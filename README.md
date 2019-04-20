@@ -1,2 +1,2 @@
 # flower-shop
-Shop for selling flower bulbes
+Shop for selling flower bulbs
