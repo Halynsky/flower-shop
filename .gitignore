@@ -1,5 +1,5 @@
 HELP.md
-/target/
+target/
 node/
 node_modules/
 !.mvn/wrapper/maven-wrapper.jar

@@ -2,69 +2,86 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.4.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
-    </parent>
+
     <groupId>ua.com.flowershop</groupId>
     <artifactId>flowershop</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>flowershop</name>
     <description>Shop for selling flower bulbs</description>
+    <packaging>pom</packaging>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.1.RELEASE</version>
+    </parent>
+
+    <modules>
+        <module>backend</module>
+        <module>frontend</module>
+    </modules>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>11</java.version>
+        <apache.commons.version>1.3.2</apache.commons.version>
+        <jsr310.version>2.9.2</jsr310.version>
+        <springfox.version>2.8.0</springfox.version>
+        <jacoco.version>0.7.5.201505241946</jacoco.version>
+        <surefire.version>2.18.1</surefire.version>
+
+        <!-- UI -->
+        <frontend.plugin.version>1.6</frontend.plugin.version>
+        <node.version>v10.10.0</node.version>
+        <npm.version>6.9.0</npm.version>
+
+        <spring.profile>${environment}</spring.profile>
     </properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-mail</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <environment>dev</environment>
+                <npm.arguments>install</npm.arguments>
+                <npm.build.cmd>run build</npm.build.cmd>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
 
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+        <profile>
+            <id>stg</id>
+            <activation>
+                <property>
+                    <name>environment</name>
+                    <value>stg</value>
+                </property>
+            </activation>
+            <properties>
+                <environment>qa</environment>
+                <npm.arguments>install --production</npm.arguments>
+                <npm.build.cmd>run build:stg</npm.build.cmd>
+            </properties>
+        </profile>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
+        <profile>
+            <id>prod</id>
+            <activation>
+                <property>
+                    <name>environment</name>
+                    <value>prod</value>
+                </property>
+            </activation>
+            <properties>
+                <environment>prod</environment>
+                <npm.arguments>install --production</npm.arguments>
+                <npm.build.cmd>run build:prod</npm.build.cmd>
+            </properties>
+        </profile>
+
+    </profiles>
 
 </project>
