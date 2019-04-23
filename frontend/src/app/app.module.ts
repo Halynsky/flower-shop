@@ -11,6 +11,7 @@ import { MatIconModule, MatIconRegistry } from '@angular/material';
 import { LayoutModule } from "./layout/layout.module";
 import { registerLocaleData } from '@angular/common';
 import localeRuUa from '@angular/common/locales/uk';
+import { HttpClientModule } from "@angular/common/http";
 registerLocaleData(localeRuUa);
 
 @NgModule({
@@ -23,10 +24,11 @@ registerLocaleData(localeRuUa);
     routing,
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
+    MatIconModule,
     // Developed modules
     LayoutModule,
     LandingModule,
-    MatIconModule
   ],
   providers: [
     MatIconRegistry,

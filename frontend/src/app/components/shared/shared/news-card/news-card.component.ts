@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { FlowerType } from "../../../../api/models/FlowerType";
 
 @Component({
   selector: 'news-card',
@@ -6,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./news-card.component.scss']
 })
 export class NewsCardComponent implements OnInit {
+
+  @Input()
+  flowerType: FlowerType;
 
   constructor() { }
 

@@ -17,7 +17,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
-@RequestMapping("flowerTypes")
+@RequestMapping("api/flowerTypes")
 public class FlowerTypeController {
 
     @Autowired

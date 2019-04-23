@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FlowerTypeService } from "../../api/services/flower-type.service";
+import { FlowerType } from "../../api/models/FlowerType";
 
 @Component({
   selector: 'landing',
@@ -7,7 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LandingComponent implements OnInit {
 
-  constructor() { }
+  flowerTypes: FlowerType[] = [];
+
+  constructor(private flowerTypeService : FlowerTypeService) {
+
+    flowerTypeService.getAll().subscribe(
+      flowerTypes => this.flowerTypes = flowerTypes,
+      error => console.error(error)
+    )
+
+  }
 
   ngOnInit() {
   }

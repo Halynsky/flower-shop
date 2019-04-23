@@ -12,7 +12,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Getter
-@Service
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor

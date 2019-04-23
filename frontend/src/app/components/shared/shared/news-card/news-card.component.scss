@@ -1,5 +1,6 @@
 @import '~@angular/material/theming';
 @import "../../../../../theme";
+@import "../../../../../scss/colors";
 
 :host {
   //flex-direction: column;
@@ -44,10 +45,16 @@
       }
 
       .created {
-        color: #858585;
+        font-size: 12px;
+        color: $grey-500;
       }
 
     }
+
+    .preview {
+      margin-top: 12px;
+    }
+    
   }
 
 }
