@@ -1,5 +1,5 @@
-<a routerLink="/">
-  <img src="/assets/img/common/logo-white.png" alt="logo" class="logo">
+<a routerLink="/" class="logo">
+  <img src="/assets/img/common/logo-white.png" alt="logo">
 </a>
 
 <div class="menu-wrapper">
@@ -10,11 +10,26 @@
   </div>
 
   <div class="right-menu">
-    <button mat-button>
+    <button mat-button [matMenuTriggerFor]="authMenu">
       <i class="material-icons md-18">exit_to_app</i>
       <span>Увійти</span>
     </button>
+
+    <button mat-icon-button [matMenuTriggerFor]="authMenu">
+      <mat-icon aria-label="Login">account_circle</mat-icon>
+    </button>
+
   </div>
 
-
 </div>
+
+<mat-menu #authMenu="matMenu" class="auth-menu">
+  <button class="facebook-auth">
+    <i class="fab fa-facebook-f"></i>
+    <span>Facebook</span>
+  </button>
+  <button class="google-auth">
+    <i class="fab fa-google"></i>
+    <span>Google</span>
+  </button>
+</mat-menu>

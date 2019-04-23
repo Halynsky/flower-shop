@@ -7,6 +7,13 @@ import { Component } from "@angular/core";
     <router-outlet></router-outlet>
   `,
   styles: [`
+    :host {
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
     router-outlet ::ng-deep + * {
       display: flex;
       flex-direction: column;
@@ -14,6 +21,8 @@ import { Component } from "@angular/core";
       position: absolute;
       top: 50px;
       width: 100%;
+      max-width: 1200px;
+      padding: 0 2em;
     }
 
     router-outlet ::ng-deep + * > .container {

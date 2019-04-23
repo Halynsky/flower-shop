@@ -1,0 +1,35 @@
+@mixin response($min, $max : null) {
+  @if ($max == null) {
+    @if (map-deep-get($rsp, $min, min) == 0) {
+      @media (max-width: #{map-deep-get($rsp, $min, max)}px) {
+        @content;
+      }
+    } @else if (map-deep-get($rsp, $min, max) == 9999) {
+      @media (min-width: #{map-deep-get($rsp, $min, min)}px) {
+        @content;
+      }
+    } @else {
+      @media (min-width: #{map-deep-get($rsp, $min, min)}px) and (max-width: #{map-deep-get($rsp, $min, max)}px) {
+        @content;
+      }
+    }
+  } @else {
+    @media (min-width: #{map-deep-get($rsp, $min, min)}px) and (max-width: #{map-deep-get($rsp, $max, max)}px) {
+      @content;
+    }
+  }
+}
+
+;
+
+@mixin response-from($rz) {
+  @media (min-width: #{map-deep-get($rsp, $rz, min)}px) {
+    @content;
+  }
+}
+
+@mixin response-to($rz) {
+  @media (max-width: #{map-deep-get($rsp, $rz, max)}px) {
+    @content;
+  }
+}

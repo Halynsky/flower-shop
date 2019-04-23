@@ -1,19 +1,23 @@
 @import "../../../theme";
 @import '~@angular/material/theming';
+@import "../../../mixins.scss";
 
 :host {
   display: flex;
+  width: 100%;
   flex-direction: row;
   align-items: center;
   height: 50px;
   background-color: mat-color($primary);
   @include mat-elevation(2);
-  padding: 0px 16px;
 }
 
 .logo {
-  height: 28px;
-  width: 28px;
+  padding: 8px 16px;
+  img {
+    height: 28px;
+    width: 28px;
+  }
 }
 
 .menu-wrapper {
@@ -24,11 +28,25 @@
 
   .left-menu {
     display: flex;
-    margin-left: 16px;
   }
 
   .right-menu {
     display: flex;
+
+    .mat-button {
+      @include response-to(xs) {
+        display: none;
+      }
+    }
+
+    .mat-icon-button {
+      width: 50px;
+      justify-content: center;
+      @include response-from(sm) {
+        display: none;
+      }
+    }
+
   }
 
 
@@ -58,3 +76,39 @@
 
 
 }
+
+::ng-deep .auth-menu {
+  margin-top: -8px;
+
+  button {
+    position: relative;
+    color: white;
+    padding: 10px 12px 10px 36px;
+    border: none;
+
+    display: flex;
+    width: 100%;
+
+
+    i {
+      position: absolute;
+    }
+
+    &.facebook-auth {
+      background: #3b5998;
+      i {
+        left: 15px;
+      }
+    }
+
+    &.google-auth {
+      background: #ec3c1e;
+      i {
+        left: 12px;
+      }
+    }
+  }
+
+}
+
+

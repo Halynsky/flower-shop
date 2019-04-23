@@ -1,0 +1,21 @@
+@import "../../../theme";
+
+.page-title {
+  color: mat-color($accent);
+}
+
+.container {
+  //flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 2em;
+
+  news-card {
+    //margin: 0 12px;
+    //margin-bottom: 24px;
+    //width: 282px;
+
+  }
+
+}
+
