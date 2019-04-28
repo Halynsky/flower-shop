@@ -4,9 +4,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ua.com.meryflowers</groupId>
-    <artifactId>flowershop</artifactId>
+    <artifactId>meryflowers</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>flowershop</name>
+    <name>meryflowers</name>
     <description>Shop for selling flower bulbs</description>
     <packaging>pom</packaging>
 
