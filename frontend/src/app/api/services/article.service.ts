@@ -10,7 +10,7 @@ export class ArticleService {
   constructor(private  http: HttpClient) {}
 
   getAll(pagination: Pagination) {
-    const params = {...pagination} as HttpParams;
+    const params = new HttpParams({fromObject: pagination as any});
     return this.http.get<RestPage<Article>>("api/articles", {params})
   }
 
