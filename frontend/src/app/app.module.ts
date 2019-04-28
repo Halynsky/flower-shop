@@ -7,11 +7,12 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { routing } from "./app.routing";
 import { LayoutComponent } from "./layout/layout.component";
 import { LandingModule } from "./components/landing/landing.module";
-import { MatIconModule, MatIconRegistry } from '@angular/material';
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS, MatIconModule, MatIconRegistry } from '@angular/material';
 import { LayoutModule } from "./layout/layout.module";
 import { registerLocaleData } from '@angular/common';
 import localeRuUa from '@angular/common/locales/uk';
 import { HttpClientModule } from "@angular/common/http";
+import { RouterModule } from "@angular/router";
 registerLocaleData(localeRuUa);
 
 @NgModule({
@@ -22,6 +23,7 @@ registerLocaleData(localeRuUa);
   imports: [
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     routing,
+    RouterModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
@@ -32,7 +34,8 @@ registerLocaleData(localeRuUa);
   ],
   providers: [
     MatIconRegistry,
-    { provide: LOCALE_ID, useValue: "uk" }
+    { provide: LOCALE_ID, useValue: "uk" },
+    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 3000, panelClass: "snack-custom-class"} }
   ],
   bootstrap: [AppComponent]
 })

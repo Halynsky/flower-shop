@@ -1,29 +1,32 @@
 <div class="content">
 
-  <div class="logo" [ngStyle]="{'background-image': 'url(' + article.logo + ''}"></div>
+  <a class="logo" [ngStyle]="{'background-image': 'url(' + article.logo + ''}"
+       [routerLink]="['/articles', article.id]" title="Читати далі"></a>
 
   <div class="general-info">
 
-    <div class="title">{{article.title | slice:0:45}}</div>
+    <div class="title" [title]="article.title">{{article.title}}</div>
 
-    <div class="article">{{article.content | slice:0:100}}...</div>
+    <div class="text">{{article.content | slice:0:100}}...</div>
 
   </div>
 
 </div>
 
-<div class="additional-info">
+<div class="footer">
 
   <div class="created">{{article.created | date}}</div>
 
-  <div class="detail-info">Детальніше <i class="fas fa-book-reader"></i></div>
+  <div class="actions">
+    <button mat-icon-button (click)="addToFavorite()">
+      <mat-icon>favorite</mat-icon>
+    </button>
+    <button mat-icon-button (click)="share()">
+      <mat-icon>share</mat-icon>
+    </button>
+  </div>
 
 </div>
-
-
-
-
-
 
 
 

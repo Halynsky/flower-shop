@@ -1,3 +1,29 @@
+@import '../theme';
+
 .mat-menu-panel .mat-menu-content:not(:empty) {
   padding: initial;
+}
+
+.mat-snack-bar-container.snack-custom-class {
+  color: white;
+
+  button {
+    span {
+      color: mat-color($accent, 400);
+      font-weight: 600;
+    }
+  }
+}
+
+
+.mat-snack-bar-container.snack-custom-error {
+  color: white;
+  background-color: mat-color($warn, 600);
+
+  button {
+    span {
+      color: mat-color($accent, 100);
+      font-weight: 600;
+    }
+  }
 }

@@ -20,6 +20,7 @@
     justify-content: space-between;
 
     .logo {
+      cursor: pointer;
       min-height: 160px;
       min-width: 100px;
       background-position: 50%;
@@ -28,16 +29,22 @@
     }
 
     .general-info {
-      padding: 12px;
-      display: flex;
+      padding: 12px 12px 8px;
+      display: grid;
       flex-direction: column;
 
       .title {
+        font-weight: 500;
         color:mat-color($accent);
+        margin-bottom: 12px;
+
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
       }
 
-      .article {
-        margin-top: 12px;
+      .text {
+
         font-size: 0.7em;
       }
 
@@ -45,23 +52,27 @@
 
   }
 
-  .additional-info {
+  .footer {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 12px;
+    padding: 0px 12px 8px;
+    align-items: center;
 
     .created {
       font-size: 12px;
       color: $grey-500;
     }
 
-    .detail-info {
-      font-size: 12px;
-      color: $grey-500;
-      &:hover {
-        color: $grey-700;
-        cursor: pointer;
+    button {
+      color: $grey-800;
+
+      i {
+        margin-right: 8px;
+        margin-left: -4px;
+      }
+      span {
+
       }
     }
 

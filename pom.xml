@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>ua.com.flowershop</groupId>
+    <groupId>ua.com.meryflowers</groupId>
     <artifactId>flowershop</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>flowershop</name>
@@ -57,11 +57,11 @@
             <activation>
                 <property>
                     <name>environment</name>
-                    <value>stg</value>
+                    <value>heroku</value>
                 </property>
             </activation>
             <properties>
-                <environment>qa</environment>
+                <environment>stg</environment>
                 <npm.arguments>install --production</npm.arguments>
                 <npm.build.cmd>run build:stg</npm.build.cmd>
             </properties>
