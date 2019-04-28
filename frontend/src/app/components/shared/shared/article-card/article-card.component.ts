@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FlowerType } from "../../../../api/models/FlowerType";
 import { Article } from "../../../../api/models/Article";
+import { SnackBarService } from "../../../../services/snak-bar.service";
 
 @Component({
   selector: 'article-card',
@@ -12,10 +12,20 @@ export class ArticleCardComponent implements OnInit {
   @Input()
   article: Article;
   
-  constructor() {
+  constructor(private snackBar: SnackBarService) {
   }
 
   ngOnInit() {
+  }
+
+  // TODO: Implement this
+  addToFavorite() {
+    this.snackBar.methodNotImplemented();
+  }
+
+  // TODO: Implement this
+  share() {
+    this.snackBar.methodNotImplemented();
   }
 
 }

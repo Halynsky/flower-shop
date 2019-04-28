@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FlowerTypeService } from "../../api/services/flower-type.service";
-import { FlowerType } from "../../api/models/FlowerType";
 import { Article } from "../../api/models/Article";
 import { ArticleService } from "../../api/services/article.service";
 import { RestPage } from "../../api/models/RestPage";
