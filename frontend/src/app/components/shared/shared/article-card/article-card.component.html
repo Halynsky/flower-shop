@@ -1,0 +1,29 @@
+<div class="content">
+
+  <div class="logo" [ngStyle]="{'background-image': 'url(' + article.logo + ''}"></div>
+
+  <div class="general-info">
+
+    <div class="title">{{article.title | slice:0:45}}</div>
+
+    <div class="article">{{article.content | slice:0:100}}...</div>
+
+  </div>
+
+</div>
+
+<div class="additional-info">
+
+  <div class="created">{{article.created | date}}</div>
+
+  <div class="detail-info">Детальніше <i class="fas fa-book-reader"></i></div>
+
+</div>
+
+
+
+
+
+
+
+
