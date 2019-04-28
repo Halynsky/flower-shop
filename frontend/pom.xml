@@ -9,8 +9,8 @@
     <packaging>jar</packaging>
 
     <parent>
-        <groupId>ua.com.flowershop</groupId>
-        <artifactId>flowershop</artifactId>
+        <groupId>ua.com.meryflowers</groupId>
+        <artifactId>meryflowers</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
