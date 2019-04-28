@@ -3,11 +3,11 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatButtonModule, MatIconModule, MatMenuModule } from "@angular/material";
-import { NewsCardComponent } from './news-card/news-card.component';
+import { ArticleCardComponent } from './article-card/article-card.component';
 
 @NgModule({
   declarations: [
-    NewsCardComponent
+    ArticleCardComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +27,7 @@ import { NewsCardComponent } from './news-card/news-card.component';
     MatMenuModule,
     MatIconModule,
     // Developed components
-    NewsCardComponent
+    ArticleCardComponent
   ]
 })
 export class SharedModule { }
