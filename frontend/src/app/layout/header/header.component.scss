@@ -3,7 +3,10 @@
 @import "../../../mixins.scss";
 
 :host {
-  display: flex;
+  display: grid;
+  position: fixed;
+  top: 0px;
+  z-index: 1000;
   width: 100%;
   flex-direction: row;
   align-items: center;
@@ -12,35 +15,47 @@
   @include mat-elevation(2);
 }
 
-.logo {
-  padding: 8px 16px;
-  img {
-    height: 28px;
-    width: 28px;
-  }
-}
+.header-content {
+  display: grid;
+  grid-template-columns: max-content auto max-content;
 
-.menu-wrapper {
-  display: flex;
-  width: 100%;
-  flex-direction: row;
-  justify-content: space-between;
-
-  .left-menu {
-    display: flex;
+  .mobile-menu {
+    @include response-from(sm) {
+      display: none;
+    }
   }
 
-  .right-menu {
-    display: flex;
+  .logo {
+    padding: 8px 16px;
+    @include response-to(xs) {
+      justify-content: center;
+    }
 
-    .mat-button {
+    img {
+      height: 28px;
+      width: 28px;
+    }
+  }
+
+  .main-navigation {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: fit-content(100%);
+    @include response-to(xs) {
+      display: none;
+    }
+  }
+
+  .login-button-wrapper {
+    display: grid;
+
+    .login-button {
       @include response-to(xs) {
         display: none;
       }
     }
 
-    .mat-icon-button {
-      width: 50px;
+    .mobile-login-button {
       justify-content: center;
       @include response-from(sm) {
         display: none;
@@ -74,8 +89,9 @@
 
   }
 
-
 }
+
+
 
 ::ng-deep .auth-menu {
   margin-top: -8px;
@@ -96,6 +112,7 @@
 
     &.facebook-auth {
       background: #3b5998;
+
       i {
         left: 15px;
       }
@@ -103,10 +120,37 @@
 
     &.google-auth {
       background: #ec3c1e;
+
       i {
         left: 12px;
       }
     }
+  }
+
+}
+
+::ng-deep .main-navigation-menu {
+  margin-top: -8px;
+
+  .mat-menu-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  button, a {
+    //position: relative;
+    //color: white;
+    //padding: 10px 12px 10px 36px;
+    //border: none;
+    border-radius: initial;
+
+    //display: flex;
+    //width: 100%;
+
+    //i {
+    //  position: absolute;
+    //}
+
   }
 
 }

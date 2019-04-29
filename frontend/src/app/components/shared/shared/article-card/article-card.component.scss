@@ -37,15 +37,14 @@
         font-weight: 500;
         color:mat-color($accent);
         margin-bottom: 12px;
-
+        font-size: 16px;
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
       }
 
       .text {
-
-        font-size: 0.7em;
+        font-size: 11px;
       }
 
     }

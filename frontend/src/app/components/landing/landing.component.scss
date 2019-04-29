@@ -3,6 +3,12 @@
 
 .page-title {
   color: mat-color($accent);
+  margin: 1.1em 0 1em;
+  font-size: 2em;
+  font-weight: 600;
+  @include response-to(xs) {
+    text-align: center;
+  }
 }
 
 .container {
