@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ua.com.flowershop.entity.Article;
 import ua.com.flowershop.service.ArticleService;
+import ua.com.flowershop.util.annotation.PageableSwagger;
 
 import java.util.List;
 
@@ -21,7 +22,9 @@ public class ArticleController {
     @Autowired
     private ArticleService articleService;
 
+
     @GetMapping
+    @PageableSwagger
     public ResponseEntity<Page<Article>> getAll(Pageable pageRequest) {
         return new ResponseEntity<>(articleService.getArticles(pageRequest), OK);
     }

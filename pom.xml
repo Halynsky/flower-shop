@@ -28,7 +28,6 @@
         <apache.commons.version>1.3.2</apache.commons.version>
         <jsr310.version>2.9.2</jsr310.version>
         <springfox.version>2.8.0</springfox.version>
-        <jacoco.version>0.7.5.201505241946</jacoco.version>
         <surefire.version>2.18.1</surefire.version>
 
         <!-- UI -->
