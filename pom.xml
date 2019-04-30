@@ -56,7 +56,7 @@
             <activation>
                 <property>
                     <name>environment</name>
-                    <value>heroku</value>
+                    <value>stg</value>
                 </property>
             </activation>
             <properties>
