@@ -61,7 +61,7 @@
             </activation>
             <properties>
                 <environment>stg</environment>
-                <npm.arguments>install --production</npm.arguments>
+                <npm.arguments>install</npm.arguments>
                 <npm.build.cmd>run build:stg</npm.build.cmd>
             </properties>
         </profile>
@@ -76,7 +76,7 @@
             </activation>
             <properties>
                 <environment>prod</environment>
-                <npm.arguments>install --production</npm.arguments>
+                <npm.arguments>install</npm.arguments>
                 <npm.build.cmd>run build:prod</npm.build.cmd>
             </properties>
         </profile>
