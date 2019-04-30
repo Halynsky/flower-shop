@@ -55,13 +55,13 @@
             <id>stg</id>
             <activation>
                 <property>
-                    <name>environment</name>
+                    <name>env.environment</name>
                     <value>stg</value>
                 </property>
             </activation>
             <properties>
                 <environment>stg</environment>
-                <npm.arguments>install --production</npm.arguments>
+                <npm.arguments>install</npm.arguments>
                 <npm.build.cmd>run build:stg</npm.build.cmd>
             </properties>
         </profile>
@@ -70,13 +70,13 @@
             <id>prod</id>
             <activation>
                 <property>
-                    <name>environment</name>
+                    <name>env.environment</name>
                     <value>prod</value>
                 </property>
             </activation>
             <properties>
                 <environment>prod</environment>
-                <npm.arguments>install --production</npm.arguments>
+                <npm.arguments>install</npm.arguments>
                 <npm.build.cmd>run build:prod</npm.build.cmd>
             </properties>
         </profile>
