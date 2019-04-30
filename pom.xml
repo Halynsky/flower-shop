@@ -55,7 +55,7 @@
             <id>stg</id>
             <activation>
                 <property>
-                    <name>environment</name>
+                    <name>env.environment</name>
                     <value>stg</value>
                 </property>
             </activation>
@@ -70,7 +70,7 @@
             <id>prod</id>
             <activation>
                 <property>
-                    <name>environment</name>
+                    <name>env.environment</name>
                     <value>prod</value>
                 </property>
             </activation>
