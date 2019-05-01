@@ -10,6 +10,7 @@ const routes: Routes = [
       { path: '', component: LandingComponent},
       { path: 'shop', loadChildren: './components/shop/shop.module#ShopModule'},
       { path: 'forum', loadChildren: './components/forum/forum.module#ForumModule'},
+      { path: 'contacts', loadChildren: './components/contacts/contacts.module#ContactsModule'}
     ]
   },
 ];
