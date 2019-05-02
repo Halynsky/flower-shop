@@ -1,6 +1,12 @@
 @import "../../../theme";
 @import "../../../mixins.scss";
 
+:host {
+  @extend .content-thin;
+  justify-self: center;
+  align-self: center;
+}
+
 .page-title {
   color: mat-color($accent);
   margin: 1.1em 0 1em;
@@ -16,6 +22,7 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 2em;
+  margin-bottom: 2em;
 
   @include response-to(sm) {
     grid-template-columns: repeat(2, 1fr);

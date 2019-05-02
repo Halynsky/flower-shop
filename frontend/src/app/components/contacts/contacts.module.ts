@@ -1,15 +1,18 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from "../shared/shared/shared.module";
 import { ContactsComponent } from "./contacts.component";
-import { CONTACTS_ROUTES } from "./contacts.routing";
+import { RouterModule, Routes } from "@angular/router";
 
+const routes: Routes = [
+  { path: '', component: ContactsComponent},
+];
 
 @NgModule({
   declarations: [
     ContactsComponent
   ],
   imports: [
-    CONTACTS_ROUTES,
+    RouterModule.forChild(routes),
     SharedModule
   ],
   bootstrap: [

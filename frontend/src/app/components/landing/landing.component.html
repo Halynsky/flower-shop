@@ -1,9 +1,8 @@
 <div class="news" *ngIf="articles">
 
-  <h1 class="page-title">ПОПУЛЯРНІ ПУБЛІКАЦІЇ</h1>
+  <h1 class="page-title">Блог</h1>
 
   <div class="container">
-
       <article-card *ngFor="let article of articles.content" [article]="article"></article-card>
   </div>
 
