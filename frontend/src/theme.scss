@@ -5,6 +5,10 @@ $primary: mat-palette($mat-green);
 $accent:  mat-palette($mat-deep-orange);
 $warn:    mat-palette($mat-red);
 
+$google-brand: mat-palette($mat-red);
+$telegram-brand: mat-palette($mat-light-blue);
+$facebook-brand: mat-palette($mat-indigo);
+
 $main-theme: mat-light-theme($primary, $accent, $warn);
 
 @include angular-material-theme($main-theme);
