@@ -3,5 +3,5 @@ export class Article{
   title: string;
   content: string;
   created: string;
-  logo: string;
+  image: string;
 }

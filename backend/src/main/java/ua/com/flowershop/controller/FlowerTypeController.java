@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ua.com.flowershop.entity.FlowerType;
+import ua.com.flowershop.projection.FlowerTypeProjection;
 import ua.com.flowershop.repository.FlowerTypeRepository;
 import ua.com.flowershop.service.FlowerTypeService;
 
@@ -26,8 +27,8 @@ public class FlowerTypeController {
     private FlowerTypeRepository flowerTypeRepository;
 
     @GetMapping
-    public ResponseEntity<List<FlowerType>> getAll() {
-        List<FlowerType> flowerTypes = flowerTypeService.getAllFlowerTypes();
+    public ResponseEntity<List<FlowerTypeProjection>> getAll() {
+        List<FlowerTypeProjection> flowerTypes = flowerTypeRepository.findByOrderByName();
         return new ResponseEntity<>(flowerTypes, OK);
     }
 

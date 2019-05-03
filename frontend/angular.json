@@ -37,6 +37,11 @@
               "node_modules/@fortawesome/fontawesome-free/scss/v4-shims.scss"
             ],
             "scripts": [],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src"
+              ]
+            },
             "es5BrowserSupport": true
           },
           "configurations": {

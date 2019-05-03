@@ -2,9 +2,18 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { MatButtonModule, MatIconModule, MatMenuModule, MatSnackBarModule } from "@angular/material";
+import {
+  MatButtonModule,
+  MatCheckboxModule,
+  MatFormFieldModule,
+  MatIconModule,
+  MatInputModule,
+  MatMenuModule,
+  MatSnackBarModule
+} from "@angular/material";
 import { ArticleCardComponent } from './article-card/article-card.component';
 import { RouterModule } from "@angular/router";
+
 
 @NgModule({
   declarations: [
@@ -19,7 +28,10 @@ import { RouterModule } from "@angular/router";
     MatButtonModule,
     MatMenuModule,
     MatIconModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatCheckboxModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   exports: [
     RouterModule,
@@ -31,6 +43,9 @@ import { RouterModule } from "@angular/router";
     MatMenuModule,
     MatIconModule,
     MatSnackBarModule,
+    MatCheckboxModule,
+    MatFormFieldModule,
+    MatInputModule,
     // Developed components
     ArticleCardComponent
   ]

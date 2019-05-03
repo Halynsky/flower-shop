@@ -7,7 +7,6 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -15,16 +14,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity()
-@Table(name = "articles")
-public class Article {
+@Table(name = "sizes")
+public class Size {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title;
-    @Column(columnDefinition = "varchar(5000)")
-    private String content;
-    private LocalDateTime created = LocalDateTime.now();
-    private String image;
+    @Column(unique = true)
+    private String name;
 
 }
