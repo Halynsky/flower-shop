@@ -8,7 +8,6 @@
   justify-self: center;
   align-self: center;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
   a {
     display: block;
@@ -20,9 +19,17 @@
   .content {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
     align-items: center;
-    flex-grow: 0.5;
+    margin-bottom: 24px;
+    @include response-to(md) {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: normal;
+      margin-bottom: 24px;
+      flex-grow: 0.5;
+    }
+
 
     .page-title {
       color: mat-color($accent);
@@ -30,6 +37,16 @@
       font-weight: 600;
       margin-top: 24px;
       margin-bottom: 24px;
+      height: 200px;
+      align-items: center;
+      display: flex;
+      @include response-to(md) {
+        height: 20px;
+      }
+
+      @include response-to(xs) {
+        height: 0px;
+      }
     }
 
     .contacts {
@@ -37,13 +54,13 @@
       grid-template-columns: repeat(4, 1fr);
       grid-gap: 2em;
 
-      @include response-to(sm) {
+      @include response-to(md) {
         grid-template-columns: repeat(2, 1fr);
       }
 
       @include response-to(xs) {
         grid-template-columns: 1fr;
-        grid-gap: 0.01em;
+        grid-gap: 2em;
       }
 
       .contact-card {
@@ -51,12 +68,11 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: space-around;
         height: 250px;
         width: 250px;
         padding: 12px;
         border-radius: 10px;
-        margin-bottom: 24px;
+        //margin-bottom: 24px;
 
         @include mat-elevation(2);
 
@@ -76,9 +92,9 @@
         .logo{
             font-size: 90px;
           @include response-to(xs) {
+            width: 40px;
             display: flex;
             font-size: 40px;
-            flex-grow: 0.75;
             justify-content: center;
             align-items: center;
           }
@@ -90,6 +106,9 @@
 
         #email {
           color:mat-color($google-brand);
+          @include response-to(xs) {
+            font-size: 38px;
+          }
         }
 
         #facebook {
@@ -108,12 +127,13 @@
           align-items: center;
           justify-content: center;
           @include response-to(xs) {
-            display: flex;
-            flex-grow: 1.25;
-            justify-content: center;
-            align-items: flex-start;
+            height: 100%;
+            width: 170px;
             font-size: 16px;
             margin-left: 12px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
           }
 
           .first-number {
