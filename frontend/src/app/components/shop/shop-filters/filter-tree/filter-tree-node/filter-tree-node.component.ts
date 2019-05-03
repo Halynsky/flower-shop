@@ -10,9 +10,9 @@ import { MatCheckbox } from "@angular/material";
 export class FilterTreeNodeComponent implements OnInit {
 
   @Input()
-  node; any;
+  node: any;
   @Input()
-  level; number;
+  level: number;
 
   @ViewChild('checkbox') checkbox: MatCheckbox;
 
