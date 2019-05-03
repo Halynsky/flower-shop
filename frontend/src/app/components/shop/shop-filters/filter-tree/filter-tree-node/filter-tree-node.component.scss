@@ -1,6 +1,9 @@
+@import "mixins";
+
 :host {
   margin-bottom: 8px;
   display: inline-block;
+  color: $grey-900;
 }
 
 .node {

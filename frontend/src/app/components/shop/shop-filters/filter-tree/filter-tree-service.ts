@@ -31,6 +31,13 @@ export class FilterTreeService {
     this.onFilterChange.emit(this.filters)
   }
 
+  hasFilters() {
+    for (let key in this.filters) {
+     if ( this.filters[key].length > 0) return true
+    }
+    return false
+  }
+
   hasChildrenFn: Function = node => {
     return node[this.childrenArrayName] && node.node[this.childrenArrayName].length > 0
   };

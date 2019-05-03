@@ -21,7 +21,10 @@ export class FilterTreeNodeComponent implements OnInit {
   expanded: boolean = false;
 
   constructor(public filterTreeService: FilterTreeService) {
-    filterTreeService.onFilterClear.subscribe(() => this.checkbox.writeValue(false))
+      filterTreeService.onFilterClear.subscribe(() => {
+        if (this.showCheckbox && this.checkbox) this.checkbox.writeValue(false)
+      })
+
   }
 
   ngOnInit() {
@@ -38,10 +41,7 @@ export class FilterTreeNodeComponent implements OnInit {
   }
 
   onCheckboxChange(event) {
-
     this.filterTreeService.toggleFilter(this.node.id, event.checked, this.level);
-
-
   }
 
 }

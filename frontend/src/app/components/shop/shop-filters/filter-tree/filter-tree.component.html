@@ -1,33 +1,3 @@
-<div class="filter-block flower-type-filter-wrapper">
-
-  <div class="filter-title">
-    <span>Цибулинки</span>
-    <mat-icon *ngIf="filterTreeService.filters[TREE_FILTER_LEVEL] && filterTreeService.filters[TREE_FILTER_LEVEL].length > 0"
-              (click)="clearTreeFilter()" title="Очистити фільтр">close</mat-icon>
-  </div>
-
-  <ng-template ngFor let-node [ngForOf]="root" [ngForTrackBy]="trackByFn">
-    <filter-tree-node [node]="node" [level]="1"></filter-tree-node>
-  </ng-template>
-
-</div>
-
-<div class="filter-block flower-color-filter-wrapper">
-
-  <div class="filter-title">
-    <span>Колір</span>
-    <mat-icon *ngIf="filterTreeService.filters[TREE_FILTER_LEVEL] && filterTreeService.filters[TREE_FILTER_LEVEL].length > 0"
-              (click)="clearTreeFilter()" title="Очистити фільтр">close</mat-icon>
-  </div>
-
-</div>
-
-<div class="filter-block bulb-size-filter-wrapper">
-
-  <div class="filter-title">
-    <span>Розмір</span>
-    <mat-icon *ngIf="filterTreeService.filters[TREE_FILTER_LEVEL] && filterTreeService.filters[TREE_FILTER_LEVEL].length > 0"
-              (click)="clearTreeFilter()" title="Очистити фільтр">close</mat-icon>
-  </div>
-
-</div>
+<ng-template ngFor let-node [ngForOf]="root" [ngForTrackBy]="trackByFn">
+  <filter-tree-node [node]="node" [level]="1"></filter-tree-node>
+</ng-template>

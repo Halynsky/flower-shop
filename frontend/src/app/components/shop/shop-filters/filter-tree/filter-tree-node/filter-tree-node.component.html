@@ -1,4 +1,4 @@
-<div class="node" [ngClass]="{'inactive': !checkbox?.checked && level == 1}">
+<div class="node" [ngClass]="{'inactive': !checkbox?.checked && level == 1 && filterTreeService.hasFilters()}">
   <mat-icon [ngClass]="{'hidden': !hasChildren}" (click)="toggleExpand($event)">
     {{expanded ? 'expand_more' : 'chevron_right'}}
   </mat-icon>
@@ -7,7 +7,7 @@
   <span class="child-count" *ngIf="node && node[filterTreeService.childrenArrayName]">&nbsp;( {{node[filterTreeService.childrenArrayName].length}} ) </span>
 </div>
 
-<div class="node-children" *ngIf="expanded" [style.marginLeft.px]="42 * level" [ngClass]="{'inactive': !checkbox?.checked && level == 1}">
+<div class="node-children" *ngIf="expanded" [style.marginLeft.px]="42 * level" [ngClass]="{'inactive': !checkbox?.checked && level == 1 && filterTreeService.hasFilters()}">
   <ng-template ngFor let-child [ngForOf]="node[filterTreeService.childrenArrayName]" [ngForTrackBy]="trackByFn">
     <filter-tree-node [node]="child" [level]="level + 1"></filter-tree-node>
   </ng-template>

@@ -9,8 +9,6 @@ import { FilterTreeService } from "./filter-tree-service";
 })
 export class FilterTreeComponent implements OnInit {
 
-  TREE_FILTER_LEVEL = 1;
-
   @Input()
   root: any[];
   @Input()
@@ -33,6 +31,10 @@ export class FilterTreeComponent implements OnInit {
 
   clearTreeFilter() {
     this.filterTreeService.clearFilters();
+  }
+
+  hasFilters() {
+    return this.filterTreeService.hasFilters();
   }
 
 }

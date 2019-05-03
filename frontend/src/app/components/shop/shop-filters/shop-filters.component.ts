@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FlowerTypeService } from "../../../api/services/flower-type.service";
 import { SnackBarService } from "../../../services/snak-bar.service";
+import { FilterTreeComponent } from "./filter-tree/filter-tree.component";
 
 @Component({
   selector: 'shop-filters',
@@ -8,6 +9,8 @@ import { SnackBarService } from "../../../services/snak-bar.service";
   styleUrls: ['./shop-filters.component.scss']
 })
 export class ShopFiltersComponent implements OnInit {
+
+  @ViewChild('flowerTypeFilterEl') flowerTypeFilter: FilterTreeComponent;
 
   catalogRoot = [];
 
