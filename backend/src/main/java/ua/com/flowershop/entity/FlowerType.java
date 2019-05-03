@@ -22,7 +22,7 @@ public class FlowerType {
     @Column(unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "flowerType")
+    @OneToMany(mappedBy = "flowerType", fetch = FetchType.LAZY)
     private List<Flower> flowers;
 
 }
