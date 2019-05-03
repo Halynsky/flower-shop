@@ -1,0 +1,32 @@
+<div class="filter-block flower-type-filter-wrapper">
+
+  <div class="filter-title">
+    <span>Цибулинки</span>
+    <mat-icon *ngIf="flowerTypeFilter.hasFilters()"
+              (click)="flowerTypeFilter.clearTreeFilter()" title="Очистити фільтр">close</mat-icon>
+  </div>
+
+  <filter-tree [root]="catalogRoot" childrenArrayName="flowers" [hasChildrenFn]="hasChildrenFn" #flowerTypeFilterEl></filter-tree>
+
+</div>
+
+
+<div class="filter-block flower-color-filter-wrapper">
+
+  <div class="filter-title">
+    <span>Колір</span>
+    <mat-icon title="Очистити фільтр">close
+    </mat-icon>
+  </div>
+
+</div>
+
+<div class="filter-block bulb-size-filter-wrapper">
+
+  <div class="filter-title">
+    <span>Розмір</span>
+    <mat-icon title="Очистити фільтр">close
+    </mat-icon>
+  </div>
+
+</div>
