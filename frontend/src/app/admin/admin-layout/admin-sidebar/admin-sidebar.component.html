@@ -1,1 +1,7 @@
-<p-panelMenu [model]="items" [style]="{'width':'300px'}"></p-panelMenu>
+<admin-accordion *ngFor="let item of items" [small]="!toggleSidebar" [data]="item"></admin-accordion>
+
+<a class="go-to-site" title="View website" routerLink="/">
+  <i class="fa fa-eye"></i>
+  <span>Перейти до сайту</span>
+</a>
+

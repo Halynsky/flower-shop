@@ -18,9 +18,12 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 })
 export class AdminLayoutComponent implements OnInit {
 
-  constructor() { }
+  toggleSidebar: boolean = true;
 
-  ngOnInit() {
+  constructor() {
+  }
+
+  ngOnInit(): void {
   }
 
 }
