@@ -30,6 +30,10 @@ body {
   height: 100%;
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  //Recommended for PWA
+  //user-select: none;
+  //-webkit-tap-highlight-color: transparent;
+  //-webkit-touch-callout: none;
 }
 
 button {
