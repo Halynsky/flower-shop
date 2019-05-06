@@ -13,6 +13,7 @@ const routes: Routes = [
       { path: 'contacts', loadChildren: './components/contacts/contacts.module#ContactsModule'}
     ]
   },
+  { path: 'admin', loadChildren: './admin/admin.module#AdminModule'}
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload', useHash: false });

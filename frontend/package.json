@@ -9,6 +9,7 @@
     "build:prod": "node --max_old_space_size=6096 node_modules/@angular/cli/bin/ng build --prod",
     "build:stg": "node --max_old_space_size=6096 node_modules/@angular/cli/bin/ng build --configuration=stg",
     "build:stats": "ng build --stats-json",
+    "bundle-report": "webpack-bundle-analyzer target/classes/stats.json",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -30,6 +31,8 @@
     "@fortawesome/fontawesome-free": "^5.8.1",
     "core-js": "^2.5.4",
     "hammerjs": "^2.0.8",
+    "primeicons": "^1.0.0",
+    "primeng": "^7.1.2",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",
     "zone.js": "~0.8.26"
@@ -42,6 +45,7 @@
     "@types/node": "~8.9.4",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
+    "webpack-bundle-analyzer": "^3.3.2",
     "codelyzer": "~4.5.0",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",

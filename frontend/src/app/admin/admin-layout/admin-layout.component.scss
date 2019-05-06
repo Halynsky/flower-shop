@@ -1,0 +1,8 @@
+router-outlet {
+  display: none;
+}
+
+.layout-content {
+  display: grid;
+  grid-template-columns: 400px auto;
+}
