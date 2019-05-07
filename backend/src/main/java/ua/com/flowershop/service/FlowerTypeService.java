@@ -3,7 +3,8 @@ package ua.com.flowershop.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ua.com.flowershop.entity.FlowerType;
+import ua.com.flowershop.exception.NotFoundException;
+import ua.com.flowershop.projection.FlowerTypeProjection;
 import ua.com.flowershop.repository.FlowerTypeRepository;
 
 import java.util.List;
@@ -15,12 +16,12 @@ public class FlowerTypeService {
     @Autowired
     private FlowerTypeRepository flowerTypeRepository;
 
-    public List<FlowerType> getAllFlowerTypes() {
-        return flowerTypeRepository.findAll();
+    public List<FlowerTypeProjection> getAllFlowerTypes() {
+        return flowerTypeRepository.findBy();
     }
 
-    public FlowerType getFlowerType(long id) {
-        return flowerTypeRepository.findById(id).get();
+    public FlowerTypeProjection getFlowerType(Long id) {
+        return flowerTypeRepository.findProjectedById(id).orElseThrow(NotFoundException::new);
     }
 
 }

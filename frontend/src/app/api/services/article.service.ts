@@ -14,4 +14,8 @@ export class ArticleService {
     return this.http.get<RestPage<Article>>("api/articles", {params})
   }
 
+  getById(id: number) {
+    return this.http.get<Article>(`api/articles/${id}`);
+  }
+
 }

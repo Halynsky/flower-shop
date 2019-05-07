@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ua.com.flowershop.entity.Article;
+import ua.com.flowershop.projection.ArticleProjection;
 import ua.com.flowershop.service.ArticleService;
 import ua.com.flowershop.util.annotation.PageableSwagger;
 
@@ -25,12 +26,12 @@ public class ArticleController {
 
     @GetMapping
     @PageableSwagger
-    public ResponseEntity<Page<Article>> getAll(Pageable pageRequest) {
+    public ResponseEntity<Page<ArticleProjection>> getAll(Pageable pageRequest) {
         return new ResponseEntity<>(articleService.getArticles(pageRequest), OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Article> getById(@PathVariable long id) {
+    public ResponseEntity<ArticleProjection> getById(@PathVariable Long id) {
         return new ResponseEntity<>(articleService.getArticleById(id), OK);
     }
 

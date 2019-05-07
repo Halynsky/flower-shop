@@ -6,12 +6,15 @@ import ua.com.flowershop.entity.FlowerType;
 import ua.com.flowershop.projection.FlowerTypeProjection;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface FlowerTypeRepository extends JpaRepository<FlowerType, Long> {
 
-    FlowerType findByName(String name);
-    List<FlowerType> findByNameStartingWith(String name);
+    FlowerTypeProjection findByName(String name);
+    List<FlowerTypeProjection> findByNameStartingWith(String name);
     List<FlowerTypeProjection> findByOrderByName();
+    Optional<FlowerTypeProjection> findProjectedById(Long id);
+    List<FlowerTypeProjection> findBy();
 
 }
