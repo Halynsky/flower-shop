@@ -33,22 +33,18 @@ public class FlowerTypeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<FlowerType> getById(@PathVariable long id) {
-        FlowerType flowerType = flowerTypeService.getFlowerType(id);
-        return new ResponseEntity<>(flowerType, OK);
+    public ResponseEntity<FlowerTypeProjection> getById(@PathVariable Long id) {
+        return new ResponseEntity<>(flowerTypeService.getFlowerType(id), OK);
     }
 
     @GetMapping("/byName/{name}")
-    public ResponseEntity<FlowerType> byName(@PathVariable String name) {
-        FlowerType flowerType = flowerTypeRepository.findByName(name);
-        HttpStatus status = flowerType == null ? NOT_FOUND : OK;
-        return new ResponseEntity<>(flowerType, status);
+    public ResponseEntity<FlowerTypeProjection> byName(@PathVariable String name) {
+        return new ResponseEntity<>(flowerTypeService.getFlowerTypeByName(name), OK);
     }
 
     @GetMapping("/searchByName/{name}")
-    public ResponseEntity<List<FlowerType>> searchByName(@PathVariable String name) {
-        List<FlowerType> flowerTypes = flowerTypeRepository.findByNameStartingWith(name);
-        return new ResponseEntity<>(flowerTypes, OK);
+    public ResponseEntity<List<FlowerTypeProjection>> searchByName(@PathVariable String name) {
+        return new ResponseEntity<>(flowerTypeRepository.findByNameStartingWith(name), OK);
     }
 
 }

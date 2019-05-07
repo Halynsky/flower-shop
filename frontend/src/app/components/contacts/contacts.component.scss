@@ -35,18 +35,16 @@
       color: mat-color($accent);
       font-size: 2em;
       font-weight: 600;
-      margin-top: 24px;
-      margin-bottom: 24px;
-      height: 200px;
+      //margin: 1.2em 0px 1.2em 0px;
+      margin: 1.2em 0px;
       align-items: center;
       display: flex;
       @include response-to(md) {
-        height: 20px;
+        margin: 1.2em 0px;
       }
 
       @include response-to(xs) {
-        height: 0px;
-      }
+        margin: 1.2em 0px;      }
     }
 
     .contacts {
