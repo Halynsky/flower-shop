@@ -17,11 +17,15 @@ public class FlowerTypeService {
     private FlowerTypeRepository flowerTypeRepository;
 
     public List<FlowerTypeProjection> getAllFlowerTypes() {
-        return flowerTypeRepository.findBy();
+        return flowerTypeRepository.findProjectedBy();
     }
 
     public FlowerTypeProjection getFlowerType(Long id) {
         return flowerTypeRepository.findProjectedById(id).orElseThrow(NotFoundException::new);
+    }
+
+    public FlowerTypeProjection getFlowerTypeByName (String name) {
+        return flowerTypeRepository.findByName(name).orElseThrow(NotFoundException::new);
     }
 
 }

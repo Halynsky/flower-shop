@@ -17,7 +17,7 @@ public class FlowerService {
     private FlowerRepository flowerRepository;
 
     public List<FlowerProjection> getAllFlowers() {
-        return flowerRepository.findBy();
+        return flowerRepository.findProjectedBy();
     }
 
     public FlowerProjection getFlowerById(Long id) {

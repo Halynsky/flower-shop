@@ -14,6 +14,6 @@ public interface FlowerRepository extends JpaRepository<Flower, Long> {
 
     List<IdNameTuple> findByFlowerTypeIdOrderByName(Long flowerTypeId);
     List<FlowerProjection> findByOrderByName();
-    List<FlowerProjection> findBy();
+    List<FlowerProjection> findProjectedBy();
     Optional<FlowerProjection> findProjectedById(Long id);
 }

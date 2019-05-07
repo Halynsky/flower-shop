@@ -20,7 +20,7 @@ public class ArticleService {
 //    }
 
     public Page<ArticleProjection> getArticles(Pageable pageRequest) {
-        return articleRepository.findBy(pageRequest);
+        return articleRepository.findProjectedBy(pageRequest);
     }
 
     public ArticleProjection getArticleById(Long id) {

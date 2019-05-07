@@ -14,5 +14,5 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 
     Optional<ArticleProjection> findProjectedById(Long id);
 
-    Page<ArticleProjection> findBy(Pageable pageRequest);
+    Page<ArticleProjection> findProjectedBy(Pageable pageRequest);
 }

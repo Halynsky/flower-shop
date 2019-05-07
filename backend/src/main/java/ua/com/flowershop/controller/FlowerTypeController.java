@@ -39,8 +39,7 @@ public class FlowerTypeController {
 
     @GetMapping("/byName/{name}")
     public ResponseEntity<FlowerTypeProjection> byName(@PathVariable String name) {
-        HttpStatus status = flowerTypeRepository.findByName(name) == null ? NOT_FOUND : OK;
-        return new ResponseEntity<>(flowerTypeRepository.findByName(name), status);
+        return new ResponseEntity<>(flowerTypeService.getFlowerTypeByName(name), OK);
     }
 
     @GetMapping("/searchByName/{name}")

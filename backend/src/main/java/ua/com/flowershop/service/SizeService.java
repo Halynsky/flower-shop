@@ -16,7 +16,7 @@ public class SizeService {
     private SizeRepository sizeRepository;
 
     public List<SizeProjection> getAllSizes() {
-        return sizeRepository.findBy();
+        return sizeRepository.findProjectedBy();
     }
 
     public SizeProjection getSizeById(Long id) {
