@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -22,5 +23,10 @@ public class Size {
     private Long id;
     @Column(unique = true)
     private String name;
+    private Integer min;
+    private Integer max;
+
+    @ManyToMany(mappedBy = "sizes")
+    private Set<FlowerType> flowerTypes;
 
 }

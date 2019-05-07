@@ -7,6 +7,7 @@ import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Accessors(chain = true)
@@ -24,5 +25,10 @@ public class FlowerType {
 
     @OneToMany(mappedBy = "flowerType", fetch = FetchType.LAZY)
     private List<Flower> flowers;
+
+    @JoinTable(name="flower_type_sizes",
+            joinColumns=@JoinColumn(name="flower_type_id", referencedColumnName="id"),
+            inverseJoinColumns=@JoinColumn(name="size_id", referencedColumnName="id"))
+    private Set<Size> sizes;
 
 }
