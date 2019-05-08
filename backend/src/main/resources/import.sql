@@ -31,9 +31,9 @@ INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currva
 INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Windsong', 'Віндсонг');
 INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Prince Claus', 'Прінс Клаус');
 
-INSERT INTO sizes (name,min, max) VALUES ('8/10','2','10');
-INSERT INTO sizes (name,min, max) VALUES ('11/13','1','13');
-INSERT INTO sizes (name,min, max) VALUES ('14/16','1','5');
+INSERT INTO sizes (name,min, max) VALUES ('8/10','8','10');
+INSERT INTO sizes (name,min, max) VALUES ('11/13','11','13');
+INSERT INTO sizes (name,min, max) VALUES ('14/16','14','16');
 
 INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES ('1', '2');
 INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES ('1', '1');
