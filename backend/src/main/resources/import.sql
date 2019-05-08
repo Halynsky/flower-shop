@@ -9,20 +9,37 @@ INSERT INTO articles (title, content, created, image) VALUES ('Механізм 
 INSERT INTO articles (title, content, created, image) VALUES ('Запилення квітів', 'Для запилення необхідно, щоб пилок за допомогою комах, вітру чи води потрапив на приймочку маточки. Зовнішній шар оболонки пилкового зерна (екзина) має у своєму складі речовини терпеноїдної природи.', '2019-04-17T10:00:30.0', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnecS3EEAm70HecYnVbHKYQj1msislZYzyzRGyFxwVTqdkhKaK');
 INSERT INTO articles (title, content, created, image) VALUES ('Як поливати квіти', 'Полив квітів – це обов''язкова частина догляду за ними. І, як іноді здається, найпростіша частина. Ну що тут складного: набрав води – полив квіти. Але так можуть думати тільки початківці квітникарі або ті, хто до рослин абсолютно байдужий.', '2019-04-28T13:20:35.3', 'https://wtop.com/wp-content/uploads/2015/05/garden_hose_thinkstock-727x485.jpg');
 
--- TODO: add flowers
 INSERT INTO flower_types (name) VALUES ('Лілії');
+INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Sorbonne', 'Сорбонне');
+INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Saltarello', 'Сальтарелло');
 
 INSERT INTO flower_types (name) VALUES ('Гіацинти');
 INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Indigo King', 'Індіго Кінг');
 INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Jellow Hammer', 'Йеллоу Хаммер');
 INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'King of the Blues', 'Кінг оф зе Блюз');
+INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Honeymoon', 'Ханімун');
 
--- TODO: add flowers
 INSERT INTO flower_types (name) VALUES ('Тюльпани');
+INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Monte Carlo', 'Монте Карло');
+INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'White Prince', 'Вайт Прінс');
+INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Big Chief', 'Біг Чіф');
+INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Oxford', 'Оксфорд');
+INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Long Ledi', 'Лонг Леді');
 
--- TODO: add flowers
 INSERT INTO flower_types (name) VALUES ('Гладіолуси');
+INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Bastia', 'Бастія');
+INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Windsong', 'Віндсонг');
+INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Prince Claus', 'Прінс Клаус');
 
-INSERT INTO sizes (name) VALUES ('8/10');
-INSERT INTO sizes (name) VALUES ('11/13');
-INSERT INTO sizes (name) VALUES ('14/16');
+INSERT INTO sizes (name, min, max) VALUES ('8/10', '8', '10');
+INSERT INTO sizes (name, min, max) VALUES ('11/13', '11', '13');
+INSERT INTO sizes (name, min, max) VALUES ('14/16', '14', '16');
+
+INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES ('1', '2');
+INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES ('1', '1');
+INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES ('2', '3');
+INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES ('3', '1');
+INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES ('3', '2');
+INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES ('3', '3');
+INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES ('4', '2');
+INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES ('4', '1');
