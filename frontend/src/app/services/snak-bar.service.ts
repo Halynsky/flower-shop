@@ -20,7 +20,7 @@ export class SnackBarService {
     return this.snackBar.open(message, action, config);
   }
 
-  showError(message: string, action?: string, config?: MatSnackBarConfig) {
+  showError(message: string, action?: string, config: MatSnackBarConfig = {}) {
     config.panelClass = "snack-custom-error";
     return this.snackBar.open(message, action, config);
   }

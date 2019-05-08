@@ -10,7 +10,8 @@ import java.util.Optional;
 
 @Repository
 public interface SizeRepository extends JpaRepository<Size, Long> {
-    List<SizeProjection> findProjectedBy();
 
+    List<SizeProjection> findProjectedBy();
     Optional<SizeProjection> findProjectedById(Long id);
+
 }

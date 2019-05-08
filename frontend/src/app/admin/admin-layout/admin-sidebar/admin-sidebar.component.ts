@@ -26,9 +26,36 @@ export class AdminSidebarComponent implements OnInit {
         routerLink: 'users'
       },
       {
-        label: 'Склад',
-        icon: 'fas fa-warehouse',
-        routerLink: 'warehouse'
+        label: 'Магазин',
+        icon: 'fas fa-shopping-cart',
+        items: [
+          {
+            label: 'Замовлення',
+            icon: 'fas fa-cart-arrow-down',
+            routerLink: 'shop/orders'
+          },
+          {
+            label: 'Склад',
+            icon: 'fas fa-warehouse',
+            routerLink: 'shop/warehouse'
+          }
+        ]
+      },
+      {
+        label: 'Класифікатори',
+        icon: 'pi pi-sitemap',
+        items: [
+          {
+            label: 'Типи квітів',
+            icon: 'fas fa-table',
+            routerLink: 'types/flower-types'
+          }
+        ]
+      },
+      {
+        label: 'Блог',
+        icon: 'far fa-newspaper',
+        routerLink: 'blog'
       }
     ];
   }

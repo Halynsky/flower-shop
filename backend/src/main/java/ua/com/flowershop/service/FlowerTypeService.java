@@ -25,7 +25,7 @@ public class FlowerTypeService {
     }
 
     public FlowerTypeProjection getFlowerTypeByName (String name) {
-        return flowerTypeRepository.findByName(name).orElseThrow(NotFoundException::new);
+        return flowerTypeRepository.findProjectedByName(name).orElseThrow(NotFoundException::new);
     }
 
 }

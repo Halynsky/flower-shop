@@ -1,20 +1,17 @@
 package ua.com.flowershop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ua.com.flowershop.entity.FlowerType;
 import ua.com.flowershop.projection.FlowerTypeProjection;
 import ua.com.flowershop.repository.FlowerTypeRepository;
 import ua.com.flowershop.service.FlowerTypeService;
 
 import java.util.List;
 
-import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
@@ -28,7 +25,7 @@ public class FlowerTypeController {
 
     @GetMapping
     public ResponseEntity<List<FlowerTypeProjection>> getAll() {
-        List<FlowerTypeProjection> flowerTypes = flowerTypeRepository.findByOrderByName();
+        List<FlowerTypeProjection> flowerTypes = flowerTypeRepository.findProjectedByOrderByName();
         return new ResponseEntity<>(flowerTypes, OK);
     }
 
@@ -44,7 +41,7 @@ public class FlowerTypeController {
 
     @GetMapping("/searchByName/{name}")
     public ResponseEntity<List<FlowerTypeProjection>> searchByName(@PathVariable String name) {
-        return new ResponseEntity<>(flowerTypeRepository.findByNameStartingWith(name), OK);
+        return new ResponseEntity<>(flowerTypeRepository.findProjectedByNameStartingWith(name), OK);
     }
 
 }

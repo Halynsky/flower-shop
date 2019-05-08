@@ -1,0 +1,12 @@
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+  margin-bottom: 16px;
+  h1 {
+    font-size: 24px;
+    margin: 0;
+    font-weight: 500;
+  }
+}

@@ -11,9 +11,9 @@ import java.util.Optional;
 @Repository
 public interface FlowerTypeRepository extends JpaRepository<FlowerType, Long> {
 
-    Optional<FlowerTypeProjection> findByName(String name);
-    List<FlowerTypeProjection> findByNameStartingWith(String name);
-    List<FlowerTypeProjection> findByOrderByName();
+    Optional<FlowerTypeProjection> findProjectedByName(String name);
+    List<FlowerTypeProjection> findProjectedByNameStartingWith(String name);
+    List<FlowerTypeProjection> findProjectedByOrderByName();
     Optional<FlowerTypeProjection> findProjectedById(Long id);
     List<FlowerTypeProjection> findProjectedBy();
 

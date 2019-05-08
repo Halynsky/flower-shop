@@ -8,8 +8,12 @@ import { ButtonModule, ConfirmDialogModule, MenuModule, PanelMenuModule, TieredM
 import { AdminSidebarComponent } from './admin-layout/admin-sidebar/admin-sidebar.component';
 import { UsersComponent } from './users/users.component';
 import { AdminHeaderComponent } from './admin-layout/admin-header/admin-header.component';
-import { WarehouseComponent } from './warehouse/warehouse.component';
+import { WarehouseComponent } from './shop/warehouse/warehouse.component';
 import { AdminAccordionComponent } from "./admin-layout/admin-sidebar/accordeon/admin-accordion.component";
+import { BlogComponent } from './blog/blog.component';
+import { OrdersComponent } from './shop/orders/orders.component';
+import { FlowerTypesComponent } from './types/flower-types/flower-types.component';
+import { TableModule } from "primeng/table";
 
 @NgModule({
   declarations: [
@@ -19,7 +23,10 @@ import { AdminAccordionComponent } from "./admin-layout/admin-sidebar/accordeon/
     AdminAccordionComponent,
     UsersComponent,
     AdminHeaderComponent,
-    WarehouseComponent
+    WarehouseComponent,
+    BlogComponent,
+    OrdersComponent,
+    FlowerTypesComponent
   ],
   imports: [
     routing,
@@ -30,7 +37,8 @@ import { AdminAccordionComponent } from "./admin-layout/admin-sidebar/accordeon/
     MenuModule,
     PanelMenuModule,
     ButtonModule,
-    TieredMenuModule
+    TieredMenuModule,
+    TableModule
   ]
 })
 export class AdminModule { }

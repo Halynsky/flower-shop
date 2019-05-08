@@ -7,6 +7,7 @@
       text-align: center!important;
       .menu-item-icon {
         margin: 0!important;
+        //margin-left: 16px;
       }
     }
   }
@@ -25,6 +26,15 @@
     width: 20px;
     text-align: center;
   }
+
+  +.sub {
+    .label {
+      span.menu-item-icon {
+        margin-left: 16px;
+      }
+    }
+  }
+
   &.active {
     color: #e67700;
     background-color: rgba(#000, .04);

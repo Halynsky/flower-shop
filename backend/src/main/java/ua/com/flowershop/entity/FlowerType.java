@@ -26,6 +26,7 @@ public class FlowerType {
     @OneToMany(mappedBy = "flowerType", fetch = FetchType.LAZY)
     private List<Flower> flowers;
 
+    @ManyToMany
     @JoinTable(name="flower_type_sizes",
             joinColumns=@JoinColumn(name="flower_type_id", referencedColumnName="id"),
             inverseJoinColumns=@JoinColumn(name="size_id", referencedColumnName="id"))

@@ -12,8 +12,10 @@ import java.util.Optional;
 @Repository
 public interface FlowerRepository extends JpaRepository<Flower, Long> {
 
-    List<IdNameTuple> findByFlowerTypeIdOrderByName(Long flowerTypeId);
-    List<FlowerProjection> findByOrderByName();
+    List<IdNameTuple> findProjectedByFlowerTypeIdOrderByName(Long flowerTypeId);
+    List<FlowerProjection> findProjectedByOrderByName();
     List<FlowerProjection> findProjectedBy();
     Optional<FlowerProjection> findProjectedById(Long id);
+    Integer countByFlowerTypeId(Long id);
+
 }
