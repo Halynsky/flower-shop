@@ -1,10 +1,11 @@
 <div class="node" [ngClass]="{'inactive': !checkbox?.checked && level == 1 && filterTreeService.hasFilters()}">
-  <mat-icon [ngClass]="{'hidden': !hasChildren}" (click)="toggleExpand($event)">
+  <mat-icon [ngClass]="{'hidden': !filterTreeService.expandable || !hasChildren}" (click)="toggleExpand($event)">
     {{expanded ? 'expand_more' : 'chevron_right'}}
   </mat-icon>
   <mat-checkbox *ngIf="showCheckbox" #checkbox (change)="onCheckboxChange($event)"></mat-checkbox>
   <span class="name" (click)="toggleExpand($event)" [ngClass]="{'clickable': hasChildren}">{{node.name}}</span>
-  <span class="child-count" *ngIf="node && node[filterTreeService.childrenArrayName]">&nbsp;( {{node[filterTreeService.childrenArrayName].length}} ) </span>
+  <span class="child-count" *ngIf="node && node[filterTreeService.childrenArrayName] && !filterTreeService.childrenCountParamName">&nbsp;( {{node[filterTreeService.childrenArrayName].length}} ) </span>
+  <span class="child-count" *ngIf="node[filterTreeService.childrenCountParamName] > 0">&nbsp;( {{node[filterTreeService.childrenCountParamName]}} ) </span>
 </div>
 
 <div class="node-children" *ngIf="expanded" [style.marginLeft.px]="42 * level" [ngClass]="{'inactive': !checkbox?.checked && level == 1 && filterTreeService.hasFilters()}">

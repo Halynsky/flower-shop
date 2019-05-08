@@ -4,6 +4,8 @@ import { EventEmitter, Injectable } from "@angular/core";
 export class FilterTreeService {
 
   childrenArrayName = 'children';
+  childrenCountParamName = 'childrenCount';
+  expandable: boolean = true;
   filters = {};
 
   onFilterClear: EventEmitter<any> = new EventEmitter();
@@ -39,7 +41,7 @@ export class FilterTreeService {
   }
 
   hasChildrenFn: Function = node => {
-    return node[this.childrenArrayName] && node.node[this.childrenArrayName].length > 0
+    return node[this.childrenCountParamName] > 0 || (node[this.childrenArrayName] && node.node[this.childrenArrayName].length > 0)
   };
 
   showCheckbox: Function = (node, level) => {

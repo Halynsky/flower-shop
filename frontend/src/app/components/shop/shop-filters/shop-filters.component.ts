@@ -25,8 +25,4 @@ export class ShopFiltersComponent implements OnInit {
   ngOnInit() {
   }
 
-  hasChildrenFn = node => {
-    return node.flowers && node.flowers.length > 0;
-  }
-
 }

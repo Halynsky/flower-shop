@@ -6,7 +6,7 @@
               (click)="flowerTypeFilter.clearTreeFilter()" title="Очистити фільтр">close</mat-icon>
   </div>
 
-  <filter-tree [root]="catalogRoot" childrenArrayName="flowers" [hasChildrenFn]="hasChildrenFn" #flowerTypeFilterEl></filter-tree>
+  <filter-tree [root]="catalogRoot" childrenCountParamName="flowersCount" [expandable]="false" #flowerTypeFilterEl></filter-tree>
 
 </div>
 
