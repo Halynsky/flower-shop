@@ -12,26 +12,28 @@ INSERT INTO articles (title, content, created, image) VALUES ('Як полива
 INSERT INTO flower_types (name) VALUES ('Лілії');
 INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Sorbonne', 'Сорбонне');
 INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Saltarello', 'Сальтарелло');
-INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Red Twinkle', 'Ред Твінкл');
 
 INSERT INTO flower_types (name) VALUES ('Гіацинти');
 INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Indigo King', 'Індіго Кінг');
 INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Jellow Hammer', 'Йеллоу Хаммер');
 INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'King of the Blues', 'Кінг оф зе Блюз');
+INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Honeymoon', 'Ханімун');
 
 INSERT INTO flower_types (name) VALUES ('Тюльпани');
 INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Monte Carlo', 'Монте Карло');
 INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'White Prince', 'Вайт Прінс');
 INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Big Chief', 'Біг Чіф');
+INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Oxford', 'Оксфорд');
+INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Long Ledi', 'Лонг Леді');
 
 INSERT INTO flower_types (name) VALUES ('Гладіолуси');
 INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Bastia', 'Бастія');
 INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Windsong', 'Віндсонг');
 INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Prince Claus', 'Прінс Клаус');
 
-INSERT INTO sizes (name) VALUES ('8/10');
-INSERT INTO sizes (name) VALUES ('11/13');
-INSERT INTO sizes (name) VALUES ('14/16');
+INSERT INTO sizes (name,min, max) VALUES ('8/10','2','10');
+INSERT INTO sizes (name,min, max) VALUES ('11/13','1','13');
+INSERT INTO sizes (name,min, max) VALUES ('14/16','1','5');
 
 INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES ('1', '2');
 INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES ('1', '1');
