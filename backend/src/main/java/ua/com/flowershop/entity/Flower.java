@@ -26,7 +26,7 @@ public class Flower {
     private String name;
     // Asiatic Lilium, Oriental Lilium etc
     private String groupName;
-    @Column(columnDefinition = "varchar(500)")
+    @Column(columnDefinition = "varchar(1000)")
     private String description;
     private Integer flowerSizeMin;
     private Integer flowerSizeMax;
@@ -37,4 +37,11 @@ public class Flower {
     @JoinColumn(name="flower_type_id",  foreignKey = @ForeignKey(name = "flower_flower_type_fkey"), nullable = false)
     private FlowerType flowerType;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="color_id",  foreignKey = @ForeignKey(name = "flower_color_fkey"), nullable = false)
+    private Color color;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="color_secondary_id",  foreignKey = @ForeignKey(name = "flower_secondary_color_fkey"))
+    private Color colorSecondary;
 }

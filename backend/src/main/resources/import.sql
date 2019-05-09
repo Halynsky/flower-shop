@@ -1,3 +1,12 @@
+INSERT INTO sizes (min, max, name) VALUES (8, 10, '8/10');
+INSERT INTO sizes (min, max, name) VALUES (11, 13, '11/13');
+INSERT INTO sizes (min, max, name) VALUES (14, 16, '14/16');
+
+INSERT INTO colors (name, hex) VALUES ('Червоний', '#ff0000');
+INSERT INTO colors (name, hex) VALUES ('Фіолетовий', '#551a8b');
+INSERT INTO colors (name, hex) VALUES ('Жовтий', '#ffff00');
+INSERT INTO colors (name, hex) VALUES ('Білий', '#ffffff');
+
 INSERT INTO articles (title, content, created, image) VALUES ('Як росте тюльпан', 'Виростає тюльпан від 10 см до метра заввишки. Коренева система складається з додаткових коренів, що ростуть із денця цибулини і щороку відмирають.', '2019-04-23T15:09:42.0', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVtDJ0IIKtm0CnQtSOXKCFW-Otl9i0XNoZpTFqOl5mHw2L50qp');
 INSERT INTO articles (title, content, created, image) VALUES ('Догляд за квітами', 'Універсальна температура свіжої води для квітів: + 18°С. Але влітку “зрадіють” більш прохолодній: +8 + 10°С. Є рослини, яким потрібна тепла вода, так як при охолодженні виділяється молочний сік застигає і закупорює судини.', '2019-04-21T16:10:22.0', 'https://www.flowers.ie/images/flower-care2.jpg');
 INSERT INTO articles (title, content, created, image) VALUES ('Національна квітка України', 'Коли розквітають соняшники, їх яскраві гарячі пелюстки виграють золотом, милуючи людське око. До Європи “квітка сонця”, як називають цю рослину мексиканці, потрапила на початку 17-го століття і вважалася суто декоративною.', '2019-04-20T22:29:30.0', 'https://www.theflowerexpert.com/media/images/flowerbusiness/flowergrowersandsellers/nationalnativepopularflowersofukraine/Helianthus_annuus_flowers.jpg');
@@ -10,36 +19,33 @@ INSERT INTO articles (title, content, created, image) VALUES ('Запиленн�
 INSERT INTO articles (title, content, created, image) VALUES ('Як поливати квіти', 'Полив квітів – це обов''язкова частина догляду за ними. І, як іноді здається, найпростіша частина. Ну що тут складного: набрав води – полив квіти. Але так можуть думати тільки початківці квітникарі або ті, хто до рослин абсолютно байдужий.', '2019-04-28T13:20:35.3', 'https://wtop.com/wp-content/uploads/2015/05/garden_hose_thinkstock-727x485.jpg');
 
 INSERT INTO flower_types (name) VALUES ('Лілії');
-INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Sorbonne', 'Сорбонне');
-INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Saltarello', 'Сальтарелло');
+INSERT INTO flowers (flower_type_id, name_original, name, color_id) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Sorbonne', 'Сорбонне', 1);
+INSERT INTO flowers (flower_type_id, name_original, name, color_id) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Saltarello', 'Сальтарелло', 2);
 
 INSERT INTO flower_types (name) VALUES ('Гіацинти');
-INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Indigo King', 'Індіго Кінг');
-INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Jellow Hammer', 'Йеллоу Хаммер');
-INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'King of the Blues', 'Кінг оф зе Блюз');
-INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Honeymoon', 'Ханімун');
+INSERT INTO flowers (flower_type_id, name_original, name, color_id) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Indigo King', 'Індіго Кінг', 1);
+INSERT INTO flowers (flower_type_id, name_original, name, color_id) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Jellow Hammer', 'Йеллоу Хаммер', 2);
+INSERT INTO flowers (flower_type_id, name_original, name, color_id) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'King of the Blues', 'Кінг оф зе Блюз', 3);
+INSERT INTO flowers (flower_type_id, name_original, name, color_id) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Honeymoon', 'Ханімун', 4);
 
 INSERT INTO flower_types (name) VALUES ('Тюльпани');
-INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Monte Carlo', 'Монте Карло');
-INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'White Prince', 'Вайт Прінс');
-INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Big Chief', 'Біг Чіф');
-INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Oxford', 'Оксфорд');
-INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Long Ledi', 'Лонг Леді');
+INSERT INTO flowers (flower_type_id, name_original, name, color_id) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Monte Carlo', 'Монте Карло', 1);
+INSERT INTO flowers (flower_type_id, name_original, name, color_id) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'White Prince', 'Вайт Прінс', 2);
+INSERT INTO flowers (flower_type_id, name_original, name, color_id) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Big Chief', 'Біг Чіф', 3);
+INSERT INTO flowers (flower_type_id, name_original, name, color_id) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Oxford', 'Оксфорд', 4);
+INSERT INTO flowers (flower_type_id, name_original, name, color_id) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Long Ledi', 'Лонг Леді', 3);
 
 INSERT INTO flower_types (name) VALUES ('Гладіолуси');
-INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Bastia', 'Бастія');
-INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Windsong', 'Віндсонг');
-INSERT INTO flowers (flower_type_id, name_original, name) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Prince Claus', 'Прінс Клаус');
+INSERT INTO flowers (flower_type_id, name_original, name, color_id) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Bastia', 'Бастія', 1);
+INSERT INTO flowers (flower_type_id, name_original, name, color_id) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Windsong', 'Віндсонг', 2);
+INSERT INTO flowers (flower_type_id, name_original, name, color_id) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Prince Claus', 'Прінс Клаус', 3);
 
-INSERT INTO sizes (name, min, max) VALUES ('8/10', '8', '10');
-INSERT INTO sizes (name, min, max) VALUES ('11/13', '11', '13');
-INSERT INTO sizes (name, min, max) VALUES ('14/16', '14', '16');
+INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES (1, 2);
+INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES (1, 1);
+INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES (2, 3);
+INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES (3, 1);
+INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES (3, 2);
+INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES (3, 3);
+INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES (4, 2);
+INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES (4, 1);
 
-INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES ('1', '2');
-INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES ('1', '1');
-INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES ('2', '3');
-INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES ('3', '1');
-INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES ('3', '2');
-INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES ('3', '3');
-INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES ('4', '2');
-INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES ('4', '1');

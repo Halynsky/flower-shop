@@ -34,8 +34,4 @@ export class FlowerTypesComponent implements OnInit {
     )
   }
 
-  refresh() {
-    this.loadData()
-  }
-
 }

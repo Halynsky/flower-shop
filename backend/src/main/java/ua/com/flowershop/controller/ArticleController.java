@@ -8,12 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ua.com.flowershop.entity.Article;
 import ua.com.flowershop.projection.ArticleProjection;
 import ua.com.flowershop.service.ArticleService;
 import ua.com.flowershop.util.annotation.PageableSwagger;
-
-import java.util.List;
 
 import static org.springframework.http.HttpStatus.OK;
 
