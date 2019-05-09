@@ -14,7 +14,7 @@
     <a routerLink="/contacts" mat-button routerLinkActive="active-link">Контакти</a>
   </div>
 
-  <div class="login-button-wrapper">
+  <div class="login-button-wrapper" *ngIf="!securityService.isAuthenticated()">
 
     <button mat-button [matMenuTriggerFor]="authMenu" class="login-button">
       <i class="material-icons md-18">exit_to_app</i>
@@ -24,18 +24,16 @@
     <button mat-button [matMenuTriggerFor]="authMenu" class="mobile-login-button">
       <mat-icon aria-label="Login">account_circle</mat-icon>
     </button>
-
   </div>
 
 </div>
 
-
 <mat-menu #authMenu="matMenu" class="auth-menu">
-  <button class="facebook-auth">
+  <button class="facebook-auth" (click)="securityService.login()">
     <i class="fab fa-facebook-f"></i>
     <span>Facebook</span>
   </button>
-  <button class="google-auth">
+  <button class="google-auth" (click)="securityService.login()">
     <i class="fab fa-google"></i>
     <span>Google</span>
   </button>
@@ -43,9 +41,9 @@
 
 
 <mat-menu #mainNavigationMenu="matMenu" class="main-navigation-menu">
-    <a routerLink="/" mat-button routerLinkActive="active-link">Головна</a>
-    <a routerLink="/forum" mat-button routerLinkActive="active-link">Блог</a>
-    <a routerLink="/shop" mat-button routerLinkActive="active-link">Магазин</a>
-    <a routerLink="/contacts" mat-button routerLinkActive="active-link">Контакти</a>
+  <a routerLink="/" mat-button routerLinkActive="active-link">Головна</a>
+  <a routerLink="/forum" mat-button routerLinkActive="active-link">Блог</a>
+  <a routerLink="/shop" mat-button routerLinkActive="active-link">Магазин</a>
+  <a routerLink="/contacts" mat-button routerLinkActive="active-link">Контакти</a>
 </mat-menu>
 

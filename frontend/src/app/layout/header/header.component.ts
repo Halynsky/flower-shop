@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { SecurityService } from "../../services/security.service";
 
 @Component({
   selector: 'layout-header',
@@ -8,9 +9,10 @@ import { Component } from '@angular/core';
 
 export class HeaderComponent {
 
-  constructor() {
+  constructor(public securityService: SecurityService) {
 
   }
+
 
 
 }
