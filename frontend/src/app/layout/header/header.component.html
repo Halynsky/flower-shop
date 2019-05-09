@@ -24,11 +24,9 @@
     <button mat-button [matMenuTriggerFor]="authMenu" class="mobile-login-button">
       <mat-icon aria-label="Login">account_circle</mat-icon>
     </button>
-
   </div>
 
 </div>
-
 
 <mat-menu #authMenu="matMenu" class="auth-menu">
   <button class="facebook-auth" (click)="login()">
@@ -43,9 +41,9 @@
 
 
 <mat-menu #mainNavigationMenu="matMenu" class="main-navigation-menu">
-    <a routerLink="/" mat-button routerLinkActive="active-link">Головна</a>
-    <a routerLink="/forum" mat-button routerLinkActive="active-link">Блог</a>
-    <a routerLink="/shop" mat-button routerLinkActive="active-link">Магазин</a>
-    <a routerLink="/contacts" mat-button routerLinkActive="active-link">Контакти</a>
+  <a routerLink="/" mat-button routerLinkActive="active-link">Головна</a>
+  <a routerLink="/forum" mat-button routerLinkActive="active-link">Блог</a>
+  <a routerLink="/shop" mat-button routerLinkActive="active-link">Магазин</a>
+  <a routerLink="/contacts" mat-button routerLinkActive="active-link">Контакти</a>
 </mat-menu>
 

@@ -3,14 +3,18 @@ import { Injectable } from "@angular/core";
 @Injectable({providedIn: 'root'})
 export class SecurityService {
 
-  private isLogined: boolean = false;
+  public isLoggedIn: boolean = false;
 
   isAuthenticated() {
-    return this.isLogined = true;
+    return this.isLoggedIn = true;
   }
 
   login() {
     return this.isAuthenticated();
+  }
+
+  logout() {
+    return this.isLoggedIn = false;
   }
 
   // hasRole(role: Role){

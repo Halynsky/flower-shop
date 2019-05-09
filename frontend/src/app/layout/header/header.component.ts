@@ -9,15 +9,19 @@ import { SecurityService } from "../../services/security.service";
 
 export class HeaderComponent {
 
-  private isLogined: boolean = false;
+  private isLoggedIn: boolean = false;
 
   constructor(public securityService: SecurityService) {
 
   }
 
   login() {
-    this.isLogined = this.securityService.login();
-    console.log(this.isLogined);
+    this.isLoggedIn = this.securityService.login();
+  }
+
+  logout() {
+    this.isLoggedIn = this.securityService.logout();
+
   }
 
 }
