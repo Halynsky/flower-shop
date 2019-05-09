@@ -14,7 +14,7 @@
     <a routerLink="/contacts" mat-button routerLinkActive="active-link">Контакти</a>
   </div>
 
-  <div class="login-button-wrapper">
+  <div class="login-button-wrapper" *ngIf="!securityService.isAuthenticated()">
 
     <button mat-button [matMenuTriggerFor]="authMenu" class="login-button">
       <i class="material-icons md-18">exit_to_app</i>
@@ -29,11 +29,11 @@
 </div>
 
 <mat-menu #authMenu="matMenu" class="auth-menu">
-  <button class="facebook-auth" (click)="login()">
+  <button class="facebook-auth" (click)="securityService.login()">
     <i class="fab fa-facebook-f"></i>
     <span>Facebook</span>
   </button>
-  <button class="google-auth" (click)="login()">
+  <button class="google-auth" (click)="securityService.login()">
     <i class="fab fa-google"></i>
     <span>Google</span>
   </button>
