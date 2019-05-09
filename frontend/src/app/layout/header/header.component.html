@@ -31,11 +31,11 @@
 
 
 <mat-menu #authMenu="matMenu" class="auth-menu">
-  <button class="facebook-auth">
+  <button class="facebook-auth" (click)="login()">
     <i class="fab fa-facebook-f"></i>
     <span>Facebook</span>
   </button>
-  <button class="google-auth">
+  <button class="google-auth" (click)="login()">
     <i class="fab fa-google"></i>
     <span>Google</span>
   </button>
