@@ -1,4 +1,4 @@
-@import '../../../mixins';
+@import 'mixins';
 
 
 :host {
@@ -16,6 +16,12 @@
 }
 
 .content {
-  padding: 0px 16px;
+  padding: 16px;
   background-color: white;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 2em;
+  margin-bottom: 2em;
+
 }

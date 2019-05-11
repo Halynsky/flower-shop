@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ua.com.flowershop.projection.FlowerFullProjection;
 import ua.com.flowershop.projection.FlowerProjection;
+import ua.com.flowershop.repository.FlowerRepository;
 import ua.com.flowershop.service.FlowerService;
 
 import java.util.List;
@@ -19,6 +21,8 @@ public class FlowerController {
 
     @Autowired
     private FlowerService flowerService;
+    @Autowired
+    private FlowerRepository flowerRepository;
 
     @GetMapping
     public ResponseEntity<List<FlowerProjection>> getAll() {
@@ -29,4 +33,10 @@ public class FlowerController {
     public ResponseEntity<FlowerProjection> getById(@PathVariable Long id) {
         return new ResponseEntity<>(flowerService.getFlowerById(id), OK);
     }
+
+    @GetMapping("/shop")
+    public ResponseEntity<List<FlowerFullProjection>> getForShop() {
+        return new ResponseEntity<>(flowerRepository.findProjectedByFilters(), OK);
+    }
+
 }

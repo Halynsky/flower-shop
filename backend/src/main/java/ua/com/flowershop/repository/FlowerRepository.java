@@ -1,8 +1,10 @@
 package ua.com.flowershop.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ua.com.flowershop.entity.Flower;
+import ua.com.flowershop.projection.FlowerFullProjection;
 import ua.com.flowershop.projection.FlowerProjection;
 import ua.com.flowershop.projection.IdNameTuple;
 
@@ -13,9 +15,17 @@ import java.util.Optional;
 public interface FlowerRepository extends JpaRepository<Flower, Long> {
 
     List<IdNameTuple> findProjectedByFlowerTypeIdOrderByName(Long flowerTypeId);
+
     List<FlowerProjection> findProjectedByOrderByName();
+
     List<FlowerProjection> findProjectedBy();
+
     Optional<FlowerProjection> findProjectedById(Long id);
+
     Integer countByFlowerTypeId(Long id);
+
+    @Query("SELECT f FROM Flower f " +
+            "INNER JOIN FETCH f.flowerType ft")
+    List<FlowerFullProjection> findProjectedByFilters();
 
 }

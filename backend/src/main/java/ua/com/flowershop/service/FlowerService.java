@@ -23,4 +23,5 @@ public class FlowerService {
     public FlowerProjection getFlowerById(Long id) {
         return flowerRepository.findProjectedById(id).orElseThrow(NotFoundException::new);
     }
+
 }

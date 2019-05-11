@@ -4,11 +4,13 @@ import { ShopComponent } from "./shop.component";
 import { SHOP_ROUTES } from "./shop.routing";
 import { ShopFiltersComponent } from './shop-filters/shop-filters.component';
 import { MatTreeModule } from "@angular/material";
+import { ShopContentItemComponent } from './shop-content-item/shop-content-item.component';
 
 @NgModule({
   declarations: [
     ShopComponent,
-    ShopFiltersComponent
+    ShopFiltersComponent,
+    ShopContentItemComponent
   ],
   imports: [
     SHOP_ROUTES,

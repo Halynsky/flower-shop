@@ -15,4 +15,8 @@ export class FlowerService {
     return this.http.get<Flower>(`api/flowers/${id}`);
   }
 
+  getForShop() {
+    return this.http.get<Flower[]>(`api/flowers/shop`);
+  }
+
 }

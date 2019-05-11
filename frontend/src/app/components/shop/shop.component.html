@@ -2,4 +2,11 @@
   <shop-filters></shop-filters>
 </div>
 
-<div class="content"></div>
+<div class="content">
+
+  <ng-template ngFor let-flower [ngForOf]="flowers" [ngForTrackBy]="trackByFn">
+    <shop-content-item [flower]="flower" [routerLink]="['item', flower.id]"></shop-content-item>
+  </ng-template>
+
+
+</div>
