@@ -1,6 +1,7 @@
 export class Flower {
   id: number;
   name: string;
+  image: string;
   nameOriginal: string;
   groupName: string;
   description: string;

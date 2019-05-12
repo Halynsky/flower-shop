@@ -25,6 +25,7 @@ public class Flower {
     private String nameOriginal;
     @Column(unique = true)
     private String name;
+    private String image;
     // Asiatic Lilium, Oriental Lilium etc
     private String groupName;
     @Column(columnDefinition = "varchar(1000)")
