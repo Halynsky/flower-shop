@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -44,4 +45,7 @@ public class Flower {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="color_secondary_id",  foreignKey = @ForeignKey(name = "flower_secondary_color_fkey"))
     private Color colorSecondary;
+
+    @OneToMany(mappedBy = "flower")
+    Set<FlowerSize> flowerSizes;
 }

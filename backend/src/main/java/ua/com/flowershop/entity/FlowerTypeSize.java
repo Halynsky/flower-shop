@@ -7,7 +7,6 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -15,21 +14,19 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity()
-@Table(name = "sizes")
-public class Size {
+@Table(name = "flower_type_sizes")
+public class FlowerTypeSize {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true)
-    private String name;
-    private Integer min;
-    private Integer max;
 
-    @OneToMany(mappedBy = "size")
-    Set<FlowerTypeSize> flowerTypeSizes;
+    @ManyToOne
+    @JoinColumn(name = "flower_type_id")
+    FlowerType flowerType;
 
-    @OneToMany(mappedBy = "size")
-    Set<FlowerSize> flowerSizes;
+    @ManyToOne
+    @JoinColumn(name = "size_id")
+    Size size;
 
 }

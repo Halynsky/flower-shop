@@ -6,6 +6,6 @@ import java.util.Set;
 
 public interface FlowerTypeWithSizesProjection extends IdNameTuple {
 
-    @Value("#{@sizeRepository.findProjectedByFlowerTypesId(target.id)}")
+    @Value("#{@sizeRepository.findProjectedByFlowerTypeSizesSizeId(target.id)}")
     Set<IdNameTuple> getSizes();
 }
