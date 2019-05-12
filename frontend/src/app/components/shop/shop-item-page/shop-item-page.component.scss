@@ -1,0 +1,78 @@
+@import "theme";
+@import "mixins.scss";
+
+:host {
+  display: flex;
+  justify-self: center;
+  align-self: center;
+  flex-direction: column;
+
+  .title {
+    margin: 24px 0px 24px 0px;
+    color: mat-color($accent);
+    font-size: 2em;
+  }
+
+  .main {
+    display: flex;
+    width: 1300px;
+    height: 100%;
+    flex-grow: 1;
+    .content{
+      @include mat-elevation(2);
+      padding: 12px;
+      margin: 0px 24px 0px 0px;
+      width: 1000px;
+
+      .content-head {
+        display: flex;
+
+        .flower-logo {
+          margin: 0px 12px 0px 0px;
+          height: 350px;
+
+          img {
+            width: 350px;
+            height: 350px;
+          }
+
+        }
+        .flower-info {
+          padding: 12px;
+          color: $grey-700;
+          height: 350px;
+          width: 606px;
+
+          span {
+            color: mat-color($accent);
+            font-size: 1.5em;
+          }
+
+        }
+      }
+
+      .content-description {
+        display: flex;
+        flex-direction: column;
+        margin: 24px 0px 0px 0px;
+
+        .description-head {
+          color: mat-color($accent);
+          font-size: 1.5em;
+          margin-bottom: 12px;
+        }
+        .description-info {
+          color: $grey-700;
+        }
+
+      }
+
+    }
+
+    .sidebar {
+      @include mat-elevation(2);
+      width: 300px;
+    }
+  }
+
+}

@@ -5,12 +5,14 @@ import { SHOP_ROUTES } from "./shop.routing";
 import { ShopFiltersComponent } from './shop-filters/shop-filters.component';
 import { MatTreeModule } from "@angular/material";
 import { ShopContentItemComponent } from './shop-content-item/shop-content-item.component';
+import { ShopItemPageComponent } from "./shop-item-page/shop-item-page.component";
 
 @NgModule({
   declarations: [
     ShopComponent,
     ShopFiltersComponent,
-    ShopContentItemComponent
+    ShopContentItemComponent,
+    ShopItemPageComponent
   ],
   imports: [
     SHOP_ROUTES,
