@@ -4,7 +4,7 @@ import { Role } from "../models/Role";
 @Injectable({providedIn: 'root'})
 export class SecurityService {
 
-  public isLoggedIn: boolean = false;
+  private isLoggedIn: boolean = false;
 
   isAuthenticated() {
     return this.isLoggedIn;

@@ -19,26 +19,26 @@ INSERT INTO articles (title, content, created, image) VALUES ('Запиленн�
 INSERT INTO articles (title, content, created, image) VALUES ('Як поливати квіти', 'Полив квітів – це обов''язкова частина догляду за ними. І, як іноді здається, найпростіша частина. Ну що тут складного: набрав води – полив квіти. Але так можуть думати тільки початківці квітникарі або ті, хто до рослин абсолютно байдужий.', '2019-04-28T13:20:35.3', 'https://wtop.com/wp-content/uploads/2015/05/garden_hose_thinkstock-727x485.jpg');
 
 INSERT INTO flower_types (name) VALUES ('Лілії');
-INSERT INTO flowers (flower_type_id, name_original, name, color_id) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Sorbonne', 'Сорбонне', 1);
-INSERT INTO flowers (flower_type_id, name_original, name, color_id) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Saltarello', 'Сальтарелло', 2);
+INSERT INTO flowers (flower_type_id, name_original, name, color_id, image) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Sorbonne', 'Сорбонне', 1, 'https://www.royalflowersgroup.com/wp-content/uploads/2016/09/Sorbonne-website-1_500x333.jpg');
+INSERT INTO flowers (flower_type_id, name_original, name, color_id, image) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Saltarello', 'Сальтарелло', 2, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1xXAMCSqBi-4_yFXcMYoy-ThUlmmKkdYqiVk96k0C0_F8hedj');
 
 INSERT INTO flower_types (name) VALUES ('Гіацинти');
-INSERT INTO flowers (flower_type_id, name_original, name, color_id) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Indigo King', 'Індіго Кінг', 1);
-INSERT INTO flowers (flower_type_id, name_original, name, color_id) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Jellow Hammer', 'Йеллоу Хаммер', 2);
-INSERT INTO flowers (flower_type_id, name_original, name, color_id) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'King of the Blues', 'Кінг оф зе Блюз', 3);
-INSERT INTO flowers (flower_type_id, name_original, name, color_id) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Honeymoon', 'Ханімун', 4);
+INSERT INTO flowers (flower_type_id, name_original, name, color_id, image) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Indigo King', 'Індіго Кінг', 1, 'http://semiramisgardens.ru/upload/iblock/304/30408b42e99653f538038e908f1bedc6.jpg');
+INSERT INTO flowers (flower_type_id, name_original, name, color_id, image) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Jellow Hammer', 'Йеллоу Хаммер', 2, 'https://images.immediate.co.uk/volatile/sites/10/2018/08/3260de61-a162-44a3-8ddd-9ff42d113b3b-9840bc3.jpg?quality=45&resize=960,640');
+INSERT INTO flowers (flower_type_id, name_original, name, color_id, image) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'King of the Blues', 'Кінг оф зе Блюз', 3, 'http://www.liliumaquae.com/wp-uploads/gallery/water-lilies-tropical/day-blooming/king-of-the-blues-002.jpg');
+INSERT INTO flowers (flower_type_id, name_original, name, color_id, image) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Honeymoon', 'Ханімун', 4, 'https://robertasgardens.net/pub/media/catalog/product/cache/image/800x1018/e9c3970ab036de70892d86c6d221abfe/h/a/hardy_honeymoon_dwarf_hibiscus_001.jpg');
 
 INSERT INTO flower_types (name) VALUES ('Тюльпани');
-INSERT INTO flowers (flower_type_id, name_original, name, color_id) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Monte Carlo', 'Монте Карло', 1);
-INSERT INTO flowers (flower_type_id, name_original, name, color_id) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'White Prince', 'Вайт Прінс', 2);
-INSERT INTO flowers (flower_type_id, name_original, name, color_id) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Big Chief', 'Біг Чіф', 3);
-INSERT INTO flowers (flower_type_id, name_original, name, color_id) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Oxford', 'Оксфорд', 4);
-INSERT INTO flowers (flower_type_id, name_original, name, color_id) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Long Ledi', 'Лонг Леді', 3);
+INSERT INTO flowers (flower_type_id, name_original, name, color_id, image) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Monte Carlo', 'Монте Карло', 1, 'http://www.butaflowers.ru/wp-content/uploads/2017/12/Monte-Carlo-%D0%9C%D0%BE%D0%BD%D1%82%D0%B5-%D0%9A%D0%B0%D1%80%D0%BB%D0%BE.jpg');
+INSERT INTO flowers (flower_type_id, name_original, name, color_id, image) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'White Prince', 'Вайт Прінс', 2, 'https://www.blomsbulbs.com/userfiles/productimages/mega-large/white%20prince0305201814581231052018194515.jpg');
+INSERT INTO flowers (flower_type_id, name_original, name, color_id, image) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Big Chief', 'Біг Чіф', 3, 'http://cdn.shopify.com/s/files/1/1308/3047/products/tulip-big-chief-2_grande.jpg?v=1475096883');
+INSERT INTO flowers (flower_type_id, name_original, name, color_id, image) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Oxford', 'Оксфорд', 4, 'https://www.johnnyseeds.com/dw/image/v2/BBBW_PRD/on/demandware.static/-/Sites-jss-master/default/dw7bbf78b2/images/products/flowers/3714_01_oxfordblue.jpg?sw=387&cx=302&cy=0&cw=1196&ch=1196');
+INSERT INTO flowers (flower_type_id, name_original, name, color_id, image) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Long Ledi', 'Лонг Леді', 3, 'https://daylily-phlox.eu/wp-content/uploads/2016/10/Phlox-%E2%80%98Ledi-Sovershenstvo%E2%80%99-1.jpg');
 
 INSERT INTO flower_types (name) VALUES ('Гладіолуси');
-INSERT INTO flowers (flower_type_id, name_original, name, color_id) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Bastia', 'Бастія', 1);
-INSERT INTO flowers (flower_type_id, name_original, name, color_id) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Windsong', 'Віндсонг', 2);
-INSERT INTO flowers (flower_type_id, name_original, name, color_id) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Prince Claus', 'Прінс Клаус', 3);
+INSERT INTO flowers (flower_type_id, name_original, name, color_id, image) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Bastia', 'Бастія', 1, 'https://www.hwhyde.co.uk/files/cache/bfdb0a65fc9a8748460a1735e75a27b5_f2129.jpg');
+INSERT INTO flowers (flower_type_id, name_original, name, color_id, image) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Windsong', 'Віндсонг', 2, 'http://windsongnursery.com/uploads/3/4/2/3/34232160/1752278_orig.jpg');
+INSERT INTO flowers (flower_type_id, name_original, name, color_id, image) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Prince Claus', 'Прінс Клаус', 3, 'http://cdn.shopify.com/s/files/1/1308/3047/products/crocus-prince-claus-1_grande.jpg?v=1475097686');
 
 INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES (1, 2);
 INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES (1, 1);
