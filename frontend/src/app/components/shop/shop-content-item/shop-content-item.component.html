@@ -1,6 +1,10 @@
-<img src="{{flower.image}}" alt="image">
+<div class="cover" [ngStyle]="flower.image && {'background-image':'url(' + flower.image  + ')'}"></div>
 
-<p>
-  {{flower.name}}
-</p>
+<div class="info">
+
+  <div class="flower-type-name">{{flower.flowerType.nameSingle}}</div>
+  <div class="name">{{flower.name}}</div>
+  <div class="price">від 10 грн</div>
+
+</div>
 

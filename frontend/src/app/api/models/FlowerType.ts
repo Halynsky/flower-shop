@@ -1,5 +1,6 @@
 export class FlowerType {
   id: number;
   name: string;
-  flowersCount: number
+  nameSingle: string;
+  flowersCount: number;
 }

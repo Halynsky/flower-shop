@@ -3,11 +3,45 @@
 @import "scss/colors";
 
 :host {
-  @include mat-elevation(2);
+  //@include mat-elevation(2);
   cursor: pointer;
   min-height: 200px;
-  img {
-    height: 100px;
-    width: 100px;
+  border-radius: 2px;
+
+  .cover {
+    width: 100%;
+    height: 200px;
+    background-position: center;
+    background-size: cover;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
   }
+
+  .info {
+    background: $grey-50;
+    text-align: center;
+    padding: 8px;
+    padding-bottom: 16px;
+
+    .flower-type-name {
+      color: $grey-400;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 200%;
+    }
+
+    .name {
+      //color: $grey-800;
+      color: mat-color($primary);
+      font-size: 20px;
+    }
+
+    .price {
+      //color: $black-100;
+      color: mat-color($accent, 400);
+      font-weight: 500;
+    }
+
+  }
+
 }

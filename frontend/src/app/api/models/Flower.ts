@@ -1,3 +1,6 @@
+import { FlowerType } from "./FlowerType";
+import { Color } from "colors";
+
 export class Flower {
   id: number;
   name: string;
@@ -9,4 +12,10 @@ export class Flower {
   flowerHeightMax: number;
   flowerSizeMin: number;
   flowerSizeMax: number;
+  flowerType: FlowerType;
+}
+
+export class FlowerFull extends Flower{
+  color: Color;
+  colorSecondary: Color;
 }
