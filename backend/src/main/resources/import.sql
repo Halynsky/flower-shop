@@ -40,12 +40,12 @@ INSERT INTO flowers (flower_type_id, name_original, name, color_id, image) VALUE
 INSERT INTO flowers (flower_type_id, name_original, name, color_id, image) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Windsong', 'Віндсонг', 2, 'http://windsongnursery.com/uploads/3/4/2/3/34232160/1752278_orig.jpg');
 INSERT INTO flowers (flower_type_id, name_original, name, color_id, image) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Prince Claus', 'Прінс Клаус', 3, 'http://cdn.shopify.com/s/files/1/1308/3047/products/crocus-prince-claus-1_grande.jpg?v=1475097686');
 
-INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES (1, 2);
 INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES (1, 1);
-INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES (2, 3);
+INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES (1, 2);
+INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES (2, 1);
 INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES (3, 1);
 INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES (3, 2);
 INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES (3, 3);
-INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES (4, 2);
 INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES (4, 1);
+INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES (4, 2);
 

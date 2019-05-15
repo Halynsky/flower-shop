@@ -1,4 +1,17 @@
-<div class="cover" [ngStyle]="flower.image && {'background-image':'url(' + flower.image  + ')'}"></div>
+<div class="cover" [ngStyle]="flower.image && {'background-image':'url(' + flower.image  + ')'}">
+
+  <div class="additional-buttons">
+    <button mat-mini-fab>
+      <mat-icon aria-label="Example icon-button with a heart icon">favorite_border</mat-icon>
+    </button>
+  </div>
+
+  <div class="add-to-card">
+    <mat-icon aria-label="Add to card">add_shopping_cart</mat-icon>
+    <span>Замовити</span>
+  </div>
+
+</div>
 
 <div class="info">
 
@@ -7,4 +20,5 @@
   <div class="price">від 10 грн</div>
 
 </div>
+
 

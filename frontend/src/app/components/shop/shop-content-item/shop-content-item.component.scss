@@ -1,12 +1,15 @@
 @import '~@angular/material/theming';
 @import "theme";
-@import "scss/colors";
+@import "mixins";
+
 
 :host {
   //@include mat-elevation(2);
   cursor: pointer;
   min-height: 200px;
   border-radius: 2px;
+  display: grid;
+  grid-template-rows: 200px auto;
 
   .cover {
     width: 100%;
@@ -15,13 +18,75 @@
     background-size: cover;
     border-top-left-radius: 2px;
     border-top-right-radius: 2px;
+    position: relative;
+    overflow: hidden;
+
+    .add-to-card {
+      height: 50px;
+      position: absolute;
+      color: white;
+      background: rgba(#000000,.45);
+      width: 100%;
+      font-size: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      bottom: -50px;
+      transition: bottom .3s, background .25s;
+      text-transform: uppercase;
+
+      .mat-icon {
+        margin-right: 8px;
+      }
+
+      &:hover {
+        background: rgba(#000000, .65);
+        transition: bottom .3s, background .25s;
+      }
+
+    }
+
+    .additional-buttons {
+      top: 16px;
+      left: 16px;
+      position: absolute;
+      display: flex;
+      visibility: hidden;
+      align-items: center;
+      width: 100%;
+      opacity: 0;
+      transition: opacity .3s, visibility .3s;
+
+      .mat-mini-fab {
+        background-color: white;
+        .mat-icon {
+          color: $black-100;
+        }
+      }
+
+    }
+
+  }
+
+  &:hover {
+    .cover {
+      .add-to-card {
+        bottom: 0px;
+        transition: bottom .3s, background .25s;
+      }
+      .additional-buttons {
+        //display: flex;
+        visibility: visible;
+        opacity: 1;
+        transition: opacity .3s;
+      }
+    }
   }
 
   .info {
     background: $grey-50;
     text-align: center;
-    padding: 8px;
-    padding-bottom: 16px;
+    padding: 8px 8px 16px;
 
     .flower-type-name {
       color: $grey-400;
@@ -40,8 +105,11 @@
       //color: $black-100;
       color: mat-color($accent, 400);
       font-weight: 500;
+      margin-top: 4px;
     }
 
   }
+
+
 
 }

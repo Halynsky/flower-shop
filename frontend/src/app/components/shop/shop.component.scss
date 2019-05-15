@@ -5,14 +5,20 @@
   display: grid;
   grid-template-columns: 300px auto;
   width: 100%;
-  font-size: 16px;
+  //font-size: 16px;
   padding-top: 2em;
   //background-color: $grey-50;
+  @include response-to(sm) {
+    grid-template-columns: auto
+  }
 }
 
 .sidebar {
   padding: 16px 16px;
   //border-right: solid 1px $grey-100;
+  @include response-to(sm) {
+    display: none;
+  }
 }
 
 .content-wrapper {
@@ -22,9 +28,26 @@
   .content {
     //max-width: 1000px;
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-gap: 2em;
-    margin-bottom: 2em;
+    grid-gap: 24px;
+    margin-bottom: 24px;
+
+    @include response-to(xs) {
+      grid-template-columns: auto
+    }
+
+    @include response-from(sm) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include response-from(md) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @include response-from(lg) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+
   }
 
 }
