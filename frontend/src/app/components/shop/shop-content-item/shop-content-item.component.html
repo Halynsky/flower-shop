@@ -1,6 +1,24 @@
-<img src="{{flower.image}}" alt="image">
+<div class="cover" [ngStyle]="flower.image && {'background-image':'url(' + flower.image  + ')'}">
 
-<p>
-  {{flower.name}}
-</p>
+  <div class="additional-buttons">
+    <button mat-icon-button (click)="addToFavorite($event)">
+      <mat-icon aria-label="Add to favorite">favorite_border</mat-icon>
+    </button>
+  </div>
+
+  <div class="add-to-card" (click)="addToCard($event)">
+    <mat-icon aria-label="Add to card">add_shopping_cart</mat-icon>
+    <span>Замовити</span>
+  </div>
+
+</div>
+
+<div class="info">
+
+  <div class="flower-type-name">{{flower.flowerType.nameSingle}}</div>
+  <div class="name">{{flower.name}}</div>
+  <div class="price">від 10 грн</div>
+
+</div>
+
 

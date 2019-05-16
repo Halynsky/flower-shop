@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FlowerService } from "../../api/services/flower.service";
 import { Flower } from "../../api/models/Flower";
 import { SnackBarService } from "../../services/snak-bar.service";
+import { ShopFilter } from "../../api/models/ShopFilter";
 
 @Component({
   selector: 'shop',
@@ -20,8 +21,8 @@ export class ShopComponent implements OnInit {
   ngOnInit() {
   }
 
-  getShopItems() {
-    this.flowerService.getForShop().subscribe(
+  getShopItems(filters?) {
+    this.flowerService.getForShop(filters).subscribe(
       flowers => this.flowers = flowers,
       error => this.snackBarService.showError(error)
       )
@@ -29,6 +30,11 @@ export class ShopComponent implements OnInit {
 
   trackByFn(index, item) {
     return item.id
+  }
+
+  onFilterChange($event) {
+    console.log($event);
+    this.getShopItems($event)
   }
 
 }

@@ -11,4 +11,5 @@ public interface FlowerProjection {
     Integer getFlowerHeightMax();
     Integer getFlowerSizeMin();
     Integer getFlowerSizeMax();
+    FlowerTypeTinyProjection getFlowerType();
 }

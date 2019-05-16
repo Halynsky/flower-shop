@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Flower } from "../../../api/models/Flower";
+import { SnackBarService } from "../../../services/snak-bar.service";
 
 @Component({
   selector: 'shop-content-item',
@@ -11,9 +12,19 @@ export class ShopContentItemComponent implements OnInit {
   @Input()
   public flower: Flower;
 
-  constructor() { }
+  constructor(private snackBar: SnackBarService) { }
 
   ngOnInit() {
+  }
+
+  addToFavorite(event) {
+    this.snackBar.methodNotImplemented();
+    event.stopPropagation();
+  }
+
+  addToCard(event) {
+    event.stopPropagation();
+    this.snackBar.methodNotImplemented();
   }
 
 }

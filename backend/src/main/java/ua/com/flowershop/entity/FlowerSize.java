@@ -22,6 +22,7 @@ public class FlowerSize {
     private Long id;
     private Integer reserved;
     private Integer amount;
+    private Integer price;
 
     @ManyToOne
     @JoinColumn(name = "flower_id")

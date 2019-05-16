@@ -2,14 +2,12 @@ package ua.com.flowershop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ua.com.flowershop.projection.FlowerFullProjection;
 import ua.com.flowershop.projection.FlowerProjection;
 import ua.com.flowershop.repository.FlowerRepository;
 import ua.com.flowershop.service.FlowerService;
+import ua.com.flowershop.util.HibernateUtil;
 
 import java.util.List;
 
@@ -35,8 +33,14 @@ public class FlowerController {
     }
 
     @GetMapping("/shop")
-    public ResponseEntity<List<FlowerFullProjection>> getForShop() {
-        return new ResponseEntity<>(flowerRepository.findProjectedByFilters(), OK);
+    public ResponseEntity<List<FlowerFullProjection>> getForShop(
+            @RequestParam(required = false) List<Long> flowerTypeFilters,
+            @RequestParam(required = false) List<Long> sizeFilters,
+            @RequestParam(required = false) List<Long> colorFilters) {
+        flowerTypeFilters = HibernateUtil.fixEmptyFilter(flowerTypeFilters);
+        sizeFilters = HibernateUtil.fixEmptyFilter(sizeFilters);
+        colorFilters = HibernateUtil.fixEmptyFilter(colorFilters);
+        return new ResponseEntity<>(flowerRepository.findProjectedByFilters(flowerTypeFilters, colorFilters), OK);
     }
 
 }

@@ -22,6 +22,8 @@ public class FlowerType {
     private Long id;
     @Column(unique = true)
     private String name;
+    @Column(unique = true)
+    private String nameSingle;
 
     @OneToMany(mappedBy = "flowerType", fetch = FetchType.LAZY)
     private List<Flower> flowers;

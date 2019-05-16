@@ -9,7 +9,7 @@ import { FORUM_ROUTES } from "./forum.routing";
   ],
   imports: [
     FORUM_ROUTES,
-    SharedModule
+    SharedModule.forRoot()
   ],
   bootstrap: [
     ForumComponent

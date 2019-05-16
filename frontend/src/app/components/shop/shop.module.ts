@@ -16,7 +16,7 @@ import { ShopItemPageComponent } from "./shop-item-page/shop-item-page.component
   ],
   imports: [
     SHOP_ROUTES,
-    SharedModule,
+    SharedModule.forRoot(),
     MatTreeModule
   ],
   bootstrap: [
