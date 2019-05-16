@@ -40,7 +40,7 @@ public class FlowerController {
         flowerTypeFilters = HibernateUtil.fixEmptyFilter(flowerTypeFilters);
         sizeFilters = HibernateUtil.fixEmptyFilter(sizeFilters);
         colorFilters = HibernateUtil.fixEmptyFilter(colorFilters);
-        return new ResponseEntity<>(flowerRepository.findProjectedByFilters(flowerTypeFilters, colorFilters), OK);
+        return new ResponseEntity<>(flowerRepository.findProjectedByFilters(flowerTypeFilters, colorFilters, sizeFilters), OK);
     }
 
 }

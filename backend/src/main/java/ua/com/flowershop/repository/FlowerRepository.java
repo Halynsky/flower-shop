@@ -28,8 +28,10 @@ public interface FlowerRepository extends JpaRepository<Flower, Long> {
     @Query("SELECT f FROM Flower f " +
             "INNER JOIN FETCH f.flowerType ft " +
             "INNER JOIN f.color c " +
+            "INNER JOIN f.flowerSizes fs " +
             "WHERE (COALESCE(:flowerTypeFilters, NULL) IS NULL OR ft.id IN :flowerTypeFilters) " +
-            "AND (COALESCE(:colorFilters, NULL) IS NULL OR c.id IN :colorFilters)")
-    List<FlowerFullProjection> findProjectedByFilters(List<Long> flowerTypeFilters, List<Long> colorFilters);
+            "AND (COALESCE(:colorFilters, NULL) IS NULL OR c.id IN :colorFilters) " +
+            "AND (COALESCE(:sizeFilters, NULL) IS NULL OR fs.size.id IN :sizeFilters)")
+    List<FlowerFullProjection> findProjectedByFilters(List<Long> flowerTypeFilters, List<Long> colorFilters, List<Long> sizeFilters);
 
 }

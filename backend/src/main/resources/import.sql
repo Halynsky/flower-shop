@@ -63,4 +63,3 @@ INSERT INTO flower_sizes (flower_id, size_id, amount, price) VALUES (10, 1, 44, 
 INSERT INTO flower_sizes (flower_id, size_id, amount, price) VALUES (11, 3, 65, 19000);
 INSERT INTO flower_sizes (flower_id, size_id, amount, price) VALUES (12, 2, 0, 15000);
 INSERT INTO flower_sizes (flower_id, size_id, amount, price) VALUES (13, 1, 80, 11000);
-INSERT INTO flower_sizes (flower_id, size_id, amount, price) VALUES (14, 1, 3, 12000);
