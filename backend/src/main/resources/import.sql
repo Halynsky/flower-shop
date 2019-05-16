@@ -49,3 +49,17 @@ INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES (3, 3);
 INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES (4, 1);
 INSERT INTO flower_type_sizes (flower_type_id, size_id) VALUES (4, 2);
 
+INSERT INTO flower_sizes (flower_id, size_id, amount, price) VALUES (1, 2, 31, 14000);
+INSERT INTO flower_sizes (flower_id, size_id, amount, price) VALUES (2, 1, 81, 10000);
+INSERT INTO flower_sizes (flower_id, size_id, amount, price) VALUES (3, 1, 10, 10000);
+INSERT INTO flower_sizes (flower_id, size_id, amount, price) VALUES (4, 1, 42, 11000);
+INSERT INTO flower_sizes (flower_id, size_id, amount, price) VALUES (5, 1, 38, 10000);
+INSERT INTO flower_sizes (flower_id, size_id, amount, price) VALUES (6, 1, 0, 10000);
+INSERT INTO flower_sizes (flower_id, size_id, amount, price) VALUES (7, 3, 8, 18000);
+INSERT INTO flower_sizes (flower_id, size_id, amount, price) VALUES (8, 2, 1, 14000);
+INSERT INTO flower_sizes (flower_id, size_id, amount, price) VALUES (9, 2, 90, 15000);
+INSERT INTO flower_sizes (flower_id, size_id, amount, price) VALUES (10, 1, 44, 10000);
+INSERT INTO flower_sizes (flower_id, size_id, amount, price) VALUES (11, 3, 65, 19000);
+INSERT INTO flower_sizes (flower_id, size_id, amount, price) VALUES (12, 2, 0, 15000);
+INSERT INTO flower_sizes (flower_id, size_id, amount, price) VALUES (13, 1, 80, 11000);
+INSERT INTO flower_sizes (flower_id, size_id, amount, price) VALUES (14, 1, 3, 12000);
