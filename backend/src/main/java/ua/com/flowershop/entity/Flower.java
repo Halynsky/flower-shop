@@ -7,6 +7,9 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Getter
@@ -34,6 +37,16 @@ public class Flower {
     private Integer flowerSizeMax;
     private Integer flowerHeightMin;
     private Integer flowerHeightMax;
+
+    private Boolean isNew = true;
+    private Boolean hasDiscount;
+    private Boolean isPopular;
+    @Min(1)
+    @Max(2)
+    private Integer popularity = 1;
+
+    private LocalDateTime created = LocalDateTime.now();
+    private LocalDateTime lastSupply;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="flower_type_id",  foreignKey = @ForeignKey(name = "flower_flower_type_fkey"), nullable = false)

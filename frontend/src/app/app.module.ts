@@ -34,8 +34,7 @@ registerLocaleData(localeRuUa);
   ],
   providers: [
     MatIconRegistry,
-    { provide: LOCALE_ID, useValue: "uk" },
-    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 3000, panelClass: "snack-custom-class"} }
+    { provide: LOCALE_ID, useValue: "uk" }
   ],
   bootstrap: [AppComponent]
 })

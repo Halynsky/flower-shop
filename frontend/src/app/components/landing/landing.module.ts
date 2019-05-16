@@ -7,7 +7,7 @@ import { SharedModule } from "../shared/shared/shared.module";
     LandingComponent
   ],
   imports: [
-    SharedModule,
+    SharedModule.forRoot()
   ],
   bootstrap: [
     LandingComponent

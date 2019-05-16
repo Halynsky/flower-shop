@@ -1,8 +1,9 @@
-import { NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import {
+  MAT_SNACK_BAR_DEFAULT_OPTIONS,
   MatButtonModule,
   MatCheckboxModule,
   MatFormFieldModule,
@@ -14,6 +15,9 @@ import {
 import { ArticleCardComponent } from './article-card/article-card.component';
 import { RouterModule } from "@angular/router";
 
+const PROVIDERS = [
+  { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 3000, panelClass: "snack-custom-class"} }
+];
 
 @NgModule({
   declarations: [
@@ -48,6 +52,18 @@ import { RouterModule } from "@angular/router";
     MatInputModule,
     // Developed components
     ArticleCardComponent
+  ],
+  providers: [
+    ...PROVIDERS
   ]
 })
-export class SharedModule { }
+export class SharedModule {
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: SharedModule,
+      providers: [ ...PROVIDERS ]
+    };
+  }
+}
+
+

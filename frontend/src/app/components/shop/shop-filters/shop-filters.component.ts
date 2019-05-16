@@ -1,4 +1,4 @@
-import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { FlowerTypeService } from "../../../api/services/flower-type.service";
 import { SnackBarService } from "../../../services/snak-bar.service";
 import { SizeService } from "../../../api/services/size.service";
@@ -7,6 +7,7 @@ import { ColorService } from "../../../api/services/color.service";
 import { FlowerType } from "../../../api/models/FlowerType";
 import { Size } from "../../../api/models/Size";
 import { Color } from "../../../api/models/Color";
+import { ShopFilter } from "../../../api/models/ShopFilter";
 
 @Component({
   selector: 'shop-filters',
@@ -15,13 +16,14 @@ import { Color } from "../../../api/models/Color";
 })
 export class ShopFiltersComponent implements OnInit {
 
+  @Output()
+  onFilterChange: EventEmitter<any> = new EventEmitter();
+
   flowerTypes: FlowerType[] = [];
   sizes: Size[] = [];
   colors: Color[] = [];
 
-  flowerTypeFilters = [];
-  sizeFilters = [];
-  colorFilters = [];
+  filters = new ShopFilter();
 
   @ViewChildren('flowerTypeCheckbox') flowerTypeCheckboxes: QueryList<MatCheckbox>;
   @ViewChildren('sizeCheckbox') sizeCheckboxes: QueryList<MatCheckbox>;
@@ -54,50 +56,60 @@ export class ShopFiltersComponent implements OnInit {
 
   onFlowerTypeFilterChange(event: MatCheckboxChange) {
     if (event.checked) {
-      this.flowerTypeFilters.push(event.source.value)
+      this.filters.flowerTypeFilters.push(event.source.value)
     } else {
-      let index = this.flowerTypeFilters.indexOf(event.source.value);
+      let index = this.filters.flowerTypeFilters.indexOf(event.source.value);
       if (index > -1) {
-        this.flowerTypeFilters.splice(index, 1);
+        this.filters.flowerTypeFilters.splice(index, 1);
       }
     }
+    this.emitFilterChange()
   }
 
   onColorFilterChange(event: MatCheckboxChange) {
     if (event.checked) {
-      this.colorFilters.push(event.source.value)
+      this.filters.colorFilters.push(event.source.value)
     } else {
-      let index = this.colorFilters.indexOf(event.source.value);
+      let index = this.filters.colorFilters.indexOf(event.source.value);
       if (index > -1) {
-        this.colorFilters.splice(index, 1);
+        this.filters.colorFilters.splice(index, 1);
       }
     }
+    this.emitFilterChange()
   }
 
   onSizeFilterChange(event: MatCheckboxChange) {
     if (event.checked) {
-      this.sizeFilters.push(event.source.value)
+      this.filters.sizeFilters.push(event.source.value)
     } else {
-      let index = this.sizeFilters.indexOf(event.source.value);
+      let index = this.filters.sizeFilters.indexOf(event.source.value);
       if (index > -1) {
-        this.sizeFilters.splice(index, 1);
+        this.filters.sizeFilters.splice(index, 1);
       }
     }
+    this.emitFilterChange()
   }
 
   clearFlowerTypeFilters() {
-    this.flowerTypeFilters = [];
+    this.filters.flowerTypeFilters = [];
     this.flowerTypeCheckboxes.forEach(checkbox => checkbox.writeValue(false));
+    this.emitFilterChange()
   }
 
   clearColorFilters() {
-    this.colorFilters = [];
+    this.filters.colorFilters = [];
     this.colorCheckboxes.forEach(checkbox => checkbox.writeValue(false));
+    this.emitFilterChange()
   }
 
   clearSizeFilters() {
-    this.sizeFilters = [];
+    this.filters.sizeFilters = [];
     this.sizeCheckboxes.forEach(checkbox => checkbox.writeValue(false));
+    this.emitFilterChange()
+  }
+
+  emitFilterChange() {
+    this.onFilterChange.emit(this.filters)
   }
 
   trackByFn(index, item) {

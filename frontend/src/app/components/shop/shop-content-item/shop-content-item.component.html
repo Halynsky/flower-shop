@@ -1,12 +1,12 @@
 <div class="cover" [ngStyle]="flower.image && {'background-image':'url(' + flower.image  + ')'}">
 
   <div class="additional-buttons">
-    <button mat-mini-fab>
-      <mat-icon aria-label="Example icon-button with a heart icon">favorite_border</mat-icon>
+    <button mat-icon-button (click)="addToFavorite($event)">
+      <mat-icon aria-label="Add to favorite">favorite_border</mat-icon>
     </button>
   </div>
 
-  <div class="add-to-card">
+  <div class="add-to-card" (click)="addToCard($event)">
     <mat-icon aria-label="Add to card">add_shopping_cart</mat-icon>
     <span>Замовити</span>
   </div>
