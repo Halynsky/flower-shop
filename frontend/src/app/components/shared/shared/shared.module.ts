@@ -4,7 +4,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import {
   MAT_SNACK_BAR_DEFAULT_OPTIONS,
-  MatButtonModule,
+  MatButtonModule, MatButtonToggleModule,
   MatCheckboxModule,
   MatFormFieldModule,
   MatIconModule,
@@ -35,7 +35,8 @@ const PROVIDERS = [
     MatSnackBarModule,
     MatCheckboxModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatButtonToggleModule
   ],
   exports: [
     RouterModule,
@@ -50,6 +51,7 @@ const PROVIDERS = [
     MatCheckboxModule,
     MatFormFieldModule,
     MatInputModule,
+    MatButtonToggleModule,
     // Developed components
     ArticleCardComponent
   ],

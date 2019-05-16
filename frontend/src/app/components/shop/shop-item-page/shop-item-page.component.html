@@ -1,5 +1,6 @@
 <div class="title">
   {{flower.name}} || {{flower.nameOriginal}}
+  <span>{{flower.flowerType}}</span>
 </div>
 <div class="main">
 
@@ -13,10 +14,26 @@
 
       <div class="flower-info">
         <span>ХАРАКТЕРИСТИКИ</span>
-        <p>Максимальна висота: {{flower.flowerHeightMax}}</p>
-        <p>Мінімальна висота:{{flower.flowerHeightMin}}</p>
-        <p>Максимальний розмір: {{flower.flowerSizeMax}}</p>
-        <p>Мінімальна розмір: {{flower.flowerSizeMin}}</p>
+        <p>Висота: {{flower.flowerHeightMin}} — {{flower.flowerHeightMax}}</p>
+        <p>Розмір: {{flower.flowerSizeMin}} — {{flower.flowerSizeMax}}</p>
+      </div>
+
+      <div class="buy-menu">
+        <div class="sizes-chooser">
+          <mat-button-toggle-group name="sizes" aria-label="Sizes" appearance="legacy">
+            <mat-button-toggle value="size1" checked="checked">Size 1</mat-button-toggle>
+            <mat-button-toggle value="size2">Size 2</mat-button-toggle>
+            <mat-button-toggle value="size3">Size 3</mat-button-toggle>
+          </mat-button-toggle-group>
+          <p>Ціна за штуку, вибраного розміру</p>
+        </div>
+        <div class="amount-counter">
+          <button mat-raised-button onclick="this.counterDecrement()">-</button>
+          <button mat-raised-button onclick="this.counterIncrement()">+</button>
+        </div>
+        <div class="buy-button">
+
+        </div>
       </div>
 
     </div>
@@ -28,20 +45,11 @@
       </div>
 
       <div class="description-info">
-        Опис  — композиційна форма, яку не використовують літературознавці і лінгвісти, щоб проаналізувати текст.
-
-        Цю композиційну форму розрізняють на опис предметів, опис процесів, опис пережитого або опис життя й характеристику.
-
-        Комплексний предмет утворює абстрактний змістовий тип, який використовується для опису предметів. Для цієї композиційної форми типове зображення просторових відношень, в якому також відображається просторове співвідношення елементів предмету. Саме ці елемети надають тексту наочності, яке реалізується через вживання засобів простору — прислівники місця або просторове позначення, дані напрямків, відстані та форми, а також відповідного спрямування прикметників. У описі також збігається час спостреження із часом опису.
-
-        Предмет може зображуватись у минулому часі з використанням усіх лінгвістичних засобів, які типові минулості. Дуже часто предмети у цій композиційній формі описують як спогади.      </div>
+        {{flower.description}}
+      </div>
 
     </div>
 
-  </div>
-
-  <div class="sidebar">
-    SIDEBAR
   </div>
 
 </div>

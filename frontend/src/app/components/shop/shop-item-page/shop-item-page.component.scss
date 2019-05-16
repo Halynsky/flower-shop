@@ -8,21 +8,28 @@
   flex-direction: column;
 
   .title {
-    margin: 24px 0px 24px 0px;
+    display: flex;
+    flex-direction: column;
+    margin: 36px 0px 12px 0px;
     color: mat-color($accent);
     font-size: 2em;
+
+    span {
+      margin-top: 12px;
+      font-size: 15px;
+      color: $grey-900;
+    }
   }
 
   .main {
     display: flex;
-    width: 1300px;
+    width: 1200px;
     height: 100%;
     flex-grow: 1;
     .content{
       @include mat-elevation(2);
       padding: 12px;
-      margin: 0px 24px 0px 0px;
-      width: 1000px;
+      width: 1200px;
 
       .content-head {
         display: flex;
@@ -38,14 +45,41 @@
 
         }
         .flower-info {
-          padding: 12px;
-          color: $grey-700;
+          color: $grey-900;
           height: 350px;
-          width: 606px;
+          width: 550px;
 
           span {
             color: mat-color($accent);
             font-size: 1.5em;
+          }
+
+        }
+        .buy-menu {
+          color: $grey-900;
+          height: 350px;
+          width: 300px;
+          .sizes-chooser {
+            display: flex;
+            flex-direction: column;
+            height: 100px;
+            align-items: center;
+            mat-button-toggle-group {
+              font-weight: bold;
+            }
+
+          }
+          .amount-counter {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 150px;
+            button {
+              font-weight: bold;
+            }
+          }
+          .buy-button {
+            height: 100px;
           }
 
         }
@@ -62,17 +96,13 @@
           margin-bottom: 12px;
         }
         .description-info {
-          color: $grey-700;
+          color: $grey-900;
         }
 
       }
 
     }
 
-    .sidebar {
-      @include mat-elevation(2);
-      width: 300px;
-    }
   }
 
 }
