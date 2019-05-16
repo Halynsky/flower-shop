@@ -15,6 +15,14 @@ export class Flower {
   flowerType: FlowerType;
 }
 
+export class FlowerShort {
+  id: number;
+  name: string;
+  image: string;
+  flowerType: FlowerType;
+  priceMin: number;
+}
+
 export class FlowerFull extends Flower{
   color: Color;
   colorSecondary: Color;
