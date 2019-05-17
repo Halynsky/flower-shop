@@ -3,6 +3,7 @@ package ua.com.flowershop.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ua.com.flowershop.projection.FlowerFullProjection;
 import ua.com.flowershop.projection.FlowerProjection;
 import ua.com.flowershop.projection.FlowerShortProjection;
 import ua.com.flowershop.repository.FlowerRepository;
@@ -41,6 +42,11 @@ public class FlowerController {
         sizeFilters = HibernateUtil.fixEmptyFilter(sizeFilters);
         colorFilters = HibernateUtil.fixEmptyFilter(colorFilters);
         return new ResponseEntity<>(flowerRepository.findProjectedByFilters(flowerTypeFilters, colorFilters, sizeFilters), OK);
+    }
+
+    @GetMapping("/{id}/full")
+    public ResponseEntity<FlowerFullProjection> getFlowerFullById(@PathVariable Long id) {
+        return new ResponseEntity<>(flowerService.getFlowerFullById(id), OK);
     }
 
 }

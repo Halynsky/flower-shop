@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { Flower, FlowerShort } from "../models/Flower";
+import { Flower, FlowerFull, FlowerShort } from "../models/Flower";
 import { arrayToHttpParam, copy } from "../../utils/Functions";
 
 @Injectable({providedIn: 'root'})
@@ -25,4 +25,7 @@ export class FlowerService {
     return this.http.get<FlowerShort[]>(`api/flowers/shop`, {params});
   }
 
+  getFlowerFullById(id: number) {
+    return this.http.get<FlowerFull>(`api/flowers/${id}/full`);
+  }
 }

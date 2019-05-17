@@ -13,9 +13,17 @@
     margin: 36px 0px 12px 0px;
     color: mat-color($accent);
     font-size: 2em;
-
-    span {
-      margin-top: 12px;
+    div {
+      display: flex;
+      align-items: center;
+      span{
+        margin: 5px 0px 0px 10px;
+        font-size: 15px;
+        color: $grey-900;
+      }
+    }
+    #flower-type {
+      margin: 12px 0px 0px 5px;
       font-size: 15px;
       color: $grey-900;
     }
@@ -23,13 +31,13 @@
 
   .main {
     display: flex;
-    width: 1200px;
+    width: 1100px;
     height: 100%;
     flex-grow: 1;
     .content{
       @include mat-elevation(2);
       padding: 12px;
-      width: 1200px;
+      width: 1100px;
 
       .content-head {
         display: flex;
@@ -64,6 +72,7 @@
             flex-direction: column;
             height: 100px;
             align-items: center;
+            justify-content: space-between;
             mat-button-toggle-group {
               font-weight: bold;
             }
@@ -71,15 +80,43 @@
           }
           .amount-counter {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: space-around;
             height: 150px;
+            font-size: 2em;
             button {
               font-weight: bold;
             }
+            #counter-output {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              height: 36px;
+              width: 36px;
+            }
+            .count-buttons {
+              margin-top: 24px;
+              display: flex;
+              flex-direction: row;
+            }
+            .summary-to-pay {
+              margin-top: 48px;
+            }
           }
           .buy-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             height: 100px;
+            justify-content: flex-end;
+            button {
+              background-color: mat-color($accent);
+              color: white;
+              height: 50px;
+              font-size: 2em;
+              font-weight: bold;
+            }
           }
 
         }
