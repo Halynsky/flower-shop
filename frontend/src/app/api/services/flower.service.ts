@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { Flower } from "../models/Flower";
+import { Flower, FlowerShort } from "../models/Flower";
 import { arrayToHttpParam, copy } from "../../utils/Functions";
 
 @Injectable({providedIn: 'root'})
@@ -22,7 +22,7 @@ export class FlowerService {
       filters[key] =  arrayToHttpParam(filters[key])
     }
     const params = new HttpParams({fromObject: filters as any});
-    return this.http.get<Flower[]>(`api/flowers/shop`, {params});
+    return this.http.get<FlowerShort[]>(`api/flowers/shop`, {params});
   }
 
 }

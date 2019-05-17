@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Flower } from "../../../api/models/Flower";
+import { Flower, FlowerShort } from "../../../api/models/Flower";
 import { SnackBarService } from "../../../services/snak-bar.service";
 
 @Component({
@@ -10,7 +10,7 @@ import { SnackBarService } from "../../../services/snak-bar.service";
 export class ShopContentItemComponent implements OnInit {
 
   @Input()
-  public flower: Flower;
+  public flower: FlowerShort;
 
   constructor(private snackBar: SnackBarService) { }
 

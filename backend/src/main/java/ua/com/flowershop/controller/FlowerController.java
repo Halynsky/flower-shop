@@ -3,8 +3,8 @@ package ua.com.flowershop.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ua.com.flowershop.projection.FlowerFullProjection;
 import ua.com.flowershop.projection.FlowerProjection;
+import ua.com.flowershop.projection.FlowerShortProjection;
 import ua.com.flowershop.repository.FlowerRepository;
 import ua.com.flowershop.service.FlowerService;
 import ua.com.flowershop.util.HibernateUtil;
@@ -33,14 +33,14 @@ public class FlowerController {
     }
 
     @GetMapping("/shop")
-    public ResponseEntity<List<FlowerFullProjection>> getForShop(
+    public ResponseEntity<List<FlowerShortProjection>> getForShop(
             @RequestParam(required = false) List<Long> flowerTypeFilters,
             @RequestParam(required = false) List<Long> sizeFilters,
             @RequestParam(required = false) List<Long> colorFilters) {
         flowerTypeFilters = HibernateUtil.fixEmptyFilter(flowerTypeFilters);
         sizeFilters = HibernateUtil.fixEmptyFilter(sizeFilters);
         colorFilters = HibernateUtil.fixEmptyFilter(colorFilters);
-        return new ResponseEntity<>(flowerRepository.findProjectedByFilters(flowerTypeFilters, colorFilters), OK);
+        return new ResponseEntity<>(flowerRepository.findProjectedByFilters(flowerTypeFilters, colorFilters, sizeFilters), OK);
     }
 
 }

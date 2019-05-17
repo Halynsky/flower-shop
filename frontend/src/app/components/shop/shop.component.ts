@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FlowerService } from "../../api/services/flower.service";
-import { Flower } from "../../api/models/Flower";
+import { Flower, FlowerShort } from "../../api/models/Flower";
 import { SnackBarService } from "../../services/snak-bar.service";
-import { ShopFilter } from "../../api/models/ShopFilter";
 
 @Component({
   selector: 'shop',
@@ -11,7 +10,7 @@ import { ShopFilter } from "../../api/models/ShopFilter";
 })
 export class ShopComponent implements OnInit {
 
-  flowers: Flower[] = [];
+  flowers: FlowerShort[] = [];
 
   constructor(private flowerService: FlowerService,
               private snackBarService: SnackBarService) {
