@@ -1,3 +1,5 @@
+@import '~@angular/material/theming';
+@import "theme";
 @import 'mixins';
 
 
@@ -22,8 +24,46 @@
 }
 
 .content-wrapper {
-  padding: 16px 24px;
+  padding: 0px 24px 16px;
+  margin-top: -8px;
   background-color: white;
+
+  .content-top-bar {
+    display: flex;
+    justify-content: space-between;
+
+    ::ng-deep mat-form-field {
+      .mat-form-field-wrapper {
+        width: 200px;
+        color: $black-100;
+        .mat-form-field-suffix {
+          top: 6px;
+            .close-icon {
+              cursor: pointer;
+              display: none;
+            }
+        }
+
+      }
+
+      &.mat-form-field-should-float {
+        .mat-form-field-wrapper {
+          .mat-form-field-suffix {
+            .close-icon {
+              display: block;
+            }
+            .search-icon {
+              display: none;
+            }
+          }
+
+        }
+
+      }
+
+    }
+
+  }
 
   .content {
     //max-width: 1000px;
