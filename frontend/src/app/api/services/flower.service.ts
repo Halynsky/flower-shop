@@ -16,23 +16,25 @@ export class FlowerService {
   }
 
   getAll() {
-    return this.http.get<Flower[]>(`${API_URL}`);
+    return this.http.get<Flower[]>(`${this.URL}`);
   }
 
   getById(id: number) {
-    return this.http.get<Flower>(`${API_URL}/${id}`);
+    return this.http.get<Flower>(`${this.URL}/${id}`);
   }
 
   getForShop(filtersObject) {
     let filters = copy(filtersObject);
     for (let key in filters) {
-      filters[key] =  arrayToHttpParam(filters[key])
+      filters[key] = arrayToHttpParam(filters[key])
     }
+    console.log(filters);
     const params = new HttpParams({fromObject: filters as any});
-    return this.http.get<FlowerShort[]>(`${API_URL}/shop`, {params});
+    console.log(params);
+    return this.http.get<FlowerShort[]>(`${this.URL}/shop`, {params});
   }
 
   getFlowerFullById(id: number) {
-    return this.http.get<FlowerFull>(`api/flowers/${id}/full`);
+    return this.http.get<FlowerFull>(`${this.URL}/${id}/full`);
   }
 }
