@@ -1,0 +1,66 @@
+<div class="panel-header item ui-grid-col-4" >
+  <button pButton icon="fa fa-arrow-left" class="button-back" label="Назад" routerLink="../"></button>
+  <h1>Додати <b>Розмір цибулини</b></h1>
+</div>
+
+<div class="panel-content">
+
+  <form #form class="item-form">
+
+    <div class="ui-grid ui-grid-responsive ui-fluid">
+
+      <div class="prime-form-group">
+        <div class="ui-grid-col-2"><label for="min">Мінімальний розмір</label></div>
+        <div class="ui-grid-col-2"><input
+          pInputText
+          #min="ngModel"
+          id="min"
+          name="min"
+          type="number"
+          [(ngModel)]="item.min"/></div>
+        <div class="ui-grid-col-2">
+        </div>
+      </div>
+
+      <div class="prime-form-group">
+        <div class="ui-grid-col-2"><label for="max">Максимальний розмір</label></div>
+        <div class="ui-grid-col-2"><input
+          pInputText
+          #max="ngModel"
+          id="max"
+          name="max"
+          type="number"
+          required
+          [(ngModel)]="item.max"/></div>
+        <div class="ui-grid-col-2">
+          <ng-container *ngIf="max.dirty || max.touched || form.submitted">
+            <p-message *ngIf="max.errors?.required" severity="error" text="Обовязково вказати значення"></p-message>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="prime-form-group">
+        <div class="ui-grid-col-2"><label for="max">Назва</label></div>
+        <div class="ui-grid-col-2"><input
+          pInputText
+          #name="ngModel"
+          id="name"
+          name="name"
+          type="number"
+          disabled
+          [(ngModel)]="item.name"/></div>
+        <div class="ui-grid-col-2">
+        </div>
+      </div>
+
+    </div>
+
+    <div class="ui-grid-row ui-grid-field">
+      <div class="ui-grid-col-4 footer">
+        <button type="submit" pButton icon="pi pi-check" class="ui-button-success" label="Зберегти"></button>
+      </div>
+    </div>
+
+  </form>
+
+</div>

@@ -4,3 +4,9 @@ export class Size {
   min: number;
   max: number;
 }
+
+export class SizeAdmin {
+  id: number;
+  name: string;
+  flowersCount: number;
+}

@@ -1,5 +1,5 @@
 <div class="panel-header">
-  <h1>Типи квітів</h1>
+  <h1>Кольори</h1>
   <div class="buttons">
     <button pButton icon="pi pi-plus" class="ui-button-success" label="&nbsp;&nbsp;Додати"></button>
     <button pButton (click)="loadData()" icon="pi pi-refresh" label="&nbsp;&nbsp;Оновити"></button>
@@ -23,8 +23,16 @@
     </ng-template>
     <ng-template pTemplate="body" let-rowData let-columns="columns">
       <tr>
-        <td *ngFor="let col of columns">
-          {{rowData[col.field]}}
+        <td *ngFor="let col of columns" [ngSwitch]="col.field">
+
+          <div *ngSwitchCase="'example'">
+            <div [ngStyle]="{backgroundColor: rowData.hex, height: '24px', width: '100%'}"></div>
+          </div>
+
+          <div *ngSwitchDefault>
+            {{rowData[col.field]}}
+          </div>
+
         </td>
       </tr>
     </ng-template>

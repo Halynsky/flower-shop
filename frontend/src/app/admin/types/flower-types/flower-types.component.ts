@@ -1,25 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { FlowerTypeService } from "../../../api/services/flower-type.service";
-import { RestPage } from "../../../api/models/RestPage";
 import { FlowerType } from "../../../api/models/FlowerType";
 import { SnackBarService } from "../../../services/snak-bar.service";
+import { LabelValueTuple } from "../../../models/LabelValueTuple";
 
 @Component({
-  selector: 'app-flower-types',
+  selector: 'flower-types',
   templateUrl: './flower-types.component.html',
   styleUrls: ['./flower-types.component.scss']
 })
 export class FlowerTypesComponent implements OnInit {
 
   cols = [
-    { field: 'id', header: 'Id' },
-    { field: 'name', header: 'Імя' },
-    { field: 'flowersCount', header: 'Кількість Квітів' },
+    {field: 'id', header: 'Id'},
+    {field: 'name', header: 'Імя'},
+    {field: 'flowersCount', header: 'Кількість Квітів'},
   ];
 
-  flowerTypes: FlowerType[] = [];
+  items: FlowerType[] = [];
 
-  constructor(private flowerTypeService: FlowerTypeService,
+  constructor(private dataService: FlowerTypeService,
               private snackBarService: SnackBarService) {
     this.loadData()
   }
@@ -28,10 +28,14 @@ export class FlowerTypesComponent implements OnInit {
   }
 
   loadData() {
-    this.flowerTypeService.getAll().subscribe(
-      flowerTypes => this.flowerTypes = flowerTypes,
+    this.dataService.getAll().subscribe(
+      items => this.items = items,
       error => this.snackBarService.showError(error.error.message)
     )
   }
 
+  mapToName = item => new LabelValueTuple(item.name, item.name);
+
 }
+
+
