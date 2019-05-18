@@ -9,7 +9,7 @@ import {
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
-  MatMenuModule,
+  MatMenuModule, MatSelectModule,
   MatSnackBarModule
 } from "@angular/material";
 import { ArticleCardComponent } from './article-card/article-card.component';
@@ -36,7 +36,8 @@ const PROVIDERS = [
     MatCheckboxModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatSelectModule
   ],
   exports: [
     RouterModule,
@@ -52,6 +53,7 @@ const PROVIDERS = [
     MatFormFieldModule,
     MatInputModule,
     MatButtonToggleModule,
+    MatSelectModule,
     // Developed components
     ArticleCardComponent
   ],
