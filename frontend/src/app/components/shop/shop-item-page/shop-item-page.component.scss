@@ -70,20 +70,25 @@
           .sizes-chooser {
             display: flex;
             flex-direction: column;
-            height: 100px;
+            height: 125px;
             align-items: center;
             justify-content: space-between;
             mat-button-toggle-group {
               font-weight: bold;
             }
-
+            #size-flower {
+              margin-top: 6px;
+            }
+            #price {
+              margin-bottom: 6px;
+            }
           }
           .amount-counter {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: space-around;
-            height: 150px;
+            height: 125px;
             font-size: 2em;
             button {
               font-weight: bold;
