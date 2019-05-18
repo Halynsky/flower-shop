@@ -46,9 +46,24 @@ export class AdminSidebarComponent implements OnInit {
         icon: 'pi pi-sitemap',
         items: [
           {
+            label: 'Квіти',
+            icon: 'fas fa-table',
+            routerLink: 'types/flowers'
+          },
+          {
             label: 'Типи квітів',
             icon: 'fas fa-table',
             routerLink: 'types/flower-types'
+          },
+          {
+            label: 'Розміри цибулин',
+            icon: 'fas fa-table',
+            routerLink: 'types/sizes'
+          },
+          {
+            label: 'Кольори',
+            icon: 'fas fa-table',
+            routerLink: 'types/colors'
           }
         ]
       },

@@ -22,6 +22,11 @@ public class FlowerController {
     @Autowired
     private FlowerRepository flowerRepository;
 
+    @GetMapping("/forAdmin")
+    public ResponseEntity<List<FlowerProjection>> getAllForAdmin() {
+        return new ResponseEntity<>(flowerService.getAllFlowers(), OK);
+    }
+
     @GetMapping
     public ResponseEntity<List<FlowerProjection>> getAll() {
         return new ResponseEntity<>(flowerService.getAllFlowers(), OK);

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ua.com.flowershop.exception.NotFoundException;
+import ua.com.flowershop.projection.ColorAdminProjection;
 import ua.com.flowershop.projection.ColorProjection;
 import ua.com.flowershop.repository.ColorRepository;
 
@@ -21,6 +22,12 @@ public class ColorController {
     @Autowired
     private ColorRepository colorRepository;
 
+    @GetMapping("/forAdmin")
+    public ResponseEntity<List<ColorAdminProjection>> getAllForAdmin() {
+        List<ColorAdminProjection> colors = colorRepository.findAdminProjectedBy();
+        return new ResponseEntity<>(colors, OK);
+    }
+
     @GetMapping
     public ResponseEntity<List<ColorProjection>> getAll() {
         List<ColorProjection> colors = colorRepository.findProjectedBy();
@@ -32,5 +39,7 @@ public class ColorController {
         ColorProjection color = colorRepository.findProjectedById(id).orElseThrow(NotFoundException::new);
         return new ResponseEntity<>(color, OK);
     }
+
+
 
 }

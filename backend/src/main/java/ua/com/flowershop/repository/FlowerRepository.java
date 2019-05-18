@@ -22,7 +22,11 @@ public interface FlowerRepository extends JpaRepository<Flower, Long> {
 
     Optional<FlowerProjection> findProjectedById(Long id);
 
-    Integer countByFlowerTypeId(Long id);
+    Integer countByFlowerTypeId(Long flowerTypeId);
+
+    Integer countByColorIdOrColorSecondaryId(Long colorId, Long secondaryColorId);
+
+    Integer countByFlowerSizesSizeId(Long flowerSizeId);
 
 //    TODO: Add size filtering
     @Query("SELECT f FROM Flower f " +

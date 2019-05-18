@@ -10,6 +10,10 @@ export class ColorService {
 
   constructor(private  http: HttpClient) {}
 
+  getForAdmin() {
+    return this.http.get<Color[]>(`${this.URL}/forAdmin`);
+  }
+
   getAll() {
     return this.http.get<Color[]>(`${this.URL}`);
   }

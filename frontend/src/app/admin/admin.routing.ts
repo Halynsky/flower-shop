@@ -6,6 +6,10 @@ import { WarehouseComponent } from "./shop/warehouse/warehouse.component";
 import { BlogComponent } from "./blog/blog.component";
 import { OrdersComponent } from "./shop/orders/orders.component";
 import { FlowerTypesComponent } from "./types/flower-types/flower-types.component";
+import { SizesComponent } from "./types/sizes/sizes.component";
+import { ColorsComponent } from "./types/colors/colors.component";
+import { FlowersComponent } from "./types/flowers/flowers.component";
+import { SizeItemComponent } from "./types/sizes/size-item/size-item.component";
 
 
 const routes: Routes = [
@@ -17,6 +21,10 @@ const routes: Routes = [
       {path: 'shop/orders', component: OrdersComponent},
       {path: 'shop/warehouse', component: WarehouseComponent},
       {path: 'types/flower-types', component: FlowerTypesComponent},
+      {path: 'types/flowers', component: FlowersComponent},
+      {path: 'types/sizes', component: SizesComponent},
+      {path: 'types/sizes/item', component: SizeItemComponent},
+      {path: 'types/colors', component: ColorsComponent},
       {path: 'blog', component: BlogComponent}
     ]
   },
