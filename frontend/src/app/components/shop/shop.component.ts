@@ -36,8 +36,4 @@ export class ShopComponent implements OnInit {
     this.getShopItems($event)
   }
 
-  clearSearch() {
-
-  }
-
 }

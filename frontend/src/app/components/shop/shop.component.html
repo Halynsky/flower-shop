@@ -4,24 +4,6 @@
 
 <div class="content-wrapper">
 
-  <div class="content-top-bar">
-
-    <mat-form-field>
-      <input matInput placeholder="Пошук" #search>
-      <mat-icon matSuffix class="close-icon" (click)="search.value = ''">close</mat-icon>
-      <mat-icon matSuffix class="search-icon">search</mat-icon>
-    </mat-form-field>
-
-    <mat-form-field>
-      <mat-select value="popularity" >
-        <mat-option value="popularity">За популярністю</mat-option>
-        <mat-option value="price">За ціною</mat-option>
-        <mat-option value="supply">За новизною</mat-option>
-      </mat-select>
-    </mat-form-field>
-
-  </div>
-
   <div class="content">
     <ng-template ngFor let-flower [ngForOf]="flowers" [ngForTrackBy]="trackByFn">
       <shop-content-item [flower]="flower" [routerLink]="['item', flower.id]"></shop-content-item>

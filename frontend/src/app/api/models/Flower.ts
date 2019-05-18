@@ -1,5 +1,6 @@
 import { FlowerType } from "./FlowerType";
 import { Color } from "colors";
+import { FlowerSize } from "./FlowerSize";
 
 export class Flower {
   id: number;
@@ -26,4 +27,5 @@ export class FlowerShort {
 export class FlowerFull extends Flower{
   color: Color;
   colorSecondary: Color;
+  flowerSizes: Array<FlowerSize> = [];
 }
