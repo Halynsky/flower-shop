@@ -1,57 +1,61 @@
-<div class="title">
-  <div>{{flower.name}}<span>{{flower.nameOriginal}}</span></div>
-  <span id="flower-type">{{flower.flowerType.nameSingle}}</span>
-</div>
-<div class="main">
+<div class="page-wrapper" *ngIf="flower">
 
-  <div class="content">
+  <div class="title">
+    <div>{{flower.name}}<span>{{flower.nameOriginal}}</span></div>
+    <span id="flower-type">{{flower.flowerType.nameSingle}}</span>
+  </div>
+  <div class="main">
 
-    <div class="content-head">
+    <div class="content">
 
-      <div class="flower-logo">
-        <img src="{{flower.image}}" alt="image">
-      </div>
+      <div class="content-head">
 
-      <div class="flower-info">
-        <span>ХАРАКТЕРИСТИКИ</span>
-        <p>Висота: {{flower.flowerHeightMin}} см — {{flower.flowerHeightMax}} см</p>
-        <p>Розмір: {{flower.flowerSizeMin}} см — {{flower.flowerSizeMax}} см</p>
-        <p>Група: {{flower.groupName}}</p>
-      </div>
-
-      <div class="buy-menu">
-        <div class="sizes-chooser">
-          <span id="size-flower">Розмір цибулини</span>
-          <mat-button-toggle-group name="sizes" aria-label="Sizes" appearance="legacy">
-            <mat-button-toggle *ngFor="let flowerSize of flower.flowerSizes; let i = index;" (change)="trackElement(i ,flowerSize)" checked="{{i === 0}}">{{flowerSize.size.name}}</mat-button-toggle>
-          </mat-button-toggle-group>
-          <span id="price">{{flowerSize.price/100}} грн</span>
+        <div class="flower-logo">
+          <img src="{{flower.image}}" alt="image">
         </div>
-        <div class="amount-counter">
-          <div class="count-buttons">
-            <button mat-raised-button (click)="counterDecrement()">-</button>
-            <div id="counter-output"><span>{{amountCounter}}</span></div>
-            <button mat-raised-button (click)="counterIncrement()">+</button>
+
+        <div class="flower-info">
+          <span>ХАРАКТЕРИСТИКИ</span>
+          <p>Висота: {{flower.flowerHeightMin}} см — {{flower.flowerHeightMax}} см</p>
+          <p>Розмір: {{flower.flowerSizeMin}} см — {{flower.flowerSizeMax}} см</p>
+          <p>Група: {{flower.groupName}}</p>
+        </div>
+
+        <div class="buy-menu">
+          <div class="sizes-chooser">
+            <span id="size-flower">Розмір цибулини</span>
+            <mat-button-toggle-group name="sizes" aria-label="Sizes" appearance="legacy">
+              <mat-button-toggle *ngFor="let flowerSize of flower.flowerSizes; let i = index;" (change)="trackElement(i ,flowerSize)" checked="{{i === 0}}">{{flowerSize.size.name}}</mat-button-toggle>
+            </mat-button-toggle-group>
+            <span id="price">{{flowerSize.price/100}} грн</span>
           </div>
-          <div class="summary-to-pay">
-            {{sumToPay/100}} грн
+          <div class="amount-counter">
+            <div class="count-buttons">
+              <button mat-raised-button (click)="counterDecrement()">-</button>
+              <div id="counter-output"><span>{{amountCounter}}</span></div>
+              <button mat-raised-button (click)="counterIncrement()">+</button>
+            </div>
+            <div class="summary-to-pay">
+              {{sumToPay/100}} грн
+            </div>
+          </div>
+          <div class="buy-button">
+            <button mat-raised-button>КУПИТИ</button>
           </div>
         </div>
-        <div class="buy-button">
-          <button mat-raised-button>КУПИТИ</button>
+
+      </div>
+
+      <div class="content-description">
+
+        <div class="description-head">
+          ОПИС
         </div>
-      </div>
 
-    </div>
+        <div class="description-info">
+          {{flower.description}}
+        </div>
 
-    <div class="content-description">
-
-      <div class="description-head">
-        ОПИС
-      </div>
-
-      <div class="description-info">
-        {{flower.description}}
       </div>
 
     </div>
@@ -59,5 +63,4 @@
   </div>
 
 </div>
-
 

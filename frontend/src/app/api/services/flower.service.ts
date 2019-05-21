@@ -28,9 +28,7 @@ export class FlowerService {
     for (let key in filters) {
       filters[key] = arrayToHttpParam(filters[key])
     }
-    console.log(filters);
     const params = new HttpParams({fromObject: filters as any});
-    console.log(params);
     return this.http.get<FlowerShort[]>(`${this.URL}/shop`, {params});
   }
 
