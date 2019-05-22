@@ -1,13 +1,11 @@
-<div class="page-wrapper" *ngIf="flower">
-
-  <div class="title">
+<div class="title" *ngIf="flower">
     <div>{{flower.name}}<span>{{flower.nameOriginal}}</span></div>
     <span id="flower-type">{{flower.flowerType.nameSingle}}</span>
   </div>
-  <div class="main">
+  <div class="main" *ngIf="flower">
 
     <div class="content">
-
+      <modal-page *ngIf="modalPageService.getIsModal()"></modal-page>
       <div class="content-head">
 
         <div class="flower-logo">
@@ -40,7 +38,7 @@
             </div>
           </div>
           <div class="buy-button">
-            <button mat-raised-button>КУПИТИ</button>
+            <button mat-raised-button (click)="modalPageService.showModal()">КУПИТИ</button>
           </div>
         </div>
 
@@ -62,5 +60,4 @@
 
   </div>
 
-</div>
 
