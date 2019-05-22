@@ -1,0 +1,27 @@
+@import "theme";
+@import "mixins.scss";
+
+:host {
+  #filter {
+    background-color: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+  }
+  #modalForm {
+    background-color: $grey-500;
+    position: fixed;
+    top: 100px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 150;
+    width: 450px;
+    height: 500px;
+    margin: 0 auto;
+  }
+
+}

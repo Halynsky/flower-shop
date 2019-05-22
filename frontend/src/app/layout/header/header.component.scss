@@ -58,6 +58,33 @@
       }
     }
 
+    .login-with-bucket {
+      display: flex;
+      .bucket-button {
+        display: flex;
+        align-items: center;
+
+        .bucket {
+          height: 37px;
+          font-size: 18px;
+          display: flex;
+          align-items: center;
+          .bucket-index {
+            margin: 20px 0px 0px -5px;
+            color:white;
+            width: 15px;
+            height: 15px;
+            background-color: red;
+            border-radius: 50%;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+        }
+      }
+    }
+
     .mobile-login-button {
       justify-content: center;
       @include response-from(sm) {
@@ -94,7 +121,20 @@
 
 }
 
-
+::ng-deep .bucket-menu {
+  margin-top: -8px;
+  button {
+    position: relative;
+    color: white;
+    padding: 10px 12px 10px 36px;
+    border: none;
+    display: flex;
+    width: 100%;
+  }
+  .default-bucket-info {
+   padding: 12px;
+  }
+}
 
 ::ng-deep .auth-menu {
   margin-top: -8px;

@@ -16,27 +16,54 @@
 
   <div class="login-button-wrapper" *ngIf="!securityService.isAuthenticated()">
 
-    <button mat-button [matMenuTriggerFor]="authMenu" class="login-button">
-      <i class="material-icons md-18">exit_to_app</i>
-      <span>Увійти</span>
-    </button>
+    <div class="login-with-bucket">
+      <button mat-button [matMenuTriggerFor]="bucket" class="bucket-button">
+        <div class="bucket">
+          <i class="fas fa-shopping-cart"></i>
+            <div class="bucket-index">
+            <div>0</div>
+            </div>
+        </div>
+      </button>
 
-    <button mat-button [matMenuTriggerFor]="authMenu" class="mobile-login-button">
-      <mat-icon aria-label="Login">account_circle</mat-icon>
-    </button>
+      <button mat-button [matMenuTriggerFor]="authMenu" class="login-button">
+        <i class="material-icons md-18">exit_to_app</i>
+        <span>Увійти</span>
+      </button>
+
+      <button mat-button [matMenuTriggerFor]="authMenu" class="mobile-login-button">
+        <mat-icon aria-label="Login">account_circle</mat-icon>
+      </button>
+    </div>
+
+
   </div>
 
   <div class="login-button-wrapper" *ngIf="securityService.isAuthenticated()">
 
-    <button mat-button [matMenuTriggerFor]="userMenu" class="login-button">
-      <mat-icon aria-label="Login">account_circle</mat-icon>
-      <span>Василько Пупкін</span>
-    </button>
+    <div class="login-with-bucket">
+      <button mat-button [matMenuTriggerFor]="bucket" class="bucket-button">
+        <div class="bucket">
+          <i class="fas fa-shopping-cart"></i>
+          <div class="bucket-index">
+            <div>0</div>
+          </div>
+        </div>
+      </button>
 
-    <button mat-button [matMenuTriggerFor]="userMenu" class="mobile-login-button">
-      <mat-icon aria-label="Login">account_circle</mat-icon>
-    </button>
+      <button mat-button [matMenuTriggerFor]="userMenu" class="login-button">
+        <mat-icon aria-label="Login">account_circle</mat-icon>
+        <span>Василько Пупкін</span>
+      </button>
+
+      <button mat-button [matMenuTriggerFor]="userMenu" class="mobile-login-button">
+        <mat-icon aria-label="Login">account_circle</mat-icon>
+      </button>
+    </div>
+
   </div>
+
+
 
 </div>
 
@@ -72,6 +99,10 @@
     <i class="fas fa-sign-out-alt"></i>
     <span>Вийти</span>
   </button>
+</mat-menu>
+
+<mat-menu #bucket="matMenu" class="bucket-menu">
+  <div class="default-bucket-info">У вас ще немає покупок</div>
 </mat-menu>
 
 

@@ -3,8 +3,7 @@ import { ActivatedRoute } from "@angular/router";
 import { FlowerService } from "../../../api/services/flower.service";
 import { FlowerFull } from "../../../api/models/Flower";
 import { FlowerSize } from "../../../api/models/FlowerSize";
-import { __await } from "tslib";
-import { FlowerType } from "../../../api/models/FlowerType";
+import { ModalPageService } from "../../../api/services/modal-page.service";
 
 @Component({
   selector: 'shop-item-page',
@@ -20,7 +19,7 @@ export class ShopItemPageComponent implements OnInit {
   flowerSize: FlowerSize;
   sumToPay: number = 1;
 
-  constructor(private route: ActivatedRoute, private flowerService: FlowerService) {
+  constructor(private route: ActivatedRoute, private flowerService: FlowerService, private modalPageService: ModalPageService) {
     this.route.params.subscribe(params => {
       this.id = params['id'];
       this.getFlowerById();
@@ -60,5 +59,6 @@ export class ShopItemPageComponent implements OnInit {
     this.sumToPay = flowerSize.price;
     this.amountCounter = 1;
   }
+
 
 }
