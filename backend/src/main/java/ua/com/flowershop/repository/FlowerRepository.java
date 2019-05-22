@@ -29,9 +29,8 @@ public interface FlowerRepository extends JpaRepository<Flower, Long> {
 
     Integer countByFlowerSizesSizeId(Long flowerSizeId);
 
-//    TODO: Add size filtering
-    @Query("SELECT f FROM Flower f " +
-            "INNER JOIN FETCH f.flowerType ft " +
+    @Query("SELECT DISTINCT(f.id) as id, f.name as name, f.image as image, f.flowerType as flowerType FROM Flower f " +
+            "INNER JOIN f.flowerType ft " +
             "INNER JOIN f.color c " +
             "INNER JOIN f.flowerSizes fs " +
             "WHERE (COALESCE(:flowerTypeFilters, NULL) IS NULL OR ft.id IN :flowerTypeFilters) " +
