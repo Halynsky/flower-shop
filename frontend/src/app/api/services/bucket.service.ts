@@ -16,7 +16,7 @@ export class BucketService {
     if (this.purchases.length > 0) {
       this.purchases.forEach((item) => {
         if (purchase.name == item.name && purchase.size == item.size) {
-          item.amount++;
+          item.amount += purchase.amount;
           isPresent = true;
         }
       });
