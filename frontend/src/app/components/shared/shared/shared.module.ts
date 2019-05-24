@@ -14,7 +14,7 @@ import {
 } from "@angular/material";
 import { ArticleCardComponent } from './article-card/article-card.component';
 import { RouterModule } from "@angular/router";
-import { ModalPageComponent } from "./modal-page/modal-page.component";
+import { ModalWindowComponent } from "./modal-window/modal-window.component";
 
 const PROVIDERS = [
   { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 3000, panelClass: "snack-custom-class"} }
@@ -23,7 +23,7 @@ const PROVIDERS = [
 @NgModule({
   declarations: [
     ArticleCardComponent,
-    ModalPageComponent
+    ModalWindowComponent
   ],
   imports: [
     RouterModule,
@@ -58,7 +58,7 @@ const PROVIDERS = [
     MatSelectModule,
     // Developed components
     ArticleCardComponent,
-    ModalPageComponent
+    ModalWindowComponent
   ],
   providers: [
     ...PROVIDERS

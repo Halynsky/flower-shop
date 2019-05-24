@@ -1,9 +1,11 @@
-import { AfterContentInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { FlowerService } from "../../../api/services/flower.service";
-import { FlowerFull } from "../../../api/models/Flower";
+import { FlowerBucket, FlowerFull } from "../../../api/models/Flower";
 import { FlowerSize } from "../../../api/models/FlowerSize";
-import { ModalPageService } from "../../../api/services/modal-page.service";
+import { ModalWindowService } from "../../../api/services/modal-window.service";
+import { BucketService } from "../../../api/services/bucket.service";
+import { error } from "@angular/compiler/src/util";
 
 @Component({
   selector: 'shop-item-page',
@@ -14,12 +16,11 @@ export class ShopItemPageComponent implements OnInit {
 
   id: number;
   flower: FlowerFull;
-
   amountCounter: number = 1;
   flowerSize: FlowerSize;
   sumToPay: number = 1;
 
-  constructor(private route: ActivatedRoute, private flowerService: FlowerService, private modalPageService: ModalPageService) {
+  constructor(private route: ActivatedRoute, private flowerService: FlowerService, private modalPageService: ModalWindowService, private bucketService: BucketService) {
     this.route.params.subscribe(params => {
       this.id = params['id'];
       this.getFlowerById();
@@ -27,6 +28,20 @@ export class ShopItemPageComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+
+
+  addToTemp() {
+    let flowerBucket = {
+      "name": this.flower.name,
+      "image": this.flower.image,
+      "price": this.flowerSize.price,
+      "amount": this.amountCounter,
+      "size": this.flowerSize.size.name
+    };
+    this.bucketService.temp = flowerBucket;
+    console.log(this.bucketService.temp);
   }
 
   getFlowerById() {

@@ -5,7 +5,7 @@
   <div class="main" *ngIf="flower">
 
     <div class="content">
-      <modal-page *ngIf="modalPageService.getIsModal()"></modal-page>
+      <modal-window *ngIf="modalPageService.getIsModal()"></modal-window>
       <div class="content-head">
 
         <div class="flower-logo">
@@ -38,7 +38,7 @@
             </div>
           </div>
           <div class="buy-button">
-            <button mat-raised-button (click)="modalPageService.showModal()">КУПИТИ</button>
+            <button mat-raised-button (click)="modalPageService.showModal()" (click)="addToTemp()">КУПИТИ</button>
           </div>
         </div>
 

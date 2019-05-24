@@ -24,6 +24,13 @@ export class FlowerShort {
   priceMin: number;
 }
 
+export class FlowerBucket {
+  name: string;
+  image: string;
+  price: number;
+  amount: number;
+}
+
 export class FlowerFull extends Flower{
   color: Color;
   colorSecondary: Color;

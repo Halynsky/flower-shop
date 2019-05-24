@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { SecurityService } from "../../services/security.service";
+import { BucketService } from "../../api/services/bucket.service";
 
 @Component({
   selector: 'layout-header',
@@ -9,7 +10,7 @@ import { SecurityService } from "../../services/security.service";
 
 export class HeaderComponent {
 
-  constructor(public securityService: SecurityService) {
+  constructor(public securityService: SecurityService, private bucketService: BucketService) {
 
   }
 

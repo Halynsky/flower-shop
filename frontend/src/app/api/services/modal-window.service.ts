@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 
 @Injectable({providedIn: 'root'})
-export class ModalPageService {
+export class ModalWindowService {
   private isModal: boolean;
 
   getIsModal() {
