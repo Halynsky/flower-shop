@@ -11,5 +11,9 @@ public interface FlowerProjection {
     Integer getFlowerHeightMax();
     Integer getFlowerSizeMin();
     Integer getFlowerSizeMax();
+    Boolean getPopularity();
+    Boolean getIsNew();
+    Boolean getIsPopular();
+    Boolean getHasDiscount();
     FlowerTypeTinyProjection getFlowerType();
 }

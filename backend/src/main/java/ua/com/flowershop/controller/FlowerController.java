@@ -24,13 +24,13 @@ public class FlowerController {
     private FlowerRepository flowerRepository;
 
     @GetMapping("/forAdmin")
-    public ResponseEntity<List<FlowerProjection>> getAllForAdmin() {
-        return new ResponseEntity<>(flowerService.getAllFlowers(), OK);
+    public ResponseEntity<List<FlowerFullProjection>> getAllForAdmin() {
+        return new ResponseEntity<>(flowerService.findForAdmin(), OK);
     }
 
     @GetMapping
     public ResponseEntity<List<FlowerProjection>> getAll() {
-        return new ResponseEntity<>(flowerService.getAllFlowers(), OK);
+        return new ResponseEntity<>(flowerRepository.findProjectedBy(), OK);
     }
 
     @GetMapping("/{id}")

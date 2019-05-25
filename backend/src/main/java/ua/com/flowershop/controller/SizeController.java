@@ -3,11 +3,8 @@ package ua.com.flowershop.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ua.com.flowershop.entity.Color;
 import ua.com.flowershop.entity.Size;
-import ua.com.flowershop.model.ColorModel;
 import ua.com.flowershop.model.SizeModel;
-import ua.com.flowershop.projection.ColorAdminProjection;
 import ua.com.flowershop.projection.SizeAdminProjection;
 import ua.com.flowershop.projection.SizeProjection;
 import ua.com.flowershop.repository.SizeRepository;
@@ -28,7 +25,7 @@ public class SizeController {
 
     @GetMapping("/forAdmin")
     public ResponseEntity<List<SizeAdminProjection>> getAllForAdmin() {
-        List<SizeAdminProjection> colors = sizeRepository.findAdminProjectedBy();
+        List<SizeAdminProjection> colors = sizeRepository.findForAdminProjectedBy();
         return new ResponseEntity<>(colors, OK);
     }
 

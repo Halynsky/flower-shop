@@ -17,8 +17,8 @@ public class FlowerService {
     @Autowired
     private FlowerRepository flowerRepository;
 
-    public List<FlowerProjection> getAllFlowers() {
-        return flowerRepository.findProjectedBy();
+    public List<FlowerFullProjection> findForAdmin() {
+        return flowerRepository.findForAdminProjectedBy();
     }
 
     public FlowerProjection getFlowerById(Long id) {

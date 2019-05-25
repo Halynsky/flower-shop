@@ -26,7 +26,7 @@ public class ColorController {
 
     @GetMapping("/forAdmin")
     public ResponseEntity<List<ColorAdminProjection>> getAllForAdmin() {
-        List<ColorAdminProjection> colors = colorRepository.findAdminProjectedBy();
+        List<ColorAdminProjection> colors = colorRepository.findForAdminProjectedBy();
         return new ResponseEntity<>(colors, OK);
     }
 
