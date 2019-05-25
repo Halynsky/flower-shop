@@ -2,10 +2,11 @@ package ua.com.flowershop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import ua.com.flowershop.entity.Color;
+import ua.com.flowershop.entity.FlowerType;
+import ua.com.flowershop.model.ColorModel;
+import ua.com.flowershop.model.FlowerTypeModel;
 import ua.com.flowershop.projection.FlowerTypeProjection;
 import ua.com.flowershop.repository.FlowerTypeRepository;
 import ua.com.flowershop.service.FlowerTypeService;
@@ -35,13 +36,31 @@ public class FlowerTypeController {
     }
 
     @GetMapping("/byName/{name}")
-    public ResponseEntity<FlowerTypeProjection> byName(@PathVariable String name) {
+    public ResponseEntity<FlowerTypeProjection> getByName (@PathVariable String name) {
         return new ResponseEntity<>(flowerTypeService.getFlowerTypeByName(name), OK);
     }
 
-    @GetMapping("/searchByName/{name}")
+    @GetMapping("/search/byName/{name}")
     public ResponseEntity<List<FlowerTypeProjection>> searchByName(@PathVariable String name) {
         return new ResponseEntity<>(flowerTypeRepository.findProjectedByNameStartingWith(name), OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<Void> add(@RequestBody FlowerTypeModel flowerTypeModel) {
+        flowerTypeRepository.save(FlowerType.of(flowerTypeModel));
+        return new ResponseEntity<>(OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody FlowerTypeModel flowerTypeModel) {
+        flowerTypeService.update(id, flowerTypeModel);
+        return new ResponseEntity<>(OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        flowerTypeRepository.deleteById(id);
+        return new ResponseEntity<>(OK);
     }
 
 }

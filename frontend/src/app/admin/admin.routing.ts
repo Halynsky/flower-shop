@@ -10,6 +10,7 @@ import { SizesComponent } from "./types/sizes/sizes.component";
 import { ColorsComponent } from "./types/colors/colors.component";
 import { FlowersComponent } from "./types/flowers/flowers.component";
 import { SizeItemComponent } from "./types/sizes/size-item/size-item.component";
+import { ColorItemComponent } from "./types/colors/color-item/color-item.component";
 
 
 const routes: Routes = [
@@ -23,8 +24,9 @@ const routes: Routes = [
       {path: 'types/flower-types', component: FlowerTypesComponent},
       {path: 'types/flowers', component: FlowersComponent},
       {path: 'types/sizes', component: SizesComponent},
-      {path: 'types/sizes/item', component: SizeItemComponent},
+      {path: 'types/sizes/item/:mode', component: SizeItemComponent},
       {path: 'types/colors', component: ColorsComponent},
+      {path: 'types/colors/item/:mode', component: ColorItemComponent},
       {path: 'blog', component: BlogComponent}
     ]
   },

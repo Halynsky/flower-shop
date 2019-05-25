@@ -14,13 +14,24 @@ export class SizeService {
     return this.http.get<SizeAdmin[]>(`${this.URL}/forAdmin`);
   }
 
-
   getAll() {
     return this.http.get<Size[]>(`${this.URL}`);
   }
 
   getById(id: number) {
     return this.http.get<Size>(`${this.URL}/${id}`);
+  }
+
+  add(size: Size) {
+    return this.http.post(`${this.URL}`, size);
+  }
+
+  update(id: number, size: Size) {
+    return this.http.put(`${this.URL}/${id}`, size);
+  }
+
+  delete(id: number) {
+    return this.http.delete(`${this.URL}/${id}`);
   }
 
 }

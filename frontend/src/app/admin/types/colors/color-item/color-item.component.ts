@@ -1,24 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { Size } from "../../../../api/models/Size";
-import { SizeService } from "../../../../api/services/size.service";
 import { SnackBarService } from "../../../../services/snak-bar.service";
 import { ActivatedRoute, Router } from "@angular/router";
+import { Color } from "../../../../api/models/Color";
+import { ColorService } from "../../../../api/services/color.service";
 import { getErrorMessage } from "../../../../utils/Functions";
 import { ItemSaveMode } from "../../../../models/ItemSaveMode";
 
 @Component({
-  selector: 'size-item',
-  templateUrl: './size-item.component.html',
-  styleUrls: ['./size-item.component.scss']
+  selector: 'color-item',
+  templateUrl: './color-item.component.html',
+  styleUrls: ['./color-item.component.scss']
 })
-export class SizeItemComponent implements OnInit {
+export class ColorItemComponent implements OnInit {
 
   ItemSaveMode = ItemSaveMode;
   mode: ItemSaveMode = ItemSaveMode.new;
 
-  item: Size = new Size();
+  item: Color = new Color();
 
-  constructor(private dataService: SizeService,
+  constructor(private dataService: ColorService,
               private snackBarService: SnackBarService,
               private router: Router,
               private route: ActivatedRoute) {
@@ -35,6 +35,7 @@ export class SizeItemComponent implements OnInit {
 
       }
     )
+
   }
 
   ngOnInit() {
@@ -50,7 +51,7 @@ export class SizeItemComponent implements OnInit {
   add() {
     this.dataService.add(this.item).subscribe(
       response => {
-        this.snackBarService.showSuccess("Розмір успішно створено");
+        this.snackBarService.showSuccess("Колір успішно створено");
         this.router.navigate(['../../'], {relativeTo: this.route})
       },
       error => this.snackBarService.showError(getErrorMessage(error))
@@ -60,7 +61,7 @@ export class SizeItemComponent implements OnInit {
   update() {
     this.dataService.update(this.item.id, this.item).subscribe(
       response => {
-        this.snackBarService.showSuccess("Розмір успішно оновлено");
+        this.snackBarService.showSuccess("Колір успішно оновлено");
         this.router.navigate(['../../'], {relativeTo: this.route})
       },
       error => this.snackBarService.showError(getErrorMessage(error))
@@ -69,26 +70,6 @@ export class SizeItemComponent implements OnInit {
 
   onSubmit() {
     this.mode == ItemSaveMode.new ? this.add() : this.update()
-  }
-
-  onSizeChange() {
-
-    if (this.item.min && this.item.max) {
-      this.item.name = `${this.item.min ? this.item.min : ''}/${this.item.max ? this.item.max : ''}`
-    }
-
-    if (this.item.min && !this.item.max ) {
-      this.item.name = `${this.item.min}/`
-    }
-
-    if (!this.item.min && this.item.max ) {
-      this.item.name = `${this.item.max}+`
-    }
-
-    if (!this.item.min && !this.item.max) {
-      this.item.name = ''
-    }
-
   }
 
 }

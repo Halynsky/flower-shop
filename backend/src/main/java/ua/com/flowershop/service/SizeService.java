@@ -3,7 +3,9 @@ package ua.com.flowershop.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ua.com.flowershop.entity.Size;
 import ua.com.flowershop.exception.NotFoundException;
+import ua.com.flowershop.model.SizeModel;
 import ua.com.flowershop.projection.SizeAdminProjection;
 import ua.com.flowershop.projection.SizeProjection;
 import ua.com.flowershop.repository.SizeRepository;
@@ -22,6 +24,14 @@ public class SizeService {
 
     public SizeProjection getSizeById(Long id) {
         return sizeRepository.findProjectedById(id).orElseThrow(NotFoundException::new);
+    }
+
+    public Size update(Long id, SizeModel sizeModel) {
+        Size size = sizeRepository.findById(id).orElseThrow(NotFoundException::new);
+        size.setMin(sizeModel.getMin());
+        size.setMax(sizeModel.getMax());
+        size.setName(sizeModel.getName());
+        return sizeRepository.save(size);
     }
 
 }

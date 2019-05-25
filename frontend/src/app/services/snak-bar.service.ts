@@ -4,24 +4,27 @@ import { MatSnackBar, MatSnackBarConfig } from "@angular/material";
 @Injectable({providedIn: 'root'})
 export class SnackBarService {
 
+  private readonly DEFAULT_ERROR_DURATION = 10000;
+
   constructor(private snackBar: MatSnackBar) {}
 
-  open(message: string, action?: string, config?: MatSnackBarConfig) {
+  open(message: string, action?: string, config: MatSnackBarConfig = {}) {
     return this.snackBar.open(message, action, config);
   }
 
-  // TODO: Customize messages like showError()
-  showSuccess(message: string, action?: string, config?: MatSnackBarConfig) {
+  showSuccess(message: string, action?: string, config: MatSnackBarConfig = {}) {
+    config.panelClass = "snack-custom-success";
     return this.snackBar.open(message, action, config);
   }
 
-  // TODO: Customize messages like showError()
-  showWarning(message: string, action?: string, config?: MatSnackBarConfig) {
+  showWarning(message: string, action?: string, config: MatSnackBarConfig = {}) {
+    config.panelClass = "snack-custom-warning";
     return this.snackBar.open(message, action, config);
   }
 
   showError(message: string, action?: string, config: MatSnackBarConfig = {}) {
     config.panelClass = "snack-custom-error";
+    config.duration = config.duration ? config.duration : this.DEFAULT_ERROR_DURATION;
     return this.snackBar.open(message, action, config);
   }
 

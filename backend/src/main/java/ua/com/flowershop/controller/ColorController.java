@@ -2,14 +2,14 @@ package ua.com.flowershop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import ua.com.flowershop.entity.Color;
 import ua.com.flowershop.exception.NotFoundException;
+import ua.com.flowershop.model.ColorModel;
 import ua.com.flowershop.projection.ColorAdminProjection;
 import ua.com.flowershop.projection.ColorProjection;
 import ua.com.flowershop.repository.ColorRepository;
+import ua.com.flowershop.service.ColorService;
 
 import java.util.List;
 
@@ -21,6 +21,8 @@ public class ColorController {
 
     @Autowired
     private ColorRepository colorRepository;
+    @Autowired
+    private ColorService colorService;
 
     @GetMapping("/forAdmin")
     public ResponseEntity<List<ColorAdminProjection>> getAllForAdmin() {
@@ -40,6 +42,21 @@ public class ColorController {
         return new ResponseEntity<>(color, OK);
     }
 
+    @PostMapping
+    public ResponseEntity<Void> add(@RequestBody ColorModel colorModel) {
+        colorRepository.save(Color.of(colorModel));
+        return new ResponseEntity<>(OK);
+    }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody ColorModel colorModel) {
+        colorService.update(id, colorModel);
+        return new ResponseEntity<>(OK);
+    }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        colorRepository.deleteById(id);
+        return new ResponseEntity<>(OK);
+    }
 }

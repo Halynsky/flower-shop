@@ -5,9 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import ua.com.flowershop.model.SizeModel;
 
 import javax.persistence.*;
 import java.util.Set;
+
+import static ua.com.flowershop.util.Constants.*;
 
 @Getter
 @Setter
@@ -31,5 +34,11 @@ public class Size {
 
     @OneToMany(mappedBy = "size")
     Set<FlowerSize> flowerSizes;
+
+    public static Size of(SizeModel sizeModel) {
+        return new Size().setMin(sizeModel.getMin())
+                .setMax(sizeModel.getMax())
+                .setName(sizeModel.getMin() + SLASH + sizeModel.getMax());
+    }
 
 }

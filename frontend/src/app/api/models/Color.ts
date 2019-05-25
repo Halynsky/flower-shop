@@ -1,5 +1,9 @@
 export class Color {
-  id: number;
+  id?: number;
   name: string;
-  hex: string;
+  hex: string = '#ff0000';
+}
+
+export class ColorAdmin extends Color{
+  flowersCount: number
 }
