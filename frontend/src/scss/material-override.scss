@@ -16,9 +16,8 @@
 }
 
 
-.mat-snack-bar-container.snack-custom-error {
+.mat-snack-bar-container {
   color: white;
-  background-color: mat-color($warn, 600);
 
   button {
     span {
@@ -26,4 +25,17 @@
       font-weight: 600;
     }
   }
+
+  &.snack-custom-error {
+    background-color: mat-color($warn, 600);
+  }
+
+  &.snack-custom-warning {
+    background-color: darkorange;
+  }
+
+  &.snack-custom-success {
+    background-color: mat-color($primary, 500);
+  }
+
 }

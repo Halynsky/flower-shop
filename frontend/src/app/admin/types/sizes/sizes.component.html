@@ -1,13 +1,14 @@
 <div class="panel-header">
   <h1>Розміри цибулин</h1>
   <div class="buttons">
-    <button pButton routerLink="item" icon="pi pi-plus" class="ui-button-success" label="&nbsp;&nbsp;Додати"></button>
+    <button pButton [routerLink]="['item', ItemSaveMode.new]" icon="pi pi-plus" class="ui-button-success" label="&nbsp;&nbsp;Додати"></button>
     <button pButton (click)="loadData()" icon="pi pi-refresh" label="&nbsp;&nbsp;Оновити"></button>
   </div>
 </div>
 
 <div class="panel-content">
-  <p-table #dt [columns]="cols" [value]="items" sortField="id" [paginator]="true" [rows]="10" [tableStyle]="{'table-layout':'auto'}">
+  <p-table #dt [columns]="cols" [value]="items" sortField="id" [paginator]="true" [rows]="10"
+           [tableStyle]="{'table-layout':'auto'}" [contextMenu]="cm" [(contextMenuSelection)]="selected">
     <ng-template pTemplate="header" let-columns>
       <tr>
         <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngSwitch]="col.field">
@@ -22,7 +23,7 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-rowData let-columns="columns">
-      <tr>
+      <tr [pContextMenuRow]="rowData">
         <td *ngFor="let col of columns">
           {{rowData[col.field]}}
         </td>
@@ -30,3 +31,7 @@
     </ng-template>
   </p-table>
 </div>
+
+<p-contextMenu #cm [model]="menuItems"></p-contextMenu>
+
+

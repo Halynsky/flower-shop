@@ -16,7 +16,7 @@ import { ArticleCardComponent } from './article-card/article-card.component';
 import { RouterModule } from "@angular/router";
 
 const PROVIDERS = [
-  { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 3000, panelClass: "snack-custom-class"} }
+  { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 5000, panelClass: "snack-custom-class"} }
 ];
 
 @NgModule({

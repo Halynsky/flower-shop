@@ -13,6 +13,7 @@ import java.util.Set;
 @Repository
 public interface SizeRepository extends JpaRepository<Size, Long> {
 
+    Optional<Size> findById(Long id);
     List<SizeAdminProjection> findAdminProjectedBy();
     List<SizeProjection> findProjectedBy();
     Optional<SizeProjection> findProjectedById(Long id);
