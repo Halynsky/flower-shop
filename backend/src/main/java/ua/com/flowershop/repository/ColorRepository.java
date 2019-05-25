@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 public interface ColorRepository extends JpaRepository<Color, Long> {
 
-    List<ColorAdminProjection> findAdminProjectedBy();
+    List<ColorAdminProjection> findForAdminProjectedBy();
     List<ColorProjection> findProjectedBy();
     Optional<ColorProjection> findProjectedById(Long id);
 
