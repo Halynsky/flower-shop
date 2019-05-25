@@ -102,7 +102,10 @@
 </mat-menu>
 
 <mat-menu #bucket="matMenu" class="bucket-menu">
-  <div class="default-bucket-info">У вас ще немає покупок</div>
+  <div class="default-bucket-info" *ngIf="bucketService.getPurchases().length == 0">У вас ще немає покупок</div>
+  <div *ngIf="bucketService.getPurchases().length > 0">
+    <div class="bucket-flower-button" *ngFor="let bucketFlower of bucketService.getPurchases()">Квітка —{{bucketFlower.name}}, кількість — {{bucketFlower.amount}}</div>
+  </div>
 </mat-menu>
 
 
