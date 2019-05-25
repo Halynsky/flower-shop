@@ -17,7 +17,7 @@ import { RouterModule } from "@angular/router";
 import { ModalWindowComponent } from "./modal-window/modal-window.component";
 
 const PROVIDERS = [
-  { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 3000, panelClass: "snack-custom-class"} }
+  { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 5000, panelClass: "snack-custom-class"} }
 ];
 
 @NgModule({

@@ -5,8 +5,8 @@ import { routing } from "./admin.routing";
 import { GrowlModule } from "primeng/growl";
 import { DialogModule } from "primeng/dialog";
 import {
-  ButtonModule,
-  ConfirmDialogModule, InputTextModule,
+  ButtonModule, ColorPickerModule, ConfirmationService,
+  ConfirmDialogModule, ContextMenuModule, InputTextModule,
   MenuModule, MessageModule,
   MultiSelectModule,
   PanelMenuModule,
@@ -27,6 +27,8 @@ import { NgArrayPipesModule } from "angular-pipes";
 import { FlowersComponent } from "./types/flowers/flowers.component";
 import { SizeItemComponent } from './types/sizes/size-item/size-item.component';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { ColorItemComponent } from "./types/colors/color-item/color-item.component";
+
 
 @NgModule({
   declarations: [
@@ -42,8 +44,9 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     FlowersComponent,
     FlowerTypesComponent,
     SizesComponent,
+    SizeItemComponent,
     ColorsComponent,
-    SizeItemComponent
+    ColorItemComponent
   ],
   imports: [
     routing,
@@ -61,7 +64,12 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     TableModule,
     MultiSelectModule,
     InputTextModule,
-    MessageModule
+    ContextMenuModule,
+    MessageModule,
+    ColorPickerModule
+  ],
+  providers: [
+    ConfirmationService
   ]
 })
 export class AdminModule { }

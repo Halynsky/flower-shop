@@ -1,5 +1,5 @@
 export class Size {
-  id: number;
+  id?: number;
   name: string;
   min: number;
   max: number;

@@ -3,13 +3,16 @@ package ua.com.flowershop.entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.Accessors;
+import ua.com.flowershop.model.FlowerTypeModel;
 
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
 
 @Getter
+@Setter
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,5 +33,10 @@ public class FlowerType {
 
     @OneToMany(mappedBy = "flowerType")
     Set<FlowerTypeSize> flowerTypeSizes;
+
+    public static FlowerType of(FlowerTypeModel flowerTypeModel) {
+        return new FlowerType().setName(flowerTypeModel.getName())
+                .setNameSingle(flowerTypeModel.getNameSingle());
+    }
 
 }
