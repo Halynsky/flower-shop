@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { FlowerService } from "../../../api/services/flower.service";
-import { FlowerBucket, FlowerFull } from "../../../api/models/Flower";
+import { FlowerFull } from "../../../api/models/Flower";
 import { FlowerSize } from "../../../api/models/FlowerSize";
 import { ModalWindowService } from "../../../api/services/modal-window.service";
 import { BucketService } from "../../../api/services/bucket.service";
-import { error } from "@angular/compiler/src/util";
+import { MatBottomSheet, MatBottomSheetRef } from "@angular/material";
+import { BottomSheetOverview } from "../../shared/shared/bottom-sheet/bottom-sheet.component";
+import { BucketItem } from "../../../models/BucketItem";
+
 
 @Component({
   selector: 'shop-item-page',
@@ -19,8 +22,10 @@ export class ShopItemPageComponent implements OnInit {
   amountCounter: number = 1;
   flowerSize: FlowerSize;
   sumToPay: number = 1;
+  bottomSheetRef: MatBottomSheetRef;
+  bucketItem: BucketItem = new BucketItem();
 
-  constructor(private route: ActivatedRoute, private flowerService: FlowerService, private modalPageService: ModalWindowService, private bucketService: BucketService) {
+  constructor(private route: ActivatedRoute, private flowerService: FlowerService, private modalPageService: ModalWindowService, private bucketService: BucketService, private bottomSheet: MatBottomSheet) {
     this.route.params.subscribe(params => {
       this.id = params['id'];
       this.getFlowerById();
@@ -30,18 +35,17 @@ export class ShopItemPageComponent implements OnInit {
   ngOnInit() {
   }
 
+  openBottomSheet(): void {
+    this.bottomSheetRef = this.bottomSheet.open(BottomSheetOverview);
+  }
 
-
-  addToTemp() {
-    let flowerBucket = {
-      "name": this.flower.name,
-      "image": this.flower.image,
-      "price": this.flowerSize.price,
-      "amount": this.amountCounter,
-      "size": this.flowerSize.size.name
-    };
-    this.bucketService.temp = flowerBucket;
-    console.log(this.bucketService.temp);
+  addToBucket() {
+    this.bucketItem.amount = this.amountCounter;
+    this.bucketItem.name = this.flower.name;
+    this.bucketItem.size = this.flowerSize.size.name;
+    this.bucketItem.price = this.flowerSize.price;
+    this.bucketItem.image = this.flower.image;
+    this.bucketService.addPurchase(this.bucketItem);
   }
 
   getFlowerById() {

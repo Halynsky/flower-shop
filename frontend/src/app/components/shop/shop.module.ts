@@ -12,7 +12,7 @@ import { ShopItemPageComponent } from "./shop-item-page/shop-item-page.component
     ShopComponent,
     ShopFiltersComponent,
     ShopContentItemComponent,
-    ShopItemPageComponent,
+    ShopItemPageComponent
   ],
   imports: [
     SHOP_ROUTES,

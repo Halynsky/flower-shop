@@ -1,5 +1,20 @@
 <div id="filter" (click)="modalPageService.hideModal()"></div>
 <div id="modalForm">
-  <button (click)="modalPageService.hideModal()" (click)="bucketService.addPurchase(this.bucketService.temp)">Продовжити покупки</button>
-  <button (click)="modalPageService.hideModal()">Скасувати</button>
+  <div class="main">
+    <div class="header">
+      <div class="info-head">Обрані товари</div>
+      <div class="logo-close" (click)="modalPageService.hideModal()">
+        <i class="material-icons">
+          close
+        </i>
+      </div>
+
+    </div>
+    <div class="content">
+      <div class="item" *ngFor="let item of bucketService.getBucket()">{{item.name}} || {{item.price/100}} грн || {{item.amount}}</div>
+    </div>
+  </div>
+  <div class="button-menu">
+    <button mat-raised-button id="buy-but">Підтвердити замовлення</button>
+  </div>
 </div>

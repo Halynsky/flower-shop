@@ -20,8 +20,8 @@
       <button mat-button [matMenuTriggerFor]="bucket" class="bucket-button">
         <div class="bucket">
           <i class="fas fa-shopping-cart"></i>
-            <div class="bucket-index">
-            <div>{{bucketService.getPurchases().length}}</div>
+            <div class="bucket-index" *ngIf="bucketService.getBucket().length > 0">
+            <div>{{bucketService.getBucket().length}}</div>
             </div>
         </div>
       </button>
@@ -43,10 +43,10 @@
 
     <div class="login-with-bucket">
       <button mat-button [matMenuTriggerFor]="bucket" class="bucket-button">
-        <div class="bucket">
+        <div class="bucket" >
           <i class="fas fa-shopping-cart"></i>
-          <div class="bucket-index">
-            <div>{{bucketService.getPurchases().length}}</div>
+          <div class="bucket-index" *ngIf="bucketService.getBucket().length > 0">
+            <div>{{bucketService.getBucket().length}}</div>
           </div>
         </div>
       </button>
@@ -102,9 +102,9 @@
 </mat-menu>
 
 <mat-menu #bucket="matMenu" class="bucket-menu">
-  <div class="default-bucket-info" *ngIf="bucketService.getPurchases().length == 0">У вас ще немає покупок</div>
-  <div *ngIf="bucketService.getPurchases().length > 0">
-    <div class="bucket-flower-button" *ngFor="let bucketFlower of bucketService.getPurchases()">Квітка —{{bucketFlower.name}}, кількість — {{bucketFlower.amount}}</div>
+  <div class="default-bucket-info" *ngIf="bucketService.getBucket().length == 0">У вас ще немає покупок</div>
+  <div *ngIf="bucketService.getBucket().length > 0">
+    <div class="bucket-flower-button" *ngFor="let bucketFlower of bucketService.getBucket()">Квітка —{{bucketFlower.name}}, кількість — {{bucketFlower.amount}}</div>
   </div>
 </mat-menu>
 
