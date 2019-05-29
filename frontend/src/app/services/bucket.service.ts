@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
-import { BucketItem } from "../../models/BucketItem";
+import { BucketItem } from "../models/BucketItem";
+
 
 @Injectable({providedIn: 'root'})
 export class BucketService {
@@ -10,7 +11,7 @@ export class BucketService {
   addPurchase(bucketItem: BucketItem) {
     let bucket = this.getBucket();
     let isPresent = false;
-    if (this.items.length > 0) {
+    if (bucket.length > 0) {
       bucket.forEach((item) => {
         if (bucketItem.name == item.name && bucketItem.size == item.size) {
           item.amount += bucketItem.amount;

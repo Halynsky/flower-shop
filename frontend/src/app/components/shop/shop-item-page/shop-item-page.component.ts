@@ -3,11 +3,11 @@ import { ActivatedRoute } from "@angular/router";
 import { FlowerService } from "../../../api/services/flower.service";
 import { FlowerFull } from "../../../api/models/Flower";
 import { FlowerSize } from "../../../api/models/FlowerSize";
-import { ModalWindowService } from "../../../api/services/modal-window.service";
-import { BucketService } from "../../../api/services/bucket.service";
 import { MatBottomSheet, MatBottomSheetRef } from "@angular/material";
 import { BottomSheetOverview } from "../../shared/shared/bottom-sheet/bottom-sheet.component";
 import { BucketItem } from "../../../models/BucketItem";
+import { ModalWindowService } from "../../../services/modal-window.service";
+import { BucketService } from "../../../services/bucket.service";
 
 
 @Component({
@@ -71,6 +71,7 @@ export class ShopItemPageComponent implements OnInit {
       this.amountCounter--;
     }
     this.sumToPay = this.flowerSize.price * this.amountCounter;
+    this.bucketService.clearBucket();
   }
 
   trackElement(index, flowerSize) {

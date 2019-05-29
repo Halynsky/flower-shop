@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
-import { ModalWindowService } from "../../../../api/services/modal-window.service";
-import { BucketService } from "../../../../api/services/bucket.service";
+import { ModalWindowService } from "../../../../services/modal-window.service";
+import { BucketService } from "../../../../services/bucket.service";
+
 
 @Component({
   selector: 'modal-window',

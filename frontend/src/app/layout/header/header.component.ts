@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { SecurityService } from "../../services/security.service";
-import { BucketService } from "../../api/services/bucket.service";
+import { BucketService } from "../../services/bucket.service";
 
 @Component({
   selector: 'layout-header',

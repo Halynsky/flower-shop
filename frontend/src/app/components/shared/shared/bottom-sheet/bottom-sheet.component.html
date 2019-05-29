@@ -1,11 +1,6 @@
 <mat-nav-list>
-  <a mat-list-item (click)="bucketService.clearBucket()">
-    <span mat-line>Google Keep</span>
-    <span mat-line>Add to a note</span>
-  </a>
 
-  <a mat-list-item (click)="openLink($event)">
-    <span mat-line>Google Docs</span>
-    <span mat-line>Embed in a document</span>
-  </a>
+    <button mat-raised-button (click)="modalWindowService.showModal()" (click)="openLink($event)">Оформити замовлення</button>
+    <button mat-raised-button (click)="openLink($event)">Продовжити покупки</button>
+
 </mat-nav-list>
