@@ -26,7 +26,23 @@ export class BucketService {
     this.updateBucket(bucket);
   }
 
-  deletePurchase(purchase) {
+  updateBucketItem(bucketItem, bool) {
+    let bucket = this.getBucket();
+    bool = null;
+    let itemToUpdate = bucket.find((item) => {return item.name == bucketItem.name && item.size == bucketItem.size});
+    if (bool){
+      itemToUpdate.amount++;
+    } else {
+      itemToUpdate--;
+    }
+    this.updateBucket(bucket);
+  }
+
+  deleteItem(bucketItem) {
+    let bucket = this.getBucket();
+    let index = bucket.indexOf(bucketItem);
+    bucket.splice(index,1);
+    this.updateBucket(bucket);
   }
 
   getBucket() {
@@ -47,6 +63,8 @@ export class BucketService {
   private updateBucket(items) {
     localStorage.setItem(this.BUCKET_STORAGE_KEY, JSON.stringify(items));
   }
+
+
 
 
 }
