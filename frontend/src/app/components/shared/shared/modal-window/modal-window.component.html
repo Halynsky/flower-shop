@@ -11,21 +11,24 @@
   <div class="main">
 
     <div class="content">
-      <div class="item" *ngFor="let item of bucketService.getBucket()">
+      <div class="item" *ngFor="let item of bucketService.getBucket(); let i = index">
         <div class="logo"><img src="{{item.image}}" alt="image"></div>
         <div class="item-main">
           <div class="name-size">
-            <div>{{item.name}}</div>
-            <div>{{item.size}}</div>
+            <div id="name">
+              <div>{{item.name}}</div>
+              <div>{{item.size}}</div>
+            </div>
+            <div id="price">{{(item.price/100)*item.amount}} грн</div>
           </div>
           <div class="amount-delete">
-<!--            <div class="amount">-->
-<!--              <button (click)="bucketService.updateBucketItem(item, false)">-</button>-->
-<!--              <div id="counter-output"><span>{{item.amount}}</span></div>-->
-<!--              <button (click)="bucketService.updateBucketItem(item, true)">+</button>-->
-<!--            </div>-->
-            <div class="delete">
-
+            <div class="amount">
+              <button (click)="bucketService.updateBucketItem(item, false)">-</button>
+              <div id="counter-output"><span>{{item.amount}}</span></div>
+              <button (click)="bucketService.updateBucketItem(item, true)">+</button>
+            </div>
+            <div class="delete" (click)="bucketService.deleteItem(item ,i)">
+              <i class="fas fa-trash-alt"></i>
             </div>
           </div>
         </div>
@@ -33,6 +36,7 @@
     </div>
   </div>
   <div class="button-menu">
+    <div>До оплати: 0 грн</div>
     <button mat-raised-button id="buy-but">Підтвердити замовлення</button>
   </div>
 </div>

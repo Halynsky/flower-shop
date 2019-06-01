@@ -71,7 +71,7 @@ export class ShopItemPageComponent implements OnInit {
       this.amountCounter--;
     }
     this.sumToPay = this.flowerSize.price * this.amountCounter;
-    this.bucketService.clearBucket();
+    // this.bucketService.clearBucket();
   }
 
   trackElement(index, flowerSize) {

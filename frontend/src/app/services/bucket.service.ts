@@ -1,12 +1,25 @@
 import { Injectable } from "@angular/core";
 import { BucketItem } from "../models/BucketItem";
+import { el } from "@angular/platform-browser/testing/src/browser_util";
 
 
 @Injectable({providedIn: 'root'})
 export class BucketService {
   private readonly BUCKET_STORAGE_KEY = 'bucket';
-  private items: BucketItem[] = [];
+  //
+  // private sumToPay = 0;
 
+  // getSum() {
+  //   return this.sumToPay;
+  // }
+  //
+  // setSum(price, bool) {
+  //   if(bool){
+  //     this.sumToPay += price;
+  //   } else {
+  //     this.sumToPay -= price;
+  //   }
+  // }
 
   addPurchase(bucketItem: BucketItem) {
     let bucket = this.getBucket();
@@ -28,20 +41,20 @@ export class BucketService {
 
   updateBucketItem(bucketItem, bool) {
     let bucket = this.getBucket();
-    bool = null;
     let itemToUpdate = bucket.find((item) => {return item.name == bucketItem.name && item.size == bucketItem.size});
     if (bool){
       itemToUpdate.amount++;
     } else {
-      itemToUpdate--;
+      if(itemToUpdate.amount > 1){
+        itemToUpdate.amount--;
+      }
     }
     this.updateBucket(bucket);
   }
 
-  deleteItem(bucketItem) {
+  deleteItem(item ,i) {
     let bucket = this.getBucket();
-    let index = bucket.indexOf(bucketItem);
-    bucket.splice(index,1);
+    bucket.splice(i,1);
     this.updateBucket(bucket);
   }
 
@@ -60,9 +73,12 @@ export class BucketService {
     localStorage.removeItem(this.BUCKET_STORAGE_KEY);
   }
 
+
   private updateBucket(items) {
     localStorage.setItem(this.BUCKET_STORAGE_KEY, JSON.stringify(items));
   }
+
+
 
 
 

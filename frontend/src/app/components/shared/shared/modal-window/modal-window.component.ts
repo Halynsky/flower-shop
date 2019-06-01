@@ -10,8 +10,14 @@ import { BucketService } from "../../../../services/bucket.service";
 })
 export class ModalWindowComponent {
 
-  constructor(private modalPageService: ModalWindowService, private bucketService: BucketService){
 
+  constructor(private modalPageService: ModalWindowService, private bucketService: BucketService){
   }
+
+//   trackElement() {
+//     this.bucket.forEach((item) => {
+//       this.bucketService.setSum(item.price, true);
+//     })
+// }
 
 }
