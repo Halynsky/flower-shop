@@ -6,20 +6,16 @@ import { el } from "@angular/platform-browser/testing/src/browser_util";
 @Injectable({providedIn: 'root'})
 export class BucketService {
   private readonly BUCKET_STORAGE_KEY = 'bucket';
-  //
-  // private sumToPay = 0;
 
-  // getSum() {
-  //   return this.sumToPay;
-  // }
-  //
-  // setSum(price, bool) {
-  //   if(bool){
-  //     this.sumToPay += price;
-  //   } else {
-  //     this.sumToPay -= price;
-  //   }
-  // }
+  getSum() {
+    let bucket = this.getBucket();
+    let sum = 0;
+    bucket.forEach( item => {
+      let paySum = item.price*item.amount;
+      sum += paySum;
+    });
+    return sum;
+  }
 
   addPurchase(bucketItem: BucketItem) {
     let bucket = this.getBucket();
