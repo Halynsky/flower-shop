@@ -1,6 +1,12 @@
 package ua.com.flowershop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.JpaSort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.com.flowershop.projection.FlowerFullProjection;
@@ -9,8 +15,10 @@ import ua.com.flowershop.projection.FlowerShortProjection;
 import ua.com.flowershop.repository.FlowerRepository;
 import ua.com.flowershop.service.FlowerService;
 import ua.com.flowershop.util.HibernateUtil;
+import ua.com.flowershop.util.annotation.PageableSwagger;
 
 import java.util.List;
+import java.util.Objects;
 
 import static org.springframework.http.HttpStatus.OK;
 
@@ -38,15 +46,24 @@ public class FlowerController {
         return new ResponseEntity<>(flowerService.getFlowerById(id), OK);
     }
 
+    @PageableSwagger
     @GetMapping("/shop")
-    public ResponseEntity<List<FlowerShortProjection>> getForShop(
+    public ResponseEntity<Page<FlowerShortProjection>> getForShop(
+            @RequestParam(required = false) String searchTerm,
             @RequestParam(required = false) List<Long> flowerTypeFilters,
             @RequestParam(required = false) List<Long> sizeFilters,
-            @RequestParam(required = false) List<Long> colorFilters) {
+            @RequestParam(required = false) List<Long> colorFilters,
+            @PageableDefault(sort = "popularity", direction = Sort.Direction.ASC) Pageable pageRequest) {
         flowerTypeFilters = HibernateUtil.fixEmptyFilter(flowerTypeFilters);
         sizeFilters = HibernateUtil.fixEmptyFilter(sizeFilters);
         colorFilters = HibernateUtil.fixEmptyFilter(colorFilters);
-        return new ResponseEntity<>(flowerRepository.findProjectedByFilters(flowerTypeFilters, colorFilters, sizeFilters), OK);
+
+        Sort.Order sortOrder = pageRequest.getSort().get().findFirst().orElse(null);
+        if (Objects.nonNull(sortOrder) && sortOrder.getProperty().equals("price")) {
+            pageRequest = PageRequest.of(pageRequest.getPageNumber(), pageRequest.getPageSize(), JpaSort.unsafe(sortOrder.getDirection(), "(" + sortOrder.getProperty() + ")"));
+        }
+
+        return new ResponseEntity<>(flowerRepository.findProjectedByFilters(searchTerm, flowerTypeFilters, colorFilters, sizeFilters, pageRequest), OK);
     }
 
     @GetMapping("/{id}/full")

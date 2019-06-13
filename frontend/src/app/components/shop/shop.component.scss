@@ -46,6 +46,10 @@
 
       }
 
+      .search-icon {
+        height: initial;
+      }
+
       &.mat-form-field-should-float {
         .mat-form-field-wrapper {
           .mat-form-field-suffix {
@@ -86,7 +90,6 @@
     @include response-from(lg) {
       grid-template-columns: repeat(4, 1fr);
     }
-
 
   }
 
