@@ -7,23 +7,24 @@
   <div class="content-top-bar">
 
     <mat-form-field>
-      <input matInput placeholder="Пошук" #search>
-      <mat-icon matSuffix class="close-icon" (click)="search.value = ''">close</mat-icon>
+      <input matInput placeholder="Пошук" #search [(ngModel)]="searchTerm" (ngModelChange)="searchTermChange($event)">
+      <mat-icon matSuffix class="close-icon" (click)="searchTerm = ''; searchTermCleared()">close</mat-icon>
       <mat-icon matSuffix class="search-icon">search</mat-icon>
     </mat-form-field>
 
     <mat-form-field>
-      <mat-select value="popularity" >
-        <mat-option value="popularity">За популярністю</mat-option>
-        <mat-option value="price">За ціною</mat-option>
-        <mat-option value="supply">За новизною</mat-option>
+      <mat-select [(ngModel)]="sort" value="popularity,ASC" (selectionChange)="sortSelectionChange($event)">
+        <mat-option value="popularity,ASC">За популярністю</mat-option>
+        <mat-option value="price,ASC">Від дешевших до дорощих</mat-option>
+        <mat-option value="price,DESC">Від дорощих до дешевших</mat-option>
+        <mat-option value="created,ASC">За новизною</mat-option>
       </mat-select>
     </mat-form-field>
 
   </div>
 
   <div class="content">
-    <ng-template ngFor let-flower [ngForOf]="flowers" [ngForTrackBy]="trackByFn">
+    <ng-template ngFor let-flower [ngForOf]="flowersPage.content" [ngForTrackBy]="trackByFn">
       <shop-content-item [flower]="flower" [routerLink]="['item', flower.id]"></shop-content-item>
     </ng-template>
   </div>

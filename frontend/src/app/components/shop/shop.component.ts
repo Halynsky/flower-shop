@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FlowerService } from "../../api/services/flower.service";
 import { Flower, FlowerShort } from "../../api/models/Flower";
 import { SnackBarService } from "../../services/snak-bar.service";
+import { ShopFilter } from "../../api/models/ShopFilter";
+import { Pagination } from "../../api/models/Pagination";
+import { RestPage } from "../../api/models/RestPage";
 
 @Component({
   selector: 'shop',
@@ -10,19 +13,24 @@ import { SnackBarService } from "../../services/snak-bar.service";
 })
 export class ShopComponent implements OnInit {
 
-  flowers: FlowerShort[] = [];
+  flowersPage: RestPage<FlowerShort> = new RestPage<FlowerShort>();
+  filters: ShopFilter = new ShopFilter();
+  sort = 'popularity,ASC';
+  searchTerm = '';
+
+  pagination: Pagination = new Pagination(0, 12);
 
   constructor(private flowerService: FlowerService,
               private snackBarService: SnackBarService) {
-    this.getShopItems();
+    this.getShopItems(this.searchTerm, this.pagination);
   }
 
   ngOnInit() {
   }
 
-  getShopItems(filters?) {
-    this.flowerService.getForShop(filters).subscribe(
-      flowers => this.flowers = flowers,
+  getShopItems(searchTerm: string, pagination: Pagination, filters?: ShopFilter) {
+    this.flowerService.getForShop(searchTerm, pagination, filters).subscribe(
+      page => this.flowersPage = page,
       error => this.snackBarService.showError(error)
       )
   }
@@ -32,8 +40,21 @@ export class ShopComponent implements OnInit {
   }
 
   onFilterChange($event) {
-    console.log($event);
-    this.getShopItems($event)
+    this.filters = $event;
+    this.getShopItems(this.searchTerm, this.pagination, this.filters)
+  }
+
+  sortSelectionChange($event) {
+    this.pagination.sort = this.sort;
+    this.getShopItems(this.searchTerm, this.pagination, this.filters)
+  }
+
+  searchTermChange($event) {
+    this.getShopItems(this.searchTerm, this.pagination, this.filters)
+  }
+
+  searchTermCleared() {
+    this.getShopItems(this.searchTerm, this.pagination, this.filters)
   }
 
 }
