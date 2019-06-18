@@ -55,6 +55,7 @@
             color: $grey-900;
             height: 350px;
             width: 550px;
+            font-size: 18px;
 
             span {
               color: mat-color($accent);
@@ -138,6 +139,7 @@
           }
           .description-info {
             color: $grey-900;
+            font-size: 18px;
           }
 
         }
