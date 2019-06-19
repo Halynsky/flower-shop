@@ -1,0 +1,167 @@
+@import "theme";
+@import "mixins.scss";
+
+:host {
+  #filter {
+    background-color: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+  }
+  #modalForm {
+    background-color: white;
+    position: fixed;
+    top: 100px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 150;
+    width: 500px;
+    height: 550px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    .header {
+      display: flex;
+      height: 30px;
+      background-color: $grey-100;
+      align-items: center;
+      .info-head {
+        display: flex;
+        margin-left: 190px;
+        color: black;
+      }
+      .logo-close {
+        margin-left: auto;
+        height: 30px;
+        width: 30px;
+        i {
+          font-size: 30px;
+        }
+        i:hover {
+          background-color: red;
+          color: white;
+          cursor: pointer;
+        }
+      }
+
+    }
+    .main {
+      overflow: auto;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 12px;
+
+      .content {
+
+        display: flex;
+        flex-grow: 1;
+        flex-direction: column;
+
+        .item {
+          @include mat-elevation(2);
+          height: 50px;
+          width: 475px;//410
+          display: flex;
+          flex-direction: row;
+          margin-bottom: 10px;
+          .logo {
+            img {
+              width: 50px;
+              height: 50px;
+            }
+          }
+          .item-main{
+            display: flex;
+            flex-direction: row;
+            .name-size {
+              color: #4caf50;
+
+              font-size: 14px;
+              margin-left: 10px;
+              height: 50px;
+              width: 220px;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              #name {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 150px;
+                #size {
+                  margin-left: 5px;
+                }
+              }
+              #price {
+                margin-left: 5px;
+              }
+            }
+            .amount-delete {
+              width: 185px;
+              height: 50px;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              .amount {
+                color: #4caf50;
+                display: flex;
+                align-items: center;
+                margin-left: 30px;
+                width: 100px;
+                justify-content: space-between;
+                button {
+                  color: white;
+                  height: 30px;
+                  width: 30px;
+                  border-radius: 2px;
+                  border: none;
+                  background-color: mat-color($accent);
+                  cursor: pointer;
+                }
+              }
+              .delete {
+                font-size: 25px;
+              }
+              .delete:hover {
+                color: red;
+                cursor: pointer;
+              }
+            }
+          }
+
+        }
+      }
+
+    }
+    .button-menu {
+      min-height: 60px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      #buy-but {
+        background-color: mat-color($accent);
+      }
+      .sum {
+        color: $grey-500;
+        span {
+          color: mat-color($accent);
+          font-size: 20px;
+        }
+      }
+    }
+  }
+
+  button {
+    color: white;
+    background-color: $grey-400;
+    width: 300px;
+    font-size: 20px;
+  }
+
+}

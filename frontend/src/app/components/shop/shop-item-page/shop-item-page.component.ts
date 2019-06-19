@@ -1,10 +1,14 @@
-import { AfterContentInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { FlowerService } from "../../../api/services/flower.service";
 import { FlowerFull } from "../../../api/models/Flower";
 import { FlowerSize } from "../../../api/models/FlowerSize";
-import { __await } from "tslib";
-import { FlowerType } from "../../../api/models/FlowerType";
+import { MatBottomSheet, MatBottomSheetRef } from "@angular/material";
+import { BottomSheetOverview } from "../../shared/shared/bottom-sheet/bottom-sheet.component";
+import { BucketItem } from "../../../models/BucketItem";
+import { ModalWindowService } from "../../../services/modal-window.service";
+import { BucketService } from "../../../services/bucket.service";
+
 
 @Component({
   selector: 'shop-item-page',
@@ -15,12 +19,13 @@ export class ShopItemPageComponent implements OnInit {
 
   id: number;
   flower: FlowerFull;
-
   amountCounter: number = 1;
   flowerSize: FlowerSize;
   sumToPay: number = 1;
+  bottomSheetRef: MatBottomSheetRef;
+  bucketItem: BucketItem = new BucketItem();
 
-  constructor(private route: ActivatedRoute, private flowerService: FlowerService) {
+  constructor(private route: ActivatedRoute, private flowerService: FlowerService, private modalPageService: ModalWindowService, private bucketService: BucketService, private bottomSheet: MatBottomSheet) {
     this.route.params.subscribe(params => {
       this.id = params['id'];
       this.getFlowerById();
@@ -28,6 +33,19 @@ export class ShopItemPageComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  openBottomSheet(): void {
+    this.bottomSheetRef = this.bottomSheet.open(BottomSheetOverview);
+  }
+
+  addToBucket() {
+    this.bucketItem.amount = this.amountCounter;
+    this.bucketItem.name = this.flower.name;
+    this.bucketItem.size = this.flowerSize.size.name;
+    this.bucketItem.price = this.flowerSize.price;
+    this.bucketItem.image = this.flower.image;
+    this.bucketService.addPurchase(this.bucketItem);
   }
 
   getFlowerById() {
@@ -53,6 +71,7 @@ export class ShopItemPageComponent implements OnInit {
       this.amountCounter--;
     }
     this.sumToPay = this.flowerSize.price * this.amountCounter;
+    // this.bucketService.clearBucket();
   }
 
   trackElement(index, flowerSize) {
@@ -60,5 +79,6 @@ export class ShopItemPageComponent implements OnInit {
     this.sumToPay = flowerSize.price;
     this.amountCounter = 1;
   }
+
 
 }

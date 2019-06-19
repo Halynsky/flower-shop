@@ -42,7 +42,7 @@ public class Flower {
     private Boolean hasDiscount;
     private Boolean isPopular;
     @Min(1)
-    @Max(2)
+    @Max(10)
     private Integer popularity = 1;
 
     private LocalDateTime created = LocalDateTime.now();

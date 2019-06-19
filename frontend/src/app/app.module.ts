@@ -13,6 +13,7 @@ import { registerLocaleData } from '@angular/common';
 import localeRuUa from '@angular/common/locales/uk';
 import { HttpClientModule } from "@angular/common/http";
 import { RouterModule } from "@angular/router";
+import { BottomSheetOverview } from "./components/shared/shared/bottom-sheet/bottom-sheet.component";
 registerLocaleData(localeRuUa);
 
 @NgModule({

@@ -16,27 +16,54 @@
 
   <div class="login-button-wrapper" *ngIf="!securityService.isAuthenticated()">
 
-    <button mat-button [matMenuTriggerFor]="authMenu" class="login-button">
-      <i class="material-icons md-18">exit_to_app</i>
-      <span>Увійти</span>
-    </button>
+    <div class="login-with-bucket">
+      <button mat-button [matMenuTriggerFor]="bucket" class="bucket-button">
+        <div class="bucket">
+          <i class="fas fa-shopping-cart"></i>
+            <div class="bucket-index" *ngIf="bucketService.getBucket().length > 0">
+            <div>{{bucketService.getBucket().length}}</div>
+            </div>
+        </div>
+      </button>
 
-    <button mat-button [matMenuTriggerFor]="authMenu" class="mobile-login-button">
-      <mat-icon aria-label="Login">account_circle</mat-icon>
-    </button>
+      <button mat-button [matMenuTriggerFor]="authMenu" class="login-button">
+        <i class="material-icons md-18">exit_to_app</i>
+        <span>Увійти</span>
+      </button>
+
+      <button mat-button [matMenuTriggerFor]="authMenu" class="mobile-login-button">
+        <mat-icon aria-label="Login">account_circle</mat-icon>
+      </button>
+    </div>
+
+
   </div>
 
   <div class="login-button-wrapper" *ngIf="securityService.isAuthenticated()">
 
-    <button mat-button [matMenuTriggerFor]="userMenu" class="login-button">
-      <mat-icon aria-label="Login">account_circle</mat-icon>
-      <span>Василько Пупкін</span>
-    </button>
+    <div class="login-with-bucket">
+      <button mat-button [matMenuTriggerFor]="bucket" class="bucket-button">
+        <div class="bucket" >
+          <i class="fas fa-shopping-cart"></i>
+          <div class="bucket-index" *ngIf="bucketService.getBucket().length > 0">
+            <div>{{bucketService.getBucket().length}}</div>
+          </div>
+        </div>
+      </button>
 
-    <button mat-button [matMenuTriggerFor]="userMenu" class="mobile-login-button">
-      <mat-icon aria-label="Login">account_circle</mat-icon>
-    </button>
+      <button mat-button [matMenuTriggerFor]="userMenu" class="login-button">
+        <mat-icon aria-label="Login">account_circle</mat-icon>
+        <span>Василько Пупкін</span>
+      </button>
+
+      <button mat-button [matMenuTriggerFor]="userMenu" class="mobile-login-button">
+        <mat-icon aria-label="Login">account_circle</mat-icon>
+      </button>
+    </div>
+
   </div>
+
+
 
 </div>
 
@@ -72,6 +99,16 @@
     <i class="fas fa-sign-out-alt"></i>
     <span>Вийти</span>
   </button>
+</mat-menu>
+
+<mat-menu #bucket="matMenu" class="bucket-menu">
+  <div class="default-bucket-info" *ngIf="bucketService.getBucket().length == 0">У вас ще немає покупок</div>
+  <div *ngIf="bucketService.getBucket().length > 0">
+    <div class="bucket-wrapper">
+      <div class="bucket-flower-button" *ngFor="let bucketFlower of bucketService.getBucket()"><div class="name-in-bucket">{{bucketFlower.name}}</div><div class="size-in-bucket">{{bucketFlower.size}}</div><div class="price-in-bucket">{{(bucketFlower.price*bucketFlower.amount)/100}} грн</div></div>
+    </div>
+    <div class="accept-but"><button (click)="modalWindowService.showModal()">Оформити замовлення</button></div>
+  </div>
 </mat-menu>
 
 

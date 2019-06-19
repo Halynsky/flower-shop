@@ -53,7 +53,7 @@ public class FlowerController {
             @RequestParam(required = false) List<Long> flowerTypeFilters,
             @RequestParam(required = false) List<Long> sizeFilters,
             @RequestParam(required = false) List<Long> colorFilters,
-            @PageableDefault(sort = "popularity", direction = Sort.Direction.ASC) Pageable pageRequest) {
+            @PageableDefault(sort = "popularity", direction = Sort.Direction.DESC) Pageable pageRequest) {
         flowerTypeFilters = HibernateUtil.fixEmptyFilter(flowerTypeFilters);
         sizeFilters = HibernateUtil.fixEmptyFilter(sizeFilters);
         colorFilters = HibernateUtil.fixEmptyFilter(colorFilters);

@@ -3,25 +3,34 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import {
-  MAT_SNACK_BAR_DEFAULT_OPTIONS,
-  MatButtonModule, MatButtonToggleModule,
+  MAT_BOTTOM_SHEET_DEFAULT_OPTIONS,
+  MAT_SNACK_BAR_DEFAULT_OPTIONS, MatBottomSheetModule,
+  MatButtonModule,
+  MatButtonToggleModule,
   MatCheckboxModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
-  MatMenuModule, MatSelectModule,
+  MatListModule,
+  MatMenuModule,
+  MatSelectModule,
   MatSnackBarModule
 } from "@angular/material";
 import { ArticleCardComponent } from './article-card/article-card.component';
 import { RouterModule } from "@angular/router";
+import { ModalWindowComponent } from "./modal-window/modal-window.component";
+import { BottomSheetOverview } from "./bottom-sheet/bottom-sheet.component";
 
 const PROVIDERS = [
-  { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 5000, panelClass: "snack-custom-class"} }
+  {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 5000, panelClass: "snack-custom-class"}},
+  {provide: MAT_BOTTOM_SHEET_DEFAULT_OPTIONS, useValue: {hasBackdrop: true, backdropClass: "bottom-sheet-custom-class", closeOnNavigation: true}}
 ];
 
 @NgModule({
   declarations: [
-    ArticleCardComponent
+    ArticleCardComponent,
+    ModalWindowComponent,
+    BottomSheetOverview
   ],
   imports: [
     RouterModule,
@@ -37,7 +46,9 @@ const PROVIDERS = [
     MatFormFieldModule,
     MatInputModule,
     MatButtonToggleModule,
-    MatSelectModule
+    MatSelectModule,
+    MatListModule,
+    MatBottomSheetModule
   ],
   exports: [
     RouterModule,
@@ -55,17 +66,24 @@ const PROVIDERS = [
     MatButtonToggleModule,
     MatSelectModule,
     // Developed components
-    ArticleCardComponent
+    ArticleCardComponent,
+    ModalWindowComponent
   ],
   providers: [
     ...PROVIDERS
+  ],
+  entryComponents: [
+    BottomSheetOverview
+  ],
+  bootstrap: [
+    BottomSheetOverview
   ]
 })
 export class SharedModule {
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: SharedModule,
-      providers: [ ...PROVIDERS ]
+      providers: [...PROVIDERS]
     };
   }
 }
