@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { SecurityService } from "../../services/security.service";
 import { BucketService } from "../../services/bucket.service";
+import { ModalWindowService } from "../../services/modal-window.service";
 
 @Component({
   selector: 'layout-header',
@@ -10,10 +11,9 @@ import { BucketService } from "../../services/bucket.service";
 
 export class HeaderComponent {
 
-  constructor(public securityService: SecurityService, private bucketService: BucketService) {
+  constructor(private securityService: SecurityService, private bucketService: BucketService, private modalWindowService: ModalWindowService) {
 
   }
-
 
 
 }

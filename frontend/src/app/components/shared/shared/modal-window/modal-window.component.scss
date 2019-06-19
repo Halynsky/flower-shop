@@ -94,6 +94,9 @@
                 align-items: center;
                 justify-content: space-between;
                 width: 150px;
+                #size {
+                  margin-left: 5px;
+                }
               }
               #price {
                 margin-left: 5px;
@@ -143,6 +146,13 @@
       align-items: center;
       #buy-but {
         background-color: mat-color($accent);
+      }
+      .sum {
+        color: $grey-500;
+        span {
+          color: mat-color($accent);
+          font-size: 20px;
+        }
       }
     }
   }

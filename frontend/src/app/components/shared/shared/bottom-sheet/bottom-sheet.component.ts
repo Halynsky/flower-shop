@@ -8,7 +8,7 @@ import { ModalWindowService } from "../../../../services/modal-window.service";
   templateUrl: './bottom-sheet.component.html',
 })
 export class BottomSheetOverview {
-  constructor(private bottomSheetRef: MatBottomSheetRef<BottomSheetOverview>, public bucketService: BucketService, public modalWindowService: ModalWindowService) {
+  constructor(private bottomSheetRef: MatBottomSheetRef<BottomSheetOverview>, private bucketService: BucketService, private modalWindowService: ModalWindowService) {
   }
 
   openLink(event: MouseEvent): void {

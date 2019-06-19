@@ -17,7 +17,7 @@
           <div class="name-size">
             <div id="name">
               <div>{{item.name}}</div>
-              <div>{{item.size}}</div>
+              <div id="size">{{item.size}}</div>
             </div>
             <div id="price">{{(item.price/100)*item.amount}} грн</div>
           </div>
@@ -36,7 +36,7 @@
     </div>
   </div>
   <div class="button-menu">
-    <div>До оплати: {{bucketService.getSum()/100}} грн</div>
+    <div class="sum">До оплати: <span>{{bucketService.getSum()/100}} грн</span></div>
     <button mat-raised-button id="buy-but">Підтвердити замовлення</button>
   </div>
 </div>
