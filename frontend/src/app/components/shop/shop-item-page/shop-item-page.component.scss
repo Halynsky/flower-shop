@@ -2,149 +2,150 @@
 @import "mixins.scss";
 
 :host {
-  display: flex;
-  justify-self: center;
-  align-self: center;
-  flex-direction: column;
-
-  .title {
     display: flex;
+    justify-self: center;
+    align-self: center;
     flex-direction: column;
-    margin: 36px 0px 12px 0px;
-    color: mat-color($accent);
-    font-size: 2em;
-    div {
+    .title {
       display: flex;
-      align-items: center;
-      span{
-        margin: 5px 0px 0px 10px;
+      flex-direction: column;
+      margin: 36px 0px 12px 0px;
+      color: mat-color($accent);
+      font-size: 2em;
+      div {
+        display: flex;
+        align-items: center;
+        span{
+          margin: 5px 0px 0px 10px;
+          font-size: 15px;
+          color: $grey-900;
+        }
+      }
+      #flower-type {
+        margin: 12px 0px 0px 5px;
         font-size: 15px;
         color: $grey-900;
       }
     }
-    #flower-type {
-      margin: 12px 0px 0px 5px;
-      font-size: 15px;
-      color: $grey-900;
-    }
-  }
 
-  .main {
-    display: flex;
-    width: 1100px;
-    height: 100%;
-    flex-grow: 1;
-    .content{
-      @include mat-elevation(2);
-      padding: 12px;
+    .main {
+      display: flex;
       width: 1100px;
+      height: 100%;
+      flex-grow: 1;
+      .content{
+        @include mat-elevation(2);
+        padding: 12px;
+        width: 1100px;
 
-      .content-head {
-        display: flex;
+        .content-head {
+          display: flex;
 
-        .flower-logo {
-          margin: 0px 12px 0px 0px;
-          height: 350px;
-
-          img {
-            width: 350px;
+          .flower-logo {
+            margin: 0px 12px 0px 0px;
             height: 350px;
+
+            img {
+              width: 350px;
+              height: 350px;
+            }
+
           }
+          .flower-info {
+            color: $grey-900;
+            height: 350px;
+            width: 550px;
+            font-size: 18px;
 
+            span {
+              color: mat-color($accent);
+              font-size: 1.5em;
+            }
+
+          }
+          .buy-menu {
+            color: $grey-900;
+            height: 350px;
+            width: 300px;
+            .sizes-chooser {
+              display: flex;
+              flex-direction: column;
+              height: 125px;
+              align-items: center;
+              justify-content: space-between;
+              mat-button-toggle-group {
+                font-weight: bold;
+              }
+              #size-flower {
+                margin-top: 6px;
+              }
+              #price {
+                margin-bottom: 6px;
+              }
+            }
+            .amount-counter {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: space-around;
+              height: 125px;
+              font-size: 2em;
+              button {
+                font-weight: bold;
+              }
+              #counter-output {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 36px;
+                width: 36px;
+              }
+              .count-buttons {
+                margin-top: 24px;
+                display: flex;
+                flex-direction: row;
+              }
+              .summary-to-pay {
+                margin-top: 48px;
+              }
+            }
+            .buy-button {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              height: 100px;
+              justify-content: flex-end;
+              button {
+                background-color: mat-color($accent);
+                color: white;
+                height: 50px;
+                font-size: 2em;
+                font-weight: bold;
+              }
+            }
+
+          }
         }
-        .flower-info {
-          color: $grey-900;
-          height: 350px;
-          width: 550px;
 
-          span {
+        .content-description {
+          display: flex;
+          flex-direction: column;
+          margin: 24px 0px 0px 0px;
+
+          .description-head {
             color: mat-color($accent);
             font-size: 1.5em;
+            margin-bottom: 12px;
+          }
+          .description-info {
+            color: $grey-900;
+            font-size: 18px;
           }
 
-        }
-        .buy-menu {
-          color: $grey-900;
-          height: 350px;
-          width: 300px;
-          .sizes-chooser {
-            display: flex;
-            flex-direction: column;
-            height: 125px;
-            align-items: center;
-            justify-content: space-between;
-            mat-button-toggle-group {
-              font-weight: bold;
-            }
-            #size-flower {
-              margin-top: 6px;
-            }
-            #price {
-              margin-bottom: 6px;
-            }
-          }
-          .amount-counter {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-around;
-            height: 125px;
-            font-size: 2em;
-            button {
-              font-weight: bold;
-            }
-            #counter-output {
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              height: 36px;
-              width: 36px;
-            }
-            .count-buttons {
-              margin-top: 24px;
-              display: flex;
-              flex-direction: row;
-            }
-            .summary-to-pay {
-              margin-top: 48px;
-            }
-          }
-          .buy-button {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 100px;
-            justify-content: flex-end;
-            button {
-              background-color: mat-color($accent);
-              color: white;
-              height: 50px;
-              font-size: 2em;
-              font-weight: bold;
-            }
-          }
-
-        }
-      }
-
-      .content-description {
-        display: flex;
-        flex-direction: column;
-        margin: 24px 0px 0px 0px;
-
-        .description-head {
-          color: mat-color($accent);
-          font-size: 1.5em;
-          margin-bottom: 12px;
-        }
-        .description-info {
-          color: $grey-900;
         }
 
       }
 
     }
-
-  }
 
 }
