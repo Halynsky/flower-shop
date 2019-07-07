@@ -28,6 +28,8 @@ import { FlowersComponent } from "./types/flowers/flowers.component";
 import { SizeItemComponent } from './types/sizes/size-item/size-item.component';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ColorItemComponent } from "./types/colors/color-item/color-item.component";
+import { FlowerTypeItemComponent } from "./types/flower-types/flower-type-item/flower-type-item.component";
+import { FlowerItemComponent } from "./types/flowers/flower-item/flower-item.component";
 
 
 @NgModule({
@@ -42,7 +44,9 @@ import { ColorItemComponent } from "./types/colors/color-item/color-item.compone
     BlogComponent,
     OrdersComponent,
     FlowersComponent,
+    FlowerItemComponent,
     FlowerTypesComponent,
+    FlowerTypeItemComponent,
     SizesComponent,
     SizeItemComponent,
     ColorsComponent,

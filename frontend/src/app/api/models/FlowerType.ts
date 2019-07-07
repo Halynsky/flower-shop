@@ -1,5 +1,5 @@
 export class FlowerType {
-  id: number;
+  id?: number;
   name: string;
   nameSingle: string;
   flowersCount: number;

@@ -1,0 +1,55 @@
+<div class="panel-header item ui-grid-col-4">
+  <button pButton icon="fa fa-arrow-left" class="button-back" label="Назад" routerLink="../../"></button>
+  <h1>{{mode == ItemSaveMode.new ? 'Додати' : 'Оновити'}} <b>Тип Квітів</b></h1>
+</div>
+
+<div class="panel-content">
+
+  <form #form="ngForm" class="item-form" (ngSubmit)="form.valid && onSubmit()">
+
+    <div class="ui-grid ui-grid-responsive ui-fluid">
+
+      <div class="prime-form-group">
+        <div class="ui-grid-col-2">
+          <label for="name">Назва</label>
+        </div>
+        <div class="ui-grid-col-2">
+          <input
+            pInputText
+            #name="ngModel"
+            id="name"
+            name="name"
+            [(ngModel)]="item.name"/>
+        </div>
+        <div class="ui-grid-col-2">
+        </div>
+      </div>
+
+      <div class="prime-form-group">
+        <div class="ui-grid-col-2">
+          <label for="nameSingle">Назва(однина)</label>
+        </div>
+        <div class="ui-grid-col-2">
+          <input
+            pInputText
+            #nameSingle="ngModel"
+            id="nameSingle"
+            name="nameSingle"
+            [(ngModel)]="item.nameSingle"/>
+        </div>
+        <div class="ui-grid-col-2">
+        </div>
+      </div>
+
+    </div>
+
+    <div class="ui-grid-row ui-grid-field">
+      <div class="ui-grid-col-4 footer">
+        <button type="submit" pButton icon="pi pi-check" class="ui-button-success" label="{{mode == ItemSaveMode.new ? 'Зберегти' : 'Оновити'}}"></button>
+      </div>
+    </div>
+
+  </form>
+
+</div>
+

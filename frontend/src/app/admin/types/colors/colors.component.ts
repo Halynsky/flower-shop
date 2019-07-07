@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SnackBarService } from "../../../services/snak-bar.service";
-import { Color, ColorAdmin } from "../../../api/models/Color";
+import { ColorAdmin } from "../../../api/models/Color";
 import { ColorService } from "../../../api/services/color.service";
-import { LabelValueTuple } from "../../../models/LabelValueTuple";
 import { getErrorMessage } from "../../../utils/Functions";
 import { ConfirmationService } from "primeng/api";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -55,15 +54,10 @@ export class ColorsComponent implements OnInit {
     )
   }
 
-  edit(event) {
-    console.log(this.selected);
-    console.log(event);
-  }
-
   remove(event) {
     this.dataService.delete(this.selected.id).subscribe(
       response => {
-        this.snackBarService.showSuccess("Колір успішно видалено");
+        this.snackBarService.showSuccess("'Колір' успішно видалено");
         this.loadData();
       },
       error => this.snackBarService.showError(getErrorMessage(error))
@@ -72,11 +66,11 @@ export class ColorsComponent implements OnInit {
 
   confirmRemove(event) {
     if (this.selected.flowersCount > 0) {
-      return this.snackBarService.showWarning("Видалення Кольору який привязаний до квітів не можливе")
+      return this.snackBarService.showWarning("Видалення 'Кольору' який привязаний до квітів не можливе")
     }
 
     this.confirmationService.confirm({
-      message: 'Ви впевнені що хочете видалити данний Колір?',
+      message: "Ви впевнені що хочете видалити данний 'Колір'?",
       accept: () => {
         this.remove(event)
       }

@@ -20,9 +20,14 @@ public class FlowerSize {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Integer reserved;
-    private Integer amount;
-    private Integer price;
+    @Column(columnDefinition = "integer default 0")
+    private Integer reserved = 0;
+    @Column(columnDefinition = "integer default 0")
+    private Integer amount = 0;
+    @Column(columnDefinition = "integer default 10000")
+    private Integer price = 10000;
+    @Column(columnDefinition = "integer default 0")
+    private Integer sold = 0;
 
     @ManyToOne
     @JoinColumn(name = "flower_id")

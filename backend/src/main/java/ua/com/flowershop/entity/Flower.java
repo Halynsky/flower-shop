@@ -44,7 +44,7 @@ public class Flower {
     @Min(1)
     @Max(10)
     private Integer popularity = 1;
-
+    @Column(columnDefinition = "timestamp default timezone('utc'::text, now())")
     private LocalDateTime created = LocalDateTime.now();
     private LocalDateTime lastSupply;
 

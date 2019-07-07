@@ -26,6 +26,9 @@ import static org.springframework.http.HttpStatus.OK;
 @RequestMapping("api/flowers")
 public class FlowerController {
 
+//    TODO: Create FlowerAdminProjection nad insert it in to forAdmin
+//    TODO: Save and update from admin panel
+
     @Autowired
     private FlowerService flowerService;
     @Autowired

@@ -40,4 +40,18 @@ export class FlowerService {
   getFlowerFullById(id: number) {
     return this.http.get<FlowerFull>(`${this.URL}/${id}/full`);
   }
+
+  add(flower: Flower) {
+    return this.http.post(`${this.URL}`, flower);
+  }
+
+  update(id: number, flower: Flower) {
+    return this.http.put(`${this.URL}/${id}`, flower);
+  }
+
+  delete(id: number) {
+    return this.http.delete(`${this.URL}/${id}`);
+  }
+
+
 }

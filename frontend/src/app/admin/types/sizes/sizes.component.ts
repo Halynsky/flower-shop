@@ -52,15 +52,10 @@ export class SizesComponent implements OnInit {
     )
   }
 
-  edit(event) {
-    console.log(this.selected);
-    console.log(event);
-  }
-
   remove(event) {
     this.dataService.delete(this.selected.id).subscribe(
       response => {
-        this.snackBarService.showSuccess("Розмір успішно видалено");
+        this.snackBarService.showSuccess("'Розмір' успішно видалено");
         this.loadData();
       },
       error => this.snackBarService.showError(getErrorMessage(error))
@@ -69,11 +64,11 @@ export class SizesComponent implements OnInit {
 
   confirmRemove(event) {
       if (this.selected.flowersCount > 0) {
-        return this.snackBarService.showWarning("Видалення Розміру який привязаний до квітів не можливе")
+        return this.snackBarService.showWarning("Видалення 'Розміру' який привязаний до квітів не можливе")
       }
 
       this.confirmationService.confirm({
-        message: 'Ви впевнені що хочете видалити данний Розмір?',
+        message: "Ви впевнені що хочете видалити данний 'Розмір'?",
         accept: () => {
           this.remove(event)
         }

@@ -18,4 +18,16 @@ export class FlowerTypeService {
     return this.http.get<FlowerType>(`${this.URL}/${id}`);
   }
 
+  add(flowerType: FlowerType) {
+    return this.http.post(`${this.URL}`, flowerType);
+  }
+
+  update(id: number, flowerType: FlowerType) {
+    return this.http.put(`${this.URL}/${id}`, flowerType);
+  }
+
+  delete(id: number) {
+    return this.http.delete(`${this.URL}/${id}`);
+  }
+
 }
