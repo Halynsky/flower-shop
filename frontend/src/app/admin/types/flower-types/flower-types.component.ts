@@ -13,7 +13,8 @@ export class FlowerTypesComponent implements OnInit {
 
   cols = [
     {field: 'id', header: 'Id'},
-    {field: 'name', header: 'Імя'},
+    {field: 'name', header: 'Назва'},
+    {field: 'nameSingle', header: 'Назва(однина)'},
     {field: 'flowersCount', header: 'Кількість Квітів'},
   ];
 

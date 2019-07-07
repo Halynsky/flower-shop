@@ -14,8 +14,8 @@ export class FlowersComponent implements OnInit {
 
   cols = [
     {field: 'id', header: 'Id'},
-    {field: 'name', header: 'Імя'},
-    {field: 'nameOriginal', header: 'Імя Англ'},
+    {field: 'name', header: 'Назва'},
+    {field: 'nameOriginal', header: 'Назва(англ)'},
     {field: 'flowerType', header: 'Тип квітки'}
   ];
 

@@ -18,6 +18,7 @@
       <tr>
         <th *ngFor="let col of columns" [ngSwitch]="col.field">
           <input *ngSwitchCase="'name'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" class="table-filter">
+          <input *ngSwitchCase="'nameSingle'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" class="table-filter">
         </th>
       </tr>
     </ng-template>

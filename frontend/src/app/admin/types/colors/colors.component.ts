@@ -19,7 +19,7 @@ export class ColorsComponent implements OnInit {
 
   cols = [
     { field: 'id', header: 'Id' },
-    { field: 'name', header: 'Імя' },
+    { field: 'name', header: 'Назва' },
     { field: 'flowersCount', header: 'Кількість квітів' },
     { field: 'hex', header: 'Hex' },
     { field: 'example', header: 'Приклад' }
