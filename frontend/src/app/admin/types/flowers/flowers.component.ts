@@ -17,12 +17,12 @@ export class FlowersComponent implements OnInit {
 
   ItemSaveMode = ItemSaveMode;
 
-  cols = [
-    {field: 'id', header: 'Id'},
-    {field: 'name', header: 'Назва'},
-    {field: 'nameOriginal', header: 'Назва(англ)'},
-    {field: 'flowerType', header: 'Тип квітки'}
-  ];
+  // cols = [
+  //   {field: 'id', header: 'Id'},
+  //   {field: 'name', header: 'Назва'},
+  //   {field: 'nameOriginal', header: 'Назва(англ)'},
+  //   {field: 'flowerType', header: 'Тип квітки'}
+  // ];
 
   items: Flower[] = [];
   selected: Flower;
