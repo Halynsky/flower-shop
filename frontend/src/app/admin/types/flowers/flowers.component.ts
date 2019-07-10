@@ -17,6 +17,12 @@ export class FlowersComponent implements OnInit {
 
   ItemSaveMode = ItemSaveMode;
 
+  sizeTimeout: any;
+  sizeFilter: number[] = [1, 25];
+
+  heightTimeout: any;
+  heightFilter: number[] = [15, 160];
+
   // cols = [
   //   {field: 'id', header: 'Id'},
   //   {field: 'name', header: 'Назва'},
@@ -28,12 +34,19 @@ export class FlowersComponent implements OnInit {
   selected: Flower;
 
   menuItems = [
-    { label: 'Редагувати',
+    {
+      label: 'Редагувати',
       icon: 'fa fa-fw fa-pencil',
-      command: () => this.router.navigate(['item', ItemSaveMode.edit], {relativeTo: this.route, queryParams: {id: this.selected.id}})},
-    { label: 'Видалити',
+      command: () => this.router.navigate(['item', ItemSaveMode.edit], {
+        relativeTo: this.route,
+        queryParams: {id: this.selected.id}
+      })
+    },
+    {
+      label: 'Видалити',
       icon: 'fa fa-fw fa-trash',
-      command: (event) => this.confirmRemove(event)},
+      command: (event) => this.confirmRemove(event)
+    },
   ];
 
   constructor(private dataService: FlowerService,
@@ -84,6 +97,29 @@ export class FlowersComponent implements OnInit {
     });
   }
 
+  onSizeChange(event, dt, isSize) {
+    console.log(event)
+    if (isSize){
+      if (this.sizeTimeout) {
+        clearTimeout(this.sizeTimeout);
+      }
+
+      this.sizeTimeout = setTimeout(() => {
+        dt.filter(event.values[0]-1, 'flowerSizeMin', 'gt');
+        dt.filter(event.values[1], 'flowerSizeMax', 'lte');
+      }, 250);
+    } else {
+
+      if (this.heightTimeout) {
+        clearTimeout(this.heightTimeout);
+      }
+
+      this.heightTimeout = setTimeout(() => {
+        dt.filter(event.values[0]-1, 'flowerHeightMin', 'gt');
+        dt.filter(event.values[1], 'flowerHeightMax', 'lte');
+      }, 250);
+    }
+  }
 }
 
 

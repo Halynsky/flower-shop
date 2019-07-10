@@ -9,7 +9,7 @@ import {
   ConfirmDialogModule, ContextMenuModule, InputTextModule,
   MenuModule, MessageModule,
   MultiSelectModule,
-  PanelMenuModule,
+  PanelMenuModule, SliderModule,
   TieredMenuModule
 } from "primeng/primeng";
 import { AdminSidebarComponent } from './admin-layout/admin-sidebar/admin-sidebar.component';
@@ -70,7 +70,8 @@ import { FlowerItemComponent } from "./types/flowers/flower-item/flower-item.com
     InputTextModule,
     ContextMenuModule,
     MessageModule,
-    ColorPickerModule
+    ColorPickerModule,
+    SliderModule
   ],
   providers: [
     ConfirmationService

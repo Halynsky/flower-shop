@@ -14,22 +14,30 @@
       <tr>
         <th [pSortableColumn]="'id'">
           Id
-        <p-sortIcon></p-sortIcon>
+        <p-sortIcon [field]="'id'"></p-sortIcon>
         </th>
         <th>
           Фото
         </th>
         <th [pSortableColumn]="'name'">
           Назва
-          <p-sortIcon></p-sortIcon>
+          <p-sortIcon [field]="'name'"></p-sortIcon>
         </th>
         <th [pSortableColumn]="'nameOriginal'">
           Назва(англ)
-          <p-sortIcon></p-sortIcon>
+          <p-sortIcon [field]="'nameOriginal'"></p-sortIcon>
         </th>
         <th [pSortableColumn]="'flowerType.name'">
           Тип квітки
-          <p-sortIcon></p-sortIcon>
+          <p-sortIcon [field]="'flowerType.name'"></p-sortIcon>
+        </th>
+        <th [pSortableColumn]="'flowerSizeMin'">
+          Розмір
+          <p-sortIcon [field]="'flowerSizeMin'"></p-sortIcon>
+        </th>
+        <th [pSortableColumn]="'flowerHeightMin'">
+          Висота
+          <p-sortIcon [field]="'flowerHeightMin'"></p-sortIcon>
         </th>
       </tr>
       <tr>
@@ -39,12 +47,24 @@
           <input pInputText type="text" (input)="dt.filter($event.target.value, 'name', 'contains')"
                  class="table-filter">
         </th>
-        <th></th>
+        <th>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'nameOriginal', 'contains')"
+                 class="table-filter">
+        </th>
         <th>
           <p-multiSelect [options]="items | pluck: 'flowerType' | deep | uniq | map: mapForFilter" defaultLabel="Всі"
                          class="table-filter"
                          (onChange)="dt.filter($event.value, 'flowerType.id', 'in')"></p-multiSelect>
         </th>
+        <th>
+           {{this.sizeFilter[0]}} — {{this.sizeFilter[1]}}
+          <p-slider [style]="{'width':'100%','margin-top':'8px'}" [(ngModel)]="sizeFilter" [min]="1" [range]="true" [max]="25" [step]="1" (onChange)="onSizeChange($event, dt, true)"></p-slider>
+        </th>
+        <th>
+          {{this.heightFilter[0]}} — {{this.heightFilter[1]}}
+          <p-slider [style]="{'width':'100%','margin-top':'8px'}" [(ngModel)]="heightFilter" [min]="15" [range]="true" [max]="160" [step]="1" (onChange)="onSizeChange($event, dt, false)"></p-slider>
+        </th>
+
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-rowData>
@@ -65,7 +85,12 @@
         <td>
             {{rowData['flowerType'].name}}
         </td>
-
+        <td>
+          {{rowData['flowerSizeMin']}} см — {{rowData['flowerSizeMax']}} см
+        </td>
+        <td>
+          {{rowData['flowerHeightMin']}} см — {{rowData['flowerHeightMax']}} см
+        </td>
       </tr>
     </ng-template>
   </p-table>
