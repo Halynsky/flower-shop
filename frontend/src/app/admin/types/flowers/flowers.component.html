@@ -9,7 +9,7 @@
 
 <div class="panel-content">
   <p-table #dt [value]="items" sortField="id" [paginator]="true" [rows]="10"
-           [tableStyle]="{'table-layout':'auto'}" [contextMenu]="cm" [(contextMenuSelection)]="selected">
+           [tableStyle]="{'table-layout':'auto'}" [contextMenu]="cm" [(contextMenuSelection)]="selected" [customSort]="true" (sortFunction)="sortData($event)">
     <ng-template pTemplate="header">
       <tr>
         <th [pSortableColumn]="'id'">
@@ -35,7 +35,7 @@
           Розмір
           <p-sortIcon [field]="'flowerSizeMin'"></p-sortIcon>
         </th>
-        <th [pSortableColumn]="'flowerHeightMin'">
+        <th [pSortableColumn]="'flowerHeightMin'" >
           Висота
           <p-sortIcon [field]="'flowerHeightMin'"></p-sortIcon>
         </th>

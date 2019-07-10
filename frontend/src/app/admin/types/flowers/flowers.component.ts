@@ -5,7 +5,7 @@ import { FlowerService } from "../../../api/services/flower.service";
 import { getErrorMessage } from "../../../utils/Functions";
 import { ItemSaveMode } from "../../../models/ItemSaveMode";
 import { FlowerType } from "../../../api/models/FlowerType";
-import { ConfirmationService } from "primeng/api";
+import { ConfirmationService, SortEvent } from "primeng/api";
 import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
@@ -119,6 +119,36 @@ export class FlowersComponent implements OnInit {
         dt.filter(event.values[1], 'flowerHeightMax', 'lte');
       }, 250);
     }
+  }
+
+  sortData(event: SortEvent) {
+      event.data.sort((data1, data2) => {
+        let value1, value2;
+        if (event.field == 'flowerSizeMin' && event.order == -1) {
+           value1 = data1['flowerSizeMax'];
+           value2 = data2['flowerSizeMax'];
+        } else if (event.field == 'flowerHeightMin' && event.order == -1){
+           value1 = data1['flowerHeightMax'];
+           value2 = data2['flowerHeightMax'];
+        } else {
+          value1 = data1[event.field];
+          value2 = data2[event.field];
+        }
+
+        let result = null;
+        if (value1 == null && value2 != null)
+          result = -1;
+        else if (value1 != null && value2 == null)
+          result = 1;
+        else if (value1 == null && value2 == null)
+          result = 0;
+        else if (typeof value1 === 'string' && typeof value2 === 'string')
+          result = value1.localeCompare(value2);
+        else
+          result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;
+
+        return (event.order * result);
+      });
   }
 }
 
