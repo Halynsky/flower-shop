@@ -22,9 +22,9 @@ public class Color {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String name;
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String hex;
 
     @OneToMany(mappedBy = "color", fetch = FetchType.LAZY)
