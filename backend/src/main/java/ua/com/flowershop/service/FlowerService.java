@@ -14,8 +14,7 @@ import java.util.List;
 @Service
 public class FlowerService {
 
-    @Autowired
-    private FlowerRepository flowerRepository;
+    @Autowired private FlowerRepository flowerRepository;
 
     public List<FlowerFullProjection> findForAdmin() {
         return flowerRepository.findForAdminProjectedBy();

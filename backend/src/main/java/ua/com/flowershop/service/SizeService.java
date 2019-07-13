@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import ua.com.flowershop.entity.Size;
 import ua.com.flowershop.exception.NotFoundException;
 import ua.com.flowershop.model.SizeModel;
-import ua.com.flowershop.projection.SizeAdminProjection;
 import ua.com.flowershop.projection.SizeProjection;
 import ua.com.flowershop.repository.SizeRepository;
 
@@ -15,8 +14,8 @@ import java.util.List;
 @Slf4j
 @Service
 public class SizeService {
-    @Autowired
-    private SizeRepository sizeRepository;
+
+    @Autowired private SizeRepository sizeRepository;
 
     public List<SizeProjection> getAllSizes() {
         return sizeRepository.findProjectedBy();

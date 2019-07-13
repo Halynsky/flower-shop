@@ -12,9 +12,13 @@ import java.util.Optional;
 public interface FlowerTypeRepository extends JpaRepository<FlowerType, Long> {
 
     Optional<FlowerTypeProjection> findProjectedByName(String name);
+
     List<FlowerTypeProjection> findProjectedByNameStartingWith(String name);
+
     List<FlowerTypeProjection> findProjectedByOrderByName();
+
     Optional<FlowerTypeProjection> findProjectedById(Long id);
+
     List<FlowerTypeProjection> findProjectedBy();
 
 }

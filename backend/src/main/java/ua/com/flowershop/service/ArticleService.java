@@ -12,12 +12,8 @@ import ua.com.flowershop.repository.ArticleRepository;
 @Slf4j
 @Service
 public class ArticleService {
-    @Autowired
-    private ArticleRepository articleRepository;
 
-//    public Page<Article> getPopularArticles() {
-//        return articleRepository.findAll(PageRequest.of(0, 8, new Sort(Sort.Direction.DESC, "created")));
-//    }
+    @Autowired private ArticleRepository articleRepository;
 
     public Page<ArticleProjection> getArticles(Pageable pageRequest) {
         return articleRepository.findProjectedBy(pageRequest);
