@@ -78,3 +78,8 @@ INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (12, 2, 0, 
 INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (12, 1, 6, 1100);
 INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (13, 2, 88, 1500);
 INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (13, 1, 77, 1100);
+
+-- TODO: Synchronize amount of GOODS_ARRIVAL with amount in flower__sizes
+INSERT INTO werehouse_operations (amount, flower_size_id, werehouse_operation_type_id) VALUES (100, 1, (SELECT id FROM werehouse_operation_types WHERE operation_type = 'GOODS_ARRIVAL'));
+INSERT INTO werehouse_operations (amount, flower_size_id, werehouse_operation_type_id) VALUES (120, 2, (SELECT id FROM werehouse_operation_types WHERE operation_type = 'GOODS_ARRIVAL'));
+INSERT INTO werehouse_operations (amount, flower_size_id, werehouse_operation_type_id) VALUES (140, 3, (SELECT id FROM werehouse_operation_types WHERE operation_type = 'GOODS_ARRIVAL'));

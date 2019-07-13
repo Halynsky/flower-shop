@@ -38,7 +38,7 @@ public class FlowerSize {
     @JoinColumn(name = "size_id")
     Size size;
 
-    @ManyToMany(mappedBy = "flowerSizes")
+    @OneToMany(mappedBy = "flowerSize")
     Set<WerehouseOperation> werehouseOperations;
 
 }

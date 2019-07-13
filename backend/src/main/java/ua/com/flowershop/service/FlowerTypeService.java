@@ -17,8 +17,7 @@ import java.util.List;
 @Service
 public class FlowerTypeService {
 
-    @Autowired
-    private FlowerTypeRepository flowerTypeRepository;
+    @Autowired private FlowerTypeRepository flowerTypeRepository;
 
     public List<FlowerTypeProjection> getAllFlowerTypes() {
         return flowerTypeRepository.findProjectedBy();

@@ -17,9 +17,8 @@ import static org.springframework.http.HttpStatus.OK;
 @RestController
 @RequestMapping("api/articles")
 public class ArticleController {
-    @Autowired
-    private ArticleService articleService;
 
+    @Autowired private ArticleService articleService;
 
     @GetMapping
     @PageableSwagger

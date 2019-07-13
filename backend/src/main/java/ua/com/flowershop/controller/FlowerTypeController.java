@@ -19,10 +19,8 @@ import static org.springframework.http.HttpStatus.OK;
 @RequestMapping("api/flowerTypes")
 public class FlowerTypeController {
 
-    @Autowired
-    private FlowerTypeService flowerTypeService;
-    @Autowired
-    private FlowerTypeRepository flowerTypeRepository;
+    @Autowired private FlowerTypeService flowerTypeService;
+    @Autowired private FlowerTypeRepository flowerTypeRepository;
 
     @GetMapping
     public ResponseEntity<List<FlowerTypeProjection>> getAll() {

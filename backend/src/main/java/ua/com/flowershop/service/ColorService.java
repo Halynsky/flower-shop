@@ -17,8 +17,8 @@ import java.util.List;
 @Slf4j
 @Service
 public class ColorService {
-    @Autowired
-    private ColorRepository colorRepository;
+
+    @Autowired private ColorRepository colorRepository;
 
     public Color update(Long id, ColorModel colorModel) {
         Color color = colorRepository.findById(id).orElseThrow(NotFoundException::new);

@@ -2,6 +2,7 @@ package ua.com.flowershop.entity;
 
 import lombok.*;
 import lombok.experimental.Accessors;
+import ua.com.flowershop.model.WerehouseOperationModel;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -24,12 +25,9 @@ public class WerehouseOperation {
     @Column(columnDefinition = "timestamp default timezone('utc'::text, now())")
     private LocalDateTime date = LocalDateTime.now();
 
-
-    @ManyToMany
-    @JoinTable(name="flower_sizes__werehouse_operations",
-            joinColumns=@JoinColumn(name="werehouse_operation_id", referencedColumnName="id"),
-            inverseJoinColumns=@JoinColumn(name="flower_size_id", referencedColumnName="id"))
-    private Set<FlowerSize> flowerSizes;
+    @ManyToOne
+    @JoinColumn(name = "flower_size_id", nullable = false)
+    private FlowerSize flowerSize;
 
     @ManyToOne
     @JoinColumn(name = "werehouse_operation_type_id", nullable = false)

@@ -15,8 +15,8 @@ import java.util.List;
 @Slf4j
 @Service
 public class SizeService {
-    @Autowired
-    private SizeRepository sizeRepository;
+
+    @Autowired private SizeRepository sizeRepository;
 
     public List<SizeProjection> getAllSizes() {
         return sizeRepository.findProjectedBy();

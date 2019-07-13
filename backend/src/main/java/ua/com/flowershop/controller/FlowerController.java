@@ -26,13 +26,11 @@ import static org.springframework.http.HttpStatus.OK;
 @RequestMapping("api/flowers")
 public class FlowerController {
 
-//    TODO: Create FlowerAdminProjection nad insert it in to forAdmin
+//    TODO: Create FlowerAdminProjection and insert it in to forAdmin
 //    TODO: Save and update from admin panel
 
-    @Autowired
-    private FlowerService flowerService;
-    @Autowired
-    private FlowerRepository flowerRepository;
+    @Autowired private FlowerService flowerService;
+    @Autowired private FlowerRepository flowerRepository;
 
     @GetMapping("/forAdmin")
     public ResponseEntity<List<FlowerFullProjection>> getAllForAdmin() {

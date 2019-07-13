@@ -15,7 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity()
-@Table(name = "werehouse_operations")
+@Table(name = "werehouse_operation_types")
 public class WerehouseOperationType {
 
     @Id
@@ -29,7 +29,7 @@ public class WerehouseOperationType {
     private OperationType operationType;
 
     @OneToMany(mappedBy = "werehouseOperationType")
-    Set<WerehouseOperation> WerehouseOperations;
+    Set<WerehouseOperation> werehouseOperations;
 
     @AllArgsConstructor
     public enum Direction {
