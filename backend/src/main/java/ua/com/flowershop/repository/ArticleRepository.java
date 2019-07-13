@@ -13,6 +13,7 @@ import java.util.Optional;
 public interface ArticleRepository extends JpaRepository<Article, Long> {
 
     Optional<ArticleProjection> findProjectedById(Long id);
+
     Page<ArticleProjection> findProjectedBy(Pageable pageable);
 
 }

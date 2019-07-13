@@ -3,7 +3,6 @@ package ua.com.flowershop.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ua.com.flowershop.entity.WerehouseOperation;
 import ua.com.flowershop.exception.NotFoundException;
 import ua.com.flowershop.model.WerehouseOperationModel;
 import ua.com.flowershop.projection.WerehouseOperationProjection;
@@ -30,7 +29,7 @@ public class WerehouseOperationController {
     @GetMapping("/{id}")
     public ResponseEntity<WerehouseOperationProjection> getById(@PathVariable Long id) {
         WerehouseOperationProjection werehouseOperationProjection = werehouseOperationRepository.findProjectedById(id)
-                .orElseThrow(NotFoundException::new);
+            .orElseThrow(NotFoundException::new);
         return new ResponseEntity<>(werehouseOperationProjection, OK);
     }
 

@@ -50,11 +50,11 @@ public class FlowerController {
     @PageableSwagger
     @GetMapping("/shop")
     public ResponseEntity<Page<FlowerShortProjection>> getForShop(
-            @RequestParam(required = false) String searchTerm,
-            @RequestParam(required = false) List<Long> flowerTypeFilters,
-            @RequestParam(required = false) List<Long> sizeFilters,
-            @RequestParam(required = false) List<Long> colorFilters,
-            @PageableDefault(sort = "popularity", direction = Sort.Direction.DESC) Pageable pageRequest) {
+        @RequestParam(required = false) String searchTerm,
+        @RequestParam(required = false) List<Long> flowerTypeFilters,
+        @RequestParam(required = false) List<Long> sizeFilters,
+        @RequestParam(required = false) List<Long> colorFilters,
+        @PageableDefault(sort = "popularity", direction = Sort.Direction.DESC) Pageable pageRequest) {
         flowerTypeFilters = HibernateUtil.fixEmptyFilter(flowerTypeFilters);
         sizeFilters = HibernateUtil.fixEmptyFilter(sizeFilters);
         colorFilters = HibernateUtil.fixEmptyFilter(colorFilters);

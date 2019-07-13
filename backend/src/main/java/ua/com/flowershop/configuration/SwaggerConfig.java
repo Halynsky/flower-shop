@@ -4,7 +4,6 @@ import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.web.util.UriComponentsBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -52,7 +51,7 @@ public class SwaggerConfig {
     }
 
     private Predicate<String> apiPath() {
-        return regex("/api"+".*");
+        return regex("/api" + ".*");
     }
 
     class BasePathAwareRelativePathProvider extends AbstractPathProvider {

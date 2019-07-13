@@ -16,9 +16,11 @@ import java.util.Optional;
 public interface WerehouseOperationRepository extends JpaRepository<WerehouseOperation, Long> {
 
     Optional<WerehouseOperationProjection> findProjectedById(Long id);
+
     List<WerehouseOperationProjection> findProjectedBy();
+
     //TODO: Implement Filters
     @Query("SELECT wo FROM WerehouseOperation wo")
-    Page<WerehouseOperationProjection> findProjectedByFilters (Pageable pageable);
+    Page<WerehouseOperationProjection> findProjectedByFilters(Pageable pageable);
 
 }

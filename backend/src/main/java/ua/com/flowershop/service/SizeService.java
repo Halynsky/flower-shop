@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import ua.com.flowershop.entity.Size;
 import ua.com.flowershop.exception.NotFoundException;
 import ua.com.flowershop.model.SizeModel;
-import ua.com.flowershop.projection.SizeAdminProjection;
 import ua.com.flowershop.projection.SizeProjection;
 import ua.com.flowershop.repository.SizeRepository;
 

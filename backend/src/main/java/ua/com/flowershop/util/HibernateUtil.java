@@ -7,7 +7,7 @@ import static java.util.Objects.isNull;
 public class HibernateUtil {
 
     public static List fixEmptyFilter(List list) {
-       return isNull(list) || list.isEmpty() ? null : list;
+        return isNull(list) || list.isEmpty() ? null : list;
     }
 
 }

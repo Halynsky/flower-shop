@@ -12,7 +12,8 @@ import java.util.List;
 public interface FlowerSizeRepository extends JpaRepository<FlowerSize, Long> {
 
     @Query("SELECT min(fs.price) FROM FlowerSize fs " +
-            "WHERE fs.flower.id = :id")
+        "WHERE fs.flower.id = :id")
     Integer findMinPriceByFlowerId(Long id);
+
     List<FlowerSizeInFlowerProjection> findProjectedByFlowerId(Long id);
 }

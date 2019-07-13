@@ -36,7 +36,7 @@ public class FlowerType {
 
     public static FlowerType of(FlowerTypeModel flowerTypeModel) {
         return new FlowerType().setName(flowerTypeModel.getName())
-                .setNameSingle(flowerTypeModel.getNameSingle());
+            .setNameSingle(flowerTypeModel.getNameSingle());
     }
 
 }

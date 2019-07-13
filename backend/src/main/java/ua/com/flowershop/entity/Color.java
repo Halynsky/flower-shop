@@ -36,7 +36,7 @@ public class Color {
 
     public static Color of(ColorModel colorModel) {
         return new Color().setName(colorModel.getName())
-                .setHex(colorModel.getHex());
+            .setHex(colorModel.getHex());
     }
 
 }

@@ -10,7 +10,7 @@ import ua.com.flowershop.model.SizeModel;
 import javax.persistence.*;
 import java.util.Set;
 
-import static ua.com.flowershop.util.Constants.*;
+import static ua.com.flowershop.util.Constants.SLASH;
 
 @Getter
 @Setter
@@ -37,8 +37,8 @@ public class Size {
 
     public static Size of(SizeModel sizeModel) {
         return new Size().setMin(sizeModel.getMin())
-                .setMax(sizeModel.getMax())
-                .setName(sizeModel.getMin() + SLASH + sizeModel.getMax());
+            .setMax(sizeModel.getMax())
+            .setName(sizeModel.getMin() + SLASH + sizeModel.getMax());
     }
 
 }

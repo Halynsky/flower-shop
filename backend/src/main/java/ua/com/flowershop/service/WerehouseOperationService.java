@@ -18,24 +18,24 @@ public class WerehouseOperationService {
 
     public void update(Long id, WerehouseOperationModel werehouseOperationModel) {
         WerehouseOperation werehouseOperation = werehouseOperationRepository.findById(id)
-                .orElseThrow(EntityNotFoundException::new);
+            .orElseThrow(EntityNotFoundException::new);
 
         FlowerSize flowerSize = flowerSizeRepository.findById(werehouseOperationModel.getFlowerSizeId())
-                .orElseThrow(EntityNotFoundException::new);
+            .orElseThrow(EntityNotFoundException::new);
 
         werehouseOperationRepository.save(werehouseOperation
-                .setAmount(werehouseOperationModel.getAmount())
-                .setFlowerSize(flowerSize));
+            .setAmount(werehouseOperationModel.getAmount())
+            .setFlowerSize(flowerSize));
 
     }
 
     public void save(WerehouseOperationModel werehouseOperationModel) {
         FlowerSize flowerSize = flowerSizeRepository.findById(werehouseOperationModel.getFlowerSizeId())
-                .orElseThrow(EntityNotFoundException::new);
+            .orElseThrow(EntityNotFoundException::new);
 
         werehouseOperationRepository.save(new WerehouseOperation()
-                .setAmount(werehouseOperationModel.getAmount())
-                .setFlowerSize(flowerSize));
+            .setAmount(werehouseOperationModel.getAmount())
+            .setFlowerSize(flowerSize));
     }
 
 }

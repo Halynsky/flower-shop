@@ -12,7 +12,7 @@ import ua.com.flowershop.repository.ArticleRepository;
 @Slf4j
 @Service
 public class ArticleService {
-    
+
     @Autowired private ArticleRepository articleRepository;
 
     public Page<ArticleProjection> getArticles(Pageable pageRequest) {

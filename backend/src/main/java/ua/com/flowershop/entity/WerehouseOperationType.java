@@ -33,7 +33,7 @@ public class WerehouseOperationType {
 
     @AllArgsConstructor
     public enum Direction {
-        IN ("IN"),
+        IN("IN"),
         OUT("OUT");
 
         private final String value;
