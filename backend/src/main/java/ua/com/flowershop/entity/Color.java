@@ -22,9 +22,9 @@ public class Color {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String name;
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String hex;
 
     @OneToMany(mappedBy = "color", fetch = FetchType.LAZY)
@@ -36,7 +36,7 @@ public class Color {
 
     public static Color of(ColorModel colorModel) {
         return new Color().setName(colorModel.getName())
-                .setHex(colorModel.getHex());
+            .setHex(colorModel.getHex());
     }
 
 }

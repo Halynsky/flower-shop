@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -14,7 +15,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity()
-@Table(name = "flower_sizes")
+@Table(name = "flower__sizes")
 public class FlowerSize {
 
     @Id
@@ -36,5 +37,8 @@ public class FlowerSize {
     @ManyToOne
     @JoinColumn(name = "size_id")
     Size size;
+
+    @OneToMany(mappedBy = "flowerSize")
+    Set<WerehouseOperation> werehouseOperations;
 
 }

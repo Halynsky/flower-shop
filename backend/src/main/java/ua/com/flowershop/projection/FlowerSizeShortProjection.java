@@ -1,6 +1,6 @@
 package ua.com.flowershop.projection;
 
-public interface FlowerSizeFullProjection {
+public interface FlowerSizeShortProjection {
     Integer getPrice();
 
     Integer getAmount();
@@ -11,5 +11,5 @@ public interface FlowerSizeFullProjection {
 
     SizeProjection getSize();
 
-    FlowerProjection getFlower();
+    FlowerShortProjection getFlower();
 }

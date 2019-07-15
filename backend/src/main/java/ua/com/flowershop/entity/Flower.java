@@ -49,15 +49,15 @@ public class Flower {
     private LocalDateTime lastSupply;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="flower_type_id",  foreignKey = @ForeignKey(name = "flower_flower_type_fkey"), nullable = false)
+    @JoinColumn(name = "flower_type_id", foreignKey = @ForeignKey(name = "flower_flower_type_fkey"), nullable = false)
     private FlowerType flowerType;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="color_id",  foreignKey = @ForeignKey(name = "flower_color_fkey"), nullable = false)
+    @JoinColumn(name = "color_id", foreignKey = @ForeignKey(name = "flower_color_fkey"), nullable = false)
     private Color color;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="color_secondary_id",  foreignKey = @ForeignKey(name = "flower_secondary_color_fkey"))
+    @JoinColumn(name = "color_secondary_id", foreignKey = @ForeignKey(name = "flower_secondary_color_fkey"))
     private Color colorSecondary;
 
     @OneToMany(mappedBy = "flower")

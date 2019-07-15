@@ -18,10 +18,8 @@ import static org.springframework.http.HttpStatus.OK;
 @RequestMapping("api/sizes")
 public class SizeController {
 
-    @Autowired
-    private SizeRepository sizeRepository;
-    @Autowired
-    private SizeService sizeService;
+    @Autowired private SizeRepository sizeRepository;
+    @Autowired private SizeService sizeService;
 
     @GetMapping("/forAdmin")
     public ResponseEntity<List<SizeAdminProjection>> getAllForAdmin() {

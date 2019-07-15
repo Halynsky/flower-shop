@@ -3,9 +3,7 @@ package ua.com.flowershop.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ua.com.flowershop.entity.Color;
 import ua.com.flowershop.entity.FlowerType;
-import ua.com.flowershop.model.ColorModel;
 import ua.com.flowershop.model.FlowerTypeModel;
 import ua.com.flowershop.projection.FlowerTypeProjection;
 import ua.com.flowershop.repository.FlowerTypeRepository;
@@ -19,10 +17,8 @@ import static org.springframework.http.HttpStatus.OK;
 @RequestMapping("api/flowerTypes")
 public class FlowerTypeController {
 
-    @Autowired
-    private FlowerTypeService flowerTypeService;
-    @Autowired
-    private FlowerTypeRepository flowerTypeRepository;
+    @Autowired private FlowerTypeService flowerTypeService;
+    @Autowired private FlowerTypeRepository flowerTypeRepository;
 
     @GetMapping
     public ResponseEntity<List<FlowerTypeProjection>> getAll() {
@@ -36,7 +32,7 @@ public class FlowerTypeController {
     }
 
     @GetMapping("/byName/{name}")
-    public ResponseEntity<FlowerTypeProjection> getByName (@PathVariable String name) {
+    public ResponseEntity<FlowerTypeProjection> getByName(@PathVariable String name) {
         return new ResponseEntity<>(flowerTypeService.getFlowerTypeByName(name), OK);
     }
 

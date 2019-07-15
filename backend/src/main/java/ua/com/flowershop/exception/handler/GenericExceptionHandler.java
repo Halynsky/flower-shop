@@ -15,7 +15,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 public class GenericExceptionHandler {
 
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<Object> handleNotFoundException(NotFoundException exception, WebRequest request){
+    public ResponseEntity<Object> handleNotFoundException(NotFoundException exception, WebRequest request) {
         log.warn(exception.getMessage());
         return new ResponseEntity<>(new RestError(NOT_FOUND.value(), exception.getMessage()), NOT_FOUND);
     }

@@ -19,10 +19,8 @@ import static org.springframework.http.HttpStatus.OK;
 @RequestMapping("api/colors")
 public class ColorController {
 
-    @Autowired
-    private ColorRepository colorRepository;
-    @Autowired
-    private ColorService colorService;
+    @Autowired private ColorRepository colorRepository;
+    @Autowired private ColorService colorService;
 
     @GetMapping("/forAdmin")
     public ResponseEntity<List<ColorAdminProjection>> getAllForAdmin() {

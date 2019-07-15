@@ -15,17 +15,23 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity()
-@Table(name = "articles")
-public class Article {
+@Table(name = "werehouse_operations")
+public class WerehouseOperation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title;
-    @Column(columnDefinition = "varchar(5000)")
-    private String content;
+    @Column(nullable = false)
+    private Integer amount;
     @Column(columnDefinition = "timestamp default timezone('utc'::text, now())")
-    private LocalDateTime created = LocalDateTime.now();
-    private String image;
+    private LocalDateTime date = LocalDateTime.now();
+
+    @ManyToOne
+    @JoinColumn(name = "flower_size_id", nullable = false)
+    private FlowerSize flowerSize;
+
+    @ManyToOne
+    @JoinColumn(name = "werehouse_operation_type_id", nullable = false)
+    private WerehouseOperationType werehouseOperationType;
 
 }
