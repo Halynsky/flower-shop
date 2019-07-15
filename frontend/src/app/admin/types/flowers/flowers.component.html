@@ -27,9 +27,8 @@
           Назва(англ)
           <p-sortIcon [field]="'nameOriginal'"></p-sortIcon>
         </th>
-        <th [pSortableColumn]="'flowerType.name'">
+        <th >
           Тип квітки
-          <p-sortIcon [field]="'flowerType.name'"></p-sortIcon>
         </th>
         <th [pSortableColumn]="'flowerSizeMin'">
           Розмір
@@ -67,30 +66,31 @@
 
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-rowData>
+    <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns">
       <tr [pContextMenuRow]="rowData">
-        <td>
+
+          <td>
             {{rowData['id']}}
-        </td>
-        <td>
-          <div class="item-image" [ngStyle]="{'background-image': 'url(' + rowData['image'] + ''}">
-          </div>
-        </td>
-        <td>
+          </td>
+          <td>
+            <div class="item-image" [ngStyle]="{'background-image': 'url(' + rowData['image'] + ''}" (click)="zoomImg(rowData['image'])">
+            </div>
+          </td>
+          <td>
             {{rowData['name']}}
-        </td>
-        <td>
+          </td>
+          <td>
             {{rowData['nameOriginal']}}
-        </td>
-        <td>
+          </td>
+          <td>
             {{rowData['flowerType'].name}}
-        </td>
-        <td>
-          {{rowData['flowerSizeMin']}} см — {{rowData['flowerSizeMax']}} см
-        </td>
-        <td>
-          {{rowData['flowerHeightMin']}} см — {{rowData['flowerHeightMax']}} см
-        </td>
+          </td>
+          <td>
+            {{rowData['flowerSizeMin']}} см — {{rowData['flowerSizeMax']}} см
+          </td>
+          <td>
+            {{rowData['flowerHeightMin']}} см — {{rowData['flowerHeightMax']}} см
+          </td>
       </tr>
     </ng-template>
   </p-table>
@@ -98,3 +98,9 @@
 
 <p-contextMenu #cm [model]="menuItems"></p-contextMenu>
 
+<div class="modal" *ngIf="this.isZoomed">
+  <div class="filter" (click)="closeImg()"></div>
+  <div class="content">
+    <img src="{{this.imageUrl}}">
+  </div>
+</div>

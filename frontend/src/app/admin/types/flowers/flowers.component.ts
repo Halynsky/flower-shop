@@ -23,6 +23,9 @@ export class FlowersComponent implements OnInit {
   heightTimeout: any;
   heightFilter: number[] = [15, 160];
 
+  imageUrl: string;
+  isZoomed: boolean = false;
+
   // cols = [
   //   {field: 'id', header: 'Id'},
   //   {field: 'name', header: 'Назва'},
@@ -150,6 +153,16 @@ export class FlowersComponent implements OnInit {
         return (event.order * result);
       });
   }
+
+  zoomImg(imageUrl) {
+    this.imageUrl = imageUrl;
+    this.isZoomed = true;
+  }
+
+  closeImg() {
+    this.isZoomed = false;
+  }
+
 }
 
 
