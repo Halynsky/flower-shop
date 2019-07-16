@@ -1,17 +1,31 @@
-import { Component, OnInit } from '@angular/core';
-import { SnackBarService } from "../../../services/snak-bar.service";
-import { Flower } from "../../../api/models/Flower";
-import { FlowerService } from "../../../api/services/flower.service";
-import { getErrorMessage } from "../../../utils/Functions";
-import { ItemSaveMode } from "../../../models/ItemSaveMode";
-import { FlowerType } from "../../../api/models/FlowerType";
-import { ConfirmationService, SortEvent } from "primeng/api";
-import { ActivatedRoute, Router } from "@angular/router";
+import {Component, OnInit} from '@angular/core';
+import {SnackBarService} from "../../../services/snak-bar.service";
+import {Flower} from "../../../api/models/Flower";
+import {FlowerService} from "../../../api/services/flower.service";
+import {getErrorMessage} from "../../../utils/Functions";
+import {ItemSaveMode} from "../../../models/ItemSaveMode";
+import {ConfirmationService, SortEvent} from "primeng/api";
+import {ActivatedRoute, Router} from "@angular/router";
+import {animate, state, style, transition, trigger} from "@angular/animations";
+
 
 @Component({
   selector: 'flowers',
   templateUrl: './flowers.component.html',
-  styleUrls: ['./flowers.component.scss']
+  styleUrls: ['./flowers.component.scss'],
+  animations: [
+    trigger('rowExpansionTrigger', [
+      state('void', style({
+        transform: 'translateX(-10%)',
+        opacity: 0
+      })),
+      state('active', style({
+        transform: 'translateX(0)',
+        opacity: 1
+      })),
+      transition('* <=> *', animate('400ms cubic-bezier(0.86, 0, 0.07, 1)'))
+    ])
+  ]
 })
 export class FlowersComponent implements OnInit {
 
@@ -23,15 +37,27 @@ export class FlowersComponent implements OnInit {
   heightTimeout: any;
   heightFilter: number[] = [15, 160];
 
+  popularityTimeout: any;
+  popularityFilter: number[] = [1, 10];
+
   imageUrl: string;
   isZoomed: boolean = false;
 
-  // cols = [
-  //   {field: 'id', header: 'Id'},
-  //   {field: 'name', header: 'Назва'},
-  //   {field: 'nameOriginal', header: 'Назва(англ)'},
-  //   {field: 'flowerType', header: 'Тип квітки'}
-  // ];
+  cols = [
+    {field: 'id', header: 'Id'},
+    {field: 'name', header: 'Назва'},
+    {field: 'nameOriginal', header: 'Назва(англ)'},
+    {field: 'flowerType', header: 'Тип квітки'},
+    {field: 'groupName', header: 'Група'},
+    {field: 'flowerSizeMin', header: 'Розмір'},
+    {field: 'flowerHeightMin', header: 'Висота'},
+    {field: 'isNew', header: 'Новинка'},
+    {field: 'hasDiscount', header: 'Знижка'},
+    {field: 'isPopular', header: 'Популярна'},
+    {field: 'popularity', header: 'Рейтинг'}
+  ];
+
+  selectedColumns: any[];
 
   items: Flower[] = [];
   selected: Flower;
@@ -57,10 +83,12 @@ export class FlowersComponent implements OnInit {
               private confirmationService: ConfirmationService,
               private router: Router,
               private route: ActivatedRoute) {
-    this.loadData()
+    this.loadData();
+
   }
 
   ngOnInit() {
+    this.selectedColumns = this.cols;
   }
 
   loadData() {
@@ -122,6 +150,16 @@ export class FlowersComponent implements OnInit {
         dt.filter(event.values[1], 'flowerHeightMax', 'lte');
       }, 250);
     }
+  }
+
+  onPopularityChange(event, dt) {
+    if (this.popularityTimeout) {
+      clearTimeout(this.popularityTimeout);
+    }
+
+    this.popularityTimeout = setTimeout(() => {
+      dt.filter(event.value, 'popularity', 'gt');
+    }, 250);
   }
 
   sortData(event: SortEvent) {

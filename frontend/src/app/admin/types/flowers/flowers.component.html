@@ -9,12 +9,20 @@
 
 <div class="panel-content">
   <p-table #dt [value]="items" sortField="id" [paginator]="true" [rows]="10"
-           [tableStyle]="{'table-layout':'auto'}" [contextMenu]="cm" [(contextMenuSelection)]="selected" [customSort]="true" (sortFunction)="sortData($event)">
+           [tableStyle]="{'table-layout':'auto'}" [contextMenu]="cm" [(contextMenuSelection)]="selected"
+           [customSort]="true" (sortFunction)="sortData($event)" dataKey="id" rowExpandMode="single">
+<!--    <ng-template pTemplate="caption">-->
+<!--      <div style="text-align:left">-->
+<!--        <p-multiSelect [options]="this.cols" optionLabel="header"-->
+<!--                       selectedItemsLabel="{0} вибраних стовпців" [style]="{minWidth: '200px'}" defaultLabel="Виберіть стовпці"></p-multiSelect>-->
+<!--      </div>-->
+<!--    </ng-template>-->
     <ng-template pTemplate="header">
       <tr>
+        <th></th>
         <th [pSortableColumn]="'id'">
           Id
-        <p-sortIcon [field]="'id'"></p-sortIcon>
+          <p-sortIcon [field]="'id'"></p-sortIcon>
         </th>
         <th>
           Фото
@@ -27,19 +35,36 @@
           Назва(англ)
           <p-sortIcon [field]="'nameOriginal'"></p-sortIcon>
         </th>
-        <th >
+        <th>
           Тип квітки
+        </th>
+        <th>
+          Група
         </th>
         <th [pSortableColumn]="'flowerSizeMin'">
           Розмір
           <p-sortIcon [field]="'flowerSizeMin'"></p-sortIcon>
         </th>
-        <th [pSortableColumn]="'flowerHeightMin'" >
+        <th [pSortableColumn]="'flowerHeightMin'">
           Висота
           <p-sortIcon [field]="'flowerHeightMin'"></p-sortIcon>
         </th>
+        <th>
+          Новинка
+        </th>
+        <th>
+          Знижка
+        </th>
+        <th>
+          Популярна
+        </th>
+<!--        <th [pSortableColumn]="'popularity'" ]>-->
+<!--          Рейтинг-->
+<!--          <p-sortIcon [field]="'popularity'"></p-sortIcon>-->
+<!--        </th>-->
       </tr>
       <tr>
+        <th></th>
         <th></th>
         <th></th>
         <th>
@@ -56,41 +81,106 @@
                          (onChange)="dt.filter($event.value, 'flowerType.id', 'in')"></p-multiSelect>
         </th>
         <th>
-           {{this.sizeFilter[0]}} — {{this.sizeFilter[1]}}
-          <p-slider [style]="{'width':'100%','margin-top':'8px'}" [(ngModel)]="sizeFilter" [min]="1" [range]="true" [max]="25" [step]="1" (onChange)="onSizeChange($event, dt, true)"></p-slider>
+          <input pInputText type="text" (input)="dt.filter($event.target.value, 'groupName', 'contains')"
+                 class="table-filter">
+        </th>
+        <th>
+          {{this.sizeFilter[0]}} — {{this.sizeFilter[1]}}
+          <p-slider [style]="{'width':'100%','margin-top':'8px'}" [(ngModel)]="sizeFilter" [min]="1" [range]="true"
+                    [max]="25" [step]="1" (onChange)="onSizeChange($event, dt, true)"></p-slider>
         </th>
         <th>
           {{this.heightFilter[0]}} — {{this.heightFilter[1]}}
-          <p-slider [style]="{'width':'100%','margin-top':'8px'}" [(ngModel)]="heightFilter" [min]="15" [range]="true" [max]="160" [step]="1" (onChange)="onSizeChange($event, dt, false)"></p-slider>
+          <p-slider [style]="{'width':'100%','margin-top':'8px'}" [(ngModel)]="heightFilter" [min]="15" [range]="true"
+                    [max]="160" [step]="1" (onChange)="onSizeChange($event, dt, false)"></p-slider>
         </th>
-
+        <th></th>
+        <th></th>
+        <th></th>
+<!--        <th>-->
+<!--          <p-slider [style]="{'width':'100%','margin-top':'8px'}" [(ngModel)]="popularityFilter" [min]="0"-->
+<!--                    [max]="10" (onChange)="onPopularityChange($event, dt)"></p-slider>-->
+<!--        </th>-->
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns">
+    <ng-template pTemplate="body" let-rowData let-expanded="expanded">
       <tr [pContextMenuRow]="rowData">
-
-          <td>
-            {{rowData['id']}}
-          </td>
-          <td>
-            <div class="item-image" [ngStyle]="{'background-image': 'url(' + rowData['image'] + ''}" (click)="zoomImg(rowData['image'])">
-            </div>
-          </td>
-          <td>
-            {{rowData['name']}}
-          </td>
-          <td>
-            {{rowData['nameOriginal']}}
-          </td>
-          <td>
-            {{rowData['flowerType'].name}}
-          </td>
-          <td>
-            {{rowData['flowerSizeMin']}} см — {{rowData['flowerSizeMax']}} см
-          </td>
-          <td>
-            {{rowData['flowerHeightMin']}} см — {{rowData['flowerHeightMax']}} см
-          </td>
+        <td>
+          <a [pRowToggler]="rowData">
+            <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
+          </a>
+        </td>
+        <td>
+          {{rowData['id']}}
+        </td>
+        <td>
+          <div class="item-image" [ngStyle]="{'background-image': 'url(' + rowData['image'] + ''}"
+               (click)="zoomImg(rowData['image'])">
+          </div>
+        </td>
+        <td>
+          {{rowData['name']}}
+        </td>
+        <td>
+          {{rowData['nameOriginal']}}
+        </td>
+        <td>
+          {{rowData['flowerType'].name}}
+        </td>
+        <td>
+          {{rowData['groupName']}}
+        </td>
+        <td>
+          {{rowData['flowerSizeMin']}} см — {{rowData['flowerSizeMax']}} см
+        </td>
+        <td>
+          {{rowData['flowerHeightMin']}} см — {{rowData['flowerHeightMax']}} см
+        </td>
+        <td>
+          <div class="true-false-ico">
+            <div *ngIf="rowData['isNew']"><i class="material-icons">
+              check_box
+            </i></div>
+            <div *ngIf="!rowData['isNew']"><i class="material-icons">
+              check_box_outline_blank
+            </i></div>
+          </div>
+        </td>
+        <td>
+          <div class="true-false-ico">
+            <div *ngIf="rowData['hasDiscount']"><i class="material-icons">
+              check_box
+            </i></div>
+            <div *ngIf="!rowData['hasDiscount']"><i class="material-icons">
+              check_box_outline_blank
+            </i></div>
+          </div>
+        </td>
+        <td>
+          <div class="true-false-ico">
+            <div *ngIf="rowData['isPopular']"><i class="material-icons">
+              check_box
+            </i></div>
+            <div *ngIf="!rowData['isPopular']"><i class="material-icons">
+              check_box_outline_blank
+            </i></div>
+          </div>
+        </td>
+<!--        <td>-->
+<!--          <div *ngIf="rowData['popularity']">-->
+<!--            {{rowData['popularity']}}/10-->
+<!--          </div>-->
+<!--          <div *ngIf="rowData['popularity'] == null">-->
+<!--            10/10-->
+<!--          </div>-->
+<!--        </td>-->
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="rowexpansion" let-rowData>
+      <tr>
+        <td [attr.colspan]="9">
+          {{rowData['description']}}
+        </td>
       </tr>
     </ng-template>
   </p-table>
