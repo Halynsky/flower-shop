@@ -20,6 +20,7 @@ import { ArticleCardComponent } from './article-card/article-card.component';
 import { RouterModule } from "@angular/router";
 import { ModalWindowComponent } from "./modal-window/modal-window.component";
 import { BottomSheetOverview } from "./bottom-sheet/bottom-sheet.component";
+import { PipesModule } from "../../../pipes/pipes.module";
 
 const PROVIDERS = [
   {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 5000, panelClass: "snack-custom-class"}},
@@ -48,7 +49,8 @@ const PROVIDERS = [
     MatButtonToggleModule,
     MatSelectModule,
     MatListModule,
-    MatBottomSheetModule
+    MatBottomSheetModule,
+    PipesModule
   ],
   exports: [
     RouterModule,
@@ -65,6 +67,7 @@ const PROVIDERS = [
     MatInputModule,
     MatButtonToggleModule,
     MatSelectModule,
+    PipesModule,
     // Developed components
     ArticleCardComponent,
     ModalWindowComponent

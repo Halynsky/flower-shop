@@ -1,0 +1,111 @@
+<div class="panel-header">
+  <h1>Товарні Операції</h1>
+  <div class="buttons">
+    <button pButton [routerLink]="['item', ItemSaveMode.new]" icon="pi pi-plus" class="ui-button-success" label="&nbsp;&nbsp;Додати"></button>
+    <button pButton (click)="loadData()" icon="pi pi-refresh" label="&nbsp;&nbsp;Оновити"></button>
+  </div>
+</div>
+
+<div class="panel-content">
+  <p-table #dt [columns]="selectedColumns" [value]="items" sortField="id" [paginator]="true" [rows]="10"
+           [tableStyle]="{'table-layout':'auto'}" [contextMenu]="cm" [(contextMenuSelection)]="selected">
+
+    <!--Column selector-->
+    <ng-template pTemplate="caption">
+      <div style="text-align:left">
+        <p-multiSelect [options]="columns" [(ngModel)]="selectedColumns" optionLabel="header"
+                       selectedItemsLabel="{0} колонок обрано" [style]="{minWidth: '300px'}" defaultLabel="Оберіть колонки"
+                       (onChange)="onColumnSelect($event)"></p-multiSelect>
+      </div>
+    </ng-template>
+
+    <!--Headers-->
+    <ng-template pTemplate="header" let-columns>
+      <!--Titles-->
+      <tr>
+        <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngSwitch]="col.field">
+          {{col.header}}
+          <p-sortIcon [field]="col.field"></p-sortIcon>
+        </th>
+      </tr>
+      <!--Filters-->
+      <tr>
+        <th *ngFor="let col of columns" [ngSwitch]="col.field">
+          <input *ngSwitchCase="'id'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'equals')" class="table-filter">
+          <input *ngSwitchCase="'flowerType'" pInputText type="text" (input)="dt.filter($event.target.value, 'flowerSize.flower.flowerType.nameSingle', 'startsWith')" class="table-filter">
+          <input *ngSwitchCase="'flower'" pInputText type="text" (input)="dt.filter($event.target.value, 'flowerSize.flower.name', 'startsWith')" class="table-filter">
+          <input *ngSwitchCase="'size'" pInputText type="text" (input)="dt.filter($event.target.value, 'flowerSize.size.name', 'startsWith')" class="table-filter">
+
+          <div *ngSwitchCase="'amount'">
+            <span>({{amountFilter[0]}} - {{amountFilter[1]}} )</span>
+            <i class="fa fa-close" (click)="this.amountFilter=[amountMin,amountMax]; dt.filter(null,col.field,col.filterMatchMode)" title="click to reset filter"
+               [ngStyle]="{'margin-left':'8px', 'margin-bottom': '10px', 'cursor':'pointer'}"></i>
+            <p-slider [(ngModel)]="amountFilter" [ngStyle]="{'width':'100%'}" [range]="true"
+                      (onSlideEnd)="dt.filter(rangePipe.transform([], amountFilter[1] - amountFilter[0], amountFilter[0]), col.field, 'in')" [min]="amountMin" [max]="amountMax"></p-slider>
+          </div>
+
+
+          <div *ngSwitchCase="'date'">
+            <p-calendar
+              [(ngModel)]="dateFilters"
+              appendTo="body"
+              selectionMode="range"
+              [readonlyInput]="false"
+              dateFormat="dd.mm.yy"
+              (onSelect)="dt.filter($event, col.field, 'dateRangeFilter')"
+              [locale]="translation.calendar_ua">
+            </p-calendar>
+          </div>
+
+          <p-multiSelect *ngSwitchCase="'operationType'" [options]="operationTypes" defaultLabel="Всі" class="table-filter"
+                         (onChange)="dt.filter($event.value, 'werehouseOperationType.operationType', 'in')"></p-multiSelect>
+          <p-multiSelect *ngSwitchCase="'direction'" [options]="directionOptions" defaultLabel="Всі" class="table-filter"
+                         (onChange)="dt.filter($event.value, 'werehouseOperationType.direction', 'in')"></p-multiSelect>
+        </th>
+      </tr>
+    </ng-template>
+
+    <!--Rows-->
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr [pContextMenuRow]="rowData">
+        <td *ngFor="let col of columns" [ngSwitch]="col.field">
+
+          <span *ngSwitchCase="'flowerType'">
+            {{rowData.flowerSize.flower.flowerType.nameSingle}}
+          </span>
+
+          <span *ngSwitchCase="'flower'">
+            {{rowData.flowerSize.flower.name}}
+          </span>
+
+          <span *ngSwitchCase="'size'">
+            {{rowData.flowerSize.size.name}}
+          </span>
+
+          <span *ngSwitchCase="'direction'">
+            <span>{{translation.text[rowData.werehouseOperationType.direction]}}</span>
+            <img class="direction-arrow" *ngIf="rowData.werehouseOperationType.direction == WerehouseOperationType.Direction.IN" src="/assets/icons/interface/arrow-in-green.png">
+            <img class="direction-arrow" *ngIf="rowData.werehouseOperationType.direction == WerehouseOperationType.Direction.OUT" src="/assets/icons/interface/arrow-out-red.png">
+          </span>
+
+          <span *ngSwitchCase="'operationType'">
+            {{translation.text[rowData.werehouseOperationType.operationType]}}
+          </span>
+
+          <span *ngSwitchCase="'date'">
+            {{rowData[col.field] | date:'dd.MM.yyyy H:mm'}}
+          </span>
+
+          <span *ngSwitchDefault>
+            {{rowData[col.field]}}
+          </span>
+
+        </td>
+      </tr>
+    </ng-template>
+
+  </p-table>
+</div>
+
+<p-contextMenu #cm [model]="menuItems"></p-contextMenu>
+
