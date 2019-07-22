@@ -116,19 +116,8 @@ export class WarehouseOperationsComponent implements OnInit {
     this.selectedColumns = this.columns.filter(column => column.active);
   }
 
-  change(... arg) {
-    console.log(arg)
-  }
-
-  ageRangeFilterSlideEndHandler(event:any){
-    console.log("SMV ageRangeFilterSlideEndHandler() this.appointmentDataTable" + event);
-    let values = this.table.value;
-
-    let min = this.amountFilter[0];
-    let max = this.amountFilter[1];
-
-    // let filteredValues =this._filterByRange(values, ['patient','age'], min, max); //implement filter logic and build an array
-    // this.table.filteredValue = filteredValues; //this is the key line!!!!!!
+  loadDataOnScroll(event: any) {
+    console.log(event)
   }
 
 }

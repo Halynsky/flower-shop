@@ -8,7 +8,8 @@
 
 <div class="panel-content">
   <p-table #dt [columns]="selectedColumns" [value]="items" sortField="id" [paginator]="true" [rows]="10"
-           [tableStyle]="{'table-layout':'auto'}" [contextMenu]="cm" [(contextMenuSelection)]="selected">
+           [tableStyle]="{'table-layout':'auto'}" [contextMenu]="cm" [(contextMenuSelection)]="selected"
+           [virtualScroll]="true" (onLazyLoad)="loadDataOnScroll($event)" [lazy]="true">
 
     <!--Column selector-->
     <ng-template pTemplate="caption">
