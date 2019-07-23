@@ -8,9 +8,10 @@ import { WerehouseOperationService } from "../../../api/services/werehouse-opera
 import { TranslationService } from "../../../utils/translation.service";
 import { WerehouseOperationType } from "../../../api/models/WerehouseOperationType";
 import { Table } from "primeng/table";
-import { RangePipe } from "angular-pipes";
 import { EnumToObjectsPipe } from "../../../pipes/enum-to-objects";
-import { getErrorMessage } from "../../../utils/Functions";
+import { getErrorMessage, ngPrimeFiltersToParams } from "../../../utils/Functions";
+import { Pagination } from "../../../api/models/Pagination";
+import { RestPage } from "../../../api/models/RestPage";
 
 @Component({
   selector: 'app-warehouse',
@@ -46,7 +47,7 @@ export class WarehouseOperationsComponent implements OnInit {
 
   selectedColumns = this.columns.filter(column => column.active);
 
-  items: WerehouseOperation[] = [];
+  items: RestPage<WerehouseOperation> = new RestPage<WerehouseOperation>();
   selected: WerehouseOperation;
 
   menuItems = [
@@ -64,9 +65,7 @@ export class WarehouseOperationsComponent implements OnInit {
               private router: Router,
               private route: ActivatedRoute,
               private translation: TranslationService,
-              private enumToObjectsPipe: EnumToObjectsPipe,
-              public rangePipe: RangePipe) {
-    this.loadData();
+              private enumToObjectsPipe: EnumToObjectsPipe) {
     this.directionOptions = enumToObjectsPipe.transform(WerehouseOperationType.Direction);
     this.directionOptions.forEach(e => e.label = translation.text[e.label]);
     this.operationTypes = enumToObjectsPipe.transform(WerehouseOperationType.OperationType);
@@ -74,17 +73,21 @@ export class WarehouseOperationsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.table.filterConstraints['dateRangeFilter'] = (value, filter): boolean => {
-      return true
-    }
-
   }
 
-  loadData() {
-    this.dataService.getAll().subscribe(
+  loadDataLazy(filters = {}, pagination: Pagination = new Pagination()) {
+    this.dataService.getAll(filters, pagination).subscribe(
       items => this.items = items,
       error => this.snackBarService.showError(error.error.message)
     )
+  }
+
+  onLazyLoad(event: any) {
+    this.loadDataLazy(ngPrimeFiltersToParams(event.filters), new Pagination().fromPrimeNg(event));
+  }
+
+  refresh(): void {
+    this.table.onLazyLoad.emit(this.table.createLazyLoadMetadata());
   }
 
   confirmRemove(event) {
@@ -100,7 +103,7 @@ export class WarehouseOperationsComponent implements OnInit {
     this.dataService.delete(this.selected.id).subscribe(
       response => {
         this.snackBarService.showSuccess("'Складську операцію' успішно видалено");
-        this.loadData();
+        this.refresh();
       },
       error => this.snackBarService.showError(getErrorMessage(error))
     )
@@ -116,8 +119,5 @@ export class WarehouseOperationsComponent implements OnInit {
     this.selectedColumns = this.columns.filter(column => column.active);
   }
 
-  loadDataOnScroll(event: any) {
-    console.log(event)
-  }
 
 }

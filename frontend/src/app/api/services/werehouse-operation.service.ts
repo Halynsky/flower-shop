@@ -14,8 +14,9 @@ export class WerehouseOperationService {
 
   constructor(private  http: HttpClient) {}
 
-  getAll() {
-    return this.http.get<WerehouseOperation[]>(`${this.URL}`);
+  getAll(params, pagination) {
+    params = Object.assign(params, ...pagination);
+    return this.http.get<RestPage<WerehouseOperation>>(`${this.URL}`, {params: params});
   }
 
   getById(id: number) {

@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
-public class MvcConfiguration implements WebMvcConfigurer {
+public class MvcConfig implements WebMvcConfigurer {
 
     private static final String LAYOUT = "index";
 
