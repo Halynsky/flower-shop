@@ -5,7 +5,7 @@ import { routing } from "./admin.routing";
 import { GrowlModule } from "primeng/growl";
 import { DialogModule } from "primeng/dialog";
 import {
-  ButtonModule, ColorPickerModule, ConfirmationService,
+  ButtonModule, CalendarModule, ColorPickerModule, ConfirmationService,
   ConfirmDialogModule, ContextMenuModule, InputTextModule,
   MenuModule, MessageModule,
   MultiSelectModule,
@@ -15,7 +15,7 @@ import {
 import { AdminSidebarComponent } from './admin-layout/admin-sidebar/admin-sidebar.component';
 import { UsersComponent } from './users/users.component';
 import { AdminHeaderComponent } from './admin-layout/admin-header/admin-header.component';
-import { WarehouseComponent } from './shop/warehouse/warehouse.component';
+import { WarehouseOperationsComponent } from './shop/warehouse-operations/warehouse-operations.component';
 import { AdminAccordionComponent } from "./admin-layout/admin-sidebar/accordeon/admin-accordion.component";
 import { BlogComponent } from './blog/blog.component';
 import { OrdersComponent } from './shop/orders/orders.component';
@@ -23,13 +23,14 @@ import { FlowerTypesComponent } from './types/flower-types/flower-types.componen
 import { TableModule } from "primeng/table";
 import { SizesComponent } from './types/sizes/sizes.component';
 import { ColorsComponent } from './types/colors/colors.component';
-import { NgArrayPipesModule } from "angular-pipes";
+import { NgArrayPipesModule, RangePipe } from "angular-pipes";
 import { FlowersComponent } from "./types/flowers/flowers.component";
 import { SizeItemComponent } from './types/sizes/size-item/size-item.component';
 import {FormsModule, NgModel, ReactiveFormsModule} from "@angular/forms";
 import { ColorItemComponent } from "./types/colors/color-item/color-item.component";
 import { FlowerTypeItemComponent } from "./types/flower-types/flower-type-item/flower-type-item.component";
 import { FlowerItemComponent } from "./types/flowers/flower-item/flower-item.component";
+import { PipesModule } from "../pipes/pipes.module";
 
 
 @NgModule({
@@ -40,7 +41,7 @@ import { FlowerItemComponent } from "./types/flowers/flower-item/flower-item.com
     AdminAccordionComponent,
     UsersComponent,
     AdminHeaderComponent,
-    WarehouseComponent,
+    WarehouseOperationsComponent,
     BlogComponent,
     OrdersComponent,
     FlowersComponent,
@@ -57,7 +58,6 @@ import { FlowerItemComponent } from "./types/flowers/flower-item/flower-item.com
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    NgArrayPipesModule,
     GrowlModule,
     DialogModule,
     ConfirmDialogModule,
@@ -71,9 +71,15 @@ import { FlowerItemComponent } from "./types/flowers/flower-item/flower-item.com
     ContextMenuModule,
     MessageModule,
     ColorPickerModule,
-    SliderModule
+    CalendarModule,
+    SliderModule,
+    NgArrayPipesModule,
+    ColorPickerModule,
+    SliderModule,
+    PipesModule.forRoot()
   ],
   providers: [
+    RangePipe,
     ConfirmationService
   ]
 })
