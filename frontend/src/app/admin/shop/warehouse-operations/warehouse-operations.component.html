@@ -25,10 +25,38 @@
       <!--Titles-->
       <tr>
 
-          <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngSwitch]="col.field">
-            {{col.header}}
-            <p-sortIcon *ngSwitchDefault [field]="col.field"></p-sortIcon>
-          </th>
+          <ng-container *ngFor="let col of columns" [ngSwitch]="col.field">
+
+            <th *ngSwitchCase="'flowerType'" [pSortableColumn]="'flowerSize.flower.flowerType.nameSingle'" >
+              {{col.header}}
+              <p-sortIcon [field]="'flowerSize.flower.flowerType.name'"></p-sortIcon>
+            </th>
+
+            <th *ngSwitchCase="'flower'" [pSortableColumn]="'flowerSize.flower.name'" >
+              {{col.header}}
+              <p-sortIcon [field]="'flowerSize.flower.name'"></p-sortIcon>
+            </th>
+
+            <th *ngSwitchCase="'size'" [pSortableColumn]="'flowerSize.size.name'" >
+              {{col.header}}
+              <p-sortIcon [field]="'flowerSize.size.name'"></p-sortIcon>
+            </th>
+
+            <th *ngSwitchCase="'operationType'" >
+              {{col.header}}
+            </th>
+
+            <th *ngSwitchCase="'direction'">
+              {{col.header}}
+            </th>
+
+            <th *ngSwitchDefault [pSortableColumn]="col.field" >
+              {{col.header}}
+              <p-sortIcon [field]="col.field"></p-sortIcon>
+            </th>
+
+
+          </ng-container>
 
       </tr>
       <!--Filters-->
