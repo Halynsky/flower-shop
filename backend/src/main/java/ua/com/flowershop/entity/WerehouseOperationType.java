@@ -48,6 +48,7 @@ public class WerehouseOperationType {
     @AllArgsConstructor
     public enum OperationType {
         GOODS_ARRIVAL("GOODS_ARRIVAL"),
+        INTERNAL_SALE("INTERNAL_SALE"),
         EXTERNAL_SALE("EXTERNAL_SALE"),
         GIFT("GIFT"),
         DEFECT("DEFECT");
