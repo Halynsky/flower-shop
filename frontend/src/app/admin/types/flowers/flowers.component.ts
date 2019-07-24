@@ -38,7 +38,7 @@ export class FlowersComponent implements OnInit {
   heightFilter: number[] = [15, 160];
 
   popularityTimeout: any;
-  popularityFilter: number[] = [1, 10];
+  popularityFilter: number[];
 
   imageUrl: string;
   isZoomed: boolean = false;
@@ -53,7 +53,8 @@ export class FlowersComponent implements OnInit {
     {field: 'flowerHeightMin', header: 'Висота', active: true},
     {field: 'isNew', header: 'Новинка', active: true},
     {field: 'hasDiscount', header: 'Знижка', active: true},
-    {field: 'isPopular', header: 'Популярна', active: true}
+    {field: 'isPopular', header: 'Популярна', active: true},
+    {field: 'popularity', header: 'Рейтинг', active: true}
   ];
 
   selectedColumns = this.cols.filter(column => column.active);
@@ -157,7 +158,7 @@ export class FlowersComponent implements OnInit {
     }
 
     this.popularityTimeout = setTimeout(() => {
-      dt.filter(event.value, 'popularity', 'gt');
+      dt.filter(event.value, 'popularity', 'gte');
     }, 250);
   }
 

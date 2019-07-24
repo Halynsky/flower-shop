@@ -20,7 +20,7 @@
     </ng-template>
     <ng-template pTemplate="header" let-columns>
       <tr>
-<!--        <th></th>-->
+        <!--        <th></th>-->
         <ng-container *ngFor="let col of selectedColumns" [ngSwitch]="col.field">
           <th *ngSwitchCase="'id'" [pSortableColumn]="'id'">
             {{col.header}}
@@ -60,15 +60,15 @@
           <th *ngSwitchCase="'isPopular'">
             {{col.header}}
           </th>
-          <!--        <th [pSortableColumn]="'popularity'" ]>-->
-          <!--          Рейтинг-->
-          <!--          <p-sortIcon [field]="'popularity'"></p-sortIcon>-->
-          <!--        </th>-->
+          <th *ngSwitchCase="'popularity'" [pSortableColumn]="'popularity'">
+            {{col.header}}
+            <p-sortIcon [field]="'popularity'"></p-sortIcon>
+          </th>
         </ng-container>
 
       </tr>
       <tr>
-<!--        <th></th>-->
+        <!--        <th></th>-->
         <th *ngFor="let col of selectedColumns" [ngSwitch]="col.field">
           <div *ngSwitchCase="'id'"></div>
           <div *ngSwitchCase="'image'"></div>
@@ -102,20 +102,22 @@
           <div *ngSwitchCase="'isNew'"></div>
           <div *ngSwitchCase="'hasDiscount'"></div>
           <div *ngSwitchCase="'isPopular'"></div>
-          <!--        <th>-->
-          <!--          <p-slider [style]="{'width':'100%','margin-top':'8px'}" [(ngModel)]="popularityFilter" [min]="0"-->
-          <!--                    [max]="10" (onChange)="onPopularityChange($event, dt)"></p-slider>-->
-          <!--        </th>-->
+          <div *ngSwitchCase="'popularity'">
+            <span *ngIf="!this.popularityFilter">1</span>
+            {{this.popularityFilter}}
+            <p-slider [style]="{'width':'100%','margin-top':'8px'}" [(ngModel)]="popularityFilter" [min]="1"
+                      [max]="10" (onChange)="onPopularityChange($event, dt)"></p-slider>
+          </div>
         </th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns">
       <tr [pContextMenuRow]="rowData">
-<!--        <td>-->
-<!--          <a [pRowToggler]="rowData">-->
-<!--            <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>-->
-<!--          </a>-->
-<!--        </td>-->
+        <!--        <td>-->
+        <!--          <a [pRowToggler]="rowData">-->
+        <!--            <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>-->
+        <!--          </a>-->
+        <!--        </td>-->
         <td *ngFor="let col of selectedColumns" [ngSwitch]="col.field">
           <span *ngSwitchCase="'id'">
             {{rowData[col.field]}}
@@ -173,24 +175,19 @@
               </i></div>
             </div>
           </span>
-          <!--        <td>-->
-          <!--          <div *ngIf="rowData['popularity']">-->
-          <!--            {{rowData['popularity']}}/10-->
-          <!--          </div>-->
-          <!--          <div *ngIf="rowData['popularity'] == null">-->
-          <!--            10/10-->
-          <!--          </div>-->
-          <!--        </td>-->
+          <span *ngSwitchCase="'popularity'">
+                      {{rowData[col.field]}}/10
+          </span>
         </td>
       </tr>
     </ng-template>
-<!--    <ng-template pTemplate="rowexpansion" let-rowData>-->
-<!--      <tr>-->
-<!--          <td [attr.colspan]="11">-->
-<!--            {{rowData['description']}}-->
-<!--          </td>-->
-<!--      </tr>-->
-<!--    </ng-template>-->
+    <!--    <ng-template pTemplate="rowexpansion" let-rowData>-->
+    <!--      <tr>-->
+    <!--          <td [attr.colspan]="11">-->
+    <!--            {{rowData['description']}}-->
+    <!--          </td>-->
+    <!--      </tr>-->
+    <!--    </ng-template>-->
   </p-table>
 </div>
 
