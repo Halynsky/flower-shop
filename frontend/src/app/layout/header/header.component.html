@@ -79,19 +79,19 @@
 </mat-menu>
 
 <mat-menu #userMenu="matMenu" class="auth-menu">
-  <button class="user-menu-button">
+  <button class="user-menu-button" (click)="userService.activateButton('1-b')"  routerLink="/my/profile">
     <i class="fas fa-users"></i>
     <span>Мій профіль</span>
   </button>
-  <button class="user-menu-button">
+  <button class="user-menu-button" (click)="userService.activateButton('2-b')" routerLink="/my/wishlist">
     <i class="fas fa-hand-holding-heart"></i>
     <span>Список бажань</span>
   </button>
-  <button class="user-menu-button">
+  <button class="user-menu-button" (click)="userService.activateButton('3-b')">
     <i class="fas fa-shopping-cart"></i>
     <span>Мої покупки</span>
   </button>
-  <button class="user-menu-button">
+  <button class="user-menu-button" (click)="userService.activateButton('4-b')">
     <i class="far fa-heart"></i>
     <span>Улюблені статті</span>
   </button>
