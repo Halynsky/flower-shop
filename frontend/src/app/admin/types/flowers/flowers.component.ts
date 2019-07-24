@@ -44,20 +44,19 @@ export class FlowersComponent implements OnInit {
   isZoomed: boolean = false;
 
   cols = [
-    {field: 'id', header: 'Id'},
-    {field: 'name', header: 'Назва'},
-    {field: 'nameOriginal', header: 'Назва(англ)'},
-    {field: 'flowerType', header: 'Тип квітки'},
-    {field: 'groupName', header: 'Група'},
-    {field: 'flowerSizeMin', header: 'Розмір'},
-    {field: 'flowerHeightMin', header: 'Висота'},
-    {field: 'isNew', header: 'Новинка'},
-    {field: 'hasDiscount', header: 'Знижка'},
-    {field: 'isPopular', header: 'Популярна'},
-    {field: 'popularity', header: 'Рейтинг'}
+    {field: 'id', header: 'Id', active: true},
+    {field: 'name', header: 'Назва', active: true},
+    {field: 'nameOriginal', header: 'Назва(англ)', active: true},
+    {field: 'flowerType', header: 'Тип квітки', active: true},
+    {field: 'groupName', header: 'Група', active: true},
+    {field: 'flowerSizeMin', header: 'Розмір', active: true},
+    {field: 'flowerHeightMin', header: 'Висота', active: true},
+    {field: 'isNew', header: 'Новинка', active: true},
+    {field: 'hasDiscount', header: 'Знижка', active: true},
+    {field: 'isPopular', header: 'Популярна', active: true}
   ];
 
-  selectedColumns: any[];
+  selectedColumns = this.cols.filter(column => column.active);
 
   items: Flower[] = [];
   selected: Flower;
@@ -199,6 +198,16 @@ export class FlowersComponent implements OnInit {
 
   closeImg() {
     this.isZoomed = false;
+  }
+
+  onColumnSelect(event) {
+    let changedColumn = this.cols.find(column => column.field == event.itemValue.field);
+    changedColumn.active = !changedColumn.active;
+    this.filterSelectedColumns()
+  }
+
+  filterSelectedColumns() {
+    this.selectedColumns = this.cols.filter(column => column.active);
   }
 
 }

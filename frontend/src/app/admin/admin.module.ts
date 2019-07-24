@@ -15,7 +15,7 @@ import {
 import { AdminSidebarComponent } from './admin-layout/admin-sidebar/admin-sidebar.component';
 import { UsersComponent } from './users/users.component';
 import { AdminHeaderComponent } from './admin-layout/admin-header/admin-header.component';
-import { WarehouseComponent } from './shop/warehouse/warehouse.component';
+import { WarehouseOperationsComponent } from './shop/warehouse-operations/warehouse-operations.component';
 import { AdminAccordionComponent } from "./admin-layout/admin-sidebar/accordeon/admin-accordion.component";
 import { BlogComponent } from './blog/blog.component';
 import { OrdersComponent } from './shop/orders/orders.component';
@@ -41,7 +41,7 @@ import { PipesModule } from "../pipes/pipes.module";
     AdminAccordionComponent,
     UsersComponent,
     AdminHeaderComponent,
-    WarehouseComponent,
+    WarehouseOperationsComponent,
     BlogComponent,
     OrdersComponent,
     FlowersComponent,
@@ -71,11 +71,9 @@ import { PipesModule } from "../pipes/pipes.module";
     InputTextModule,
     ContextMenuModule,
     MessageModule,
-    ColorPickerModule,
     CalendarModule,
     SliderModule,
     NgArrayPipesModule,
-    ColorPickerModule,
     SliderModule,
     PipesModule.forRoot(),
     ColorPickerModule,
