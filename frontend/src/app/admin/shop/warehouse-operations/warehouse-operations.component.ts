@@ -73,6 +73,7 @@ export class WarehouseOperationsComponent implements OnInit {
   }
 
   ngOnInit() {
+
   }
 
   loadDataLazy(filters = {}, pagination: Pagination = new Pagination()) {

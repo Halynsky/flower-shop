@@ -20,7 +20,7 @@
     </ng-template>
     <ng-template pTemplate="header" let-columns>
       <tr>
-        <!--        <th></th>-->
+                <th></th>
         <ng-container *ngFor="let col of selectedColumns" [ngSwitch]="col.field">
           <th *ngSwitchCase="'id'" [pSortableColumn]="'id'">
             {{col.header}}
@@ -64,11 +64,18 @@
             {{col.header}}
             <p-sortIcon [field]="'popularity'"></p-sortIcon>
           </th>
+          <th *ngSwitchCase="'color'">
+            {{col.header}}
+          </th>
+          <th *ngSwitchCase="'created'" [pSortableColumn]="'created'">
+            {{col.header}}
+            <p-sortIcon [field]="'created'"></p-sortIcon>
+          </th>
         </ng-container>
 
       </tr>
       <tr>
-        <!--        <th></th>-->
+                <th></th>
         <th *ngFor="let col of selectedColumns" [ngSwitch]="col.field">
           <div *ngSwitchCase="'id'"></div>
           <div *ngSwitchCase="'image'"></div>
@@ -108,16 +115,31 @@
             <p-slider [style]="{'width':'100%','margin-top':'8px'}" [(ngModel)]="popularityFilter" [min]="1"
                       [max]="10" (onChange)="onPopularityChange($event, dt)"></p-slider>
           </div>
+          <div *ngSwitchCase="'color'">
+            <input pInputText type="text" (input)="dt.filter($event.target.value, 'color.name', 'contains')"
+                   class="table-filter">
+          </div>
+          <div *ngSwitchCase="'created'">
+            <p-calendar
+              [(ngModel)]="dateFilters"
+              appendTo="body"
+              selectionMode="range"
+              [readonlyInput]="false"
+              dateFormat="dd.mm.yy"
+              (onSelect)="dt.filter(dateFilters, col.field, 'dateRange')"
+              [locale]="translation.calendar_ua">
+            </p-calendar>
+          </div>
         </th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns">
       <tr [pContextMenuRow]="rowData">
-        <!--        <td>-->
-        <!--          <a [pRowToggler]="rowData">-->
-        <!--            <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>-->
-        <!--          </a>-->
-        <!--        </td>-->
+        <td>
+          <a [pRowToggler]="rowData">
+            <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
+          </a>
+        </td>
         <td *ngFor="let col of selectedColumns" [ngSwitch]="col.field">
           <span *ngSwitchCase="'id'">
             {{rowData[col.field]}}
@@ -178,16 +200,28 @@
           <span *ngSwitchCase="'popularity'">
                       {{rowData[col.field]}}/10
           </span>
+          <span *ngSwitchCase="'color'">
+             <div class="color-example" [ngStyle]="{backgroundColor: rowData[col.field].hex}"></div>
+          </span>
+          <span *ngSwitchCase="'created'">
+            {{rowData[col.field] | date:'dd.MM.yyyy H:mm'}}
+          </span>
         </td>
       </tr>
     </ng-template>
-    <!--    <ng-template pTemplate="rowexpansion" let-rowData>-->
-    <!--      <tr>-->
-    <!--          <td [attr.colspan]="11">-->
-    <!--            {{rowData['description']}}-->
-    <!--          </td>-->
-    <!--      </tr>-->
-    <!--    </ng-template>-->
+        <ng-template pTemplate="rowexpansion" let-rowData>
+          <tr>
+              <td [attr.colspan]="cols.length + 1">
+                <div class="row-expansion">
+                  <div *ngFor="let flowerSize of rowData['flowerSizes']" class="flower-size-card">
+                    <span>Розмір: {{flowerSize.size.name}}</span>
+                    <span>Ціна (1 шт.) : {{flowerSize.price/100}} грн</span>
+                    <span>Кількість: {{flowerSize.amount}}</span>
+                  </div>
+                </div>
+              </td>
+          </tr>
+        </ng-template>
   </p-table>
 </div>
 

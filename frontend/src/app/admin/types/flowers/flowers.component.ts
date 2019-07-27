@@ -1,12 +1,15 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {SnackBarService} from "../../../services/snak-bar.service";
 import {Flower} from "../../../api/models/Flower";
 import {FlowerService} from "../../../api/services/flower.service";
-import {getErrorMessage} from "../../../utils/Functions";
+import { getErrorMessage, ngPrimeFiltersToParams } from "../../../utils/Functions";
 import {ItemSaveMode} from "../../../models/ItemSaveMode";
 import {ConfirmationService, SortEvent} from "primeng/api";
 import {ActivatedRoute, Router} from "@angular/router";
 import {animate, state, style, transition, trigger} from "@angular/animations";
+import { Pagination } from "../../../api/models/Pagination";
+import { Table } from "primeng/table";
+import { TranslationService } from "../../../utils/translation.service";
 
 
 @Component({
@@ -29,7 +32,11 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
 })
 export class FlowersComponent implements OnInit {
 
+  @ViewChild('dt') private table: Table;
+
   ItemSaveMode = ItemSaveMode;
+
+  dateFilters;
 
   sizeTimeout: any;
   sizeFilter: number[] = [1, 25];
@@ -45,16 +52,19 @@ export class FlowersComponent implements OnInit {
 
   cols = [
     {field: 'id', header: 'Id', active: true},
+    {field: 'image', header: 'Фото', active: true},
     {field: 'name', header: 'Назва', active: true},
-    {field: 'nameOriginal', header: 'Назва(англ)', active: true},
-    {field: 'flowerType', header: 'Тип квітки', active: true},
-    {field: 'groupName', header: 'Група', active: true},
+    {field: 'nameOriginal', header: 'Назва(англ)', active: false},
+    {field: 'flowerType', header: 'Тип квітки', active: false},
+    {field: 'groupName', header: 'Група', active: false},
     {field: 'flowerSizeMin', header: 'Розмір', active: true},
     {field: 'flowerHeightMin', header: 'Висота', active: true},
-    {field: 'isNew', header: 'Новинка', active: true},
+    {field: 'isNew', header: 'Новинка', active: false},
     {field: 'hasDiscount', header: 'Знижка', active: true},
-    {field: 'isPopular', header: 'Популярна', active: true},
-    {field: 'popularity', header: 'Рейтинг', active: true}
+    {field: 'isPopular', header: 'Популярна', active: false},
+    {field: 'popularity', header: 'Рейтинг', active: true},
+    {field: 'color', header: 'Колір', active: true},
+    {field: 'created', header: 'Створення', active: true}
   ];
 
   selectedColumns = this.cols.filter(column => column.active);
@@ -82,14 +92,23 @@ export class FlowersComponent implements OnInit {
               private snackBarService: SnackBarService,
               private confirmationService: ConfirmationService,
               private router: Router,
+              private translation: TranslationService,
               private route: ActivatedRoute) {
+
     this.loadData();
 
   }
 
   ngOnInit() {
-    this.selectedColumns = this.cols;
+
   }
+
+  // loadDataLazy() {
+  //   this.dataService.getForAdmin().subscribe(
+  //     items => this.items = items,
+  //     error => this.snackBarService.showError(error.error.message)
+  //   )
+  // }
 
   loadData() {
     this.dataService.getForAdmin().subscribe(
@@ -97,6 +116,14 @@ export class FlowersComponent implements OnInit {
       error => this.snackBarService.showError(error.error.message)
     )
   }
+
+  // onLazyLoad(event: any) {
+  //   this.loadDataLazy(ngPrimeFiltersToParams(event.filters), new Pagination().fromPrimeNg(event));
+  // }
+
+  // refresh(): void {
+  //   this.table.onLazyLoad.emit(this.table.createLazyLoadMetadata());
+  // }
 
   mapForFilter = item => {
     return {
