@@ -1,9 +1,11 @@
 import { Component } from "@angular/core";
+import { ModalWindowService } from "../services/modal-window.service";
 
 @Component({
   selector: 'layout',
   template: `
     <layout-header></layout-header>
+    <modal-window *ngIf="modalPageService.getIsModal()"></modal-window>
     <router-outlet></router-outlet>
   `,
   styles: [`
@@ -27,7 +29,7 @@ import { Component } from "@angular/core";
 })
 export class LayoutComponent {
 
-  constructor() {
+  constructor( public modalPageService: ModalWindowService) {
   }
 
 }

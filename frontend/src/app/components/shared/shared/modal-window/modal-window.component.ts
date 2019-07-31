@@ -11,7 +11,7 @@ import { BucketService } from "../../../../services/bucket.service";
 export class ModalWindowComponent {
 
 
-  constructor(private modalPageService: ModalWindowService, private bucketService: BucketService){
+  constructor(public modalPageService: ModalWindowService, public bucketService: BucketService){
   }
 
 //   trackElement() {

@@ -14,6 +14,7 @@ import localeRuUa from '@angular/common/locales/uk';
 import { HttpClientModule } from "@angular/common/http";
 import { RouterModule } from "@angular/router";
 import { BottomSheetOverview } from "./components/shared/shared/bottom-sheet/bottom-sheet.component";
+import { SharedModule } from "./components/shared/shared/shared.module";
 registerLocaleData(localeRuUa);
 
 @NgModule({
@@ -22,7 +23,7 @@ registerLocaleData(localeRuUa);
     LayoutComponent
   ],
   imports: [
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
     routing,
     RouterModule,
     BrowserModule,
@@ -32,6 +33,7 @@ registerLocaleData(localeRuUa);
     // Developed modules
     LayoutModule,
     LandingModule,
+    SharedModule,
   ],
   providers: [
     MatIconRegistry,
