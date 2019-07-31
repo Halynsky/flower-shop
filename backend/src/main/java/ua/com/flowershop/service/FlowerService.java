@@ -23,11 +23,11 @@ public class FlowerService {
 
     public Page<FlowerFullProjection> findForAdmin(Long id, String flowerNamePart, String flowerOriginalNamePart, List<String> flowerTypeNames, String groupNamePart,
                                                    Integer sizeFrom, Integer sizeTo, Integer heightFrom, Integer heightTo,
-                                                   Integer popularityFrom, String colorNamePart,
+                                                   Integer popularityFrom, Integer popularityTo, String colorNamePart,
                                                    LocalDateTime createdFrom, LocalDateTime createdTo,
                                                    Pageable pageRequest) {
         return flowerRepository.findForAdminProjectedByFilters(id, flowerNamePart, flowerOriginalNamePart, flowerTypeNames, groupNamePart, sizeFrom, sizeTo, heightFrom,
-            heightTo, popularityFrom, colorNamePart, createdFrom, createdTo, pageRequest );
+            heightTo, popularityFrom, popularityTo, colorNamePart, createdFrom, createdTo, pageRequest );
     }
 
     public FlowerProjection getFlowerById(Long id) {

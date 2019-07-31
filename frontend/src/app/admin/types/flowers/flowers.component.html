@@ -113,9 +113,9 @@
           <div *ngSwitchCase="'isPopular'"></div>
           <div *ngSwitchCase="'popularity'">
             <span *ngIf="!this.popularityFilter">1</span>
-            {{this.popularityFilter}}
+            {{this.popularityFilter[0]}} — {{this.popularityFilter[1]}}
             <p-slider [style]="{'width':'100%','margin-top':'8px'}" [(ngModel)]="popularityFilter" [min]="1"
-                      [max]="10" (onChange)="onPopularityChange($event, dt)"></p-slider>
+                      [max]="10" [step]="1" (onSlideEnd)="dt.filter(popularityFilter, col.field, 'range')" [range]="true"></p-slider>
           </div>
           <div *ngSwitchCase="'color'">
             <input pInputText type="text" (input)="dt.filter($event.target.value, 'colorNamePart', 'contains')"

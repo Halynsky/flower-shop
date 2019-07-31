@@ -1,17 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {SnackBarService} from "../../../services/snak-bar.service";
-import {Flower} from "../../../api/models/Flower";
-import {FlowerService} from "../../../api/services/flower.service";
+import { SnackBarService } from "../../../services/snak-bar.service";
+import { Flower } from "../../../api/models/Flower";
+import { FlowerService } from "../../../api/services/flower.service";
 import { getErrorMessage, ngPrimeFiltersToParams } from "../../../utils/Functions";
-import {ItemSaveMode} from "../../../models/ItemSaveMode";
-import {ConfirmationService, SortEvent} from "primeng/api";
-import {ActivatedRoute, Router} from "@angular/router";
-import {animate, state, style, transition, trigger} from "@angular/animations";
+import { ItemSaveMode } from "../../../models/ItemSaveMode";
+import { ConfirmationService, SortEvent } from "primeng/api";
+import { ActivatedRoute, Router } from "@angular/router";
+import { animate, state, style, transition, trigger } from "@angular/animations";
 import { Pagination } from "../../../api/models/Pagination";
 import { Table } from "primeng/table";
 import { TranslationService } from "../../../utils/translation.service";
 import { RestPage } from "../../../api/models/RestPage";
-
 
 
 @Component({
@@ -45,8 +44,7 @@ export class FlowersComponent implements OnInit {
 
   heightFilter: number[] = [15, 160];
 
-  popularityTimeout: any;
-  popularityFilter: number[];
+  popularityFilter: number[] = [1, 10];
 
   imageUrl: string;
   isZoomed: boolean = false;
@@ -97,9 +95,6 @@ export class FlowersComponent implements OnInit {
               private router: Router,
               private translation: TranslationService,
               private route: ActivatedRoute) {
-
-    // this.loadData();
-
   }
 
   ngOnInit() {
@@ -150,18 +145,6 @@ export class FlowersComponent implements OnInit {
         this.remove(event)
       }
     });
-  }
-
-
-
-  onPopularityChange(event, dt) {
-    if (this.popularityTimeout) {
-      clearTimeout(this.popularityTimeout);
-    }
-
-    this.popularityTimeout = setTimeout(() => {
-      dt.filter(event.value, 'popularityFrom', 'gte');
-    }, 250);
   }
 
   sortData(event: SortEvent) {

@@ -46,12 +46,13 @@ public class FlowerController {
                                                                      @RequestParam(required = false) Integer heightFrom,
                                                                      @RequestParam(required = false) Integer heightTo,
                                                                      @RequestParam(required = false) Integer popularityFrom,
+                                                                     @RequestParam(required = false) Integer popularityTo,
                                                                      @RequestParam(required = false) String colorNamePart,
                                                                      @RequestParam(required = false) LocalDateTime createdFrom,
                                                                      @RequestParam(required = false) LocalDateTime createdTo,
                                                                      @PageableDefault(sort = "id", page = 0, size = 10, direction = Sort.Direction.ASC) Pageable pageRequest) {
         return new ResponseEntity<>(flowerService.findForAdmin(id, flowerNamePart, flowerOriginalNamePart, flowerTypeNames, groupNamePart, sizeFrom, sizeTo, heightFrom,
-            heightTo, popularityFrom, colorNamePart, createdFrom, createdTo, pageRequest), OK);
+            heightTo, popularityFrom, popularityTo, colorNamePart, createdFrom, createdTo, pageRequest), OK);
     }
 
     @GetMapping
