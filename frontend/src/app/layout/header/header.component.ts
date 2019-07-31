@@ -11,7 +11,7 @@ import { ModalWindowService } from "../../services/modal-window.service";
 
 export class HeaderComponent {
 
-  constructor(private securityService: SecurityService, private bucketService: BucketService, private modalWindowService: ModalWindowService) {
+  constructor(public securityService: SecurityService, public bucketService: BucketService, public modalWindowService: ModalWindowService) {
 
   }
 

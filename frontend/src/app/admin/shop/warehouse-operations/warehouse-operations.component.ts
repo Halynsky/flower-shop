@@ -70,9 +70,11 @@ export class WarehouseOperationsComponent implements OnInit {
     this.directionOptions.forEach(e => e.label = translation.text[e.label]);
     this.operationTypes = enumToObjectsPipe.transform(WerehouseOperationType.OperationType);
     this.operationTypes.forEach(e => e.label = translation.text[e.label]);
+
   }
 
   ngOnInit() {
+
   }
 
   loadDataLazy(filters = {}, pagination: Pagination = new Pagination()) {

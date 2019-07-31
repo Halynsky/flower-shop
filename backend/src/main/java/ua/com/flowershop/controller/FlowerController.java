@@ -9,6 +9,8 @@ import org.springframework.data.jpa.domain.JpaSort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ua.com.flowershop.entity.FlowerType;
+import ua.com.flowershop.entity.WerehouseOperationType;
 import ua.com.flowershop.projection.FlowerFullProjection;
 import ua.com.flowershop.projection.FlowerProjection;
 import ua.com.flowershop.projection.FlowerShortProjection;
@@ -17,6 +19,7 @@ import ua.com.flowershop.service.FlowerService;
 import ua.com.flowershop.util.HibernateUtil;
 import ua.com.flowershop.util.annotation.PageableSwagger;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -33,8 +36,23 @@ public class FlowerController {
     @Autowired private FlowerRepository flowerRepository;
 
     @GetMapping("/forAdmin")
-    public ResponseEntity<List<FlowerFullProjection>> getAllForAdmin() {
-        return new ResponseEntity<>(flowerService.findForAdmin(), OK);
+    public ResponseEntity<Page<FlowerFullProjection>> getAllForAdmin(@RequestParam(required = false) Long id,
+                                                                     @RequestParam(required = false) String flowerNamePart,
+                                                                     @RequestParam(required = false) String flowerOriginalNamePart,
+                                                                     @RequestParam(required = false) List<String> flowerTypeNames,
+                                                                     @RequestParam(required = false) String groupNamePart,
+                                                                     @RequestParam(required = false) Integer sizeFrom,
+                                                                     @RequestParam(required = false) Integer sizeTo,
+                                                                     @RequestParam(required = false) Integer heightFrom,
+                                                                     @RequestParam(required = false) Integer heightTo,
+                                                                     @RequestParam(required = false) Integer popularityFrom,
+                                                                     @RequestParam(required = false) Integer popularityTo,
+                                                                     @RequestParam(required = false) String colorNamePart,
+                                                                     @RequestParam(required = false) LocalDateTime createdFrom,
+                                                                     @RequestParam(required = false) LocalDateTime createdTo,
+                                                                     @PageableDefault(sort = "id", page = 0, size = 10, direction = Sort.Direction.ASC) Pageable pageRequest) {
+        return new ResponseEntity<>(flowerService.findForAdmin(id, flowerNamePart, flowerOriginalNamePart, flowerTypeNames, groupNamePart, sizeFrom, sizeTo, heightFrom,
+            heightTo, popularityFrom, popularityTo, colorNamePart, createdFrom, createdTo, pageRequest), OK);
     }
 
     @GetMapping

@@ -23,10 +23,10 @@ import { FlowerTypesComponent } from './types/flower-types/flower-types.componen
 import { TableModule } from "primeng/table";
 import { SizesComponent } from './types/sizes/sizes.component';
 import { ColorsComponent } from './types/colors/colors.component';
-import { NgArrayPipesModule, RangePipe } from "angular-pipes";
+import { NgArrayPipesModule } from "angular-pipes";
 import { FlowersComponent } from "./types/flowers/flowers.component";
 import { SizeItemComponent } from './types/sizes/size-item/size-item.component';
-import {FormsModule, NgModel, ReactiveFormsModule} from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ColorItemComponent } from "./types/colors/color-item/color-item.component";
 import { FlowerTypeItemComponent } from "./types/flower-types/flower-type-item/flower-type-item.component";
 import { FlowerItemComponent } from "./types/flowers/flower-item/flower-item.component";
@@ -58,6 +58,7 @@ import { PipesModule } from "../pipes/pipes.module";
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    NgArrayPipesModule,
     GrowlModule,
     DialogModule,
     ConfirmDialogModule,
@@ -70,16 +71,15 @@ import { PipesModule } from "../pipes/pipes.module";
     InputTextModule,
     ContextMenuModule,
     MessageModule,
-    ColorPickerModule,
     CalendarModule,
     SliderModule,
     NgArrayPipesModule,
-    ColorPickerModule,
     SliderModule,
-    PipesModule.forRoot()
+    PipesModule.forRoot(),
+    ColorPickerModule,
+    SliderModule
   ],
   providers: [
-    RangePipe,
     ConfirmationService
   ]
 })

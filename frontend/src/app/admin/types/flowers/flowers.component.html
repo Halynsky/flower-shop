@@ -3,186 +3,227 @@
   <div class="buttons">
     <button pButton [routerLink]="['item', ItemSaveMode.new]" icon="pi pi-plus" class="ui-button-success"
             label="&nbsp;&nbsp;Додати"></button>
-    <button pButton (click)="loadData()" icon="pi pi-refresh" label="&nbsp;&nbsp;Оновити"></button>
+    <button pButton (click)="refresh()" icon="pi pi-refresh" label="&nbsp;&nbsp;Оновити"></button>
   </div>
 </div>
 
 <div class="panel-content">
-  <p-table #dt [value]="items" sortField="id" [paginator]="true" [rows]="10"
+  <p-table #dt [value]="items.content" sortField="id" [paginator]="true" [rows]="10"
            [tableStyle]="{'table-layout':'auto'}" [contextMenu]="cm" [(contextMenuSelection)]="selected"
-           [customSort]="true" (sortFunction)="sortData($event)" dataKey="id" rowExpandMode="single">
-<!--    <ng-template pTemplate="caption">-->
-<!--      <div style="text-align:left">-->
-<!--        <p-multiSelect [options]="this.cols" optionLabel="header"-->
-<!--                       selectedItemsLabel="{0} вибраних стовпців" [style]="{minWidth: '200px'}" defaultLabel="Виберіть стовпці"></p-multiSelect>-->
-<!--      </div>-->
-<!--    </ng-template>-->
-    <ng-template pTemplate="header">
+           [customSort]="true" (sortFunction)="sortData($event)" dataKey="id" rowExpandMode="single" [columns]="selectedColumns"
+           (onLazyLoad)="onLazyLoad($event)" [lazy]="true" [totalRecords]="items.totalElements">
+    <ng-template pTemplate="caption">
+      <div style="text-align:left">
+        <p-multiSelect [options]="cols" [(ngModel)]="selectedColumns" optionLabel="header"
+                       selectedItemsLabel="{0} колонок обрано" [style]="{minWidth: '300px'}" defaultLabel="Оберіть колонки"
+                       (onChange)="onColumnSelect($event)"></p-multiSelect>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
       <tr>
-        <th></th>
-        <th [pSortableColumn]="'id'">
-          Id
-          <p-sortIcon [field]="'id'"></p-sortIcon>
-        </th>
-        <th>
-          Фото
-        </th>
-        <th [pSortableColumn]="'name'">
-          Назва
-          <p-sortIcon [field]="'name'"></p-sortIcon>
-        </th>
-        <th [pSortableColumn]="'nameOriginal'">
-          Назва(англ)
-          <p-sortIcon [field]="'nameOriginal'"></p-sortIcon>
-        </th>
-        <th>
-          Тип квітки
-        </th>
-        <th>
-          Група
-        </th>
-        <th [pSortableColumn]="'flowerSizeMin'">
-          Розмір
-          <p-sortIcon [field]="'flowerSizeMin'"></p-sortIcon>
-        </th>
-        <th [pSortableColumn]="'flowerHeightMin'">
-          Висота
-          <p-sortIcon [field]="'flowerHeightMin'"></p-sortIcon>
-        </th>
-        <th>
-          Новинка
-        </th>
-        <th>
-          Знижка
-        </th>
-        <th>
-          Популярна
-        </th>
-<!--        <th [pSortableColumn]="'popularity'" ]>-->
-<!--          Рейтинг-->
-<!--          <p-sortIcon [field]="'popularity'"></p-sortIcon>-->
-<!--        </th>-->
+                <th></th>
+        <ng-container *ngFor="let col of selectedColumns" [ngSwitch]="col.field">
+          <th *ngSwitchCase="'id'" [pSortableColumn]="'id'">
+            {{col.header}}
+            <p-sortIcon [field]="'id'"></p-sortIcon>
+          </th>
+          <th *ngSwitchCase="'image'">
+            {{col.header}}
+          </th>
+          <th *ngSwitchCase="'name'" [pSortableColumn]="'name'">
+            {{col.header}}
+            <p-sortIcon [field]="'name'"></p-sortIcon>
+          </th>
+          <th *ngSwitchCase="'nameOriginal'" [pSortableColumn]="'nameOriginal'">
+            {{col.header}}
+            <p-sortIcon [field]="'nameOriginal'"></p-sortIcon>
+          </th>
+          <th *ngSwitchCase="'flowerType'">
+            {{col.header}}
+          </th>
+          <th *ngSwitchCase="'groupName'">
+            {{col.header}}
+          </th>
+          <th *ngSwitchCase="'flowerSizeMin'" [pSortableColumn]="'flowerSizeMin'">
+            {{col.header}}
+            <p-sortIcon [field]="'flowerSizeMin'"></p-sortIcon>
+          </th>
+          <th *ngSwitchCase="'flowerHeightMin'" [pSortableColumn]="'flowerHeightMin'">
+            {{col.header}}
+            <p-sortIcon [field]="'flowerHeightMin'"></p-sortIcon>
+          </th>
+          <th *ngSwitchCase="'isNew'">
+            {{col.header}}
+          </th>
+          <th *ngSwitchCase="'hasDiscount'">
+            {{col.header}}
+          </th>
+          <th *ngSwitchCase="'isPopular'">
+            {{col.header}}
+          </th>
+          <th *ngSwitchCase="'popularity'" [pSortableColumn]="'popularity'">
+            {{col.header}}
+            <p-sortIcon [field]="'popularity'"></p-sortIcon>
+          </th>
+          <th *ngSwitchCase="'color'">
+            {{col.header}}
+          </th>
+          <th *ngSwitchCase="'created'" [pSortableColumn]="'created'">
+            {{col.header}}
+            <p-sortIcon [field]="'created'"></p-sortIcon>
+          </th>
+        </ng-container>
+
       </tr>
       <tr>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th>
-          <input pInputText type="text" (input)="dt.filter($event.target.value, 'name', 'contains')"
-                 class="table-filter">
+                <th></th>
+        <th *ngFor="let col of selectedColumns" [ngSwitch]="col.field">
+          <input *ngSwitchCase="'id'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'equals')" class="table-filter">
+          <div *ngSwitchCase="'image'"></div>
+          <div *ngSwitchCase="'name'">
+            <input pInputText type="text" (input)="dt.filter($event.target.value, 'flowerNamePart', 'contains')"
+                   class="table-filter">
+          </div>
+          <div *ngSwitchCase="'nameOriginal'">
+            <input pInputText type="text" (input)="dt.filter($event.target.value, 'flowerOriginalNamePart', 'contains')"
+                   class="table-filter">
+          </div>
+          <div *ngSwitchCase="'flowerType'">
+            <p-multiSelect [options]="flowerTypes" defaultLabel="Всі"
+                           class="table-filter"
+                           (onChange)="dt.filter($event.value, 'flowerTypeNames', 'in')"></p-multiSelect>
+          </div>
+          <div *ngSwitchCase="'groupName'">
+            <input pInputText type="text" (input)="dt.filter($event.target.value, 'groupNamePart', 'contains')"
+                   class="table-filter">
+          </div>
+          <div *ngSwitchCase="'flowerSizeMin'">
+            {{this.sizeFilter[0]}} — {{this.sizeFilter[1]}}
+            <p-slider [style]="{'width':'100%','margin-top':'8px'}" [(ngModel)]="sizeFilter" [min]="1"
+                      [max]="25" [step]="1" [range]="true"
+                      (onSlideEnd)="dt.filter(sizeFilter, 'size', 'range')"></p-slider>
+          </div>
+          <div *ngSwitchCase="'flowerHeightMin'">
+            {{this.heightFilter[0]}} — {{this.heightFilter[1]}}
+            <p-slider [style]="{'width':'100%','margin-top':'8px'}" [(ngModel)]="heightFilter" [min]="15" [range]="true"
+                      [max]="160" [step]="1" (onSlideEnd)="dt.filter(heightFilter, 'height', 'range')"></p-slider>
+          </div>
+          <div *ngSwitchCase="'isNew'"></div>
+          <div *ngSwitchCase="'hasDiscount'"></div>
+          <div *ngSwitchCase="'isPopular'"></div>
+          <div *ngSwitchCase="'popularity'">
+            <span *ngIf="!this.popularityFilter">1</span>
+            {{this.popularityFilter[0]}} — {{this.popularityFilter[1]}}
+            <p-slider [style]="{'width':'100%','margin-top':'8px'}" [(ngModel)]="popularityFilter" [min]="1"
+                      [max]="10" [step]="1" (onSlideEnd)="dt.filter(popularityFilter, col.field, 'range')" [range]="true"></p-slider>
+          </div>
+          <div *ngSwitchCase="'color'">
+            <input pInputText type="text" (input)="dt.filter($event.target.value, 'colorNamePart', 'contains')"
+                   class="table-filter">
+          </div>
+          <div *ngSwitchCase="'created'">
+            <p-calendar
+              [(ngModel)]="dateFilters"
+              appendTo="body"
+              selectionMode="range"
+              [readonlyInput]="false"
+              dateFormat="dd.mm.yy"
+              (onSelect)="dt.filter(dateFilters, col.field, 'dateRange')"
+              [locale]="translation.calendar_ua">
+            </p-calendar>
+          </div>
         </th>
-        <th>
-          <input pInputText type="text" (input)="dt.filter($event.target.value, 'nameOriginal', 'contains')"
-                 class="table-filter">
-        </th>
-        <th>
-          <p-multiSelect [options]="items | pluck: 'flowerType' | deep | uniq | map: mapForFilter" defaultLabel="Всі"
-                         class="table-filter"
-                         (onChange)="dt.filter($event.value, 'flowerType.id', 'in')"></p-multiSelect>
-        </th>
-        <th>
-          <input pInputText type="text" (input)="dt.filter($event.target.value, 'groupName', 'contains')"
-                 class="table-filter">
-        </th>
-        <th>
-          {{this.sizeFilter[0]}} — {{this.sizeFilter[1]}}
-          <p-slider [style]="{'width':'100%','margin-top':'8px'}" [(ngModel)]="sizeFilter" [min]="1" [range]="true"
-                    [max]="25" [step]="1" (onChange)="onSizeChange($event, dt, true)"></p-slider>
-        </th>
-        <th>
-          {{this.heightFilter[0]}} — {{this.heightFilter[1]}}
-          <p-slider [style]="{'width':'100%','margin-top':'8px'}" [(ngModel)]="heightFilter" [min]="15" [range]="true"
-                    [max]="160" [step]="1" (onChange)="onSizeChange($event, dt, false)"></p-slider>
-        </th>
-        <th></th>
-        <th></th>
-        <th></th>
-<!--        <th>-->
-<!--          <p-slider [style]="{'width':'100%','margin-top':'8px'}" [(ngModel)]="popularityFilter" [min]="0"-->
-<!--                    [max]="10" (onChange)="onPopularityChange($event, dt)"></p-slider>-->
-<!--        </th>-->
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-rowData let-expanded="expanded">
+    <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns">
       <tr [pContextMenuRow]="rowData">
         <td>
           <a [pRowToggler]="rowData">
             <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
           </a>
         </td>
-        <td>
-          {{rowData['id']}}
-        </td>
-        <td>
-          <div class="item-image" [ngStyle]="{'background-image': 'url(' + rowData['image'] + ''}"
-               (click)="zoomImg(rowData['image'])">
-          </div>
-        </td>
-        <td>
-          {{rowData['name']}}
-        </td>
-        <td>
-          {{rowData['nameOriginal']}}
-        </td>
-        <td>
-          {{rowData['flowerType'].name}}
-        </td>
-        <td>
-          {{rowData['groupName']}}
-        </td>
-        <td>
-          {{rowData['flowerSizeMin']}} см — {{rowData['flowerSizeMax']}} см
-        </td>
-        <td>
-          {{rowData['flowerHeightMin']}} см — {{rowData['flowerHeightMax']}} см
-        </td>
-        <td>
-          <div class="true-false-ico">
-            <div *ngIf="rowData['isNew']"><i class="material-icons">
-              check_box
-            </i></div>
-            <div *ngIf="!rowData['isNew']"><i class="material-icons">
-              check_box_outline_blank
-            </i></div>
-          </div>
-        </td>
-        <td>
-          <div class="true-false-ico">
-            <div *ngIf="rowData['hasDiscount']"><i class="material-icons">
-              check_box
-            </i></div>
-            <div *ngIf="!rowData['hasDiscount']"><i class="material-icons">
-              check_box_outline_blank
-            </i></div>
-          </div>
-        </td>
-        <td>
-          <div class="true-false-ico">
-            <div *ngIf="rowData['isPopular']"><i class="material-icons">
-              check_box
-            </i></div>
-            <div *ngIf="!rowData['isPopular']"><i class="material-icons">
-              check_box_outline_blank
-            </i></div>
-          </div>
-        </td>
-<!--        <td>-->
-<!--          <div *ngIf="rowData['popularity']">-->
-<!--            {{rowData['popularity']}}/10-->
-<!--          </div>-->
-<!--          <div *ngIf="rowData['popularity'] == null">-->
-<!--            10/10-->
-<!--          </div>-->
-<!--        </td>-->
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="rowexpansion" let-rowData>
-      <tr>
-        <td [attr.colspan]="9">
-          {{rowData['description']}}
+        <td *ngFor="let col of selectedColumns" [ngSwitch]="col.field">
+          <span *ngSwitchCase="'id'">
+            {{rowData[col.field]}}
+          </span>
+          <span *ngSwitchCase="'image'">
+            <div class="item-image" [ngStyle]="{'background-image': 'url(' + rowData['image'] + ''}"
+                 (click)="zoomImg(rowData['image'])">
+            </div>
+          </span>
+          <span *ngSwitchCase="'name'">
+            {{rowData[col.field]}}
+          </span>
+          <span *ngSwitchCase="'nameOriginal'">
+            {{rowData[col.field]}}
+          </span>
+          <span *ngSwitchCase="'flowerType'">
+            {{rowData[col.field].name}}
+          </span>
+          <span *ngSwitchCase="'groupName'">
+            {{rowData[col.field]}}
+          </span>
+          <span *ngSwitchCase="'flowerSizeMin'">
+            {{rowData[col.field]}} см — {{rowData['flowerSizeMax']}} см
+          </span>
+          <span *ngSwitchCase="'flowerHeightMin'">
+            {{rowData[col.field]}} см — {{rowData['flowerHeightMax']}} см
+          </span>
+          <span *ngSwitchCase="'isNew'">
+            <div class="true-false-ico">
+              <div *ngIf="rowData['isNew']"><i class="material-icons">
+                check_box
+              </i></div>
+              <div *ngIf="!rowData['isNew']"><i class="material-icons">
+                check_box_outline_blank
+              </i></div>
+            </div>
+          </span>
+          <span *ngSwitchCase="'hasDiscount'">
+            <div class="true-false-ico">
+              <div *ngIf="rowData['hasDiscount']"><i class="material-icons">
+                check_box
+              </i></div>
+              <div *ngIf="!rowData['hasDiscount']"><i class="material-icons">
+                check_box_outline_blank
+              </i></div>
+            </div>
+          </span>
+          <span *ngSwitchCase="'isPopular'">
+            <div class="true-false-ico">
+              <div *ngIf="rowData['isPopular']"><i class="material-icons">
+                check_box
+              </i></div>
+              <div *ngIf="!rowData['isPopular']"><i class="material-icons">
+                check_box_outline_blank
+              </i></div>
+            </div>
+          </span>
+          <span *ngSwitchCase="'popularity'">
+                      {{rowData[col.field]}}/10
+          </span>
+          <span *ngSwitchCase="'color'">
+             <div class="color-example" [ngStyle]="{backgroundColor: rowData[col.field].hex}"></div>
+          </span>
+          <span *ngSwitchCase="'created'">
+            {{rowData[col.field] | date:'dd.MM.yyyy H:mm'}}
+          </span>
         </td>
       </tr>
     </ng-template>
+        <ng-template pTemplate="rowexpansion" let-rowData>
+          <tr>
+              <td [attr.colspan]="cols.length + 1">
+                <div class="row-expansion">
+                  <div *ngFor="let flowerSize of rowData['flowerSizes']" class="flower-size-card">
+                    <span>Розмір: {{flowerSize.size.name}}</span>
+                    <span>Ціна (1 шт.) : {{flowerSize.price/100}} грн</span>
+                    <span>Кількість: {{flowerSize.amount}}</span>
+                  </div>
+                </div>
+              </td>
+          </tr>
+        </ng-template>
   </p-table>
 </div>
 

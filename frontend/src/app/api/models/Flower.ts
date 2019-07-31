@@ -14,6 +14,7 @@ export class Flower {
   flowerSizeMin: number;
   flowerSizeMax: number;
   flowerType: FlowerType;
+  created?: string;
 }
 
 export class FlowerShort {
