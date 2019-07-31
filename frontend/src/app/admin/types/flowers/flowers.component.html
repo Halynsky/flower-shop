@@ -3,14 +3,15 @@
   <div class="buttons">
     <button pButton [routerLink]="['item', ItemSaveMode.new]" icon="pi pi-plus" class="ui-button-success"
             label="&nbsp;&nbsp;Додати"></button>
-    <button pButton (click)="loadData()" icon="pi pi-refresh" label="&nbsp;&nbsp;Оновити"></button>
+    <button pButton  icon="pi pi-refresh" label="&nbsp;&nbsp;Оновити"></button>
   </div>
 </div>
 
 <div class="panel-content">
-  <p-table #dt [value]="items" sortField="id" [paginator]="true" [rows]="10"
+  <p-table #dt [value]="items.content" sortField="id" [paginator]="true" [rows]="10"
            [tableStyle]="{'table-layout':'auto'}" [contextMenu]="cm" [(contextMenuSelection)]="selected"
-           [customSort]="true" (sortFunction)="sortData($event)" dataKey="id" rowExpandMode="single" [columns]="selectedColumns">
+           [customSort]="true" (sortFunction)="sortData($event)" dataKey="id" rowExpandMode="single" [columns]="selectedColumns"
+           (onLazyLoad)="onLazyLoad($event)" [lazy]="true" [totalRecords]="items.totalElements">
     <ng-template pTemplate="caption">
       <div style="text-align:left">
         <p-multiSelect [options]="cols" [(ngModel)]="selectedColumns" optionLabel="header"
@@ -77,34 +78,35 @@
       <tr>
                 <th></th>
         <th *ngFor="let col of selectedColumns" [ngSwitch]="col.field">
-          <div *ngSwitchCase="'id'"></div>
+          <input *ngSwitchCase="'id'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'equals')" class="table-filter">
           <div *ngSwitchCase="'image'"></div>
           <div *ngSwitchCase="'name'">
-            <input pInputText type="text" (input)="dt.filter($event.target.value, 'name', 'contains')"
+            <input pInputText type="text" (input)="dt.filter($event.target.value, 'flowerNamePart', 'contains')"
                    class="table-filter">
           </div>
           <div *ngSwitchCase="'nameOriginal'">
-            <input pInputText type="text" (input)="dt.filter($event.target.value, 'nameOriginal', 'contains')"
+            <input pInputText type="text" (input)="dt.filter($event.target.value, 'flowerOriginalNamePart', 'contains')"
                    class="table-filter">
           </div>
           <div *ngSwitchCase="'flowerType'">
-            <p-multiSelect [options]="items | pluck: 'flowerType' | deep | uniq | map: mapForFilter" defaultLabel="Всі"
+            <p-multiSelect [options]="flowerTypes" defaultLabel="Всі"
                            class="table-filter"
-                           (onChange)="dt.filter($event.value, 'flowerType.id', 'in')"></p-multiSelect>
+                           (onChange)="dt.filter($event.value, 'flowerTypeNames', 'in')"></p-multiSelect>
           </div>
           <div *ngSwitchCase="'groupName'">
-            <input pInputText type="text" (input)="dt.filter($event.target.value, 'groupName', 'contains')"
+            <input pInputText type="text" (input)="dt.filter($event.target.value, 'groupNamePart', 'contains')"
                    class="table-filter">
           </div>
           <div *ngSwitchCase="'flowerSizeMin'">
             {{this.sizeFilter[0]}} — {{this.sizeFilter[1]}}
-            <p-slider [style]="{'width':'100%','margin-top':'8px'}" [(ngModel)]="sizeFilter" [min]="1" [range]="true"
-                      [max]="25" [step]="1" (onChange)="onSizeChange($event, dt, true)"></p-slider>
+            <p-slider [style]="{'width':'100%','margin-top':'8px'}" [(ngModel)]="sizeFilter" [min]="1"
+                      [max]="25" [step]="1" [range]="true"
+                      (onSlideEnd)="dt.filter(sizeFilter, 'size', 'range')"></p-slider>
           </div>
           <div *ngSwitchCase="'flowerHeightMin'">
             {{this.heightFilter[0]}} — {{this.heightFilter[1]}}
             <p-slider [style]="{'width':'100%','margin-top':'8px'}" [(ngModel)]="heightFilter" [min]="15" [range]="true"
-                      [max]="160" [step]="1" (onChange)="onSizeChange($event, dt, false)"></p-slider>
+                      [max]="160" [step]="1" (onSlideEnd)="dt.filter(heightFilter, 'height', 'range')"></p-slider>
           </div>
           <div *ngSwitchCase="'isNew'"></div>
           <div *ngSwitchCase="'hasDiscount'"></div>
@@ -116,7 +118,7 @@
                       [max]="10" (onChange)="onPopularityChange($event, dt)"></p-slider>
           </div>
           <div *ngSwitchCase="'color'">
-            <input pInputText type="text" (input)="dt.filter($event.target.value, 'color.name', 'contains')"
+            <input pInputText type="text" (input)="dt.filter($event.target.value, 'colorNamePart', 'contains')"
                    class="table-filter">
           </div>
           <div *ngSwitchCase="'created'">

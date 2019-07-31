@@ -10,6 +10,8 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
 import { Pagination } from "../../../api/models/Pagination";
 import { Table } from "primeng/table";
 import { TranslationService } from "../../../utils/translation.service";
+import { RestPage } from "../../../api/models/RestPage";
+
 
 
 @Component({
@@ -38,10 +40,9 @@ export class FlowersComponent implements OnInit {
 
   dateFilters;
 
-  sizeTimeout: any;
+
   sizeFilter: number[] = [1, 25];
 
-  heightTimeout: any;
   heightFilter: number[] = [15, 160];
 
   popularityTimeout: any;
@@ -49,6 +50,8 @@ export class FlowersComponent implements OnInit {
 
   imageUrl: string;
   isZoomed: boolean = false;
+
+  flowerTypes = [{value: 'Гладіолуси', label: 'Гладіолуси'}, {value: 'Тюльпани', label: 'Тюльпани'}, {value: 'Гіацинти', label: 'Гіацинти'}, {value: 'Лілії', label: 'Лілії'}];
 
   cols = [
     {field: 'id', header: 'Id', active: true},
@@ -69,7 +72,7 @@ export class FlowersComponent implements OnInit {
 
   selectedColumns = this.cols.filter(column => column.active);
 
-  items: Flower[] = [];
+  items: RestPage<Flower> = new RestPage<Flower>();
   selected: Flower;
 
   menuItems = [
@@ -95,7 +98,7 @@ export class FlowersComponent implements OnInit {
               private translation: TranslationService,
               private route: ActivatedRoute) {
 
-    this.loadData();
+    // this.loadData();
 
   }
 
@@ -103,27 +106,21 @@ export class FlowersComponent implements OnInit {
 
   }
 
-  // loadDataLazy() {
-  //   this.dataService.getForAdmin().subscribe(
-  //     items => this.items = items,
-  //     error => this.snackBarService.showError(error.error.message)
-  //   )
-  // }
-
-  loadData() {
-    this.dataService.getForAdmin().subscribe(
+  loadDataLazy(filters = {}, pagination: Pagination = new Pagination()) {
+    this.dataService.getForAdmin(filters, pagination).subscribe(
       items => this.items = items,
       error => this.snackBarService.showError(error.error.message)
     )
   }
 
-  // onLazyLoad(event: any) {
-  //   this.loadDataLazy(ngPrimeFiltersToParams(event.filters), new Pagination().fromPrimeNg(event));
-  // }
 
-  // refresh(): void {
-  //   this.table.onLazyLoad.emit(this.table.createLazyLoadMetadata());
-  // }
+  onLazyLoad(event: any) {
+    this.loadDataLazy(ngPrimeFiltersToParams(event.filters), new Pagination().fromPrimeNg(event));
+  }
+
+  refresh(): void {
+    this.table.onLazyLoad.emit(this.table.createLazyLoadMetadata());
+  }
 
   mapForFilter = item => {
     return {
@@ -140,7 +137,7 @@ export class FlowersComponent implements OnInit {
     this.dataService.delete(this.selected.id).subscribe(
       response => {
         this.snackBarService.showSuccess("'Квітку' успішно видалено");
-        this.loadData();
+        this.refresh();
       },
       error => this.snackBarService.showError(getErrorMessage(error))
     )
@@ -155,29 +152,7 @@ export class FlowersComponent implements OnInit {
     });
   }
 
-  onSizeChange(event, dt, isSize) {
-    console.log(event)
-    if (isSize){
-      if (this.sizeTimeout) {
-        clearTimeout(this.sizeTimeout);
-      }
 
-      this.sizeTimeout = setTimeout(() => {
-        dt.filter(event.values[0]-1, 'flowerSizeMin', 'gt');
-        dt.filter(event.values[1], 'flowerSizeMax', 'lte');
-      }, 250);
-    } else {
-
-      if (this.heightTimeout) {
-        clearTimeout(this.heightTimeout);
-      }
-
-      this.heightTimeout = setTimeout(() => {
-        dt.filter(event.values[0]-1, 'flowerHeightMin', 'gt');
-        dt.filter(event.values[1], 'flowerHeightMax', 'lte');
-      }, 250);
-    }
-  }
 
   onPopularityChange(event, dt) {
     if (this.popularityTimeout) {
@@ -185,7 +160,7 @@ export class FlowersComponent implements OnInit {
     }
 
     this.popularityTimeout = setTimeout(() => {
-      dt.filter(event.value, 'popularity', 'gte');
+      dt.filter(event.value, 'popularityFrom', 'gte');
     }, 250);
   }
 

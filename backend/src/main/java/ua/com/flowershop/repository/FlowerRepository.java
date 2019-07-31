@@ -6,11 +6,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ua.com.flowershop.entity.Flower;
+import ua.com.flowershop.entity.FlowerType;
 import ua.com.flowershop.projection.FlowerFullProjection;
 import ua.com.flowershop.projection.FlowerProjection;
 import ua.com.flowershop.projection.FlowerShortProjection;
 import ua.com.flowershop.projection.IdNameTuple;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,7 +25,23 @@ public interface FlowerRepository extends JpaRepository<Flower, Long> {
 
     List<FlowerProjection> findProjectedBy();
 
-    List<FlowerFullProjection> findForAdminProjectedBy();
+    @Query("SELECT f FROM Flower f WHERE " +
+        "(:id IS null OR f.id = :id) " +
+        "AND (:flowerNamePart IS null OR lower(f.name) LIKE '%' || lower(cast(:flowerNamePart as string)) || '%' ) " +
+        "AND (:flowerOriginalNamePart IS null OR lower(f.nameOriginal) LIKE '%' || lower(cast(:flowerOriginalNamePart as string)) || '%' ) " +
+        "AND (COALESCE(:flowerTypeNames, NULL) IS NULL OR f.flowerType.name IN :flowerTypeNames) " +
+        "AND (:groupNamePart IS null OR lower(f.groupName) LIKE '%' || lower(cast(:groupNamePart as string)) || '%' ) " +
+        "AND (:sizeFrom IS null or f.flowerSizeMin >= :sizeFrom) AND (:sizeTo IS null or f.flowerSizeMax <= :sizeTo) " +
+        "AND (:heightFrom IS null or f.flowerHeightMin >= :heightFrom) AND (:heightTo IS null or f.flowerHeightMax <= :heightTo) " +
+        "AND (:popularityFrom IS null or f.popularity >= :popularityFrom)" +
+        "AND (:colorNamePart IS null OR lower(f.color.name) LIKE '%' || lower(cast(:colorNamePart as string)) || '%' ) " +
+        "AND ((CAST(:createdFrom AS date) IS null OR CAST(:createdTo AS date) IS null) OR f.created BETWEEN :createdFrom AND :createdTo) "
+    )
+    Page<FlowerFullProjection> findForAdminProjectedByFilters(Long id, String flowerNamePart, String flowerOriginalNamePart, List<String> flowerTypeNames, String groupNamePart,
+                                                              Integer sizeFrom, Integer sizeTo, Integer heightFrom, Integer heightTo,
+                                                              Integer popularityFrom, String colorNamePart,
+                                                              LocalDateTime createdFrom, LocalDateTime createdTo,
+                                                              Pageable pageRequest);
 
     Optional<FlowerProjection> findProjectedById(Long id);
 
