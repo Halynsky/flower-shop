@@ -25,13 +25,13 @@ export class FlowerTypeItemComponent implements OnInit {
     this.route.params.subscribe(
       params => {
         this.mode = params['mode'];
-        if (params['id'])
-          this.getItem(params['id']);
 
-        this.route.queryParams.subscribe(queryParams  => {
-          if (this.mode == ItemSaveMode.edit && queryParams['id'])
-            this.getItem(queryParams['id'])
-        })
+        if (this.mode == ItemSaveMode.edit) {
+          this.route.queryParams.subscribe(queryParams  => {
+            if (queryParams['id'])
+              this.getItem(queryParams['id'])
+          })
+        }
 
       }
     )

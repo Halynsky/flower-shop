@@ -6,6 +6,10 @@ import { ItemSaveMode } from "../../../../models/ItemSaveMode";
 import { FlowerTypeService } from "../../../../api/services/flower-type.service";
 import { Flower } from "../../../../api/models/Flower";
 import { FlowerService } from "../../../../api/services/flower.service";
+import { LabelValueTuple } from "../../../../models/LabelValueTuple";
+import {SelectItem} from 'primeng/api';
+import { FlowerType } from "../../../../api/models/FlowerType";
+import { error } from "@angular/compiler/src/util";
 
 @Component({
   selector: 'flower-item',
@@ -17,30 +21,45 @@ export class FlowerItemComponent implements OnInit {
   ItemSaveMode = ItemSaveMode;
   mode: ItemSaveMode = ItemSaveMode.new;
 
+
+
+  flowerTypes: FlowerType[] = [];
+
+
   item: Flower = new Flower();
 
   constructor(private dataService: FlowerService,
               private snackBarService: SnackBarService,
               private router: Router,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private flowerTypeService: FlowerTypeService) {
     this.route.params.subscribe(
       params => {
         this.mode = params['mode'];
-        if (params['id'])
-          this.getItem(params['id']);
 
-        this.route.queryParams.subscribe(queryParams  => {
-          if (this.mode == ItemSaveMode.edit && queryParams['id'])
-            this.getItem(queryParams['id'])
-        })
+        if (this.mode == ItemSaveMode.edit) {
+          this.route.queryParams.subscribe(queryParams  => {
+            if (queryParams['id'])
+              this.getItem(queryParams['id'])
+          })
+        }
 
       }
     )
 
+    this.flowerTypeService.getAll().subscribe(
+      flowerTypes => this.flowerTypes = flowerTypes,
+      error => this.snackBarService.showError(error.error.message)
+    );
+
+
+
   }
 
   ngOnInit() {
+
   }
+
 
   getItem(id) {
     this.dataService.getById(id).subscribe(
@@ -72,5 +91,7 @@ export class FlowerItemComponent implements OnInit {
   onSubmit() {
     this.mode == ItemSaveMode.new ? this.add() : this.update()
   }
+
+
 
 }
