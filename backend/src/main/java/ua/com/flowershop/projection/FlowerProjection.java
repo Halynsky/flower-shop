@@ -27,7 +27,5 @@ public interface FlowerProjection {
 
     Boolean getIsPopular();
 
-    Boolean getHasDiscount();
-
     FlowerTypeTinyProjection getFlowerType();
 }

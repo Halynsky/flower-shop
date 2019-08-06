@@ -27,6 +27,8 @@ public class FlowerSize {
     private Integer amount = 0;
     @Column(columnDefinition = "integer default 10000")
     private Integer price = 10000;
+    @Column()
+    private Integer priceWithDiscount;
     @Column(columnDefinition = "integer default 0")
     private Integer sold = 0;
 

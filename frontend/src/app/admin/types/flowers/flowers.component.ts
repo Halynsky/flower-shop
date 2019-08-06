@@ -61,7 +61,6 @@ export class FlowersComponent implements OnInit {
     {field: 'flowerSizeMin', header: 'Розмір', active: true},
     {field: 'flowerHeightMin', header: 'Висота', active: true},
     {field: 'isNew', header: 'Новинка', active: false},
-    {field: 'hasDiscount', header: 'Знижка', active: true},
     {field: 'isPopular', header: 'Популярна', active: false},
     {field: 'popularity', header: 'Рейтинг', active: true},
     {field: 'color', header: 'Колір', active: true},

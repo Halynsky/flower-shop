@@ -6,11 +6,11 @@ import { GrowlModule } from "primeng/growl";
 import { DialogModule } from "primeng/dialog";
 import {
   ButtonModule, CalendarModule, ColorPickerModule, ConfirmationService,
-  ConfirmDialogModule, ContextMenuModule, DropdownModule, InputTextModule,
+  ConfirmDialogModule, ContextMenuModule, DropdownModule, InputSwitchModule, InputTextModule,
   MenuModule, MessageModule,
   MultiSelectModule,
-  PanelMenuModule, SliderModule,
-  TieredMenuModule
+  PanelMenuModule, RatingModule, SliderModule,
+  TieredMenuModule, ToggleButtonModule
 } from "primeng/primeng";
 import { AdminSidebarComponent } from './admin-layout/admin-sidebar/admin-sidebar.component';
 import { UsersComponent } from './users/users.component';
@@ -78,7 +78,10 @@ import { PipesModule } from "../pipes/pipes.module";
     PipesModule.forRoot(),
     ColorPickerModule,
     SliderModule,
-    DropdownModule
+    DropdownModule,
+    ToggleButtonModule,
+    InputSwitchModule,
+    RatingModule
   ],
   providers: [
     ConfirmationService

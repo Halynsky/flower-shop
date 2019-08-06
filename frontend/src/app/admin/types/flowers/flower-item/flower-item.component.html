@@ -50,7 +50,7 @@
             pInputText
             #image="ngModel"
             id="image"
-            name="nameOriginal"
+            name="image"
             [(ngModel)]="item.image"/>
         </div>
         <div class="ui-grid-col-2">
@@ -61,14 +61,88 @@
         <div class="ui-grid-col-2">
           <label for="flowerTypeName">Тип квітки</label>
         </div>
-<!--        <div class="ui-grid-col-2">-->
+        <div class="ui-grid-col-2" *ngIf="mode == 'new'">
           <p-dropdown [options]="flowerTypes" [ngModelOptions]="{standalone: true}" optionLabel="name" [(ngModel)]="item.flowerType" placeholder="Виберіть тип квітки" id="flowerTypeName"></p-dropdown>
-<!--        </div>-->
+        </div>
+        <div class="ui-grid-col-2" *ngIf="mode == 'edit'">
+          <p-dropdown [options]="flowerTypes" [ngModelOptions]="{standalone: true}" optionLabel="name" [(ngModel)]="item.flowerType"></p-dropdown>
+        </div>
         <div class="ui-grid-col-2">
         </div>
       </div>
 
+      <div class="prime-form-group">
+        <div class="ui-grid-col-2">
+          <label for="groupName">Група</label>
+        </div>
+        <div class="ui-grid-col-2">
+          <input
+            pInputText
+            #groupName="ngModel"
+            id="groupName"
+            name="groupName"
+            [(ngModel)]="item.groupName"/>
+        </div>
+        <div class="ui-grid-col-2">
+        </div>
+      </div>
 
+      <div class="prime-form-group">
+        <div class="ui-grid-col-2">
+          <label for="flowerSizeMin">Розмір(cm)</label>
+        </div>
+        <div class="ui-grid-col-2">
+          <input
+            pInputText
+            #flowerSizeMin="ngModel"
+            id="flowerSizeMin"
+            name="flowerSizeMin"
+            [(ngModel)]="item.flowerSizeMin"/> — <input
+          pInputText
+          #flowerSizeMax="ngModel"
+          id="flowerSizeMax"
+          name="flowerSizeMax"
+          [(ngModel)]="item.flowerSizeMax"/>
+        </div>
+        <div class="ui-grid-col-2">
+        </div>
+      </div>
+
+      <div class="prime-form-group">
+        <div class="ui-grid-col-2">
+          <label for="flowerHeightMin">Висота(cm)</label>
+        </div>
+        <div class="ui-grid-col-2">
+          <input
+            pInputText
+            #flowerHeightMin="ngModel"
+            id="flowerHeightMin"
+            name="flowerHeightMin"
+            [(ngModel)]="item.flowerHeightMin"/> — <input
+          pInputText
+          #flowerHeightMax="ngModel"
+          id="flowerHeightMax"
+          name="flowerHeightMax"
+          [(ngModel)]="item.flowerHeightMax"/>
+        </div>
+        <div class="ui-grid-col-2">
+        </div>
+      </div>
+
+      <div class="prime-form-group">
+        <div class="ui-grid-col-2">
+          <label for="popularity">Рейтинг</label>
+        </div>
+<!--        <div class="ui-grid-col-2">-->
+          <p-rating
+            #popularity="ngModel"
+            id="popularity"
+            name="popularity"
+            [(ngModel)]="item.popularity" stars="10"></p-rating>
+<!--        </div>-->
+        <div class="ui-grid-col-2">
+        </div>
+      </div>
 
     </div>
 

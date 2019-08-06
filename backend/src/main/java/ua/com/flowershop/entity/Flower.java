@@ -39,7 +39,6 @@ public class Flower {
     private Integer flowerHeightMax;
 
     private Boolean isNew = true;
-    private Boolean hasDiscount;
     private Boolean isPopular;
     @Min(1)
     @Max(10)
