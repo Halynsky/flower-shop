@@ -61,7 +61,7 @@ public class FlowerController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<FlowerProjection> getById(@PathVariable Long id) {
+    public ResponseEntity<FlowerFullProjection> getById(@PathVariable Long id) {
         return new ResponseEntity<>(flowerService.getFlowerById(id), OK);
     }
 

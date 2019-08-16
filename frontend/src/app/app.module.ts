@@ -9,7 +9,7 @@ import { LayoutComponent } from "./layout/layout.component";
 import { LandingModule } from "./components/landing/landing.module";
 import { MatIconModule, MatIconRegistry } from '@angular/material';
 import { LayoutModule } from "./layout/layout.module";
-import { registerLocaleData } from '@angular/common';
+import { DatePipe, registerLocaleData } from '@angular/common';
 import localeRuUa from '@angular/common/locales/uk';
 import { HttpClientModule } from "@angular/common/http";
 import { RouterModule } from "@angular/router";
@@ -36,6 +36,7 @@ registerLocaleData(localeRuUa);
     SharedModule,
   ],
   providers: [
+    [DatePipe],
     MatIconRegistry,
     { provide: LOCALE_ID, useValue: "uk" }
   ],

@@ -61,11 +61,15 @@
         <div class="ui-grid-col-2">
           <label for="flowerTypeName">Тип квітки</label>
         </div>
-        <div class="ui-grid-col-2" *ngIf="mode == 'new'">
-          <p-dropdown [options]="flowerTypes" [ngModelOptions]="{standalone: true}" optionLabel="name" [(ngModel)]="item.flowerType" placeholder="Виберіть тип квітки" id="flowerTypeName"></p-dropdown>
-        </div>
-        <div class="ui-grid-col-2" *ngIf="mode == 'edit'">
-          <p-dropdown [options]="flowerTypes" [ngModelOptions]="{standalone: true}" optionLabel="name" [(ngModel)]="item.flowerType"></p-dropdown>
+        <div class="ui-grid-col-2">
+          <div class="dropdown-block">
+            <p-dropdown [options]="flowerTypes" [ngModelOptions]="{standalone: true}" optionLabel="name" [(ngModel)]="item.flowerType"
+                        placeholder="Виберіть тип квітки" id="flowerTypeName"></p-dropdown>
+            <div *ngIf="item.flowerType" class="chosen-item">
+              <div>Вибраний тип:</div>
+              <div style="margin-left: 5px">{{item.flowerType.name}}</div>
+            </div>
+          </div>
         </div>
         <div class="ui-grid-col-2">
         </div>
@@ -133,16 +137,87 @@
         <div class="ui-grid-col-2">
           <label for="popularity">Рейтинг</label>
         </div>
-<!--        <div class="ui-grid-col-2">-->
-          <p-rating
-            #popularity="ngModel"
-            id="popularity"
-            name="popularity"
-            [(ngModel)]="item.popularity" stars="10"></p-rating>
-<!--        </div>-->
+        <!--        <div class="ui-grid-col-2">-->
+        <p-rating
+          #popularity="ngModel"
+          id="popularity"
+          name="popularity"
+          [(ngModel)]="item.popularity" stars="10"></p-rating>
+        <!--        </div>-->
         <div class="ui-grid-col-2">
         </div>
       </div>
+
+
+      <div class="prime-form-group">
+        <div class="ui-grid-col-2">
+          <label for="isNew">Новинка</label>
+        </div>
+        <div class="ui-grid-col-2">
+          <p-inputSwitch
+            #isNew="ngModel"
+            id="isNew"
+            name="isNew"
+            [(ngModel)]="item.isNew"></p-inputSwitch>
+        </div>
+        <div class="ui-grid-col-2">
+        </div>
+      </div>
+
+      <div class="prime-form-group">
+        <div class="ui-grid-col-2">
+          <label for="isPopular">Популярна</label>
+        </div>
+        <div class="ui-grid-col-2">
+          <p-inputSwitch
+            #isPopular="ngModel"
+            id="isPopular"
+            name="isPopular"
+            [(ngModel)]="item.isPopular"></p-inputSwitch>
+        </div>
+        <div class="ui-grid-col-2">
+        </div>
+      </div>
+
+      <div class="prime-form-group">
+        <div class="ui-grid-col-2">
+          <label for="color">Колір</label>
+        </div>
+        <div class="ui-grid-col-2">
+          <div class="dropdown-block">
+            <p-dropdown [options]="colors" id="color" [ngModelOptions]="{standalone: true}" [(ngModel)]="item.color" placeholder="Виберіть колір квітки"
+                        optionLabel="name"></p-dropdown>
+            <div *ngIf="item.color" class="chosen-item">
+              <div>Вибраний колір:</div>
+              <div style="margin-left: 5px;width: 25px; height: 25px;" [ngStyle]="{'background-color': item.color.hex}"></div>
+            </div>
+          </div>
+        </div>
+        <div class="ui-grid-col-2">
+        </div>
+      </div>
+
+      <div class="prime-form-group">
+        <div class="ui-grid-col-2">
+          <label for="created">Дата</label>
+        </div>
+        <div class="ui-grid-col-2">
+          <div class="dropdown-block">
+            <p-calendar dateFormat="dd.mm.yy" [ngModelOptions]="{standalone: true}"
+                        [locale]="translation.calendar_ua" id="created"
+                        [(ngModel)]="date" (onSelect)="changeDate()"
+                        [inline]="true" [showWeek]="true"></p-calendar>
+            <div class="chosen-item" *ngIf="item.created">
+              <div>Дата:</div>
+              <div style="margin-left: 5px;">{{item.created | date:'dd.MM.yyyy H:mm'}}</div>
+            </div>
+          </div>
+
+        </div>
+        <div class="ui-grid-col-2">
+        </div>
+      </div>
+
 
     </div>
 

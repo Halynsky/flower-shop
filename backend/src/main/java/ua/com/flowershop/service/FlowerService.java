@@ -30,7 +30,7 @@ public class FlowerService {
             heightTo, popularityFrom, popularityTo, colorNamePart, createdFrom, createdTo, pageRequest );
     }
 
-    public FlowerProjection getFlowerById(Long id) {
+    public FlowerFullProjection getFlowerById(Long id) {
         return flowerRepository.findProjectedById(id).orElseThrow(NotFoundException::new);
     }
 

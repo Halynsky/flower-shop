@@ -6,7 +6,7 @@ import { GrowlModule } from "primeng/growl";
 import { DialogModule } from "primeng/dialog";
 import {
   ButtonModule, CalendarModule, ColorPickerModule, ConfirmationService,
-  ConfirmDialogModule, ContextMenuModule, DropdownModule, InputSwitchModule, InputTextModule,
+  ConfirmDialogModule, ContextMenuModule, DropdownModule, InputSwitchModule, InputTextModule, ListboxModule,
   MenuModule, MessageModule,
   MultiSelectModule,
   PanelMenuModule, RatingModule, SliderModule,
@@ -81,7 +81,8 @@ import { PipesModule } from "../pipes/pipes.module";
     DropdownModule,
     ToggleButtonModule,
     InputSwitchModule,
-    RatingModule
+    RatingModule,
+    ListboxModule
   ],
   providers: [
     ConfirmationService

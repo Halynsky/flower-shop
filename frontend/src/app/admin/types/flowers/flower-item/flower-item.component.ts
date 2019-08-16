@@ -4,12 +4,13 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { getErrorMessage } from "../../../../utils/Functions";
 import { ItemSaveMode } from "../../../../models/ItemSaveMode";
 import { FlowerTypeService } from "../../../../api/services/flower-type.service";
-import { Flower } from "../../../../api/models/Flower";
+import { FlowerFull } from "../../../../api/models/Flower";
 import { FlowerService } from "../../../../api/services/flower.service";
-import { LabelValueTuple } from "../../../../models/LabelValueTuple";
-import {SelectItem} from 'primeng/api';
 import { FlowerType } from "../../../../api/models/FlowerType";
-import { error } from "@angular/compiler/src/util";
+import { ColorService } from "../../../../api/services/color.service";
+import { Color } from "../../../../api/models/Color";
+import { TranslationService } from "../../../../utils/translation.service";
+import { DatePipe } from "@angular/common";
 
 @Component({
   selector: 'flower-item',
@@ -21,26 +22,31 @@ export class FlowerItemComponent implements OnInit {
   ItemSaveMode = ItemSaveMode;
   mode: ItemSaveMode = ItemSaveMode.new;
 
-
-
   flowerTypes: FlowerType[] = [];
+  item: FlowerFull = new FlowerFull();
 
+  colors: Color[] = [];
 
-  item: Flower = new Flower();
+  date;
+
 
   constructor(private dataService: FlowerService,
               private snackBarService: SnackBarService,
               private router: Router,
               private route: ActivatedRoute,
-              private flowerTypeService: FlowerTypeService) {
+              private flowerTypeService: FlowerTypeService,
+              private colorService: ColorService,
+              private translation: TranslationService,
+              public datepipe: DatePipe) {
     this.route.params.subscribe(
       params => {
         this.mode = params['mode'];
 
         if (this.mode == ItemSaveMode.edit) {
-          this.route.queryParams.subscribe(queryParams  => {
-            if (queryParams['id'])
-              this.getItem(queryParams['id'])
+          this.route.queryParams.subscribe(queryParams => {
+            if (queryParams['id']) {
+              this.getItem(queryParams['id']);
+            }
           })
         }
 
@@ -52,13 +58,18 @@ export class FlowerItemComponent implements OnInit {
       error => this.snackBarService.showError(error.error.message)
     );
 
-
+    this.colorService.getForAdmin().subscribe(
+      colors => this.colors = colors,
+      error => this.snackBarService.showError(error.error.message)
+    );
 
   }
 
   ngOnInit() {
-
+    this.item.isNew = false;
+    this.item.isPopular = false;
   }
+
 
 
   getItem(id) {
@@ -67,6 +78,7 @@ export class FlowerItemComponent implements OnInit {
       error => this.snackBarService.showError(getErrorMessage(error))
     )
   }
+
 
   add() {
     this.dataService.add(this.item).subscribe(
@@ -92,6 +104,8 @@ export class FlowerItemComponent implements OnInit {
     this.mode == ItemSaveMode.new ? this.add() : this.update()
   }
 
-
+  changeDate() {
+    this.item.created = this.datepipe.transform(this.date, 'yyyy-MM-dd');
+  }
 
 }
