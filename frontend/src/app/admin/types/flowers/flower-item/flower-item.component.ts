@@ -11,6 +11,9 @@ import { ColorService } from "../../../../api/services/color.service";
 import { Color } from "../../../../api/models/Color";
 import { TranslationService } from "../../../../utils/translation.service";
 import { DatePipe } from "@angular/common";
+import { SizeService } from "../../../../api/services/size.service";
+import { Size } from "../../../../api/models/Size";
+import { FlowerSize } from "../../../../api/models/FlowerSize";
 
 @Component({
   selector: 'flower-item',
@@ -27,6 +30,13 @@ export class FlowerItemComponent implements OnInit {
 
   colors: Color[] = [];
 
+  sizes: Size[] = [];
+  sizesToChange: Size[] = [];
+
+  isInitialised: boolean = false;
+
+  flowerSizes: FlowerSize[] = [];
+
   date;
 
 
@@ -35,6 +45,7 @@ export class FlowerItemComponent implements OnInit {
               private router: Router,
               private route: ActivatedRoute,
               private flowerTypeService: FlowerTypeService,
+              private sizeService: SizeService,
               private colorService: ColorService,
               private translation: TranslationService,
               public datepipe: DatePipe) {
@@ -51,7 +62,7 @@ export class FlowerItemComponent implements OnInit {
         }
 
       }
-    )
+    );
 
     this.flowerTypeService.getAll().subscribe(
       flowerTypes => this.flowerTypes = flowerTypes,
@@ -63,6 +74,20 @@ export class FlowerItemComponent implements OnInit {
       error => this.snackBarService.showError(error.error.message)
     );
 
+    this.sizeService.getAll().subscribe(
+      sizes => this.sizes = sizes,
+      error => this.snackBarService.showError(error.error.message)
+    );
+
+  }
+
+  initializeFlowerSizes(event) {
+    if (this.mode == ItemSaveMode.new) {
+      this.flowerSizes = [];
+      for (let i = 0; i < this.sizesToChange.length; i++) {
+        this.flowerSizes[i] = new FlowerSize();
+      }
+    }
   }
 
   ngOnInit() {
@@ -81,6 +106,8 @@ export class FlowerItemComponent implements OnInit {
 
 
   add() {
+    this.item.flowerSizes = this.flowerSizes;
+    console.log(this.item.flowerSizes)
     this.dataService.add(this.item).subscribe(
       response => {
         this.snackBarService.showSuccess("'Квітку' успішно створено");
@@ -91,6 +118,7 @@ export class FlowerItemComponent implements OnInit {
   }
 
   update() {
+    console.log(this.item.flowerSizes)
     this.dataService.update(this.item.id, this.item).subscribe(
       response => {
         this.snackBarService.showSuccess("'Квітку' успішно оновлено");
@@ -106,6 +134,10 @@ export class FlowerItemComponent implements OnInit {
 
   changeDate() {
     this.item.created = this.datepipe.transform(this.date, 'yyyy-MM-dd');
+  }
+
+  onSizeChange(size, i) {
+      this.flowerSizes[i].size = size;
   }
 
 }

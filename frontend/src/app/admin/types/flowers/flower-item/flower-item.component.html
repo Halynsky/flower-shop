@@ -21,8 +21,6 @@
             name="name"
             [(ngModel)]="item.name"/>
         </div>
-        <div class="ui-grid-col-2">
-        </div>
       </div>
 
       <div class="prime-form-group">
@@ -36,8 +34,6 @@
             id="nameOriginal"
             name="nameOriginal"
             [(ngModel)]="item.nameOriginal"/>
-        </div>
-        <div class="ui-grid-col-2">
         </div>
       </div>
 
@@ -53,8 +49,6 @@
             name="image"
             [(ngModel)]="item.image"/>
         </div>
-        <div class="ui-grid-col-2">
-        </div>
       </div>
 
       <div class="prime-form-group">
@@ -64,14 +58,12 @@
         <div class="ui-grid-col-2">
           <div class="dropdown-block">
             <p-dropdown [options]="flowerTypes" [ngModelOptions]="{standalone: true}" optionLabel="name" [(ngModel)]="item.flowerType"
-                        placeholder="Виберіть тип квітки" id="flowerTypeName"></p-dropdown>
-            <div *ngIf="item.flowerType" class="chosen-item">
+                        placeholder="Оберіть тип квітки" id="flowerTypeName"></p-dropdown>
+            <div *ngIf="this.mode == ItemSaveMode.edit" class="chosen-item">
               <div>Вибраний тип:</div>
-              <div style="margin-left: 5px">{{item.flowerType.name}}</div>
+              <div style="margin-left: 5px" *ngIf="item.flowerType != undefined">{{item.flowerType.name}}</div>
             </div>
           </div>
-        </div>
-        <div class="ui-grid-col-2">
         </div>
       </div>
 
@@ -86,8 +78,6 @@
             id="groupName"
             name="groupName"
             [(ngModel)]="item.groupName"/>
-        </div>
-        <div class="ui-grid-col-2">
         </div>
       </div>
 
@@ -108,8 +98,6 @@
           name="flowerSizeMax"
           [(ngModel)]="item.flowerSizeMax"/>
         </div>
-        <div class="ui-grid-col-2">
-        </div>
       </div>
 
       <div class="prime-form-group">
@@ -129,23 +117,17 @@
           name="flowerHeightMax"
           [(ngModel)]="item.flowerHeightMax"/>
         </div>
-        <div class="ui-grid-col-2">
-        </div>
       </div>
 
       <div class="prime-form-group">
         <div class="ui-grid-col-2">
           <label for="popularity">Рейтинг</label>
         </div>
-        <!--        <div class="ui-grid-col-2">-->
         <p-rating
           #popularity="ngModel"
           id="popularity"
           name="popularity"
           [(ngModel)]="item.popularity" stars="10"></p-rating>
-        <!--        </div>-->
-        <div class="ui-grid-col-2">
-        </div>
       </div>
 
 
@@ -160,8 +142,6 @@
             name="isNew"
             [(ngModel)]="item.isNew"></p-inputSwitch>
         </div>
-        <div class="ui-grid-col-2">
-        </div>
       </div>
 
       <div class="prime-form-group">
@@ -175,8 +155,6 @@
             name="isPopular"
             [(ngModel)]="item.isPopular"></p-inputSwitch>
         </div>
-        <div class="ui-grid-col-2">
-        </div>
       </div>
 
       <div class="prime-form-group">
@@ -185,15 +163,13 @@
         </div>
         <div class="ui-grid-col-2">
           <div class="dropdown-block">
-            <p-dropdown [options]="colors" id="color" [ngModelOptions]="{standalone: true}" [(ngModel)]="item.color" placeholder="Виберіть колір квітки"
+            <p-dropdown [options]="colors" id="color" [ngModelOptions]="{standalone: true}" [(ngModel)]="item.color" placeholder="Оберіть колір квітки"
                         optionLabel="name"></p-dropdown>
             <div *ngIf="item.color" class="chosen-item">
               <div>Вибраний колір:</div>
-              <div style="margin-left: 5px;width: 25px; height: 25px;" [ngStyle]="{'background-color': item.color.hex}"></div>
+              <div class="color-square" [ngStyle]="{'background-color': item.color.hex}"></div>
             </div>
           </div>
-        </div>
-        <div class="ui-grid-col-2">
         </div>
       </div>
 
@@ -206,18 +182,26 @@
             <p-calendar dateFormat="dd.mm.yy" [ngModelOptions]="{standalone: true}"
                         [locale]="translation.calendar_ua" id="created"
                         [(ngModel)]="date" (onSelect)="changeDate()"
-                        [inline]="true" [showWeek]="true"></p-calendar>
-            <div class="chosen-item" *ngIf="item.created">
+                        [showWeek]="true"></p-calendar>
+            <div class="chosen-item" *ngIf="this.mode == ItemSaveMode.edit">
               <div>Дата:</div>
-              <div style="margin-left: 5px;">{{item.created | date:'dd.MM.yyyy H:mm'}}</div>
+              <div class="current-date-value">{{item.created | date:'dd.MM.yyyy H:mm'}}</div>
             </div>
           </div>
-
-        </div>
-        <div class="ui-grid-col-2">
         </div>
       </div>
 
+      <div class="prime-form-group" style="align-items: flex-start;">
+        <div class="ui-grid-col-2" style="margin-top: 7px;">
+          <label for="size">Розмір та ціна(коп.)</label>
+        </div>
+        <div class="size-wrapper" *ngIf="mode == ItemSaveMode.new">
+          <p-multiSelect id="size" [options]="sizes" [ngModelOptions]="{standalone: true}" [(ngModel)]="sizesToChange" (onChange)="initializeFlowerSizes($event)" optionLabel="name" defaultLabel="Оберіть розміри квітки"></p-multiSelect>
+          <div class="size-price-block" *ngFor="let sizeToChange of sizesToChange; let i = index">
+            <div class="size-block">{{sizeToChange.name}}</div>—<div class="price-block"><input [ngModelOptions]="{standalone: true}" [(ngModel)]="flowerSizes[i].price" (ngModelChange)="onSizeChange(sizeToChange, i)" style="width: 60px"></div>
+          </div>
+        </div>
+      </div>
 
     </div>
 
