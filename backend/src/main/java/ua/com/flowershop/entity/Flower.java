@@ -60,5 +60,5 @@ public class Flower {
     private Color colorSecondary;
 
     @OneToMany(mappedBy = "flower")
-    Set<FlowerSize> flowerSizes;
+    private Set<FlowerSize> flowerSizes;
 }

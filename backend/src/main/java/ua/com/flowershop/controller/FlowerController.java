@@ -7,10 +7,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.JpaSort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ua.com.flowershop.entity.Flower;
 import ua.com.flowershop.entity.FlowerType;
 import ua.com.flowershop.entity.WerehouseOperationType;
+import ua.com.flowershop.model.FlowerModel;
 import ua.com.flowershop.projection.FlowerFullProjection;
 import ua.com.flowershop.projection.FlowerProjection;
 import ua.com.flowershop.projection.FlowerShortProjection;
@@ -88,6 +91,12 @@ public class FlowerController {
     @GetMapping("/{id}/full")
     public ResponseEntity<FlowerFullProjection> getFlowerFullById(@PathVariable Long id) {
         return new ResponseEntity<>(flowerService.getFlowerFullById(id), OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> update(@PathVariable Long id, @RequestBody FlowerModel flower){
+        flowerService.updateFlower(id ,flower);
+        return new ResponseEntity<>(OK);
     }
 
 }

@@ -34,8 +34,11 @@ export class FlowerItemComponent implements OnInit {
   sizesToChange: Size[] = [];
 
   isInitialised: boolean = false;
+  isEqual: boolean = false;
 
   flowerSizes: FlowerSize[] = [];
+
+  isEditFlowerSizesShowed: boolean = false;
 
   date;
 
@@ -59,6 +62,8 @@ export class FlowerItemComponent implements OnInit {
               this.getItem(queryParams['id']);
             }
           })
+        } else {
+          this.isEditFlowerSizesShowed = true;
         }
 
       }
@@ -81,20 +86,24 @@ export class FlowerItemComponent implements OnInit {
 
   }
 
-  initializeFlowerSizes(event) {
-    if (this.mode == ItemSaveMode.new) {
-      this.flowerSizes = [];
-      for (let i = 0; i < this.sizesToChange.length; i++) {
-        this.flowerSizes[i] = new FlowerSize();
+  initializeFlowerSizes() {
+      if (!this.isInitialised) {
+        this.flowerSizes = [];
+        for (let i = 0; i < this.sizes.length; i++) {
+          this.flowerSizes[i] = new FlowerSize();
+        }
+        this.isInitialised = true;
       }
-    }
+      if (this.isEqual) {
+        this.flowerSizes.push(new FlowerSize());
+      }
+
   }
 
   ngOnInit() {
     this.item.isNew = false;
     this.item.isPopular = false;
   }
-
 
 
   getItem(id) {
@@ -104,10 +113,25 @@ export class FlowerItemComponent implements OnInit {
     )
   }
 
+  compareMassive(sizes, flowerSizes) {
+    if (sizes.length < flowerSizes.length) {
+      let fs: FlowerSize[] = [];
+      for (let i = 0; i < sizes.length; i++) {
+        fs[i] = new FlowerSize();
+        fs[i].size = sizes[i];
+      }
+      this.flowerSizes = fs;
+      this.isEqual = true;
+    } else if (flowerSizes.length <= this.sizes) {
+      this.isEqual = false;
+    }
+  }
+
 
   add() {
+    this.compareMassive(this.sizesToChange, this.flowerSizes);
     this.item.flowerSizes = this.flowerSizes;
-    console.log(this.item.flowerSizes)
+    console.log(this.item)
     this.dataService.add(this.item).subscribe(
       response => {
         this.snackBarService.showSuccess("'Квітку' успішно створено");
@@ -118,7 +142,11 @@ export class FlowerItemComponent implements OnInit {
   }
 
   update() {
-    console.log(this.item.flowerSizes)
+    if (this.isEditFlowerSizesShowed) {
+      this.compareMassive(this.sizesToChange, this.flowerSizes);
+      this.item.flowerSizes = this.flowerSizes;
+    }
+    console.log(this.item)
     this.dataService.update(this.item.id, this.item).subscribe(
       response => {
         this.snackBarService.showSuccess("'Квітку' успішно оновлено");
@@ -137,7 +165,7 @@ export class FlowerItemComponent implements OnInit {
   }
 
   onSizeChange(size, i) {
-      this.flowerSizes[i].size = size;
+    this.flowerSizes[i].size = size;
   }
 
 }

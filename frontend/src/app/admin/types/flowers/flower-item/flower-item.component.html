@@ -195,11 +195,19 @@
         <div class="ui-grid-col-2" style="margin-top: 7px;">
           <label for="size">Розмір та ціна(коп.)</label>
         </div>
-        <div class="size-wrapper" *ngIf="mode == ItemSaveMode.new">
-          <p-multiSelect id="size" [options]="sizes" [ngModelOptions]="{standalone: true}" [(ngModel)]="sizesToChange" (onChange)="initializeFlowerSizes($event)" optionLabel="name" defaultLabel="Оберіть розміри квітки"></p-multiSelect>
-          <div class="size-price-block" *ngFor="let sizeToChange of sizesToChange; let i = index">
-            <div class="size-block">{{sizeToChange.name}}</div>—<div class="price-block"><input [ngModelOptions]="{standalone: true}" [(ngModel)]="flowerSizes[i].price" (ngModelChange)="onSizeChange(sizeToChange, i)" style="width: 60px"></div>
+        <div class="size-wrapper">
+          <p-multiSelect id="size" [options]="sizes" [ngModelOptions]="{standalone: true}" [(ngModel)]="sizesToChange" (onClick)="isEditFlowerSizesShowed=true" (onChange)="initializeFlowerSizes()" optionLabel="name" defaultLabel="Оберіть розміри квітки"></p-multiSelect>
+          <div *ngIf="isEditFlowerSizesShowed">
+            <div class="size-price-block" *ngFor="let sizeToChange of sizesToChange; let i = index">
+              <div class="size-block">{{sizeToChange.name}}</div>—<div class="price-block"><input [ngModelOptions]="{standalone: true}" [(ngModel)]="flowerSizes[i].price" (ngModelChange)="onSizeChange(sizeToChange, i)" style="width: 60px"></div>
+            </div>
           </div>
+          <div *ngIf="!isEditFlowerSizesShowed">
+            <div class="size-price-block" *ngFor="let sizeToChange of this.item.flowerSizes; let i = index">
+              <div class="size-block">{{sizeToChange.size.name}}</div>—<div class="price-block"><input [ngModelOptions]="{standalone: true}" [(ngModel)]="this.item.flowerSizes[i].price" style="width: 60px"></div>
+            </div>
+          </div>
+
         </div>
       </div>
 

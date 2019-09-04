@@ -30,10 +30,10 @@ public class Size {
     private Integer max;
 
     @OneToMany(mappedBy = "size")
-    Set<FlowerTypeSize> flowerTypeSizes;
+    private Set<FlowerTypeSize> flowerTypeSizes;
 
     @OneToMany(mappedBy = "size")
-    Set<FlowerSize> flowerSizes;
+    private Set<FlowerSize> flowerSizes;
 
     public static Size of(SizeModel sizeModel) {
         return new Size().setMin(sizeModel.getMin())

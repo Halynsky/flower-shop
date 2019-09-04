@@ -5,12 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import ua.com.flowershop.entity.FlowerType;
+import ua.com.flowershop.entity.Flower;
 import ua.com.flowershop.exception.NotFoundException;
+import ua.com.flowershop.model.FlowerModel;
 import ua.com.flowershop.projection.FlowerFullProjection;
-import ua.com.flowershop.projection.FlowerProjection;
 import ua.com.flowershop.repository.FlowerRepository;
-
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -36,6 +35,27 @@ public class FlowerService {
 
     public FlowerFullProjection getFlowerFullById(Long id) {
         return flowerRepository.findFullProjectedById(id).orElseThrow(NotFoundException::new);
+    }
+
+    public void updateFlower(Long id, FlowerModel flower) {
+        Flower fl = flowerRepository.findById(id).orElseThrow(NotFoundException::new);
+        fl.setColor(flower.getColor());
+        fl.setName(flower.getName());
+        fl.setNameOriginal(flower.getNameOriginal());
+        fl.setImage(flower.getImage());
+        fl.setGroupName(flower.getGroupName());
+        fl.setFlowerHeightMax(flower.getFlowerHeightMax());
+        fl.setFlowerHeightMin(flower.getFlowerHeightMin());
+        fl.setFlowerSizeMax(flower.getFlowerSizeMax());
+        fl.setFlowerSizeMin(flower.getFlowerSizeMin());
+        fl.setIsNew(flower.getIsNew());
+        fl.setIsPopular(flower.getIsPopular());
+        fl.setPopularity(flower.getPopularity());
+        fl.setCreated(flower.getCreated());
+        fl.setFlowerType(flower.getFlowerType());
+        fl.setColor(flower.getColor());
+        fl.setFlowerSizes(flower.getFlowerSizes());
+        flowerRepository.save(fl);
     }
 
 }

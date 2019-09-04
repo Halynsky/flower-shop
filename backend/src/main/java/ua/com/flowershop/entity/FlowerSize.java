@@ -34,13 +34,13 @@ public class FlowerSize {
 
     @ManyToOne
     @JoinColumn(name = "flower_id")
-    Flower flower;
+    private Flower flower;
 
     @ManyToOne
     @JoinColumn(name = "size_id")
-    Size size;
+    private Size size;
 
     @OneToMany(mappedBy = "flowerSize")
-    Set<WerehouseOperation> werehouseOperations;
+    private Set<WerehouseOperation> werehouseOperations;
 
 }

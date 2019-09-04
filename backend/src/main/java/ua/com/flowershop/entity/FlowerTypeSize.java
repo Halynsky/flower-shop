@@ -23,10 +23,10 @@ public class FlowerTypeSize {
 
     @ManyToOne
     @JoinColumn(name = "flower_type_id")
-    FlowerType flowerType;
+    private FlowerType flowerType;
 
     @ManyToOne
     @JoinColumn(name = "size_id")
-    Size size;
+    private Size size;
 
 }
