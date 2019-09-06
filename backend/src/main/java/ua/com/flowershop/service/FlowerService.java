@@ -26,7 +26,7 @@ public class FlowerService {
                                                    LocalDateTime createdFrom, LocalDateTime createdTo,
                                                    Pageable pageRequest) {
         return flowerRepository.findForAdminProjectedByFilters(id, flowerNamePart, flowerOriginalNamePart, flowerTypeNames, groupNamePart, sizeFrom, sizeTo, heightFrom,
-            heightTo, popularityFrom, popularityTo, colorNamePart, createdFrom, createdTo, pageRequest );
+            heightTo, popularityFrom, popularityTo, colorNamePart, createdFrom, createdTo, pageRequest);
     }
 
     public FlowerFullProjection getFlowerById(Long id) {
@@ -55,6 +55,27 @@ public class FlowerService {
         fl.setFlowerType(flower.getFlowerType());
         fl.setColor(flower.getColor());
         fl.setFlowerSizes(flower.getFlowerSizes());
+        flowerRepository.save(fl);
+    }
+
+    public void addFlower(FlowerModel flower) {
+        Flower fl = new Flower();
+        fl.setFlowerSizes(flower.getFlowerSizes());
+        fl.setName(flower.getName());
+        fl.setNameOriginal(flower.getNameOriginal());
+        fl.setImage(flower.getImage());
+        fl.setGroupName(flower.getGroupName());
+        fl.setFlowerHeightMax(flower.getFlowerHeightMax());
+        fl.setFlowerHeightMin(flower.getFlowerHeightMin());
+        fl.setFlowerSizeMax(flower.getFlowerSizeMax());
+        fl.setFlowerSizeMin(flower.getFlowerSizeMin());
+        fl.setIsNew(flower.getIsNew());
+        fl.setIsPopular(flower.getIsPopular());
+        fl.setPopularity(flower.getPopularity());
+        fl.setCreated(flower.getCreated());
+        fl.setFlowerType(flower.getFlowerType());
+        fl.setColor(flower.getColor());
+        fl.setColor(flower.getColor());
         flowerRepository.save(fl);
     }
 
