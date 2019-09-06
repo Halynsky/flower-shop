@@ -43,7 +43,7 @@ public interface FlowerRepository extends JpaRepository<Flower, Long> {
                                                               LocalDateTime createdFrom, LocalDateTime createdTo,
                                                               Pageable pageRequest);
 
-    Optional<FlowerProjection> findProjectedById(Long id);
+    Optional<FlowerFullProjection> findProjectedById(Long id);
 
     Integer countByFlowerTypeId(Long flowerTypeId);
 

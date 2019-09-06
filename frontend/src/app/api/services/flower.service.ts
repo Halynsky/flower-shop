@@ -23,7 +23,7 @@ export class FlowerService {
   }
 
   getById(id: number) {
-    return this.http.get<Flower>(`${this.URL}/${id}`);
+    return this.http.get<FlowerFull>(`${this.URL}/${id}`);
   }
 
   getForShop(searchTerm: string, pagination: Pagination, filtersObject) {
@@ -42,7 +42,7 @@ export class FlowerService {
     return this.http.get<FlowerFull>(`${this.URL}/${id}/full`);
   }
 
-  add(flower: Flower) {
+  create(flower: Flower) {
     return this.http.post(`${this.URL}`, flower);
   }
 

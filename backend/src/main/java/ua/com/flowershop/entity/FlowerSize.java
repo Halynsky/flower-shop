@@ -27,18 +27,20 @@ public class FlowerSize {
     private Integer amount = 0;
     @Column(columnDefinition = "integer default 10000")
     private Integer price = 10000;
+    @Column()
+    private Integer priceWithDiscount;
     @Column(columnDefinition = "integer default 0")
     private Integer sold = 0;
 
     @ManyToOne
     @JoinColumn(name = "flower_id")
-    Flower flower;
+    private Flower flower;
 
     @ManyToOne
     @JoinColumn(name = "size_id")
-    Size size;
+    private Size size;
 
     @OneToMany(mappedBy = "flowerSize")
-    Set<WerehouseOperation> werehouseOperations;
+    private Set<WerehouseOperation> werehouseOperations;
 
 }

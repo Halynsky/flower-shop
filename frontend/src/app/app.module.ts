@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { LOCALE_ID, ModuleWithProviders, NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
@@ -7,14 +7,14 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { routing } from "./app.routing";
 import { LayoutComponent } from "./layout/layout.component";
 import { LandingModule } from "./components/landing/landing.module";
-import { MAT_SNACK_BAR_DEFAULT_OPTIONS, MatIconModule, MatIconRegistry } from '@angular/material';
+import { MatIconModule, MatIconRegistry } from '@angular/material';
 import { LayoutModule } from "./layout/layout.module";
-import { registerLocaleData } from '@angular/common';
+import { DatePipe, registerLocaleData } from '@angular/common';
 import localeRuUa from '@angular/common/locales/uk';
 import { HttpClientModule } from "@angular/common/http";
 import { RouterModule } from "@angular/router";
-import { BottomSheetOverview } from "./components/shared/shared/bottom-sheet/bottom-sheet.component";
 import { SharedModule } from "./components/shared/shared/shared.module";
+
 registerLocaleData(localeRuUa);
 
 @NgModule({
@@ -36,6 +36,7 @@ registerLocaleData(localeRuUa);
     SharedModule,
   ],
   providers: [
+    [DatePipe],
     MatIconRegistry,
     { provide: LOCALE_ID, useValue: "uk" }
   ],

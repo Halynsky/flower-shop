@@ -55,9 +55,6 @@
           <th *ngSwitchCase="'isNew'">
             {{col.header}}
           </th>
-          <th *ngSwitchCase="'hasDiscount'">
-            {{col.header}}
-          </th>
           <th *ngSwitchCase="'isPopular'">
             {{col.header}}
           </th>
@@ -109,7 +106,6 @@
                       [max]="160" [step]="1" (onSlideEnd)="dt.filter(heightFilter, 'height', 'range')"></p-slider>
           </div>
           <div *ngSwitchCase="'isNew'"></div>
-          <div *ngSwitchCase="'hasDiscount'"></div>
           <div *ngSwitchCase="'isPopular'"></div>
           <div *ngSwitchCase="'popularity'">
             <span *ngIf="!this.popularityFilter">1</span>
@@ -175,16 +171,6 @@
                 check_box
               </i></div>
               <div *ngIf="!rowData['isNew']"><i class="material-icons">
-                check_box_outline_blank
-              </i></div>
-            </div>
-          </span>
-          <span *ngSwitchCase="'hasDiscount'">
-            <div class="true-false-ico">
-              <div *ngIf="rowData['hasDiscount']"><i class="material-icons">
-                check_box
-              </i></div>
-              <div *ngIf="!rowData['hasDiscount']"><i class="material-icons">
                 check_box_outline_blank
               </i></div>
             </div>

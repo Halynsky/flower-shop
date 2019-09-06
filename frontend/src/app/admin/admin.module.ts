@@ -5,12 +5,12 @@ import { routing } from "./admin.routing";
 import { GrowlModule } from "primeng/growl";
 import { DialogModule } from "primeng/dialog";
 import {
-  ButtonModule, CalendarModule, ColorPickerModule, ConfirmationService,
-  ConfirmDialogModule, ContextMenuModule, InputTextModule,
+  ButtonModule, CalendarModule, CheckboxModule, ColorPickerModule, ConfirmationService,
+  ConfirmDialogModule, ContextMenuModule, DropdownModule, InputSwitchModule, InputTextModule, ListboxModule,
   MenuModule, MessageModule,
   MultiSelectModule,
-  PanelMenuModule, SliderModule,
-  TieredMenuModule
+  PanelMenuModule, RatingModule, SliderModule,
+  TieredMenuModule, ToggleButtonModule
 } from "primeng/primeng";
 import { AdminSidebarComponent } from './admin-layout/admin-sidebar/admin-sidebar.component';
 import { UsersComponent } from './users/users.component';
@@ -77,7 +77,13 @@ import { PipesModule } from "../pipes/pipes.module";
     SliderModule,
     PipesModule.forRoot(),
     ColorPickerModule,
-    SliderModule
+    SliderModule,
+    DropdownModule,
+    ToggleButtonModule,
+    InputSwitchModule,
+    RatingModule,
+    ListboxModule,
+    CheckboxModule
   ],
   providers: [
     ConfirmationService

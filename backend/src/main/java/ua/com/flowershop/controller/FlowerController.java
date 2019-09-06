@@ -9,8 +9,7 @@ import org.springframework.data.jpa.domain.JpaSort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ua.com.flowershop.entity.FlowerType;
-import ua.com.flowershop.entity.WerehouseOperationType;
+import ua.com.flowershop.model.FlowerModel;
 import ua.com.flowershop.projection.FlowerFullProjection;
 import ua.com.flowershop.projection.FlowerProjection;
 import ua.com.flowershop.projection.FlowerShortProjection;
@@ -61,7 +60,7 @@ public class FlowerController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<FlowerProjection> getById(@PathVariable Long id) {
+    public ResponseEntity<FlowerFullProjection> getById(@PathVariable Long id) {
         return new ResponseEntity<>(flowerService.getFlowerById(id), OK);
     }
 
@@ -90,4 +89,21 @@ public class FlowerController {
         return new ResponseEntity<>(flowerService.getFlowerFullById(id), OK);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody FlowerModel flower){
+        flowerService.updateFlower(id ,flower);
+        return new ResponseEntity<>(OK);
+    }
+
+    @PostMapping()
+    public ResponseEntity<Void> create(@RequestBody FlowerModel flower){
+        flowerService.createFlower(flower);
+        return new ResponseEntity<>(OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        flowerRepository.deleteById(id);
+        return new ResponseEntity<>(OK);
+    }
 }
