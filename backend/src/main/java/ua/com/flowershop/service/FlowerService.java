@@ -38,45 +38,43 @@ public class FlowerService {
     }
 
     public void updateFlower(Long id, FlowerModel flower) {
-        Flower fl = flowerRepository.findById(id).orElseThrow(NotFoundException::new);
-        fl.setColor(flower.getColor());
-        fl.setName(flower.getName());
-        fl.setNameOriginal(flower.getNameOriginal());
-        fl.setImage(flower.getImage());
-        fl.setGroupName(flower.getGroupName());
-        fl.setFlowerHeightMax(flower.getFlowerHeightMax());
-        fl.setFlowerHeightMin(flower.getFlowerHeightMin());
-        fl.setFlowerSizeMax(flower.getFlowerSizeMax());
-        fl.setFlowerSizeMin(flower.getFlowerSizeMin());
-        fl.setIsNew(flower.getIsNew());
-        fl.setIsPopular(flower.getIsPopular());
-        fl.setPopularity(flower.getPopularity());
-        fl.setCreated(flower.getCreated());
-        fl.setFlowerType(flower.getFlowerType());
-        fl.setColor(flower.getColor());
-        fl.setFlowerSizes(flower.getFlowerSizes());
-        flowerRepository.save(fl);
+        Flower flowerToUpdate = flowerRepository.findById(id).orElseThrow(NotFoundException::new);
+        flowerToUpdate.setColor(flower.getColor())
+            .setName(flower.getName())
+            .setNameOriginal(flower.getNameOriginal())
+            .setImage(flower.getImage())
+            .setGroupName(flower.getGroupName())
+            .setFlowerHeightMax(flower.getFlowerHeightMax())
+            .setFlowerHeightMin(flower.getFlowerHeightMin())
+            .setFlowerSizeMax(flower.getFlowerSizeMax())
+            .setFlowerSizeMin(flower.getFlowerSizeMin())
+            .setIsNew(flower.getIsNew())
+            .setIsPopular(flower.getIsPopular())
+            .setPopularity(flower.getPopularity())
+            .setCreated(flower.getCreated())
+            .setFlowerType(flower.getFlowerType()).setColor(flower.getColor())
+            .setFlowerSizes(flower.getFlowerSizes());
+        flowerRepository.save(flowerToUpdate);
     }
 
-    public void addFlower(FlowerModel flower) {
-        Flower fl = new Flower();
-        fl.setFlowerSizes(flower.getFlowerSizes());
-        fl.setName(flower.getName());
-        fl.setNameOriginal(flower.getNameOriginal());
-        fl.setImage(flower.getImage());
-        fl.setGroupName(flower.getGroupName());
-        fl.setFlowerHeightMax(flower.getFlowerHeightMax());
-        fl.setFlowerHeightMin(flower.getFlowerHeightMin());
-        fl.setFlowerSizeMax(flower.getFlowerSizeMax());
-        fl.setFlowerSizeMin(flower.getFlowerSizeMin());
-        fl.setIsNew(flower.getIsNew());
-        fl.setIsPopular(flower.getIsPopular());
-        fl.setPopularity(flower.getPopularity());
-        fl.setCreated(flower.getCreated());
-        fl.setFlowerType(flower.getFlowerType());
-        fl.setColor(flower.getColor());
-        fl.setColor(flower.getColor());
-        flowerRepository.save(fl);
+    public void createFlower(FlowerModel flower) {
+        Flower flowerToCreate = new Flower();
+        flowerToCreate.setColor(flower.getColor())
+            .setName(flower.getName())
+            .setNameOriginal(flower.getNameOriginal())
+            .setImage(flower.getImage())
+            .setGroupName(flower.getGroupName())
+            .setFlowerHeightMax(flower.getFlowerHeightMax())
+            .setFlowerHeightMin(flower.getFlowerHeightMin())
+            .setFlowerSizeMax(flower.getFlowerSizeMax())
+            .setFlowerSizeMin(flower.getFlowerSizeMin())
+            .setIsNew(flower.getIsNew())
+            .setIsPopular(flower.getIsPopular())
+            .setPopularity(flower.getPopularity())
+            .setCreated(flower.getCreated())
+            .setFlowerType(flower.getFlowerType()).setColor(flower.getColor())
+            .setFlowerSizes(flower.getFlowerSizes());
+        flowerRepository.save(flowerToCreate);
     }
 
 }

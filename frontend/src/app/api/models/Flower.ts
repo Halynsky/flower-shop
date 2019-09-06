@@ -14,8 +14,8 @@ export class Flower {
   flowerSizeMin: number;
   flowerSizeMax: number;
   flowerType: FlowerType;
-  isNew: boolean;
-  isPopular: boolean;
+  isNew: boolean = false;
+  isPopular: boolean = false;
   popularity: number;
 }
 

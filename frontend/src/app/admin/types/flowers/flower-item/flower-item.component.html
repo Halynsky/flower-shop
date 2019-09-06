@@ -60,7 +60,7 @@
             <p-dropdown [options]="flowerTypes" [ngModelOptions]="{standalone: true}" optionLabel="name" [(ngModel)]="item.flowerType"
                         placeholder="Оберіть тип квітки" id="flowerTypeName"></p-dropdown>
             <div *ngIf="this.mode == ItemSaveMode.edit" class="chosen-item">
-              <div>Вибраний тип:</div>
+              <div>Обраний тип:</div>
               <div style="margin-left: 5px" *ngIf="item.flowerType != undefined">{{item.flowerType.name}}</div>
             </div>
           </div>

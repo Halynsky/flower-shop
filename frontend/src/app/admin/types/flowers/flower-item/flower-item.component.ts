@@ -101,8 +101,6 @@ export class FlowerItemComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.item.isNew = false;
-    this.item.isPopular = false;
   }
 
 
@@ -113,7 +111,7 @@ export class FlowerItemComponent implements OnInit {
     )
   }
 
-  compareMassive(sizes, flowerSizes) {
+  compareArrays(sizes, flowerSizes) {
     if (sizes.length < flowerSizes.length) {
       let fs: FlowerSize[] = [];
       for (let i = 0; i < sizes.length; i++) {
@@ -128,11 +126,10 @@ export class FlowerItemComponent implements OnInit {
   }
 
 
-  add() {
-    this.compareMassive(this.sizesToChange, this.flowerSizes);
+  create() {
+    this.compareArrays(this.sizesToChange, this.flowerSizes);
     this.item.flowerSizes = this.flowerSizes;
-    console.log(this.item)
-    this.dataService.add(this.item).subscribe(
+    this.dataService.create(this.item).subscribe(
       response => {
         this.snackBarService.showSuccess("'Квітку' успішно створено");
         this.router.navigate(['../../'], {relativeTo: this.route})
@@ -143,10 +140,9 @@ export class FlowerItemComponent implements OnInit {
 
   update() {
     if (this.isEditFlowerSizesShowed) {
-      this.compareMassive(this.sizesToChange, this.flowerSizes);
+      this.compareArrays(this.sizesToChange, this.flowerSizes);
       this.item.flowerSizes = this.flowerSizes;
     }
-    console.log(this.item)
     this.dataService.update(this.item.id, this.item).subscribe(
       response => {
         this.snackBarService.showSuccess("'Квітку' успішно оновлено");
@@ -157,7 +153,7 @@ export class FlowerItemComponent implements OnInit {
   }
 
   onSubmit() {
-    this.mode == ItemSaveMode.new ? this.add() : this.update()
+    this.mode == ItemSaveMode.new ? this.create() : this.update()
   }
 
   changeDate() {

@@ -42,7 +42,7 @@ export class FlowerService {
     return this.http.get<FlowerFull>(`${this.URL}/${id}/full`);
   }
 
-  add(flower: Flower) {
+  create(flower: Flower) {
     return this.http.post(`${this.URL}`, flower);
   }
 

@@ -96,8 +96,8 @@ public class FlowerController {
     }
 
     @PostMapping()
-    public ResponseEntity<Void> add(@RequestBody FlowerModel flower){
-        flowerService.addFlower(flower);
+    public ResponseEntity<Void> create(@RequestBody FlowerModel flower){
+        flowerService.createFlower(flower);
         return new ResponseEntity<>(OK);
     }
 
