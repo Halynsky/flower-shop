@@ -29,7 +29,6 @@ import static org.springframework.http.HttpStatus.OK;
 public class FlowerController {
 
 //    TODO: Create FlowerAdminProjection and insert it in to forAdmin
-//    TODO: Save and update from admin panel
 
     @Autowired private FlowerService flowerService;
     @Autowired private FlowerRepository flowerRepository;
