@@ -9,6 +9,16 @@ export class Pagination {
     this.sort = sort;
   }
 
+  fromPrimeNg(primeEvent): Pagination {
+    this.page = primeEvent.first / primeEvent.rows;
+    this.size = primeEvent.rows;
+    const sortOrder = primeEvent.sortOrder > 0 ? 'ASC' : 'DESC';
+    if (primeEvent.sortField) {
+      this.sort = `${primeEvent.sortField},${sortOrder}`;
+    }
+    return this;
+  }
+
   nextPage(): Pagination {
     this.page += 1;
     return this;

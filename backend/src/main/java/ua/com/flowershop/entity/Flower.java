@@ -31,7 +31,7 @@ public class Flower {
     private String image;
     // Asiatic Lilium, Oriental Lilium etc
     private String groupName;
-    @Column(columnDefinition = "varchar(1000)")
+    @Column(columnDefinition = "varchar(2000)")
     private String description;
     private Integer flowerSizeMin;
     private Integer flowerSizeMax;
@@ -39,7 +39,6 @@ public class Flower {
     private Integer flowerHeightMax;
 
     private Boolean isNew = true;
-    private Boolean hasDiscount;
     private Boolean isPopular;
     @Min(1)
     @Max(10)
@@ -61,5 +60,5 @@ public class Flower {
     private Color colorSecondary;
 
     @OneToMany(mappedBy = "flower")
-    Set<FlowerSize> flowerSizes;
+    private Set<FlowerSize> flowerSizes;
 }

@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
-public class MvcConfiguration implements WebMvcConfigurer {
+public class MvcConfig implements WebMvcConfigurer {
 
     private static final String LAYOUT = "index";
 
@@ -27,7 +27,7 @@ public class MvcConfiguration implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName(LAYOUT);
-        registry.addViewController("/**/{[path:[^\\.]*}").setViewName(LAYOUT);
+        registry.addViewController("{path:(?:(?!^api|\\.).)*}/**").setViewName(LAYOUT);
         registry.setOrder(2);
     }
 
