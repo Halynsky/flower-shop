@@ -1,11 +1,13 @@
-import {NgModule} from '@angular/core';
-import {UserComponent} from "./user.component";
-import {USER_ROUTES} from "./user.routing";
-import {ProfileComponent} from "./profile/profile.component";
-import {WishlistComponent} from "./wishlist/wishlist.component";
-import {UserSidebarComponent} from "./user-cabinet-sidebar/user-sidebar.component";
+import { NgModule } from '@angular/core';
+import { UserComponent } from "./user.component";
+
+import { ProfileComponent } from "./profile/profile.component";
+import { WishlistComponent } from "./wishlist/wishlist.component";
+import { UserSidebarComponent } from "./user-cabinet-sidebar/user-sidebar.component";
 import { FavouriteArticlesComponent } from "./favourite-articles/favourite-articles.component";
 import { PurchaseHistoryComponent } from "./purchase-history/purchase-history.component";
+import { RouterModule } from "@angular/router";
+
 
 @NgModule({
   declarations: [
@@ -17,10 +19,9 @@ import { PurchaseHistoryComponent } from "./purchase-history/purchase-history.co
     FavouriteArticlesComponent
   ],
   imports: [
-    USER_ROUTES
+    RouterModule
   ],
-  bootstrap: [
-
-  ]
+  bootstrap: []
 })
-export class UserModule { }
+export class UserModule {
+}

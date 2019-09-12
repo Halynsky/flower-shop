@@ -2,9 +2,15 @@ import {Component} from "@angular/core";
 
 @Component({
   selector: 'user',
-  template: `    
+  template: `
+    <user-sidebar></user-sidebar>
+    <router-outlet></router-outlet>
   `,
   styles: [`
+    :host {
+      display: flex;
+      padding-top: 24px;
+    }
   `]
 })
 

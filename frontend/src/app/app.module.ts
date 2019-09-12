@@ -14,6 +14,7 @@ import localeRuUa from '@angular/common/locales/uk';
 import { HttpClientModule } from "@angular/common/http";
 import { RouterModule } from "@angular/router";
 import { SharedModule } from "./components/shared/shared/shared.module";
+import { UserModule } from "./components/user/user.module";
 
 registerLocaleData(localeRuUa);
 
@@ -34,6 +35,7 @@ registerLocaleData(localeRuUa);
     LayoutModule,
     LandingModule,
     SharedModule,
+    UserModule
   ],
   providers: [
     [DatePipe],
