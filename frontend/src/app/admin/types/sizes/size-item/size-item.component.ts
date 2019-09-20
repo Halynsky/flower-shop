@@ -16,6 +16,8 @@ export class SizeItemComponent implements OnInit {
   ItemSaveMode = ItemSaveMode;
   mode: ItemSaveMode = ItemSaveMode.new;
 
+  minMaxError: boolean = false;
+
   item: Size = new Size();
 
   constructor(private dataService: SizeService,
@@ -74,21 +76,31 @@ export class SizeItemComponent implements OnInit {
   onSizeChange() {
 
     if (this.item.min && this.item.max) {
-      this.item.name = `${this.item.min ? this.item.min : ''}/${this.item.max ? this.item.max : ''}`
+      if (this.item.min < this.item.max) {
+        this.item.name = `${this.item.min ? this.item.min : ''}/${this.item.max ? this.item.max : ''}`;
+        this.minMaxError = false;
+      } else {
+        this.minMaxError = true;
+      }
     }
 
     if (this.item.min && !this.item.max ) {
-      this.item.name = `${this.item.min}/`
+      this.item.name = `${this.item.min}/`;
+      this.minMaxError = false;
     }
 
     if (!this.item.min && this.item.max ) {
-      this.item.name = `${this.item.max}+`
+      this.item.name = `${this.item.max}+`;
+      this.minMaxError = false;
     }
 
     if (!this.item.min && !this.item.max) {
-      this.item.name = ''
+      this.item.name = '';
+      this.minMaxError = false;
     }
 
   }
+
+
 
 }

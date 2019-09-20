@@ -42,9 +42,14 @@
             [(ngModel)]="item.max"
             (ngModelChange)="onSizeChange()"/>
         </div>
-        <div class="ui-grid-col-2">
+        <div class="ui-grid-col-2" *ngIf="max.errors?.required">
           <ng-container *ngIf="max.dirty || max.touched || form.submitted">
-            <p-message *ngIf="max.errors?.required" severity="error" text="Обовязково вказати значення"></p-message>
+            <p-message  severity="error" text="Обовязково вказати значення"></p-message>
+          </ng-container>
+        </div>
+        <div class="ui-grid-col-2" *ngIf="this.minMaxError">
+          <ng-container>
+            <p-message severity="error" text="Максимальне значення повинне бути більше ніж мінімальне"></p-message>
           </ng-container>
         </div>
       </div>
@@ -70,7 +75,8 @@
 
     <div class="ui-grid-row ui-grid-field">
       <div class="ui-grid-col-4 footer">
-        <button type="submit" pButton icon="pi pi-check" class="ui-button-success" label="{{mode == ItemSaveMode.new ? 'Зберегти' : 'Оновити'}}"></button>
+        <button type="submit" pButton icon="pi pi-check" class="ui-button-success" label="{{mode == ItemSaveMode.new ? 'Зберегти' : 'Оновити'}}" *ngIf="!this.minMaxError"></button>
+        <button type="submit" pButton icon="pi pi-check" class="ui-button-success" label="{{mode == ItemSaveMode.new ? 'Зберегти' : 'Оновити'}}" disabled *ngIf="this.minMaxError"></button>
       </div>
     </div>
 
