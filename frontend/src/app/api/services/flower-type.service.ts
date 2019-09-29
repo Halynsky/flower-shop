@@ -6,7 +6,7 @@ import { API_URL } from "../../utils/Costants";
 @Injectable({providedIn: 'root'})
 export class FlowerTypeService {
 
-  private readonly URL = `${API_URL}/flowerTypes`;
+  private readonly URL = `${API_URL}/flower-types`;
 
   constructor(private  http: HttpClient) {}
 

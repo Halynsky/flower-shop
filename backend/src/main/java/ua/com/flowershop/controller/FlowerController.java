@@ -23,9 +23,10 @@ import java.util.List;
 import java.util.Objects;
 
 import static org.springframework.http.HttpStatus.OK;
+import static ua.com.flowershop.util.Path.FLOWERS_PATH;
 
 @RestController
-@RequestMapping("api/flowers")
+@RequestMapping(FLOWERS_PATH)
 public class FlowerController {
 
 //    TODO: Create FlowerAdminProjection and insert it in to forAdmin

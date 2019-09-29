@@ -2,7 +2,7 @@ package ua.com.flowershop.projection;
 
 import java.time.LocalDateTime;
 
-public interface WerehouseOperationProjection {
+public interface WarehouseOperationProjection {
     Long getId();
 
     Integer getAmount();
@@ -11,5 +11,5 @@ public interface WerehouseOperationProjection {
 
     FlowerSizeShortProjection getFlowerSize();
 
-    WerehouseOperationTypeProjection getWerehouseOperationType();
+    WarehouseOperationTypeProjection getWarehouseOperationType();
 }

@@ -13,9 +13,10 @@ import ua.com.flowershop.service.ArticleService;
 import ua.com.flowershop.util.annotation.PageableSwagger;
 
 import static org.springframework.http.HttpStatus.OK;
+import static ua.com.flowershop.util.Path.ARTICLES_PATH;
 
 @RestController
-@RequestMapping("api/articles")
+@RequestMapping(ARTICLES_PATH)
 public class ArticleController {
 
     @Autowired private ArticleService articleService;

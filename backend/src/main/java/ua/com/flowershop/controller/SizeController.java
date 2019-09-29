@@ -13,9 +13,10 @@ import ua.com.flowershop.service.SizeService;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.OK;
+import static ua.com.flowershop.util.Path.SIZES_PATH;
 
 @RestController
-@RequestMapping("api/sizes")
+@RequestMapping(SIZES_PATH)
 public class SizeController {
 
     @Autowired private SizeRepository sizeRepository;
