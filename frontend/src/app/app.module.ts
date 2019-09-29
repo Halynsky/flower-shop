@@ -14,6 +14,7 @@ import localeRuUa from '@angular/common/locales/uk';
 import { HttpClientModule } from "@angular/common/http";
 import { RouterModule } from "@angular/router";
 import { SharedModule } from "./components/shared/shared/shared.module";
+import { NameUniqueValidator } from "./validators/name-unique-validator.directive";
 
 registerLocaleData(localeRuUa);
 
@@ -38,7 +39,10 @@ registerLocaleData(localeRuUa);
   providers: [
     [DatePipe],
     MatIconRegistry,
-    { provide: LOCALE_ID, useValue: "uk" }
+    {provide: LOCALE_ID, useValue: "uk"}
+  ],
+  exports: [
+
   ],
   bootstrap: [AppComponent]
 })

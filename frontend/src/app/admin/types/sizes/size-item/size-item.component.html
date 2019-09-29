@@ -15,15 +15,23 @@
         </div>
         <div class="ui-grid-col-2">
           <input
+            oninput="validity.valid||(value='');"
+            min="1"
             pInputText
             #min="ngModel"
             id="min"
             name="min"
             type="number"
             [(ngModel)]="item.min"
-            (ngModelChange)="onSizeChange()"/>
+            (ngModelChange)="onSizeChange()"
+            numberComparisonValidator
+            [maximum]="item.max"
+          />
         </div>
-        <div class="ui-grid-col-2">
+        <div class="ui-grid-col-2" *ngIf="min.errors?.invalidNumber">
+          <ng-container>
+            <p-message severity="error" text="Мінімальне значення повинне бути менше ніж максимальне"></p-message>
+          </ng-container>
         </div>
       </div>
 
@@ -33,6 +41,8 @@
         </div>
         <div class="ui-grid-col-2">
           <input
+            oninput="validity.valid||(value='');"
+            min="1"
             pInputText
             #max="ngModel"
             id="max"
@@ -40,15 +50,16 @@
             type="number"
             required
             [(ngModel)]="item.max"
-            (ngModelChange)="onSizeChange()"/>
+            (ngModelChange)="onSizeChange()"
+            numberComparisonValidator
+            [minimum]="item.min"
+          />
         </div>
         <div class="ui-grid-col-2" *ngIf="max.errors?.required">
           <ng-container *ngIf="max.dirty || max.touched || form.submitted">
             <p-message  severity="error" text="Обовязково вказати значення"></p-message>
           </ng-container>
-        </div>
-        <div class="ui-grid-col-2" *ngIf="this.minMaxError">
-          <ng-container>
+          <ng-container *ngIf="max.errors?.invalidNumber">
             <p-message severity="error" text="Максимальне значення повинне бути більше ніж мінімальне"></p-message>
           </ng-container>
         </div>
@@ -64,10 +75,14 @@
             #name="ngModel"
             id="name"
             name="name"
-            disabled
-            [(ngModel)]="item.name"/>
+            [(ngModel)]="item.name"
+            nameUniqueValidator
+          />
         </div>
-        <div class="ui-grid-col-2">
+        <div class="ui-grid-col-2" *ngIf="name.errors?.nameUnique">
+          <ng-container>
+            <p-message severity="error" text="Це ім'я зайняте, оберіть інше"></p-message>
+          </ng-container>
         </div>
       </div>
 
@@ -75,8 +90,7 @@
 
     <div class="ui-grid-row ui-grid-field">
       <div class="ui-grid-col-4 footer">
-        <button type="submit" pButton icon="pi pi-check" class="ui-button-success" label="{{mode == ItemSaveMode.new ? 'Зберегти' : 'Оновити'}}" *ngIf="!this.minMaxError"></button>
-        <button type="submit" pButton icon="pi pi-check" class="ui-button-success" label="{{mode == ItemSaveMode.new ? 'Зберегти' : 'Оновити'}}" disabled *ngIf="this.minMaxError"></button>
+        <button type="submit" pButton icon="pi pi-check" class="ui-button-success" label="{{mode == ItemSaveMode.new ? 'Зберегти' : 'Оновити'}}"></button>
       </div>
     </div>
 

@@ -12,6 +12,7 @@ import ua.com.flowershop.service.SizeService;
 
 import java.util.List;
 
+import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
@@ -35,6 +36,11 @@ public class SizeController {
     @GetMapping("/{id}")
     public ResponseEntity<SizeProjection> getById(@PathVariable Long id) {
         return new ResponseEntity<>(sizeService.getSizeById(id), OK);
+    }
+
+    @GetMapping("/isNameFree")
+    public ResponseEntity<Void> isNameFree(@RequestParam("name") String name) {
+        return new ResponseEntity<>(sizeService.isNameFree(name) ? OK : CONFLICT);
     }
 
     @PostMapping

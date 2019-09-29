@@ -33,4 +33,8 @@ public class SizeService {
         return sizeRepository.save(size);
     }
 
+    public Boolean isNameFree(String name) {
+        return !sizeRepository.existsByName(name);
+    }
+
 }
