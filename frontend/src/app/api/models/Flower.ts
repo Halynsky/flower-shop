@@ -1,5 +1,5 @@
 import { FlowerType } from "./FlowerType";
-import { Color } from "colors";
+import { Color } from "./Color";
 import { FlowerSize } from "./FlowerSize";
 
 export class Flower {
