@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.com.flowershop.entity.Size;
+import ua.com.flowershop.exception.NotFoundException;
 import ua.com.flowershop.model.SizeModel;
 import ua.com.flowershop.projection.SizeAdminProjection;
 import ua.com.flowershop.projection.SizeProjection;
@@ -34,8 +35,9 @@ public class SizeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SizeProjection> getById(@PathVariable Long id) {
-        return new ResponseEntity<>(sizeService.getSizeById(id), OK);
+    public ResponseEntity<SizeAdminProjection> getById(@PathVariable Long id) {
+        SizeAdminProjection size = sizeRepository.findForAdminProjectedById(id).orElseThrow(NotFoundException::new);
+        return new ResponseEntity<>(size, OK);
     }
 
     @GetMapping("/isNameFree")

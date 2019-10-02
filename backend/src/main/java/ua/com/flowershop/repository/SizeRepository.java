@@ -21,6 +21,8 @@ public interface SizeRepository extends JpaRepository<Size, Long> {
 
     Optional<SizeProjection> findProjectedById(Long id);
 
+    Optional<SizeAdminProjection> findForAdminProjectedById(Long id);
+
     Set<SizeProjection> findProjectedByFlowerTypeSizesSizeId(Long id);
 
     Boolean existsByName(String name);

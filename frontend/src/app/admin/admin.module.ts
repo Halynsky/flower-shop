@@ -31,7 +31,7 @@ import { ColorItemComponent } from "./types/colors/color-item/color-item.compone
 import { FlowerTypeItemComponent } from "./types/flower-types/flower-type-item/flower-type-item.component";
 import { FlowerItemComponent } from "./types/flowers/flower-item/flower-item.component";
 import { PipesModule } from "../pipes/pipes.module";
-import { NameUniqueValidator } from "../validators/name-unique-validator.directive";
+import { UniqueValidator } from "../validators/unique-validator.directive";
 import { NumberComparisonValidator } from "../validators/number-comparison-validator.directive";
 
 
@@ -54,7 +54,7 @@ import { NumberComparisonValidator } from "../validators/number-comparison-valid
     SizeItemComponent,
     ColorsComponent,
     ColorItemComponent,
-    NameUniqueValidator,
+    UniqueValidator,
     NumberComparisonValidator
   ],
   imports: [
