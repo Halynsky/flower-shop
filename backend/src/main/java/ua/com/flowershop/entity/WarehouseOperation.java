@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity()
 @Table(name = "werehouse_operations")
-public class WerehouseOperation {
+public class WarehouseOperation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +32,6 @@ public class WerehouseOperation {
 
     @ManyToOne
     @JoinColumn(name = "werehouse_operation_type_id", nullable = false)
-    private WerehouseOperationType werehouseOperationType;
+    private WarehouseOperationType warehouseOperationType;
 
 }

@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ItemSaveMode } from "../../../models/ItemSaveMode";
 import { ConfirmationService } from "primeng/api";
-import { WerehouseOperation } from "../../../api/models/WerehouseOperation";
+import { WarehouseOperation } from "../../../api/models/WarehouseOperation";
 import { SnackBarService } from "../../../services/snak-bar.service";
 import { ActivatedRoute, Router } from "@angular/router";
-import { WerehouseOperationService } from "../../../api/services/werehouse-operation.service";
+import { WarehouseOperationService } from "../../../api/services/warehouse-operation.service";
 import { TranslationService } from "../../../utils/translation.service";
-import { WerehouseOperationType } from "../../../api/models/WerehouseOperationType";
+import { WarehouseOperationType } from "../../../api/models/WarehouseOperationType";
 import { Table } from "primeng/table";
 import { EnumToObjectsPipe } from "../../../pipes/enum-to-objects";
 import { getErrorMessage, ngPrimeFiltersToParams } from "../../../utils/Functions";
@@ -25,7 +25,7 @@ export class WarehouseOperationsComponent implements OnInit {
   ItemSaveMode = ItemSaveMode;
   mode: ItemSaveMode = ItemSaveMode.new;
 
-  WerehouseOperationType = WerehouseOperationType;
+  WarehouseOperationType = WarehouseOperationType;
   directionOptions = [];
   operationTypes = [];
 
@@ -47,8 +47,8 @@ export class WarehouseOperationsComponent implements OnInit {
 
   selectedColumns = this.columns.filter(column => column.active);
 
-  items: RestPage<WerehouseOperation> = new RestPage<WerehouseOperation>();
-  selected: WerehouseOperation;
+  items: RestPage<WarehouseOperation> = new RestPage<WarehouseOperation>();
+  selected: WarehouseOperation;
 
   menuItems = [
     { label: 'Редагувати',
@@ -59,16 +59,16 @@ export class WarehouseOperationsComponent implements OnInit {
       command: (event) => this.confirmRemove(event)},
   ];
 
-  constructor(private dataService: WerehouseOperationService,
+  constructor(private dataService: WarehouseOperationService,
               private snackBarService: SnackBarService,
               private confirmationService: ConfirmationService,
               private router: Router,
               private route: ActivatedRoute,
               private translation: TranslationService,
               private enumToObjectsPipe: EnumToObjectsPipe) {
-    this.directionOptions = enumToObjectsPipe.transform(WerehouseOperationType.Direction);
+    this.directionOptions = enumToObjectsPipe.transform(WarehouseOperationType.Direction);
     this.directionOptions.forEach(e => e.label = translation.text[e.label]);
-    this.operationTypes = enumToObjectsPipe.transform(WerehouseOperationType.OperationType);
+    this.operationTypes = enumToObjectsPipe.transform(WarehouseOperationType.OperationType);
     this.operationTypes.forEach(e => e.label = translation.text[e.label]);
 
   }

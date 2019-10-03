@@ -14,9 +14,10 @@ import ua.com.flowershop.service.ColorService;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.OK;
+import static ua.com.flowershop.util.Path.COLORS_PATH;
 
 @RestController
-@RequestMapping("api/colors")
+@RequestMapping(COLORS_PATH)
 public class ColorController {
 
     @Autowired private ColorRepository colorRepository;

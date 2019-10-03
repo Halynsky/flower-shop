@@ -114,13 +114,13 @@
           </span>
 
           <span *ngSwitchCase="'direction'">
-            <span>{{translation.text[rowData.werehouseOperationType.direction]}}</span>
-            <img class="direction-arrow" *ngIf="rowData.werehouseOperationType.direction == WerehouseOperationType.Direction.IN" src="/assets/icons/interface/arrow-in-green.png">
-            <img class="direction-arrow" *ngIf="rowData.werehouseOperationType.direction == WerehouseOperationType.Direction.OUT" src="/assets/icons/interface/arrow-out-red.png">
+            <span>{{translation.text[rowData.warehouseOperationType.direction]}}</span>
+            <img class="direction-arrow" *ngIf="rowData.warehouseOperationType.direction == WarehouseOperationType.Direction.IN" src="/assets/icons/interface/arrow-in-green.png">
+            <img class="direction-arrow" *ngIf="rowData.warehouseOperationType.direction == WarehouseOperationType.Direction.OUT" src="/assets/icons/interface/arrow-out-red.png">
           </span>
 
           <span *ngSwitchCase="'operationType'">
-            {{translation.text[rowData.werehouseOperationType.operationType]}}
+            {{translation.text[rowData.warehouseOperationType.operationType]}}
           </span>
 
           <span *ngSwitchCase="'date'">
