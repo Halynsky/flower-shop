@@ -94,6 +94,4 @@ export class SizeItemComponent implements OnInit {
 
   }
 
-
-
 }

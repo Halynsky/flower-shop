@@ -24,7 +24,7 @@
             [(ngModel)]="item.min"
             (ngModelChange)="onSizeChange()"
             numberComparisonValidator
-            [maximum]="item.max"
+            [state]="true"
           />
         </div>
         <div class="ui-grid-col-2" *ngIf="min.dirty || min.touched || form.submitted">
@@ -50,13 +50,17 @@
             [(ngModel)]="item.max"
             (ngModelChange)="onSizeChange()"
             numberComparisonValidator
-            [minimum]="item.min"
+            [state]="false"
           />
         </div>
-        <div class="ui-grid-col-2" *ngIf="max.errors?.required">
-          <ng-container *ngIf="max.dirty || max.touched || form.submitted">
-            <p-message *ngIf="max.errors?.required" severity="error" text="Повинну бути вказано"></p-message>
-            <p-message *ngIf="max.errors?.invalidNumber" severity="error" text="Максимальне значення повинне бути більше ніж мінімальне"></p-message>
+        <div class="ui-grid-col-2">
+          <div *ngIf="max.errors?.required">
+            <ng-container *ngIf="max.dirty || max.touched || form.submitted">
+              <p-message *ngIf="max.errors?.required" severity="error" text="Повинну бути вказано"></p-message>
+            </ng-container>
+          </div>
+          <ng-container *ngIf="max.errors?.invalidNumber">
+            <p-message  severity="error" text="Максимальне значення повинне бути більше ніж мінімальне"></p-message>
           </ng-container>
         </div>
       </div>
