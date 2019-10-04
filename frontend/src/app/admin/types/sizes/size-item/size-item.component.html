@@ -23,13 +23,13 @@
             type="number"
             [(ngModel)]="item.min"
             (ngModelChange)="onSizeChange()"
-            numberComparisonValidator
-            [state]="true"
+            rangePair
+            [rangePairMax]="item.max"
           />
         </div>
-        <div class="ui-grid-col-2" *ngIf="min.dirty || min.touched || form.submitted">
+        <div class="ui-grid-col-4" *ngIf="min.dirty || min.touched || form.submitted">
           <ng-container>
-            <p-message *ngIf="min.errors?.invalidNumber" severity="error" text="Мінімальне значення повинне бути менше ніж максимальне"></p-message>
+            <p-message *ngIf="min.errors?.rangePair" severity="error" text="Мінімальне значення повинне бути менше ніж максимальне"></p-message>
           </ng-container>
         </div>
       </div>
@@ -49,17 +49,17 @@
             required
             [(ngModel)]="item.max"
             (ngModelChange)="onSizeChange()"
-            numberComparisonValidator
-            [state]="false"
+            rangePair
+            [rangePairMin]="item.min"
           />
         </div>
-        <div class="ui-grid-col-2">
+        <div class="ui-grid-col-4">
           <div *ngIf="max.errors?.required">
             <ng-container *ngIf="max.dirty || max.touched || form.submitted">
               <p-message *ngIf="max.errors?.required" severity="error" text="Повинну бути вказано"></p-message>
             </ng-container>
           </div>
-          <ng-container *ngIf="max.errors?.invalidNumber">
+          <ng-container *ngIf="max.errors?.rangePair">
             <p-message  severity="error" text="Максимальне значення повинне бути більше ніж мінімальне"></p-message>
           </ng-container>
         </div>
@@ -81,7 +81,7 @@
             readonly
           />
         </div>
-        <div class="ui-grid-col-2" *ngIf="name.errors?.unique">
+        <div class="ui-grid-col-4" *ngIf="name.errors?.unique">
           <ng-container>
             <p-message severity="error" text="Данний розмір вже існує"></p-message>
           </ng-container>
