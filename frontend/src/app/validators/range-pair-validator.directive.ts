@@ -47,6 +47,7 @@ export class RangePairValidator implements AsyncValidator {
       if(max) {
         let maxControl = control.root.get(this.oppositeInput ? this.oppositeInput : 'max');
         if(control.value < max) {
+          maxControl.setErrors(null);
           return of(null)
         } {
           if (maxControl.value) {

@@ -17,6 +17,8 @@ export class ColorItemComponent implements OnInit {
   mode: ItemSaveMode = ItemSaveMode.new;
 
   item: Color = new Color();
+  previousName;
+  previousColor;
 
   constructor(private dataService: ColorService,
               private snackBarService: SnackBarService,
@@ -44,7 +46,11 @@ export class ColorItemComponent implements OnInit {
 
   getItem(id) {
     this.dataService.getById(id).subscribe(
-      item => this.item = item,
+      item => {
+        this.item = item;
+        this.previousName = item.name;
+        this.previousColor = item.hex;
+      },
       error => this.snackBarService.showError(getErrorMessage(error))
     )
   }

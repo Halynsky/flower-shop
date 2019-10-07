@@ -22,6 +22,8 @@ import { FlowerSize } from "../../../../api/models/FlowerSize";
 })
 export class FlowerItemComponent implements OnInit {
 
+  previousNameOriginal;
+  previousName;
   ItemSaveMode = ItemSaveMode;
   mode: ItemSaveMode = ItemSaveMode.new;
 
@@ -106,7 +108,11 @@ export class FlowerItemComponent implements OnInit {
 
   getItem(id) {
     this.dataService.getById(id).subscribe(
-      item => this.item = item,
+      item => {
+        this.item = item;
+        this.previousNameOriginal = item.nameOriginal;
+        this.previousName = item.name;
+      } ,
       error => this.snackBarService.showError(getErrorMessage(error))
     )
   }

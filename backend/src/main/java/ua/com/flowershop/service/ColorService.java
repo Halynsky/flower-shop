@@ -21,4 +21,12 @@ public class ColorService {
         return colorRepository.save(color);
     }
 
+    public Boolean isNameFree(String name) {
+        return !colorRepository.existsByName(name);
+    }
+
+    public Boolean isHexFree(String hex) {
+        return !colorRepository.existsByHex(hex);
+    }
+
 }

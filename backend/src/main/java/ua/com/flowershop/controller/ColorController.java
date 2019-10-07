@@ -13,6 +13,7 @@ import ua.com.flowershop.service.ColorService;
 
 import java.util.List;
 
+import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.OK;
 import static ua.com.flowershop.util.Path.COLORS_PATH;
 
@@ -27,6 +28,16 @@ public class ColorController {
     public ResponseEntity<List<ColorAdminProjection>> getAllForAdmin() {
         List<ColorAdminProjection> colors = colorRepository.findForAdminProjectedBy();
         return new ResponseEntity<>(colors, OK);
+    }
+
+    @GetMapping("/isNameFree")
+    public ResponseEntity<Void> isNameFree(@RequestParam("name") String name) {
+        return new ResponseEntity<>(colorService.isNameFree(name) ? OK : CONFLICT);
+    }
+
+    @GetMapping("/isColorFree")
+    public ResponseEntity<Void> isHexFree(@RequestParam("hex") String hex) {
+        return new ResponseEntity<>(colorService.isHexFree(hex) ? OK : CONFLICT);
     }
 
     @GetMapping

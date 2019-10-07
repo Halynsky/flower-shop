@@ -25,7 +25,7 @@ export class UniqueValidator implements AsyncValidator {
 
   constructor(private http: HttpClient) {}
 
-  validate(control: AbstractControl): Observable<ValidationErrors|null>  {
+   validate(control: AbstractControl): Observable<ValidationErrors|null>  {
     if (control.value) {
       if(this.previousValue) {
         if((control.value as String).toLowerCase().trim() === this.previousValue.toLowerCase().trim()) {
