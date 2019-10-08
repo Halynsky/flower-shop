@@ -35,7 +35,7 @@ public class ColorController {
         return new ResponseEntity<>(colorService.isNameFree(name) ? OK : CONFLICT);
     }
 
-    @GetMapping("/isColorFree")
+    @GetMapping("/isHexFree")
     public ResponseEntity<Void> isHexFree(@RequestParam("hex") String hex) {
         return new ResponseEntity<>(colorService.isHexFree(hex) ? OK : CONFLICT);
     }

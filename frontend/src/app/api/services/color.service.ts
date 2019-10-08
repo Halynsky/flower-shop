@@ -23,7 +23,7 @@ export class ColorService {
 
   isHexFree(hex: string): Observable<any> {
     const params = new HttpParams().set('hex', hex)
-    return this.http.get(`${this.URL}/isColorFree`, {params: params});
+    return this.http.get(`${this.URL}/isHexFree`, {params: params});
   }
 
   getAll() {
