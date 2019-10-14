@@ -27,10 +27,7 @@
             [rangePairMax]="item.max"
           />
         </div>
-        <div class="ui-grid-col-4" *ngIf="min.dirty || min.touched || form.submitted">
-          <ng-container>
-            <p-message *ngIf="min.errors?.rangePair" severity="error" text="Мінімальне значення повинне бути менше ніж максимальне"></p-message>
-          </ng-container>
+        <div class="ui-grid-col-4">
         </div>
       </div>
 
@@ -53,6 +50,7 @@
             [rangePairMin]="item.min"
           />
         </div>
+        {{max.errors | json}}
         <div class="ui-grid-col-4">
           <div *ngIf="max.errors?.required">
             <ng-container *ngIf="max.dirty || max.touched || form.submitted">

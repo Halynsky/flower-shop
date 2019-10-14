@@ -23,7 +23,7 @@ export class RangePairValidator implements AsyncValidator {
   constructor() {
   }
 
-  validate(control: AbstractControl): Observable<ValidationErrors|null> {
+  validate(control: AbstractControl): Observable<ValidationErrors | null> {
     let min = parseInt(this.rangePairMin as any);
     let max = parseInt(this.rangePairMax as any);
     if (control.value && (min || max)) {
@@ -36,22 +36,24 @@ export class RangePairValidator implements AsyncValidator {
         }
       }
 
-      if(min) {
-        if(control.value > min) {
+      if (min) {
+        if (control.value > min) {
           return of(null)
-        } {
+        }
+        {
           return of({[this.error]: true});
         }
       }
 
-      if(max) {
+      if (max) {
         let maxControl = control.root.get(this.oppositeInput ? this.oppositeInput : 'max');
-        if(control.value < max) {
-          maxControl.setErrors(null);
+        if (control.value < max) {
+          maxControl.setErrors(this.resetErrors(maxControl.errors));
           return of(null)
-        } {
+        }
+        {
           if (maxControl.value) {
-            maxControl.setErrors({[this.error]: true});
+            maxControl.setErrors(this.addError(maxControl.errors));
           }
           return of(null)
         }
@@ -63,5 +65,23 @@ export class RangePairValidator implements AsyncValidator {
   }
 
 
+  resetErrors(errors: ValidationErrors): ValidationErrors | null {
+    if (errors !== null && errors[this.error]) {
+      if (Object.keys(errors).length == 1) {
+        return null;
+      }
+      delete errors[this.error];
+    }
+    return errors;
+  }
+
+  addError(errors: ValidationErrors): ValidationErrors {
+    if (errors !== null) {
+      errors[this.error] = true;
+      return errors;
+    } else {
+      return {[this.error]: true};
+    }
+  }
 
 }
