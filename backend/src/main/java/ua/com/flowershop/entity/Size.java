@@ -38,7 +38,7 @@ public class Size {
     public static Size of(SizeModel sizeModel) {
         return new Size().setMin(sizeModel.getMin())
             .setMax(sizeModel.getMax())
-            .setName(sizeModel.getMin() + SLASH + sizeModel.getMax());
+            .setName(sizeModel.getName());
     }
 
 }

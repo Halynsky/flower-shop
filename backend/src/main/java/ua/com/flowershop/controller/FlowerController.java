@@ -22,6 +22,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
+import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.OK;
 import static ua.com.flowershop.util.Path.FLOWERS_PATH;
 
@@ -57,6 +58,16 @@ public class FlowerController {
     @GetMapping
     public ResponseEntity<List<FlowerProjection>> getAll() {
         return new ResponseEntity<>(flowerRepository.findProjectedBy(), OK);
+    }
+
+    @GetMapping("/isNameOriginalFree")
+    public ResponseEntity<Void> isNameOriginalFree(@RequestParam("name") String name) {
+        return new ResponseEntity<>(flowerService.isNameOriginalFree(name) ? OK : CONFLICT);
+    }
+
+    @GetMapping("/isNameFree")
+    public ResponseEntity<Void> isNameFree(@RequestParam("name") String name) {
+        return new ResponseEntity<>(flowerService.isNameFree(name) ? OK : CONFLICT);
     }
 
     @GetMapping("/{id}")

@@ -2,16 +2,21 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Size, SizeAdmin } from "../models/Size";
 import { API_URL } from "../../utils/Costants";
+import { Observable } from "rxjs";
 
 @Injectable({providedIn: 'root'})
 export class SizeService {
 
   private readonly URL = `${API_URL}/sizes`;
 
-  constructor(private  http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
   getForAdmin() {
     return this.http.get<SizeAdmin[]>(`${this.URL}/forAdmin`);
+  }
+
+  isNameFree(name: string): Observable<any> {
+    return this.http.get(`${this.URL}/isNameFree/?name=${name}`, {responseType: 'text'});
   }
 
   getAll() {

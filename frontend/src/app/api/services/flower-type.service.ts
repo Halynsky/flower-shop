@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { FlowerType } from "../models/FlowerType";
 import { API_URL } from "../../utils/Costants";
+import { Observable } from "rxjs";
 
 @Injectable({providedIn: 'root'})
 export class FlowerTypeService {
@@ -12,6 +13,10 @@ export class FlowerTypeService {
 
   getAll() {
     return this.http.get<FlowerType[]>(`${this.URL}`)
+  }
+
+  isNameFree(name: string): Observable<any> {
+    return this.http.get(`${this.URL}/isNameFree/?name=${name}`, {responseType: 'text'});
   }
 
   getById(id: number) {

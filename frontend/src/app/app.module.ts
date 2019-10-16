@@ -38,7 +38,10 @@ registerLocaleData(localeRuUa);
   providers: [
     [DatePipe],
     MatIconRegistry,
-    { provide: LOCALE_ID, useValue: "uk" }
+    {provide: LOCALE_ID, useValue: "uk"}
+  ],
+  exports: [
+
   ],
   bootstrap: [AppComponent]
 })
