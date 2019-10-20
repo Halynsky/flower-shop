@@ -26,12 +26,12 @@
         </div>
       </button>
 
-      <button mat-button [matMenuTriggerFor]="authMenu" class="login-button">
+      <button mat-button class="login-button" (click)="onLoginDialog()">
         <i class="material-icons md-18">exit_to_app</i>
         <span>Увійти</span>
       </button>
 
-      <button mat-button [matMenuTriggerFor]="authMenu" class="mobile-login-button">
+      <button mat-button class="mobile-login-button" (click)="onLoginDialog()">
         <mat-icon aria-label="Login">account_circle</mat-icon>
       </button>
     </div>
@@ -67,16 +67,16 @@
 
 </div>
 
-<mat-menu #authMenu="matMenu" class="auth-menu">
-  <button class="facebook-auth" (click)="securityService.login()">
-    <i class="fab fa-facebook-f"></i>
-    <span>Facebook</span>
-  </button>
-  <button class="google-auth" (click)="securityService.login()">
-    <i class="fab fa-google"></i>
-    <span>Google</span>
-  </button>
-</mat-menu>
+<!--<mat-menu #authMenu="matMenu" class="auth-menu">-->
+<!--  <button class="facebook-auth" (click)="onLoginDialog()">-->
+<!--    <i class="fab fa-facebook-f"></i>-->
+<!--    <span>Facebook</span>-->
+<!--  </button>-->
+<!--  <button class="google-auth" (click)="onLoginDialog()">-->
+<!--    <i class="fab fa-google"></i>-->
+<!--    <span>Google</span>-->
+<!--  </button>-->
+<!--</mat-menu>-->
 
 <mat-menu #userMenu="matMenu" class="auth-menu">
   <button class="user-menu-button">
