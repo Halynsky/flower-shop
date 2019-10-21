@@ -2,8 +2,8 @@ import { Component } from "@angular/core";
 import { AuthService } from "../../../../api/services/auth.service";
 import { SecurityService } from "../../../../services/security.service";
 import { User } from "../../../../api/models/User";
-import { getErrorMessage } from "../../../../utils/Functions";
 import { SnackBarService } from "../../../../services/snak-bar.service";
+import { MatDialogRef } from "@angular/material";
 
 @Component({
   selector: 'dialog-window',
@@ -12,7 +12,7 @@ import { SnackBarService } from "../../../../services/snak-bar.service";
 })
 export class DialogWindowComponent {
 
-  constructor(private authService: AuthService, private securityService: SecurityService, private snackBarService: SnackBarService,) {
+  constructor(private authService: AuthService, private securityService: SecurityService, private snackBarService: SnackBarService, public dialogRef: MatDialogRef<DialogWindowComponent>) {
   }
 
   userEmail;
@@ -21,11 +21,15 @@ export class DialogWindowComponent {
 
   onSubmit() {
     this.login();
+
   }
 
   login() {
     this.authService.login(this.userEmail, this.userPassword).subscribe(
-      user => console.log(user),
+      user => {
+        this.securityService.login(user);
+        this.dialogRef.close();
+      } ,
       error => this.snackBarService.showError('Невірний логін або пароль')
     )
   }

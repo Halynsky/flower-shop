@@ -16,12 +16,14 @@ public class UserModel {
     private Long id;
     private String email;
     private User.Role role;
+    private String name;
 
     public static UserModel of(User user) {
         return new UserModel()
             .setId(user.getId())
             .setEmail(user.getEmail())
-            .setRole(user.getRole());
+            .setRole(user.getRole())
+            .setName(user.getName());
     }
 
 }

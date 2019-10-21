@@ -4,8 +4,8 @@ export class User {
   name: string;
   email: string;
   password: string;
-  isVirtual: boolean;
-  isEnabled;
+  // isVirtual: boolean;
+  // isEnabled;
   role: Role;
-  orders: [];
+  // orders: [];
 }

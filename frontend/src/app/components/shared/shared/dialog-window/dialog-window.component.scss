@@ -74,14 +74,15 @@
 
         .dialog-action {
           margin-top: 3px;
-          width: 100%;
           display: flex;
+          width: 280px;
 
 
 
           .login-button {
             background-color: mat-color($accent);
             color: white;
+            margin-right: 10px;
           }
         }
 
