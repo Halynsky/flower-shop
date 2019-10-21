@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ua.com.flowershop.entity.User;
+import ua.com.flowershop.exception.AccountIsNotActivatedException;
 import ua.com.flowershop.repository.UserRepository;
 
 @Service
@@ -16,10 +17,15 @@ public class DatabaseUserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException(username));
+
+        if (!user.getIsActivated()) {
+            throw new AccountIsNotActivatedException();
+        }
+
         return org.springframework.security.core.userdetails.User.withUsername(user.getEmail())
             .password(user.getPassword())
             .disabled(!user.getIsEnabled())
             .authorities(user.getRole().toString())
-                .build();
+            .build();
     }
 }

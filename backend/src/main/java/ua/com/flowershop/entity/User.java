@@ -28,8 +28,12 @@ public class User {
     private String email;
     @JsonIgnore
     private String password;
+    @Column(columnDefinition = "boolean default false")
     private Boolean isVirtual = false;
-    private Boolean isEnabled = false;
+    @Column(columnDefinition = "boolean default true")
+    private Boolean isEnabled = true;
+    @Column(columnDefinition = "boolean default false")
+    private Boolean isActivated = false;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
