@@ -6,8 +6,6 @@ import { MatDialog } from "@angular/material";
 import { DialogWindowComponent } from "../../components/shared/shared/dialog-window/dialog-window.component";
 import { AuthService } from "../../api/services/auth.service";
 import { SnackBarService } from "../../services/snak-bar.service";
-import { User } from "../../api/models/User";
-import { USER_KEY } from "../../utils/Costants";
 
 @Component({
   selector: 'layout-header',

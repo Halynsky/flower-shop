@@ -4,6 +4,7 @@ import { SecurityService } from "../../../../services/security.service";
 import { User } from "../../../../api/models/User";
 import { SnackBarService } from "../../../../services/snak-bar.service";
 import { MatDialogRef } from "@angular/material";
+import { getErrorMessage } from "../../../../utils/Functions";
 
 @Component({
   selector: 'dialog-window',
@@ -30,7 +31,26 @@ export class DialogWindowComponent {
         this.securityService.login(user);
         this.dialogRef.close();
       } ,
-      error => this.snackBarService.showError('Невірний логін або пароль')
+      error => {
+        switch (getErrorMessage(error)) {
+          case 'Bad credentials': {
+            this.snackBarService.showError('Невірний логін чи пароль');
+            break;
+          }
+          case 'Account is not activated': {
+            this.snackBarService.showError('Обліковий запис не активовано');
+            break;
+          }
+          case 'User is disabled': {
+            this.snackBarService.showError('Обліковий запис заблоковано');
+            break;
+          }
+          default: {
+            this.snackBarService.showError('Помилка авторизації');
+            break;
+          }
+        }
+      }
     )
   }
 
