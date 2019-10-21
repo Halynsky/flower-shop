@@ -25,7 +25,6 @@ public class ArticleController {
     @GetMapping
     @PageableSwagger
     public ResponseEntity<Page<ArticleProjection>> getAll(Pageable pageRequest) {
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return new ResponseEntity<>(articleService.getArticles(pageRequest), OK);
     }
 
