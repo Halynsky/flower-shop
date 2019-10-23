@@ -1,0 +1,115 @@
+@import "theme";
+@import "mixins.scss";
+
+
+:host {
+  .md-dialog-container {
+    width: 400px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+
+    .dialog-header {
+      display: flex;
+      justify-content: center;
+    }
+
+    .content {
+      display: flex;
+      height: 100%;
+      font-size: 20px;
+      justify-content: center;
+
+
+      .wrapper {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        align-items: center;
+        justify-content: space-between;
+
+
+        .dialog-content {
+          display: flex;
+          flex-direction: column;
+          align-content: center;
+          justify-content: center;
+          height: 70%;
+          width: 100%;
+          .input-elem {
+            margin-top: 7px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+
+            .input-block {
+              width: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+
+              .input-user {
+                display: flex;
+                justify-content: flex-end;
+              }
+            }
+
+            .error-wrapper {
+              height: 10px;
+              width: 280px;
+              font-size: 10px;
+              margin-top: 3px;
+              .error-block {
+                background-color: #f8b7bd;
+                border: 0 none;
+                color: #212121;
+                height: 100%;
+                width: 100%;
+                padding: 1px;
+                border-radius: 2px;
+              }
+            }
+          }
+        }
+
+        .dialog-action {
+          margin-top: 3px;
+          display: flex;
+          width: 280px;
+
+
+
+          .login-button {
+            background-color: mat-color($accent);
+            color: white;
+            margin-right: 10px;
+          }
+        }
+
+      }
+
+
+    }
+
+
+    input {
+      color: #333333;
+      background: #ffffff;
+      padding: 0.429em;
+      border: 1px solid #a6a6a6;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+      border-radius: 3px;
+      width: 280px;
+      font-size: 15px;
+    }
+
+    h1 {
+      font-size: 2em;
+    }
+
+    button {
+      font-size: 20px;
+    }
+  }
+}
