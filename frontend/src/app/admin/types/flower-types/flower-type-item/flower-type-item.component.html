@@ -19,9 +19,15 @@
             #name="ngModel"
             id="name"
             name="name"
-            [(ngModel)]="item.name"/>
+            [(ngModel)]="item.name"
+            [uniqueValidator]="dataService.isNameFree.bind(dataService)"
+            [previousValue]="previousName"
+          />
         </div>
-        <div class="ui-grid-col-2">
+        <div class="ui-grid-col-2" *ngIf="name.errors?.unique">
+          <ng-container>
+            <p-message severity="error" text="Данний тип вже існує"></p-message>
+          </ng-container>
         </div>
       </div>
 

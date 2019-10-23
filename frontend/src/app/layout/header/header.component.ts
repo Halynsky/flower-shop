@@ -2,7 +2,10 @@ import { Component } from '@angular/core';
 import { SecurityService } from "../../services/security.service";
 import { BucketService } from "../../services/bucket.service";
 import { ModalWindowService } from "../../services/modal-window.service";
-import { UserCabinetService } from "../../services/user-cabinet.service";
+import { MatDialog } from "@angular/material";
+import { DialogWindowComponent } from "../../components/shared/shared/dialog-window/dialog-window.component";
+import { AuthService } from "../../api/services/auth.service";
+import { SnackBarService } from "../../services/snak-bar.service";
 
 @Component({
   selector: 'layout-header',
@@ -12,10 +15,23 @@ import { UserCabinetService } from "../../services/user-cabinet.service";
 
 export class HeaderComponent {
 
-  constructor(private securityService: SecurityService, private bucketService: BucketService, private modalWindowService: ModalWindowService, private userService: UserCabinetService) {
-
+  constructor(public securityService: SecurityService,
+              public bucketService: BucketService,
+              public modalWindowService: ModalWindowService,
+              public dialog: MatDialog, private authService: AuthService,
+              private snackBarService: SnackBarService) {
   }
 
+  onLoginDialog() {
+    this.dialog.open(DialogWindowComponent);
+  }
+
+  logout() {
+    this.authService.logot().subscribe(
+      res => this.securityService.logout(),
+      error => this.snackBarService.showError(error)
+    )
+  }
 
 }
 

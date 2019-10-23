@@ -1,9 +1,10 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Color } from "colors";
 import { API_URL } from "../../utils/Costants";
 import { Size } from "../models/Size";
 import { ColorAdmin } from "../models/Color";
+import { Observable } from "rxjs";
 
 @Injectable({providedIn: 'root'})
 export class ColorService {
@@ -14,6 +15,15 @@ export class ColorService {
 
   getForAdmin() {
     return this.http.get<ColorAdmin[]>(`${this.URL}/forAdmin`);
+  }
+
+  isNameFree(name: string): Observable<any> {
+    return this.http.get(`${this.URL}/isNameFree/?name=${name}`, {responseType: 'text'});
+  }
+
+  isHexFree(hex: string): Observable<any> {
+    const params = new HttpParams().set('hex', hex)
+    return this.http.get(`${this.URL}/isHexFree`, {params: params});
   }
 
   getAll() {

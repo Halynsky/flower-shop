@@ -31,6 +31,8 @@ import { ColorItemComponent } from "./types/colors/color-item/color-item.compone
 import { FlowerTypeItemComponent } from "./types/flower-types/flower-type-item/flower-type-item.component";
 import { FlowerItemComponent } from "./types/flowers/flower-item/flower-item.component";
 import { PipesModule } from "../pipes/pipes.module";
+import { UniqueValidator } from "../validators/unique-validator.directive";
+import { RangePairValidator } from "../validators/range-pair-validator.directive";
 
 
 @NgModule({
@@ -51,7 +53,9 @@ import { PipesModule } from "../pipes/pipes.module";
     SizesComponent,
     SizeItemComponent,
     ColorsComponent,
-    ColorItemComponent
+    ColorItemComponent,
+    UniqueValidator,
+    RangePairValidator
   ],
   imports: [
     routing,
@@ -83,7 +87,8 @@ import { PipesModule } from "../pipes/pipes.module";
     InputSwitchModule,
     RatingModule,
     ListboxModule,
-    CheckboxModule
+    CheckboxModule,
+
   ],
   providers: [
     ConfirmationService

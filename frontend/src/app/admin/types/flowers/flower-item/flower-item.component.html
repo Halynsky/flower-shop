@@ -19,7 +19,15 @@
             #name="ngModel"
             id="name"
             name="name"
-            [(ngModel)]="item.name"/>
+            [(ngModel)]="item.name"
+            [uniqueValidator]="dataService.isNameFree.bind(dataService)"
+            [previousValue]="previousName"
+          />
+        </div>
+        <div class="ui-grid-col-3" *ngIf="name.errors?.unique">
+          <ng-container>
+            <p-message severity="error" text="Дана квітка вже існує"></p-message>
+          </ng-container>
         </div>
       </div>
 
@@ -33,7 +41,15 @@
             #nameOriginal="ngModel"
             id="nameOriginal"
             name="nameOriginal"
-            [(ngModel)]="item.nameOriginal"/>
+            [(ngModel)]="item.nameOriginal"
+            [uniqueValidator]="dataService.isNameOriginalFree.bind(dataService)"
+            [previousValue]="previousNameOriginal"
+          />
+        </div>
+        <div class="ui-grid-col-3" *ngIf="nameOriginal.errors?.unique">
+          <ng-container>
+            <p-message severity="error" text="Дана квітка вже існує"></p-message>
+          </ng-container>
         </div>
       </div>
 
@@ -91,12 +107,30 @@
             #flowerSizeMin="ngModel"
             id="flowerSizeMin"
             name="flowerSizeMin"
-            [(ngModel)]="item.flowerSizeMin"/> — <input
+            [(ngModel)]="item.flowerSizeMin"
+            rangePair
+            [rangePairMax]="item.flowerSizeMax"
+            [rangePair]="'flowerSizeMax'"
+          /> — <input
           pInputText
           #flowerSizeMax="ngModel"
           id="flowerSizeMax"
           name="flowerSizeMax"
-          [(ngModel)]="item.flowerSizeMax"/>
+          [(ngModel)]="item.flowerSizeMax"
+          rangePair
+          required
+          [rangePairMin]="item.flowerSizeMin"
+        />
+        </div>
+        <div class="ui-grid-col-4">
+          <div *ngIf="flowerSizeMax.errors?.required">
+            <ng-container *ngIf="flowerSizeMax.dirty || flowerSizeMax.touched || form.submitted">
+              <p-message *ngIf="flowerSizeMax.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
+            </ng-container>
+          </div>
+          <ng-container *ngIf="flowerSizeMax.errors?.rangePair">
+            <p-message  severity="error" text="Максимальне значення повинне бути більше ніж мінімальне"></p-message>
+          </ng-container>
         </div>
       </div>
 
@@ -110,12 +144,30 @@
             #flowerHeightMin="ngModel"
             id="flowerHeightMin"
             name="flowerHeightMin"
-            [(ngModel)]="item.flowerHeightMin"/> — <input
+            [(ngModel)]="item.flowerHeightMin"
+            rangePair
+            [rangePairMax]="item.flowerHeightMax"
+            [rangePair]="'flowerHeightMax'"
+          /> — <input
           pInputText
           #flowerHeightMax="ngModel"
           id="flowerHeightMax"
           name="flowerHeightMax"
-          [(ngModel)]="item.flowerHeightMax"/>
+          [(ngModel)]="item.flowerHeightMax"
+          rangePair
+          required
+          [rangePairMin]="item.flowerHeightMin"
+        />
+        </div>
+        <div class="ui-grid-col-4">
+          <div *ngIf="flowerHeightMax.errors?.required">
+            <ng-container *ngIf="flowerHeightMax.dirty || flowerHeightMax.touched || form.submitted">
+              <p-message *ngIf="flowerHeightMax.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
+            </ng-container>
+          </div>
+          <ng-container *ngIf="flowerHeightMax.errors?.rangePair">
+            <p-message  severity="error" text="Максимальне значення повинне бути більше ніж мінімальне"></p-message>
+          </ng-container>
         </div>
       </div>
 

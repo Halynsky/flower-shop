@@ -15,10 +15,10 @@ export class SizeItemComponent implements OnInit {
 
   ItemSaveMode = ItemSaveMode;
   mode: ItemSaveMode = ItemSaveMode.new;
-
   item: Size = new Size();
+  previousName;
 
-  constructor(private dataService: SizeService,
+  constructor(public dataService: SizeService,
               private snackBarService: SnackBarService,
               private router: Router,
               private route: ActivatedRoute) {
@@ -42,7 +42,10 @@ export class SizeItemComponent implements OnInit {
 
   getItem(id) {
     this.dataService.getById(id).subscribe(
-      item => this.item = item,
+      item => {
+        this.item = item;
+        this.previousName = item.name;
+      },
       error => this.snackBarService.showError(getErrorMessage(error))
     )
   }
@@ -74,19 +77,19 @@ export class SizeItemComponent implements OnInit {
   onSizeChange() {
 
     if (this.item.min && this.item.max) {
-      this.item.name = `${this.item.min ? this.item.min : ''}/${this.item.max ? this.item.max : ''}`
+        this.item.name = `${this.item.min ? this.item.min : ''}/${this.item.max ? this.item.max : ''}`;
     }
 
     if (this.item.min && !this.item.max ) {
-      this.item.name = `${this.item.min}/`
+      this.item.name = `${this.item.min}/`;
     }
 
     if (!this.item.min && this.item.max ) {
-      this.item.name = `${this.item.max}+`
+      this.item.name = `${this.item.max}+`;
     }
 
     if (!this.item.min && !this.item.max) {
-      this.item.name = ''
+      this.item.name = '';
     }
 
   }

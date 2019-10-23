@@ -17,6 +17,10 @@ public class FlowerTypeService {
 
     @Autowired private FlowerTypeRepository flowerTypeRepository;
 
+    public Boolean isNameFree(String name) {
+        return !flowerTypeRepository.existsByName(name);
+    }
+
     public List<FlowerTypeProjection> getAllFlowerTypes() {
         return flowerTypeRepository.findProjectedBy();
     }

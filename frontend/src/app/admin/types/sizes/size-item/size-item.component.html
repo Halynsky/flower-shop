@@ -15,15 +15,19 @@
         </div>
         <div class="ui-grid-col-2">
           <input
+            min="1"
             pInputText
             #min="ngModel"
             id="min"
             name="min"
             type="number"
             [(ngModel)]="item.min"
-            (ngModelChange)="onSizeChange()"/>
+            (ngModelChange)="onSizeChange()"
+            rangePair
+            [rangePairMax]="item.max"
+          />
         </div>
-        <div class="ui-grid-col-2">
+        <div class="ui-grid-col-4">
         </div>
       </div>
 
@@ -33,6 +37,7 @@
         </div>
         <div class="ui-grid-col-2">
           <input
+            min="1"
             pInputText
             #max="ngModel"
             id="max"
@@ -40,11 +45,19 @@
             type="number"
             required
             [(ngModel)]="item.max"
-            (ngModelChange)="onSizeChange()"/>
+            (ngModelChange)="onSizeChange()"
+            rangePair
+            [rangePairMin]="item.min"
+          />
         </div>
-        <div class="ui-grid-col-2">
-          <ng-container *ngIf="max.dirty || max.touched || form.submitted">
-            <p-message *ngIf="max.errors?.required" severity="error" text="Обовязково вказати значення"></p-message>
+        <div class="ui-grid-col-4">
+          <div *ngIf="max.errors?.required">
+            <ng-container *ngIf="max.dirty || max.touched || form.submitted">
+              <p-message *ngIf="max.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
+            </ng-container>
+          </div>
+          <ng-container *ngIf="max.errors?.rangePair">
+            <p-message  severity="error" text="Максимальне значення повинне бути більше ніж мінімальне"></p-message>
           </ng-container>
         </div>
       </div>
@@ -59,10 +72,16 @@
             #name="ngModel"
             id="name"
             name="name"
-            disabled
-            [(ngModel)]="item.name"/>
+            [(ngModel)]="item.name"
+            [uniqueValidator]="dataService.isNameFree.bind(dataService)"
+            [previousValue]="previousName"
+            readonly
+          />
         </div>
-        <div class="ui-grid-col-2">
+        <div class="ui-grid-col-4" *ngIf="name.errors?.unique">
+          <ng-container>
+            <p-message severity="error" text="Данний розмір вже існує"></p-message>
+          </ng-container>
         </div>
       </div>
 

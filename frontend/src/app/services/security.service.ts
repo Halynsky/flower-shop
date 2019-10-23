@@ -1,30 +1,53 @@
 import { Injectable } from "@angular/core";
 import { Role } from "../models/Role";
+
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from "@angular/router";
 import {Observable} from "rxjs";
 
+import { User } from "../api/models/User";
+import { USER_KEY } from "../utils/Costants";
+
+
 @Injectable({providedIn: 'root'})
 export class SecurityService implements CanActivate{
+
 
   private isLoggedIn: boolean = false;
 
   constructor(public router: Router){}
 
+
   isAuthenticated() {
-    return this.isLoggedIn;
+    return localStorage.getItem(USER_KEY) !== null;
   }
 
-  login() {
-    this.isLoggedIn = true;
+  login(user: User) {
+    localStorage.setItem(USER_KEY, JSON.stringify(user));
   }
 
   logout() {
-    this.isLoggedIn = false;
+
     this.router.navigate(['']);
+    localStorage.removeItem(USER_KEY);
   }
 
-  hasRole(role: Role){
-    return true;
+  hasRole(role: Role) {
+    return this.getUser().role === role;
+  }
+
+  hasAnyRole(roles: Array<Role>) {
+    let hasAnyRole = false;
+    roles.forEach(role => {
+      if (role === this.getUser().role) {
+        hasAnyRole = true;
+      }
+    });
+    return hasAnyRole;
+
+  }
+
+  getUser(): User {
+    return JSON.parse(localStorage.getItem(USER_KEY));
   }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (!this.isAuthenticated()) {

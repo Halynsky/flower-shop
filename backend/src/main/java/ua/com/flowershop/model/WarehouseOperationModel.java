@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class WerehouseOperationModel {
+public class WarehouseOperationModel {
 
     @NotNull
     Integer amount;

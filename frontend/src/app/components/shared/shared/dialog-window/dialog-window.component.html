@@ -1,0 +1,79 @@
+<div class="md-dialog-container">
+
+  <div class="dialog-header">
+    <h1>Авторизація</h1>
+  </div>
+
+  <div class="content">
+    <form #form="ngForm" class="item-form" (ngSubmit)="form.valid && onSubmit()">
+
+      <div class="wrapper">
+
+        <div class="dialog-content">
+
+          <div class="input-elem">
+            <div class="input-block">
+
+              <div class="input-user">
+                <input
+                  pInputText
+                  #email="ngModel"
+                  type="email"
+                  id="email"
+                  name="email"
+                  [(ngModel)]="userEmail"
+                  placeholder="Електронна адреса"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="error-wrapper">
+              <div *ngIf="form.submitted || email.touched">
+                <div class="error-block" *ngIf="email.errors?.required">
+                  <p-message severity="error" text="Повинно бути вказано"></p-message>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="input-elem">
+            <div class="input-block">
+
+              <div class="input-user">
+                <input
+                  pInputText
+                  type="password"
+                  #password="ngModel"
+                  id="password"
+                  name="password"
+                  placeholder="Пароль"
+                  [(ngModel)]="userPassword"
+                  required
+                />
+              </div>
+            </div>
+            <div class="error-wrapper">
+              <div *ngIf="form.submitted || password.touched">
+                <div class="error-block" *ngIf="password.errors?.required">
+                  <p-message severity="error" text="Повинно бути вказано"></p-message>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="dialog-action">
+          <button type="submit" mat-button class="login-button">Увійти</button>
+          <button mat-button class="reg-button">Зареєструватись</button>
+        </div>
+
+      </div>
+
+
+    </form>
+  </div>
+
+</div>

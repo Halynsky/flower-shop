@@ -15,6 +15,7 @@ export class FlowerTypeItemComponent implements OnInit {
 
   ItemSaveMode = ItemSaveMode;
   mode: ItemSaveMode = ItemSaveMode.new;
+  previousName;
 
   item: FlowerType = new FlowerType();
 
@@ -43,7 +44,10 @@ export class FlowerTypeItemComponent implements OnInit {
 
   getItem(id) {
     this.dataService.getById(id).subscribe(
-      item => this.item = item,
+      item => {
+        this.item = item;
+        this.previousName = item.name;
+      },
       error => this.snackBarService.showError(getErrorMessage(error))
     )
   }

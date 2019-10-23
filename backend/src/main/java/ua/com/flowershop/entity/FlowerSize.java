@@ -41,6 +41,9 @@ public class FlowerSize {
     private Size size;
 
     @OneToMany(mappedBy = "flowerSize")
-    private Set<WerehouseOperation> werehouseOperations;
+    private Set<OrderItem> orderItems;
+
+    @OneToMany(mappedBy = "flowerSize")
+    private Set<WarehouseOperation> warehouseOperations;
 
 }

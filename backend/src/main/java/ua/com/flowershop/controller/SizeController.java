@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.com.flowershop.entity.Size;
+import ua.com.flowershop.exception.NotFoundException;
 import ua.com.flowershop.model.SizeModel;
 import ua.com.flowershop.projection.SizeAdminProjection;
 import ua.com.flowershop.projection.SizeProjection;
@@ -12,10 +13,12 @@ import ua.com.flowershop.service.SizeService;
 
 import java.util.List;
 
+import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.OK;
+import static ua.com.flowershop.util.Path.SIZES_PATH;
 
 @RestController
-@RequestMapping("api/sizes")
+@RequestMapping(SIZES_PATH)
 public class SizeController {
 
     @Autowired private SizeRepository sizeRepository;
@@ -33,8 +36,14 @@ public class SizeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SizeProjection> getById(@PathVariable Long id) {
-        return new ResponseEntity<>(sizeService.getSizeById(id), OK);
+    public ResponseEntity<SizeAdminProjection> getById(@PathVariable Long id) {
+        SizeAdminProjection size = sizeRepository.findForAdminProjectedById(id).orElseThrow(NotFoundException::new);
+        return new ResponseEntity<>(size, OK);
+    }
+
+    @GetMapping("/isNameFree")
+    public ResponseEntity<Void> isNameFree(@RequestParam("name") String name) {
+        return new ResponseEntity<>(sizeService.isNameFree(name) ? OK : CONFLICT);
     }
 
     @PostMapping

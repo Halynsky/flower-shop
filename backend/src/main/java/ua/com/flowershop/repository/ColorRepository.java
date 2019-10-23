@@ -18,5 +18,8 @@ public interface ColorRepository extends JpaRepository<Color, Long> {
 
     Optional<ColorProjection> findProjectedById(Long id);
 
+    Boolean existsByName(String name);
+
+    Boolean existsByHex(String hex);
 
 }

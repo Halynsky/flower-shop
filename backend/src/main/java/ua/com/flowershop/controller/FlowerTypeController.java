@@ -11,10 +11,12 @@ import ua.com.flowershop.service.FlowerTypeService;
 
 import java.util.List;
 
+import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.OK;
+import static ua.com.flowershop.util.Path.FLOWER_TYPES_PATH;
 
 @RestController
-@RequestMapping("api/flowerTypes")
+@RequestMapping(FLOWER_TYPES_PATH)
 public class FlowerTypeController {
 
     @Autowired private FlowerTypeService flowerTypeService;
@@ -24,6 +26,11 @@ public class FlowerTypeController {
     public ResponseEntity<List<FlowerTypeProjection>> getAll() {
         List<FlowerTypeProjection> flowerTypes = flowerTypeRepository.findProjectedByOrderByName();
         return new ResponseEntity<>(flowerTypes, OK);
+    }
+
+    @GetMapping("/isNameFree")
+    public ResponseEntity<Void> isNameFree(@RequestParam("name") String name) {
+        return new ResponseEntity<>(flowerTypeService.isNameFree(name) ? OK : CONFLICT);
     }
 
     @GetMapping("/{id}")

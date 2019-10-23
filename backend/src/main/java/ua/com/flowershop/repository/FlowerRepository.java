@@ -23,6 +23,10 @@ public interface FlowerRepository extends JpaRepository<Flower, Long> {
 
     List<FlowerProjection> findProjectedByOrderByName();
 
+    Boolean existsByName(String name);
+
+    Boolean existsByNameOriginal(String name);
+
     List<FlowerProjection> findProjectedBy();
 
     @Query("SELECT f FROM Flower f WHERE " +

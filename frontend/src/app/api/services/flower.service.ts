@@ -5,6 +5,7 @@ import { arrayToHttpParam, copy } from "../../utils/Functions";
 import { API_URL } from "../../utils/Costants";
 import { Pagination } from "../models/Pagination";
 import { RestPage } from "../models/RestPage";
+import { Observable } from "rxjs";
 
 @Injectable({providedIn: 'root'})
 export class FlowerService {
@@ -17,6 +18,15 @@ export class FlowerService {
     params = Object.assign(params, ...pagination);
     return this.http.get<RestPage<Flower>>(`${this.URL}/forAdmin`, {params: params});
   }
+
+  isNameOriginalFree(name: string): Observable<any> {
+    return this.http.get(`${this.URL}/isNameOriginalFree/?name=${name}`, {responseType: 'text'});
+  }
+
+  isNameFree(name: string): Observable<any> {
+    return this.http.get(`${this.URL}/isNameFree/?name=${name}`, {responseType: 'text'});
+  }
+
 
   getAll() {
     return this.http.get<Flower[]>(`${this.URL}`);

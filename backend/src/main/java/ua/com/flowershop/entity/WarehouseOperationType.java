@@ -16,7 +16,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity()
 @Table(name = "werehouse_operation_types")
-public class WerehouseOperationType {
+public class WarehouseOperationType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,8 +28,8 @@ public class WerehouseOperationType {
     @Column(nullable = false)
     private OperationType operationType;
 
-    @OneToMany(mappedBy = "werehouseOperationType")
-    Set<WerehouseOperation> werehouseOperations;
+    @OneToMany(mappedBy = "warehouseOperationType")
+    Set<WarehouseOperation> warehouseOperations;
 
     @AllArgsConstructor
     public enum Direction {
