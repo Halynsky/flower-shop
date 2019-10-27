@@ -10,7 +10,8 @@ const routes: Routes = [
       { path: '', component: LandingComponent},
       { path: 'shop', loadChildren: './components/shop/shop.module#ShopModule'},
       { path: 'forum', loadChildren: './components/forum/forum.module#ForumModule'},
-      { path: 'contacts', loadChildren: './components/contacts/contacts.module#ContactsModule'}
+      { path: 'contacts', loadChildren: './components/contacts/contacts.module#ContactsModule'},
+      { path: '403', loadChildren: './components/forbidden/forbidden.module#ForbiddenModule'}
     ]
   },
   { path: 'admin', loadChildren: './admin/admin.module#AdminModule'}
