@@ -1,5 +1,6 @@
 import {Component} from "@angular/core";
 import {UserCabinetService} from "../../../services/user-cabinet.service";
+import { SecurityService } from "../../../services/security.service";
 
 @Component({
   selector: 'profile',
@@ -9,7 +10,7 @@ import {UserCabinetService} from "../../../services/user-cabinet.service";
 
 export class ProfileComponent {
 
-  constructor(public userService: UserCabinetService){
+  constructor(public userService: UserCabinetService, public securityService: SecurityService){
 
   }
 

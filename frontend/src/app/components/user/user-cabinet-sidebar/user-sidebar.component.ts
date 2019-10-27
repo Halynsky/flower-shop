@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import {UserCabinetService} from "../../../services/user-cabinet.service";
+import { UserCabinetService } from "../../../services/user-cabinet.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'user-sidebar',
@@ -7,24 +8,21 @@ import {UserCabinetService} from "../../../services/user-cabinet.service";
   styleUrls: ['./user-sidebar.component.scss']
 })
 
-export class UserSidebarComponent implements OnInit{
+export class UserSidebarComponent implements OnInit {
 
-  private permanentId;
 
-  constructor(public userService: UserCabinetService){
+  constructor(public userService: UserCabinetService, private router: Router) {
 
   }
 
   ngOnInit(): void {
-    this.activateButton(this.userService.getId())
+    this.onButtonGroupClick();
   }
 
-  activateButton(id) {
-    if (this.permanentId){
-      document.getElementById(this.permanentId).style.backgroundColor = 'white';
-    }
-    document.getElementById(id).style.backgroundColor = '#e0e0e0';
-    this.permanentId = id;
+  onButtonGroupClick() {
+    let currentUrl = this.router.url;
+    currentUrl = currentUrl.split('/').pop();
+    this.userService.changeButtonColor(currentUrl);
   }
 
 

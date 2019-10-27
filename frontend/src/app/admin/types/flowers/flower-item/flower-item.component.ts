@@ -45,14 +45,14 @@ export class FlowerItemComponent implements OnInit {
   date;
 
 
-  constructor(private dataService: FlowerService,
+  constructor(public dataService: FlowerService,
               private snackBarService: SnackBarService,
               private router: Router,
               private route: ActivatedRoute,
               private flowerTypeService: FlowerTypeService,
               private sizeService: SizeService,
               private colorService: ColorService,
-              private translation: TranslationService,
+              public translation: TranslationService,
               public datepipe: DatePipe) {
     this.route.params.subscribe(
       params => {

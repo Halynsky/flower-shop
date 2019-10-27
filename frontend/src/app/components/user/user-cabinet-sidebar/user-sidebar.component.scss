@@ -1,36 +1,41 @@
+@import "theme";
+@import '~@angular/material/theming';
+@import "mixins.scss";
+
 :host {
-    justify-content: space-between;
+  justify-content: space-between;
+  display: flex;
+  width: 300px;
+  flex-direction: column;
+  //height: 100%;
+  align-items: center;
+
+  .nav {
     display: flex;
-    width: 300px;
+    padding-left: 24px;
+    margin-bottom: 2px;
+    width: 100%;
+    font-size: 1.7em;
     flex-direction: column;
-    //height: 100%;
-    align-items: center;
+  }
 
-    .nav {
-      display: flex;
-      padding-left: 24px;
-      margin-bottom: 2px;
-      width: 100%;
-      font-size: 1.7em;
-      flex-direction: column;
-    }
+  .buttons {
+    height: 240px;
+    margin-bottom: 50px;
+  }
 
-    .buttons {
-      height: 240px;
-      margin-bottom: 50px;
-    }
+  button {
+    background-color: white;
+    border: none;
+    height: 70px;
+    width: 100%;
+    font-size: 1.1em;
+  }
 
-    button {
-      background-color: white;
-      border: none;
-      height: 70px;
-      width: 100%;
-      font-size: 1.1em;
-    }
   hr {
     border: 0;
-    clear:both;
-    display:block;
+    clear: both;
+    display: block;
     width: 100%;
     background-color: lightgrey;
     height: 1px;

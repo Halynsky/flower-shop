@@ -7,6 +7,9 @@ import { UserSidebarComponent } from "./user-cabinet-sidebar/user-sidebar.compon
 import { FavouriteArticlesComponent } from "./favourite-articles/favourite-articles.component";
 import { PurchaseHistoryComponent } from "./purchase-history/purchase-history.component";
 import { RouterModule } from "@angular/router";
+import { InputTextModule } from "primeng/primeng";
+import { MatButtonModule } from "@angular/material";
+import { MatInputModule } from "@angular/material";
 
 
 @NgModule({
@@ -19,7 +22,10 @@ import { RouterModule } from "@angular/router";
     FavouriteArticlesComponent
   ],
   imports: [
-    RouterModule
+    RouterModule,
+    InputTextModule,
+    MatButtonModule,
+    MatInputModule,
   ],
   bootstrap: []
 })
