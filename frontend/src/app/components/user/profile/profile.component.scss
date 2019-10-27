@@ -1,0 +1,40 @@
+@import "theme";
+@import '~@angular/material/theming';
+@import "mixins.scss";
+
+:host {
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    padding-left: 24px;
+    .main {
+      font-size: 1.7em;
+      margin-bottom: 19.5px;
+    }
+    .content {
+      padding-left: 24px;
+      font-size: 1.1em;
+
+      .user-info {
+        height: 70px;
+        display: flex;
+        align-items: center;
+        .user-property {
+          font-weight: 500;
+          width: 150px;
+        }
+        .user-value {
+          margin-left: 20px;
+          width: 500px;
+          border-bottom: 1px solid black;
+          padding-left: 10px;
+        }
+      }
+    }
+  }
+  button {
+    font-size: 15px;
+    background-color: mat-color($accent);
+    color: white;
+  }
+}

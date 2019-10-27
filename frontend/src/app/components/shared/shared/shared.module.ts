@@ -56,8 +56,7 @@ const PROVIDERS = [
     MatBottomSheetModule,
     PipesModule,
     MatDialogModule,
-    MessageModule,
-    InputTextModule
+    MessageModule
   ],
   exports: [
     RouterModule,

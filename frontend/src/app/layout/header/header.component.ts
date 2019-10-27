@@ -6,6 +6,8 @@ import { MatDialog } from "@angular/material";
 import { DialogWindowComponent } from "../../components/shared/shared/dialog-window/dialog-window.component";
 import { AuthService } from "../../api/services/auth.service";
 import { SnackBarService } from "../../services/snak-bar.service";
+import { UserCabinetService } from "../../services/user-cabinet.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'layout-header',
@@ -19,7 +21,9 @@ export class HeaderComponent {
               public bucketService: BucketService,
               public modalWindowService: ModalWindowService,
               public dialog: MatDialog, private authService: AuthService,
-              private snackBarService: SnackBarService) {
+              private snackBarService: SnackBarService,
+              public userService: UserCabinetService,
+              private router: Router) {
   }
 
   onLoginDialog() {
@@ -31,6 +35,12 @@ export class HeaderComponent {
       res => this.securityService.logout(),
       error => this.snackBarService.showError(error)
     )
+  }
+
+  onProfileButtonClick() {
+    let currentUrl = this.router.url;
+    currentUrl = currentUrl.split('/').pop();
+    this.userService.changeButtonColor(currentUrl);
   }
 
 }

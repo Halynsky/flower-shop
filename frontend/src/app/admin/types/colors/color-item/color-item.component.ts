@@ -20,7 +20,7 @@ export class ColorItemComponent implements OnInit {
   previousName;
   previousColor;
 
-  constructor(private dataService: ColorService,
+  constructor(public dataService: ColorService,
               private snackBarService: SnackBarService,
               private router: Router,
               private route: ActivatedRoute) {

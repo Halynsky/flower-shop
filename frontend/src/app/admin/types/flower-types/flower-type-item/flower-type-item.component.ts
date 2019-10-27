@@ -19,7 +19,7 @@ export class FlowerTypeItemComponent implements OnInit {
 
   item: FlowerType = new FlowerType();
 
-  constructor(private dataService: FlowerTypeService,
+  constructor(public dataService: FlowerTypeService,
               private snackBarService: SnackBarService,
               private router: Router,
               private route: ActivatedRoute) {
