@@ -36,7 +36,7 @@ export class SecurityService implements CanActivate{
   }
 
   hasAnyRole(roles: Array<Role>) {
-    return roles.includes(this.getUser().role);;
+    return roles.includes(this.getUser().role);
   }
 
   getUser(): User {
