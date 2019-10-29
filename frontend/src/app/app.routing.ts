@@ -8,7 +8,7 @@ import { ProfileComponent } from "./components/user/profile/profile.component";
 import { WishlistComponent } from "./components/user/wishlist/wishlist.component";
 import { PurchaseHistoryComponent } from "./components/user/purchase-history/purchase-history.component";
 import { FavouriteArticlesComponent } from "./components/user/favourite-articles/favourite-articles.component";
-import { AdminGuard } from "./guards/admin-panel.guard";
+import { AdminGuard } from "./guards/admin.guard";
 
 const routes: Routes = [
   { path: '',
