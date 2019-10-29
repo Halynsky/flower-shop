@@ -8,6 +8,7 @@ import { ProfileComponent } from "./components/user/profile/profile.component";
 import { WishlistComponent } from "./components/user/wishlist/wishlist.component";
 import { PurchaseHistoryComponent } from "./components/user/purchase-history/purchase-history.component";
 import { FavouriteArticlesComponent } from "./components/user/favourite-articles/favourite-articles.component";
+import { AdminGuard } from "./guards/admin-panel.guard";
 
 const routes: Routes = [
   { path: '',
@@ -26,7 +27,7 @@ const routes: Routes = [
       { path: '403', loadChildren: './components/forbidden/forbidden.module#ForbiddenModule'}
     ]
   },
-  { path: 'admin', loadChildren: './admin/admin.module#AdminModule'}
+  { path: 'admin', loadChildren: './admin/admin.module#AdminModule', canLoad: [AdminGuard]}
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload', useHash: false });

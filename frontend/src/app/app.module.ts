@@ -11,11 +11,12 @@ import { MatDialogModule, MatIconModule, MatIconRegistry } from '@angular/materi
 import { LayoutModule } from "./layout/layout.module";
 import { DatePipe, registerLocaleData } from '@angular/common';
 import localeRuUa from '@angular/common/locales/uk';
-import { HttpClientModule } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { RouterModule } from "@angular/router";
 import { SharedModule } from "./components/shared/shared/shared.module";
 import { DialogWindowComponent } from "./components/shared/shared/dialog-window/dialog-window.component";
 import { UserModule } from "./components/user/user.module";
+import { MainInterceptor } from "./inteceptors/main.interceptor";
 
 registerLocaleData(localeRuUa);
 
@@ -45,7 +46,12 @@ registerLocaleData(localeRuUa);
   providers: [
     [DatePipe],
     MatIconRegistry,
-    {provide: LOCALE_ID, useValue: "uk"}
+    {provide: LOCALE_ID, useValue: "uk"},
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: MainInterceptor,
+      multi: true
+    }
   ],
   exports: [
 
