@@ -9,7 +9,7 @@ import { USER_KEY } from "../utils/Costants";
 
 
 @Injectable({providedIn: 'root'})
-export class SecurityService implements CanActivate{
+export class SecurityService {
 
 
   private isLoggedIn: boolean = false;
@@ -26,7 +26,6 @@ export class SecurityService implements CanActivate{
   }
 
   logout() {
-
     this.router.navigate(['']);
     localStorage.removeItem(USER_KEY);
   }
@@ -42,12 +41,5 @@ export class SecurityService implements CanActivate{
   getUser(): User {
     return JSON.parse(localStorage.getItem(USER_KEY));
   }
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (!this.isAuthenticated()) {
-      this.router.navigate(['']);
-      return false;
-    }
-    return true;
 
-  }
 }

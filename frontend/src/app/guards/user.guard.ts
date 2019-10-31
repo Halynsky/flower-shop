@@ -4,7 +4,7 @@ import { SecurityService } from "../services/security.service";
 import { Role } from "../models/Role";
 
 @Injectable({providedIn: 'root'})
-export class AdminGuard implements CanActivate, CanActivateChild, CanLoad {
+export class UserGuard implements CanActivate, CanActivateChild, CanLoad {
 
   constructor(private securityService: SecurityService, private router: Router) {
   }
@@ -22,7 +22,7 @@ export class AdminGuard implements CanActivate, CanActivateChild, CanLoad {
   }
 
   private hasAccess(): boolean {
-    if (this.securityService.hasRole(Role.ADMIN)) {
+    if (this.securityService.hasRole(Role.USER)) {
       return true;
     } else {
       this.router.navigate([ '/403' ]);
