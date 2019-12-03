@@ -31,7 +31,7 @@ export class SecurityService {
   }
 
   hasRole(role: Role) {
-    return this.getUser().role === role;
+    return this.getUser() && this.getUser().role === role;
   }
 
   hasAnyRole(roles: Array<Role>) {

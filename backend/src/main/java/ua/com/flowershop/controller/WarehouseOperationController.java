@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ua.com.flowershop.entity.WarehouseOperationType;
 import ua.com.flowershop.exception.NotFoundException;
@@ -21,6 +22,7 @@ import java.util.List;
 import static org.springframework.http.HttpStatus.OK;
 import static ua.com.flowershop.util.Path.WAREHOUSE_OPERATIONS_PATH;
 
+@PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
 @RestController
 @RequestMapping(WAREHOUSE_OPERATIONS_PATH)
 public class WarehouseOperationController {

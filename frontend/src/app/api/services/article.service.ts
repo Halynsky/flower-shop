@@ -10,7 +10,7 @@ export class ArticleService {
 
   private readonly URL = `${API_URL}/articles`;
 
-  constructor(private  http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
   getAll(pagination: Pagination) {
     const params = new HttpParams({fromObject: pagination as any});

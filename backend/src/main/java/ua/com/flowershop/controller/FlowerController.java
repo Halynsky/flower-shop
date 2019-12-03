@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.JpaSort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ua.com.flowershop.model.FlowerModel;
 import ua.com.flowershop.projection.FlowerFullProjection;
@@ -35,6 +36,7 @@ public class FlowerController {
     @Autowired private FlowerService flowerService;
     @Autowired private FlowerRepository flowerRepository;
 
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @GetMapping("/forAdmin")
     public ResponseEntity<Page<FlowerFullProjection>> getAllForAdmin(@RequestParam(required = false) Long id,
                                                                      @RequestParam(required = false) String flowerNamePart,
@@ -100,18 +102,21 @@ public class FlowerController {
         return new ResponseEntity<>(flowerService.getFlowerFullById(id), OK);
     }
 
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody FlowerModel flower){
         flowerService.updateFlower(id ,flower);
         return new ResponseEntity<>(OK);
     }
 
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @PostMapping()
     public ResponseEntity<Void> create(@RequestBody FlowerModel flower){
         flowerService.createFlower(flower);
         return new ResponseEntity<>(OK);
     }
 
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         flowerRepository.deleteById(id);

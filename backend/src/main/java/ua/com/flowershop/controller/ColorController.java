@@ -2,6 +2,7 @@ package ua.com.flowershop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ua.com.flowershop.entity.Color;
 import ua.com.flowershop.exception.NotFoundException;
@@ -52,18 +53,21 @@ public class ColorController {
         return new ResponseEntity<>(color, OK);
     }
 
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @PostMapping
     public ResponseEntity<Void> add(@RequestBody ColorModel colorModel) {
         colorRepository.save(Color.of(colorModel));
         return new ResponseEntity<>(OK);
     }
 
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody ColorModel colorModel) {
         colorService.update(id, colorModel);
         return new ResponseEntity<>(OK);
     }
 
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         colorRepository.deleteById(id);

@@ -79,7 +79,7 @@
 <!--</mat-menu>-->
 
 <mat-menu #userMenu="matMenu" class="auth-menu">
-  <div class="profile-menu" (click)="onProfileButtonClick()">
+  <div class="profile-menu user-menu" (click)="onProfileButtonClick()" *ngIf="securityService.hasRole(Role.USER)">
     <button class="user-menu-button" routerLink="/my/profile">
       <i class="fas fa-users"></i>
       <span>Мій профіль</span>
@@ -98,6 +98,13 @@
     </button>
   </div>
 
+  <div class="profile-menu admin-menu" (click)="onProfileButtonClick()" *ngIf="securityService.hasRole(Role.ADMIN) || securityService.hasRole(Role.SUPPORT)">
+    <button class="user-menu-button" routerLink="/admin">
+      <i class="fas fa-columns"></i>
+      <span>Адмін Панель</span>
+    </button>
+  </div>
+
   <button class="user-menu-button" (click)="logout()">
     <i class="fas fa-sign-out-alt"></i>
     <span>Вийти</span>
@@ -105,7 +112,7 @@
 </mat-menu>
 
 <mat-menu #bucket="matMenu" class="bucket-menu">
-  <div class="default-bucket-info" *ngIf="bucketService.getBucket().length == 0">У вас ще немає покупок</div>
+  <div class="default-bucket-info" *ngIf="bucketService.getBucket().length == 0">Кошик порожній</div>
   <div *ngIf="bucketService.getBucket().length > 0">
     <div class="bucket-wrapper">
       <div class="bucket-flower-button" *ngFor="let bucketFlower of bucketService.getBucket()"><div class="name-in-bucket">{{bucketFlower.name}}</div><div class="size-in-bucket">{{bucketFlower.size}}</div><div class="price-in-bucket">{{(bucketFlower.price*bucketFlower.amount)/100}} грн</div></div>
@@ -116,9 +123,9 @@
 
 
 <mat-menu #mainNavigationMenu="matMenu" class="main-navigation-menu">
-  <a routerLink="/" mat-button routerLinkActive="active-link">Головна</a>
-  <a routerLink="/forum" mat-button routerLinkActive="active-link">Блог</a>
-  <a routerLink="/shop" mat-button routerLinkActive="active-link">Магазин</a>
-  <a routerLink="/contacts" mat-button routerLinkActive="active-link">Контакти</a>
+    <a routerLink="/" mat-button routerLinkActive="active-link">Головна</a>
+    <a routerLink="/forum" mat-button routerLinkActive="active-link">Блог</a>
+    <a routerLink="/shop" mat-button routerLinkActive="active-link">Магазин</a>
+    <a routerLink="/contacts" mat-button routerLinkActive="active-link">Контакти</a>
 </mat-menu>
 

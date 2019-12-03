@@ -11,6 +11,7 @@ import { Pagination } from "../../../api/models/Pagination";
 import { Table } from "primeng/table";
 import { TranslationService } from "../../../utils/translation.service";
 import { RestPage } from "../../../api/models/RestPage";
+import { FlowerTypeService } from "../../../api/services/flower-type.service";
 
 
 @Component({
@@ -39,7 +40,6 @@ export class FlowersComponent implements OnInit {
 
   dateFilters;
 
-
   sizeFilter: number[] = [1, 25];
 
   heightFilter: number[] = [15, 160];
@@ -49,7 +49,7 @@ export class FlowersComponent implements OnInit {
   imageUrl: string;
   isZoomed: boolean = false;
 
-  flowerTypes = [{value: 'Гладіолуси', label: 'Гладіолуси'}, {value: 'Тюльпани', label: 'Тюльпани'}, {value: 'Гіацинти', label: 'Гіацинти'}, {value: 'Лілії', label: 'Лілії'}];
+  flowerTypes = [];
 
   cols = [
     {field: 'id', header: 'Id', active: true},
@@ -89,11 +89,13 @@ export class FlowersComponent implements OnInit {
   ];
 
   constructor(private dataService: FlowerService,
+              private flowerTypeService: FlowerTypeService,
               private snackBarService: SnackBarService,
               private confirmationService: ConfirmationService,
               private router: Router,
               private translation: TranslationService,
               private route: ActivatedRoute) {
+    this.getTypes();
   }
 
   ngOnInit() {
@@ -106,7 +108,6 @@ export class FlowersComponent implements OnInit {
       error => this.snackBarService.showError(error.error.message)
     )
   }
-
 
   onLazyLoad(event: any) {
     this.loadDataLazy(ngPrimeFiltersToParams(event.filters), new Pagination().fromPrimeNg(event));
@@ -193,6 +194,14 @@ export class FlowersComponent implements OnInit {
 
   filterSelectedColumns() {
     this.selectedColumns = this.cols.filter(column => column.active);
+  }
+
+  getTypes() {
+    this.flowerTypeService.getAll().subscribe(flowerTypes => {
+      this.flowerTypes = flowerTypes.map(flowerType => { return {value: flowerType.name, label: flowerType.name}})
+    },
+      error => this.snackBarService.showError(getErrorMessage(error))
+    )
   }
 
 }

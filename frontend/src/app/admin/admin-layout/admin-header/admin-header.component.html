@@ -11,11 +11,11 @@
           (click)="sidebar = !sidebar;toggleSidebar.emit()"></button>
 </div>
 
-<!--<p-tieredMenu #menu [model]="userActions" [popup]="true"></p-tieredMenu>-->
-<!--<div class="header-navigation">-->
-<!--  <i class="pi pi-bell-o"></i>-->
-<!--  <div class="user-dropdown" (click)="menu.toggle($event)">-->
-<!--    <div class="logo" [ngStyle]="securityService.getLoginModel()?.iconUrl ? {'background-image':'url(' + securityService.getLoginModel().iconUrl + ')'} : {'background-image':'url(/assets/img/customer-logo-placeholder.png)'}"></div>-->
-<!--    <div class="name">{{securityService.getLoginModel()?.name}}</div>-->
-<!--  </div>-->
-<!--</div>-->
+<p-tieredMenu #menu [model]="userActions" [popup]="true"></p-tieredMenu>
+<div class="header-navigation">
+  <i class="pi pi-bell-o"></i>
+  <div class="user-dropdown" (click)="menu.toggle($event)">
+    <i class="fas fa-user-circle"></i>
+    <div class="name">{{securityService.getUser()?.name}}</div>
+  </div>
+</div>
