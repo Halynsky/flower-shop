@@ -35,6 +35,9 @@
             {{col.header}}
             <p-sortIcon [field]="'email'"></p-sortIcon>
           </th>
+          <th *ngSwitchCase="'phone'" [pSortableColumn]="'phone'">
+            {{col.header}}
+          </th>
           <th *ngSwitchCase="'role'" [pSortableColumn]="'role'">
             {{col.header}}
             <p-sortIcon [field]="'role'"></p-sortIcon>
@@ -43,6 +46,12 @@
             {{col.header}}
           </th>
           <th *ngSwitchCase="'isVirtual'">
+            {{col.header}}
+          </th>
+          <th *ngSwitchCase="'isActivated'">
+            {{col.header}}
+          </th>
+          <th *ngSwitchCase="'created'">
             {{col.header}}
           </th>
         </ng-container>
@@ -59,10 +68,16 @@
             <input pInputText type="text" (input)="dt.filter($event.target.value, 'emailPart', 'contains')"
                    class="table-filter">
           </div>
+          <div *ngSwitchCase="'phone'">
+            <input pInputText type="text" (input)="dt.filter($event.target.value, 'phonePart', 'contains')"
+                   class="table-filter">
+          </div>
 
           <div *ngSwitchCase="'role'"></div>
           <div *ngSwitchCase="'isEnabled'"></div>
           <div *ngSwitchCase="'isVirtual'"></div>
+          <div *ngSwitchCase="'isActivated'"></div>
+          <div *ngSwitchCase="'created'"></div>
 
         </th>
       </tr>
@@ -77,6 +92,9 @@
             {{rowData[col.field]}}
           </span>
           <span *ngSwitchCase="'email'">
+            {{rowData[col.field]}}
+          </span>
+          <span *ngSwitchCase="'phone'">
             {{rowData[col.field]}}
           </span>
           <span *ngSwitchCase="'role'">
@@ -101,6 +119,19 @@
                 <i class="material-icons">indeterminate_check_box</i>
               </div>
             </div>
+          </span>
+          <span *ngSwitchCase="'isActivated'">
+            <div class="true-false-ico">
+              <div *ngIf="rowData['isActivated']">
+                <i class="material-icons">check_box</i>
+              </div>
+              <div *ngIf="!rowData['isActivated']">
+                <i class="material-icons">indeterminate_check_box</i>
+              </div>
+            </div>
+          </span>
+          <span *ngSwitchCase="'created'">
+            {{rowData[col.field] | date }}
           </span>
         </td>
       </tr>

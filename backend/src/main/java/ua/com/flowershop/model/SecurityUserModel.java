@@ -12,20 +12,20 @@ import ua.com.flowershop.entity.User;
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserModel {
+public class SecurityUserModel {
     private Long id;
     private String email;
+    private User.Role role;
     private String name;
     private String phone;
-    private Boolean isEnabled;
 
-    public static UserModel of(User user) {
-        return new UserModel()
+    public static SecurityUserModel of(User user) {
+        return new SecurityUserModel()
             .setId(user.getId())
             .setEmail(user.getEmail())
+            .setRole(user.getRole())
             .setName(user.getName())
-            .setPhone(user.getPhone())
-            .setIsEnabled(user.getIsEnabled());
+            .setPhone(user.getPhone());
     }
 
 }

@@ -25,9 +25,12 @@ export class UsersComponent implements OnInit {
     {field: 'id', header: 'Id', active: true},
     {field: 'name', header: 'Імя', active: true},
     {field: 'email', header: 'Email', active: true},
+    {field: 'phone', header: 'Телефон', active: true},
     {field: 'role', header: 'Роль', active: true},
-    {field: 'isEnabled', header: 'Активний', active: true},
+    {field: 'isEnabled', header: 'Розблокований', active: true},
     {field: 'isVirtual', header: 'Віртуальний', active: true},
+    {field: 'isActivated', header: 'Активований', active: true},
+    {field: 'created', header: 'Дата реєстрації', active: true},
   ];
 
   selectedColumns = this.cols.filter(column => column.active);
@@ -45,9 +48,9 @@ export class UsersComponent implements OnInit {
       })
     },
     {
-      label: 'Видалити',
-      icon: 'fa fa-fw fa-trash',
-      command: (event) => this.confirmRemove(event)
+      label: 'Заблокувати',
+      icon: 'fas fa-ban',
+      command: (event) => this.confirmDisable(event)
     },
   ];
 
@@ -71,17 +74,17 @@ export class UsersComponent implements OnInit {
     this.loadDataLazy(ngPrimeFiltersToParams(event.filters), new Pagination().fromPrimeNg(event));
   }
 
-  confirmRemove(event) {
+  confirmDisable(event) {
     this.confirmationService.confirm({
-      message: "Ви впевнені що хочете видалити данного 'Користувача'?",
+      message: "Ви впевнені що хочете заблокувати данного 'Користувача'?",
       accept: () => {
-        this.remove(event)
+        this.disable(event)
       }
     });
   }
 
-  remove(event) {
-    this.dataService.delete(this.selected.id).subscribe(
+  disable(event) {
+    this.dataService.updateDisabled(this.selected.id, true).subscribe(
       response => {
         this.snackBarService.showSuccess("'Користувача' успішно видалено");
         this.refresh();

@@ -33,6 +33,7 @@ import { FlowerItemComponent } from "./types/flowers/flower-item/flower-item.com
 import { PipesModule } from "../pipes/pipes.module";
 import { UniqueValidator } from "../validators/unique-validator.directive";
 import { RangePairValidator } from "../validators/range-pair-validator.directive";
+import { UserItemComponent } from "./users/user-item/user-item.component";
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import { RangePairValidator } from "../validators/range-pair-validator.directive
     AdminHeaderComponent,
     AdminAccordionComponent,
     UsersComponent,
+    UserItemComponent,
     AdminHeaderComponent,
     WarehouseOperationsComponent,
     BlogComponent,

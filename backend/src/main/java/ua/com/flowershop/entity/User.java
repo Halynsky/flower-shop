@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Getter
@@ -28,6 +29,8 @@ public class User {
     private String email;
     @JsonIgnore
     private String password;
+    @Column(unique = true)
+    private String phone;
     @Column(columnDefinition = "boolean default false")
     private Boolean isVirtual = false;
     @Column(columnDefinition = "boolean default true")
@@ -37,6 +40,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
+    @Column(columnDefinition = "timestamp default timezone('utc'::text, now())")
+    private LocalDateTime created = LocalDateTime.now();
     @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
     private Set<Order> orders;
 

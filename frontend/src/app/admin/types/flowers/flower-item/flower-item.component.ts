@@ -9,7 +9,6 @@ import { FlowerService } from "../../../../api/services/flower.service";
 import { FlowerType } from "../../../../api/models/FlowerType";
 import { ColorService } from "../../../../api/services/color.service";
 import { Color } from "../../../../api/models/Color";
-import { TranslationService } from "../../../../utils/translation.service";
 import { DatePipe } from "@angular/common";
 import { SizeService } from "../../../../api/services/size.service";
 import { Size } from "../../../../api/models/Size";
@@ -52,7 +51,6 @@ export class FlowerItemComponent implements OnInit {
               private flowerTypeService: FlowerTypeService,
               private sizeService: SizeService,
               private colorService: ColorService,
-              public translation: TranslationService,
               public datepipe: DatePipe) {
     this.route.params.subscribe(
       params => {

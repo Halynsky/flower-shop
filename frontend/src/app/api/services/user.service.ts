@@ -4,8 +4,9 @@ import { Article } from "../models/Article";
 import { RestPage } from "../models/RestPage";
 import { Pagination } from "../models/Pagination";
 import { API_URL } from "../../utils/Costants";
-import { UserForAdmin } from "../models/User";
+import { User, UserForAdmin } from "../models/User";
 import { Flower } from "../models/Flower";
+import { Observable } from "rxjs";
 
 @Injectable({providedIn: 'root'})
 export class UserService {
@@ -28,9 +29,20 @@ export class UserService {
     return this.http.get<UserForAdmin>(`${this.URL}/${id}`);
   }
 
-  delete(id: number) {
-    return this.http.delete(`${this.URL}/${id}`);
+  create(user: UserForAdmin) {
+    return this.http.post(`${this.URL}`, user);
   }
 
+  update(id: number, user: UserForAdmin) {
+    return this.http.put(`${this.URL}/${id}`, user);
+  }
+
+  updateDisabled(id: number, disabled: boolean) {
+    return this.http.delete(`${this.URL}/${id}/disabled/?disabled=${disabled}`);
+  }
+
+  isEmailFree(email: string): Observable<any> {
+    return this.http.get(`${this.URL}/isEmailFree/?email=${email}`, {responseType: 'text'});
+  }
 
 }

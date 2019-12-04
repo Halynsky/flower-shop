@@ -98,6 +98,6 @@ INSERT INTO werehouse_operations (amount, flower_size_id, date, werehouse_operat
 INSERT INTO werehouse_operations (amount, flower_size_id, date, werehouse_operation_type_id) VALUES (161, 8, '2019-07-12 13:26:12',(SELECT id FROM werehouse_operation_types WHERE operation_type = 'GIFT'));
 INSERT INTO werehouse_operations (amount, flower_size_id, date, werehouse_operation_type_id) VALUES (133, 9, '2019-07-15 22:26:12', (SELECT id FROM werehouse_operation_types WHERE operation_type = 'GIFT'));
 
-INSERT INTO users (email, password, name, role, is_enabled, is_virtual, is_activated) VALUES ('admin@gmail.com', '$2a$10$Sl0X5/wPiIi6LxdkBoLq1O5/vonmz/wwr7zb3XKyMNUqszBtM/ynO', 'Admin', 'ADMIN', true, false, true);
-INSERT INTO users (email, password, name, role, is_enabled, is_virtual, is_activated) VALUES ('support@gmail.com', '$2a$10$Sl0X5/wPiIi6LxdkBoLq1O5/vonmz/wwr7zb3XKyMNUqszBtM/ynO', 'Support', 'SUPPORT', true, false, true);
-INSERT INTO users (email, password, name, role, is_enabled, is_virtual, is_activated) VALUES ('user@gmail.com', '$2a$10$Sl0X5/wPiIi6LxdkBoLq1O5/vonmz/wwr7zb3XKyMNUqszBtM/ynO', 'User', 'USER', true, false, true);
+INSERT INTO users (email, phone, password, name, role, is_enabled, is_virtual, is_activated) VALUES ('admin@gmail.com', '0501111111', '$2a$10$Sl0X5/wPiIi6LxdkBoLq1O5/vonmz/wwr7zb3XKyMNUqszBtM/ynO', 'Admin', 'ADMIN', true, false, true);
+INSERT INTO users (email, phone, password, name, role, is_enabled, is_virtual, is_activated) VALUES ('support@gmail.com', '0502222222', '$2a$10$Sl0X5/wPiIi6LxdkBoLq1O5/vonmz/wwr7zb3XKyMNUqszBtM/ynO', 'Support', 'SUPPORT', true, false, true);
+INSERT INTO users (email, phone, password, name, role, is_enabled, is_virtual, is_activated) VALUES ('user@gmail.com', '0503333333', '$2a$10$Sl0X5/wPiIi6LxdkBoLq1O5/vonmz/wwr7zb3XKyMNUqszBtM/ynO', 'User', 'USER', true, false, true);

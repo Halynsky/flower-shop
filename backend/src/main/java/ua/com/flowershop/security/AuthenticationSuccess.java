@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
-import ua.com.flowershop.model.UserModel;
+import ua.com.flowershop.model.SecurityUserModel;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +20,6 @@ public class AuthenticationSuccess implements AuthenticationSuccessHandler {
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
-        objectMapper.writeValue(httpServletResponse.getWriter(), UserModel.of(securityService.getUser()));
+        objectMapper.writeValue(httpServletResponse.getWriter(), SecurityUserModel.of(securityService.getUser()));
     }
 }
