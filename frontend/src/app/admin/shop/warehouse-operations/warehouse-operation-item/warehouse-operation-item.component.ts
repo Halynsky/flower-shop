@@ -10,6 +10,9 @@ import { FlowerSize } from "../../../../api/models/FlowerSize";
 import { WarehouseOperationType } from "../../../../api/models/WarehouseOperationType";
 import { EnumToObjectsPipe } from "../../../../pipes/enum-to-objects";
 import { TranslationService } from "../../../../utils/translation.service";
+import { Flower, FlowerFull } from "../../../../api/models/Flower";
+import { Size } from "../../../../api/models/Size";
+import { FlowerService } from "../../../../api/services/flower.service";
 
 @Component({
   selector: 'warehouse-operation-item',
@@ -22,38 +25,40 @@ export class WarehouseOperationItemComponent {
   mode: ItemSaveMode = ItemSaveMode.new;
 
   item: WarehouseOperation = new WarehouseOperation();
-  itemFlowerSize = new FlowerSize();
+  itemFlowerSize: FlowerSize = new FlowerSize();
   itemWarehouseOperationType = new WarehouseOperationType();
 
   directionOptions = [];
   operationTypes = [];
+
+  flowersOptions;
 
   constructor(public dataService: WarehouseOperationService,
               private snackBarService: SnackBarService,
               private router: Router,
               private route: ActivatedRoute,
               private translation: TranslationService,
-              private enumToObjectsPipe: EnumToObjectsPipe) {
+              private enumToObjectsPipe: EnumToObjectsPipe,
+              private flowerService: FlowerService) {
     this.route.params.subscribe(
       params => {
         this.mode = params['mode'];
 
         if (this.mode == ItemSaveMode.edit) {
-          this.route.queryParams.subscribe(queryParams  => {
+          this.route.queryParams.subscribe(queryParams => {
             if (queryParams['id'])
-              this.getItem(queryParams['id'])
+              this.getItem(queryParams['id']);
           })
         }
 
 
       }
-    )
+    );
 
     this.directionOptions = enumToObjectsPipe.transform(WarehouseOperationType.Direction);
     this.directionOptions.forEach(e => e.label = translation.text[e.label]);
     this.operationTypes = enumToObjectsPipe.transform(WarehouseOperationType.OperationType);
     this.operationTypes.forEach(e => e.label = translation.text[e.label]);
-
   }
 
   getItem(id) {
@@ -67,7 +72,14 @@ export class WarehouseOperationItemComponent {
     )
   }
 
-  onSubmit() {
+  getFlowersFull() {
+    this.flowerService.getAllFlowerSizeFull().subscribe(item => {
+        console.log(item)
+      },
+      error => this.snackBarService.showError(getErrorMessage(error)))
+  }
 
+  onSubmit() {
+    this.getFlowersFull();
   }
 }

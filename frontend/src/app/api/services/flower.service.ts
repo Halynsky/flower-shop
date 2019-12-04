@@ -32,6 +32,10 @@ export class FlowerService {
     return this.http.get<Flower[]>(`${this.URL}`);
   }
 
+  getAllFlowerSizeFull() {
+    return this.http.get<FlowerFull[]>(`${this.URL}/flowerSize`);
+  }
+
   getById(id: number) {
     return this.http.get<FlowerFull>(`${this.URL}/${id}`);
   }

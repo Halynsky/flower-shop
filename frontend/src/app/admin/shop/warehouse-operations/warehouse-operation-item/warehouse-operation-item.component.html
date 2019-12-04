@@ -16,6 +16,7 @@
         </div>
         <div class="ui-grid-col-2">
           <input
+            class="input-element"
             pInputText
             id="amount"
             name="amount"
@@ -32,7 +33,7 @@
           <label for="operation">Операція</label>
         </div>
         <div class="ui-grid-col-2">
-          <p-dropdown [options]="operationTypes" [ngModelOptions]="{standalone: true}" [(ngModel)]="itemWarehouseOperationType.operationType"
+          <p-dropdown class="input-element" [options]="operationTypes" [ngModelOptions]="{standalone: true}" [(ngModel)]="itemWarehouseOperationType.operationType"
                       placeholder="Оберіть операцію" id="operation"></p-dropdown>
         </div>
       </div>
@@ -42,11 +43,10 @@
           <label for="direction">Прихід/Відхід</label>
         </div>
         <div class="ui-grid-col-2">
-          <p-dropdown [options]="directionOptions" [ngModelOptions]="{standalone: true}" [(ngModel)]="itemWarehouseOperationType.direction"
+          <p-dropdown class="input-element" [options]="directionOptions" [ngModelOptions]="{standalone: true}" [(ngModel)]="itemWarehouseOperationType.direction"
                       placeholder="Оберіть напрям" id="direction"></p-dropdown>
         </div>
       </div>
-
 
 
     </div>

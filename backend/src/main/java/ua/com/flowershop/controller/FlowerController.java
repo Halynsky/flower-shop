@@ -10,10 +10,9 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.com.flowershop.model.FlowerModel;
-import ua.com.flowershop.projection.FlowerFullProjection;
-import ua.com.flowershop.projection.FlowerProjection;
-import ua.com.flowershop.projection.FlowerShortProjection;
+import ua.com.flowershop.projection.*;
 import ua.com.flowershop.repository.FlowerRepository;
+import ua.com.flowershop.repository.FlowerSizeRepository;
 import ua.com.flowershop.service.FlowerService;
 import ua.com.flowershop.util.HibernateUtil;
 import ua.com.flowershop.util.annotation.PageableSwagger;
@@ -34,6 +33,7 @@ public class FlowerController {
 
     @Autowired private FlowerService flowerService;
     @Autowired private FlowerRepository flowerRepository;
+    @Autowired private FlowerSizeRepository flowerSizeRepository;
 
     @GetMapping("/forAdmin")
     public ResponseEntity<Page<FlowerFullProjection>> getAllForAdmin(@RequestParam(required = false) Long id,
@@ -58,6 +58,11 @@ public class FlowerController {
     @GetMapping
     public ResponseEntity<List<FlowerProjection>> getAll() {
         return new ResponseEntity<>(flowerRepository.findProjectedBy(), OK);
+    }
+
+    @GetMapping("/flowerSize")
+    public ResponseEntity<List<FlowerSizeFullProjection>> getAllFlowerSize() {
+        return new ResponseEntity<>(flowerSizeRepository.findProjectedBy(), OK);
     }
 
     @GetMapping("/isNameOriginalFree")
