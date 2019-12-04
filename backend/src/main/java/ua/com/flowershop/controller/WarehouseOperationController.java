@@ -6,12 +6,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ua.com.flowershop.entity.WarehouseOperationType;
 import ua.com.flowershop.exception.NotFoundException;
 import ua.com.flowershop.model.WarehouseOperationModel;
 import ua.com.flowershop.projection.WarehouseOperationProjection;
+import ua.com.flowershop.projection.WarehouseOperationTypeProjection;
 import ua.com.flowershop.repository.WarehouseOperationRepository;
+import ua.com.flowershop.repository.WarehouseOperationTypeRepository;
 import ua.com.flowershop.service.WarehouseOperationService;
 import ua.com.flowershop.util.annotation.PageableSwagger;
 
@@ -21,11 +24,13 @@ import java.util.List;
 import static org.springframework.http.HttpStatus.OK;
 import static ua.com.flowershop.util.Path.WAREHOUSE_OPERATIONS_PATH;
 
+@PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
 @RestController
 @RequestMapping(WAREHOUSE_OPERATIONS_PATH)
 public class WarehouseOperationController {
 
     @Autowired private WarehouseOperationRepository warehouseOperationRepository;
+    @Autowired private WarehouseOperationTypeRepository warehouseOperationTypeRepository;
     @Autowired private WarehouseOperationService warehouseOperationService;
 
     @PageableSwagger
@@ -44,6 +49,11 @@ public class WarehouseOperationController {
         Page<WarehouseOperationProjection> page = warehouseOperationRepository.findProjectedByFilters(id, flowerTypeNamePart, flowerNamePart, flowerSizeNamePart,
             amountFrom, amountTo, dateFrom, dateTo, operationTypes, directions, pageRequest);
         return new ResponseEntity<>(page, OK);
+    }
+
+    @GetMapping("/warehouseOperationType")
+    public ResponseEntity<WarehouseOperationTypeProjection> getOperationTypeByOperationType(@RequestParam WarehouseOperationType.OperationType operationType) {
+        return new ResponseEntity<>(warehouseOperationTypeRepository.findPrjectedByOperationType(operationType), OK);
     }
 
     @GetMapping("/{id}")

@@ -8,6 +8,7 @@ import { AuthService } from "../../api/services/auth.service";
 import { SnackBarService } from "../../services/snak-bar.service";
 import { UserCabinetService } from "../../services/user-cabinet.service";
 import { Router } from "@angular/router";
+import { Role } from "../../models/Role";
 
 @Component({
   selector: 'layout-header',
@@ -16,6 +17,8 @@ import { Router } from "@angular/router";
 })
 
 export class HeaderComponent {
+
+  Role = Role;
 
   constructor(public securityService: SecurityService,
               public bucketService: BucketService,

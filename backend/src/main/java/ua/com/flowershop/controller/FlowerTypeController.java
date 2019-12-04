@@ -2,6 +2,7 @@ package ua.com.flowershop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ua.com.flowershop.entity.FlowerType;
 import ua.com.flowershop.model.FlowerTypeModel;
@@ -48,18 +49,21 @@ public class FlowerTypeController {
         return new ResponseEntity<>(flowerTypeRepository.findProjectedByNameStartingWith(name), OK);
     }
 
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @PostMapping
     public ResponseEntity<Void> add(@RequestBody FlowerTypeModel flowerTypeModel) {
         flowerTypeRepository.save(FlowerType.of(flowerTypeModel));
         return new ResponseEntity<>(OK);
     }
 
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody FlowerTypeModel flowerTypeModel) {
         flowerTypeService.update(id, flowerTypeModel);
         return new ResponseEntity<>(OK);
     }
 
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         flowerTypeRepository.deleteById(id);

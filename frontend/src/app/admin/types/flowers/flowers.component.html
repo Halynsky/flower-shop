@@ -167,22 +167,22 @@
           </span>
           <span *ngSwitchCase="'isNew'">
             <div class="true-false-ico">
-              <div *ngIf="rowData['isNew']"><i class="material-icons">
-                check_box
-              </i></div>
-              <div *ngIf="!rowData['isNew']"><i class="material-icons">
-                check_box_outline_blank
-              </i></div>
+              <div *ngIf="rowData['isNew']">
+                <i class="material-icons">check_box</i>
+              </div>
+              <div *ngIf="!rowData['isNew']">
+                <i class="material-icons">indeterminate_check_box</i>
+              </div>
             </div>
           </span>
           <span *ngSwitchCase="'isPopular'">
             <div class="true-false-ico">
-              <div *ngIf="rowData['isPopular']"><i class="material-icons">
-                check_box
-              </i></div>
-              <div *ngIf="!rowData['isPopular']"><i class="material-icons">
-                check_box_outline_blank
-              </i></div>
+              <div *ngIf="rowData['isPopular']">
+                <i class="material-icons">check_box</i>
+              </div>
+              <div *ngIf="!rowData['isPopular']">
+                <i class="material-icons">indeterminate_check_box</i>
+              </div>
             </div>
           </span>
           <span *ngSwitchCase="'popularity'">

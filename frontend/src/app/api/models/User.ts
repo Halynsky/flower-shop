@@ -1,11 +1,16 @@
 import { Role } from "../../models/Role";
 
 export class User {
+  id: any;
   name: string;
   email: string;
   password: string;
-  // isVirtual: boolean;
-  // isEnabled;
+  phone: string;
   role: Role;
-  // orders: [];
+}
+
+export class UserForAdmin extends User {
+  isVirtual: boolean = true;
+  isEnabled: boolean = true;
+  isActivated: boolean = true;
 }

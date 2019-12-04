@@ -34,6 +34,7 @@ import { PipesModule } from "../pipes/pipes.module";
 import { UniqueValidator } from "../validators/unique-validator.directive";
 import { RangePairValidator } from "../validators/range-pair-validator.directive";
 import { WarehouseOperationItemComponent } from "./shop/warehouse-operations/warehouse-operation-item/warehouse-operation-item.component";
+import { UserItemComponent } from "./users/user-item/user-item.component";
 
 
 @NgModule({
@@ -57,7 +58,8 @@ import { WarehouseOperationItemComponent } from "./shop/warehouse-operations/war
     ColorItemComponent,
     UniqueValidator,
     RangePairValidator,
-    WarehouseOperationItemComponent
+    WarehouseOperationItemComponent,
+    UserItemComponent
   ],
   imports: [
     routing,

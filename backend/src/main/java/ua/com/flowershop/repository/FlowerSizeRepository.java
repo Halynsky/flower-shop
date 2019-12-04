@@ -16,7 +16,7 @@ public interface FlowerSizeRepository extends JpaRepository<FlowerSize, Long> {
         "WHERE fs.flower.id = :id")
     Integer findMinPriceByFlowerId(Long id);
 
-    List<FlowerSizeInFlowerProjection> findProjectedByFlowerId(Long id);
+    List<FlowerSizeFullProjection> findProjectedByFlowerId(Long id);
 
     List<FlowerSizeFullProjection> findProjectedBy();
 }

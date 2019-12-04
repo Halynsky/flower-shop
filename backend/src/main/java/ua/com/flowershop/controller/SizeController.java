@@ -2,6 +2,7 @@ package ua.com.flowershop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ua.com.flowershop.entity.Size;
 import ua.com.flowershop.exception.NotFoundException;
@@ -24,6 +25,7 @@ public class SizeController {
     @Autowired private SizeRepository sizeRepository;
     @Autowired private SizeService sizeService;
 
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @GetMapping("/forAdmin")
     public ResponseEntity<List<SizeAdminProjection>> getAllForAdmin() {
         List<SizeAdminProjection> colors = sizeRepository.findForAdminProjectedBy();
@@ -46,18 +48,21 @@ public class SizeController {
         return new ResponseEntity<>(sizeService.isNameFree(name) ? OK : CONFLICT);
     }
 
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @PostMapping
     public ResponseEntity<Void> add(@RequestBody SizeModel sizeModel) {
         sizeRepository.save(Size.of(sizeModel));
         return new ResponseEntity<>(OK);
     }
 
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody SizeModel sizeModel) {
         sizeService.update(id, sizeModel);
         return new ResponseEntity<>(OK);
     }
 
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         sizeRepository.deleteById(id);

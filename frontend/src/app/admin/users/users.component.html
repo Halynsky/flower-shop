@@ -1,4 +1,143 @@
-<p>
-  users works!
-</p>
+<div class="panel-header">
+  <h1>Користувачі</h1>
+  <div class="buttons">
+    <button pButton [routerLink]="['item', ItemSaveMode.new]" icon="pi pi-plus" class="ui-button-success"
+            label="&nbsp;&nbsp;Додати"></button>
+    <button pButton (click)="refresh()" icon="pi pi-refresh" label="&nbsp;&nbsp;Оновити"></button>
+  </div>
+</div>
+
+<div class="panel-content">
+  <p-table #dt [value]="items.content" sortField="id" [paginator]="true" [rows]="10"
+           [tableStyle]="{'table-layout':'auto'}" [contextMenu]="cm" [(contextMenuSelection)]="selected"
+           [customSort]="true" (sortFunction)="sortData($event)" dataKey="id" rowExpandMode="single" [columns]="selectedColumns"
+           (onLazyLoad)="onLazyLoad($event)" [lazy]="true" [totalRecords]="items.totalElements">
+    <ng-template pTemplate="caption">
+      <div style="text-align:left">
+        <p-multiSelect [options]="cols" [(ngModel)]="selectedColumns" optionLabel="header"
+                       selectedItemsLabel="{0} колонок обрано" [style]="{minWidth: '300px'}" defaultLabel="Оберіть колонки"
+                       (onChange)="onColumnSelect($event)"></p-multiSelect>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+
+        <ng-container *ngFor="let col of selectedColumns" [ngSwitch]="col.field">
+          <th *ngSwitchCase="'id'" [pSortableColumn]="'id'">
+            {{col.header}}
+            <p-sortIcon [field]="'id'"></p-sortIcon>
+          </th>
+          <th *ngSwitchCase="'name'" [pSortableColumn]="'name'">
+            {{col.header}}
+            <p-sortIcon [field]="'name'"></p-sortIcon>
+          </th>
+          <th *ngSwitchCase="'email'" [pSortableColumn]="'email'">
+            {{col.header}}
+            <p-sortIcon [field]="'email'"></p-sortIcon>
+          </th>
+          <th *ngSwitchCase="'phone'" [pSortableColumn]="'phone'">
+            {{col.header}}
+          </th>
+          <th *ngSwitchCase="'role'" [pSortableColumn]="'role'">
+            {{col.header}}
+            <p-sortIcon [field]="'role'"></p-sortIcon>
+          </th>
+          <th *ngSwitchCase="'isEnabled'">
+            {{col.header}}
+          </th>
+          <th *ngSwitchCase="'isVirtual'">
+            {{col.header}}
+          </th>
+          <th *ngSwitchCase="'isActivated'">
+            {{col.header}}
+          </th>
+          <th *ngSwitchCase="'created'">
+            {{col.header}}
+          </th>
+        </ng-container>
+
+      </tr>
+      <tr>
+        <th *ngFor="let col of selectedColumns" [ngSwitch]="col.field">
+          <input *ngSwitchCase="'id'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'equals')" class="table-filter">
+          <div *ngSwitchCase="'name'">
+            <input pInputText type="text" (input)="dt.filter($event.target.value, 'namePart', 'contains')"
+                   class="table-filter">
+          </div>
+          <div *ngSwitchCase="'email'">
+            <input pInputText type="text" (input)="dt.filter($event.target.value, 'emailPart', 'contains')"
+                   class="table-filter">
+          </div>
+          <div *ngSwitchCase="'phone'">
+            <input pInputText type="text" (input)="dt.filter($event.target.value, 'phonePart', 'contains')"
+                   class="table-filter">
+          </div>
+
+          <div *ngSwitchCase="'role'"></div>
+          <div *ngSwitchCase="'isEnabled'"></div>
+          <div *ngSwitchCase="'isVirtual'"></div>
+          <div *ngSwitchCase="'isActivated'"></div>
+          <div *ngSwitchCase="'created'"></div>
+
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr [pContextMenuRow]="rowData">
+        <td *ngFor="let col of selectedColumns" [ngSwitch]="col.field">
+          <span *ngSwitchCase="'id'">
+            {{rowData[col.field]}}
+          </span>
+          <span *ngSwitchCase="'name'">
+            {{rowData[col.field]}}
+          </span>
+          <span *ngSwitchCase="'email'">
+            {{rowData[col.field]}}
+          </span>
+          <span *ngSwitchCase="'phone'">
+            {{rowData[col.field]}}
+          </span>
+          <span *ngSwitchCase="'role'">
+            {{rowData[col.field]}}
+          </span>
+          <span *ngSwitchCase="'isEnabled'">
+            <div class="true-false-ico">
+              <div *ngIf="rowData['isEnabled']">
+                <i class="material-icons">check_box</i>
+              </div>
+              <div *ngIf="!rowData['isEnabled']">
+                <i class="material-icons">indeterminate_check_box</i>
+              </div>
+            </div>
+          </span>
+          <span *ngSwitchCase="'isVirtual'">
+            <div class="true-false-ico">
+              <div *ngIf="rowData['isVirtual']">
+                <i class="material-icons">check_box</i>
+              </div>
+              <div *ngIf="!rowData['isVirtual']">
+                <i class="material-icons">indeterminate_check_box</i>
+              </div>
+            </div>
+          </span>
+          <span *ngSwitchCase="'isActivated'">
+            <div class="true-false-ico">
+              <div *ngIf="rowData['isActivated']">
+                <i class="material-icons">check_box</i>
+              </div>
+              <div *ngIf="!rowData['isActivated']">
+                <i class="material-icons">indeterminate_check_box</i>
+              </div>
+            </div>
+          </span>
+          <span *ngSwitchCase="'created'">
+            {{rowData[col.field] | date }}
+          </span>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-contextMenu #cm [model]="menuItems"></p-contextMenu>
 

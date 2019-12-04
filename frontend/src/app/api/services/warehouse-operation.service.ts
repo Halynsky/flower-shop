@@ -3,6 +3,8 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { API_URL } from "../../utils/Costants";
 import { RestPage } from "../models/RestPage";
 import { WarehouseOperation } from "../models/WarehouseOperation";
+import { WarehouseOperationType } from "../models/WarehouseOperationType";
+import OperationType = WarehouseOperationType.OperationType;
 
 @Injectable({providedIn: 'root'})
 export class WarehouseOperationService {
@@ -18,6 +20,10 @@ export class WarehouseOperationService {
 
   getById(id: number) {
     return this.http.get<WarehouseOperation>(`${this.URL}/${id}`);
+  }
+
+  getWarehouseOperationType(operationType: OperationType) {
+    return this.http.get<WarehouseOperationType>(`${this.URL}/warehouseOperationType/?operationType=${operationType}`)
   }
 
   add(warehouseOperation: WarehouseOperation) {

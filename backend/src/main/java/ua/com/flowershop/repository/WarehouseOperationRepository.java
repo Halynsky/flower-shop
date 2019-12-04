@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import ua.com.flowershop.entity.WarehouseOperation;
 import ua.com.flowershop.entity.WarehouseOperationType;
 import ua.com.flowershop.projection.WarehouseOperationProjection;
+import ua.com.flowershop.projection.WarehouseOperationTypeProjection;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -35,5 +36,7 @@ public interface WarehouseOperationRepository extends JpaRepository<WarehouseOpe
                                                               List<WarehouseOperationType.OperationType> operationTypes,
                                                               List<WarehouseOperationType.Direction> directions,
                                                               Pageable pageable);
+
+
 
 }

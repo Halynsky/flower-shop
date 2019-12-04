@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.com.flowershop.entity.FlowerSize;
 import ua.com.flowershop.entity.WarehouseOperation;
+import ua.com.flowershop.entity.WarehouseOperationType;
 import ua.com.flowershop.model.WarehouseOperationModel;
 import ua.com.flowershop.repository.FlowerSizeRepository;
 import ua.com.flowershop.repository.WarehouseOperationRepository;
+import ua.com.flowershop.repository.WarehouseOperationTypeRepository;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -14,28 +16,32 @@ import javax.persistence.EntityNotFoundException;
 public class WarehouseOperationService {
 
     @Autowired private WarehouseOperationRepository warehouseOperationRepository;
+    @Autowired private WarehouseOperationTypeRepository warehouseOperationTypeRepository;
     @Autowired private FlowerSizeRepository flowerSizeRepository;
 
     public void update(Long id, WarehouseOperationModel warehouseOperationModel) {
         WarehouseOperation warehouseOperation = warehouseOperationRepository.findById(id)
             .orElseThrow(EntityNotFoundException::new);
 
-        FlowerSize flowerSize = flowerSizeRepository.findById(warehouseOperationModel.getFlowerSizeId())
+        FlowerSize flowerSize = flowerSizeRepository.findById(warehouseOperationModel.getFlowerSize().getId())
             .orElseThrow(EntityNotFoundException::new);
 
         warehouseOperationRepository.save(warehouseOperation
             .setAmount(warehouseOperationModel.getAmount())
-            .setFlowerSize(flowerSize));
+            .setFlowerSize(flowerSize)).setWarehouseOperationType(warehouseOperationModel.getWarehouseOperationType());
 
     }
 
     public void save(WarehouseOperationModel warehouseOperationModel) {
-        FlowerSize flowerSize = flowerSizeRepository.findById(warehouseOperationModel.getFlowerSizeId())
+
+        FlowerSize flowerSize = flowerSizeRepository.findById(warehouseOperationModel.getFlowerSize().getId())
+            .orElseThrow(EntityNotFoundException::new);
+        WarehouseOperationType warehouseOperationType = warehouseOperationTypeRepository.findById(warehouseOperationModel.getWarehouseOperationType().getId())
             .orElseThrow(EntityNotFoundException::new);
 
         warehouseOperationRepository.save(new WarehouseOperation()
             .setAmount(warehouseOperationModel.getAmount())
-            .setFlowerSize(flowerSize));
+            .setFlowerSize(flowerSize)).setWarehouseOperationType(warehouseOperationType);
     }
 
 }

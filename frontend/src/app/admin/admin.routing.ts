@@ -14,6 +14,7 @@ import { ColorItemComponent } from "./types/colors/color-item/color-item.compone
 import { FlowerTypeItemComponent } from "./types/flower-types/flower-type-item/flower-type-item.component";
 import { FlowerItemComponent } from "./types/flowers/flower-item/flower-item.component";
 import { WarehouseOperationItemComponent } from "./shop/warehouse-operations/warehouse-operation-item/warehouse-operation-item.component";
+import { UserItemComponent } from "./users/user-item/user-item.component";
 
 
 const routes: Routes = [
@@ -22,6 +23,7 @@ const routes: Routes = [
     children: [
       {path: '', redirectTo: 'users', pathMatch: 'full'},
       {path: 'users', component: UsersComponent},
+      {path: 'users/item/:mode', component: UserItemComponent},
       {path: 'shop/orders', component: OrdersComponent},
       {path: 'shop/warehouse-operations', component: WarehouseOperationsComponent},
       {path: 'shop/warehouse-operations/item/:mode', component: WarehouseOperationItemComponent},

@@ -16,6 +16,7 @@
         </div>
         <div class="ui-grid-col-2">
           <input
+            required
             class="input-element"
             pInputText
             id="amount"
@@ -33,8 +34,10 @@
           <label for="operation">Операція</label>
         </div>
         <div class="ui-grid-col-2">
-          <p-dropdown class="input-element" [options]="operationTypes" [ngModelOptions]="{standalone: true}" [(ngModel)]="itemWarehouseOperationType.operationType"
-                      placeholder="Оберіть операцію" id="operation"></p-dropdown>
+          <p-dropdown class="input-element" required [options]="operationTypes" [ngModelOptions]="{standalone: true}"
+                      [(ngModel)]="itemWarehouseOperationType.operationType"
+                      placeholder="Оберіть операцію" id="operation"
+                      (ngModelChange)="getWarehouseOperationType(itemWarehouseOperationType.operationType)"></p-dropdown>
         </div>
       </div>
 
@@ -43,8 +46,29 @@
           <label for="direction">Прихід/Відхід</label>
         </div>
         <div class="ui-grid-col-2">
-          <p-dropdown class="input-element" [options]="directionOptions" [ngModelOptions]="{standalone: true}" [(ngModel)]="itemWarehouseOperationType.direction"
-                      placeholder="Оберіть напрям" id="direction"></p-dropdown>
+          <input class="input-element" required="true" pInputText name="direction" disabled [(ngModel)]="directionOption" id="direction"/>
+        </div>
+      </div>
+
+      <div class="prime-form-group">
+        <div class="ui-grid-col-2">
+          <label for="flower">Квітка</label>
+        </div>
+        <div class="ui-grid-col-2">
+          <p-dropdown class="input-element" required="true" [options]="flowersOptions" [ngModelOptions]="{standalone: true}" [(ngModel)]="flowerChosen"
+                      optionLabel="name"
+                      placeholder="Оберіть квітку" id="flower" (ngModelChange)="getFlowersSizeById(flowerChosen.id)"></p-dropdown>
+        </div>
+      </div>
+
+      <div class="prime-form-group" *ngIf="isFlowerChosen">
+        <div class="ui-grid-col-2">
+          <label for="size">Розмір</label>
+        </div>
+        <div class="ui-grid-col-2">
+          <p-dropdown class="input-element" required="true" [options]="sizeOptions" [ngModelOptions]="{standalone: true}" [(ngModel)]="itemFlowerSize"
+                      optionLabel="size.name"
+                      placeholder="Оберіть розмір" id="size"></p-dropdown>
         </div>
       </div>
 
