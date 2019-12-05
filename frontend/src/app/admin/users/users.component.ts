@@ -38,29 +38,42 @@ export class UsersComponent implements OnInit {
   items: RestPage<UserForAdmin> = new RestPage<UserForAdmin>();
   selected: UserForAdmin;
 
-  menuItems = [
-    {
-      label: 'Редагувати',
-      icon: 'fa fa-fw fa-pencil',
-      command: () => this.router.navigate(['item', ItemSaveMode.edit], {
-        relativeTo: this.route,
-        queryParams: {id: this.selected.id}
-      })
-    },
-    {
-      label: 'Заблокувати',
-      icon: 'fas fa-ban',
-      command: (event) => this.confirmDisable(event)
-    },
-  ];
+  menuItems = [];
 
   constructor(private dataService: UserService,
               private confirmationService: ConfirmationService,
               private snackBarService: SnackBarService,
               private router: Router,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute) {
+    this.initContextMenu();
+  }
 
   ngOnInit() {
+  }
+
+  initContextMenu() {
+    this.menuItems = [
+      {
+        label: 'Редагувати',
+        icon: 'fa fa-fw fa-pencil',
+        command: () => this.router.navigate(['item', ItemSaveMode.edit], {
+          relativeTo: this.route,
+          queryParams: {id: this.selected.id}
+        })
+      },
+      {
+        label: 'Заблокувати',
+        icon: 'fas fa-ban',
+        command: (event) => this.confirmDisable(event),
+        visible: this.selected && this.selected.isEnabled
+      },
+      {
+        label: 'Розблокувати',
+        icon: 'fas fa-user-check',
+        command: (event) => this.updateDisabled(event, false),
+        visible: this.selected && !this.selected.isEnabled
+      },
+    ];
   }
 
   loadDataLazy(filters = {}, pagination: Pagination = new Pagination()) {
@@ -78,15 +91,19 @@ export class UsersComponent implements OnInit {
     this.confirmationService.confirm({
       message: "Ви впевнені що хочете заблокувати данного 'Користувача'?",
       accept: () => {
-        this.disable(event)
+        this.updateDisabled(event, true)
       }
     });
   }
 
-  disable(event) {
-    this.dataService.updateDisabled(this.selected.id, true).subscribe(
+  updateDisabled(event, disabled) {
+    this.dataService.updateDisabled(this.selected.id, disabled).subscribe(
       response => {
-        this.snackBarService.showSuccess("'Користувача' успішно видалено");
+        if (disabled) {
+          this.snackBarService.showSuccess("'Користувача' успішно заблоковано");
+        } else {
+          this.snackBarService.showSuccess("'Користувача' успішно розблоковано");
+        }
         this.refresh();
       },
       error => this.snackBarService.showError(getErrorMessage(error))
@@ -126,6 +143,10 @@ export class UsersComponent implements OnInit {
 
   filterSelectedColumns() {
     this.selectedColumns = this.cols.filter(column => column.active);
+  }
+
+  onRowSelect(event) {
+    this.initContextMenu();
   }
 
 }

@@ -13,6 +13,7 @@ import { DatePipe } from "@angular/common";
 import { SizeService } from "../../../../api/services/size.service";
 import { Size } from "../../../../api/models/Size";
 import { FlowerSize } from "../../../../api/models/FlowerSize";
+import { TranslationService } from "../../../../utils/translation.service";
 
 @Component({
   selector: 'flower-item',
@@ -45,6 +46,7 @@ export class FlowerItemComponent implements OnInit {
 
 
   constructor(public dataService: FlowerService,
+              public translation: TranslationService,
               private snackBarService: SnackBarService,
               private router: Router,
               private route: ActivatedRoute,
