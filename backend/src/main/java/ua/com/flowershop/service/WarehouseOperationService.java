@@ -11,6 +11,7 @@ import ua.com.flowershop.repository.WarehouseOperationRepository;
 import ua.com.flowershop.repository.WarehouseOperationTypeRepository;
 
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 
 @Service
 public class WarehouseOperationService {
@@ -19,29 +20,30 @@ public class WarehouseOperationService {
     @Autowired private WarehouseOperationTypeRepository warehouseOperationTypeRepository;
     @Autowired private FlowerSizeRepository flowerSizeRepository;
 
-    public void update(Long id, WarehouseOperationModel warehouseOperationModel) {
-        WarehouseOperation warehouseOperation = warehouseOperationRepository.findById(id)
-            .orElseThrow(EntityNotFoundException::new);
+    @Transactional
+    public void add(WarehouseOperationModel warehouseOperationModel) {
 
         FlowerSize flowerSize = flowerSizeRepository.findById(warehouseOperationModel.getFlowerSize().getId())
             .orElseThrow(EntityNotFoundException::new);
 
-        warehouseOperationRepository.save(warehouseOperation
-            .setAmount(warehouseOperationModel.getAmount())
-            .setFlowerSize(flowerSize)).setWarehouseOperationType(warehouseOperationModel.getWarehouseOperationType());
-
-    }
-
-    public void save(WarehouseOperationModel warehouseOperationModel) {
-
-        FlowerSize flowerSize = flowerSizeRepository.findById(warehouseOperationModel.getFlowerSize().getId())
-            .orElseThrow(EntityNotFoundException::new);
         WarehouseOperationType warehouseOperationType = warehouseOperationTypeRepository.findById(warehouseOperationModel.getWarehouseOperationType().getId())
             .orElseThrow(EntityNotFoundException::new);
 
         warehouseOperationRepository.save(new WarehouseOperation()
             .setAmount(warehouseOperationModel.getAmount())
-            .setFlowerSize(flowerSize)).setWarehouseOperationType(warehouseOperationType);
+            .setFlowerSize(flowerSize)
+            .setWarehouseOperationType(warehouseOperationType));
+
+        if (warehouseOperationModel.getWarehouseOperationType().getDirection().equals(WarehouseOperationType.Direction.IN)) {
+            flowerSize.setAmount(flowerSize.getAmount() + warehouseOperationModel.getAmount());
+        } else {
+            flowerSize.setAmount(flowerSize.getAmount() - warehouseOperationModel.getAmount());
+        }
+
+        flowerSizeRepository.save(flowerSize);
     }
 
+    public void cancel(Long id) {
+
+    }
 }

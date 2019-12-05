@@ -65,19 +65,14 @@ public class WarehouseOperationController {
 
     @PostMapping
     public ResponseEntity<Void> add(@RequestBody WarehouseOperationModel warehouseOperationModel) {
-        warehouseOperationService.save(warehouseOperationModel);
-        return new ResponseEntity<>(OK);
-    }
+        warehouseOperationService.add(warehouseOperationModel);
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody WarehouseOperationModel warehouseOperationModel) {
-        warehouseOperationService.update(id, warehouseOperationModel);
         return new ResponseEntity<>(OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        warehouseOperationRepository.deleteById(id);
+    public ResponseEntity<Void> cancel(@PathVariable Long id) {
+        warehouseOperationService.cancel(id);
         return new ResponseEntity<>(OK);
     }
 

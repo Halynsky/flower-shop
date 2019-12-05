@@ -34,9 +34,9 @@
           <label for="operation">Операція</label>
         </div>
         <div class="ui-grid-col-2">
-          <p-dropdown class="input-element" required [options]="operationTypes" [ngModelOptions]="{standalone: true}"
+          <p-dropdown class="input-element" required [options]="operationTypes"
                       [(ngModel)]="itemWarehouseOperationType.operationType"
-                      placeholder="Оберіть операцію" id="operation"
+                      placeholder="Оберіть операцію" id="operation" name="operationType"
                       (ngModelChange)="getWarehouseOperationType(itemWarehouseOperationType.operationType)"></p-dropdown>
         </div>
       </div>
@@ -55,8 +55,8 @@
           <label for="flower">Квітка</label>
         </div>
         <div class="ui-grid-col-2">
-          <p-dropdown class="input-element" required="true" [options]="flowersOptions" [ngModelOptions]="{standalone: true}" [(ngModel)]="flowerChosen"
-                      optionLabel="name"
+          <p-dropdown class="input-element" required="true" [options]="flowersOptions" name="flower" [(ngModel)]="flowerChosen"
+                      optionLabel="name" dataKey="id"
                       placeholder="Оберіть квітку" id="flower" (ngModelChange)="getFlowersSizeById(flowerChosen.id)"></p-dropdown>
         </div>
       </div>
@@ -66,8 +66,8 @@
           <label for="size">Розмір</label>
         </div>
         <div class="ui-grid-col-2">
-          <p-dropdown class="input-element" required="true" [options]="sizeOptions" [ngModelOptions]="{standalone: true}" [(ngModel)]="itemFlowerSize"
-                      optionLabel="size.name"
+          <p-dropdown class="input-element" required="true" [options]="sizeOptions" name="size" [(ngModel)]="itemFlowerSize"
+                      optionLabel="size.name" dataKey="id"
                       placeholder="Оберіть розмір" id="size"></p-dropdown>
         </div>
       </div>

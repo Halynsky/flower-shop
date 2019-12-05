@@ -139,5 +139,6 @@ export class WarehouseOperationItemComponent {
     this.item.warehouseOperationType = this.itemWarehouseOperationType;
     this.item.flowerSize = this.itemFlowerSize;
     this.mode == ItemSaveMode.new ? this.add() : this.update();
+    console.log(this.item.warehouseOperationType)
   }
 }
