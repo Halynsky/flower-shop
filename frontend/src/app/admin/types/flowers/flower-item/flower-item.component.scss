@@ -6,6 +6,11 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    width: 100%;
+
+    p-multiselect {
+      width: 100%;
+    }
 
     .size-price-block {
       font-size: 12px;
@@ -31,10 +36,21 @@
     display: flex;
     flex-direction: column;
     font-size: 12px;
+    width: 100%;
+
+    &.color-dropdown-block {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      p-dropdown {
+        width: 100%;
+      }
+
+    }
 
     .chosen-item {
       display: flex;
-      margin-top: 5px;
       align-items: center;
       margin-left: 5px;
 

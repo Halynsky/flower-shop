@@ -9,7 +9,7 @@
 
 <div class="panel-content">
   <p-table #dt [value]="items.content" sortField="id" [paginator]="true" [rows]="10"
-           [tableStyle]="{'table-layout':'auto'}" [contextMenu]="cm" [(contextMenuSelection)]="selected"
+           [tableStyle]="{'table-layout':'auto'}" [contextMenu]="cm" [(contextMenuSelection)]="selected" (onContextMenuSelect)="onRowSelect($event)"
            [customSort]="true" (sortFunction)="sortData($event)" dataKey="id" rowExpandMode="single" [columns]="selectedColumns"
            (onLazyLoad)="onLazyLoad($event)" [lazy]="true" [totalRecords]="items.totalElements">
     <ng-template pTemplate="caption">
