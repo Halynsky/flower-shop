@@ -1,17 +1,35 @@
 @import "theme";
 @import "mixins.scss";
 
-
 :host {
-  .md-dialog-container {
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 100%;
+    padding: 8px 12px;
+  }
+
+  .dialog-container {
+    position: relative;
     width: 400px;
-    height: 200px;
     display: flex;
     flex-direction: column;
+
+    i.close {
+      cursor: pointer;
+      position: absolute;
+      top: -16px;
+      right: -16px;
+      color: $grey-400;
+      font-size: 24px;
+    }
 
     .dialog-header {
       display: flex;
       justify-content: center;
+      margin-bottom: 16px;
     }
 
     .content {
@@ -19,7 +37,6 @@
       height: 100%;
       font-size: 20px;
       justify-content: center;
-
 
       .wrapper {
         display: flex;
@@ -34,15 +51,15 @@
           flex-direction: column;
           align-content: center;
           justify-content: center;
-          height: 70%;
           width: 100%;
-          .input-elem {
-            margin-top: 7px;
+
+          .input-group {
             width: 100%;
             display: flex;
             flex-direction: column;
+            margin-bottom: 8px;
 
-            .input-block {
+            .input-wrapper {
               width: 100%;
               display: flex;
               align-items: center;
@@ -55,35 +72,62 @@
             }
 
             .error-wrapper {
-              height: 10px;
               width: 280px;
               font-size: 10px;
-              margin-top: 3px;
-              .error-block {
-                background-color: #f8b7bd;
-                border: 0 none;
-                color: #212121;
-                height: 100%;
-                width: 100%;
-                padding: 1px;
-                border-radius: 2px;
-              }
+
+                .error-message {
+                  color: mat-color($warn);
+                }
+
             }
           }
         }
 
         .dialog-action {
-          margin-top: 3px;
+          margin-top: 12px;
           display: flex;
           width: 280px;
-
-
 
           .login-button {
             background-color: mat-color($accent);
             color: white;
             margin-right: 10px;
           }
+        }
+
+        .auth-facebook {
+          background-color: #3b5998;
+          color: white;
+          i {
+            margin-right: 8px;
+          }
+        }
+
+        .auth-social-hint {
+          font-size: 14px;
+          text-align: center;
+          color: $grey-400;
+          width: 100%;
+          margin: 24px 0 24px;
+          position: relative;
+
+          &:before {
+            content: '';
+            display: block;
+            position: absolute;
+            left: 0;
+            top: 50%;
+            height: 1px;
+            right: 0;
+            background-color: $grey-400;
+          }
+
+          span {
+            position: relative;
+            background: white;
+            padding: 0 10px;
+          }
+
         }
 
       }
@@ -112,4 +156,22 @@
       font-size: 20px;
     }
   }
+
+  .reg-congratulation {
+    .title {
+      text-align: center;
+      font-weight: 500;
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+
+    .message {
+
+      .highlight {
+        color: mat-color($primary);
+      }
+
+    }
+  }
+
 }

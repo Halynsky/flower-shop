@@ -3,12 +3,12 @@ import { SecurityService } from "../../services/security.service";
 import { BucketService } from "../../services/bucket.service";
 import { ModalWindowService } from "../../services/modal-window.service";
 import { MatDialog } from "@angular/material";
-import { DialogWindowComponent } from "../../components/shared/shared/dialog-window/dialog-window.component";
 import { AuthService } from "../../api/services/auth.service";
 import { SnackBarService } from "../../services/snak-bar.service";
 import { UserCabinetService } from "../../services/user-cabinet.service";
 import { Router } from "@angular/router";
 import { Role } from "../../models/Role";
+import { AuthDialogComponent } from "../../components/shared/shared/auth-dialog/auth-dialog.component";
 
 @Component({
   selector: 'layout-header',
@@ -29,8 +29,14 @@ export class HeaderComponent {
               private router: Router) {
   }
 
-  onLoginDialog() {
-    this.dialog.open(DialogWindowComponent);
+  openAuthDialog() {
+    this.dialog.open(AuthDialogComponent);
+  }
+
+  openBucketDialog() {
+    let currentUrl = this.router.url;
+    currentUrl = currentUrl.split('/').pop();
+    this.userService.changeButtonColor(currentUrl);
   }
 
   logout() {
@@ -38,12 +44,6 @@ export class HeaderComponent {
       res => this.securityService.logout(),
       error => this.snackBarService.showError(error)
     )
-  }
-
-  onProfileButtonClick() {
-    let currentUrl = this.router.url;
-    currentUrl = currentUrl.split('/').pop();
-    this.userService.changeButtonColor(currentUrl);
   }
 
 }

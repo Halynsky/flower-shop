@@ -1,0 +1,235 @@
+<div class="dialog-container">
+
+  <i class="material-icons close">close</i>
+
+  <div class="login-form-wrapper" *ngIf="mode == 'login'">
+
+  <div class="dialog-header">
+    <h1>Авторизація</h1>
+  </div>
+
+  <div class="content">
+    <form #loginForm="ngForm" class="item-form" (ngSubmit)="loginForm.valid && submitLogin()">
+
+      <div class="wrapper">
+
+        <div class="dialog-content">
+
+          <div class="input-group">
+            <div class="input-wrapper">
+
+              <div class="input-user">
+                <input
+                    #email="ngModel"
+                    type="email"
+                    name="email"
+                    [(ngModel)]="credentials.email"
+                    placeholder="Електронна адреса"
+                    required
+                />
+              </div>
+            </div>
+
+            <div class="error-wrapper" *ngIf="email.dirty || email.touched || loginForm.submitted">
+              <div class="error-message" *ngIf="email.errors?.required">Повинно бути вказано</div>
+            </div>
+
+          </div>
+
+          <div class="input-group">
+            <div class="input-wrapper">
+
+              <div class="input-user">
+                <input
+                  type="password"
+                  #password="ngModel"
+                  name="password"
+                  placeholder="Пароль"
+                  [(ngModel)]="credentials.password"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="error-wrapper" *ngIf="password.dirty || password.touched || loginForm.submitted">
+              <div class="error-message" *ngIf="password.errors?.required">Повинно бути вказано</div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="dialog-action">
+          <button type="submit" mat-button class="login-button">Увійти</button>
+          <button type="button" mat-button class="reg-button" (click)="mode = 'registration'">Зареєструватись</button>
+        </div>
+
+        <div class="auth-social-hint">
+          <span>або увійти з данними</span>
+        </div>
+
+        <button type="button" mat-button class="auth-facebook" (click)="facebookAuth()">
+          <i class="fab fa-facebook-square"></i>
+          <span>Facebook</span>
+        </button>
+
+      </div>
+
+
+    </form>
+  </div>
+
+  </div>
+
+  <div class="reg-form-wrapper" *ngIf="mode == 'registration' && !registered">
+    <div class="dialog-header">
+      <h1>Реєстрація</h1>
+    </div>
+
+    <div class="content">
+      <form #regForm="ngForm" class="item-form" (ngSubmit)="regForm.valid && submitRegistration()">
+
+        <div class="wrapper">
+
+          <div class="dialog-content">
+
+            <div class="input-group">
+              <div class="input-wrapper">
+
+                <div class="input-user">
+                  <input
+                      #email="ngModel"
+                      type="email"
+                      name="email"
+                      [(ngModel)]="userRegistration.email"
+                      placeholder="Електронна адреса"
+                      required
+                  />
+                </div>
+              </div>
+
+              <div class="error-wrapper" *ngIf="email.dirty || email.touched || regForm.submitted">
+                <div class="error-message" *ngIf="email.errors?.required">Повинно бути вказано</div>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <div class="input-wrapper">
+
+                <div class="input-user">
+                  <input
+                      #name="ngModel"
+                      name="name"
+                      [(ngModel)]="userRegistration.name"
+                      placeholder="Імя"
+                      required
+                  />
+                </div>
+              </div>
+
+                <div class="error-wrapper" *ngIf="name.dirty || name.touched || regForm.submitted">
+                    <div class="error-message" *ngIf="name.errors?.required">Повинно бути вказано</div>
+                </div>
+            </div>
+
+            <div class="input-group">
+              <div class="input-wrapper">
+
+                <div class="input-user">
+                  <input
+                      #phone="ngModel"
+                      name="phone"
+                      [(ngModel)]="userRegistration.phone"
+                      placeholder="Телефон"
+                      required
+                  />
+                </div>
+              </div>
+
+                <div class="error-wrapper" *ngIf="phone.dirty || phone.touched || regForm.submitted">
+                  <div class="error-message" *ngIf="phone.errors?.required">Повинно бути вказано</div>
+                </div>
+            </div>
+
+            <div class="input-group">
+              <div class="input-wrapper">
+
+                <div class="input-user">
+                  <input
+                    type="password"
+                    #password="ngModel"
+                    name="password"
+                    placeholder="Пароль"
+                    [(ngModel)]="userRegistration.password"
+                    validateEqual="confirmPassword"
+                    validationEqualReverse="true"
+                    required
+                  />
+                </div>
+              </div>
+                <div class="error-wrapper" *ngIf="password.dirty || password.touched || regForm.submitted">
+                    <div class="error-message" *ngIf="password.errors?.required">Повинно бути вказано</div>
+                </div>
+
+            </div>
+
+            <div class="input-group">
+              <div class="input-wrapper">
+
+                <div class="input-user">
+                  <input
+                    type="password"
+                    #passwordConfirm="ngModel"
+                    name="passwordConfirm"
+                    placeholder="Повторіть пароль"
+                    [(ngModel)]="userRegistration.passwordConfirm"
+                    validateEqual="password"
+                    validationEqualReverse="false"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="error-wrapper" *ngIf="passwordConfirm.dirty || passwordConfirm.touched || regForm.submitted">
+                  <div class="error-message" *ngIf="passwordConfirm.errors?.required">Повинно бути вказано</div>
+                  <div class="error-message" *ngIf="passwordConfirm.errors?.validateEqual && !passwordConfirm.errors?.required">Паролі повинні співпадати</div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="dialog-action">
+            <button type="submit" mat-button class="login-button">Зареєструватись</button>
+            <button type="button" mat-button class="reg-button" (click)="mode = 'login'">Увійти</button>
+          </div>
+
+          <div class="auth-social-hint">
+            <span>або увійти з данними</span>
+          </div>
+
+          <button type="button" mat-button class="auth-facebook" (click)="facebookAuth()">
+            <i class="fab fa-facebook-square"></i>
+            <span>Facebook</span>
+          </button>
+
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+
+  <div class="reg-congratulation" *ngIf="mode == 'registration' && registered">
+
+    <div class="title">Дякуєм за реєстрацію</div>
+    <div class="message">Ми відправили вам на <span class="highlight">{{userRegistration.email}}</span>
+      лист для підвердження вашої поштової адреси.
+      Якщо ви не отримали лист з підтвердженням на протязі 10 хвили - зверніться в службу підтримки сайту.
+    </div>
+
+  </div>
+
+</div>
+
+
+

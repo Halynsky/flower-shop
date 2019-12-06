@@ -5,7 +5,6 @@ import { ModalWindowService } from "../services/modal-window.service";
   selector: 'layout',
   template: `
     <layout-header></layout-header>
-    <modal-window *ngIf="modalPageService.getIsModal()"></modal-window>
     <router-outlet></router-outlet>
   `,
   styles: [`

@@ -14,3 +14,11 @@ export class UserForAdmin extends User {
   isEnabled: boolean = true;
   isActivated: boolean = true;
 }
+
+export class UserRegistration {
+  name: string;
+  email: string;
+  password: string;
+  passwordConfirm: string;
+  phone: string;
+}
