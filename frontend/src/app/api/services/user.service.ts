@@ -4,7 +4,7 @@ import { Article } from "../models/Article";
 import { RestPage } from "../models/RestPage";
 import { Pagination } from "../models/Pagination";
 import { API_URL } from "../../utils/Costants";
-import { User, UserForAdmin } from "../models/User";
+import { User, UserForAdmin, UserRegistration } from "../models/User";
 import { Flower } from "../models/Flower";
 import { Observable } from "rxjs";
 

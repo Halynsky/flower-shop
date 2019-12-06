@@ -29,7 +29,7 @@ public class User {
     private String email;
     @JsonIgnore
     private String password;
-    @Column(unique = true)
+    @Column
     private String phone;
     @Column(columnDefinition = "boolean default false")
     private Boolean isVirtual = false;

@@ -14,9 +14,10 @@ import localeRuUa from '@angular/common/locales/uk';
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { RouterModule } from "@angular/router";
 import { SharedModule } from "./components/shared/shared/shared.module";
-import { DialogWindowComponent } from "./components/shared/shared/dialog-window/dialog-window.component";
 import { UserModule } from "./components/user/user.module";
 import { MainInterceptor } from "./inteceptors/main.interceptor";
+import { AuthDialogComponent } from "./components/shared/shared/auth-dialog/auth-dialog.component";
+import { BucketDialogComponent } from "./components/shared/shared/bucket-dialog/bucket-dialog.component";
 
 registerLocaleData(localeRuUa);
 
@@ -26,7 +27,8 @@ registerLocaleData(localeRuUa);
     LayoutComponent
   ],
   entryComponents: [
-    DialogWindowComponent
+    AuthDialogComponent,
+    BucketDialogComponent
   ],
   imports: [
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),

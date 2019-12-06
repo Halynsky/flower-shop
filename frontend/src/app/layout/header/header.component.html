@@ -26,12 +26,12 @@
         </div>
       </button>
 
-      <button mat-button class="login-button" (click)="onLoginDialog()">
+      <button mat-button class="login-button" (click)="openAuthDialog()">
         <i class="material-icons md-18">exit_to_app</i>
         <span>Увійти</span>
       </button>
 
-      <button mat-button class="mobile-login-button" (click)="onLoginDialog()">
+      <button mat-button class="mobile-login-button" (click)="openAuthDialog()">
         <mat-icon aria-label="Login">account_circle</mat-icon>
       </button>
     </div>
@@ -79,7 +79,7 @@
 <!--</mat-menu>-->
 
 <mat-menu #userMenu="matMenu" class="auth-menu">
-  <div class="profile-menu user-menu" (click)="onProfileButtonClick()" *ngIf="securityService.hasRole(Role.USER)">
+  <div class="profile-menu user-menu" (click)="openBucketDialog()" *ngIf="securityService.hasRole(Role.USER)">
     <button class="user-menu-button" routerLink="/my/profile">
       <i class="fas fa-users"></i>
       <span>Мій профіль</span>
@@ -98,7 +98,7 @@
     </button>
   </div>
 
-  <div class="profile-menu admin-menu" (click)="onProfileButtonClick()" *ngIf="securityService.hasRole(Role.ADMIN) || securityService.hasRole(Role.SUPPORT)">
+  <div class="profile-menu admin-menu" (click)="openBucketDialog()" *ngIf="securityService.hasRole(Role.ADMIN) || securityService.hasRole(Role.SUPPORT)">
     <button class="user-menu-button" routerLink="/admin">
       <i class="fas fa-columns"></i>
       <span>Адмін Панель</span>

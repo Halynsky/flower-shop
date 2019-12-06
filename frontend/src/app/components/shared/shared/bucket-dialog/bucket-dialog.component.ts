@@ -4,11 +4,11 @@ import { BucketService } from "../../../../services/bucket.service";
 
 
 @Component({
-  selector: 'modal-window',
-  templateUrl: './modal-window.component.html',
-  styleUrls: ['./modal-window.component.scss']
+  selector: 'bucket-dialog',
+  templateUrl: './bucket-dialog.component.html',
+  styleUrls: ['./bucket-dialog.component.scss']
 })
-export class ModalWindowComponent {
+export class BucketDialogComponent {
 
 
   constructor(public modalPageService: ModalWindowService, public bucketService: BucketService){

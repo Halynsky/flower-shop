@@ -1,32 +1,41 @@
 import { Component } from "@angular/core";
 import { AuthService } from "../../../../api/services/auth.service";
 import { SecurityService } from "../../../../services/security.service";
-import { User } from "../../../../api/models/User";
+import { User, UserRegistration } from "../../../../api/models/User";
 import { SnackBarService } from "../../../../services/snak-bar.service";
 import { MatDialogRef } from "@angular/material";
 import { getErrorMessage } from "../../../../utils/Functions";
+import { Credentials } from "../../../../api/models/Credentials";
 
 @Component({
-  selector: 'dialog-window',
-  templateUrl: './dialog-window.component.html',
-  styleUrls: ['./dialog-window.component.scss']
+  selector: 'auth-dialog',
+  templateUrl: './auth-dialog.component.html',
+  styleUrls: ['./auth-dialog.component.scss']
 })
-export class DialogWindowComponent {
+export class AuthDialogComponent {
 
-  constructor(private authService: AuthService, private securityService: SecurityService, private snackBarService: SnackBarService, public dialogRef: MatDialogRef<DialogWindowComponent>) {
+  mode: 'login' | 'registration' = 'login';
+  registered = false;
+
+  credentials: Credentials = new Credentials();
+  userRegistration: UserRegistration = new UserRegistration();
+
+  constructor(private authService: AuthService,
+              private securityService: SecurityService,
+              private snackBarService: SnackBarService,
+              public dialogRef: MatDialogRef<AuthDialogComponent>) {
   }
 
-  userEmail;
-  userPassword;
-  user: User;
-
-  onSubmit() {
+  submitLogin() {
     this.login();
+  }
 
+  submitRegistration() {
+    this.register();
   }
 
   login() {
-    this.authService.login(this.userEmail, this.userPassword).subscribe(
+    this.authService.login(this.credentials).subscribe(
       user => {
         this.securityService.login(user);
         this.dialogRef.close();
@@ -52,6 +61,22 @@ export class DialogWindowComponent {
         }
       }
     )
+  }
+
+  register() {
+    this.authService.register(this.userRegistration).subscribe(
+      user => {
+        // TODO: show message after registration
+        this.registered = true;
+      } ,
+      error => {
+        this.snackBarService.showError(getErrorMessage(error));
+      }
+    )
+  }
+
+  // TODO: Implement this
+  facebookAuth() {
   }
 
 }

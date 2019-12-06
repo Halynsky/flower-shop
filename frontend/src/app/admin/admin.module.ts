@@ -34,6 +34,7 @@ import { PipesModule } from "../pipes/pipes.module";
 import { UniqueValidator } from "../validators/unique-validator.directive";
 import { RangePairValidator } from "../validators/range-pair-validator.directive";
 import { UserItemComponent } from "./users/user-item/user-item.component";
+import { EqualValidator } from "../validators/equal-validator.directive";
 
 
 @NgModule({
@@ -57,7 +58,8 @@ import { UserItemComponent } from "./users/user-item/user-item.component";
     ColorsComponent,
     ColorItemComponent,
     UniqueValidator,
-    RangePairValidator
+    RangePairValidator,
+    EqualValidator
   ],
   imports: [
     routing,

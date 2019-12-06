@@ -18,12 +18,12 @@ import {
 } from "@angular/material";
 import { ArticleCardComponent } from './article-card/article-card.component';
 import { RouterModule } from "@angular/router";
-import { ModalWindowComponent } from "./modal-window/modal-window.component";
 import { BottomSheetOverview } from "./bottom-sheet/bottom-sheet.component";
 import { PipesModule } from "../../../pipes/pipes.module";
-import { DialogWindowComponent } from "./dialog-window/dialog-window.component";
 import { MessageModule } from "primeng/message";
 import { InputTextModule } from "primeng/primeng";
+import { AuthDialogComponent } from "./auth-dialog/auth-dialog.component";
+import { BucketDialogComponent } from "./bucket-dialog/bucket-dialog.component";
 
 const PROVIDERS = [
   {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 5000, panelClass: "snack-custom-class"}},
@@ -33,9 +33,9 @@ const PROVIDERS = [
 @NgModule({
   declarations: [
     ArticleCardComponent,
-    ModalWindowComponent,
     BottomSheetOverview,
-    DialogWindowComponent
+    AuthDialogComponent,
+    BucketDialogComponent
   ],
   imports: [
     RouterModule,
@@ -75,8 +75,7 @@ const PROVIDERS = [
     MatSelectModule,
     PipesModule,
     // Developed components
-    ArticleCardComponent,
-    ModalWindowComponent
+    ArticleCardComponent
   ],
   providers: [
     ...PROVIDERS

@@ -70,4 +70,10 @@ public class UserController {
         return new ResponseEntity<>(OK);
     }
 
+    @PostMapping("/register")
+    public ResponseEntity<Void> register(@RequestBody UserModel user){
+        usersService.register(user);
+        return new ResponseEntity<>(OK);
+    }
+
 }

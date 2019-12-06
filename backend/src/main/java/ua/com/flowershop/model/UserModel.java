@@ -15,6 +15,7 @@ import ua.com.flowershop.entity.User;
 public class UserModel {
     private Long id;
     private String email;
+    private String password;
     private String name;
     private String phone;
     private Boolean isEnabled;
