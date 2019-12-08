@@ -15,6 +15,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findById(Long id);
     Optional<User> findByEmail(String email);
+    Optional<User> findBySecretKey(String secretKey);
+    Optional<User> findBySecretKeyAndIsActivated(String secretKey, Boolean isActivated);
 
     UserAdminProjection findProjectedById(Long id);
 

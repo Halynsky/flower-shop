@@ -1,6 +1,6 @@
 <div class="dialog-container">
 
-  <i class="material-icons close">close</i>
+  <i class="material-icons close" (click)="dialogRef.close()">close</i>
 
   <div class="login-form-wrapper" *ngIf="mode == 'login'">
 
@@ -60,7 +60,7 @@
         </div>
 
         <div class="dialog-action">
-          <button type="submit" mat-button class="login-button">Увійти</button>
+          <button type="submit" mat-button class="main-button">Увійти</button>
           <button type="button" mat-button class="reg-button" (click)="mode = 'registration'">Зареєструватись</button>
         </div>
 
@@ -199,7 +199,7 @@
           </div>
 
           <div class="dialog-action">
-            <button type="submit" mat-button class="login-button">Зареєструватись</button>
+            <button type="submit" mat-button class="main-button">Зареєструватись</button>
             <button type="button" mat-button class="reg-button" (click)="mode = 'login'">Увійти</button>
           </div>
 
@@ -226,6 +226,8 @@
       лист для підвердження вашої поштової адреси.
       Якщо ви не отримали лист з підтвердженням на протязі 10 хвили - зверніться в службу підтримки сайту.
     </div>
+
+    <button type="submit" mat-raised-button class="ok-button" (click)="dialogRef.close()" color="primary">ОК</button>
 
   </div>
 

@@ -29,5 +29,11 @@ public class Path {
 	public static final String WAREHOUSE_OPERATIONS_PATH 	= API + SLASH + WAREHOUSE_OPERATIONS;
 	public static final String ORDERS_PATH 		            = API + SLASH + ORDERS;
 
+	// OTHER
+    public static final String EMAIL                    = "email";
+    public static final String CONFIRM				    = "confirm";
+    public static final String ACTIVATION				= "activation";
+    public static final String RESTORE_PASSWORD         = "restore-password";
+
 }
 

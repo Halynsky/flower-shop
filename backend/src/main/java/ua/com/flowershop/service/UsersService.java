@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import ua.com.flowershop.entity.User;
 import ua.com.flowershop.model.UserModel;
 import ua.com.flowershop.repository.UserRepository;
+import ua.com.flowershop.util.mail.MailService;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -16,6 +17,7 @@ public class UsersService {
 
     @Autowired private UserRepository userRepository;
     @Autowired private PasswordEncoder passwordEncoder;
+    @Autowired private MailService mailService;
 
     public void update(Long id, UserModel userModel) {
         User user = userRepository.findById(id)
@@ -46,15 +48,23 @@ public class UsersService {
         userRepository.save(user);
     }
 
-    // TODO: Send activation email
     public void register(UserModel userModel) {
-        userRepository.save(new User()
+        User user = userRepository.save(new User()
             .setName(userModel.getName())
             .setEmail(userModel.getEmail())
             .setPhone(userModel.getPhone())
             .setRole(User.Role.USER)
             .setPassword(passwordEncoder.encode(userModel.getPassword())));
+        mailService.sendRegistrationConfirmEmail(user);
     }
 
 
+    public void activate(String secretKey) {
+        User user = userRepository.findBySecretKeyAndIsActivated(secretKey, false)
+            .orElseThrow(EntityNotFoundException::new);
+
+        userRepository.save(user.setSecretKey(null)
+            .setIsActivated(true));
+
+    }
 }

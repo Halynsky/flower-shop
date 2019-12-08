@@ -10,6 +10,7 @@ import lombok.experimental.Accessors;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Set;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -27,6 +28,8 @@ public class User {
     private String name;
     @Column(unique = true)
     private String email;
+    @Column(unique = true)
+    private String newEmail;
     @JsonIgnore
     private String password;
     @Column
@@ -37,6 +40,7 @@ public class User {
     private Boolean isEnabled = true;
     @Column(columnDefinition = "boolean default false")
     private Boolean isActivated = false;
+    private String secretKey = UUID.randomUUID().toString();
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;

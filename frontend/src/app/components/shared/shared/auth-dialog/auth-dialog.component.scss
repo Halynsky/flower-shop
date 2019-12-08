@@ -88,7 +88,7 @@
           display: flex;
           width: 280px;
 
-          .login-button {
+          .main-button {
             background-color: mat-color($accent);
             color: white;
             margin-right: 10px;
@@ -158,6 +158,11 @@
   }
 
   .reg-congratulation {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    flex-direction: column;
+
     .title {
       text-align: center;
       font-weight: 500;
@@ -172,6 +177,14 @@
       }
 
     }
+
+    .ok-button {
+      align-self: center;
+      justify-content: center;
+      margin-top: 24px;
+      color: white !important;
+    }
+
   }
 
 }
