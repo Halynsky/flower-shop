@@ -15,16 +15,20 @@
   }
 }
 
-body .ui-table .ui-table-tbody > tr.ui-contextmenu-selected {
+.ui-table .ui-table-tbody > tr.ui-contextmenu-selected {
   background-color: mat-color($accent) !important;
   color: #ffffff;
 }
 
-body .ui-table .ui-sortable-column.ui-state-highlight {
+.ui-table .ui-sortable-column.ui-state-highlight {
   background-color: mat-color($accent) !important;
   color: #ffffff;
 }
 
+.ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-active {
+  background-color: mat-color($accent) !important;
+  color: #ffffff;
+}
 
 .cdk-overlay-container {
   .bottom-sheet-custom-class {

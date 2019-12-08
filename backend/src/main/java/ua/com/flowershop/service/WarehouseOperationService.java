@@ -44,6 +44,25 @@ public class WarehouseOperationService {
     }
 
     public void cancel(Long id) {
+        WarehouseOperation warehouseOperation = warehouseOperationRepository.findById(id)
+            .orElseThrow(EntityNotFoundException::new);
+
+        FlowerSize flowerSize = flowerSizeRepository.findById(warehouseOperation.getFlowerSize().getId())
+            .orElseThrow(EntityNotFoundException::new);
+
+        if (warehouseOperation.getWarehouseOperationType().getDirection().equals(WarehouseOperationType.Direction.IN)) {
+            if (flowerSize.getAmount() < warehouseOperation.getAmount()) {
+                flowerSize.setAmount(0);
+            } else {
+                flowerSize.setAmount(flowerSize.getAmount() - warehouseOperation.getAmount());
+            }
+        } else {
+            flowerSize.setAmount(flowerSize.getAmount() + warehouseOperation.getAmount());
+        }
+
+        warehouseOperation.setIsActive(false);
+        warehouseOperationRepository.save(warehouseOperation);
+        flowerSizeRepository.save(flowerSize);
 
     }
 }

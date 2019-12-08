@@ -40,6 +40,7 @@ export class WarehouseOperationsComponent implements OnInit {
     {field: 'flower', header: 'Назва', active: true},
     {field: 'size', header: 'Розмір', active: true},
     {field: 'amount', header: 'Кількість', active: true},
+    {field: 'isActive', header: 'Дійсна', active: true},
     {field: 'date', header: 'Дата', active: true},
     {field: 'operationType', header: 'Операція', active: true},
     {field: 'direction', header: 'Прихід/Відхід', active: true},
@@ -51,10 +52,7 @@ export class WarehouseOperationsComponent implements OnInit {
   selected: WarehouseOperation;
 
   menuItems = [
-    { label: 'Редагувати',
-      icon: 'fa fa-fw fa-pencil',
-      command: () => this.router.navigate(['item', ItemSaveMode.edit], {relativeTo: this.route, queryParams: {id: this.selected.id}})},
-    { label: 'Видалити',
+    { label: 'Відмінити',
       icon: 'fa fa-fw fa-trash',
       command: (event) => this.confirmRemove(event)},
   ];
@@ -93,12 +91,17 @@ export class WarehouseOperationsComponent implements OnInit {
   }
 
   confirmRemove(event) {
-    this.confirmationService.confirm({
-      message: "Ви впевнені що хочете видалити данну 'Складську операцію'?",
-      accept: () => {
-        this.remove(event)
-      }
-    });
+    if (this.selected.isActive) {
+      this.confirmationService.confirm({
+        message: "Ви впевнені що хочете відмінити данну 'Складську операцію'?",
+        accept: () => {
+          this.remove(event)
+        }
+      });
+    } else {
+      this.snackBarService.showError("Ви не можете відмінити не дійсну 'Складську операцію'")
+    }
+
   }
 
   remove(event) {

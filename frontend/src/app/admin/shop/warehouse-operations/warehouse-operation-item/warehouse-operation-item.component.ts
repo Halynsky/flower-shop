@@ -45,16 +45,6 @@ export class WarehouseOperationItemComponent {
     this.route.params.subscribe(
       params => {
         this.mode = params['mode'];
-
-        if (this.mode == ItemSaveMode.edit) {
-          this.route.queryParams.subscribe(queryParams => {
-            if (queryParams['id'])
-              this.getItem(queryParams['id']);
-            this.isFlowerChosen = true;
-          })
-        }
-
-
       }
     );
 
@@ -63,17 +53,6 @@ export class WarehouseOperationItemComponent {
     this.operationTypes.forEach(e => e.label = translation.text[e.label]);
   }
 
-  getItem(id) {
-    this.dataService.getById(id).subscribe(
-      item => {
-        this.item = item;
-        this.itemFlowerSize = item.flowerSize;
-        this.itemWarehouseOperationType = item.warehouseOperationType;
-        this.getFlowerById(item.flowerSize.flower.id);
-      },
-      error => this.snackBarService.showError(getErrorMessage(error))
-    )
-  }
 
   getWarehouseOperationType(operationType) {
     this.dataService.getWarehouseOperationType(operationType).subscribe(
@@ -85,15 +64,6 @@ export class WarehouseOperationItemComponent {
         } else {
           this.directionOption = 'Відхід';
         }
-      },
-      error => this.snackBarService.showError(getErrorMessage(error))
-    )
-  }
-
-  getFlowerById(id) {
-    this.flowerService.getFlowerFullById(id).subscribe(item => {
-        this.flowerChosen = item;
-        this.getFlowersSizeById(this.flowerChosen.id);
       },
       error => this.snackBarService.showError(getErrorMessage(error))
     )
@@ -125,20 +95,9 @@ export class WarehouseOperationItemComponent {
     )
   }
 
-  update() {
-    this.dataService.update(this.item.id, this.item).subscribe(
-      response => {
-        this.snackBarService.showSuccess("Товарну операцію успішно оновлено");
-        this.router.navigate(['../../'], {relativeTo: this.route})
-      },
-      error => this.snackBarService.showError(getErrorMessage(error))
-    )
-  }
-
   onSubmit() {
     this.item.warehouseOperationType = this.itemWarehouseOperationType;
     this.item.flowerSize = this.itemFlowerSize;
-    this.mode == ItemSaveMode.new ? this.add() : this.update();
-    console.log(this.item.warehouseOperationType)
+    this.add() ;
   }
 }

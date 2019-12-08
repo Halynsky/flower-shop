@@ -30,10 +30,6 @@ export class WarehouseOperationService {
     return this.http.post(`${this.URL}`, warehouseOperation);
   }
 
-  update(id: number, warehouseOperation: WarehouseOperation) {
-    return this.http.put(`${this.URL}/${id}`, warehouseOperation);
-  }
-
   delete(id: number) {
     return this.http.delete(`${this.URL}/${id}`);
   }
