@@ -23,7 +23,7 @@ export class WarehouseOperationService {
   }
 
   getWarehouseOperationType(operationType: OperationType) {
-    return this.http.get<WarehouseOperationType>(`${this.URL}/warehouseOperationType/?operationType=${operationType}`)
+    return this.http.get<WarehouseOperationType>(`${this.URL}/byWarehouseOperationType/?operationType=${operationType}`)
   }
 
   add(warehouseOperation: WarehouseOperation) {

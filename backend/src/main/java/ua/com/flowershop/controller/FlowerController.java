@@ -62,7 +62,7 @@ public class FlowerController {
         return new ResponseEntity<>(flowerRepository.findProjectedBy(), OK);
     }
 
-    @GetMapping("/flowerSizeById/{id}")
+    @GetMapping("/{id}/flowerSizes")
     public ResponseEntity<List<FlowerSizeFullProjection>> getAllFlowerSize(@PathVariable Long id) {
         return new ResponseEntity<>(flowerSizeRepository.findProjectedByFlowerId(id), OK);
     }

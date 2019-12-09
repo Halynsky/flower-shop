@@ -51,8 +51,8 @@ public class WarehouseOperationController {
         return new ResponseEntity<>(page, OK);
     }
 
-    @GetMapping("/warehouseOperationType")
-    public ResponseEntity<WarehouseOperationTypeProjection> getOperationTypeByOperationType(@RequestParam WarehouseOperationType.OperationType operationType) {
+    @GetMapping("/byWarehouseOperationType")
+    public ResponseEntity<WarehouseOperationTypeProjection> getWarehouseOperationTypeByOperation(@RequestParam WarehouseOperationType.OperationType operationType) {
         return new ResponseEntity<>(warehouseOperationTypeRepository.findPrjectedByOperationType(operationType), OK);
     }
 
