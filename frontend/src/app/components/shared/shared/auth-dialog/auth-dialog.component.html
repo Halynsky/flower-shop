@@ -60,8 +60,8 @@
         </div>
 
         <div class="dialog-action">
-          <button type="submit" mat-button class="main-button">Увійти</button>
-          <button type="button" mat-button class="reg-button" (click)="mode = 'registration'">Зареєструватись</button>
+          <button type="submit" mat-button class="main-button" [disabled]="loading">Увійти</button>
+          <button type="button" mat-button class="reg-button" (click)="mode = 'registration'" [disabled]="loading">Зареєструватись</button>
         </div>
 
         <div class="auth-social-hint">
@@ -104,11 +104,14 @@
                       [(ngModel)]="userRegistration.email"
                       placeholder="Електронна адреса"
                       required
+                      email
+                      [uniqueValidator]="userService.isEmailFree.bind(userService)"
                   />
                 </div>
               </div>
 
               <div class="error-wrapper" *ngIf="email.dirty || email.touched || regForm.submitted">
+                <div class="error-message" *ngIf="email.errors?.unique && !email.errors?.required">Данний Email вже зайнятий</div>
                 <div class="error-message" *ngIf="email.errors?.required">Повинно бути вказано</div>
               </div>
             </div>
@@ -199,8 +202,8 @@
           </div>
 
           <div class="dialog-action">
-            <button type="submit" mat-button class="main-button">Зареєструватись</button>
-            <button type="button" mat-button class="reg-button" (click)="mode = 'login'">Увійти</button>
+            <button type="submit" mat-button class="main-button" [disabled]="loading">Зареєструватись</button>
+            <button type="button" mat-button class="reg-button" (click)="mode = 'login'" [disabled]="loading">Увійти</button>
           </div>
 
           <div class="auth-social-hint">

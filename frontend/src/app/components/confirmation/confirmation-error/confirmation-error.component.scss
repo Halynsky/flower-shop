@@ -17,11 +17,10 @@
   color: $grey-800;
 }
 
-.back-to-home-button {
-  margin-top: 24px;
-  &.mat-raised-button.mat-primary {
-    color: white;
-  }
+.error-text {
+  font-size: 20px;
+  font-weight: 400;
+  color: $grey-600;
 }
 
 

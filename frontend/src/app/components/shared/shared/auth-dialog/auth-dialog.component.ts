@@ -6,6 +6,8 @@ import { SnackBarService } from "../../../../services/snak-bar.service";
 import { MatDialogRef } from "@angular/material";
 import { getErrorMessage } from "../../../../utils/Functions";
 import { Credentials } from "../../../../api/models/Credentials";
+import { UserService } from "../../../../api/services/user.service";
+import { finalize } from "rxjs/operators";
 
 @Component({
   selector: 'auth-dialog',
@@ -16,11 +18,13 @@ export class AuthDialogComponent {
 
   mode: 'login' | 'registration' = 'login';
   registered = false;
+  loading = false;
 
   credentials: Credentials = new Credentials();
   userRegistration: UserRegistration = new UserRegistration();
 
-  constructor(private authService: AuthService,
+  constructor(public authService: AuthService,
+              public userService: UserService,
               private securityService: SecurityService,
               private snackBarService: SnackBarService,
               public dialogRef: MatDialogRef<AuthDialogComponent>) {
@@ -35,7 +39,10 @@ export class AuthDialogComponent {
   }
 
   login() {
-    this.authService.login(this.credentials).subscribe(
+    this.loading = true;
+    this.authService.login(this.credentials)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(
       user => {
         this.securityService.login(user);
         this.dialogRef.close();
@@ -64,9 +71,11 @@ export class AuthDialogComponent {
   }
 
   register() {
-    this.authService.register(this.userRegistration).subscribe(
+    this.loading = true;
+    this.authService.register(this.userRegistration)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(
       user => {
-        // TODO: show message after registration
         this.registered = true;
       } ,
       error => {
