@@ -58,7 +58,6 @@ export class WarehouseOperationItemComponent {
     this.dataService.getWarehouseOperationType(operationType).subscribe(
       item => {
         this.itemWarehouseOperationType = item;
-        console.log(item.id);
         if (item.direction === WarehouseOperationType.Direction.IN) {
           this.directionOption = 'Прихід';
         } else {
