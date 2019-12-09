@@ -24,6 +24,9 @@ import { MessageModule } from "primeng/message";
 import { InputTextModule } from "primeng/primeng";
 import { AuthDialogComponent } from "./auth-dialog/auth-dialog.component";
 import { BucketDialogComponent } from "./bucket-dialog/bucket-dialog.component";
+import { UniqueValidator } from "../../../validators/unique-validator.directive";
+import { RangePairValidator } from "../../../validators/range-pair-validator.directive";
+import { EqualValidator } from "../../../validators/equal-validator.directive";
 
 const PROVIDERS = [
   {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 5000, panelClass: "snack-custom-class"}},
@@ -35,7 +38,10 @@ const PROVIDERS = [
     ArticleCardComponent,
     BottomSheetOverview,
     AuthDialogComponent,
-    BucketDialogComponent
+    BucketDialogComponent,
+    UniqueValidator,
+    RangePairValidator,
+    EqualValidator
   ],
   imports: [
     RouterModule,
@@ -74,8 +80,12 @@ const PROVIDERS = [
     MatButtonToggleModule,
     MatSelectModule,
     PipesModule,
-    // Developed components
-    ArticleCardComponent
+    // Developed Components
+    ArticleCardComponent,
+    // Developed Validators
+    UniqueValidator,
+    RangePairValidator,
+    EqualValidator
   ],
   providers: [
     ...PROVIDERS

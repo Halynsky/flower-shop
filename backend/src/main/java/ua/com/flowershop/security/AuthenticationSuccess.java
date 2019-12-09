@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.Charset;
 
 @Component
 public class AuthenticationSuccess implements AuthenticationSuccessHandler {
@@ -20,6 +21,7 @@ public class AuthenticationSuccess implements AuthenticationSuccessHandler {
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
+        httpServletResponse.setCharacterEncoding(Charset.defaultCharset().name());
         objectMapper.writeValue(httpServletResponse.getWriter(), SecurityUserModel.of(securityService.getUser()));
     }
 }

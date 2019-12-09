@@ -24,4 +24,8 @@ export class AuthService {
     return this.http.post(`${this.URL}/register`, user);
   }
 
+  activate(secretKey: string): Observable<any> {
+    return this.http.post(`${this.URL}/activate?secretKey=${secretKey}`, null);
+  }
+
 }

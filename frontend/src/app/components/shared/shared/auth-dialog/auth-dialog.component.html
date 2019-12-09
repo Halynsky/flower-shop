@@ -1,6 +1,6 @@
 <div class="dialog-container">
 
-  <i class="material-icons close">close</i>
+  <i class="material-icons close" (click)="dialogRef.close()">close</i>
 
   <div class="login-form-wrapper" *ngIf="mode == 'login'">
 
@@ -60,8 +60,8 @@
         </div>
 
         <div class="dialog-action">
-          <button type="submit" mat-button class="login-button">Увійти</button>
-          <button type="button" mat-button class="reg-button" (click)="mode = 'registration'">Зареєструватись</button>
+          <button type="submit" mat-button class="main-button" [disabled]="loading">Увійти</button>
+          <button type="button" mat-button class="reg-button" (click)="mode = 'registration'" [disabled]="loading">Зареєструватись</button>
         </div>
 
         <div class="auth-social-hint">
@@ -104,11 +104,14 @@
                       [(ngModel)]="userRegistration.email"
                       placeholder="Електронна адреса"
                       required
+                      email
+                      [uniqueValidator]="userService.isEmailFree.bind(userService)"
                   />
                 </div>
               </div>
 
               <div class="error-wrapper" *ngIf="email.dirty || email.touched || regForm.submitted">
+                <div class="error-message" *ngIf="email.errors?.unique && !email.errors?.required">Данний Email вже зайнятий</div>
                 <div class="error-message" *ngIf="email.errors?.required">Повинно бути вказано</div>
               </div>
             </div>
@@ -199,8 +202,8 @@
           </div>
 
           <div class="dialog-action">
-            <button type="submit" mat-button class="login-button">Зареєструватись</button>
-            <button type="button" mat-button class="reg-button" (click)="mode = 'login'">Увійти</button>
+            <button type="submit" mat-button class="main-button" [disabled]="loading">Зареєструватись</button>
+            <button type="button" mat-button class="reg-button" (click)="mode = 'login'" [disabled]="loading">Увійти</button>
           </div>
 
           <div class="auth-social-hint">
@@ -226,6 +229,8 @@
       лист для підвердження вашої поштової адреси.
       Якщо ви не отримали лист з підтвердженням на протязі 10 хвили - зверніться в службу підтримки сайту.
     </div>
+
+    <button type="submit" mat-raised-button class="ok-button" (click)="dialogRef.close()" color="primary">ОК</button>
 
   </div>
 

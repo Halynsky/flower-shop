@@ -21,6 +21,7 @@ const routes: Routes = [
           { path: 'purchases', component: PurchaseHistoryComponent},
           { path: 'favourite-articles', component: FavouriteArticlesComponent}
         ] },
+      { path: 'confirm', loadChildren: './components/confirmation/confirmation.module#ConfirmationModule'},
       { path: 'shop', loadChildren: './components/shop/shop.module#ShopModule'},
       { path: 'forum', loadChildren: './components/forum/forum.module#ForumModule'},
       { path: 'contacts', loadChildren: './components/contacts/contacts.module#ContactsModule'},
