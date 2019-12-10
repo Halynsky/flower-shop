@@ -4,10 +4,12 @@ import { HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import {
   MAT_BOTTOM_SHEET_DEFAULT_OPTIONS,
-  MAT_SNACK_BAR_DEFAULT_OPTIONS, MatBottomSheetModule,
+  MAT_SNACK_BAR_DEFAULT_OPTIONS,
+  MatBottomSheetModule,
   MatButtonModule,
   MatButtonToggleModule,
-  MatCheckboxModule, MatDialogModule,
+  MatCheckboxModule,
+  MatDialogModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
@@ -21,12 +23,9 @@ import { RouterModule } from "@angular/router";
 import { BottomSheetOverview } from "./bottom-sheet/bottom-sheet.component";
 import { PipesModule } from "../../../pipes/pipes.module";
 import { MessageModule } from "primeng/message";
-import { InputTextModule } from "primeng/primeng";
 import { AuthDialogComponent } from "./auth-dialog/auth-dialog.component";
 import { BucketDialogComponent } from "./bucket-dialog/bucket-dialog.component";
-import { UniqueValidator } from "../../../validators/unique-validator.directive";
-import { RangePairValidator } from "../../../validators/range-pair-validator.directive";
-import { EqualValidator } from "../../../validators/equal-validator.directive";
+import { ValidatorModule } from "../../../validators/validator.module";
 
 const PROVIDERS = [
   {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 5000, panelClass: "snack-custom-class"}},
@@ -38,10 +37,7 @@ const PROVIDERS = [
     ArticleCardComponent,
     BottomSheetOverview,
     AuthDialogComponent,
-    BucketDialogComponent,
-    UniqueValidator,
-    RangePairValidator,
-    EqualValidator
+    BucketDialogComponent
   ],
   imports: [
     RouterModule,
@@ -62,7 +58,8 @@ const PROVIDERS = [
     MatBottomSheetModule,
     PipesModule,
     MatDialogModule,
-    MessageModule
+    MessageModule,
+    ValidatorModule.forRoot()
   ],
   exports: [
     RouterModule,
@@ -81,11 +78,7 @@ const PROVIDERS = [
     MatSelectModule,
     PipesModule,
     // Developed Components
-    ArticleCardComponent,
-    // Developed Validators
-    UniqueValidator,
-    RangePairValidator,
-    EqualValidator
+    ArticleCardComponent
   ],
   providers: [
     ...PROVIDERS

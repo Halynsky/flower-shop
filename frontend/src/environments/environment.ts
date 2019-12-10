@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
   googleApiKey: '',
-  facebookClientId: '',
+  facebookClientId: '654293855101789',
   googleClientId: ''
 };

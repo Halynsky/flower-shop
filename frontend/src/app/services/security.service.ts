@@ -1,20 +1,21 @@
 import { Injectable } from "@angular/core";
 import { Role } from "../models/Role";
 
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from "@angular/router";
-import {Observable} from "rxjs";
+import { Router } from "@angular/router";
 
 import { User } from "../api/models/User";
 import { USER_KEY } from "../utils/Costants";
+import { AuthService as SocialAuthService } from "angularx-social-login";
 
 
 @Injectable({providedIn: 'root'})
 export class SecurityService {
 
-
   private isLoggedIn: boolean = false;
 
-  constructor(public router: Router){}
+  constructor(public router: Router,
+              public socialAuthService: SocialAuthService){
+  }
 
 
   isAuthenticated() {
@@ -28,6 +29,11 @@ export class SecurityService {
   logout() {
     this.router.navigate(['']);
     localStorage.removeItem(USER_KEY);
+    this.socialAuthService.authState.subscribe(state => {
+      if(state) {
+        this.socialAuthService.signOut();
+      }
+    });
   }
 
   hasRole(role: Role) {

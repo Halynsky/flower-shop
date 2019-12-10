@@ -19,6 +19,7 @@ public class UserModel {
     private String name;
     private String phone;
     private Boolean isEnabled;
+    private User.Role role;
 
     public static UserModel of(User user) {
         return new UserModel()
@@ -26,7 +27,8 @@ public class UserModel {
             .setEmail(user.getEmail())
             .setName(user.getName())
             .setPhone(user.getPhone())
-            .setIsEnabled(user.getIsEnabled());
+            .setIsEnabled(user.getIsEnabled())
+            .setRole(user.getRole());
     }
 
 }
