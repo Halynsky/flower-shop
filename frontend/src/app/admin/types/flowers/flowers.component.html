@@ -215,7 +215,7 @@
 
 <p-contextMenu #cm [model]="menuItems"></p-contextMenu>
 
-<div class="modal" *ngIf="this.isZoomed">
+<div class="image-zoom-modal" *ngIf="this.isZoomed">
   <div class="filter" (click)="closeImg()"></div>
   <div class="content">
     <img src="{{this.imageUrl}}">

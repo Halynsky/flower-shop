@@ -35,8 +35,8 @@ public class User {
     private String newEmail;
     @JsonIgnore
     private String password;
-    @Column
     private String phone;
+    private String icon;
     @Column(columnDefinition = "boolean default false")
     private Boolean isVirtual = false;
     @Column(columnDefinition = "boolean default true")
@@ -44,11 +44,14 @@ public class User {
     @Column(columnDefinition = "boolean default false")
     private Boolean isActivated = false;
     private String secretKey = UUID.randomUUID().toString();
+    @Column(columnDefinition = "varchar(2000)")
+    private String note;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
     @Column(columnDefinition = "timestamp default timezone('utc'::text, now())")
     private LocalDateTime created = LocalDateTime.now();
+    private LocalDateTime lastOrderDate;
     @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
     private List<Order> orders;
     @JsonIgnore

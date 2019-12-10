@@ -23,12 +23,12 @@ export class FlowerTypeService {
     return this.http.get<FlowerType>(`${this.URL}/${id}`);
   }
 
-  add(flowerType: FlowerType) {
-    return this.http.post(`${this.URL}`, flowerType);
+  add(formData: FormData) {
+    return this.http.post(`${this.URL}`, formData);
   }
 
-  update(id: number, flowerType: FlowerType) {
-    return this.http.put(`${this.URL}/${id}`, flowerType);
+  update(id: number, formData: FormData) {
+    return this.http.put(`${this.URL}/${id}`, formData);
   }
 
   delete(id: number) {

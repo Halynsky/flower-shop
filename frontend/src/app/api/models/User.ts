@@ -13,6 +13,9 @@ export class UserForAdmin extends User {
   isVirtual: boolean = true;
   isEnabled: boolean = true;
   isActivated: boolean = true;
+  created: string;
+  lastOrderDate: string;
+  note: string;
 }
 
 export class UserRegistration {

@@ -62,8 +62,9 @@ export function getAuthServiceConfigs() {
     ValidatorModule.forRoot()
   ],
   providers: [
-    [DatePipe],
+    DatePipe,
     MatIconRegistry,
+    {provide: 'Window', useValue: window},
     {provide: LOCALE_ID, useValue: "uk"},
     {
       provide: HTTP_INTERCEPTORS,
@@ -76,7 +77,6 @@ export function getAuthServiceConfigs() {
     }
   ],
   exports: [
-
   ],
   bootstrap: [AppComponent]
 })

@@ -18,6 +18,7 @@ export class FlowerTypesComponent implements OnInit {
 
   cols = [
     {field: 'id', header: 'Id'},
+    {field: 'image', header: 'Фото'},
     {field: 'name', header: 'Назва'},
     {field: 'nameSingle', header: 'Назва(однина)'},
     {field: 'flowersCount', header: 'Кількість Квітів'},
@@ -34,6 +35,9 @@ export class FlowerTypesComponent implements OnInit {
       icon: 'fa fa-fw fa-trash',
       command: (event) => this.confirmRemove(event)},
   ];
+
+  imageUrl: string;
+  isZoomed: boolean = false;
 
   constructor(private dataService: FlowerTypeService,
               private snackBarService: SnackBarService,
@@ -74,6 +78,15 @@ export class FlowerTypesComponent implements OnInit {
         this.remove(event)
       }
     });
+  }
+
+  zoomImg(imageUrl) {
+    this.imageUrl = imageUrl;
+    this.isZoomed = true;
+  }
+
+  closeImg() {
+    this.isZoomed = false;
   }
 
 }

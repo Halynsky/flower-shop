@@ -47,6 +47,18 @@
         </div>
       </div>
 
+      <div class="prime-form-group">
+        <div class="ui-grid-col-2">
+          <label for="image">Картинка</label>
+        </div>
+        <div class="ui-grid-col-2">
+          <image-preview [previewSize]="80" (fileChange)="addImage($event)" class="image" id="image"
+                         [image]="item.image" [disabled]="mode == 'view'"></image-preview>
+        </div>
+        <div class="ui-grid-col-2">
+        </div>
+      </div>
+
     </div>
 
     <div class="ui-grid-row ui-grid-field">

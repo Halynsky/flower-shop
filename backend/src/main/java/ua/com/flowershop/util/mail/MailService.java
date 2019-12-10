@@ -25,7 +25,7 @@ public class MailService {
     private static final String THANK_YOU_FOR_JOIN = "Дякуємо за те що приєднались до нас!";
     private static final String LOGO_URL = "/assets/icons/logo/icon-192x192.png";
 
-    private static final String SUPPORT_EMAIL = "meryflowers@gmail.com";
+    private static final String SUPPORT_EMAIL = "meryflowersua@gmail.com";
     private static final String SUPPORT_TEXT = "Якщо у вас виникли якісь запитання, ви можете звязатись з нами";
 
     private static final String SECRET_KEY_PARAM = "?secretKey=";

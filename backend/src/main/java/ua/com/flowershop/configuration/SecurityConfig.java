@@ -67,6 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers(SLASH + SIZES_PATH + SLASH + "**").permitAll()
             .antMatchers(SLASH + FLOWER_TYPES_PATH + SLASH + "**").permitAll()
             .antMatchers(SLASH + FLOWERS_PATH + SLASH + "**").permitAll()
+            .antMatchers(SLASH + WAREHOUSE_OPERATIONS_PATH + SLASH + "**").permitAll()
             .anyRequest().authenticated()
             .and()
             .exceptionHandling()
@@ -94,7 +95,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) {
         web.ignoring()
-            // for angular
+            .antMatchers(HttpMethod.GET, "/*")
+            .antMatchers(HttpMethod.GET, IMAGES_PATH + "/**")
+            // for Angular
             .antMatchers(HttpMethod.GET, "/vendor.js")
             .antMatchers(HttpMethod.GET, "/styles.js")
             .antMatchers(HttpMethod.GET, "/polyfills.js")

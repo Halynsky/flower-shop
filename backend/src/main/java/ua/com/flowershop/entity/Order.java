@@ -15,7 +15,7 @@ import java.util.Set;
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity()
+@Entity
 @Table(name = "orders")
 public class Order {
 

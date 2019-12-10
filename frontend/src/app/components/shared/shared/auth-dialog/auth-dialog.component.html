@@ -30,7 +30,7 @@
               </div>
             </div>
 
-            <div class="error-wrapper" *ngIf="email.dirty || email.touched || loginForm.submitted">
+            <div class="error-wrapper" *ngIf="(email.dirty || email.touched) && loginForm.submitted">
               <div class="error-message" *ngIf="email.errors?.required">Повинно бути вказано</div>
             </div>
 
@@ -51,7 +51,7 @@
               </div>
             </div>
 
-            <div class="error-wrapper" *ngIf="password.dirty || password.touched || loginForm.submitted">
+            <div class="error-wrapper" *ngIf="(password.dirty || password.touched) && loginForm.submitted">
               <div class="error-message" *ngIf="password.errors?.required">Повинно бути вказано</div>
             </div>
 

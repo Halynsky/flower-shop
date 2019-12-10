@@ -3,4 +3,5 @@ export class FlowerType {
   name: string;
   nameSingle: string;
   flowersCount: number;
+  image: string;
 }

@@ -14,4 +14,6 @@ public interface UserAdminProjection {
     Boolean getIsEnabled();
     Boolean getIsActivated();
     LocalDateTime getCreated();
+    LocalDateTime getLastOrderDate();
+    String getNote();
 }
