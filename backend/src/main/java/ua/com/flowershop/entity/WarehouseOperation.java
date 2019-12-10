@@ -25,6 +25,10 @@ public class WarehouseOperation {
     private Integer amount;
     @Column(columnDefinition = "timestamp default timezone('utc'::text, now())")
     private LocalDateTime date = LocalDateTime.now();
+    @Column(columnDefinition = "boolean default true")
+    private Boolean isActive = true;
+    @Column(columnDefinition = "varchar(2000)")
+    private String comment;
 
     @ManyToOne
     @JoinColumn(name = "flower_size_id", nullable = false)

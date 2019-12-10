@@ -15,6 +15,21 @@
   }
 }
 
+.ui-table .ui-table-tbody > tr.ui-contextmenu-selected {
+  background-color: #e67700 !important;
+  color: #ffffff;
+}
+
+.ui-table .ui-sortable-column.ui-state-highlight {
+  background-color: #e67700 !important;
+  color: #ffffff;
+}
+
+.ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-active {
+  background-color: #e67700 !important;
+  color: #ffffff;
+}
+
 .cdk-overlay-container {
   .bottom-sheet-custom-class {
     pointer-events: none;

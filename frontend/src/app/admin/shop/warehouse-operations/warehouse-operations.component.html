@@ -127,6 +127,17 @@
             {{rowData[col.field] | date:'dd.MM.yyyy H:mm'}}
           </span>
 
+          <span *ngSwitchCase="'isActive'">
+             <div class="true-false-ico">
+              <div *ngIf="rowData['isActive']">
+                <i class="material-icons">check_box</i>
+              </div>
+              <div *ngIf="!rowData['isActive']">
+                <i class="material-icons">indeterminate_check_box</i>
+              </div>
+            </div>
+          </span>
+
           <span *ngSwitchDefault>
             {{rowData[col.field]}}
           </span>

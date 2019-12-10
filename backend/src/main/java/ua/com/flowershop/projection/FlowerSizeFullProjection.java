@@ -9,6 +9,8 @@ public interface FlowerSizeFullProjection {
 
     Integer getSold();
 
+    Integer getId();
+
     SizeProjection getSize();
 
     FlowerProjection getFlower();

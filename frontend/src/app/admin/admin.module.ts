@@ -32,6 +32,8 @@ import { FlowerTypeItemComponent } from "./types/flower-types/flower-type-item/f
 import { FlowerItemComponent } from "./types/flowers/flower-item/flower-item.component";
 import { PipesModule } from "../pipes/pipes.module";
 import { UserItemComponent } from "./users/user-item/user-item.component";
+import { EqualValidator } from "../validators/equal-validator.directive";
+import { WarehouseOperationItemComponent } from "./shop/warehouse-operations/warehouse-operation-item/warehouse-operation-item.component";
 import { ValidatorModule } from "../validators/validator.module";
 
 @NgModule({
@@ -53,7 +55,9 @@ import { ValidatorModule } from "../validators/validator.module";
     SizesComponent,
     SizeItemComponent,
     ColorsComponent,
-    ColorItemComponent
+    ColorItemComponent,
+    WarehouseOperationItemComponent,
+    UserItemComponent
   ],
   imports: [
     routing,
@@ -87,6 +91,7 @@ import { ValidatorModule } from "../validators/validator.module";
     RatingModule,
     ListboxModule,
     CheckboxModule,
+
   ],
   providers: [
     ConfirmationService

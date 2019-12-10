@@ -51,6 +51,12 @@ export class FlowersComponent implements OnInit {
 
   flowerTypes = [];
 
+  flowerSizeCols = [
+    {field: 'size', header: 'Розмір'},
+    {field: 'price', header: 'Ціна'},
+    {field: 'amount', header: 'Кількість'}
+  ];
+
   cols = [
     {field: 'id', header: 'Id', active: true},
     {field: 'image', header: 'Фото', active: true},

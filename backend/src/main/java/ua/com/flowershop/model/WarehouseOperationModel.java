@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import ua.com.flowershop.entity.FlowerSize;
+import ua.com.flowershop.entity.WarehouseOperationType;
 
 import javax.validation.constraints.NotNull;
 
@@ -19,6 +21,8 @@ public class WarehouseOperationModel {
     @NotNull
     Integer amount;
     @NotNull
-    Long flowerSizeId;
+    FlowerSize flowerSize;
+    @NotNull
+    WarehouseOperationType warehouseOperationType;
 
 }

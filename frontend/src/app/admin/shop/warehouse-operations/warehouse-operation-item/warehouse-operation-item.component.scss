@@ -1,0 +1,8 @@
+@import "theme";
+@import "mixins.scss";
+
+:host {
+  .input-element {
+    width: 300px;
+  }
+}

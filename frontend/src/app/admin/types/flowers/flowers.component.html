@@ -21,7 +21,7 @@
     </ng-template>
     <ng-template pTemplate="header" let-columns>
       <tr>
-                <th></th>
+        <th></th>
         <ng-container *ngFor="let col of selectedColumns" [ngSwitch]="col.field">
           <th *ngSwitchCase="'id'" [pSortableColumn]="'id'">
             {{col.header}}
@@ -73,7 +73,7 @@
 
       </tr>
       <tr>
-                <th></th>
+        <th></th>
         <th *ngFor="let col of selectedColumns" [ngSwitch]="col.field">
           <input *ngSwitchCase="'id'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'equals')" class="table-filter">
           <div *ngSwitchCase="'image'"></div>

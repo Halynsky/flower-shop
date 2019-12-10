@@ -12,7 +12,9 @@ import ua.com.flowershop.entity.WarehouseOperationType;
 import ua.com.flowershop.exception.NotFoundException;
 import ua.com.flowershop.model.WarehouseOperationModel;
 import ua.com.flowershop.projection.WarehouseOperationProjection;
+import ua.com.flowershop.projection.WarehouseOperationTypeProjection;
 import ua.com.flowershop.repository.WarehouseOperationRepository;
+import ua.com.flowershop.repository.WarehouseOperationTypeRepository;
 import ua.com.flowershop.service.WarehouseOperationService;
 import ua.com.flowershop.util.annotation.PageableSwagger;
 
@@ -28,6 +30,7 @@ import static ua.com.flowershop.util.Path.WAREHOUSE_OPERATIONS_PATH;
 public class WarehouseOperationController {
 
     @Autowired private WarehouseOperationRepository warehouseOperationRepository;
+    @Autowired private WarehouseOperationTypeRepository warehouseOperationTypeRepository;
     @Autowired private WarehouseOperationService warehouseOperationService;
 
     @PageableSwagger
@@ -48,6 +51,11 @@ public class WarehouseOperationController {
         return new ResponseEntity<>(page, OK);
     }
 
+    @GetMapping("/byWarehouseOperationType")
+    public ResponseEntity<WarehouseOperationTypeProjection> getWarehouseOperationTypeByOperation(@RequestParam WarehouseOperationType.OperationType operationType) {
+        return new ResponseEntity<>(warehouseOperationTypeRepository.findPrjectedByOperationType(operationType), OK);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<WarehouseOperationProjection> getById(@PathVariable Long id) {
         WarehouseOperationProjection warehouseOperationProjection = warehouseOperationRepository.findProjectedById(id)
@@ -57,19 +65,14 @@ public class WarehouseOperationController {
 
     @PostMapping
     public ResponseEntity<Void> add(@RequestBody WarehouseOperationModel warehouseOperationModel) {
-        warehouseOperationService.save(warehouseOperationModel);
-        return new ResponseEntity<>(OK);
-    }
+        warehouseOperationService.add(warehouseOperationModel);
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody WarehouseOperationModel warehouseOperationModel) {
-        warehouseOperationService.update(id, warehouseOperationModel);
         return new ResponseEntity<>(OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        warehouseOperationRepository.deleteById(id);
+    public ResponseEntity<Void> cancel(@PathVariable Long id) {
+        warehouseOperationService.cancel(id);
         return new ResponseEntity<>(OK);
     }
 

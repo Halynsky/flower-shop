@@ -7,10 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ua.com.flowershop.entity.Flower;
 import ua.com.flowershop.entity.FlowerType;
-import ua.com.flowershop.projection.FlowerFullProjection;
-import ua.com.flowershop.projection.FlowerProjection;
-import ua.com.flowershop.projection.FlowerShortProjection;
-import ua.com.flowershop.projection.IdNameTuple;
+import ua.com.flowershop.projection.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -71,4 +68,6 @@ public interface FlowerRepository extends JpaRepository<Flower, Long> {
     Page<FlowerShortProjection> findProjectedByFilters(String searchTerm, List<Long> flowerTypeFilters, List<Long> colorFilters, List<Long> sizeFilters, Pageable pageable);
 
     Optional<FlowerFullProjection> findFullProjectedById(Long id);
+
+
 }

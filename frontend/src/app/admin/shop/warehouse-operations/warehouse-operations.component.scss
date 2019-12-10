@@ -1,3 +1,6 @@
+@import "theme";
+@import "mixins.scss";
+
 img.direction-arrow {
   width: 16px;
   margin-left: 8px;
@@ -6,4 +9,9 @@ img.direction-arrow {
 
 th[ng-reflect-ng-switch="direction"] {
   width: 160px;
+}
+
+body .ui-table .ui-table-tbody > tr.ui-contextmenu-selected {
+  background-color: mat-color($accent);
+  color: #ffffff;
 }
