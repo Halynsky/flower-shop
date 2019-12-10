@@ -10,6 +10,7 @@ public class Path {
 	//	CONTROLLER ENDPOINT PARTS
     public static final String AUTH				    = "auth";
     public static final String USERS	            = "users";
+    public static final String SOCIAL				= "social";
 	public static final String ARTICLES				= "articles";
     public static final String COLORS				= "colors";
     public static final String FLOWERS				= "flowers";
@@ -21,6 +22,7 @@ public class Path {
 	//	CONTROLLER ENDPOINTS
     public static final String AUTH_PATH 			        = API + SLASH + AUTH;
     public static final String USERS_PATH	                = API + SLASH + USERS;
+    public static final String SOCIAL_PATH	                = API + SLASH + SOCIAL;
 	public static final String ARTICLES_PATH 			    = API + SLASH + ARTICLES;
 	public static final String COLORS_PATH 			        = API + SLASH + COLORS;
 	public static final String FLOWERS_PATH 			    = API + SLASH + FLOWERS;

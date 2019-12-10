@@ -6,9 +6,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import ua.com.flowershop.model.socials.SocialUser;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -47,7 +50,10 @@ public class User {
     @Column(columnDefinition = "timestamp default timezone('utc'::text, now())")
     private LocalDateTime created = LocalDateTime.now();
     @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
-    private Set<Order> orders;
+    private List<Order> orders;
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    protected List<SocialConnection> socialConnections;
 
     public enum Role {
         USER("USER"),
@@ -68,6 +74,23 @@ public class User {
         public String toString() {
             return this.value;
         }
+    }
+
+    public static User of(SocialUser socialUser) {
+        return new User().setEmail(socialUser.getEmail())
+            .setName(socialUser.getFirstName() + socialUser.getLastName())
+            .setRole(Role.USER)
+            .setIsActivated(true);
+    }
+
+    public User addSocialConnection(SocialConnection socialConnection) {
+        if (getSocialConnections() == null) {
+            this.socialConnections = new ArrayList<>();
+            this.socialConnections.add(socialConnection);
+        } else {
+            this.socialConnections.add(socialConnection);
+        }
+        return this;
     }
 
 }

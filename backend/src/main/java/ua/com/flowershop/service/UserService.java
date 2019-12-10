@@ -4,8 +4,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import ua.com.flowershop.entity.SocialConnection;
 import ua.com.flowershop.entity.User;
 import ua.com.flowershop.model.UserModel;
+import ua.com.flowershop.model.socials.SocialUser;
+import ua.com.flowershop.repository.SocialConnectionRepository;
 import ua.com.flowershop.repository.UserRepository;
 import ua.com.flowershop.util.mail.MailService;
 
@@ -13,11 +17,12 @@ import javax.persistence.EntityNotFoundException;
 
 @Slf4j
 @Service
-public class UsersService {
+public class UserService {
 
     @Autowired private UserRepository userRepository;
     @Autowired private PasswordEncoder passwordEncoder;
     @Autowired private MailService mailService;
+    @Autowired private SocialConnectionRepository socialConnectionRepository;
 
     public void update(Long id, UserModel userModel) {
         User user = userRepository.findById(id)
@@ -56,6 +61,16 @@ public class UsersService {
             .setRole(User.Role.USER)
             .setPassword(passwordEncoder.encode(userModel.getPassword())));
         mailService.sendRegistrationConfirmEmail(user);
+    }
+
+    @Transactional
+    public User registerBySocial(SocialUser socialUser) {
+        User user = User.of(socialUser);
+        userRepository.save(user);
+        SocialConnection socialConnection = new SocialConnection(socialUser, user);
+        user.addSocialConnection(socialConnection);
+        socialConnectionRepository.save(socialConnection);
+        return user;
     }
 
 

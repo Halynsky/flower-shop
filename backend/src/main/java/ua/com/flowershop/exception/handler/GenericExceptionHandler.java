@@ -6,8 +6,10 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
+import ua.com.flowershop.exception.AuthenticationRequiredException;
 import ua.com.flowershop.exception.NotFoundException;
 import ua.com.flowershop.exception.RestError;
+import ua.com.flowershop.exception.ThirdPartyException;
 
 import java.nio.file.AccessDeniedException;
 
@@ -33,6 +35,18 @@ public class GenericExceptionHandler {
     public ResponseEntity<Object> handleAccessDeniedException(AuthenticationException exception, WebRequest request) {
         log.debug(exception.getMessage());
         return new ResponseEntity<>(new RestError(UNAUTHORIZED.value(), exception.getMessage()), UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(ThirdPartyException.class)
+    public ResponseEntity<Object> handleThirdPartyException(ThirdPartyException exception, WebRequest request) {
+        log.debug(exception.getMessage());
+        return new ResponseEntity<>(new RestError(BAD_REQUEST.value(), exception.getMessage()), BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AuthenticationRequiredException.class)
+    public ResponseEntity<Object> handleAuthenticationRequiredException(AuthenticationRequiredException exception, WebRequest request) {
+        log.debug(exception.getMessage());
+        return new ResponseEntity<>(new RestError(BAD_REQUEST.value(), exception.getMessage()), BAD_REQUEST);
     }
 
 }

@@ -23,7 +23,8 @@ export class HeaderComponent {
   constructor(public securityService: SecurityService,
               public bucketService: BucketService,
               public modalWindowService: ModalWindowService,
-              public dialog: MatDialog, private authService: AuthService,
+              public dialog: MatDialog,
+              private authService: AuthService,
               private snackBarService: SnackBarService,
               public userService: UserCabinetService,
               private router: Router) {

@@ -31,11 +31,8 @@ import { ColorItemComponent } from "./types/colors/color-item/color-item.compone
 import { FlowerTypeItemComponent } from "./types/flower-types/flower-type-item/flower-type-item.component";
 import { FlowerItemComponent } from "./types/flowers/flower-item/flower-item.component";
 import { PipesModule } from "../pipes/pipes.module";
-import { UniqueValidator } from "../validators/unique-validator.directive";
-import { RangePairValidator } from "../validators/range-pair-validator.directive";
 import { UserItemComponent } from "./users/user-item/user-item.component";
-import { EqualValidator } from "../validators/equal-validator.directive";
-
+import { ValidatorModule } from "../validators/validator.module";
 
 @NgModule({
   declarations: [
@@ -56,10 +53,7 @@ import { EqualValidator } from "../validators/equal-validator.directive";
     SizesComponent,
     SizeItemComponent,
     ColorsComponent,
-    ColorItemComponent,
-    UniqueValidator,
-    RangePairValidator,
-    EqualValidator
+    ColorItemComponent
   ],
   imports: [
     routing,
@@ -84,6 +78,7 @@ import { EqualValidator } from "../validators/equal-validator.directive";
     NgArrayPipesModule,
     SliderModule,
     PipesModule.forRoot(),
+    ValidatorModule.forRoot(),
     ColorPickerModule,
     SliderModule,
     DropdownModule,
@@ -92,7 +87,6 @@ import { EqualValidator } from "../validators/equal-validator.directive";
     RatingModule,
     ListboxModule,
     CheckboxModule,
-
   ],
   providers: [
     ConfirmationService

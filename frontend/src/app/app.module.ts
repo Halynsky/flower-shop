@@ -18,8 +18,22 @@ import { UserModule } from "./components/user/user.module";
 import { MainInterceptor } from "./inteceptors/main.interceptor";
 import { AuthDialogComponent } from "./components/shared/shared/auth-dialog/auth-dialog.component";
 import { BucketDialogComponent } from "./components/shared/shared/bucket-dialog/bucket-dialog.component";
+import { AuthService, AuthServiceConfig, FacebookLoginProvider, GoogleLoginProvider, SocialLoginModule } from "angularx-social-login";
+import { ValidatorModule } from "./validators/validator.module";
 
 registerLocaleData(localeRuUa);
+
+export function getAuthServiceConfigs() {
+  let config = new AuthServiceConfig(
+    [
+      {
+        id: FacebookLoginProvider.PROVIDER_ID,
+        provider: new FacebookLoginProvider(environment.facebookClientId)
+      }
+    ]
+  );
+  return config;
+}
 
 @NgModule({
   declarations: [
@@ -43,7 +57,9 @@ registerLocaleData(localeRuUa);
     LandingModule,
     SharedModule,
     MatDialogModule,
-    UserModule
+    UserModule,
+    SocialLoginModule,
+    ValidatorModule.forRoot()
   ],
   providers: [
     [DatePipe],
@@ -53,6 +69,10 @@ registerLocaleData(localeRuUa);
       provide: HTTP_INTERCEPTORS,
       useClass: MainInterceptor,
       multi: true
+    },
+    {
+      provide: AuthServiceConfig,
+      useFactory: getAuthServiceConfigs
     }
   ],
   exports: [

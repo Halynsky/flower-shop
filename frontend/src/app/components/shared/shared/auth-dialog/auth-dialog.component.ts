@@ -8,6 +8,9 @@ import { getErrorMessage } from "../../../../utils/Functions";
 import { Credentials } from "../../../../api/models/Credentials";
 import { UserService } from "../../../../api/services/user.service";
 import { finalize } from "rxjs/operators";
+import { FacebookLoginProvider } from "angularx-social-login";
+import { AuthService as SocialAuthService } from 'angularx-social-login'
+import { SocialService } from "../../../../api/services/social.service";
 
 @Component({
   selector: 'auth-dialog',
@@ -25,6 +28,8 @@ export class AuthDialogComponent {
 
   constructor(public authService: AuthService,
               public userService: UserService,
+              public socialService: SocialService,
+              public socialAuthService: SocialAuthService,
               private securityService: SecurityService,
               private snackBarService: SnackBarService,
               public dialogRef: MatDialogRef<AuthDialogComponent>) {
@@ -84,8 +89,24 @@ export class AuthDialogComponent {
     )
   }
 
-  // TODO: Implement this
-  facebookAuth() {
+  facebookAuth(): void {
+    this.loading = true;
+    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID)
+      .then(user => {
+        this.socialService.loginOrRegisterWithFacebook(user.authToken)
+          .pipe(finalize(() => this.loading = false))
+          .subscribe(
+            user => {
+              this.securityService.login(user);
+              this.dialogRef.close();
+            }, error => this.snackBarService.showError(getErrorMessage(error))
+          )
+      })
+      .catch(error => {
+        this.snackBarService.showError(getErrorMessage(error));
+        this.loading = false;
+      });
   }
+
 
 }
