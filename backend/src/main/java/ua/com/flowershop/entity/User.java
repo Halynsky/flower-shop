@@ -78,7 +78,7 @@ public class User {
 
     public static User of(SocialUser socialUser) {
         return new User().setEmail(socialUser.getEmail())
-            .setName(socialUser.getFirstName() + socialUser.getLastName())
+            .setName(socialUser.getFirstName() + " " + socialUser.getLastName())
             .setRole(Role.USER)
             .setIsActivated(true);
     }
