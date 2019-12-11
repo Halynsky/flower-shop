@@ -65,6 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers(SLASH + ARTICLES_PATH + SLASH + "**").permitAll()
             .antMatchers(SLASH + COLORS_PATH + SLASH + "**").permitAll()
             .antMatchers(SLASH + SIZES_PATH + SLASH + "**").permitAll()
+            .antMatchers(SLASH + FLOWER_SIZE_PATH + SLASH + "**").permitAll()
             .antMatchers(SLASH + FLOWER_TYPES_PATH + SLASH + "**").permitAll()
             .antMatchers(SLASH + FLOWERS_PATH + SLASH + "**").permitAll()
             .antMatchers(SLASH + WAREHOUSE_OPERATIONS_PATH + SLASH + "**").permitAll()

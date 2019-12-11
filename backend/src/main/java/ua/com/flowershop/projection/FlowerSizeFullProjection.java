@@ -3,6 +3,8 @@ package ua.com.flowershop.projection;
 public interface FlowerSizeFullProjection {
     Integer getPrice();
 
+    Integer getPriceOld();
+
     Integer getAmount();
 
     Integer getReserved();

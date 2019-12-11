@@ -36,6 +36,7 @@ import { EqualValidator } from "../validators/equal-validator.directive";
 import { WarehouseOperationItemComponent } from "./shop/warehouse-operations/warehouse-operation-item/warehouse-operation-item.component";
 import { ValidatorModule } from "../validators/validator.module";
 import { ImagePreviewComponent } from "./shared/image-preview/image-preview.component";
+import { WarehouseComponent } from "./shop/warehouse/warehouse.component";
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { ImagePreviewComponent } from "./shared/image-preview/image-preview.comp
     ColorsComponent,
     ColorItemComponent,
     WarehouseOperationItemComponent,
+    WarehouseComponent,
     UserItemComponent
   ],
   imports: [

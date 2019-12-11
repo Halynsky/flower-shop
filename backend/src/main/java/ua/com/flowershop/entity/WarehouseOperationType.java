@@ -15,7 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity()
-@Table(name = "werehouse_operation_types")
+@Table(name = "warehouse_operation_types")
 public class WarehouseOperationType {
 
     @Id

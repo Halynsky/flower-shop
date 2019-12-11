@@ -36,8 +36,7 @@ public interface FlowerRepository extends JpaRepository<Flower, Long> {
         "AND (:heightFrom IS null or f.flowerHeightMin >= :heightFrom) AND (:heightTo IS null or f.flowerHeightMax <= :heightTo) " +
         "AND (:popularityFrom IS null or f.popularity >= :popularityFrom AND (:popularityTo IS null or f.popularity <= :popularityTo))" +
         "AND (:colorNamePart IS null OR lower(f.color.name) LIKE '%' || lower(cast(:colorNamePart as string)) || '%' ) " +
-        "AND ((CAST(:createdFrom AS date) IS null OR CAST(:createdTo AS date) IS null) OR f.created BETWEEN :createdFrom AND :createdTo) "
-    )
+        "AND ((CAST(:createdFrom AS date) IS null OR CAST(:createdTo AS date) IS null) OR f.created BETWEEN :createdFrom AND :createdTo) ")
     Page<FlowerFullProjection> findForAdminProjectedByFilters(Long id, String flowerNamePart, String flowerOriginalNamePart, List<String> flowerTypeNames, String groupNamePart,
                                                               Integer sizeFrom, Integer sizeTo, Integer heightFrom, Integer heightTo,
                                                               Integer popularityFrom, Integer popularityTo, String colorNamePart,

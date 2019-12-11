@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity()
-@Table(name = "werehouse_operations")
+@Table(name = "warehouse_operations")
 public class WarehouseOperation {
 
     @Id
@@ -35,7 +35,7 @@ public class WarehouseOperation {
     private FlowerSize flowerSize;
 
     @ManyToOne
-    @JoinColumn(name = "werehouse_operation_type_id", nullable = false)
+    @JoinColumn(name = "warehouse_operation_type_id", nullable = false)
     private WarehouseOperationType warehouseOperationType;
 
 }

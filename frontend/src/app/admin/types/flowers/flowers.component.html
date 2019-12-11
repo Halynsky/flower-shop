@@ -142,9 +142,8 @@
           <span *ngSwitchCase="'id'">
             {{rowData[col.field]}}
           </span>
-          <span *ngSwitchCase="'image'">
-            <div class="item-image" [ngStyle]="{'background-image': 'url(' + rowData['image'] + ''}"
-                 (click)="zoomImg(rowData['image'])">
+          <span *ngSwitchCase="'image'" class="table-row-image-wrapper">
+            <div class="table-row-image" [ngStyle]="{'background-image': 'url(' + rowData.image + ''}">
             </div>
           </span>
           <span *ngSwitchCase="'name'">
@@ -154,7 +153,7 @@
             {{rowData[col.field]}}
           </span>
           <span *ngSwitchCase="'flowerType'">
-            {{rowData[col.field].name}}
+            {{rowData[col.field].nameSingle}}
           </span>
           <span *ngSwitchCase="'groupName'">
             {{rowData[col.field]}}
@@ -215,9 +214,3 @@
 
 <p-contextMenu #cm [model]="menuItems"></p-contextMenu>
 
-<div class="image-zoom-modal" *ngIf="this.isZoomed">
-  <div class="filter" (click)="closeImg()"></div>
-  <div class="content">
-    <img src="{{this.imageUrl}}">
-  </div>
-</div>

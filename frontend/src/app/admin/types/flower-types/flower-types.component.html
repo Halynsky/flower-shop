@@ -29,10 +29,8 @@
       <tr [pContextMenuRow]="rowData">
         <td *ngFor="let col of columns" [ngSwitch]="col.field">
 
-          <span *ngSwitchCase="'image'" class="image-wrapper">
-            <div class="item-image" [ngStyle]="{'background-image': 'url(' + rowData['image'] + ''}"
-                 (click)="zoomImg(rowData['image'])">
-            </div>
+          <span *ngSwitchCase="'image'" class="table-row-image-wrapper">
+            <div class="table-row-image" [ngStyle]="{'background-image': 'url(' + rowData.image + ''}"></div>
           </span>
 
           <span *ngSwitchDefault>{{rowData[col.field]}}</span>
@@ -45,9 +43,3 @@
 
 <p-contextMenu #cm [model]="menuItems"></p-contextMenu>
 
-<div class="image-zoom-modal" *ngIf="this.isZoomed">
-  <div class="filter" (click)="closeImg()"></div>
-  <div class="content">
-    <img src="{{this.imageUrl}}">
-  </div>
-</div>

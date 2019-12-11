@@ -50,14 +50,14 @@ INSERT INTO flower_type__sizes (flower_type_id, size_id) VALUES (3, 3);
 INSERT INTO flower_type__sizes (flower_type_id, size_id) VALUES (4, 1);
 INSERT INTO flower_type__sizes (flower_type_id, size_id) VALUES (4, 2);
 
-INSERT INTO flower__sizes (flower_id, size_id, amount, price, price_with_discount) VALUES (1, 2, 28, 1600, 1400);
+INSERT INTO flower__sizes (flower_id, size_id, amount, price, price_old) VALUES (1, 2, 28, 1600, 1800);
 INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (1, 1, 31, 1400);
 INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (2, 1, 81, 1000);
 INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (2, 2, 12, 1800);
 INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (3, 2, 23, 1500);
 INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (3, 1, 10, 1300);
 
-INSERT INTO flower__sizes (flower_id, size_id, amount, price, price_with_discount) VALUES (4, 1, 42, 1100, 900);
+INSERT INTO flower__sizes (flower_id, size_id, amount, price, price_old) VALUES (4, 1, 42, 1100, 1200);
 INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (5, 1, 38, 1000);
 
 INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (6, 1, 0, 1000);
@@ -65,7 +65,7 @@ INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (6, 3, 8, 1
 INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (6, 2, 20, 1500);
 INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (7, 3, 8, 1800);
 INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (7, 2, 88, 1500);
-INSERT INTO flower__sizes (flower_id, size_id, amount, price, price_with_discount) VALUES (8, 2, 1, 1400, 1200);
+INSERT INTO flower__sizes (flower_id, size_id, amount, price, price_old) VALUES (8, 2, 1, 1400, 1500);
 INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (9, 1, 90, 1000);
 INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (9, 2, 50, 1500);
 INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (9, 3, 44, 1900);
@@ -76,27 +76,27 @@ INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (11, 1, 68,
 INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (11, 2, 74, 1900);
 INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (12, 2, 0, 1500);
 INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (12, 1, 6, 1100);
-INSERT INTO flower__sizes (flower_id, size_id, amount, price, price_with_discount) VALUES (13, 2, 88, 1500, 1300);
+INSERT INTO flower__sizes (flower_id, size_id, amount, price, price_old) VALUES (13, 2, 88, 1500, 1600);
 INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (13, 1, 77, 1100);
 
-INSERT INTO werehouse_operations (amount, flower_size_id, date, werehouse_operation_type_id) VALUES (40, 1, '2019-07-10 10:26:12', (SELECT id FROM werehouse_operation_types WHERE operation_type = 'GOODS_ARRIVAL'));
-INSERT INTO werehouse_operations (amount, flower_size_id, date, werehouse_operation_type_id) VALUES (35, 2, '2019-07-12 13:26:12',(SELECT id FROM werehouse_operation_types WHERE operation_type = 'GOODS_ARRIVAL'));
-INSERT INTO werehouse_operations (amount, flower_size_id, date, werehouse_operation_type_id) VALUES (90, 3, '2019-07-15 22:26:12', (SELECT id FROM werehouse_operation_types WHERE operation_type = 'GOODS_ARRIVAL'));
-INSERT INTO werehouse_operations (amount, flower_size_id, date, werehouse_operation_type_id) VALUES (73, 4, '2019-07-10 10:26:12', (SELECT id FROM werehouse_operation_types WHERE operation_type = 'GOODS_ARRIVAL'));
-INSERT INTO werehouse_operations (amount, flower_size_id, date, werehouse_operation_type_id) VALUES (108, 5, '2019-07-12 13:26:12',(SELECT id FROM werehouse_operation_types WHERE operation_type = 'GOODS_ARRIVAL'));
-INSERT INTO werehouse_operations (amount, flower_size_id, date, werehouse_operation_type_id) VALUES (140, 6, '2019-07-15 22:26:12', (SELECT id FROM werehouse_operation_types WHERE operation_type = 'GOODS_ARRIVAL'));
-INSERT INTO werehouse_operations (amount, flower_size_id, date, werehouse_operation_type_id) VALUES (98, 7, '2019-07-10 10:26:12', (SELECT id FROM werehouse_operation_types WHERE operation_type = 'GOODS_ARRIVAL'));
-INSERT INTO werehouse_operations (amount, flower_size_id, date, werehouse_operation_type_id) VALUES (199, 8, '2019-07-12 13:26:12',(SELECT id FROM werehouse_operation_types WHERE operation_type = 'GOODS_ARRIVAL'));
-INSERT INTO werehouse_operations (amount, flower_size_id, date, werehouse_operation_type_id) VALUES (133, 9, '2019-07-15 22:26:12', (SELECT id FROM werehouse_operation_types WHERE operation_type = 'GOODS_ARRIVAL'));
-INSERT INTO werehouse_operations (amount, flower_size_id, date, werehouse_operation_type_id) VALUES (12, 1, '2019-07-10 10:26:12', (SELECT id FROM werehouse_operation_types WHERE operation_type = 'DEFECT'));
-INSERT INTO werehouse_operations (amount, flower_size_id, date, werehouse_operation_type_id) VALUES (4, 2, '2019-07-12 13:26:12',(SELECT id FROM werehouse_operation_types WHERE operation_type = 'EXTERNAL_SALE'));
-INSERT INTO werehouse_operations (amount, flower_size_id, date, werehouse_operation_type_id) VALUES (9, 3, '2019-07-15 22:26:12', (SELECT id FROM werehouse_operation_types WHERE operation_type = 'GIFT'));
-INSERT INTO werehouse_operations (amount, flower_size_id, date, werehouse_operation_type_id) VALUES (61, 4, '2019-07-10 10:26:12', (SELECT id FROM werehouse_operation_types WHERE operation_type = 'INTERNAL_SALE'));
-INSERT INTO werehouse_operations (amount, flower_size_id, date, werehouse_operation_type_id) VALUES (85, 5, '2019-07-12 13:26:12',(SELECT id FROM werehouse_operation_types WHERE operation_type = 'EXTERNAL_SALE'));
-INSERT INTO werehouse_operations (amount, flower_size_id, date, werehouse_operation_type_id) VALUES (130, 6, '2019-07-15 22:26:12', (SELECT id FROM werehouse_operation_types WHERE operation_type = 'DEFECT'));
-INSERT INTO werehouse_operations (amount, flower_size_id, date, werehouse_operation_type_id) VALUES (56, 7, '2019-07-10 10:26:12', (SELECT id FROM werehouse_operation_types WHERE operation_type = 'INTERNAL_SALE'));
-INSERT INTO werehouse_operations (amount, flower_size_id, date, werehouse_operation_type_id) VALUES (161, 8, '2019-07-12 13:26:12',(SELECT id FROM werehouse_operation_types WHERE operation_type = 'GIFT'));
-INSERT INTO werehouse_operations (amount, flower_size_id, date, werehouse_operation_type_id) VALUES (133, 9, '2019-07-15 22:26:12', (SELECT id FROM werehouse_operation_types WHERE operation_type = 'GIFT'));
+INSERT INTO warehouse_operations (amount, flower_size_id, date, warehouse_operation_type_id) VALUES (40, 1, '2019-07-10 10:26:12', (SELECT id FROM warehouse_operation_types WHERE operation_type = 'GOODS_ARRIVAL'));
+INSERT INTO warehouse_operations (amount, flower_size_id, date, warehouse_operation_type_id) VALUES (35, 2, '2019-07-12 13:26:12',(SELECT id FROM warehouse_operation_types WHERE operation_type = 'GOODS_ARRIVAL'));
+INSERT INTO warehouse_operations (amount, flower_size_id, date, warehouse_operation_type_id) VALUES (90, 3, '2019-07-15 22:26:12', (SELECT id FROM warehouse_operation_types WHERE operation_type = 'GOODS_ARRIVAL'));
+INSERT INTO warehouse_operations (amount, flower_size_id, date, warehouse_operation_type_id) VALUES (73, 4, '2019-07-10 10:26:12', (SELECT id FROM warehouse_operation_types WHERE operation_type = 'GOODS_ARRIVAL'));
+INSERT INTO warehouse_operations (amount, flower_size_id, date, warehouse_operation_type_id) VALUES (108, 5, '2019-07-12 13:26:12',(SELECT id FROM warehouse_operation_types WHERE operation_type = 'GOODS_ARRIVAL'));
+INSERT INTO warehouse_operations (amount, flower_size_id, date, warehouse_operation_type_id) VALUES (140, 6, '2019-07-15 22:26:12', (SELECT id FROM warehouse_operation_types WHERE operation_type = 'GOODS_ARRIVAL'));
+INSERT INTO warehouse_operations (amount, flower_size_id, date, warehouse_operation_type_id) VALUES (98, 7, '2019-07-10 10:26:12', (SELECT id FROM warehouse_operation_types WHERE operation_type = 'GOODS_ARRIVAL'));
+INSERT INTO warehouse_operations (amount, flower_size_id, date, warehouse_operation_type_id) VALUES (199, 8, '2019-07-12 13:26:12',(SELECT id FROM warehouse_operation_types WHERE operation_type = 'GOODS_ARRIVAL'));
+INSERT INTO warehouse_operations (amount, flower_size_id, date, warehouse_operation_type_id) VALUES (133, 9, '2019-07-15 22:26:12', (SELECT id FROM warehouse_operation_types WHERE operation_type = 'GOODS_ARRIVAL'));
+INSERT INTO warehouse_operations (amount, flower_size_id, date, warehouse_operation_type_id) VALUES (12, 1, '2019-07-10 10:26:12', (SELECT id FROM warehouse_operation_types WHERE operation_type = 'DEFECT'));
+INSERT INTO warehouse_operations (amount, flower_size_id, date, warehouse_operation_type_id) VALUES (4, 2, '2019-07-12 13:26:12',(SELECT id FROM warehouse_operation_types WHERE operation_type = 'EXTERNAL_SALE'));
+INSERT INTO warehouse_operations (amount, flower_size_id, date, warehouse_operation_type_id) VALUES (9, 3, '2019-07-15 22:26:12', (SELECT id FROM warehouse_operation_types WHERE operation_type = 'GIFT'));
+INSERT INTO warehouse_operations (amount, flower_size_id, date, warehouse_operation_type_id) VALUES (61, 4, '2019-07-10 10:26:12', (SELECT id FROM warehouse_operation_types WHERE operation_type = 'INTERNAL_SALE'));
+INSERT INTO warehouse_operations (amount, flower_size_id, date, warehouse_operation_type_id) VALUES (85, 5, '2019-07-12 13:26:12',(SELECT id FROM warehouse_operation_types WHERE operation_type = 'EXTERNAL_SALE'));
+INSERT INTO warehouse_operations (amount, flower_size_id, date, warehouse_operation_type_id) VALUES (130, 6, '2019-07-15 22:26:12', (SELECT id FROM warehouse_operation_types WHERE operation_type = 'DEFECT'));
+INSERT INTO warehouse_operations (amount, flower_size_id, date, warehouse_operation_type_id) VALUES (56, 7, '2019-07-10 10:26:12', (SELECT id FROM warehouse_operation_types WHERE operation_type = 'INTERNAL_SALE'));
+INSERT INTO warehouse_operations (amount, flower_size_id, date, warehouse_operation_type_id) VALUES (161, 8, '2019-07-12 13:26:12',(SELECT id FROM warehouse_operation_types WHERE operation_type = 'GIFT'));
+INSERT INTO warehouse_operations (amount, flower_size_id, date, warehouse_operation_type_id) VALUES (133, 9, '2019-07-15 22:26:12', (SELECT id FROM warehouse_operation_types WHERE operation_type = 'GIFT'));
 
 INSERT INTO users (email, phone, password, name, role, is_enabled, is_virtual, is_activated) VALUES ('admin@gmail.com', '0501111111', '$2a$10$Sl0X5/wPiIi6LxdkBoLq1O5/vonmz/wwr7zb3XKyMNUqszBtM/ynO', 'Admin', 'ADMIN', true, false, true);
 INSERT INTO users (email, phone, password, name, role, is_enabled, is_virtual, is_activated) VALUES ('support@gmail.com', '0502222222', '$2a$10$Sl0X5/wPiIi6LxdkBoLq1O5/vonmz/wwr7zb3XKyMNUqszBtM/ynO', 'Support', 'SUPPORT', true, false, true);

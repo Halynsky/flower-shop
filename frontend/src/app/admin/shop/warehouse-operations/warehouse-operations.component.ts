@@ -14,7 +14,7 @@ import { Pagination } from "../../../api/models/Pagination";
 import { RestPage } from "../../../api/models/RestPage";
 
 @Component({
-  selector: 'app-warehouse',
+  selector: 'warehouse',
   templateUrl: './warehouse-operations.component.html',
   styleUrls: ['./warehouse-operations.component.scss']
 })
@@ -23,8 +23,6 @@ export class WarehouseOperationsComponent implements OnInit {
   @ViewChild('dt') private table: Table;
 
   ItemSaveMode = ItemSaveMode;
-  mode: ItemSaveMode = ItemSaveMode.new;
-
   WarehouseOperationType = WarehouseOperationType;
   directionOptions = [];
   operationTypes = [];

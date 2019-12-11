@@ -14,7 +14,7 @@ export class FlowerService {
 
   constructor(private  http: HttpClient) {}
 
-  getForAdmin(params, pagination) {
+  getAllForAdmin(params, pagination) {
     params = Object.assign(params, ...pagination);
     return this.http.get<RestPage<Flower>>(`${this.URL}/forAdmin`, {params: params});
   }

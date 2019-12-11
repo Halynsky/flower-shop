@@ -1,0 +1,107 @@
+<div class="panel-header">
+  <h1>Склад</h1>
+  <div class="buttons">
+    <button pButton (click)="refresh()" icon="pi pi-refresh" label="&nbsp;&nbsp;Оновити"></button>
+  </div>
+</div>
+
+<div class="panel-content">
+  <p-table #dt [columns]="selectedColumns" [value]="items.content" sortField="flower.flowerType.nameSingle" [paginator]="true" [rows]="10" [totalRecords]="items.totalElements"
+           [tableStyle]="{'table-layout':'auto'}"
+           (onLazyLoad)="onLazyLoad($event)" [lazy]="true">
+
+    <!--Column selector-->
+    <ng-template pTemplate="caption">
+      <div style="text-align:left">
+        <p-multiSelect [options]="columns" [(ngModel)]="selectedColumns" optionLabel="header"
+                       selectedItemsLabel="{0} колонок обрано" [style]="{minWidth: '300px'}" defaultLabel="Оберіть колонки"
+                       (onChange)="onColumnSelect($event)"></p-multiSelect>
+      </div>
+    </ng-template>
+
+    <!--Headers-->
+    <ng-template pTemplate="header" let-columns>
+      <!--Titles-->
+      <tr>
+
+          <ng-container *ngFor="let col of columns" [ngSwitch]="col.field">
+
+            <th *ngSwitchCase="'flowerType'" [pSortableColumn]="'flower.flowerType.nameSingle'" >
+              {{col.header}}
+              <p-sortIcon [field]="'flower.flowerType.nameSingle'"></p-sortIcon>
+            </th>
+
+            <th *ngSwitchCase="'flower'" [pSortableColumn]="'flower.name'" >
+              {{col.header}}
+              <p-sortIcon [field]="'flower.name'"></p-sortIcon>
+            </th>
+
+            <th *ngSwitchCase="'size'" [pSortableColumn]="'size.name'" >
+              {{col.header}}
+              <p-sortIcon [field]="'size.name'"></p-sortIcon>
+            </th>
+
+            <th *ngSwitchDefault [pSortableColumn]="col.field" >
+              {{col.header}}
+              <p-sortIcon [field]="col.field"></p-sortIcon>
+            </th>
+
+          </ng-container>
+
+      </tr>
+      <!--Filters-->
+      <tr>
+        <th *ngFor="let col of columns" [ngSwitch]="col.field">
+          <input *ngSwitchCase="'id'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'equals')" class="table-filter">
+          <input *ngSwitchCase="'flower'" pInputText type="text" (input)="dt.filter($event.target.value, 'flowerNamePart', 'startsWith')" class="table-filter">
+
+          <div *ngSwitchCase="'flowerType'">
+            <p-multiSelect [options]="flowerTypes" defaultLabel="Всі"
+                           class="table-filter"
+                           (onChange)="dt.filter($event.value, 'flowerTypeNames', 'in')"></p-multiSelect>
+          </div>
+
+        </th>
+      </tr>
+    </ng-template>
+
+    <!--Rows-->
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr [pContextMenuRow]="rowData">
+        <td *ngFor="let col of columns" [ngSwitch]="col.field">
+
+          <span *ngSwitchCase="'image'" class="table-row-image-wrapper">
+            <div class="table-row-image" [ngStyle]="{'background-image': 'url(' + rowData.flower.image + ''}"></div>
+          </span>
+
+          <span *ngSwitchCase="'flowerType'">
+            {{rowData.flower.flowerType.nameSingle}}
+          </span>
+
+          <span *ngSwitchCase="'flower'">
+            {{rowData.flower.name}}
+          </span>
+
+          <span *ngSwitchCase="'size'">
+            {{rowData.size.name}}
+          </span>
+
+          <span *ngSwitchCase="'price'">
+            {{rowData[col.field] / 100}}
+          </span>
+
+          <span *ngSwitchCase="'priceOld'">
+            <span *ngIf="!rowData[col.field]"></span>
+            <span *ngIf="rowData[col.field]">{{rowData[col.field] / 100}}</span>
+          </span>
+
+          <span *ngSwitchDefault>
+            {{rowData[col.field]}}
+          </span>
+
+        </td>
+      </tr>
+    </ng-template>
+
+  </p-table>
+</div>

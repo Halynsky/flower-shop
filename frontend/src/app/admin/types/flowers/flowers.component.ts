@@ -53,7 +53,7 @@ export class FlowersComponent implements OnInit {
 
   flowerSizeCols = [
     {field: 'size', header: 'Розмір'},
-    {field: 'price', header: 'Ціна'},
+    {field: 'price', header: 'Ціна, грн'},
     {field: 'amount', header: 'Кількість'}
   ];
 
@@ -62,7 +62,7 @@ export class FlowersComponent implements OnInit {
     {field: 'image', header: 'Фото', active: true},
     {field: 'name', header: 'Назва', active: true},
     {field: 'nameOriginal', header: 'Назва(англ)', active: false},
-    {field: 'flowerType', header: 'Тип квітки', active: false},
+    {field: 'flowerType', header: 'Тип квітки', active: true},
     {field: 'groupName', header: 'Група', active: false},
     {field: 'flowerSizeMin', header: 'Розмір', active: true},
     {field: 'flowerHeightMin', header: 'Висота', active: true},
@@ -70,7 +70,7 @@ export class FlowersComponent implements OnInit {
     {field: 'isPopular', header: 'Популярна', active: false},
     {field: 'popularity', header: 'Рейтинг', active: true},
     {field: 'color', header: 'Колір', active: true},
-    {field: 'created', header: 'Створення', active: true}
+    {field: 'created', header: 'Створено', active: false}
   ];
 
   selectedColumns = this.cols.filter(column => column.active);
@@ -109,7 +109,7 @@ export class FlowersComponent implements OnInit {
   }
 
   loadDataLazy(filters = {}, pagination: Pagination = new Pagination()) {
-    this.dataService.getForAdmin(filters, pagination).subscribe(
+    this.dataService.getAllForAdmin(filters, pagination).subscribe(
       items => this.items = items,
       error => this.snackBarService.showError(error.error.message)
     )

@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { EventEmitter, Injectable } from "@angular/core";
 import { Role } from "../models/Role";
 
 import { Router } from "@angular/router";
@@ -6,15 +6,22 @@ import { Router } from "@angular/router";
 import { User } from "../api/models/User";
 import { USER_KEY } from "../utils/Costants";
 import { AuthService as SocialAuthService } from "angularx-social-login";
+import { ReplaySubject } from "rxjs";
 
 
 @Injectable({providedIn: 'root'})
 export class SecurityService {
 
-  private isLoggedIn: boolean = false;
+  public onLogin: ReplaySubject<any> = new ReplaySubject(1);
+  public onLogout: EventEmitter<any> = new EventEmitter();
 
   constructor(public router: Router,
-              public socialAuthService: SocialAuthService){
+              public socialAuthService: SocialAuthService) {
+    this.onLogin.subscribe(() => {
+      if (this.hasAnyRole([Role.ADMIN, Role.SUPPORT])) {
+        this.router.navigate(['admin']);
+      }
+    })
   }
 
 
@@ -24,6 +31,7 @@ export class SecurityService {
 
   login(user: User) {
     localStorage.setItem(USER_KEY, JSON.stringify(user));
+    this.onLogin.next();
   }
 
   logout() {
@@ -34,6 +42,7 @@ export class SecurityService {
         this.socialAuthService.signOut();
       }
     });
+    this.onLogout.emit();
   }
 
   hasRole(role: Role) {
