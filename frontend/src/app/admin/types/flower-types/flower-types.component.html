@@ -20,13 +20,23 @@
         <th *ngFor="let col of columns" [ngSwitch]="col.field">
           <input *ngSwitchCase="'name'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" class="table-filter">
           <input *ngSwitchCase="'nameSingle'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" class="table-filter">
+          <input *ngSwitchCase="'nameOriginal'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" class="table-filter">
+
         </th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-rowData let-columns="columns">
       <tr [pContextMenuRow]="rowData">
-        <td *ngFor="let col of columns">
-          {{rowData[col.field]}}
+        <td *ngFor="let col of columns" [ngSwitch]="col.field">
+
+          <span *ngSwitchCase="'image'" class="image-wrapper">
+            <div class="item-image" [ngStyle]="{'background-image': 'url(' + rowData['image'] + ''}"
+                 (click)="zoomImg(rowData['image'])">
+            </div>
+          </span>
+
+          <span *ngSwitchDefault>{{rowData[col.field]}}</span>
+
         </td>
       </tr>
     </ng-template>
@@ -34,3 +44,10 @@
 </div>
 
 <p-contextMenu #cm [model]="menuItems"></p-contextMenu>
+
+<div class="image-zoom-modal" *ngIf="this.isZoomed">
+  <div class="filter" (click)="closeImg()"></div>
+  <div class="content">
+    <img src="{{this.imageUrl}}">
+  </div>
+</div>

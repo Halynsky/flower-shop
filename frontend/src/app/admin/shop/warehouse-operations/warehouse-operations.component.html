@@ -1,5 +1,5 @@
 <div class="panel-header">
-  <h1>Товарні Операції</h1>
+  <h1>Складські Операції</h1>
   <div class="buttons">
     <button pButton [routerLink]="['item', ItemSaveMode.new]" icon="pi pi-plus" class="ui-button-success" label="&nbsp;&nbsp;Додати"></button>
     <button pButton (click)="refresh()" icon="pi pi-refresh" label="&nbsp;&nbsp;Оновити"></button>
@@ -114,9 +114,9 @@
           </span>
 
           <span *ngSwitchCase="'direction'">
-            <span>{{translation.text[rowData.warehouseOperationType.direction]}}</span>
             <img class="direction-arrow" *ngIf="rowData.warehouseOperationType.direction == WarehouseOperationType.Direction.IN" src="/assets/icons/interface/arrow-in-green.png">
             <img class="direction-arrow" *ngIf="rowData.warehouseOperationType.direction == WarehouseOperationType.Direction.OUT" src="/assets/icons/interface/arrow-out-red.png">
+            <span>{{translation.text[rowData.warehouseOperationType.direction]}}</span>
           </span>
 
           <span *ngSwitchCase="'operationType'">

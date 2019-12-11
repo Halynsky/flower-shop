@@ -27,10 +27,12 @@ export class UsersComponent implements OnInit {
     {field: 'email', header: 'Email', active: true},
     {field: 'phone', header: 'Телефон', active: true},
     {field: 'role', header: 'Роль', active: true},
-    {field: 'isEnabled', header: 'Розблокований', active: true},
+    {field: 'isEnabled', header: 'Розблокований', active: false},
     {field: 'isVirtual', header: 'Віртуальний', active: true},
-    {field: 'isActivated', header: 'Активований', active: true},
-    {field: 'created', header: 'Дата реєстрації', active: true},
+    {field: 'isActivated', header: 'Активований', active: false},
+    {field: 'created', header: 'Дата реєстрації', active: false},
+    {field: 'lastOrderDate', header: 'Дата останньої покупки', active: true},
+    {field: 'note', header: 'Примітка', active: false},
   ];
 
   selectedColumns = this.cols.filter(column => column.active);

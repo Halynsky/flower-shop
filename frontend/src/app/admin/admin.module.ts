@@ -35,6 +35,7 @@ import { UserItemComponent } from "./users/user-item/user-item.component";
 import { EqualValidator } from "../validators/equal-validator.directive";
 import { WarehouseOperationItemComponent } from "./shop/warehouse-operations/warehouse-operation-item/warehouse-operation-item.component";
 import { ValidatorModule } from "../validators/validator.module";
+import { ImagePreviewComponent } from "./shared/image-preview/image-preview.component";
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { ValidatorModule } from "../validators/validator.module";
     AdminSidebarComponent,
     AdminHeaderComponent,
     AdminAccordionComponent,
+    ImagePreviewComponent,
     UsersComponent,
     UserItemComponent,
     AdminHeaderComponent,

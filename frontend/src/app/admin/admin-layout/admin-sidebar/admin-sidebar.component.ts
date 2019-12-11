@@ -37,6 +37,11 @@ export class AdminSidebarComponent implements OnInit {
           {
             label: 'Склад',
             icon: 'fas fa-warehouse',
+            routerLink: 'shop/warehouse'
+          },
+          {
+            label: 'Складські операції',
+            icon: 'fas fa-boxes',
             routerLink: 'shop/warehouse-operations'
           }
         ]

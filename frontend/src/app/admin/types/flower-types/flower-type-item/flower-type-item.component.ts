@@ -15,7 +15,8 @@ export class FlowerTypeItemComponent implements OnInit {
 
   ItemSaveMode = ItemSaveMode;
   mode: ItemSaveMode = ItemSaveMode.new;
-  previousName;
+  previousName: string;
+  private newImage: File;
 
   item: FlowerType = new FlowerType();
 
@@ -53,7 +54,12 @@ export class FlowerTypeItemComponent implements OnInit {
   }
 
   add() {
-    this.dataService.add(this.item).subscribe(
+    const formData: FormData = new FormData();
+    formData.append('data', JSON.stringify(this.item));
+    if (this.newImage) {
+      formData.append('file', this.newImage);
+    }
+    this.dataService.add(formData).subscribe(
       response => {
         this.snackBarService.showSuccess("Тип квітів успішно створено");
         this.router.navigate(['../../'], {relativeTo: this.route})
@@ -63,7 +69,12 @@ export class FlowerTypeItemComponent implements OnInit {
   }
 
   update() {
-    this.dataService.update(this.item.id, this.item).subscribe(
+    const formData: FormData = new FormData();
+    formData.append('data', JSON.stringify(this.item));
+    if (this.newImage) {
+      formData.append('file', this.newImage);
+    }
+    this.dataService.update(this.item.id, formData).subscribe(
       response => {
         this.snackBarService.showSuccess("Тип квітів успішно оновлено");
         this.router.navigate(['../../'], {relativeTo: this.route})
@@ -74,6 +85,13 @@ export class FlowerTypeItemComponent implements OnInit {
 
   onSubmit() {
     this.mode == ItemSaveMode.new ? this.add() : this.update()
+  }
+
+  addImage(event: File): void {
+    if (!event) {
+      this.item.image = null;
+    }
+    this.newImage = event;
   }
 
 }

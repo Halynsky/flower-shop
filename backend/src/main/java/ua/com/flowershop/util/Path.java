@@ -18,6 +18,7 @@ public class Path {
     public static final String SIZES				= "sizes";
     public static final String WAREHOUSE_OPERATIONS	= "warehouse-operations";
     public static final String ORDERS	            = "orders";
+    public static final String IMAGES               = "images";
 
 	//	CONTROLLER ENDPOINTS
     public static final String AUTH_PATH 			        = API + SLASH + AUTH;
@@ -30,12 +31,17 @@ public class Path {
 	public static final String SIZES_PATH			        = API + SLASH + SIZES;
 	public static final String WAREHOUSE_OPERATIONS_PATH 	= API + SLASH + WAREHOUSE_OPERATIONS;
 	public static final String ORDERS_PATH 		            = API + SLASH + ORDERS;
+    public static final String IMAGES_PATH                  = API + SLASH + IMAGES;
 
 	// OTHER
     public static final String EMAIL                    = "email";
     public static final String CONFIRM				    = "confirm";
     public static final String ACTIVATION				= "activation";
     public static final String RESTORE_PASSWORD         = "restore-password";
+    public static final String ICON                     = "icon";
+
+    // PATH VARIABLES
+    public static final String ID_PATH_VARIABLE         = "/{id}";
 
 }
 

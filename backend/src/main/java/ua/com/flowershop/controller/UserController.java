@@ -8,6 +8,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import ua.com.flowershop.model.UserAdminModel;
 import ua.com.flowershop.model.UserModel;
 import ua.com.flowershop.projection.UserAdminProjection;
 import ua.com.flowershop.repository.UserRepository;
@@ -51,14 +52,14 @@ public class UserController {
 
     @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody UserModel user){
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody UserAdminModel user){
         userService.update(id ,user);
         return new ResponseEntity<>(OK);
     }
 
     @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @PostMapping()
-    public ResponseEntity<Void> create(@RequestBody UserModel user){
+    public ResponseEntity<Void> create(@RequestBody UserAdminModel user){
         userService.createVirtual(user);
         return new ResponseEntity<>(OK);
     }

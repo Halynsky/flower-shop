@@ -33,6 +33,7 @@ public class WarehouseOperationController {
     @Autowired private WarehouseOperationTypeRepository warehouseOperationTypeRepository;
     @Autowired private WarehouseOperationService warehouseOperationService;
 
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @PageableSwagger
     @GetMapping
     public ResponseEntity<Page<WarehouseOperationProjection>> getAll(@RequestParam(required = false) Long id,
@@ -51,11 +52,13 @@ public class WarehouseOperationController {
         return new ResponseEntity<>(page, OK);
     }
 
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @GetMapping("/byWarehouseOperationType")
     public ResponseEntity<WarehouseOperationTypeProjection> getWarehouseOperationTypeByOperation(@RequestParam WarehouseOperationType.OperationType operationType) {
         return new ResponseEntity<>(warehouseOperationTypeRepository.findPrjectedByOperationType(operationType), OK);
     }
 
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<WarehouseOperationProjection> getById(@PathVariable Long id) {
         WarehouseOperationProjection warehouseOperationProjection = warehouseOperationRepository.findProjectedById(id)
@@ -63,6 +66,7 @@ public class WarehouseOperationController {
         return new ResponseEntity<>(warehouseOperationProjection, OK);
     }
 
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @PostMapping
     public ResponseEntity<Void> add(@RequestBody WarehouseOperationModel warehouseOperationModel) {
         warehouseOperationService.add(warehouseOperationModel);
@@ -70,6 +74,7 @@ public class WarehouseOperationController {
         return new ResponseEntity<>(OK);
     }
 
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> cancel(@PathVariable Long id) {
         warehouseOperationService.cancel(id);

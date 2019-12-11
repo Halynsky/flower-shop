@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.flowershop.entity.SocialConnection;
 import ua.com.flowershop.entity.User;
+import ua.com.flowershop.model.UserAdminModel;
 import ua.com.flowershop.model.UserModel;
 import ua.com.flowershop.model.socials.SocialUser;
 import ua.com.flowershop.repository.SocialConnectionRepository;
@@ -24,26 +25,28 @@ public class UserService {
     @Autowired private MailService mailService;
     @Autowired private SocialConnectionRepository socialConnectionRepository;
 
-    public void update(Long id, UserModel userModel) {
+    public void update(Long id, UserAdminModel userModel) {
         User user = userRepository.findById(id)
             .orElseThrow(EntityNotFoundException::new);
 
         user.setName(userModel.getName())
             .setEmail(userModel.getEmail())
             .setPhone(userModel.getPhone())
-            .setIsEnabled(userModel.getIsEnabled());
+            .setIsEnabled(userModel.getIsEnabled())
+            .setNote(userModel.getNote());
 
         userRepository.save(user);
     }
 
-    public void createVirtual(UserModel userModel) {
+    public void createVirtual(UserAdminModel userModel) {
         userRepository.save(new User()
             .setName(userModel.getName())
             .setEmail(userModel.getEmail())
             .setPhone(userModel.getPhone())
             .setIsVirtual(true)
             .setIsEnabled(userModel.getIsEnabled())
-            .setIsActivated(true));
+            .setIsActivated(true))
+            .setNote(userModel.getNote());
     }
 
     public void updateDisabled(Long id, Boolean disabled) {

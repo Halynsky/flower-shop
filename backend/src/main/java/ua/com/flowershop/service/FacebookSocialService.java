@@ -81,12 +81,11 @@ public class FacebookSocialService {
             throw new ThirdPartyException(message);
         }
 
-        FacebookUserProfile userProfile;
         int statusCode;
         statusCode = response.getStatusLine().getStatusCode();
         String result = EntityUtils.toString(response.getEntity());
 
-        userProfile = objectMapper.readValue(result, FacebookUserProfile.class);
+        FacebookUserProfile userProfile = objectMapper.readValue(result, FacebookUserProfile.class);
 
         if (statusCode != 200) {
             String message = "Error in request to Facebook API with statusCode " + statusCode + ". " + response.getStatusLine().getReasonPhrase();
