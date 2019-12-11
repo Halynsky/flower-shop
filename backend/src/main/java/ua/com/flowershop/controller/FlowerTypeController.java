@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import ua.com.flowershop.entity.FlowerType;
 import ua.com.flowershop.model.FlowerTypeModel;
 import ua.com.flowershop.projection.FlowerTypeProjection;
 import ua.com.flowershop.repository.FlowerTypeRepository;
@@ -55,10 +54,10 @@ public class FlowerTypeController {
 
     @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @PostMapping
-    public ResponseEntity<Void> add(@RequestPart(value = "data") String data,
-                                    @RequestPart(value = "file", required = false) MultipartFile image) throws IOException {
+    public ResponseEntity<Void> create(@RequestPart(value = "data") String data,
+                                       @RequestPart(value = "file", required = false) MultipartFile image) throws IOException {
         FlowerTypeModel flowerTypeModel = objectMapper.readValue(data, FlowerTypeModel.class);
-        flowerTypeService.save(flowerTypeModel, image);
+        flowerTypeService.create(flowerTypeModel, image);
         return new ResponseEntity<>(OK);
     }
 

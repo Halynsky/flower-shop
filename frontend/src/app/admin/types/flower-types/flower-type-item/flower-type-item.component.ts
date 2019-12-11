@@ -53,13 +53,13 @@ export class FlowerTypeItemComponent implements OnInit {
     )
   }
 
-  add() {
+  create() {
     const formData: FormData = new FormData();
     formData.append('data', JSON.stringify(this.item));
     if (this.newImage) {
       formData.append('file', this.newImage);
     }
-    this.dataService.add(formData).subscribe(
+    this.dataService.create(formData).subscribe(
       response => {
         this.snackBarService.showSuccess("Тип квітів успішно створено");
         this.router.navigate(['../../'], {relativeTo: this.route})
@@ -84,7 +84,7 @@ export class FlowerTypeItemComponent implements OnInit {
   }
 
   onSubmit() {
-    this.mode == ItemSaveMode.new ? this.add() : this.update()
+    this.mode == ItemSaveMode.new ? this.create() : this.update()
   }
 
   addImage(event: File): void {

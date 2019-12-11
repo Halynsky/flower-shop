@@ -26,6 +26,7 @@ export class FlowerItemComponent implements OnInit {
   previousName;
   ItemSaveMode = ItemSaveMode;
   mode: ItemSaveMode = ItemSaveMode.new;
+  private newImage: File;
 
   flowerTypes: FlowerType[] = [];
   item: FlowerFull = new FlowerFull();
@@ -133,9 +134,14 @@ export class FlowerItemComponent implements OnInit {
 
 
   create() {
+    const formData: FormData = new FormData();
     this.compareArrays(this.sizesToChange, this.flowerSizes);
     this.item.flowerSizes = this.flowerSizes;
-    this.dataService.create(this.item).subscribe(
+    formData.append('data', JSON.stringify(this.item));
+    if (this.newImage) {
+      formData.append('file', this.newImage);
+    }
+    this.dataService.create(formData).subscribe(
       response => {
         this.snackBarService.showSuccess("'Квітку' успішно створено");
         this.router.navigate(['../../'], {relativeTo: this.route})
@@ -145,11 +151,16 @@ export class FlowerItemComponent implements OnInit {
   }
 
   update() {
+    const formData: FormData = new FormData();
     if (this.isEditFlowerSizesShowed) {
       this.compareArrays(this.sizesToChange, this.flowerSizes);
       this.item.flowerSizes = this.flowerSizes;
     }
-    this.dataService.update(this.item.id, this.item).subscribe(
+    formData.append('data', JSON.stringify(this.item));
+    if (this.newImage) {
+      formData.append('file', this.newImage);
+    }
+    this.dataService.update(this.item.id, formData).subscribe(
       response => {
         this.snackBarService.showSuccess("'Квітку' успішно оновлено");
         this.router.navigate(['../../'], {relativeTo: this.route})
@@ -168,6 +179,13 @@ export class FlowerItemComponent implements OnInit {
 
   onSizeChange(size, i) {
     this.flowerSizes[i].size = size;
+  }
+
+  addImage(event: File): void {
+    if (!event) {
+      this.item.image = null;
+    }
+    this.newImage = event;
   }
 
 }

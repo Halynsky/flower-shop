@@ -23,7 +23,7 @@ public class OrderService {
     @Autowired private OrderItemRepository orderItemRepository;
     @Autowired private FlowerSizeRepository flowerSizeRepository;
 
-    public void save(OrderModel orderModel) {
+    public void create(OrderModel orderModel) {
         Order order = new Order();
         Set<OrderItem> orderItems = orderModel.getOrderItems().stream()
             .map(om -> {

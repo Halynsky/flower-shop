@@ -42,7 +42,7 @@ public class FlowerTypeService {
     }
 
     @Transactional
-    public FlowerType save(FlowerTypeModel flowerTypeModel, MultipartFile image) {
+    public FlowerType create(FlowerTypeModel flowerTypeModel, MultipartFile image) {
         FlowerType flowerType = FlowerType.of(flowerTypeModel);
         if(nonNull(image)) {
             String imageUrl = imageService.saveImage(image);

@@ -56,11 +56,11 @@ export class FlowerService {
     return this.http.get<FlowerFull>(`${this.URL}/${id}/full`);
   }
 
-  create(flower: Flower) {
+  create(flower: FormData) {
     return this.http.post(`${this.URL}`, flower);
   }
 
-  update(id: number, flower: Flower) {
+  update(id: number, flower: FormData) {
     return this.http.put(`${this.URL}/${id}`, flower);
   }
 

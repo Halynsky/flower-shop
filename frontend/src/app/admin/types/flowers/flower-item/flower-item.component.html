@@ -55,15 +55,13 @@
 
       <div class="prime-form-group">
         <div class="ui-grid-col-3">
-          <label for="nameOriginal">Фото</label>
+          <label for="image">Картинка</label>
         </div>
         <div class="ui-grid-col-3">
-          <input
-            pInputText
-            #image="ngModel"
-            id="image"
-            name="image"
-            [(ngModel)]="item.image"/>
+          <image-preview [previewSize]="80" (fileChange)="addImage($event)" class="image" id="image"
+                         [image]="item.image"></image-preview>
+        </div>
+        <div class="ui-grid-col-3">
         </div>
       </div>
 

@@ -16,8 +16,8 @@ public class OrderController {
     @Autowired private OrderService orderService;
 
     @PostMapping
-    public ResponseEntity<Void> add(@RequestBody OrderModel orderModel) {
-        orderService.save(orderModel);
+    public ResponseEntity<Void> create(@RequestBody OrderModel orderModel) {
+        orderService.create(orderModel);
         return new ResponseEntity<>(OK);
     }
 

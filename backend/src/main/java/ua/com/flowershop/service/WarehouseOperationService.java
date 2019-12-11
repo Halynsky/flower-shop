@@ -21,7 +21,7 @@ public class WarehouseOperationService {
     @Autowired private FlowerSizeRepository flowerSizeRepository;
 
     @Transactional
-    public void add(WarehouseOperationModel warehouseOperationModel) {
+    public void create(WarehouseOperationModel warehouseOperationModel) {
 
         FlowerSize flowerSize = flowerSizeRepository.findById(warehouseOperationModel.getFlowerSize().getId())
             .orElseThrow(EntityNotFoundException::new);

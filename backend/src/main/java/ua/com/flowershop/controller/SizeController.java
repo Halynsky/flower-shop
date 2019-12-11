@@ -50,7 +50,7 @@ public class SizeController {
 
     @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @PostMapping
-    public ResponseEntity<Void> add(@RequestBody SizeModel sizeModel) {
+    public ResponseEntity<Void> create(@RequestBody SizeModel sizeModel) {
         sizeRepository.save(Size.of(sizeModel));
         return new ResponseEntity<>(OK);
     }

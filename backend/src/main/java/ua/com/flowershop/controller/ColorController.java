@@ -55,7 +55,7 @@ public class ColorController {
 
     @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @PostMapping
-    public ResponseEntity<Void> add(@RequestBody ColorModel colorModel) {
+    public ResponseEntity<Void> create(@RequestBody ColorModel colorModel) {
         colorRepository.save(Color.of(colorModel));
         return new ResponseEntity<>(OK);
     }

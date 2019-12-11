@@ -68,9 +68,8 @@ public class WarehouseOperationController {
 
     @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @PostMapping
-    public ResponseEntity<Void> add(@RequestBody WarehouseOperationModel warehouseOperationModel) {
-        warehouseOperationService.add(warehouseOperationModel);
-
+    public ResponseEntity<Void> create(@RequestBody WarehouseOperationModel warehouseOperationModel) {
+        warehouseOperationService.create(warehouseOperationModel);
         return new ResponseEntity<>(OK);
     }
 
