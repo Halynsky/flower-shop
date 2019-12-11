@@ -22,11 +22,13 @@
             [(ngModel)]="item.name"
             [uniqueValidator]="dataService.isNameFree.bind(dataService)"
             [previousValue]="previousName"
+            required
           />
         </div>
-        <div class="ui-grid-col-2" *ngIf="name.errors?.unique">
+        <div class="ui-grid-col-2" *ngIf="name.errors">
           <ng-container>
-            <p-message severity="error" text="Данний тип вже існує"></p-message>
+            <p-message severity="error" text="Повинно бути вказано" *ngIf="name.errors?.required"></p-message>
+            <p-message severity="error" text="Данний тип вже існує" *ngIf="name.errors?.unique && !name.errors?.required"></p-message>
           </ng-container>
         </div>
       </div>
@@ -41,9 +43,33 @@
             #nameSingle="ngModel"
             id="nameSingle"
             name="nameSingle"
-            [(ngModel)]="item.nameSingle"/>
+            [(ngModel)]="item.nameSingle"
+            required/>
+        </div>
+        <div class="ui-grid-col-2" *ngIf="name.errors">
+          <ng-container>
+            <p-message severity="error" text="Повинно бути вказано" *ngIf="name.errors?.required"></p-message>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="prime-form-group">
+        <div class="ui-grid-col-2">
+          <label for="nameOriginal">Назва(Англ)</label>
         </div>
         <div class="ui-grid-col-2">
+          <input
+            pInputText
+            #nameOriginal="ngModel"
+            id="nameOriginal"
+            name="nameOriginal"
+            [(ngModel)]="item.nameOriginal"
+            required/>
+        </div>
+        <div class="ui-grid-col-2" *ngIf="name.errors">
+          <ng-container>
+            <p-message severity="error" text="Повинно бути вказано" *ngIf="name.errors?.required"></p-message>
+          </ng-container>
         </div>
       </div>
 

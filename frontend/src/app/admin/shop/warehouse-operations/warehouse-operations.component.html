@@ -114,9 +114,9 @@
           </span>
 
           <span *ngSwitchCase="'direction'">
-            <span>{{translation.text[rowData.warehouseOperationType.direction]}}</span>
             <img class="direction-arrow" *ngIf="rowData.warehouseOperationType.direction == WarehouseOperationType.Direction.IN" src="/assets/icons/interface/arrow-in-green.png">
             <img class="direction-arrow" *ngIf="rowData.warehouseOperationType.direction == WarehouseOperationType.Direction.OUT" src="/assets/icons/interface/arrow-out-red.png">
+            <span>{{translation.text[rowData.warehouseOperationType.direction]}}</span>
           </span>
 
           <span *ngSwitchCase="'operationType'">
