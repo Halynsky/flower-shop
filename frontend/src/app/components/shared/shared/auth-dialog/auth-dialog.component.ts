@@ -19,12 +19,14 @@ import { SocialService } from "../../../../api/services/social.service";
 })
 export class AuthDialogComponent {
 
-  mode: 'login' | 'registration' = 'login';
+  mode: 'login' | 'registration' | 'restore-password' = 'login';
   registered = false;
+  restored = false;
   loading = false;
 
   credentials: Credentials = new Credentials();
   userRegistration: UserRegistration = new UserRegistration();
+  passwordRestoreEmail: string;
 
   constructor(public authService: AuthService,
               public userService: UserService,
@@ -33,14 +35,6 @@ export class AuthDialogComponent {
               private securityService: SecurityService,
               private snackBarService: SnackBarService,
               public dialogRef: MatDialogRef<AuthDialogComponent>) {
-  }
-
-  submitLogin() {
-    this.login();
-  }
-
-  submitRegistration() {
-    this.register();
   }
 
   login() {
@@ -89,7 +83,7 @@ export class AuthDialogComponent {
     )
   }
 
-  facebookAuth(): void {
+  facebookAuth() {
     this.loading = true;
     this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID)
       .then(user => {
@@ -106,6 +100,20 @@ export class AuthDialogComponent {
         this.snackBarService.showError(getErrorMessage(error));
         this.loading = false;
       });
+  }
+
+  restorePassword() {
+    this.loading = true;
+    this.authService.passwordRestoreRequest(this.passwordRestoreEmail)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(
+        () => {
+          this.restored = true;
+        } ,
+        error => {
+          this.snackBarService.showError(getErrorMessage(error));
+        }
+      )
   }
 
 

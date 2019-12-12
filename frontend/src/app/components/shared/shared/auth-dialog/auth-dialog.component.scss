@@ -3,6 +3,18 @@
 
 :host {
 
+  .forgot-password {
+    color: mat-color($primary, 300);
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+  }
+
   button {
     display: flex;
     align-items: center;
@@ -87,12 +99,18 @@
           margin-top: 12px;
           display: flex;
           width: 280px;
+          justify-content: space-between;
 
           .main-button {
             background-color: mat-color($accent);
             color: white;
             margin-right: 10px;
           }
+
+          .secondary-button {
+            margin-left: auto;
+          }
+
         }
 
         .auth-facebook {
@@ -157,7 +175,7 @@
     }
   }
 
-  .reg-congratulation {
+  .reg-response-wrapper, .restore-password-response-wrapper {
     display: flex;
     justify-content: center;
     align-self: center;

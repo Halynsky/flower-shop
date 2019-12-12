@@ -9,7 +9,7 @@
   </div>
 
   <div class="content">
-    <form #loginForm="ngForm" class="item-form" (ngSubmit)="loginForm.valid && submitLogin()">
+    <form #loginForm="ngForm" class="item-form" (ngSubmit)="loginForm.valid && login()">
 
       <div class="wrapper">
 
@@ -59,9 +59,11 @@
 
         </div>
 
+        <a class="forgot-password" (click)="mode = 'restore-password'">Забули пароль?</a>
+
         <div class="dialog-action">
           <button type="submit" mat-button class="main-button" [disabled]="loading">Увійти</button>
-          <button type="button" mat-button class="reg-button" (click)="mode = 'registration'" [disabled]="loading">Зареєструватись</button>
+          <button type="button" mat-button class="secondary-button" (click)="mode = 'registration'" [disabled]="loading">Зареєструватись</button>
         </div>
 
         <div class="auth-social-hint">
@@ -87,7 +89,7 @@
     </div>
 
     <div class="content">
-      <form #regForm="ngForm" class="item-form" (ngSubmit)="regForm.valid && submitRegistration()">
+      <form #regForm="ngForm" class="item-form" (ngSubmit)="regForm.valid && register()">
 
         <div class="wrapper">
 
@@ -222,11 +224,71 @@
 
   </div>
 
-  <div class="reg-congratulation" *ngIf="mode == 'registration' && registered">
+  <div class="reg-response-wrapper" *ngIf="mode == 'registration' && registered">
 
     <div class="title">Дякуєм за реєстрацію</div>
     <div class="message">Ми відправили вам на <span class="highlight">{{userRegistration.email}}</span>
       лист для підвердження вашої поштової адреси.
+      Якщо ви не отримали лист з підтвердженням на протязі 10 хвили - зверніться в службу підтримки сайту.
+    </div>
+
+    <button type="submit" mat-raised-button class="ok-button" (click)="dialogRef.close()" color="primary">ОК</button>
+
+  </div>
+
+  <div class="restore-password-form-wrapper" *ngIf="mode == 'restore-password' && !restored">
+
+    <div class="dialog-header">
+      <h1>Відновлення паролю</h1>
+    </div>
+
+    <div class="content">
+      <form #passwordRestore="ngForm" class="item-form" (ngSubmit)="passwordRestore.valid && restorePassword()">
+
+        <div class="wrapper">
+
+          <div class="dialog-content">
+
+            <div class="input-group">
+              <div class="input-wrapper">
+
+                <div class="input-user">
+                  <input
+                      #email="ngModel"
+                      type="email"
+                      name="email"
+                      [(ngModel)]="passwordRestoreEmail"
+                      placeholder="Електронна адреса"
+                      required
+                  />
+                </div>
+              </div>
+
+              <div class="error-wrapper" *ngIf="(email.dirty || email.touched) && passwordRestore.submitted">
+                <div class="error-message" *ngIf="email.errors?.required">Повинно бути вказано</div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="dialog-action">
+            <button type="submit" mat-button class="main-button" [disabled]="loading">Відновити</button>
+            <button type="button" mat-button class="reg-button" (click)="mode = 'login'" [disabled]="loading">Увійти</button>
+          </div>
+
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+
+  <div class="restore-password-response-wrapper" *ngIf="mode == 'restore-password' && restored">
+
+    <div class="title">Запит на відновлення паролю прийнято</div>
+    <div class="message">Ми відправили вам на <span class="highlight">{{passwordRestoreEmail}}</span>
+      лист з інструкціями для процедури відновлення паролю.
       Якщо ви не отримали лист з підтвердженням на протязі 10 хвили - зверніться в службу підтримки сайту.
     </div>
 

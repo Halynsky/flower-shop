@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.flowershop.entity.SocialConnection;
 import ua.com.flowershop.entity.User;
+import ua.com.flowershop.model.PasswordRestoreConfirmModel;
 import ua.com.flowershop.model.UserAdminModel;
 import ua.com.flowershop.model.UserModel;
 import ua.com.flowershop.model.socials.SocialUser;
@@ -85,4 +86,11 @@ public class UserService {
             .setIsActivated(true));
 
     }
+
+    public void passwordRestoreRequest(String email) {
+    }
+
+    public void passwordRestoreConfirm(PasswordRestoreConfirmModel passwordRestoreConfirmModel) {
+    }
+
 }

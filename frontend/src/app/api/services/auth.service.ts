@@ -4,6 +4,7 @@ import { API_URL } from "../../utils/Costants";
 import { User, UserRegistration } from "../models/User";
 import { Credentials } from "../models/Credentials";
 import { Observable } from "rxjs";
+import { PasswordRestoreConfirm } from "../models/PasswordRestoreConfirm";
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
@@ -25,7 +26,15 @@ export class AuthService {
   }
 
   activate(secretKey: string): Observable<any> {
-    return this.http.post(`${this.URL}/activate?secretKey=${secretKey}`, null);
+    return this.http.post(`${this.URL}/activate`, secretKey);
+  }
+
+  passwordRestoreRequest(email: string) {
+    return this.http.post(`${this.URL}/password/restore/request`, email);
+  }
+
+  passwordRestoreConfirm(passwordRestoreConfirm: PasswordRestoreConfirm) {
+    return this.http.post(`${this.URL}/password/restore/confirm`, passwordRestoreConfirm);
   }
 
 }
