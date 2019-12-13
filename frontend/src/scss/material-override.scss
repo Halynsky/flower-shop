@@ -1,4 +1,5 @@
 @import '../theme';
+@import "mixins";
 
 .mat-menu-panel .mat-menu-content:not(:empty) {
   padding: initial;
@@ -92,4 +93,10 @@
     background-color: mat-color($primary, 500);
   }
 
+}
+
+.modal-panel-class {
+  @include response-from(sm) {
+    max-width: initial;
+  }
 }

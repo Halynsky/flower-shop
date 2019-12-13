@@ -3,6 +3,7 @@ package ua.com.flowershop.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ua.com.flowershop.model.PasswordRestoreConfirmModel;
 import ua.com.flowershop.model.UserModel;
 import ua.com.flowershop.repository.UserRepository;
 import ua.com.flowershop.service.UserService;
@@ -26,6 +27,18 @@ public class AuthController {
     @PostMapping("/activate")
     public ResponseEntity<Void> register(@RequestParam String secretKey){
         userService.activate(secretKey);
+        return new ResponseEntity<>(OK);
+    }
+
+    @PostMapping("/password/restore/request")
+    public ResponseEntity<Void> passwordRestoreRequest(@RequestBody String email){
+        userService.passwordRestoreRequest(email);
+        return new ResponseEntity<>(OK);
+    }
+
+    @PostMapping("/password/restore/confirm")
+    public ResponseEntity<Void> passwordRestoreRequest(@RequestBody PasswordRestoreConfirmModel passwordRestoreConfirmModel){
+        userService.passwordRestoreConfirm(passwordRestoreConfirmModel);
         return new ResponseEntity<>(OK);
     }
 

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.flowershop.entity.SocialConnection;
 import ua.com.flowershop.entity.User;
+import ua.com.flowershop.model.PasswordRestoreConfirmModel;
 import ua.com.flowershop.model.UserAdminModel;
 import ua.com.flowershop.model.UserModel;
 import ua.com.flowershop.model.socials.SocialUser;
@@ -15,6 +16,8 @@ import ua.com.flowershop.repository.UserRepository;
 import ua.com.flowershop.util.mail.MailService;
 
 import javax.persistence.EntityNotFoundException;
+
+import static java.util.Objects.nonNull;
 
 @Slf4j
 @Service
@@ -85,4 +88,19 @@ public class UserService {
             .setIsActivated(true));
 
     }
+
+    public void passwordRestoreRequest(String email) {
+        User user = userRepository.findByEmail(email).orElse(null);
+        if(nonNull(user)) {
+            mailService.sendPasswordRestore(user);
+        }
+    }
+
+    public void passwordRestoreConfirm(PasswordRestoreConfirmModel passwordRestoreConfirmModel) {
+        User user = userRepository.findBySecretKey(passwordRestoreConfirmModel.getSecretKey())
+            .orElseThrow(EntityNotFoundException::new);
+        user.setPassword(passwordEncoder.encode(passwordRestoreConfirmModel.getPassword()));
+        userRepository.save(user);
+    }
+
 }

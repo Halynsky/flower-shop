@@ -9,7 +9,7 @@
   </div>
 
   <div class="content">
-    <form #loginForm="ngForm" class="item-form" (ngSubmit)="loginForm.valid && submitLogin()">
+    <form #loginForm="ngForm" class="login-form" (ngSubmit)="loginForm.valid && login()">
 
       <div class="wrapper">
 
@@ -18,7 +18,7 @@
           <div class="input-group">
             <div class="input-wrapper">
 
-              <div class="input-user">
+              <div class="input-holder">
                 <input
                     #email="ngModel"
                     type="email"
@@ -39,7 +39,7 @@
           <div class="input-group">
             <div class="input-wrapper">
 
-              <div class="input-user">
+              <div class="input-holder">
                 <input
                   type="password"
                   #password="ngModel"
@@ -59,9 +59,11 @@
 
         </div>
 
+        <a class="forgot-password" (click)="mode = 'restore-password'">Забули пароль?</a>
+
         <div class="dialog-action">
-          <button type="submit" mat-button class="main-button" [disabled]="loading">Увійти</button>
-          <button type="button" mat-button class="reg-button" (click)="mode = 'registration'" [disabled]="loading">Зареєструватись</button>
+          <button type="submit" mat-flat-button color="accent" class="button-accent" [disabled]="loading">Увійти</button>
+          <button type="button" mat-stroked-button color="primary" class="button-secondary" (click)="mode = 'registration'" [disabled]="loading">Зареєструватись</button>
         </div>
 
         <div class="auth-social-hint">
@@ -87,7 +89,7 @@
     </div>
 
     <div class="content">
-      <form #regForm="ngForm" class="item-form" (ngSubmit)="regForm.valid && submitRegistration()">
+      <form #regForm="ngForm" class="reg-form" (ngSubmit)="regForm.valid && register()">
 
         <div class="wrapper">
 
@@ -96,7 +98,7 @@
             <div class="input-group">
               <div class="input-wrapper">
 
-                <div class="input-user">
+                <div class="input-holder">
                   <input
                       #email="ngModel"
                       type="email"
@@ -119,7 +121,7 @@
             <div class="input-group">
               <div class="input-wrapper">
 
-                <div class="input-user">
+                <div class="input-holder">
                   <input
                       #name="ngModel"
                       name="name"
@@ -138,7 +140,7 @@
             <div class="input-group">
               <div class="input-wrapper">
 
-                <div class="input-user">
+                <div class="input-holder">
                   <input
                       #phone="ngModel"
                       name="phone"
@@ -156,8 +158,7 @@
 
             <div class="input-group">
               <div class="input-wrapper">
-
-                <div class="input-user">
+                <div class="input-holder">
                   <input
                     type="password"
                     #password="ngModel"
@@ -179,7 +180,7 @@
             <div class="input-group">
               <div class="input-wrapper">
 
-                <div class="input-user">
+                <div class="input-holder">
                   <input
                     type="password"
                     #passwordConfirm="ngModel"
@@ -202,12 +203,12 @@
           </div>
 
           <div class="dialog-action">
-            <button type="submit" mat-button class="main-button" [disabled]="loading">Зареєструватись</button>
-            <button type="button" mat-button class="reg-button" (click)="mode = 'login'" [disabled]="loading">Увійти</button>
+            <button type="submit" mat-flat-button color="accent" class="button-accent"  [disabled]="loading">Зареєструватись</button>
+            <button type="button" mat-stroked-button color="primary" (click)="mode = 'login'" [disabled]="loading">Увійти</button>
           </div>
 
           <div class="auth-social-hint">
-            <span>або увійти з данними</span>
+            <span>або продовжити з данними</span>
           </div>
 
           <button type="button" mat-button class="auth-facebook" (click)="facebookAuth()">
@@ -222,15 +223,79 @@
 
   </div>
 
-  <div class="reg-congratulation" *ngIf="mode == 'registration' && registered">
+  <div class="reg-response-wrapper" *ngIf="mode == 'registration' && registered">
 
     <div class="title">Дякуєм за реєстрацію</div>
-    <div class="message">Ми відправили вам на <span class="highlight">{{userRegistration.email}}</span>
-      лист для підвердження вашої поштової адреси.
-      Якщо ви не отримали лист з підтвердженням на протязі 10 хвили - зверніться в службу підтримки сайту.
+    <div class="message-primary">
+      Ми відправили вам на <span class="highlight">{{userRegistration.email}}</span> лист для підвердження вашої поштової адреси.
+    </div>
+    <div class="message-secondary">
+      Якщо ви не отримали лист з підтвердженням на протязі 10 хвили - зверніться в службу підтримки сайту за адресою <a class="support-request" href="mailto:vlad@htmlbook.ru">meryflowersua@gmal.com</a>
     </div>
 
-    <button type="submit" mat-raised-button class="ok-button" (click)="dialogRef.close()" color="primary">ОК</button>
+    <button type="submit" class="button-primary" (click)="dialogRef.close()" color="primary">ОК</button>
+
+  </div>
+
+  <div class="restore-password-form-wrapper" *ngIf="mode == 'restore-password' && !restored">
+
+    <div class="dialog-header">
+      <h1>Відновлення паролю</h1>
+    </div>
+
+    <div class="content">
+      <form #passwordRestore="ngForm" class="password-restore-form" (ngSubmit)="passwordRestore.valid && restorePassword()">
+
+        <div class="wrapper">
+
+          <div class="dialog-content">
+
+            <div class="input-group">
+              <div class="input-wrapper">
+
+                <div class="input-holder">
+                  <input
+                      #email="ngModel"
+                      type="email"
+                      name="email"
+                      [(ngModel)]="passwordRestoreEmail"
+                      placeholder="Електронна адреса"
+                      required
+                  />
+                </div>
+              </div>
+
+              <div class="error-wrapper" *ngIf="(email.dirty || email.touched) && passwordRestore.submitted">
+                <div class="error-message" *ngIf="email.errors?.required">Повинно бути вказано</div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="dialog-action">
+            <button type="submit" mat-flat-button color="accent" [disabled]="loading">Відновити</button>
+            <button type="button" mat-stroked-button color="primary" (click)="mode = 'login'" [disabled]="loading">Увійти</button>
+          </div>
+
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+
+  <div class="restore-password-response-wrapper" *ngIf="mode == 'restore-password' && restored">
+
+    <div class="title">Запит на відновлення паролю прийнято</div>
+    <div class="message-primary">
+      Ми відправили вам на <span class="highlight">{{passwordRestoreEmail}}</span> лист з інструкціями для процедури відновлення паролю.
+    </div>
+    <div class="message-secondary">
+      Якщо ви не отримали лист з підтвердженням на протязі 10 хвили - зверніться в службу підтримки сайту за адресою <a class="support-request" href="mailto:vlad@htmlbook.ru">meryflowersua@gmal.com</a>
+    </div>
+
+    <button type="submit" mat-raised-button class="button-primary" (click)="dialogRef.close()" color="primary">ОК</button>
 
   </div>
 

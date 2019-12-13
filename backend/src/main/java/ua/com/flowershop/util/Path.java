@@ -39,7 +39,7 @@ public class Path {
     public static final String EMAIL                    = "email";
     public static final String CONFIRM				    = "confirm";
     public static final String ACTIVATION				= "activation";
-    public static final String RESTORE_PASSWORD         = "restore-password";
+    public static final String PASSWORD_RESTORE         = "password-restore";
     public static final String ICON                     = "icon";
 
     // PATH VARIABLES
