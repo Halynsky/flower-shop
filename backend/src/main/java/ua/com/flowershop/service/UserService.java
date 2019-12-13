@@ -17,6 +17,8 @@ import ua.com.flowershop.util.mail.MailService;
 
 import javax.persistence.EntityNotFoundException;
 
+import static java.util.Objects.nonNull;
+
 @Slf4j
 @Service
 public class UserService {
@@ -88,9 +90,17 @@ public class UserService {
     }
 
     public void passwordRestoreRequest(String email) {
+        User user = userRepository.findByEmail(email).orElse(null);
+        if(nonNull(user)) {
+            mailService.sendPasswordRestore(user);
+        }
     }
 
     public void passwordRestoreConfirm(PasswordRestoreConfirmModel passwordRestoreConfirmModel) {
+        User user = userRepository.findBySecretKey(passwordRestoreConfirmModel.getSecretKey())
+            .orElseThrow(EntityNotFoundException::new);
+        user.setPassword(passwordEncoder.encode(passwordRestoreConfirmModel.getPassword()));
+        userRepository.save(user);
     }
 
 }

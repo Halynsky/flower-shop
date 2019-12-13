@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'confirmation-error',
@@ -6,6 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./confirmation-error.component.scss']
 })
 export class ConfirmationErrorComponent implements OnInit {
+
+  @Input() title = 'Невідома помилка';
+  @Input() error = 'Повторіть операцію через декілька хвилин';
 
   constructor() { }
 

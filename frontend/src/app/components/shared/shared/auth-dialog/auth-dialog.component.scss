@@ -3,11 +3,15 @@
 
 :host {
 
+  form {
+    min-width: 280px;
+  }
+
   .forgot-password {
-    color: mat-color($primary, 300);
+    color: $grey-600;
     cursor: pointer;
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 400;
 
     &:hover {
       text-decoration: underline;
@@ -25,9 +29,12 @@
 
   .dialog-container {
     position: relative;
-    width: 400px;
     display: flex;
     flex-direction: column;
+
+    @include response-from(sm) {
+      width: 400px;
+    }
 
     i.close {
       cursor: pointer;
@@ -42,6 +49,7 @@
       display: flex;
       justify-content: center;
       margin-bottom: 16px;
+      color: $black-100;
     }
 
     .content {
@@ -65,52 +73,14 @@
           justify-content: center;
           width: 100%;
 
-          .input-group {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 8px;
 
-            .input-wrapper {
-              width: 100%;
-              display: flex;
-              align-items: center;
-              justify-content: space-between;
-
-              .input-user {
-                display: flex;
-                justify-content: flex-end;
-              }
-            }
-
-            .error-wrapper {
-              width: 280px;
-              font-size: 10px;
-
-                .error-message {
-                  color: mat-color($warn);
-                }
-
-            }
-          }
         }
 
         .dialog-action {
           margin-top: 12px;
           display: flex;
-          width: 280px;
+          width: 100%;
           justify-content: space-between;
-
-          .main-button {
-            background-color: mat-color($accent);
-            color: white;
-            margin-right: 10px;
-          }
-
-          .secondary-button {
-            margin-left: auto;
-          }
-
         }
 
         .auth-facebook {
@@ -122,7 +92,7 @@
         }
 
         .auth-social-hint {
-          font-size: 14px;
+          font-size: 16px;
           text-align: center;
           color: $grey-400;
           width: 100%;
@@ -154,18 +124,6 @@
     }
 
 
-    input {
-      color: #333333;
-      background: #ffffff;
-      padding: 0.429em;
-      border: 1px solid #a6a6a6;
-      transition: border-color 0.2s;
-      -webkit-appearance: none;
-      border-radius: 3px;
-      width: 280px;
-      font-size: 15px;
-    }
-
     h1 {
       font-size: 2em;
     }
@@ -181,6 +139,13 @@
     align-self: center;
     flex-direction: column;
 
+    .support-request {
+      color: mat-color($primary);
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
     .title {
       text-align: center;
       font-weight: 500;
@@ -188,19 +153,26 @@
       margin-bottom: 16px;
     }
 
-    .message {
+    .message-primary {
+      margin-bottom: 16px;
+      font-size: 14px;
 
       .highlight {
-        color: mat-color($primary);
+        color: mat-color($accent);
       }
 
     }
 
-    .ok-button {
+    .message-secondary {
+      font-size: 13px;
+      color: $grey-400;
+      margin-bottom: 16px;
+    }
+
+    button {
+      width: 64px;
+      display: flex;
       align-self: center;
-      justify-content: center;
-      margin-top: 24px;
-      color: white !important;
     }
 
   }

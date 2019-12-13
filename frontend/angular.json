@@ -30,6 +30,7 @@
             "styles": [
               "src/styles.scss",
               "src/theme.scss",
+              "src/custom-theme.scss",
               "node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss",
               "node_modules/@fortawesome/fontawesome-free/scss/brands.scss",
               "node_modules/@fortawesome/fontawesome-free/scss/regular.scss",

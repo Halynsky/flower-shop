@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { routing } from "./app.routing";
 import { LayoutComponent } from "./layout/layout.component";
 import { LandingModule } from "./components/landing/landing.module";
-import { MatDialogModule, MatIconModule, MatIconRegistry } from '@angular/material';
+import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogConfig, MatDialogModule, MatIconModule, MatIconRegistry } from '@angular/material';
 import { LayoutModule } from "./layout/layout.module";
 import { DatePipe, registerLocaleData } from '@angular/common';
 import localeRuUa from '@angular/common/locales/uk';
@@ -74,7 +74,8 @@ export function getAuthServiceConfigs() {
     {
       provide: AuthServiceConfig,
       useFactory: getAuthServiceConfigs
-    }
+    },
+    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {...new MatDialogConfig(), panelClass: 'modal-panel-class', maxWidth: ''} as MatDialogConfig}
   ],
   exports: [
   ],

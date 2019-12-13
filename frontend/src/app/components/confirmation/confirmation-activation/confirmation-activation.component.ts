@@ -9,8 +9,8 @@ import { ActivatedRoute } from "@angular/router";
 })
 export class ConfirmationActivationComponent implements OnInit {
 
-  hasError: boolean = false;
-  confirmed: boolean = false;
+  hasError = false;
+  confirmed = false;
 
   constructor(private route: ActivatedRoute,
               private authService: AuthService) {

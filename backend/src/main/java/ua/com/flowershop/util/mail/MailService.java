@@ -109,8 +109,8 @@ public class MailService {
         Context context = contextTemplate();
         context.setVariable(USER_NAME, user.getName());
         context.setVariable(TITLE, "Тепер ви можете оновити свій пароль");
-        context.setVariable(BODY, "Ви здыйснили запит на оновлення паролю. Для наступного кроку перейдыть, будь ласка, за посиланням внизу");
-        context.setVariable(CONFIRM_URL, siteUrl + SLASH + RESTORE_PASSWORD + SECRET_KEY_PARAM + user.getSecretKey());
+        context.setVariable(BODY, "Ви здійснили запит на оновлення паролю. Для наступного кроку перейдыть, будь ласка, за посиланням внизу");
+        context.setVariable(CONFIRM_URL, siteUrl + SLASH + CONFIRM + SLASH + PASSWORD_RESTORE + SECRET_KEY_PARAM + user.getSecretKey());
         context.setVariable(CONFIRM_BTN_TEXT, "Відновити пароль");
         mailClient.sendMail("Відновлення паролю", CONFIRMATION_TEMPLATE, context, MailHolder.MessageType.NOREPLY, user.getEmail());
     }
