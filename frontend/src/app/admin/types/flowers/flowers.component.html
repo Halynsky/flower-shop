@@ -199,17 +199,17 @@
     <ng-template pTemplate="rowexpansion" let-rowData>
       <tr>
         <td [attr.colspan]="cols.length + 1">
-          <div class="divTable">
-            <div class="divTableBody">
-              <div class="divTableRow">
-                <div class="divTableHead">Розмір</div>
-                <div class="divTableHead">Ціна(грн)</div>
-                <div class="divTableHead">Кількість</div>
+          <div class="flower-size-table">
+            <div class="body">
+              <div class="row">
+                <div class="head">Розмір</div>
+                <div class="head">Ціна(грн)</div>
+                <div class="head">Кількість</div>
               </div>
-              <div class="divTableRow" *ngFor="let flowerSize of rowData['flowerSizes']">
-                <div class="divTableCell">{{flowerSize.size.name}}</div>
-                <div class="divTableCell">{{flowerSize.price/100}}</div>
-                <div class="divTableCell">{{flowerSize.amount}}</div>
+              <div class="row" *ngFor="let flowerSize of rowData['flowerSizes']">
+                <div class="cell">{{flowerSize.size.name}}</div>
+                <div class="cell">{{flowerSize.price/100}}</div>
+                <div class="cell">{{flowerSize.amount}}</div>
               </div>
             </div>
           </div>

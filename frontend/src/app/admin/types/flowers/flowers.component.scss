@@ -24,23 +24,23 @@
     cursor: pointer;
   }
 
-  .divTable {
+  .flower-size-table {
     display: table;
     width: 100%;
 
-    .divTableBody {
+    .body {
       display: table-row-group;
 
-      .divTableRow {
+      .row {
         display: table-row;
 
-        .divTableCell {
+        .cell {
           border: 1px solid #c8c8c8;
           display: table-cell;
           padding: 3px 10px;
           background-color: white;
         }
-        .divTableHead {
+        .head {
           border: 1px solid #c8c8c8;
           display: table-cell;
           padding: 3px 10px;
