@@ -5,30 +5,13 @@
 @import "theme";
 @import "mixins.scss";
 
-:host{
+:host {
 
   .true-false-ico {
     font-size: 25px;
     width: 100%;
     display: flex;
     justify-content: center;
-  }
-
-  .row-expansion {
-    display: flex;
-    align-items: center;
-
-    .flower-size-card {
-      @include mat-elevation(6);
-      width: 150px;
-      height: 75px;
-      border-radius: 5px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      margin-left: 10px;
-    }
   }
 
   .color-example {
@@ -40,6 +23,36 @@
   a {
     cursor: pointer;
   }
+
+  .divTable {
+    display: table;
+    width: 100%;
+
+    .divTableBody {
+      display: table-row-group;
+
+      .divTableRow {
+        display: table-row;
+
+        .divTableCell {
+          border: 1px solid #c8c8c8;
+          display: table-cell;
+          padding: 3px 10px;
+          background-color: white;
+        }
+        .divTableHead {
+          border: 1px solid #c8c8c8;
+          display: table-cell;
+          padding: 3px 10px;
+          font-weight: bold;
+          color: white;
+          background-color: #007ad9;
+        }
+      }
+    }
+
+  }
+
 
 }
 

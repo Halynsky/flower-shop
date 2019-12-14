@@ -196,19 +196,26 @@
         </td>
       </tr>
     </ng-template>
-        <ng-template pTemplate="rowexpansion" let-rowData>
-          <tr>
-              <td [attr.colspan]="cols.length + 1">
-                <div class="row-expansion">
-                  <div *ngFor="let flowerSize of rowData['flowerSizes']" class="flower-size-card">
-                    <span>Розмір: {{flowerSize.size.name}}</span>
-                    <span>Ціна (1 шт.) : {{flowerSize.price/100}} грн</span>
-                    <span>Кількість: {{flowerSize.amount}}</span>
-                  </div>
-                </div>
-              </td>
-          </tr>
-        </ng-template>
+    <ng-template pTemplate="rowexpansion" let-rowData>
+      <tr>
+        <td [attr.colspan]="cols.length + 1">
+          <div class="divTable">
+            <div class="divTableBody">
+              <div class="divTableRow">
+                <div class="divTableHead">Розмір</div>
+                <div class="divTableHead">Ціна(грн)</div>
+                <div class="divTableHead">Кількість</div>
+              </div>
+              <div class="divTableRow" *ngFor="let flowerSize of rowData['flowerSizes']">
+                <div class="divTableCell">{{flowerSize.size.name}}</div>
+                <div class="divTableCell">{{flowerSize.price/100}}</div>
+                <div class="divTableCell">{{flowerSize.amount}}</div>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
   </p-table>
 </div>
 

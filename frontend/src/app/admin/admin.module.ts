@@ -5,7 +5,7 @@ import { routing } from "./admin.routing";
 import { GrowlModule } from "primeng/growl";
 import { DialogModule } from "primeng/dialog";
 import {
-  ButtonModule, CalendarModule, CheckboxModule, ColorPickerModule, ConfirmationService,
+  ButtonModule, CalendarModule, CardModule, CheckboxModule, ColorPickerModule, ConfirmationService,
   ConfirmDialogModule, ContextMenuModule, DropdownModule, InputSwitchModule, InputTextModule, ListboxModule,
   MenuModule, MessageModule,
   MultiSelectModule,
@@ -95,6 +95,7 @@ import { WarehouseComponent } from "./shop/warehouse/warehouse.component";
     RatingModule,
     ListboxModule,
     CheckboxModule,
+    CardModule,
 
   ],
   providers: [
