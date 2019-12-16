@@ -1,0 +1,168 @@
+<div class="user-cabinet-title">Мій Профіль</div>
+
+<mat-card class="user-cabinet-card profile-card"  *ngIf="profile">
+
+  <mat-card-content>
+
+    <div class="card-header">
+      Персональні данні
+    </div>
+
+    <form #profileForm="ngForm" class="profile-form" (ngSubmit)="profileForm.valid && updateProfile()">
+
+        <div class="input-group">
+          <label>Email</label>
+          <input
+              #email="ngModel"
+              type="email"
+              name="email"
+              [(ngModel)]="profile.email"
+              placeholder="Email"
+              required
+              email
+              [uniqueValidator]="userService.isEmailFree.bind(userService)"
+              [previousValue]="previousEmail"/>
+
+          <div class="error-wrapper" *ngIf="email.dirty || email.touched || profileForm.submitted">
+            <div class="error-message" *ngIf="email.errors?.unique && !email.errors?.required">Данний Email вже зайнятий</div>
+            <div class="error-message" *ngIf="email.errors?.required">Повинно бути вказано</div>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label>Імя</label>
+          <input
+              #name="ngModel"
+              name="name"
+              [(ngModel)]="profile.name"
+              placeholder="Імя"
+              required/>
+
+          <div class="error-wrapper" *ngIf="name.dirty || name.touched || profileForm.submitted">
+            <div class="error-message" *ngIf="name.errors?.required">Повинно бути вказано</div>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label>Телефон</label>
+          <input
+              #phone="ngModel"
+              name="phone"
+              [(ngModel)]="profile.phone"
+              placeholder="Телефон"
+              required/>
+
+          <div class="error-wrapper" *ngIf="phone.dirty || phone.touched || profileForm.submitted">
+            <div class="error-message" *ngIf="phone.errors?.required">Повинно бути вказано</div>
+          </div>
+        </div>
+
+        <button type="submit" mat-flat-button color="primary" [disabled]="loadingProfile">Зберегти</button>
+
+    </form>
+
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="user-cabinet-card password-card"  *ngIf="profile">
+
+  <div class="card-header">
+    Оновлення паролю
+  </div>
+
+  <mat-card-content>
+
+    <form #passwordForm="ngForm" class="password-form" (ngSubmit)="passwordForm.valid && updatePassword()">
+
+      <div class="input-group">
+
+        <label>Пароль</label>
+        <input
+          type="password"
+          #password="ngModel"
+          name="password"
+          placeholder="Пароль"
+          [(ngModel)]="passwordUpdate.password"
+          required/>
+
+        <div class="error-wrapper" *ngIf="password.dirty || password.touched || passwordForm.submitted">
+          <div class="error-message" *ngIf="password.errors?.required">Повинно бути вказано</div>
+        </div>
+
+      </div>
+
+      <div class="input-group">
+
+        <label>Новий пароль</label>
+        <input
+          type="password"
+          #passwordNew="ngModel"
+          name="passwordNew"
+          placeholder="Новий пароль"
+          [(ngModel)]="passwordUpdate.passwordNew"
+          validateEqual="passwordNewConfirm"
+          validationEqualReverse="true"
+          required/>
+
+        <div class="error-wrapper" *ngIf="passwordNew.dirty || passwordNew.touched || passwordForm.submitted">
+          <div class="error-message" *ngIf="passwordNew.errors?.required">Повинно бути вказано</div>
+        </div>
+
+      </div>
+
+      <div class="input-group">
+
+        <input
+          type="password"
+          #passwordNewConfirm="ngModel"
+          name="passwordNewConfirm"
+          placeholder="Повторіть новий пароль"
+          [(ngModel)]="passwordUpdate.passwordNewConfirm"
+          validationEqualReverse="false"
+          required
+        />
+
+        <div class="error-wrapper" *ngIf="passwordNewConfirm.dirty || passwordNewConfirm.touched || passwordForm.submitted">
+          <div class="error-message" *ngIf="passwordNewConfirm.errors?.required">Повинно бути вказано</div>
+          <div class="error-message" *ngIf="passwordNewConfirm.errors?.validateEqual && !passwordNewConfirm.errors?.required">Паролі повинні співпадати</div>
+        </div>
+
+      </div>
+
+      <button type="submit" mat-flat-button color="primary" [disabled]="loadingProfile">Зберегти</button>
+
+    </form>
+
+  </mat-card-content>
+</mat-card>
+
+
+<mat-card class="user-cabinet-card social-connection-card"  *ngIf="socialConnections">
+
+  <div class="card-header">
+    Соціальні профілі
+  </div>
+
+  <mat-card-content>
+
+    <div class="social-connections">
+
+      <div class="social-connection facebook-social-connection" [ngClass]="{ 'active': hasSocialConnection('FACEBOOK')}">
+        <div class="label">
+          <i class="fab fa-facebook-square"></i>
+          <span>Facebook</span>
+        </div>
+
+        <img class="connection-icon" src="assets/icons/interface/chain-links.png" alt="connection">
+
+        <div class="social-connect-buttons">
+          <button mat-stroked-button color="primary" class="button-connect" (click)="connectFacebook()">Приєднати</button>
+          <button mat-stroked-button color="warn" class="button-disconnect" (click)="disconnectFacebook()">Відєднати</button>
+        </div>
+      </div>
+
+    </div>
+
+  </mat-card-content>
+
+</mat-card>

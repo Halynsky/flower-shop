@@ -1,5 +1,4 @@
 import {Component} from "@angular/core";
-import {UserCabinetService} from "../../../services/user-cabinet.service";
 
 @Component({
   selector: 'wishlist',
@@ -9,7 +8,7 @@ import {UserCabinetService} from "../../../services/user-cabinet.service";
 
 export class WishlistComponent {
 
-  constructor(public userService: UserCabinetService){
+  constructor(){
 
   }
 

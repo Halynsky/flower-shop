@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ua.com.flowershop.entity.User;
+import ua.com.flowershop.projection.ProfileProjection;
 import ua.com.flowershop.projection.UserAdminProjection;
 
 import java.util.Optional;
@@ -19,6 +20,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findBySecretKeyAndIsActivated(String secretKey, Boolean isActivated);
 
     UserAdminProjection findProjectedById(Long id);
+    ProfileProjection findProfileById(Long id);
 
     @Query("SELECT u.id as id, u.name as name, u.email as email, u.phone as phone, u.role as role, u.isEnabled as isEnabled, u.isVirtual as isVirtual, u.created as created " +
         "FROM User u " +

@@ -5,7 +5,6 @@ import { ModalWindowService } from "../../services/modal-window.service";
 import { MatDialog } from "@angular/material";
 import { AuthService } from "../../api/services/auth.service";
 import { SnackBarService } from "../../services/snak-bar.service";
-import { UserCabinetService } from "../../services/user-cabinet.service";
 import { Router } from "@angular/router";
 import { Role } from "../../models/Role";
 import { AuthDialogComponent } from "../../components/shared/shared/auth-dialog/auth-dialog.component";
@@ -26,7 +25,6 @@ export class HeaderComponent {
               public dialog: MatDialog,
               private authService: AuthService,
               private snackBarService: SnackBarService,
-              public userService: UserCabinetService,
               private router: Router) {
   }
 
@@ -35,9 +33,6 @@ export class HeaderComponent {
   }
 
   openBucketDialog() {
-    let currentUrl = this.router.url;
-    currentUrl = currentUrl.split('/').pop();
-    this.userService.changeButtonColor(currentUrl);
   }
 
   logout() {

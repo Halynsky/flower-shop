@@ -28,7 +28,7 @@ import { ModalWindowService } from "../services/modal-window.service";
 })
 export class LayoutComponent {
 
-  constructor( public modalPageService: ModalWindowService) {
+  constructor(public modalPageService: ModalWindowService) {
   }
 
 }

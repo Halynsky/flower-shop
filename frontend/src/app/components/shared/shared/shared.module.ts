@@ -77,6 +77,7 @@ const PROVIDERS = [
     MatButtonToggleModule,
     MatSelectModule,
     PipesModule,
+    ValidatorModule,
     // Developed Components
     ArticleCardComponent
   ],

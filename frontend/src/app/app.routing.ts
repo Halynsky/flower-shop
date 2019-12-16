@@ -2,11 +2,11 @@ import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LayoutComponent } from "./layout/layout.component";
 import { LandingComponent } from "./components/landing/landing.component";
-import { UserComponent } from "./components/user/user.component";
-import { ProfileComponent } from "./components/user/profile/profile.component";
-import { WishlistComponent } from "./components/user/wishlist/wishlist.component";
-import { PurchaseHistoryComponent } from "./components/user/purchase-history/purchase-history.component";
-import { FavouriteArticlesComponent } from "./components/user/favourite-articles/favourite-articles.component";
+import { UserCabinetComponent } from "./components/user-cabinet/user-cabinet.component";
+import { ProfileComponent } from "./components/user-cabinet/profile/profile.component";
+import { WishlistComponent } from "./components/user-cabinet/wishlist/wishlist.component";
+import { PurchaseHistoryComponent } from "./components/user-cabinet/purchase-history/purchase-history.component";
+import { FavouriteArticlesComponent } from "./components/user-cabinet/favourite-articles/favourite-articles.component";
 import { AdminPanelGuard } from "./guards/admin-panel.guard";
 import { UserGuard } from "./guards/user.guard";
 
@@ -15,7 +15,7 @@ const routes: Routes = [
     component: LayoutComponent,
     children: [
       { path: '', component: LandingComponent},
-      { path: 'my', component: UserComponent, canActivate: [UserGuard], canActivateChild: [UserGuard] , children: [
+      { path: 'my', component: UserCabinetComponent, canActivate: [UserGuard], canActivateChild: [UserGuard] , children: [
           { path: 'profile', component: ProfileComponent},
           { path: 'wishlist', component: WishlistComponent},
           { path: 'purchases', component: PurchaseHistoryComponent},

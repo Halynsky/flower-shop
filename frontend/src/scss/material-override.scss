@@ -11,7 +11,7 @@
   button {
     span {
       color: mat-color($accent, 400);
-      font-weight: 600;
+      font-weight: 500;
     }
   }
 }
@@ -77,7 +77,7 @@
   button {
     span {
       color: mat-color($accent, 100);
-      font-weight: 600;
+      font-weight: 500;
     }
   }
 
@@ -99,4 +99,8 @@
   @include response-from(sm) {
     max-width: initial;
   }
+}
+
+.mat-button {
+  font-weight: 400;
 }

@@ -17,5 +17,17 @@ export class SocialService {
     return this.http.post<User>(`${this.URL}/auth/facebook`, authToken);
   }
 
+  getConnections() {
+    return this.http.get<any[]>(`${this.URL}`);
+  }
+
+  connectFacebook(accessToken: string) {
+    return this.http.post(`${this.URL}/facebook/connect`, accessToken);
+  }
+
+  disconnectFacebook() {
+    return this.http.delete(`${this.URL}/facebook/disconnect`, );
+  }
+
 
 }

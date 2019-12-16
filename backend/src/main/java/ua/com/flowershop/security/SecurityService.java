@@ -37,7 +37,7 @@ public class SecurityService {
     }
 
     public SecurityUserModel performUserLogin(User user) {
-        Authentication authentication = new UsernamePasswordAuthenticationToken(user, null,
+        Authentication authentication = new UsernamePasswordAuthenticationToken(user.getEmail(), null,
         AuthorityUtils.createAuthorityList("USER"));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return SecurityUserModel.of(user);

@@ -1,0 +1,27 @@
+@import "theme";
+@import '~@angular/material/theming';
+@import "mixins.scss";
+
+.user-cabinet-title {
+  font-weight: 500;
+  font-size: 24px;
+  margin-bottom: 18px;
+  color: $black-100;
+  text-transform: uppercase;
+  padding-left: 24px;
+}
+
+.user-cabinet-card {
+  padding: 24px;
+  margin-bottom: 48px;
+
+  .card-header {
+    color: mat-color($primary, 700);
+    font-size: 24px;
+    margin-bottom: 24px;
+  }
+
+}
+
+
+

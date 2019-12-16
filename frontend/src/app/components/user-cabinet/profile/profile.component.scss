@@ -1,0 +1,77 @@
+@import 'theme';
+@import '~@angular/material/theming';
+@import 'mixins.scss';
+@import '../user-cabinet-chaper';
+
+:host {
+  flex: 1 1 auto;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+
+  .input-group {
+    margin-bottom: 16px;
+  }
+
+  button {
+    margin-left: auto;
+    margin-top: 8px;
+  }
+}
+
+.password-form {
+  .input-group:last-of-type {
+    margin-top: -8px;
+  }
+}
+
+.social-connection {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .button-connect {
+    display: block;
+  }
+
+  .button-disconnect {
+    display: none;
+  }
+
+  &.active {
+    .connection-icon {
+      opacity: 1;
+    }
+
+    .button-connect {
+      display: none;
+    }
+
+    .button-disconnect {
+      display: block;
+    }
+
+
+  }
+
+  .connection-icon {
+    width: 32px;
+    height: 32px;
+    margin-right: 24px;
+    margin-left: 24px;
+    opacity: 0.3;
+  }
+
+  .label {
+    font-size: 20px;
+    padding: 6px 12px;
+    background-color: #3b5998;
+    color: white;
+    i {
+      margin-right: 8px;
+    }
+  }
+
+}

@@ -1,0 +1,16 @@
+@import "theme";
+@import '~@angular/material/theming';
+@import "mixins.scss";
+
+:host {
+  display: flex;
+  justify-self: center;
+  align-self: center;
+  flex-direction: row;
+  padding-top: 24px;
+
+  @extend .content-thin;
+
+}
+
+

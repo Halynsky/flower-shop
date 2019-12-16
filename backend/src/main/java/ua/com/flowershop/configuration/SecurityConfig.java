@@ -59,6 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             .antMatcher(SLASH + API + SLASH + "**")
             .authorizeRequests()
+            .antMatchers(SLASH + IMAGES_PATH + SLASH + "**").permitAll()
             .antMatchers(SLASH + AUTH_PATH + SLASH + "**").permitAll()
             .antMatchers(SLASH + USERS_PATH + SLASH + "**").permitAll()
             .antMatchers(SLASH + SOCIAL_PATH + SLASH + "**").permitAll()

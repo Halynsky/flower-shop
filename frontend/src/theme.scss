@@ -55,7 +55,7 @@ $main-theme: mat-light-theme($primary, $accent, $warn);
 }
 
 $custom-typography: mat-typography-config(
-  $font-family: '"Lato", sans-serif',
+  $font-family: 'Roboto, "Helvetica Neue", sans-serif',
   $headline: mat-typography-level(32px, 48px, 700),
   $body-1: mat-typography-level(16px, 24px, 500)
 );
@@ -68,6 +68,4 @@ $custom-typography: mat-typography-config(
 
 // Override typography for all Angular Material, including mat-base-typography and all components.
 @include angular-material-typography($custom-typography);
-
-
 

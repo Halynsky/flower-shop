@@ -14,12 +14,12 @@ import localeRuUa from '@angular/common/locales/uk';
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { RouterModule } from "@angular/router";
 import { SharedModule } from "./components/shared/shared/shared.module";
-import { UserModule } from "./components/user/user.module";
 import { MainInterceptor } from "./inteceptors/main.interceptor";
 import { AuthDialogComponent } from "./components/shared/shared/auth-dialog/auth-dialog.component";
 import { BucketDialogComponent } from "./components/shared/shared/bucket-dialog/bucket-dialog.component";
 import { AuthService, AuthServiceConfig, FacebookLoginProvider, GoogleLoginProvider, SocialLoginModule } from "angularx-social-login";
 import { ValidatorModule } from "./validators/validator.module";
+import { UserCabinetModule } from "./components/user-cabinet/user-cabinet.module";
 
 registerLocaleData(localeRuUa);
 
@@ -57,7 +57,7 @@ export function getAuthServiceConfigs() {
     LandingModule,
     SharedModule,
     MatDialogModule,
-    UserModule,
+    UserCabinetModule,
     SocialLoginModule,
     ValidatorModule.forRoot()
   ],

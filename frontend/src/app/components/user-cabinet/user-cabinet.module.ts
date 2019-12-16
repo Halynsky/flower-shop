@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
-import { UserComponent } from "./user.component";
-
+import { UserCabinetComponent } from "./user-cabinet.component";
 import { ProfileComponent } from "./profile/profile.component";
 import { WishlistComponent } from "./wishlist/wishlist.component";
 import { UserSidebarComponent } from "./user-cabinet-sidebar/user-sidebar.component";
@@ -8,13 +7,16 @@ import { FavouriteArticlesComponent } from "./favourite-articles/favourite-artic
 import { PurchaseHistoryComponent } from "./purchase-history/purchase-history.component";
 import { RouterModule } from "@angular/router";
 import { InputTextModule } from "primeng/primeng";
-import { MatButtonModule } from "@angular/material";
+import { MatButtonModule, MatCardModule } from "@angular/material";
 import { MatInputModule } from "@angular/material";
+import { SharedModule } from "../shared/shared/shared.module";
+import { ValidatorModule } from "../../validators/validator.module";
+import { NgArrayPipesModule } from "angular-pipes";
 
 
 @NgModule({
   declarations: [
-    UserComponent,
+    UserCabinetComponent,
     ProfileComponent,
     WishlistComponent,
     UserSidebarComponent,
@@ -23,11 +25,14 @@ import { MatInputModule } from "@angular/material";
   ],
   imports: [
     RouterModule,
+    SharedModule,
     InputTextModule,
     MatButtonModule,
     MatInputModule,
+    MatCardModule,
+    NgArrayPipesModule
   ],
   bootstrap: []
 })
-export class UserModule {
+export class UserCabinetModule {
 }
