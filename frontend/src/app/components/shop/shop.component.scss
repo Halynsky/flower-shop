@@ -36,6 +36,11 @@
       .mat-form-field-wrapper {
         width: 200px;
         color: $black-100;
+
+        @include response(xs) {
+          width: 130px;
+        }
+
         .mat-form-field-suffix {
           top: 6px;
           .close-icon {
@@ -67,6 +72,12 @@
 
     }
 
+    .main-search-wrapper, .ordering-selector-wrapper {
+      font-size: 20px;
+      @include response-to(sm) {
+        font-size: 18px;
+      }
+    }
   }
 
   .content {

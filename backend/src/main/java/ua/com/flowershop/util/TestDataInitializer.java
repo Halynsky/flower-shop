@@ -35,7 +35,7 @@ public class TestDataInitializer {
 
     @PostConstruct
     public void init() {
-        log.info("Start test data ======================================");
+        log.info("Start test data ============================================");
         try {
             setFlowerTypeImagesIntoDb("classpath*:**/tmp/images/flower-types/*.jpg");
             setFlowerImagesIntoDb("classpath*:**/tmp/images/flowers/*.jpg");
