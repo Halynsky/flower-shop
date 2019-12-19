@@ -41,43 +41,43 @@ INSERT INTO flowers (flower_type_id, name_original, name, color_id,  flower_size
 INSERT INTO flowers (flower_type_id, name_original, name, color_id,  flower_size_min, flower_size_max, flower_height_min, flower_height_max, description, group_name, is_new, is_popular, popularity, created) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Windsong', 'Віндсонг', 6, 13, 15, 100, 110, 'Великоквітковий гладіолус Windsong (Віндсонг) – пурпурні, матові, оксамитові квіти з ніжно-карамельної серединкою. Квітки типу – Батерфляй. Сучасні сорти гладіолусів мають такі красиві і не банальні забарвлення пелюсток, що дух захоплює! До того ж, вони невибагливі, ростуть швидко і сильно, стійкі. Мінімум клопоту – максимум задоволення!', 'Батерфлай', true, null, 5, '2019-10-10T16:10:22.0');
 INSERT INTO flowers (flower_type_id, name_original, name, color_id,  flower_size_min, flower_size_max, flower_height_min, flower_height_max, description, group_name, is_new, is_popular, popularity, created) VALUES ((SELECT currval(pg_get_serial_sequence('flower_types','id'))), 'Prince Claus', 'Прінс Клаус', 4, 5, 8, 40, 50, 'Гладіолус нанус Prins Claus (Прінс Клаус) – асиметричні квітки. неповторного забарвлення. Рослини мініатюрні, добре тримають суцвіття, і не потребують підв''язки. Універсальний сорт, який вирощують і в саду, і в вазонах на терасах або підвіконнях. Бутони – ніжні бежево-рожеві. Коли квітки відкриваються – набувають біле забарвлення. По центру верхніх пелюсток – рожеве «око» з червоною облямівкою і білим штрихом по середині. Низькорослі рослини формують красиві бордюри, ростуть в рокарії, прикрашають альпійські гірки. Цвіте тривало із липня до кінця вересня.', 'Низькорослі нануси', false, false, 1, '2019-12-12T16:10:22.0');
 
-INSERT INTO flower_type__sizes (flower_type_id, size_id) VALUES (1, 1);
-INSERT INTO flower_type__sizes (flower_type_id, size_id) VALUES (1, 2);
-INSERT INTO flower_type__sizes (flower_type_id, size_id) VALUES (2, 1);
-INSERT INTO flower_type__sizes (flower_type_id, size_id) VALUES (3, 1);
-INSERT INTO flower_type__sizes (flower_type_id, size_id) VALUES (3, 2);
-INSERT INTO flower_type__sizes (flower_type_id, size_id) VALUES (3, 3);
-INSERT INTO flower_type__sizes (flower_type_id, size_id) VALUES (4, 1);
-INSERT INTO flower_type__sizes (flower_type_id, size_id) VALUES (4, 2);
+INSERT INTO flower_types__sizes (flower_type_id, size_id) VALUES (1, 1);
+INSERT INTO flower_types__sizes (flower_type_id, size_id) VALUES (1, 2);
+INSERT INTO flower_types__sizes (flower_type_id, size_id) VALUES (2, 1);
+INSERT INTO flower_types__sizes (flower_type_id, size_id) VALUES (3, 1);
+INSERT INTO flower_types__sizes (flower_type_id, size_id) VALUES (3, 2);
+INSERT INTO flower_types__sizes (flower_type_id, size_id) VALUES (3, 3);
+INSERT INTO flower_types__sizes (flower_type_id, size_id) VALUES (4, 1);
+INSERT INTO flower_types__sizes (flower_type_id, size_id) VALUES (4, 2);
 
-INSERT INTO flower__sizes (flower_id, size_id, amount, price, price_old) VALUES (1, 2, 28, 1600, 1800);
-INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (1, 1, 31, 1400);
-INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (2, 1, 81, 1000);
-INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (2, 2, 12, 1800);
-INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (3, 2, 23, 1500);
-INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (3, 1, 10, 1300);
+INSERT INTO flowers__sizes (flower_id, size_id, amount, price, price_old) VALUES (1, 2, 28, 1600, 1800);
+INSERT INTO flowers__sizes (flower_id, size_id, amount, price) VALUES (1, 1, 31, 1400);
+INSERT INTO flowers__sizes (flower_id, size_id, amount, price) VALUES (2, 1, 81, 1000);
+INSERT INTO flowers__sizes (flower_id, size_id, amount, price) VALUES (2, 2, 12, 1800);
+INSERT INTO flowers__sizes (flower_id, size_id, amount, price) VALUES (3, 2, 23, 1500);
+INSERT INTO flowers__sizes (flower_id, size_id, amount, price) VALUES (3, 1, 10, 1300);
 
-INSERT INTO flower__sizes (flower_id, size_id, amount, price, price_old) VALUES (4, 1, 42, 1100, 1200);
-INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (5, 1, 38, 1000);
+INSERT INTO flowers__sizes (flower_id, size_id, amount, price, price_old) VALUES (4, 1, 42, 1100, 1200);
+INSERT INTO flowers__sizes (flower_id, size_id, amount, price) VALUES (5, 1, 38, 1000);
 
-INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (6, 1, 0, 1000);
-INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (6, 3, 8, 1900);
-INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (6, 2, 20, 1500);
-INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (7, 3, 8, 1800);
-INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (7, 2, 88, 1500);
-INSERT INTO flower__sizes (flower_id, size_id, amount, price, price_old) VALUES (8, 2, 1, 1400, 1500);
-INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (9, 1, 90, 1000);
-INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (9, 2, 50, 1500);
-INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (9, 3, 44, 1900);
-INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (10, 3, 45, 1500);
-INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (10, 1, 36, 1000);
+INSERT INTO flowers__sizes (flower_id, size_id, amount, price) VALUES (6, 1, 0, 1000);
+INSERT INTO flowers__sizes (flower_id, size_id, amount, price) VALUES (6, 3, 8, 1900);
+INSERT INTO flowers__sizes (flower_id, size_id, amount, price) VALUES (6, 2, 20, 1500);
+INSERT INTO flowers__sizes (flower_id, size_id, amount, price) VALUES (7, 3, 8, 1800);
+INSERT INTO flowers__sizes (flower_id, size_id, amount, price) VALUES (7, 2, 88, 1500);
+INSERT INTO flowers__sizes (flower_id, size_id, amount, price, price_old) VALUES (8, 2, 1, 1400, 1500);
+INSERT INTO flowers__sizes (flower_id, size_id, amount, price) VALUES (9, 1, 90, 1000);
+INSERT INTO flowers__sizes (flower_id, size_id, amount, price) VALUES (9, 2, 50, 1500);
+INSERT INTO flowers__sizes (flower_id, size_id, amount, price) VALUES (9, 3, 44, 1900);
+INSERT INTO flowers__sizes (flower_id, size_id, amount, price) VALUES (10, 3, 45, 1500);
+INSERT INTO flowers__sizes (flower_id, size_id, amount, price) VALUES (10, 1, 36, 1000);
 
-INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (11, 1, 68, 1500);
-INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (11, 2, 74, 1900);
-INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (12, 2, 0, 1500);
-INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (12, 1, 6, 1100);
-INSERT INTO flower__sizes (flower_id, size_id, amount, price, price_old) VALUES (13, 2, 88, 1500, 1600);
-INSERT INTO flower__sizes (flower_id, size_id, amount, price) VALUES (13, 1, 77, 1100);
+INSERT INTO flowers__sizes (flower_id, size_id, amount, price) VALUES (11, 1, 68, 1500);
+INSERT INTO flowers__sizes (flower_id, size_id, amount, price) VALUES (11, 2, 74, 1900);
+INSERT INTO flowers__sizes (flower_id, size_id, amount, price) VALUES (12, 2, 0, 1500);
+INSERT INTO flowers__sizes (flower_id, size_id, amount, price) VALUES (12, 1, 6, 1100);
+INSERT INTO flowers__sizes (flower_id, size_id, amount, price, price_old) VALUES (13, 2, 88, 1500, 1600);
+INSERT INTO flowers__sizes (flower_id, size_id, amount, price) VALUES (13, 1, 77, 1100);
 
 INSERT INTO warehouse_operations (amount, flower_size_id, date, warehouse_operation_type_id) VALUES (40, 1, '2019-07-10 10:26:12', (SELECT id FROM warehouse_operation_types WHERE operation_type = 'GOODS_ARRIVAL'));
 INSERT INTO warehouse_operations (amount, flower_size_id, date, warehouse_operation_type_id) VALUES (35, 2, '2019-07-12 13:26:12',(SELECT id FROM warehouse_operation_types WHERE operation_type = 'GOODS_ARRIVAL'));

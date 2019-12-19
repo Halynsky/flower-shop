@@ -20,10 +20,17 @@ public class FavoritesController {
     @Autowired private SecurityService securityService;
 
     @PreAuthorize("isAuthenticated()")
+    @GetMapping("/flowers/ids")
+    public ResponseEntity<List<Long>> getFavoriteFlowersIds(){
+        User user = securityService.getUser();
+        return new ResponseEntity<>(favoritesService.getFavoriteFlowersIds(user), OK);
+    }
+
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/flowers")
     public ResponseEntity<List<Long>> getFavoriteFlowers(){
         User user = securityService.getUser();
-        return new ResponseEntity<>(favoritesService.getFavoriteFlowers(user), OK);
+        return new ResponseEntity<>(favoritesService.getFavoriteFlowersIds(user), OK);
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -37,7 +44,7 @@ public class FavoritesController {
     @DeleteMapping("/flowers/{id}")
     public ResponseEntity<List<Long>> removeFavoriteFlower(@PathVariable Long id){
         User user = securityService.getUser();
-        return new ResponseEntity<>(favoritesService.addFavoriteFlower(user, id), OK);
+        return new ResponseEntity<>(favoritesService.removeFavoriteFlower(user, id), OK);
     }
 
 }

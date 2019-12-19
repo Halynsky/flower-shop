@@ -4,6 +4,7 @@
 
 
 :host {
+  @extend .content-thin;
   display: grid;
   grid-template-columns: 300px auto;
   width: 100%;
@@ -13,6 +14,7 @@
   @include response-to(sm) {
     grid-template-columns: auto
   }
+
 }
 
 .sidebar {
@@ -24,6 +26,7 @@
 }
 
 .content-wrapper {
+  width: 100%;
   padding: 0px 24px 16px;
   margin-top: -8px;
   background-color: white;
@@ -98,10 +101,10 @@
       grid-template-columns: repeat(3, 1fr);
     }
 
-    @include response-from(lg) {
-      grid-template-columns: repeat(4, 1fr);
-    }
+  }
 
+  .mat-form-field-underline {
+    height: 2px;
   }
 
 }

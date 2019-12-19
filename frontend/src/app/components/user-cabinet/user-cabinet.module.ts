@@ -12,6 +12,7 @@ import { MatInputModule } from "@angular/material";
 import { SharedModule } from "../shared/shared/shared.module";
 import { ValidatorModule } from "../../validators/validator.module";
 import { NgArrayPipesModule } from "angular-pipes";
+import { ShopContentItemComponent } from "../shared/shared/shop-content-item/shop-content-item.component";
 
 
 @NgModule({

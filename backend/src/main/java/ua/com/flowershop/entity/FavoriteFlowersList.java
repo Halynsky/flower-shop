@@ -13,11 +13,8 @@ import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
 
 import javax.persistence.*;
+import java.util.Set;
 
-@TypeDefs({
-    @TypeDef(name = "string-array", typeClass = StringArrayType.class),
-    @TypeDef(name = "int-array", typeClass = IntArrayType.class),
-})
 @Getter
 @Setter
 @Accessors(chain = true)
@@ -32,16 +29,25 @@ public class FavoriteFlowersList {
     private Long id;
     private String name;
     private boolean isDefault;
-    @Type( type = "int-array" )
-    @Column(
-        name = "flower_ids",
-        columnDefinition = "bigint[]"
-    )
-    private Long[] flowerIds = new Long[0];
+//    @Type( type = "int-array" )
+//    @Column(
+//        name = "flower_ids",
+//        columnDefinition = "bigint[]"
+//    )
+//    private Long[] flowerIds = new Long[0];
+
+
 
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name="user_id",  foreignKey = @ForeignKey(name = "favorite_flowers_list_user_fkey"))
     private User user;
+
+    @ManyToMany
+    @JoinTable(
+        name = "flower__favorite_flowers_lists",
+        joinColumns = @JoinColumn(name = "favorite_flowers_list_id"),
+        inverseJoinColumns = @JoinColumn(name = "flower_id"))
+    Set<Flower> flowers;
 
 }

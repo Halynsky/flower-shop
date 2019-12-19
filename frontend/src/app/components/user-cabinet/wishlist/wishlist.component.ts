@@ -1,4 +1,5 @@
 import {Component} from "@angular/core";
+import { FavoritesService } from "../../../api/services/favorites.service";
 
 @Component({
   selector: 'wishlist',
@@ -8,7 +9,7 @@ import {Component} from "@angular/core";
 
 export class WishlistComponent {
 
-  constructor(){
+  constructor(public favoritesService: FavoritesService){
 
   }
 

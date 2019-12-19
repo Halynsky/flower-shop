@@ -61,4 +61,8 @@ public class Flower {
 
     @OneToMany(mappedBy = "flower")
     private Set<FlowerSize> flowerSizes;
+
+    @ManyToMany
+    Set<FavoriteFlowersList> likedCourses;
+
 }

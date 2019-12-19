@@ -26,7 +26,7 @@ export class FavoritesService {
 
   }
 
-  getFavoriteFlower() {
+  getFavoriteFlowers() {
     return this.http.get<number[]>(`${this.URL}/flowers`);
   }
 
@@ -39,7 +39,7 @@ export class FavoritesService {
   }
 
   loadFavoriteFlowers() {
-    this.getFavoriteFlower().subscribe(
+    this.getFavoriteFlowers().subscribe(
       favoriteFlowerIds => {
         this.favoriteFlowerIds = favoriteFlowerIds;
       },

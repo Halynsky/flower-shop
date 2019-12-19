@@ -14,7 +14,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity()
-@Table(name = "flower_type__sizes")
+@Table(name = "flower_types__sizes")
 public class FlowerTypeSize {
 
     @Id
