@@ -26,6 +26,7 @@ import { MessageModule } from "primeng/message";
 import { AuthDialogComponent } from "./auth-dialog/auth-dialog.component";
 import { BucketDialogComponent } from "./bucket-dialog/bucket-dialog.component";
 import { ValidatorModule } from "../../../validators/validator.module";
+import { ShopContentItemComponent } from "./shop-content-item/shop-content-item.component";
 
 const PROVIDERS = [
   {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 5000, panelClass: "snack-custom-class"}},
@@ -37,7 +38,8 @@ const PROVIDERS = [
     ArticleCardComponent,
     BottomSheetOverview,
     AuthDialogComponent,
-    BucketDialogComponent
+    BucketDialogComponent,
+    ShopContentItemComponent
   ],
   imports: [
     RouterModule,
@@ -79,7 +81,8 @@ const PROVIDERS = [
     PipesModule,
     ValidatorModule,
     // Developed Components
-    ArticleCardComponent
+    ArticleCardComponent,
+    ShopContentItemComponent
   ],
   providers: [
     ...PROVIDERS

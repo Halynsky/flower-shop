@@ -15,7 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity()
-@Table(name = "flower__sizes")
+@Table(name = "flowers__sizes")
 public class FlowerSize {
 
     @Id

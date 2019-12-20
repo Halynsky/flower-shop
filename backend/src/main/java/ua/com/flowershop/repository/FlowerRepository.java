@@ -66,6 +66,17 @@ public interface FlowerRepository extends JpaRepository<Flower, Long> {
         "GROUP BY f.id, f.name, f.nameOriginal, f.image, f.popularity, f.created, ft.id, ft.name, ft.nameSingle")
     Page<FlowerShortProjection> findProjectedByFilters(String searchTerm, List<Long> flowerTypeFilters, List<Long> colorFilters, List<Long> sizeFilters, Pageable pageable);
 
+    @Query("SELECT DISTINCT(f.id) as id, f.name as name, f.nameOriginal as nameOriginal, f.image as image, f.popularity as popularity, f.created as created, " +
+        "min(fs.price) as price, f.flowerType as flowerType FROM Flower f " +
+        "INNER JOIN f.flowerType ft " +
+        "INNER JOIN f.color c " +
+        "INNER JOIN f.flowerSizes fs " +
+        "INNER JOIN f.favoriteFlowersLists ffl " +
+        "WHERE ffl.user.id = :userId " +
+        "GROUP BY f.id, f.name, f.nameOriginal, f.image, f.popularity, f.created, ft.id, ft.name, ft.nameSingle")
+    List<FlowerShortProjection> findFavoriteFlowers(Long userId);
+
+
     Optional<FlowerFullProjection> findFullProjectedById(Long id);
 
 

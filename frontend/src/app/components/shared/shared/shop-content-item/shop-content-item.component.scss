@@ -1,4 +1,4 @@
-@import '~@angular/material/theming';
+@import '../../../../../../node_modules/@angular/material/theming';
 @import "theme";
 @import "mixins";
 
@@ -35,6 +35,11 @@
       transition: bottom .3s, background .25s;
       text-transform: uppercase;
 
+      @include response-to(sm) {
+        bottom: 0px;
+        height: 40px;
+      }
+
       .mat-icon {
         margin-right: 8px;
       }
@@ -46,26 +51,32 @@
 
     }
 
-    .additional-buttons {
-      top: 16px;
-      left: 16px;
+    .favorites-button-wrapper {
+      top: 8px;
+      left: 8px;
       position: absolute;
       display: flex;
-      visibility: hidden;
+      //visibility: hidden;
       align-items: center;
       width: 100%;
-      opacity: 0;
-      transition: opacity .3s, visibility .3s;
+      //opacity: 0;
+      //transition: opacity .3s, visibility .3s;
 
       .mat-icon-button {
         color: $black-100;
         background: $grey-50;
-        height: 40px;
-        width: 40px;
+        height: 36px;
+        width: 36px;
+        line-height: 36px;
         display: flex;
         justify-content: center;
         align-items: center;
         border-radius: 50%;
+
+        &.in-favorites {
+          color: mat-color($accent)
+        }
+
       }
 
     }
@@ -78,7 +89,7 @@
         bottom: 0px;
         transition: bottom .3s, background .25s;
       }
-      .additional-buttons {
+      .favorites-button-wrapper {
         //display: flex;
         visibility: visible;
         opacity: 1;
@@ -90,13 +101,13 @@
   .info {
     background: $grey-50;
     text-align: center;
-    padding: 8px 8px 16px;
+    padding: 12px 8px 12px;
 
     .flower-type-name {
       color: $grey-400;
       font-weight: 500;
       font-size: 14px;
-      line-height: 200%;
+      line-height: 120%;
     }
 
     .name {

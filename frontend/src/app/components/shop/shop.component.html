@@ -6,13 +6,13 @@
 
   <div class="content-top-bar">
 
-    <mat-form-field>
+    <mat-form-field class="main-search-wrapper">
       <input matInput placeholder="Пошук" #search [(ngModel)]="searchTerm" (ngModelChange)="searchTermChange($event)">
       <mat-icon matSuffix class="close-icon" (click)="searchTerm = ''; searchTermCleared()">close</mat-icon>
       <mat-icon matSuffix class="search-icon">search</mat-icon>
     </mat-form-field>
 
-    <mat-form-field>
+    <mat-form-field class="ordering-selector-wrapper">
       <mat-select [(ngModel)]="sort" value="popularity,ASC" (selectionChange)="sortSelectionChange($event)">
         <mat-option value="popularity,ASC">За популярністю</mat-option>
         <mat-option value="price,ASC">Від дешевших до дорощих</mat-option>

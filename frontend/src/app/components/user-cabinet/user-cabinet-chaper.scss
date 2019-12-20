@@ -9,6 +9,11 @@
   color: $black-100;
   text-transform: uppercase;
   padding-left: 24px;
+
+  @include response-to(sm) {
+    padding-left: 0;
+    text-align: center;
+  }
 }
 
 .user-cabinet-card {

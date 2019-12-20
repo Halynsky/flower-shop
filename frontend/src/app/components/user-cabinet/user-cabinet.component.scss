@@ -8,6 +8,9 @@
   align-self: center;
   flex-direction: row;
   padding-top: 24px;
+  padding-left: 24px;
+  padding-right: 24px;
+  justify-content: center;
 
   @extend .content-thin;
 

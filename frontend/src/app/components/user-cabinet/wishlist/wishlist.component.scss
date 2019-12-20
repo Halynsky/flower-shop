@@ -2,3 +2,34 @@
 @import '~@angular/material/theming';
 @import 'mixins.scss';
 @import '../user-cabinet-chaper';
+
+:host {
+  flex: 0 1 812px;
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+  align-items: stretch;
+}
+
+mat-card-content, .content {
+  display: grid;
+  grid-gap: 24px;
+  margin-bottom: 24px;
+
+  @include response-to(xs) {
+    grid-template-columns: auto
+  }
+
+  @include response-from(sm) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include response-from(md) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.empty-wishlist-text {
+  color: $grey-500;
+  text-align: center;
+}

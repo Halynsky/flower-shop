@@ -2,3 +2,7 @@
 @import '~@angular/material/theming';
 @import 'mixins.scss';
 @import '../user-cabinet-chaper';
+
+:host {
+  flex: 0 1 812px;
+}

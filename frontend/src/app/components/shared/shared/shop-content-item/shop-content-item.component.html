@@ -1,0 +1,32 @@
+<div class="cover" [ngStyle]="flower.image && {'background-image':'url(' + flower.image  + ')'}">
+
+  <div class="favorites-button-wrapper" *ngIf="!inFavorites">
+
+    <button mat-icon-button class="in-favorites" (click)="removeFromFavorites()" *ngIf="favoritesService.favoriteFlowerIds.includes(flower.id); else addToFavoritesBlock">
+      <mat-icon  aria-label="Remove from favorites">favorite</mat-icon>
+    </button>
+
+    <ng-template #addToFavoritesBlock>
+      <button mat-icon-button (click)="addToFavorites()">
+        <mat-icon aria-label="Add to favorites">favorite_border</mat-icon>
+      </button>
+    </ng-template>
+
+  </div>
+
+  <div class="add-to-card" (click)="addToCard($event)" >
+    <mat-icon aria-label="Add to card">add_shopping_cart</mat-icon>
+    <span>Замовити</span>
+  </div>
+
+</div>
+
+<div class="info">
+
+  <div class="flower-type-name">{{flower.flowerType.nameSingle}}</div>
+  <div class="name">{{flower.name}}</div>
+  <div class="price">від {{flower.priceMin / 100}} грн</div>
+
+</div>
+
+
