@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { API_URL } from "../../utils/Costants";
 import { SecurityService } from "../../services/security.service";
 import { takeUntil } from "rxjs/operators";
+import { FlowerShort } from "../models/Flower";
 
 @Injectable({providedIn: 'root'})
 export class FavoritesService {
@@ -14,20 +15,24 @@ export class FavoritesService {
   constructor(private http: HttpClient,
               private securityService: SecurityService) {
     if(securityService.isAuthenticated()) {
-      this.loadFavoriteFlowers();
+      this.loadFavoriteFlowersIds();
     } else {
       this.securityService.onLogin
         .pipe(takeUntil(this.securityService.onLogout))
         .subscribe(() => {
-        this.loadFavoriteFlowers();
+        this.loadFavoriteFlowersIds();
       })
     }
 
 
   }
 
+  getFavoriteFlowersIds() {
+    return this.http.get<number[]>(`${this.URL}/flowers/ids`);
+  }
+
   getFavoriteFlowers() {
-    return this.http.get<number[]>(`${this.URL}/flowers`);
+    return this.http.get<FlowerShort[]>(`${this.URL}/flowers`);
   }
 
   addFavoriteFlower(flowerId) {
@@ -38,8 +43,8 @@ export class FavoritesService {
     return this.http.delete<number[]>(`${this.URL}/flowers/${flowerId}`);
   }
 
-  loadFavoriteFlowers() {
-    this.getFavoriteFlowers().subscribe(
+  loadFavoriteFlowersIds() {
+    this.getFavoriteFlowersIds().subscribe(
       favoriteFlowerIds => {
         this.favoriteFlowerIds = favoriteFlowerIds;
       },

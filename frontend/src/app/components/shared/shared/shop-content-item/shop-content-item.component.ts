@@ -13,6 +13,8 @@ export class ShopContentItemComponent implements OnInit {
 
   @Input()
   public flower: FlowerShort;
+  @Input()
+  public inFavorites: boolean = false;
 
   constructor(private snackBar: SnackBarService,
               private favoritesService: FavoritesService) { }

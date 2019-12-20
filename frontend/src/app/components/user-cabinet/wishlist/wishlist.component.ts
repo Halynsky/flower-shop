@@ -1,5 +1,8 @@
 import {Component} from "@angular/core";
 import { FavoritesService } from "../../../api/services/favorites.service";
+import { SnackBarService } from "../../../services/snak-bar.service";
+import { getErrorMessage } from "../../../utils/Functions";
+import { FlowerShort } from "../../../api/models/Flower";
 
 @Component({
   selector: 'wishlist',
@@ -9,8 +12,17 @@ import { FavoritesService } from "../../../api/services/favorites.service";
 
 export class WishlistComponent {
 
-  constructor(public favoritesService: FavoritesService){
+  favoriteFlowers: FlowerShort[];
 
+  constructor(public favoritesService: FavoritesService,
+              private snackBarService: SnackBarService){
+    this.getFavoriteFlowers()
+  }
+
+  getFavoriteFlowers() {
+    this.favoritesService.getFavoriteFlowers().subscribe(
+      favoriteFlowers => this.favoriteFlowers = favoriteFlowers,
+        error => this.snackBarService.showError(getErrorMessage(error)))
   }
 
 }

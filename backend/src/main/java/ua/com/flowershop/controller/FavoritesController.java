@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ua.com.flowershop.entity.User;
+import ua.com.flowershop.projection.FlowerShortProjection;
 import ua.com.flowershop.security.SecurityService;
 import ua.com.flowershop.service.FavoritesService;
 
@@ -28,9 +29,9 @@ public class FavoritesController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/flowers")
-    public ResponseEntity<List<Long>> getFavoriteFlowers(){
+    public ResponseEntity<List<FlowerShortProjection>> getFavoriteFlowers(){
         User user = securityService.getUser();
-        return new ResponseEntity<>(favoritesService.getFavoriteFlowersIds(user), OK);
+        return new ResponseEntity<>(favoritesService.getFavoriteFlowers(user), OK);
     }
 
     @PreAuthorize("isAuthenticated()")

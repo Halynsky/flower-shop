@@ -71,8 +71,10 @@ public interface FlowerRepository extends JpaRepository<Flower, Long> {
         "INNER JOIN f.flowerType ft " +
         "INNER JOIN f.color c " +
         "INNER JOIN f.flowerSizes fs " +
-        "INNER JOIN f.flowerSizes fs ")
-    Page<FlowerShortProjection> findFavoriteFlowers(String searchTerm, List<Long> flowerTypeFilters, List<Long> colorFilters, List<Long> sizeFilters, Pageable pageable);
+        "INNER JOIN f.favoriteFlowersLists ffl " +
+        "WHERE ffl.user.id = :userId " +
+        "GROUP BY f.id, f.name, f.nameOriginal, f.image, f.popularity, f.created, ft.id, ft.name, ft.nameSingle")
+    List<FlowerShortProjection> findFavoriteFlowers(Long userId);
 
 
     Optional<FlowerFullProjection> findFullProjectedById(Long id);

@@ -1,9 +1,18 @@
 <div class="user-cabinet-title">Список Бажаннь</div>
 
-<mat-card class="user-cabinet-card">
-  <mat-card-header>
-  </mat-card-header>
-  <mat-card-content>
-    Wishlist
-  </mat-card-content>
-</mat-card>
+<!--<mat-card class="user-cabinet-card">-->
+<!--  <mat-card-header>-->
+<!--  </mat-card-header>-->
+<!--  <mat-card-content>-->
+<!--    <ng-template ngFor let-flower [ngForOf]="favoriteFlowers">-->
+<!--      <shop-content-item [flower]="flower" [routerLink]="['/', 'shop','item', flower.id]" [inFavorites]="true"></shop-content-item>-->
+<!--    </ng-template>-->
+<!--  </mat-card-content>-->
+<!--</mat-card>-->
+
+
+<div class="content">
+      <ng-template ngFor let-flower [ngForOf]="favoriteFlowers">
+        <shop-content-item [flower]="flower" [routerLink]="['/', 'shop','item', flower.id]" [inFavorites]="true"></shop-content-item>
+      </ng-template>
+</div>

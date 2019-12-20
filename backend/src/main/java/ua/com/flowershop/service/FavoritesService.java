@@ -8,6 +8,7 @@ import ua.com.flowershop.entity.Flower;
 import ua.com.flowershop.entity.User;
 import ua.com.flowershop.exception.InternalServerException;
 import ua.com.flowershop.exception.NotFoundException;
+import ua.com.flowershop.projection.FlowerShortProjection;
 import ua.com.flowershop.repository.FavoriteFlowersListRepository;
 import ua.com.flowershop.repository.FlowerRepository;
 
@@ -23,12 +24,8 @@ public class FavoritesService {
     @Autowired private FavoriteFlowersListRepository favoriteFlowersListRepository;
     @Autowired private FlowerRepository flowerRepository;
 
-    public List<Long> getFavoriteFlowers(User user) {
-        List<FavoriteFlowersList> favoriteFlowersList = favoriteFlowersListRepository.findByUserId(user.getId());
-        return favoriteFlowersList.stream().map(FavoriteFlowersList::getFlowers)
-            .flatMap(Collection::stream)
-            .map(Flower::getId)
-            .collect(Collectors.toList());
+    public List<FlowerShortProjection> getFavoriteFlowers(User user) {
+        return flowerRepository.findFavoriteFlowers(user.getId());
     }
 
     public List<Long> getFavoriteFlowersIds(User user) {

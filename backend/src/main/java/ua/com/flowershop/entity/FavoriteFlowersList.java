@@ -13,6 +13,7 @@ import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -29,14 +30,6 @@ public class FavoriteFlowersList {
     private Long id;
     private String name;
     private boolean isDefault;
-//    @Type( type = "int-array" )
-//    @Column(
-//        name = "flower_ids",
-//        columnDefinition = "bigint[]"
-//    )
-//    private Long[] flowerIds = new Long[0];
-
-
 
     @JsonIgnore
     @ManyToOne
@@ -45,9 +38,9 @@ public class FavoriteFlowersList {
 
     @ManyToMany
     @JoinTable(
-        name = "flower__favorite_flowers_lists",
+        name = "flowers__favorite_flowers_lists",
         joinColumns = @JoinColumn(name = "favorite_flowers_list_id"),
         inverseJoinColumns = @JoinColumn(name = "flower_id"))
-    Set<Flower> flowers;
+    Set<Flower> flowers = new HashSet<>();
 
 }
