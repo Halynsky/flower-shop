@@ -1,15 +1,8 @@
 <div class="user-cabinet-title">Список Бажаннь</div>
 
-<!--<mat-card class="user-cabinet-card">-->
-<!--  <mat-card-header>-->
-<!--  </mat-card-header>-->
-<!--  <mat-card-content>-->
-<!--    <ng-template ngFor let-flower [ngForOf]="favoriteFlowers">-->
-<!--      <shop-content-item [flower]="flower" [routerLink]="['/', 'shop','item', flower.id]" [inFavorites]="true"></shop-content-item>-->
-<!--    </ng-template>-->
-<!--  </mat-card-content>-->
-<!--</mat-card>-->
-
+<div class="empty-wishlist-text" *ngIf="favoriteFlowers && favoriteFlowers.length == 0">
+  У вас ще немає жодного товару в списку бажаннь
+</div>
 
 <div class="content">
       <ng-template ngFor let-flower [ngForOf]="favoriteFlowers">
