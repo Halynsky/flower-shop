@@ -17,6 +17,7 @@ export namespace WarehouseOperationType {
     INTERNAL_SALE = 'INTERNAL_SALE',
     EXTERNAL_SALE = 'EXTERNAL_SALE',
     GIFT = 'GIFT',
-    DEFECT = 'DEFECT'
+    DEFECT = 'DEFECT',
+    RETURN = 'RETURN'
   }
 }

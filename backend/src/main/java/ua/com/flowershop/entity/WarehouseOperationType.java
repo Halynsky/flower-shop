@@ -50,6 +50,7 @@ public class WarehouseOperationType {
         GOODS_ARRIVAL("GOODS_ARRIVAL"),
         INTERNAL_SALE("INTERNAL_SALE"),
         EXTERNAL_SALE("EXTERNAL_SALE"),
+        RETURN("RETURN"),
         GIFT("GIFT"),
         DEFECT("DEFECT");
 
