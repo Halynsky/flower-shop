@@ -9,7 +9,7 @@
   <div class="filter-content">
     <ng-template ngFor let-flowerType [ngForOf]="flowerTypes" [ngForTrackBy]="trackByFn">
       <div class="filter-item" [ngClass]="{'inactive': filters.flowerTypeFilters.length > 0 && !filters.flowerTypeFilters.includes(flowerType.id)}">
-        <mat-checkbox (change)="onFlowerTypeFilterChange($event)" [value]="flowerType.id" #flowerTypeCheckbox>
+        <mat-checkbox (change)="onFlowerTypeFilterChange($event)" [value]="flowerType.id" #flowerTypeCheckbox [checked]="filters.flowerTypeFilters.includes(flowerType.id)">
           <span>{{flowerType.name}}</span>
           <span>&nbsp;( {{flowerType.flowersCount}} ) </span>
         </mat-checkbox>
@@ -31,7 +31,7 @@
   <div class="filter-content">
     <ng-template ngFor let-color [ngForOf]="colors" [ngForTrackBy]="trackByFn">
       <div class="filter-item" [ngClass]="{'inactive': filters.colorFilters.length > 0 && !filters.colorFilters.includes(color.id)}">
-        <mat-checkbox (change)="onColorFilterChange($event)" [value]="color.id"  #colorCheckbox>{{color.name}}</mat-checkbox>
+        <mat-checkbox (change)="onColorFilterChange($event)" [value]="color.id"  #colorCheckbox [checked]="filters.colorFilters.includes(color.id)">{{color.name}}</mat-checkbox>
       </div>
     </ng-template>
   </div>
@@ -49,7 +49,7 @@
   <div class="filter-content">
     <ng-template ngFor let-size [ngForOf]="sizes" [ngForTrackBy]="trackByFn">
       <div class="filter-item" [ngClass]="{'inactive': filters.sizeFilters.length > 0 && !filters.sizeFilters.includes(size.id)}">
-        <mat-checkbox (change)="onSizeFilterChange($event)" [value]="size.id"  #sizeCheckbox>{{size.name}}</mat-checkbox>
+        <mat-checkbox (change)="onSizeFilterChange($event)" [value]="size.id"  #sizeCheckbox [checked]="filters.sizeFilters.includes(size.id)">{{size.name}}</mat-checkbox>
       </div>
     </ng-template>
   </div>

@@ -12,6 +12,11 @@
       <mat-icon matSuffix class="search-icon">search</mat-icon>
     </mat-form-field>
 
+    <button mat-flat-button color="primary" class="filters-button" (click)="openFilterModal()">
+      <i class="fas fa-filter"></i>
+      <span>Фільтри</span>
+    </button>
+
     <mat-form-field class="ordering-selector-wrapper">
       <mat-select [(ngModel)]="sort" value="popularity,ASC" (selectionChange)="sortSelectionChange($event)">
         <mat-option value="popularity,ASC">За популярністю</mat-option>

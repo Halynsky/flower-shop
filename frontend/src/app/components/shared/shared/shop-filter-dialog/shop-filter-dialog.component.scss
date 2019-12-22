@@ -1,0 +1,29 @@
+@import "theme";
+@import "mixins.scss";
+
+:host {
+
+  .dialog-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    i.close {
+      cursor: pointer;
+      position: fixed;
+      top: 8px;
+      right: 8px;
+      color: $grey-400;
+      font-size: 24px;
+    }
+
+    .submit-filter-button {
+      cursor: pointer;
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+    }
+
+  }
+
+}

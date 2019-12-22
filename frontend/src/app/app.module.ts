@@ -17,9 +17,10 @@ import { SharedModule } from "./components/shared/shared/shared.module";
 import { MainInterceptor } from "./inteceptors/main.interceptor";
 import { AuthDialogComponent } from "./components/shared/shared/auth-dialog/auth-dialog.component";
 import { BucketDialogComponent } from "./components/shared/shared/bucket-dialog/bucket-dialog.component";
-import { AuthService, AuthServiceConfig, FacebookLoginProvider, GoogleLoginProvider, SocialLoginModule } from "angularx-social-login";
+import { AuthServiceConfig, FacebookLoginProvider, SocialLoginModule } from "angularx-social-login";
 import { ValidatorModule } from "./validators/validator.module";
 import { UserCabinetModule } from "./components/user-cabinet/user-cabinet.module";
+import { ShopFilterDialogComponent } from "./components/shared/shared/shop-filter-dialog/shop-filter-dialog.component";
 
 registerLocaleData(localeRuUa);
 
@@ -42,7 +43,8 @@ export function getAuthServiceConfigs() {
   ],
   entryComponents: [
     AuthDialogComponent,
-    BucketDialogComponent
+    BucketDialogComponent,
+    ShopFilterDialogComponent
   ],
   imports: [
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),

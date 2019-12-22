@@ -9,7 +9,7 @@ import ua.com.flowershop.model.socials.SocialUser;
 import javax.persistence.*;
 import java.time.ZonedDateTime;
 
-@Entity(name = "social_connection")
+@Entity(name = "social_connections")
 @Data
 @Accessors(chain = true)
 @NoArgsConstructor

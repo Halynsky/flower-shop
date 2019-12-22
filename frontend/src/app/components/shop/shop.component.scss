@@ -34,6 +34,32 @@
   .content-top-bar {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+
+    .filters-button {
+
+      @include response-from(md) {
+        display: none;
+      }
+
+      @include response(xs) {
+        min-width: 40px;
+        padding: 0px;
+      }
+
+      @include response(sm) {
+        i {
+          margin-right: 8px;
+        }
+      }
+
+      span {
+        @include response(xs) {
+          display: none;
+        }
+      }
+
+    }
 
     ::ng-deep mat-form-field {
       .mat-form-field-wrapper {

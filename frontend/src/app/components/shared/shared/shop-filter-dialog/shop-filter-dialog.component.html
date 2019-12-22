@@ -1,0 +1,14 @@
+<div class="dialog-container">
+
+  <i class="material-icons close" (click)="dialogRef.close()">close</i>
+
+  <shop-filters [filters]="filters" (onFilterChange)="filterChange($event)"></shop-filters>
+
+  <button mat-flat-button color="primary" class="submit-filter-button" (click)="dialogRef.close()">
+    Застосувати
+  </button>
+
+</div>
+
+
+
