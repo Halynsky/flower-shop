@@ -45,8 +45,6 @@ export class ShopComponent implements OnInit {
   }
 
   onFilterChange(event) {
-    console.log("this", this);
-    console.log("onFilterChange", event);
     this.filters = event;
     this.getShopItems(this.searchTerm, this.pagination, this.filters)
   }

@@ -1,8 +1,11 @@
 @import '../theme';
 @import "mixins";
 
-.mat-menu-panel .mat-menu-content:not(:empty) {
-  padding: initial;
+.mat-menu-panel  {
+  border-radius: 2px !important;
+  .mat-menu-content:not(:empty) {
+    padding: initial;
+  }
 }
 
 .mat-snack-bar-container.snack-custom-class {

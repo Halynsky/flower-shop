@@ -67,48 +67,38 @@
 
 </div>
 
-<!--<mat-menu #authMenu="matMenu" class="auth-menu">-->
-<!--  <button class="facebook-auth" (click)="onLoginDialog()">-->
-<!--    <i class="fab fa-facebook-f"></i>-->
-<!--    <span>Facebook</span>-->
-<!--  </button>-->
-<!--  <button class="google-auth" (click)="onLoginDialog()">-->
-<!--    <i class="fab fa-google"></i>-->
-<!--    <span>Google</span>-->
-<!--  </button>-->
-<!--</mat-menu>-->
-
 <mat-menu #userMenu="matMenu" class="auth-menu">
   <div class="profile-menu user-menu" (click)="openBucketDialog()" *ngIf="securityService.hasRole(Role.USER)">
-    <button class="user-menu-button" routerLink="/my/profile">
-      <i class="fas fa-users"></i>
+    <button mat-flat-button class="user-menu-button" routerLink="/my/profile">
+      <i class="material-icons">perm_identity</i>
       <span>Мій профіль</span>
     </button>
-    <button class="user-menu-button" routerLink="/my/wishlist">
-      <i class="fas fa-hand-holding-heart"></i>
+    <button mat-flat-button class="user-menu-button" routerLink="/my/wishlist">
+      <i class="material-icons">favorite_border</i>
       <span>Список бажань</span>
     </button>
-    <button class="user-menu-button" routerLink="/my/purchases">
-      <i class="fas fa-shopping-cart"></i>
+    <button mat-flat-button class="user-menu-button" routerLink="/my/purchases">
+      <i class="material-icons">shopping_basket</i>
       <span>Мої покупки</span>
     </button>
-    <button class="user-menu-button" routerLink="/my/favourite-articles">
-      <i class="far fa-heart"></i>
+    <button mat-flat-button class="user-menu-button" routerLink="/my/favourite-articles">
+      <i class="material-icons">notes</i>
       <span>Улюблені статті</span>
     </button>
   </div>
 
   <div class="profile-menu admin-menu" (click)="openBucketDialog()" *ngIf="securityService.hasRole(Role.ADMIN) || securityService.hasRole(Role.SUPPORT)">
-    <button class="user-menu-button" routerLink="/admin">
-      <i class="fas fa-columns"></i>
+    <button mat-flat-button class="user-menu-button" routerLink="/admin">
+      <i class="material-icons">table_chart</i>
       <span>Адмін Панель</span>
     </button>
   </div>
 
-  <button class="user-menu-button" (click)="logout()">
-    <i class="fas fa-sign-out-alt"></i>
+  <button mat-flat-button class="user-menu-button" (click)="logout()">
+    <i class="material-icons">exit_to_app</i>
     <span>Вийти</span>
   </button>
+
 </mat-menu>
 
 <mat-menu #bucket="matMenu" class="bucket-menu">

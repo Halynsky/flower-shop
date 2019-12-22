@@ -20,6 +20,7 @@
   grid-template-columns: max-content auto max-content;
 
   .mobile-menu {
+    width: 200px;
     @include response-from(sm) {
       display: none;
     }
@@ -183,51 +184,38 @@
 
 ::ng-deep .auth-menu {
   margin-top: -8px;
+  margin-right: 8px;
 
   button {
     position: relative;
     color: white;
-    padding: 10px 12px 10px 36px;
+    padding: 8px 12px 8px 12px;
     border: none;
-
     display: flex;
     width: 100%;
-
-
-    i {
-      position: absolute;
-    }
-
-    &.facebook-auth {
-      background: #3b5998;
-
-      i {
-        left: 15px;
-      }
-    }
-
-    &.google-auth {
-      background: #ec3c1e;
-
-      i {
-        left: 12px;
-      }
-    }
+    font-size: 16px !important;
 
     &.user-menu-button {
-      background: white;
-      color: black;
+      border-radius: 0px;
+      color: $black-100;
 
       i {
-        left: 12px;
+        margin-right: 12px;
       }
+
     }
+
+
+
   }
 
 }
 
 ::ng-deep .main-navigation-menu {
   margin-top: -8px;
+  margin-left: 8px;
+  color: $black-100;
+  width: 135px;
 
   .mat-menu-content {
     display: flex;
@@ -235,19 +223,9 @@
   }
 
   button, a {
-    //position: relative;
-    //color: white;
-    //padding: 10px 12px 10px 36px;
-    //border: none;
     border-radius: initial;
-
-    //display: flex;
-    //width: 100%;
-
-    //i {
-    //  position: absolute;
-    //}
-
+    padding: 8px 12px 8px 12px;
+    font-size: 16px !important;
   }
 
 }

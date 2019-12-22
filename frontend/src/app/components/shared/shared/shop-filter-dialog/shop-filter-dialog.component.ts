@@ -21,7 +21,6 @@ export class ShopFilterDialogComponent {
   }
 
   filterChange(event: any) {
-    console.log(event)
     this.onFilterChange.emit(event)
   }
 

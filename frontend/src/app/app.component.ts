@@ -21,7 +21,6 @@ export class AppComponent implements OnInit {
   checkSwUpdate() {
     if (this.swUpdate.isEnabled) {
       this.swUpdate.available.subscribe(() => {
-        // console.log("Service is updated, please reload the page to prevent errors");
         alert('Доступна нова версія нашого сервісу. Ми повинні оновити сторінку щоб відобразити для вас актуальну версію.');
         window.location.reload();
       });
