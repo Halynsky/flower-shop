@@ -13,11 +13,13 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ua.com.flowershop.model.FlowerModel;
-import ua.com.flowershop.projection.*;
+import ua.com.flowershop.projection.FlowerFullProjection;
+import ua.com.flowershop.projection.FlowerProjection;
+import ua.com.flowershop.projection.FlowerShortProjection;
+import ua.com.flowershop.projection.FlowerSizeFullProjection;
 import ua.com.flowershop.repository.FlowerRepository;
 import ua.com.flowershop.repository.FlowerSizeRepository;
 import ua.com.flowershop.service.FlowerService;
-import ua.com.flowershop.service.ImageService;
 import ua.com.flowershop.util.HibernateUtil;
 import ua.com.flowershop.util.annotation.PageableSwagger;
 
@@ -33,8 +35,6 @@ import static ua.com.flowershop.util.Path.FLOWERS_PATH;
 @RestController
 @RequestMapping(FLOWERS_PATH)
 public class FlowerController {
-
-//    TODO: Create FlowerAdminProjection and insert it in to forAdmin
 
     @Autowired private FlowerService flowerService;
     @Autowired private FlowerRepository flowerRepository;

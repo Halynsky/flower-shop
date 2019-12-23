@@ -18,7 +18,7 @@
     </button>
 
     <mat-form-field class="ordering-selector-wrapper">
-      <mat-select [(ngModel)]="sort" value="popularity,ASC" (selectionChange)="sortSelectionChange($event)">
+      <mat-select placeholder="Сортування" [(ngModel)]="sort" value="popularity,ASC" (selectionChange)="sortSelectionChange($event)">
         <mat-option value="popularity,ASC">За популярністю</mat-option>
         <mat-option value="price,ASC">Від дешевших до дорощих</mat-option>
         <mat-option value="price,DESC">Від дорощих до дешевших</mat-option>
