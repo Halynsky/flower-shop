@@ -8,7 +8,7 @@ export class TranslationService {
     OUT: 'Відхід',
     GOODS_ARRIVAL: 'Прибуття товару',
     RETURN: 'Повернення',
-    INTERNAL_SALE: 'Продаж',
+    SALE: 'Продаж',
     EXTERNAL_SALE: 'Продаж (поза системою)',
     GIFT: 'Подарунок',
     DEFECT: 'Списання (Брак)'

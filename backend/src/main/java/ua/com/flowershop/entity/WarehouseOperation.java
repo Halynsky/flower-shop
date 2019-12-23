@@ -30,6 +30,9 @@ public class WarehouseOperation {
     @Column(columnDefinition = "varchar(2000)")
     private String comment;
 
+    @OneToOne
+    private OrderItem orderItem;
+
     @ManyToOne
     @JoinColumn(name = "flower_size_id", nullable = false)
     private FlowerSize flowerSize;
