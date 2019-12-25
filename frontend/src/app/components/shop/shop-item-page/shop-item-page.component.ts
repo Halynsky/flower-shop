@@ -3,12 +3,10 @@ import { ActivatedRoute } from "@angular/router";
 import { FlowerService } from "../../../api/services/flower.service";
 import { FlowerFull } from "../../../api/models/Flower";
 import { FlowerSize } from "../../../api/models/FlowerSize";
-import { MatBottomSheet, MatBottomSheetRef } from "@angular/material";
-import { BottomSheetOverview } from "../../shared/shared/bottom-sheet/bottom-sheet.component";
-import { BucketItem } from "../../../models/BucketItem";
 import { BucketService } from "../../../services/bucket.service";
 import { SnackBarService } from "../../../services/snak-bar.service";
 import { getErrorMessage } from "../../../utils/Functions";
+import { BucketItem } from "../../../models/Bucket";
 
 
 @Component({
@@ -22,17 +20,13 @@ export class ShopItemPageComponent implements OnInit {
 
   id: number;
   flower: FlowerFull;
-  amountCounter: number = 1;
   flowerSize: FlowerSize;
-  totalPrice: number = 1;
-  bottomSheetRef: MatBottomSheetRef;
-  bucketItems: Array<BucketItem> = [];
+  bucketItems: BucketItem[] = [];
 
   constructor(private route: ActivatedRoute,
               private flowerService: FlowerService,
               private bucketService: BucketService,
-              private snackBarService: SnackBarService,
-              private bottomSheet: MatBottomSheet) {
+              private snackBarService: SnackBarService) {
     this.route.params.subscribe(params => {
       this.id = params['id'];
       this.getFlowerById();
@@ -42,22 +36,17 @@ export class ShopItemPageComponent implements OnInit {
   ngOnInit() {
   }
 
-  openBottomSheet(): void {
-    this.bottomSheetRef = this.bottomSheet.open(BottomSheetOverview);
-  }
-
-  addToBucket() {
-
-  }
 
   fillBucketItems(flower: FlowerFull) {
     for (let flowerSize of flower.flowerSizes) {
       let bucketItem = new BucketItem();
       bucketItem.amount = 0;
+      bucketItem.price = flowerSize.price;
       bucketItem.flowerSizeId = flowerSize.id;
       bucketItem.image = flower.image;
       bucketItem.name = flower.name;
       bucketItem.size = flowerSize.size.name;
+      bucketItem.flowerType = flower.flowerType.nameSingle;
       this.bucketItems.push(bucketItem);
     }
   }
@@ -84,4 +73,20 @@ export class ShopItemPageComponent implements OnInit {
       this.bucketItems[flowerSizeIndex].amount++
     }
   }
+
+  addToBucket() {
+    if (this.getSelectedAmount() > 0) {
+      this.bucketService.addToBucket(this.bucketItems.filter(item => item.amount > 0));
+      this.bucketItems = [];
+      this.fillBucketItems(this.flower);
+    } else {
+      this.snackBarService.showWarning("Вкажіть, будь ласка, кількість товару яку ви хочете придбати");
+    }
+
+  }
+
+  getSelectedAmount() {
+    return this.bucketItems.reduce(((accumulator, item) => accumulator + item.amount), 0)
+  }
+
 }

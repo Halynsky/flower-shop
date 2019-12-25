@@ -16,7 +16,8 @@ import {
   MatListModule,
   MatMenuModule,
   MatSelectModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatTooltipModule
 } from "@angular/material";
 import { ArticleCardComponent } from './article-card/article-card.component';
 import { RouterModule } from "@angular/router";
@@ -30,10 +31,11 @@ import { ShopContentItemComponent } from "./shop-content-item/shop-content-item.
 import { ShopFiltersComponent } from "./shop-filters/shop-filters.component";
 import { ShopFilterDialogComponent } from "./shop-filter-dialog/shop-filter-dialog.component";
 import { DigitOnlyDirective } from "../../../directives/ditgits-only.directive";
+import { AmountControlledInputComponent } from './amount-controled-input/amount-controlled-input.component';
 
 const PROVIDERS = [
-  {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 5000, panelClass: "snack-custom-class"}},
-  {provide: MAT_BOTTOM_SHEET_DEFAULT_OPTIONS, useValue: {hasBackdrop: true, backdropClass: "bottom-sheet-custom-class", closeOnNavigation: true}}
+  {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 4000, panelClass: "snack-custom-class"}},
+  {provide: MAT_BOTTOM_SHEET_DEFAULT_OPTIONS, useValue: {hasBackdrop: true, backdropClass: "bottom-sheet-custom-class", closeOnNavigation: true}},
 ];
 
 @NgModule({
@@ -45,7 +47,8 @@ const PROVIDERS = [
     ShopContentItemComponent,
     ShopFiltersComponent,
     ShopFilterDialogComponent,
-    DigitOnlyDirective
+    DigitOnlyDirective,
+    AmountControlledInputComponent
   ],
   imports: [
     RouterModule,
@@ -84,6 +87,7 @@ const PROVIDERS = [
     MatInputModule,
     MatButtonToggleModule,
     MatSelectModule,
+    MatTooltipModule,
     PipesModule,
     ValidatorModule,
     // Developed Components

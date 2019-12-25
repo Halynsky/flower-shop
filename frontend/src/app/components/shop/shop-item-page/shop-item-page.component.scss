@@ -72,7 +72,7 @@
       }
 
       .specification {
-        font-size: 18px;
+        font-size: 16px;
         display: grid;
         grid-template-columns: minmax(100px, 1fr) fit-content(100%);
         padding: 8px;
@@ -90,8 +90,9 @@
           color: $grey-800;
         }
         .specification-value {
-          color: mat-color($primary);
+          color: mat-color($primary, 500);
           text-align: right;
+          font-weight: 500;
         }
       }
 
@@ -227,7 +228,7 @@
 
       .title {
         font-size: 24px;
-        color: mat-color($primary, 300);
+        color: mat-color($primary, 900);
         margin-bottom: 8px;
       }
 

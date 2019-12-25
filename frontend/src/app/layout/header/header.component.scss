@@ -52,6 +52,7 @@
       &.active-link {
         border-bottom: 2px solid white;
         color: white;
+        background-color: mat-color($primary, 800);
       }
     }
 
@@ -81,7 +82,7 @@
 
         .bucket {
           height: 37px;
-          font-size: 18px;
+          font-size: 20px;
           display: flex;
           align-items: center;
           .bucket-index {
@@ -138,21 +139,27 @@
 }
 
 ::ng-deep .bucket-menu {
+  display: flex;
+  text-align: center;
+  justify-content: center;
   margin-top: -8px;
-  button {
-    position: relative;
-    color: white;
-    padding: 10px 12px 10px 36px;
-    border: none;
-    display: flex;
-    width: 100%;
-  }
-  .default-bucket-info {
-   padding: 12px;
-  }
-  .bucket-wrapper {
+  padding: 12px 24px;
+  max-width: 270px !important;
+
+  .bucket-info-wrapper {
     max-height: 400px;
     overflow-y: auto;
+    margin-bottom: 12px;
+    line-height: 160%;
+
+    .bucket-items-amount {
+      color: mat-color($accent);
+    }
+
+    .bucket-items-price {
+      color: mat-color($accent);
+    }
+
     .bucket-flower-button {
       color: #4caf50;
       padding: 12px;
@@ -178,18 +185,18 @@
       }
     }
   }
-  .accept-but {
-    display: flex;
-    justify-content: center;
-    margin: 10px 0px 10px 0px;
-    button {
-      background-color: mat-color($accent);
-      color: white;
-      width: 220px;
-      height: 35px;
-      border-radius: 5px;
+
+  button {
+    width: 100%;
+    i {
+      margin-right: 8px;
     }
   }
+
+  .check-bucket-button {
+    margin-top: 12px;
+  }
+
 }
 
 ::ng-deep .auth-menu {
@@ -199,7 +206,7 @@
   button {
     position: relative;
     color: white;
-    padding: 8px 12px 8px 12px;
+    padding: 8px 12px 8px 16px;
     border: none;
     display: flex;
     width: 100%;

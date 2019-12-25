@@ -1,59 +1,38 @@
 import { Injectable } from "@angular/core";
-import { BucketItem } from "../models/BucketItem";
+import { BucketInfo, BucketItem } from "../models/Bucket";
+import { SecurityService } from "./security.service";
 
 
 @Injectable({providedIn: 'root'})
 export class BucketService {
   private readonly BUCKET_STORAGE_KEY = 'bucket';
+  public bucketInfo: BucketInfo = new BucketInfo();
+  public bucket: BucketItem[];
 
-  getSum() {
-    let bucket = this.getBucket();
-    let sum = 0;
+  constructor(private securityService: SecurityService) {
+    this.bucket = this.getBucket();
+    this.updateBucketInfo();
+    this.securityService.onLogout.subscribe(() => {
+      this.updateBucketInfo();
+    })
+  }
+
+  getTotalPrice() {
+    return this.getBucket().reduce((accumulator, item) => accumulator + item.amount * item.price);
+  }
+
+  updateBucketInfo(bucket: BucketItem[] = this.getBucket()) {
+    this.bucketInfo.totalItems = 0;
+    this.bucketInfo.totalAmount = 0;
+    this.bucketInfo.totalPrice = 0;
     bucket.forEach( item => {
-      let paySum = item.price*item.amount;
-      sum += paySum;
+      this.bucketInfo.totalItems++;
+      this.bucketInfo.totalAmount += item.amount;
+      this.bucketInfo.totalPrice += item.price * item.amount;
     });
-    return sum;
   }
 
-  addPurchase(bucketItem: BucketItem) {
-    let bucket = this.getBucket();
-    let isPresent = false;
-    if (bucket.length > 0) {
-      bucket.forEach((item) => {
-        if (bucketItem.name == item.name && bucketItem.size == item.size) {
-          item.amount += bucketItem.amount;
-          isPresent = true;
-        }
-      });
-      if (!isPresent)
-        bucket.push(bucketItem);
-    } else {
-      bucket.push(bucketItem);
-    }
-    this.updateBucket(bucket);
-  }
-
-  updateBucketItem(bucketItem, bool) {
-    let bucket = this.getBucket();
-    let itemToUpdate = bucket.find((item) => {return item.name == bucketItem.name && item.size == bucketItem.size});
-    if (bool){
-      itemToUpdate.amount++;
-    } else {
-      if(itemToUpdate.amount > 1){
-        itemToUpdate.amount--;
-      }
-    }
-    this.updateBucket(bucket);
-  }
-
-  deleteItem(item ,i) {
-    let bucket = this.getBucket();
-    bucket.splice(i,1);
-    this.updateBucket(bucket);
-  }
-
-  getBucket() {
+  private getBucket() {
     const storageBucket = localStorage.getItem(this.BUCKET_STORAGE_KEY);
     let bucket;
     try {
@@ -64,12 +43,31 @@ export class BucketService {
     return bucket ? bucket : [];
   }
 
-  clearBucket() {
-    localStorage.removeItem(this.BUCKET_STORAGE_KEY);
+  private updateBucket(bucket: BucketItem[]) {
+    localStorage.setItem(this.BUCKET_STORAGE_KEY, JSON.stringify(bucket));
+    this.bucket = bucket;
+    this.updateBucketInfo(this.bucket)
   }
 
-  private updateBucket(items) {
-    localStorage.setItem(this.BUCKET_STORAGE_KEY, JSON.stringify(items));
+  addToBucket(bucketItems: BucketItem[]) {
+    let bucket = this.getBucket();
+
+    bucketItems.forEach(item => {
+      let index = bucket.findIndex(element => element.flowerSizeId == item.flowerSizeId);
+      if (index >= 0) {
+        bucket[index].amount += item.amount
+      } else {
+        bucket.push(item)
+      }
+    });
+
+    this.updateBucket(bucket);
+
+  }
+
+  clearBucket() {
+    localStorage.removeItem(this.BUCKET_STORAGE_KEY);
+    this.bucket = [];
   }
 
 }

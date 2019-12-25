@@ -77,7 +77,7 @@ export function getAuthServiceConfigs() {
       provide: AuthServiceConfig,
       useFactory: getAuthServiceConfigs
     },
-    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {...new MatDialogConfig(), panelClass: 'modal-panel-class', maxWidth: ''} as MatDialogConfig}
+    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {...new MatDialogConfig(), panelClass: 'modal-panel-class', maxWidth: '', disableClose: true, autoFocus: false} as MatDialogConfig}
   ],
   exports: [
   ],

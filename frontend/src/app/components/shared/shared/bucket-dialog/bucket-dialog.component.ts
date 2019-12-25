@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { BucketService } from "../../../../services/bucket.service";
+import { MatDialogRef } from "@angular/material";
 
 
 @Component({
@@ -10,14 +11,10 @@ import { BucketService } from "../../../../services/bucket.service";
 export class BucketDialogComponent {
 
 
-  constructor(public bucketService: BucketService){
-  }
+  constructor(public bucketService: BucketService,
+              public dialogRef: MatDialogRef<BucketDialogComponent>){
 
-//   trackElement() {
-//     this.bucket.forEach((item) => {
-//       this.bucketService.setSum(item.price, true);
-//     })
-// }
+  }
 
 
 }
