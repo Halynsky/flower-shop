@@ -6,8 +6,9 @@ import { FlowerSize } from "../../../api/models/FlowerSize";
 import { MatBottomSheet, MatBottomSheetRef } from "@angular/material";
 import { BottomSheetOverview } from "../../shared/shared/bottom-sheet/bottom-sheet.component";
 import { BucketItem } from "../../../models/BucketItem";
-import { ModalWindowService } from "../../../services/modal-window.service";
 import { BucketService } from "../../../services/bucket.service";
+import { SnackBarService } from "../../../services/snak-bar.service";
+import { getErrorMessage } from "../../../utils/Functions";
 
 
 @Component({
@@ -17,15 +18,21 @@ import { BucketService } from "../../../services/bucket.service";
 })
 export class ShopItemPageComponent implements OnInit {
 
+  private MAX_AMOUNT = 999;
+
   id: number;
   flower: FlowerFull;
   amountCounter: number = 1;
   flowerSize: FlowerSize;
-  sumToPay: number = 1;
+  totalPrice: number = 1;
   bottomSheetRef: MatBottomSheetRef;
-  bucketItem: BucketItem = new BucketItem();
+  bucketItems: Array<BucketItem> = [];
 
-  constructor(private route: ActivatedRoute, private flowerService: FlowerService, private modalPageService: ModalWindowService, private bucketService: BucketService, private bottomSheet: MatBottomSheet) {
+  constructor(private route: ActivatedRoute,
+              private flowerService: FlowerService,
+              private bucketService: BucketService,
+              private snackBarService: SnackBarService,
+              private bottomSheet: MatBottomSheet) {
     this.route.params.subscribe(params => {
       this.id = params['id'];
       this.getFlowerById();
@@ -40,45 +47,41 @@ export class ShopItemPageComponent implements OnInit {
   }
 
   addToBucket() {
-    this.bucketItem.amount = this.amountCounter;
-    this.bucketItem.name = this.flower.name;
-    this.bucketItem.size = this.flowerSize.size.name;
-    this.bucketItem.price = this.flowerSize.price;
-    this.bucketItem.image = this.flower.image;
-    this.bucketService.addPurchase(this.bucketItem);
+
+  }
+
+  fillBucketItems(flower: FlowerFull) {
+    for (let flowerSize of flower.flowerSizes) {
+      let bucketItem = new BucketItem();
+      bucketItem.amount = 0;
+      bucketItem.flowerSizeId = flowerSize.id;
+      bucketItem.image = flower.image;
+      bucketItem.name = flower.name;
+      bucketItem.size = flowerSize.size.name;
+      this.bucketItems.push(bucketItem);
+    }
   }
 
   getFlowerById() {
     this.flowerService.getFlowerFullById(this.id).subscribe(
       flower => {
         this.flower = flower;
-        this.flowerSize = this.flower.flowerSizes[0];
-        this.sumToPay = this.flowerSize.price * this.amountCounter;
+        this.fillBucketItems(this.flower)
       },
-      error => console.error(error)
+      error => this.snackBarService.showError(getErrorMessage(error))
     );
   }
 
-  counterIncrement() {
-    if (this.amountCounter < this.flowerSize.amount) {
-      this.amountCounter++;
+
+  minusAmount(flowerSizeIndex: number) {
+    if (this.bucketItems[flowerSizeIndex].amount > 0) {
+      this.bucketItems[flowerSizeIndex].amount--
     }
-    this.sumToPay = this.flowerSize.price * this.amountCounter;
   }
 
-  counterDecrement() {
-    if (this.amountCounter > 1) {
-      this.amountCounter--;
+  plusAmount(flowerSizeIndex: number) {
+    if (this.bucketItems[flowerSizeIndex].amount < this.MAX_AMOUNT) {
+      this.bucketItems[flowerSizeIndex].amount++
     }
-    this.sumToPay = this.flowerSize.price * this.amountCounter;
-    // this.bucketService.clearBucket();
   }
-
-  trackElement(index, flowerSize) {
-    this.flowerSize = flowerSize;
-    this.sumToPay = flowerSize.price;
-    this.amountCounter = 1;
-  }
-
-
 }

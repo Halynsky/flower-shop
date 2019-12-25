@@ -12,7 +12,6 @@
   align-items: center;
   height: 50px;
   background-color: mat-color($primary);
-  @include mat-elevation(2);
 }
 
 .header-content {
@@ -46,6 +45,16 @@
     @include response-to(xs) {
       display: none;
     }
+
+    a, button {
+      color: mat-color($primary, 100);
+
+      &.active-link {
+        border-bottom: 2px solid white;
+        color: white;
+      }
+    }
+
   }
 
   .login-button-wrapper {
@@ -76,13 +85,13 @@
           display: flex;
           align-items: center;
           .bucket-index {
-            margin: 20px 0px 0px -5px;
+            margin: -16px 0px 0px -10px;
             color:white;
             width: 16px;
             height: 16px;
             background-color: red;
             border-radius: 50%;
-            font-size: 11px;
+            font-size: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -103,7 +112,7 @@
 
   a, button {
     border-radius: 0px;
-    height: 52px;
+    height: 50px;
     display: flex;
     align-items: center;
     color: white;
@@ -113,6 +122,7 @@
 
     &.active-link {
       border-bottom: 2px solid white;
+      color: white;
     }
 
     span {

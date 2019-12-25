@@ -4,8 +4,9 @@ export class BucketItem {
   price: number;
   amount: number;
   size: string;
+  flowerSizeId: any
 
   constructor(){
-
   }
+
 }

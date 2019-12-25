@@ -68,14 +68,8 @@ export class BucketService {
     localStorage.removeItem(this.BUCKET_STORAGE_KEY);
   }
 
-
   private updateBucket(items) {
     localStorage.setItem(this.BUCKET_STORAGE_KEY, JSON.stringify(items));
   }
-
-
-
-
-
 
 }

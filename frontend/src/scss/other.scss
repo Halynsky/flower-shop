@@ -1,6 +1,16 @@
-
+@import "util";
 
 .content-thin {
   width: 100%;
   max-width: 1200px;
+}
+
+.content-thin-padding {
+  padding-top: 24px;
+  padding-left: 24px;
+  padding-right: 24px;
+  @include response(xs) {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
 }

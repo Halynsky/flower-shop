@@ -1,62 +1,57 @@
-<div class="title" *ngIf="flower">
-    <div>{{flower.name}}<span>{{flower.nameOriginal}}</span></div>
-    <span id="flower-type">{{flower.flowerType.nameSingle}}</span>
+<div class="wrapper" *ngIf="flower">
+
+  <div class="title">
+    <span class="flower-type-name">{{flower.flowerType.nameSingle}} </span>
+    <span class="flower-name">{{flower.name}}</span>
   </div>
-  <div class="main" *ngIf="flower">
+  <div class="content">
 
-    <div class="content">
-      <div class="content-head">
-
-        <div class="flower-logo">
-          <img src="{{flower.image}}" alt="image">
-        </div>
-
-        <div class="flower-info">
-          <span>ХАРАКТЕРИСТИКИ</span>
-          <p>Висота: {{flower.flowerHeightMin}} см — {{flower.flowerHeightMax}} см</p>
-          <p>Розмір: {{flower.flowerSizeMin}} см — {{flower.flowerSizeMax}} см</p>
-          <p>Група: {{flower.groupName}}</p>
-        </div>
-
-        <div class="buy-menu">
-          <div class="sizes-chooser">
-            <span id="size-flower">Розмір цибулини</span>
-            <mat-button-toggle-group name="sizes" aria-label="Sizes" appearance="legacy">
-              <mat-button-toggle *ngFor="let flowerSize of flower.flowerSizes; let i = index;" (change)="trackElement(i ,flowerSize)" checked="{{i === 0}}">{{flowerSize.size.name}}</mat-button-toggle>
-            </mat-button-toggle-group>
-            <span id="price">{{flowerSize.price/100}} грн</span>
-          </div>
-          <div class="amount-counter">
-            <div class="count-buttons">
-              <button mat-raised-button (click)="counterDecrement()">-</button>
-              <div id="counter-output"><span>{{amountCounter}}</span></div>
-              <button mat-raised-button (click)="counterIncrement()">+</button>
-            </div>
-            <div class="summary-to-pay">
-              {{sumToPay/100}} грн
-            </div>
-          </div>
-          <div class="buy-button">
-            <button mat-raised-button (click)="addToBucket()" (click)="openBottomSheet()">КУПИТИ</button>
-          </div>
-        </div>
-
+    <div class="image" [ngStyle]="{'background-image':'url(' + flower.image + ')'}"></div>
+    <div class="specifications">
+      <div class="specification">
+        <div class="specification-label">Назва</div>
+        <div class="specification-value">{{flower.nameOriginal}}</div>
       </div>
-
-      <div class="content-description">
-
-        <div class="description-head">
-          ОПИС
-        </div>
-
-        <div class="description-info">
-          {{flower.description}}
-        </div>
-
+      <div class="specification">
+        <div class="specification-label">Група</div>
+        <div class="specification-value">{{flower.groupName}}</div>
       </div>
+      <div class="specification">
+        <div class="specification-label">Висота</div>
+        <div class="specification-value">{{flower.flowerHeightMin}} см - {{flower.flowerHeightMax}} см</div>
+      </div>
+      <div class="specification">
+        <div class="specification-label">Розмір</div>
+        <div class="specification-value">{{flower.flowerSizeMin}} см - {{flower.flowerSizeMax}} см</div>
+      </div>
+    </div>
+    <div class="add-to-card-block">
+      <div class="header">
+        <div class="size-title">Розмір</div>
+        <div class="amount-title">Кількість</div>
+      </div>
+      <ng-template ngFor let-flowerSize [ngForOf]="flower.flowerSizes" let-i="index">
+        <div class="add-flower-size">
+          <div class="flower-size-name">{{flowerSize.size.name}}</div>
+          <div class="add-flower-size-controls">
+            <button mat-stroked-button color="primary" (click)="minusAmount(i)">-</button>
+            <input type="text" name="amount" [(ngModel)]="bucketItems[i].amount" maxlength="3" inputmode="numeric" pattern="[0-9]*" digitOnly>
+            <button mat-stroked-button color="primary" class="plus" (click)="plusAmount(i)">+</button>
+          </div>
+        </div>
+      </ng-template>
+      <button mat-flat-button color="accent" class="add-to-card-button">
+        <i class="material-icons">add_shopping_cart</i>
+        <span>Купити</span>
+      </button>
+    </div>
 
+    <div class="description" *ngIf="flower.description">
+      <div class="title">Опис</div>
+      <div class="value">{{flower.description}}</div>
     </div>
 
   </div>
 
+</div>
 

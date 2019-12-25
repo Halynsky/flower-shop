@@ -1,5 +1,4 @@
 import { Component } from "@angular/core";
-import { ModalWindowService } from "../../../../services/modal-window.service";
 import { BucketService } from "../../../../services/bucket.service";
 
 
@@ -11,7 +10,7 @@ import { BucketService } from "../../../../services/bucket.service";
 export class BucketDialogComponent {
 
 
-  constructor(public modalPageService: ModalWindowService, public bucketService: BucketService){
+  constructor(public bucketService: BucketService){
   }
 
 //   trackElement() {

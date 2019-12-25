@@ -29,6 +29,7 @@ import { ValidatorModule } from "../../../validators/validator.module";
 import { ShopContentItemComponent } from "./shop-content-item/shop-content-item.component";
 import { ShopFiltersComponent } from "./shop-filters/shop-filters.component";
 import { ShopFilterDialogComponent } from "./shop-filter-dialog/shop-filter-dialog.component";
+import { DigitOnlyDirective } from "../../../directives/ditgits-only.directive";
 
 const PROVIDERS = [
   {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 5000, panelClass: "snack-custom-class"}},
@@ -43,7 +44,8 @@ const PROVIDERS = [
     BucketDialogComponent,
     ShopContentItemComponent,
     ShopFiltersComponent,
-    ShopFilterDialogComponent
+    ShopFilterDialogComponent,
+    DigitOnlyDirective
   ],
   imports: [
     RouterModule,
@@ -88,7 +90,9 @@ const PROVIDERS = [
     ArticleCardComponent,
     ShopContentItemComponent,
     ShopFiltersComponent,
-    ShopFilterDialogComponent
+    ShopFilterDialogComponent,
+    // Developed Directives
+    DigitOnlyDirective
   ],
   providers: [
     ...PROVIDERS

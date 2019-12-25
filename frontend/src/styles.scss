@@ -17,6 +17,7 @@ h1, h2, h3, h4, h5, h6{
 
 html {
   font-size: 16px;
+  background-color: $grey-10;
 }
 
 body {
@@ -80,4 +81,16 @@ input:invalid, textarea:invalid {
 
 .noselect {
   user-select: none;
+}
+
+::-webkit-input-placeholder { /* Edge */
+  color: $grey-200;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: $grey-200;
+}
+
+::placeholder {
+  color: $grey-200;
 }

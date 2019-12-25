@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { SecurityService } from "../../services/security.service";
 import { BucketService } from "../../services/bucket.service";
-import { ModalWindowService } from "../../services/modal-window.service";
 import { MatDialog } from "@angular/material";
 import { AuthService } from "../../api/services/auth.service";
 import { SnackBarService } from "../../services/snak-bar.service";
@@ -21,7 +20,6 @@ export class HeaderComponent {
 
   constructor(public securityService: SecurityService,
               public bucketService: BucketService,
-              public modalWindowService: ModalWindowService,
               public dialog: MatDialog,
               private authService: AuthService,
               private snackBarService: SnackBarService,
