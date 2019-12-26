@@ -20,6 +20,7 @@ public class Path {
     public static final String FLOWER_SIZE			= "flower-sizes";
     public static final String WAREHOUSE_OPERATIONS	= "warehouse-operations";
     public static final String ORDERS	            = "orders";
+    public static final String BUCKET	            = "buckets";
     public static final String IMAGES               = "images";
 
 	//	CONTROLLER ENDPOINTS
@@ -35,6 +36,7 @@ public class Path {
     public static final String FLOWER_SIZE_PATH			    = API + SLASH + FLOWER_SIZE;
 	public static final String WAREHOUSE_OPERATIONS_PATH 	= API + SLASH + WAREHOUSE_OPERATIONS;
 	public static final String ORDERS_PATH 		            = API + SLASH + ORDERS;
+    public static final String BUCKET_PATH 		            = API + SLASH + BUCKET;
     public static final String IMAGES_PATH                  = API + SLASH + IMAGES;
 
 	// OTHER

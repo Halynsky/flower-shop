@@ -39,13 +39,13 @@
 
         .header {
           display: grid;
-          grid-template-columns: 100px 25fr 20fr 35fr 20fr;
+          grid-template-columns: 100px 27fr 18fr 35fr 20fr;
           font-weight: 500;
           color: $grey-800;
           border-bottom: 1px solid $grey-200;
           padding-bottom: 8px;
 
-          @include response-to(sm) {
+          @include response-to(xs) {
             display: none;
           }
 
@@ -62,7 +62,7 @@
 
           .bucket-table-row {
             display: grid;
-            grid-template-columns: 100px 25fr 20fr 35fr 20fr;
+            grid-template-columns: 100px 27fr 18fr 35fr 20fr;
             align-items: center;
             border-bottom: 1px solid $grey-200;
             color: $grey-900;
@@ -70,9 +70,13 @@
             padding: 10px 0;
             grid-template-areas: "bucket-item-image bucket-item-name bucket-item-price bucket-item-amount bucket-item-total-price";
 
-            @include response-to(sm) {
+            @include response-to(xs) {
               grid-template-columns: 2fr;
               grid-template-areas: "bucket-item-image bucket-item-name" "bucket-item-image bucket-item-price" "bucket-item-image bucket-item-amount" "bucket-item-image bucket-item-total-price";
+
+            }
+
+            @include response-to(sm) {
               font-size: 16px;
             }
 
@@ -82,7 +86,7 @@
               justify-content: center;
               align-items: center;
 
-              @include response-to(sm) {
+              @include response-to(xs) {
                 justify-content: initial;
                 align-items: initial;
               }
@@ -94,7 +98,7 @@
                 background-size: contain;
                 background-color: mat-color($primary, 100);
 
-                @include response-to(sm) {
+                @include response-to(xs) {
                   height: 150px;
                   width: 150px;
                 }
@@ -106,7 +110,7 @@
               grid-area: bucket-item-name;
               padding: 0 0 0 12px;
 
-              @include response-to(sm) {
+              @include response-to(xs) {
                 padding-bottom: 12px;
               }
 
@@ -129,12 +133,12 @@
 
               .label {
                 display: none;
-                @include response-to(sm) {
+                @include response-to(xs) {
                   display: inline-block;
                 }
               }
 
-              @include response-to(sm) {
+              @include response-to(xs) {
                 padding-bottom: 4px;
               }
 
@@ -143,7 +147,7 @@
             .bucket-item-amount {
               grid-area: bucket-item-amount;
 
-              @include response-to(sm) {
+              @include response-to(xs) {
                 padding-bottom: 4px;
               }
 
@@ -157,7 +161,7 @@
               color: $black-500;
               font-weight: 500;
 
-              @include response-to(sm) {
+              @include response-to(xs) {
                 padding-top: 8px;
               }
 
@@ -166,7 +170,7 @@
                 font-weight: 400;
                 font-size: 14px;
                 color: $grey-600;
-                @include response-to(sm) {
+                @include response-to(xs) {
                   display: inline-block;
                 }
               }
@@ -184,7 +188,7 @@
         font-size: 24px;
         justify-content: flex-end;
 
-        @include response-to(sm) {
+        @include response-to(xs) {
           justify-content: center;
         }
 

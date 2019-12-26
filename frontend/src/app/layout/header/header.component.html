@@ -20,8 +20,8 @@
       <button mat-button [matMenuTriggerFor]="bucket" class="bucket-button">
         <div class="bucket">
           <i class="fas fa-shopping-cart"></i>
-            <div class="bucket-index" *ngIf="bucketService.bucketInfo.totalItems > 0">
-            <div>{{bucketService.bucketInfo.totalItems}}</div>
+            <div class="bucket-index" *ngIf="bucketLocalService.bucketInfo.totalItems > 0">
+            <div>{{bucketLocalService.bucketInfo.totalItems}}</div>
             </div>
         </div>
       </button>
@@ -45,8 +45,8 @@
       <button mat-button [matMenuTriggerFor]="bucket" class="bucket-button">
         <div class="bucket" >
           <i class="fas fa-shopping-cart"></i>
-          <div class="bucket-index" *ngIf="bucketService.bucketInfo.totalItems > 0">
-            <div>{{bucketService.bucketInfo.totalItems}}</div>
+          <div class="bucket-index" *ngIf="bucketLocalService.bucketInfo.totalItems > 0">
+            <div>{{bucketLocalService.bucketInfo.totalItems}}</div>
           </div>
         </div>
       </button>
@@ -102,11 +102,11 @@
 </mat-menu>
 
 <mat-menu #bucket="matMenu" class="bucket-menu">
-  <div class="default-bucket-info" *ngIf="bucketService.bucketInfo.totalItems == 0">Кошик порожній</div>
-  <div *ngIf="bucketService.bucketInfo.totalItems > 0">
+  <div class="default-bucket-info" *ngIf="bucketLocalService.bucketInfo.totalItems == 0">Кошик порожній</div>
+  <div *ngIf="bucketLocalService.bucketInfo.totalItems > 0">
     <div class="bucket-info-wrapper">
-      <div>В вашій корзині <span class="bucket-items-amount">{{bucketService.bucketInfo.totalItems}}</span> позиції</div>
-      <div>На сумму <span class="bucket-items-price">{{bucketService.bucketInfo.totalPrice / 100}}</span> грн</div>
+      <div>В вашій корзині <span class="bucket-items-amount">{{bucketLocalService.bucketInfo.totalItems}}</span> позиції</div>
+      <div>На сумму <span class="bucket-items-price">{{bucketLocalService.bucketInfo.totalPrice / 100}}</span> грн</div>
     </div>
     <button mat-flat-button color="accent" (click)="openBucketDialog()">
       <i class="material-icons">shopping_basket</i>

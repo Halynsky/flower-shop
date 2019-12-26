@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { SecurityService } from "../../services/security.service";
-import { BucketService } from "../../services/bucket.service";
+import { BucketLocalService } from "../../services/bucket-local.service";
 import { MatDialog } from "@angular/material";
 import { AuthService } from "../../api/services/auth.service";
 import { SnackBarService } from "../../services/snak-bar.service";
@@ -20,7 +20,7 @@ export class HeaderComponent {
   Role = Role;
 
   constructor(public securityService: SecurityService,
-              public bucketService: BucketService,
+              public bucketLocalService: BucketLocalService,
               public dialog: MatDialog,
               private authService: AuthService,
               private snackBarService: SnackBarService,
@@ -32,7 +32,7 @@ export class HeaderComponent {
   }
 
   openBucketDialog() {
-    this.dialog.open(BucketDialogComponent, {width: "80%", panelClass: "modal-panel-no-padding"});
+    this.dialog.open(BucketDialogComponent, {width: "80%", panelClass: "modal-panel-no-padding", maxWidth: 800});
   }
 
   logout() {

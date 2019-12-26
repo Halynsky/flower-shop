@@ -1,6 +1,9 @@
 import { Component } from "@angular/core";
-import { BucketService } from "../../../../services/bucket.service";
+import { BucketLocalService } from "../../../../services/bucket-local.service";
 import { MatDialogRef } from "@angular/material";
+import { OrderService } from "../../../../api/services/order.service";
+import { SnackBarService } from "../../../../services/snak-bar.service";
+import { getErrorMessage } from "../../../../utils/Functions";
 
 
 @Component({
@@ -11,15 +14,23 @@ import { MatDialogRef } from "@angular/material";
 export class BucketDialogComponent {
 
 
-  constructor(public bucketService: BucketService,
-              public dialogRef: MatDialogRef<BucketDialogComponent>){
+  constructor(public bucketLocalService: BucketLocalService,
+              public dialogRef: MatDialogRef<BucketDialogComponent>,
+              public orderService: OrderService,
+              public snackBarService: SnackBarService){
 
   }
 
   onBucketChange() {
-    console.log("onBucketChange");
-    this.bucketService.updateBucket();
+    this.bucketLocalService.updateBucket();
   }
 
+  submitOrder() {
+    this.orderService.create(this.bucketLocalService.bucket).subscribe(
+      () => {
 
+      },
+      error => this.snackBarService.showError(getErrorMessage(error))
+    )
+  }
 }

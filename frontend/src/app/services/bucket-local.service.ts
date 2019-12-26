@@ -1,15 +1,17 @@
 import { Injectable } from "@angular/core";
 import { BucketInfo, BucketItem } from "../models/Bucket";
 import { SecurityService } from "./security.service";
+import { BucketService } from "../api/services/bucket.service";
 
 
 @Injectable({providedIn: 'root'})
-export class BucketService {
+export class BucketLocalService {
   private readonly BUCKET_STORAGE_KEY = 'bucket';
   public bucketInfo: BucketInfo = new BucketInfo();
   public bucket: BucketItem[];
 
-  constructor(private securityService: SecurityService) {
+  constructor(private securityService: SecurityService,
+              private bucketService: BucketService) {
     this.bucket = this.getBucket();
     this.updateBucketInfo();
     this.securityService.onLogout.subscribe(() => {
@@ -45,10 +47,10 @@ export class BucketService {
 
   updateBucket(bucket: BucketItem[] = this.bucket) {
     if (JSON.stringify(bucket) != JSON.stringify(this.getBucket())) {
-      console.log("updateBucket");
       localStorage.setItem(this.BUCKET_STORAGE_KEY, JSON.stringify(bucket));
       this.bucket = bucket;
-      this.updateBucketInfo(this.bucket)
+      this.updateBucketInfo(this.bucket);
+      this.bucketService.post(this.bucket).subscribe(() => {})
     }
   }
 

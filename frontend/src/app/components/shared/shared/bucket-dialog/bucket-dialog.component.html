@@ -20,15 +20,15 @@
 
       <div class="content">
 
-        <ng-template ngFor let-bucketItem [ngForOf]="bucketService.bucket" let-i="index">
+        <ng-template ngFor let-bucketItem [ngForOf]="bucketLocalService.bucket" let-i="index">
           <div class="bucket-table-row">
             <div  class="bucket-item-image">
               <img [src]="bucketItem.image">
             </div>
             <div class="bucket-item-name">
-              <div class="flower-type-name">{{bucketItem.flowerType}}</div>
+              <div class="flower-type-name">{{bucketItem.flowerTypeName}}</div>
               <div class="flower-name">{{bucketItem.name}}</div>
-              <div class="flower-size-name">{{bucketItem.size}}</div>
+              <div class="flower-size-name">{{bucketItem.sizeName}}</div>
             </div>
             <div class="bucket-item-price">{{bucketItem.price / 100}} грн <span class="label"> за шт.</span></div>
             <div class="bucket-item-amount">
@@ -45,16 +45,16 @@
     <div class="total-price-wrapper">
       <div class="total-price-block">
         <div class="label">Разом:</div>
-        <div class="total-price">{{bucketService.bucketInfo.totalPrice / 100}} грн</div>
+        <div class="total-price">{{bucketLocalService.bucketInfo.totalPrice / 100}} грн</div>
       </div>
     </div>
 
     <div class="buttons-wrapper">
-      <button mat-stroked-button color="primary">
+      <button mat-stroked-button color="primary" (click)="dialogRef.close()">
         <i class="material-icons">add_shopping_cart</i>
         <span>Продовжити купувати</span>
       </button>
-      <button mat-flat-button color="accent">
+      <button mat-flat-button color="accent" (click)="submitOrder()">
         <i class="material-icons">shopping_basket</i>
         <span>Оформити замовлення</span>
       </button>
@@ -63,3 +63,4 @@
   </div>
 
 </div>
+

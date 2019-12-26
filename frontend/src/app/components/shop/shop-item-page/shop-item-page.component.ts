@@ -3,7 +3,7 @@ import { ActivatedRoute } from "@angular/router";
 import { FlowerService } from "../../../api/services/flower.service";
 import { FlowerFull } from "../../../api/models/Flower";
 import { FlowerSize } from "../../../api/models/FlowerSize";
-import { BucketService } from "../../../services/bucket.service";
+import { BucketLocalService } from "../../../services/bucket-local.service";
 import { SnackBarService } from "../../../services/snak-bar.service";
 import { getErrorMessage } from "../../../utils/Functions";
 import { BucketItem } from "../../../models/Bucket";
@@ -25,7 +25,7 @@ export class ShopItemPageComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private flowerService: FlowerService,
-              private bucketService: BucketService,
+              private bucketLocalService: BucketLocalService,
               private snackBarService: SnackBarService) {
     this.route.params.subscribe(params => {
       this.id = params['id'];
@@ -42,11 +42,11 @@ export class ShopItemPageComponent implements OnInit {
       let bucketItem = new BucketItem();
       bucketItem.amount = 0;
       bucketItem.price = flowerSize.price;
-      bucketItem.flowerSizeId = flowerSize.id;
       bucketItem.image = flower.image;
       bucketItem.name = flower.name;
-      bucketItem.size = flowerSize.size.name;
-      bucketItem.flowerType = flower.flowerType.nameSingle;
+      bucketItem.sizeName = flowerSize.size.name;
+      bucketItem.flowerSizeId = flowerSize.id;
+      bucketItem.flowerTypeName = flower.flowerType.nameSingle;
       this.bucketItems.push(bucketItem);
     }
   }
@@ -76,7 +76,7 @@ export class ShopItemPageComponent implements OnInit {
 
   addToBucket() {
     if (this.getSelectedAmount() > 0) {
-      this.bucketService.addToBucket(this.bucketItems.filter(item => item.amount > 0));
+      this.bucketLocalService.addToBucket(this.bucketItems.filter(item => item.amount > 0));
       this.bucketItems = [];
       this.fillBucketItems(this.flower);
     } else {

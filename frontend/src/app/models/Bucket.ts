@@ -3,8 +3,8 @@ export class BucketItem {
   image: string;
   price: number;
   amount: number;
-  size: string;
-  flowerType: string;
+  sizeName: string;
+  flowerTypeName: string;
   flowerSizeId: any;
 
   constructor(){
