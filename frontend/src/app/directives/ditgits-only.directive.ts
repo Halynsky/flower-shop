@@ -24,7 +24,6 @@ export class DigitOnlyDirective {
   inputElement: HTMLInputElement;
 
   constructor(public el: ElementRef) {
-    console.log("inputElement", this.inputElement);
     this.inputElement = el.nativeElement;
   }
 

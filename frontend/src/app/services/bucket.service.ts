@@ -43,10 +43,13 @@ export class BucketService {
     return bucket ? bucket : [];
   }
 
-  private updateBucket(bucket: BucketItem[]) {
-    localStorage.setItem(this.BUCKET_STORAGE_KEY, JSON.stringify(bucket));
-    this.bucket = bucket;
-    this.updateBucketInfo(this.bucket)
+  updateBucket(bucket: BucketItem[] = this.bucket) {
+    if (JSON.stringify(bucket) != JSON.stringify(this.getBucket())) {
+      console.log("updateBucket");
+      localStorage.setItem(this.BUCKET_STORAGE_KEY, JSON.stringify(bucket));
+      this.bucket = bucket;
+      this.updateBucketInfo(this.bucket)
+    }
   }
 
   addToBucket(bucketItems: BucketItem[]) {

@@ -16,5 +16,10 @@ export class BucketDialogComponent {
 
   }
 
+  onBucketChange() {
+    console.log("onBucketChange");
+    this.bucketService.updateBucket();
+  }
+
 
 }

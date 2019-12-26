@@ -44,7 +44,10 @@
           color: $grey-800;
           border-bottom: 1px solid $grey-200;
           padding-bottom: 8px;
-          margin-bottom: 8px;
+
+          @include response-to(sm) {
+            display: none;
+          }
 
           .amount {
             padding-right: 28px;
@@ -56,7 +59,6 @@
           display: grid;
           grid-template-columns: 1fr;
           color: $black-200;
-          grid-row-gap: 8px;
 
           .bucket-table-row {
             display: grid;
@@ -64,23 +66,49 @@
             align-items: center;
             border-bottom: 1px solid $grey-200;
             color: $grey-900;
-            height: 100px;
+            // height: 100px;
+            padding: 10px 0;
+            grid-template-areas: "bucket-item-image bucket-item-name bucket-item-price bucket-item-amount bucket-item-total-price";
+
+            @include response-to(sm) {
+              grid-template-columns: 2fr;
+              grid-template-areas: "bucket-item-image bucket-item-name" "bucket-item-image bucket-item-price" "bucket-item-image bucket-item-amount" "bucket-item-image bucket-item-total-price";
+              font-size: 16px;
+            }
 
             .bucket-item-image {
+              grid-area: bucket-item-image;
               display: flex;
               justify-content: center;
               align-items: center;
+
+              @include response-to(sm) {
+                justify-content: initial;
+                align-items: initial;
+              }
+
               img {
                 height: 80px;
                 width: 80px;
                 background-position: center;
                 background-size: contain;
                 background-color: mat-color($primary, 100);
+
+                @include response-to(sm) {
+                  height: 150px;
+                  width: 150px;
+                }
+
               }
             }
 
             .bucket-item-name {
+              grid-area: bucket-item-name;
               padding: 0 0 0 12px;
+
+              @include response-to(sm) {
+                padding-bottom: 12px;
+              }
 
               .flower-type-name {
                 color: $grey-600
@@ -96,7 +124,28 @@
 
             }
 
+            .bucket-item-price {
+              grid-area: bucket-item-price;
+
+              .label {
+                display: none;
+                @include response-to(sm) {
+                  display: inline-block;
+                }
+              }
+
+              @include response-to(sm) {
+                padding-bottom: 4px;
+              }
+
+            }
+
             .bucket-item-amount {
+              grid-area: bucket-item-amount;
+
+              @include response-to(sm) {
+                padding-bottom: 4px;
+              }
 
               amount-controlled-input {
                 justify-content: flex-end;
@@ -104,8 +153,23 @@
             }
 
             .bucket-item-total-price {
+              grid-area: bucket-item-total-price;
               color: $black-500;
               font-weight: 500;
+
+              @include response-to(sm) {
+                padding-top: 8px;
+              }
+
+              .label {
+                display: none;
+                font-weight: 400;
+                font-size: 14px;
+                color: $grey-600;
+                @include response-to(sm) {
+                  display: inline-block;
+                }
+              }
             }
 
           }
@@ -136,6 +200,7 @@
             color: $grey-800
           }
           .total-price {
+            font-weight: 500;
             color: $black-500;
           }
         }
