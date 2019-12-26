@@ -31,7 +31,9 @@
               <div class="flower-size-name">{{bucketItem.size}}</div>
             </div>
             <div class="bucket-item-price">{{bucketItem.price / 100}} грн</div>
-            <div class="bucket-item-amount">{{bucketItem.amount}}</div>
+            <div class="bucket-item-amount">
+              <amount-controlled-input [(ngModel)]="bucketItem.amount" name="amount" minAmount="1"></amount-controlled-input>
+            </div>
             <div class="bucket-item-total-price">{{bucketItem.price * bucketItem.amount / 100}} грн</div>
           </div>
         </ng-template>

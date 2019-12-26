@@ -17,6 +17,7 @@
       font-size: 24px;
       font-weight: 500;
       color: $black-200;
+
     }
 
     i.close {
@@ -38,12 +39,17 @@
 
         .header {
           display: grid;
-          grid-template-columns: 100px 1fr 1fr 1fr 1fr;
+          grid-template-columns: 100px 25fr 20fr 35fr 20fr;
           font-weight: 500;
           color: $grey-800;
           border-bottom: 1px solid $grey-200;
           padding-bottom: 8px;
           margin-bottom: 8px;
+
+          .amount {
+            padding-right: 28px;
+          }
+
         }
 
         .content {
@@ -54,7 +60,7 @@
 
           .bucket-table-row {
             display: grid;
-            grid-template-columns: 100px 1fr 1fr 1fr 1fr;
+            grid-template-columns: 100px 25fr 20fr 35fr 20fr;
             align-items: center;
             border-bottom: 1px solid $grey-200;
             color: $grey-900;
@@ -90,6 +96,13 @@
 
             }
 
+            .bucket-item-amount {
+
+              amount-controlled-input {
+                justify-content: flex-end;
+              }
+            }
+
             .bucket-item-total-price {
               color: $black-500;
               font-weight: 500;
@@ -106,6 +119,10 @@
         flex-direction: row;
         font-size: 24px;
         justify-content: flex-end;
+
+        @include response-to(sm) {
+          justify-content: center;
+        }
 
         .total-price-block {
           display: flex;
@@ -132,10 +149,22 @@
         width: 100%;
         justify-content: space-between;
 
+        @include response-to(sm) {
+          flex-direction: column-reverse;
+          align-items: center;
+        }
+
         button {
           font-size: 22px;
           height: 42px;
           font-weight: 400;
+
+          @include response-to(sm) {
+            max-width: 300px;
+            &:last-of-type {
+              margin-bottom: 24px;
+            }
+          }
 
           i {
            margin-right: 8px;

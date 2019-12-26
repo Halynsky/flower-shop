@@ -1,14 +1,26 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ControlValueAccessor } from "@angular/forms";
+import { Component, forwardRef, Injector, Input, OnDestroy, OnInit, Provider } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from "@angular/forms";
+
+export const AMOUNT_CONTROLLED_VALUE_ACCESSOR: Provider = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => AmountControlledInputComponent),
+  multi: true
+};
 
 @Component({
-  selector: 'app-amount-controlled-input',
+  selector: 'amount-controlled-input',
   templateUrl: './amount-controlled-input.component.html',
-  styleUrls: ['./amount-controlled-input.component.scss']
+  styleUrls: ['./amount-controlled-input.component.scss'],
+  providers: [AMOUNT_CONTROLLED_VALUE_ACCESSOR]
 })
 export class AmountControlledInputComponent implements ControlValueAccessor, OnInit, OnDestroy {
 
-  MAX_AMOUNT = 999;
+  @Input()
+  maxAmount = 999;
+  @Input()
+  minAmount = 0;
+
+  private ngControl: NgControl;
 
   private _value: number = 0;
   get value(): number { return this._value; };
@@ -19,23 +31,24 @@ export class AmountControlledInputComponent implements ControlValueAccessor, OnI
     }
   }
 
-  constructor() { }
+  constructor(private injector: Injector) { }
 
   ngOnInit() {
+    this.ngControl = this.injector.get(NgControl);
   }
 
   ngOnDestroy(): void {
   }
 
   minusAmount() {
-    if (this.value > 0) {
+    if (this.value > this.minAmount) {
       this.value--
     }
   }
 
   plusAmount() {
-    if (this.value < this.MAX_AMOUNT) {
-      this.value
+    if (this.value < this.maxAmount) {
+      this.value++;
     }
   }
 

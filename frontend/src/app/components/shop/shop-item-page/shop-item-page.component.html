@@ -33,11 +33,7 @@
       <ng-template ngFor let-flowerSize [ngForOf]="flower.flowerSizes" let-i="index">
         <div class="add-flower-size">
           <div class="flower-size-name">{{flowerSize.size.name}}</div>
-          <div class="add-flower-size-controls">
-            <button mat-stroked-button color="primary" (click)="minusAmount(i)">-</button>
-            <input type="text" name="amount" [(ngModel)]="bucketItems[i].amount" maxlength="3" inputmode="numeric" pattern="[0-9]*" digitOnly>
-            <button mat-stroked-button color="primary" class="plus" (click)="plusAmount(i)">+</button>
-          </div>
+          <amount-controlled-input [(ngModel)]="bucketItems[i].amount" name="amount"></amount-controlled-input>
         </div>
       </ng-template>
       <button mat-flat-button color="accent" class="add-to-card-button" (click)="addToBucket()">

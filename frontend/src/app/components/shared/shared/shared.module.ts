@@ -95,6 +95,7 @@ const PROVIDERS = [
     ShopContentItemComponent,
     ShopFiltersComponent,
     ShopFilterDialogComponent,
+    AmountControlledInputComponent,
     // Developed Directives
     DigitOnlyDirective
   ],

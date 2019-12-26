@@ -77,10 +77,12 @@ export function getAuthServiceConfigs() {
       provide: AuthServiceConfig,
       useFactory: getAuthServiceConfigs
     },
-    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {...new MatDialogConfig(), panelClass: 'modal-panel-class', maxWidth: '', disableClose: true, autoFocus: false} as MatDialogConfig}
+    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {...new MatDialogConfig(), panelClass: 'modal-panel-class', maxWidth: '', disableClose: true, autoFocus: false, maxHeight: '100vh'} as MatDialogConfig}
   ],
   exports: [
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+

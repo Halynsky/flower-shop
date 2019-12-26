@@ -103,12 +103,24 @@
   @include response-from(sm) {
     max-width: initial;
   }
+  @include response(xs) {
+    width: 100vw !important;
+  }
 }
 
 .modal-panel-no-padding {
   border-radius: 2px;
   mat-dialog-container {
     padding: 0px !important;
+  }
+  @include response-from(sm) {
+    max-width: initial;
+  }
+  @include response(sm) {
+    min-width: 599px;
+  }
+  @include response(xs) {
+    width: 100vw !important;
   }
 }
 

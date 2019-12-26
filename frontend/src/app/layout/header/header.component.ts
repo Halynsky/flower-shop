@@ -32,7 +32,7 @@ export class HeaderComponent {
   }
 
   openBucketDialog() {
-    this.dialog.open(BucketDialogComponent, {minWidth: 320, width: "80%", panelClass: "modal-panel-no-padding"});
+    this.dialog.open(BucketDialogComponent, {width: "80%", panelClass: "modal-panel-no-padding"});
   }
 
   logout() {
