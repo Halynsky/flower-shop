@@ -3,13 +3,93 @@
 @import 'mixins';
 
 :host {
+  justify-content: center;
   @extend .content-thin;
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(300px, 400px) minmax(300px, 400px);
   width: 100%;
   padding-top: 2em;
+
   @include response-to(sm) {
-    grid-template-columns: auto
+    grid-template-columns: auto;
+    justify-content: stretch;
   }
+
+  ::ng-deep.mat-step {
+    input {
+      max-width: 300px;
+    }
+    button {
+      margin-right: 48px;
+      margin-top: 12px;
+    }
+    form {
+      margin-top: 12px;
+    }
+  }
+
+  .final-purchase-block-wrapper {
+    padding: 0px 24px 24px;
+
+    @include response-to(sm) {
+      padding: 0px;
+    }
+
+    .final-purchase-block {
+      background-color: mat-color($primary, 50);
+      display: grid;
+      justify-content: center;
+      padding: 24px;
+
+      button {
+        i {
+          margin-right: 8px;
+        }
+      }
+
+      .final-purchase-info-wrapper {
+        max-height: 400px;
+        overflow-y: auto;
+        margin-bottom: 12px;
+        line-height: 160%;
+
+        .final-purchase-items-amount {
+          color: mat-color($accent);
+        }
+
+        .final-purchase-items-price {
+          color: mat-color($accent);
+        }
+
+        .final-purchase-flower-button {
+          color: #4caf50;
+          padding: 12px;
+          display: flex;
+          border-bottom: 1px solid $grey-700;
+          .name-in-final-purchase {
+            display: flex;
+            width: 150px;
+          }
+
+          .size-in-final-purchase {
+            justify-content: center;
+            color: $grey-400;
+            display: flex;
+            width: 60px;
+          }
+
+          .price-in-final-purchase {
+            justify-content: flex-end;
+            color: mat-color($accent);
+            display: flex;
+            width: 70px;
+          }
+        }
+      }
+
+    }
+  }
+
+
 
 }

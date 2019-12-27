@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { BucketLocalService } from "../../services/bucket-local.service";
 
 @Component({
   selector: 'order',
@@ -8,17 +9,23 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 })
 export class OrderComponent implements OnInit {
 
-  firstFormGroup: FormGroup;
-  secondFormGroup: FormGroup;
+  contactInfoGroup: FormGroup;
+  shippingFormGroup: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder,
+              public bucketLocalService: BucketLocalService) {}
 
   ngOnInit() {
-    this.firstFormGroup = this.formBuilder.group({
-      firstCtrl: ['', Validators.required]
+
+    this.contactInfoGroup = this.formBuilder.group({
+      name: [''],
+      email: [''],
+      phone: ['']
     });
-    this.secondFormGroup = this.formBuilder.group({
-      secondCtrl: ['', Validators.required]
+
+    this.shippingFormGroup = this.formBuilder.group({
+      city: ['']
     });
+
   }
 }
