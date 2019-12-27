@@ -1,0 +1,15 @@
+@import '~@angular/material/theming';
+@import "theme";
+@import 'mixins';
+
+:host {
+  @extend .content-thin;
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 100%;
+  padding-top: 2em;
+  @include response-to(sm) {
+    grid-template-columns: auto
+  }
+
+}

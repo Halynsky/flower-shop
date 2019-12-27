@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { API_URL } from "../../utils/Costants";
 import { BucketItem } from "../../models/Bucket";
 
@@ -12,6 +12,10 @@ export class BucketService {
 
   post(bucketItems: BucketItem[]) {
     return this.http.post(`${this.URL}`, bucketItems);
+  }
+
+  get() {
+    return this.http.get<BucketItem[]>(`${this.URL}`);
   }
 
 }

@@ -108,7 +108,7 @@
       <div>В вашій корзині <span class="bucket-items-amount">{{bucketLocalService.bucketInfo.totalItems}}</span> позиції</div>
       <div>На сумму <span class="bucket-items-price">{{bucketLocalService.bucketInfo.totalPrice / 100}}</span> грн</div>
     </div>
-    <button mat-flat-button color="accent" (click)="openBucketDialog()">
+    <button mat-flat-button color="accent" routerLink="/order">
       <i class="material-icons">shopping_basket</i>
       <span>Оформити замовлення</span>
     </button>

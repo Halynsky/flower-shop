@@ -54,11 +54,11 @@ export function getAuthServiceConfigs() {
     BrowserAnimationsModule,
     HttpClientModule,
     MatIconModule,
+    MatDialogModule,
     // Developed modules
     LayoutModule,
     LandingModule,
     SharedModule,
-    MatDialogModule,
     UserCabinetModule,
     SocialLoginModule,
     ValidatorModule.forRoot()

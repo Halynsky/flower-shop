@@ -18,6 +18,8 @@ export class AmountControlledInputComponent implements ControlValueAccessor, OnI
   @Input()
   maxAmount = 999;
   @Input()
+  availableAmount = 999;
+  @Input()
   minAmount = 0;
 
   private ngControl: NgControl;

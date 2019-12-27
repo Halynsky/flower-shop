@@ -1,5 +1,5 @@
 import { ModuleWithProviders } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from "./layout/layout.component";
 import { LandingComponent } from "./components/landing/landing.component";
 import { UserCabinetComponent } from "./components/user-cabinet/user-cabinet.component";
@@ -21,6 +21,7 @@ const routes: Routes = [
           { path: 'purchases', component: PurchaseHistoryComponent},
           { path: 'favourite-articles', component: FavouriteArticlesComponent}
         ] },
+      { path: 'order', loadChildren: './components/order/order.module#OrderModule'},
       { path: 'confirm', loadChildren: './components/confirmation/confirmation.module#ConfirmationModule'},
       { path: 'shop', loadChildren: './components/shop/shop.module#ShopModule'},
       { path: 'forum', loadChildren: './components/forum/forum.module#ForumModule'},

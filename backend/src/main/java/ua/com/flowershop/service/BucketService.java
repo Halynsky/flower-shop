@@ -9,6 +9,7 @@ import ua.com.flowershop.entity.FlowerSize;
 import ua.com.flowershop.entity.User;
 import ua.com.flowershop.exception.NotFoundException;
 import ua.com.flowershop.model.BucketItemModel;
+import ua.com.flowershop.projection.BucketItemProjection;
 import ua.com.flowershop.repository.BucketItemRepository;
 import ua.com.flowershop.repository.FlowerSizeRepository;
 
@@ -37,6 +38,10 @@ public class BucketService {
 
         bucketItemRepository.saveAll(bucketItems);
 
+    }
+
+    public List<BucketItemProjection> getBucket(User user) {
+        return bucketItemRepository.findProjectedByUserEmail(user.getEmail());
     }
 
 }

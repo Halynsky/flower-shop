@@ -14,13 +14,18 @@ export class BucketLocalService {
               private bucketService: BucketService) {
     this.bucket = this.getBucket();
     this.updateBucketInfo();
-    this.securityService.onLogout.subscribe(() => {
-      this.updateBucketInfo();
-    })
+    this.securityService.onLogin.subscribe(() => {
+      this.getUserBucket();
+    });
+    // this.securityService.onLogout.subscribe(() => {
+    //   this.updateBucketInfo();
+    // });
   }
 
-  getTotalPrice() {
-    return this.getBucket().reduce((accumulator, item) => accumulator + item.amount * item.price);
+  getUserBucket() {
+    this.bucketService.get().subscribe(
+      userBucket => this.addToBucket(userBucket)
+    )
   }
 
   updateBucketInfo(bucket: BucketItem[] = this.getBucket()) {
@@ -50,7 +55,9 @@ export class BucketLocalService {
       localStorage.setItem(this.BUCKET_STORAGE_KEY, JSON.stringify(bucket));
       this.bucket = bucket;
       this.updateBucketInfo(this.bucket);
-      this.bucketService.post(this.bucket).subscribe(() => {})
+      if(this.securityService.isAuthenticated()) {
+        this.bucketService.post(this.bucket).subscribe(() => {})
+      }
     }
   }
 
@@ -60,7 +67,8 @@ export class BucketLocalService {
     bucketItems.forEach(item => {
       let index = bucket.findIndex(element => element.flowerSizeId == item.flowerSizeId);
       if (index >= 0) {
-        bucket[index].amount += item.amount
+        bucket[index].amount = parseInt(bucket[index].amount) + parseInt(item.amount as any);
+        bucket[index].image = item.image;
       } else {
         bucket.push(item)
       }

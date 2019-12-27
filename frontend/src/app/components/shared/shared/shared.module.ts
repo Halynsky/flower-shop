@@ -17,7 +17,9 @@ import {
   MatMenuModule,
   MatSelectModule,
   MatSnackBarModule,
-  MatTooltipModule
+  MatStepperModule,
+  MatTooltipModule,
+  MatTreeModule
 } from "@angular/material";
 import { ArticleCardComponent } from './article-card/article-card.component';
 import { RouterModule } from "@angular/router";
@@ -67,6 +69,8 @@ const PROVIDERS = [
     MatSelectModule,
     MatListModule,
     MatBottomSheetModule,
+    MatStepperModule,
+    MatTreeModule,
     PipesModule,
     MatDialogModule,
     MessageModule,
@@ -88,6 +92,8 @@ const PROVIDERS = [
     MatButtonToggleModule,
     MatSelectModule,
     MatTooltipModule,
+    MatStepperModule,
+    MatTreeModule,
     PipesModule,
     ValidatorModule,
     // Developed Components

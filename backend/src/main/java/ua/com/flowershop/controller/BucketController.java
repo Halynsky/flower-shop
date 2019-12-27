@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ua.com.flowershop.model.BucketItemModel;
+import ua.com.flowershop.projection.BucketItemProjection;
 import ua.com.flowershop.security.SecurityService;
 import ua.com.flowershop.service.BucketService;
 
@@ -28,9 +29,8 @@ public class BucketController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping
-    public ResponseEntity<Void> getBucket() {
-        return new ResponseEntity<>(OK);
+    public ResponseEntity<List<BucketItemProjection>> getBucket() {
+        return new ResponseEntity<>(bucketService.getBucket(securityService.getUser()), OK);
     }
-
 
 }
