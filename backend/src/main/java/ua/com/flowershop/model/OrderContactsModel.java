@@ -13,10 +13,11 @@ import java.util.List;
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderModel {
+public class OrderContactsModel {
     private Long id;
     private List<OrderItemModel> orderItems;
     private Long userId;
-    private OrderContactsModel orderContacts;
-    private OrderShippingModel orderShipping;
+    private String name;
+    private String phone;
+    private String email;
 }

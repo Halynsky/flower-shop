@@ -21,6 +21,7 @@ import { AuthServiceConfig, FacebookLoginProvider, SocialLoginModule } from "ang
 import { ValidatorModule } from "./validators/validator.module";
 import { UserCabinetModule } from "./components/user-cabinet/user-cabinet.module";
 import { ShopFilterDialogComponent } from "./components/shared/shared/shop-filter-dialog/shop-filter-dialog.component";
+import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
 
 registerLocaleData(localeRuUa);
 
@@ -77,8 +78,12 @@ export function getAuthServiceConfigs() {
       provide: AuthServiceConfig,
       useFactory: getAuthServiceConfigs
     },
-    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {...new MatDialogConfig(), panelClass: 'modal-panel-class', maxWidth: '', disableClose: true, autoFocus: false, maxHeight: '100vh'} as MatDialogConfig}
-  ],
+    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {...new MatDialogConfig(), panelClass: 'modal-panel-class', maxWidth: '', disableClose: true, autoFocus: false, maxHeight: '100vh'} as MatDialogConfig},
+    {
+      provide: STEPPER_GLOBAL_OPTIONS,
+      useValue: { displayDefaultIndicatorType: false }
+    }
+    ],
   exports: [
   ],
   bootstrap: [AppComponent]

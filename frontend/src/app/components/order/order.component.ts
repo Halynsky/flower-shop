@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup } from "@angular/forms";
 import { BucketLocalService } from "../../services/bucket-local.service";
 
 @Component({
@@ -24,8 +24,14 @@ export class OrderComponent implements OnInit {
     });
 
     this.shippingFormGroup = this.formBuilder.group({
-      city: ['']
+      city: [''],
+      novaPoshtaDepartment: [''],
+      comment: ['']
     });
+
+  }
+
+  submitOrder() {
 
   }
 }

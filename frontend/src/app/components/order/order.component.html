@@ -1,5 +1,6 @@
 <mat-vertical-stepper [linear]="false" #stepper>
   <mat-step [stepControl]="contactInfoGroup">
+
     <form [formGroup]="contactInfoGroup">
       <ng-template matStepLabel>Контактні данні</ng-template>
 
@@ -9,8 +10,7 @@
           name="name"
           formControlName="name"
           placeholder="Ім'я та прізвище"
-          required
-          email>
+          required>
         <div class="error-wrapper" *ngIf="contactInfoGroup.get('name').dirty || contactInfoGroup.get('name').touched">
           <div class="error-message" *ngIf="contactInfoGroup.get('name').errors?.required">Повинно бути вказано</div>
         </div>
@@ -66,6 +66,28 @@
         </div>
       </div>
 
+      <div class="input-group">
+        <label>Відділення Нової пошти</label>
+        <input
+          name="novaPoshtaDepartment"
+          formControlName="novaPoshtaDepartment"
+          placeholder="Відділення Нової пошти"
+          required>
+        <div class="error-wrapper" *ngIf="shippingFormGroup.get('novaPoshtaDepartment').dirty || shippingFormGroup.get('novaPoshtaDepartment').touched">
+          <div class="error-message" *ngIf="shippingFormGroup.get('novaPoshtaDepartment').errors?.required">Повинно бути вказано</div>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>Коментар до замовлення</label>
+        <textarea
+          name="comment"
+          formControlName="comment"
+          cols="30" rows="10"
+          placeholder="Коментар до замовлення">
+        </textarea>
+      </div>
+
       <div class="buttons-wrapper">
         <button mat-stroked-button color="primary" matStepperPrevious>Назад</button>
       </div>
@@ -80,11 +102,14 @@
     <div class="final-purchase-info-wrapper">
       <div><span class="final-purchase-items-amount">{{bucketLocalService.bucketInfo.totalItems}}</span> позиції</div>
       <div>На сумму <span class="final-purchase-items-price">{{bucketLocalService.bucketInfo.totalPrice / 100}}</span> грн</div>
+
+      <button mat-flat-button color="accent" routerLink="/order" [disabled]="contactInfoGroup.invalid || shippingFormGroup.invalid" (click)="submitOrder()">
+        <i class="material-icons">check</i>
+        <span>Підтвердити замовлення</span>
+      </button>
+
     </div>
-    <button mat-flat-button color="accent" routerLink="/order">
-      <i class="material-icons">check</i>
-      <span>Підтвердити замовлення</span>
-    </button>
+
   </div>
 
 </div>

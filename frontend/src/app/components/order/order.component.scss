@@ -16,7 +16,7 @@
   }
 
   ::ng-deep.mat-step {
-    input {
+    input, textarea {
       max-width: 300px;
     }
     button {
@@ -36,22 +36,25 @@
     }
 
     .final-purchase-block {
-      background-color: mat-color($primary, 50);
       display: grid;
       justify-content: center;
-      padding: 24px;
+
 
       button {
+        margin-top: 8px;
         i {
           margin-right: 8px;
         }
       }
 
       .final-purchase-info-wrapper {
+        padding: 24px 36px;
+        background-color: mat-color($primary, 50);
         max-height: 400px;
         overflow-y: auto;
         margin-bottom: 12px;
         line-height: 160%;
+
 
         .final-purchase-items-amount {
           color: mat-color($accent);

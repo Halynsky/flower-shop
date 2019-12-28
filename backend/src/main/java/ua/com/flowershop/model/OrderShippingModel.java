@@ -6,17 +6,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import java.util.List;
-
 @Getter
 @Setter
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderModel {
-    private Long id;
-    private List<OrderItemModel> orderItems;
-    private Long userId;
-    private OrderContactsModel orderContacts;
-    private OrderShippingModel orderShipping;
+public class OrderShippingModel {
+    private String city;
+    private String novaPoshtaDepartment;
+    private String comment;
 }
