@@ -7,6 +7,8 @@ import { BucketLocalService } from "../../../services/bucket-local.service";
 import { SnackBarService } from "../../../services/snak-bar.service";
 import { getErrorMessage } from "../../../utils/Functions";
 import { BucketItem } from "../../../models/Bucket";
+import { BucketDialogComponent } from "../../shared/shared/bucket-dialog/bucket-dialog.component";
+import { MatDialog } from "@angular/material";
 
 
 @Component({
@@ -26,7 +28,8 @@ export class ShopItemPageComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private flowerService: FlowerService,
               private bucketLocalService: BucketLocalService,
-              private snackBarService: SnackBarService) {
+              private snackBarService: SnackBarService,
+              public dialog: MatDialog) {
     this.route.params.subscribe(params => {
       this.id = params['id'];
       this.getFlowerById();
@@ -79,6 +82,9 @@ export class ShopItemPageComponent implements OnInit {
       this.bucketLocalService.addToBucket(this.bucketItems.filter(item => item.amount > 0));
       this.bucketItems = [];
       this.fillBucketItems(this.flower);
+
+      this.dialog.open(BucketDialogComponent, {width: "80%", panelClass: "modal-panel-no-padding", maxWidth: 800});
+
     } else {
       this.snackBarService.showWarning("Вкажіть, будь ласка, кількість товару яку ви хочете придбати");
     }

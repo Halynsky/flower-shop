@@ -3,7 +3,6 @@ import { BucketLocalService } from "../../../../services/bucket-local.service";
 import { MatDialogRef } from "@angular/material";
 import { OrderService } from "../../../../api/services/order.service";
 import { SnackBarService } from "../../../../services/snak-bar.service";
-import { getErrorMessage } from "../../../../utils/Functions";
 
 
 @Component({
@@ -25,12 +24,5 @@ export class BucketDialogComponent {
     this.bucketLocalService.updateBucket();
   }
 
-  submitOrder() {
-    this.orderService.create(this.bucketLocalService.bucket).subscribe(
-      () => {
 
-      },
-      error => this.snackBarService.showError(getErrorMessage(error))
-    )
-  }
 }

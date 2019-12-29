@@ -39,6 +39,10 @@
       display: grid;
       justify-content: center;
 
+      @include response-to(sm) {
+        grid-template-columns: 1fr;
+      }
+
 
       button {
         margin-top: 8px;
@@ -54,6 +58,11 @@
         overflow-y: auto;
         margin-bottom: 12px;
         line-height: 160%;
+
+        @include response-to(sm) {
+          justify-content: center;
+          display: grid;
+        }
 
 
         .final-purchase-items-amount {
