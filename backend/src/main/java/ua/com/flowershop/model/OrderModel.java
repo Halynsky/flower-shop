@@ -17,4 +17,6 @@ public class OrderModel {
     private Long id;
     private List<OrderItemModel> orderItems;
     private Long userId;
+    private OrderContactsModel orderContacts;
+    private OrderShippingModel orderShipping;
 }

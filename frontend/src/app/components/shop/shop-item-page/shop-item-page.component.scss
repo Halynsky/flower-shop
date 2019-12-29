@@ -1,151 +1,247 @@
+@import '~@angular/material/theming';
 @import "theme";
-@import "mixins.scss";
+@import 'mixins';
 
 :host {
-    display: flex;
-    justify-self: center;
-    align-self: center;
-    flex-direction: column;
-    .title {
-      display: flex;
-      flex-direction: column;
-      margin: 36px 0px 12px 0px;
+  @extend .content-thin;
+  @extend .content-thin-padding;
+  display: grid;
+  grid-template-rows: 75px auto;
+
+  .wrapper > .title {
+    color: $grey-800;
+    font-size: 26px;
+    margin-bottom: 24px;
+    .flower-name {
       color: mat-color($accent);
-      font-size: 2em;
-      div {
-        display: flex;
-        align-items: center;
-        span{
-          margin: 5px 0px 0px 10px;
-          font-size: 15px;
-          color: $grey-900;
-        }
-      }
-      #flower-type {
-        margin: 12px 0px 0px 5px;
-        font-size: 15px;
-        color: $grey-900;
-      }
     }
 
-    .main {
-      display: flex;
-      width: 1100px;
-      height: 100%;
-      flex-grow: 1;
-      .content{
-        @include mat-elevation(2);
-        padding: 12px;
-        width: 1100px;
+    @include response-to(sm) {
+      text-align: center;
+    }
 
-        .content-head {
-          display: flex;
+  }
 
-          .flower-logo {
-            margin: 0px 12px 0px 0px;
-            height: 350px;
+  .content {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas: "image specifications add-to-card-block" "description description description";
+    height: fit-content;
 
-            img {
-              width: 350px;
-              height: 350px;
-            }
 
-          }
-          .flower-info {
-            color: $grey-900;
-            height: 350px;
-            width: 550px;
-            font-size: 18px;
 
-            span {
-              color: mat-color($accent);
-              font-size: 1.5em;
-            }
+    @include response-to(sm) {
+      grid-template-columns: 1fr 1fr;
+      //grid-template-areas: "image specifications" "image add-to-card-block"
+      grid-template-areas: "image add-to-card-block" "specifications specifications" "description description"
+    }
 
-          }
-          .buy-menu {
-            color: $grey-900;
-            height: 350px;
-            width: 300px;
-            .sizes-chooser {
-              display: flex;
-              flex-direction: column;
-              height: 125px;
-              align-items: center;
-              justify-content: space-between;
-              mat-button-toggle-group {
-                font-weight: bold;
-              }
-              #size-flower {
-                margin-top: 6px;
-              }
-              #price {
-                margin-bottom: 6px;
-              }
-            }
-            .amount-counter {
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-              justify-content: space-around;
-              height: 125px;
-              font-size: 2em;
-              button {
-                font-weight: bold;
-              }
-              #counter-output {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                height: 36px;
-                width: 36px;
-              }
-              .count-buttons {
-                margin-top: 24px;
-                display: flex;
-                flex-direction: row;
-              }
-              .summary-to-pay {
-                margin-top: 48px;
-              }
-            }
-            .buy-button {
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-              height: 100px;
-              justify-content: flex-end;
-              button {
-                background-color: mat-color($accent);
-                color: white;
-                height: 50px;
-                font-size: 2em;
-                font-weight: bold;
-              }
-            }
+    @include response-to(xs) {
+      grid-template-columns: 1fr;
+      grid-template-areas: "image" "add-to-card-block" "specifications" "description"
+    }
 
-          }
-        }
+    .image {
+      grid-area: image;
+      height: 400px;
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-color: mat-color($primary, 50);
+      background-position: center;
 
-        .content-description {
-          display: flex;
-          flex-direction: column;
-          margin: 24px 0px 0px 0px;
-
-          .description-head {
-            color: mat-color($accent);
-            font-size: 1.5em;
-            margin-bottom: 12px;
-          }
-          .description-info {
-            color: $grey-900;
-            font-size: 18px;
-          }
-
-        }
-
+      @include response(xs) {
+        height: 200px;
       }
 
     }
+
+    .specifications {
+      grid-area: specifications;
+      padding: 0px 24px;
+
+      @include response(xs) {
+        padding: 0px 12px;
+      }
+
+      @include response(sm) {
+        margin-top: 24px;
+        max-width: 600px;
+        min-width: 400px;
+        width: 60%;
+        justify-self: center;
+      }
+
+      .specification {
+        font-size: 16px;
+        display: grid;
+        grid-template-columns: minmax(100px, 1fr) fit-content(100%);
+        padding: 8px;
+        border-bottom: 1px solid $grey-100;
+
+        //&:nth-child(odd) {
+        //  background-color: $grey-30;
+        //}
+        //
+        //&:nth-child(even) {
+        //  background-color: $grey-50;
+        //}
+
+        .specification-label {
+          color: $grey-800;
+        }
+        .specification-value {
+          color: mat-color($primary, 500);
+          text-align: right;
+          font-weight: 500;
+        }
+      }
+
+    }
+
+    .add-to-card-block {
+      grid-area: add-to-card-block;
+      padding: 24px;
+      background-color: $grey-30;
+      height: fit-content;
+      display: grid;
+
+      @include response(xs) {
+        margin: 24px 0px;
+        padding: 24px 0px;
+      }
+
+      @include response(sm) {
+        margin: 0px 0px 24px 24px;
+      }
+
+      .header {
+        display: grid;
+        grid-template-columns: 33% auto;
+        margin-bottom: 16px;
+        color: $grey-800;
+        font-weight: 500;
+        grid-column-gap: 24px;
+
+        @include response(xs) {
+          grid-template-columns: 37% auto;
+        }
+
+        @include response(sm) {
+          grid-template-columns: 28% auto;
+        }
+
+        .size-title {
+          display: flex;
+          justify-content: flex-end;
+        }
+
+        .amount-title {
+          display: flex;
+          padding-left: 34px;
+        }
+
+      }
+
+      .add-flower-size {
+        font-size: 20px;
+        margin-bottom: 16px;
+        display: grid;
+        grid-template-columns: 33% auto;
+        grid-column-gap: 24px;
+
+        @include response(xs) {
+          grid-template-columns: 37% auto;
+        }
+
+        @include response(sm) {
+          grid-template-columns: 28% auto;
+        }
+
+        //&:last-of-type {
+        //  margin-bottom: 0px;
+        //}
+
+        .flower-size-name {
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
+          color: $black-200;
+        }
+
+        .add-flower-size-controls {
+          display: flex;
+          align-items: center;
+
+          input {
+            width: 43px;
+            margin: 0px 12px;
+            height: 36px;
+            text-align: center;
+            font-size: 20px;
+            color: $black-500;
+            border-radius: 2px;
+            border: solid 1px $grey-200;
+          }
+
+          button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 2px !important;
+            padding: 0px;
+            min-width: 36px;
+            height: 36px;
+            width: 36px;
+            font-size: 30px;
+            font-weight: 400;
+            background-color: white;
+
+
+            &.plus {
+              font-size: 20px;
+            }
+          }
+        }
+
+      }
+
+      .add-to-card-button {
+        justify-self: center;
+        width: 220px;
+        font-size: 24px;
+        height: 44px;
+        text-transform: uppercase;
+        i {
+          margin-right: 8px;
+        }
+      }
+
+    }
+
+    .description {
+      grid-area: description;
+      margin-top: 36px;
+
+      @include response(xs) {
+        padding: 0px 12px;
+      }
+
+      .title {
+        font-size: 24px;
+        color: mat-color($primary, 900);
+        margin-bottom: 8px;
+      }
+
+      .value {
+        color: $black-400;
+        font-size: 16px;
+      }
+
+
+    }
+
+  }
 
 }
+
+

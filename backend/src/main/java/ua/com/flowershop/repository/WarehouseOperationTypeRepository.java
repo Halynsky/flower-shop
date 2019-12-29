@@ -8,4 +8,5 @@ import ua.com.flowershop.projection.WarehouseOperationTypeProjection;
 @Repository
 public interface WarehouseOperationTypeRepository extends JpaRepository<WarehouseOperationType, Long> {
     WarehouseOperationTypeProjection findPrjectedByOperationType(WarehouseOperationType.OperationType operationType);
+    WarehouseOperationType findByOperationType(WarehouseOperationType.OperationType operationType);
 }

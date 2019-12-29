@@ -3,11 +3,12 @@ import { ActivatedRoute } from "@angular/router";
 import { FlowerService } from "../../../api/services/flower.service";
 import { FlowerFull } from "../../../api/models/Flower";
 import { FlowerSize } from "../../../api/models/FlowerSize";
-import { MatBottomSheet, MatBottomSheetRef } from "@angular/material";
-import { BottomSheetOverview } from "../../shared/shared/bottom-sheet/bottom-sheet.component";
-import { BucketItem } from "../../../models/BucketItem";
-import { ModalWindowService } from "../../../services/modal-window.service";
-import { BucketService } from "../../../services/bucket.service";
+import { BucketLocalService } from "../../../services/bucket-local.service";
+import { SnackBarService } from "../../../services/snak-bar.service";
+import { getErrorMessage } from "../../../utils/Functions";
+import { BucketItem } from "../../../models/Bucket";
+import { BucketDialogComponent } from "../../shared/shared/bucket-dialog/bucket-dialog.component";
+import { MatDialog } from "@angular/material";
 
 
 @Component({
@@ -17,15 +18,18 @@ import { BucketService } from "../../../services/bucket.service";
 })
 export class ShopItemPageComponent implements OnInit {
 
+  private MAX_AMOUNT = 999;
+
   id: number;
   flower: FlowerFull;
-  amountCounter: number = 1;
   flowerSize: FlowerSize;
-  sumToPay: number = 1;
-  bottomSheetRef: MatBottomSheetRef;
-  bucketItem: BucketItem = new BucketItem();
+  bucketItems: BucketItem[] = [];
 
-  constructor(private route: ActivatedRoute, private flowerService: FlowerService, private modalPageService: ModalWindowService, private bucketService: BucketService, private bottomSheet: MatBottomSheet) {
+  constructor(private route: ActivatedRoute,
+              private flowerService: FlowerService,
+              private bucketLocalService: BucketLocalService,
+              private snackBarService: SnackBarService,
+              public dialog: MatDialog) {
     this.route.params.subscribe(params => {
       this.id = params['id'];
       this.getFlowerById();
@@ -35,50 +39,60 @@ export class ShopItemPageComponent implements OnInit {
   ngOnInit() {
   }
 
-  openBottomSheet(): void {
-    this.bottomSheetRef = this.bottomSheet.open(BottomSheetOverview);
-  }
 
-  addToBucket() {
-    this.bucketItem.amount = this.amountCounter;
-    this.bucketItem.name = this.flower.name;
-    this.bucketItem.size = this.flowerSize.size.name;
-    this.bucketItem.price = this.flowerSize.price;
-    this.bucketItem.image = this.flower.image;
-    this.bucketService.addPurchase(this.bucketItem);
+  fillBucketItems(flower: FlowerFull) {
+    for (let flowerSize of flower.flowerSizes) {
+      let bucketItem = new BucketItem();
+      bucketItem.amount = 0;
+      bucketItem.price = flowerSize.price;
+      bucketItem.image = flower.image;
+      bucketItem.name = flower.name;
+      bucketItem.sizeName = flowerSize.size.name;
+      bucketItem.flowerSizeId = flowerSize.id;
+      bucketItem.flowerTypeName = flower.flowerType.nameSingle;
+      this.bucketItems.push(bucketItem);
+    }
   }
 
   getFlowerById() {
     this.flowerService.getFlowerFullById(this.id).subscribe(
       flower => {
         this.flower = flower;
-        this.flowerSize = this.flower.flowerSizes[0];
-        this.sumToPay = this.flowerSize.price * this.amountCounter;
+        this.fillBucketItems(this.flower)
       },
-      error => console.error(error)
+      error => this.snackBarService.showError(getErrorMessage(error))
     );
   }
 
-  counterIncrement() {
-    if (this.amountCounter < this.flowerSize.amount) {
-      this.amountCounter++;
+
+  minusAmount(flowerSizeIndex: number) {
+    if (this.bucketItems[flowerSizeIndex].amount > 0) {
+      this.bucketItems[flowerSizeIndex].amount--
     }
-    this.sumToPay = this.flowerSize.price * this.amountCounter;
   }
 
-  counterDecrement() {
-    if (this.amountCounter > 1) {
-      this.amountCounter--;
+  plusAmount(flowerSizeIndex: number) {
+    if (this.bucketItems[flowerSizeIndex].amount < this.MAX_AMOUNT) {
+      this.bucketItems[flowerSizeIndex].amount++
     }
-    this.sumToPay = this.flowerSize.price * this.amountCounter;
-    // this.bucketService.clearBucket();
   }
 
-  trackElement(index, flowerSize) {
-    this.flowerSize = flowerSize;
-    this.sumToPay = flowerSize.price;
-    this.amountCounter = 1;
+  addToBucket() {
+    if (this.getSelectedAmount() > 0) {
+      this.bucketLocalService.addToBucket(this.bucketItems.filter(item => item.amount > 0));
+      this.bucketItems = [];
+      this.fillBucketItems(this.flower);
+
+      this.dialog.open(BucketDialogComponent, {width: "80%", panelClass: "modal-panel-no-padding", maxWidth: 800});
+
+    } else {
+      this.snackBarService.showWarning("Вкажіть, будь ласка, кількість товару яку ви хочете придбати");
+    }
+
   }
 
+  getSelectedAmount() {
+    return this.bucketItems.reduce(((accumulator, item) => accumulator + item.amount), 0)
+  }
 
 }

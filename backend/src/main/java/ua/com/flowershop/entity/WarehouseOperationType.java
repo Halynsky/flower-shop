@@ -48,7 +48,7 @@ public class WarehouseOperationType {
     @AllArgsConstructor
     public enum OperationType {
         GOODS_ARRIVAL("GOODS_ARRIVAL"),
-        INTERNAL_SALE("INTERNAL_SALE"),
+        SALE("SALE"),
         EXTERNAL_SALE("EXTERNAL_SALE"),
         RETURN("RETURN"),
         GIFT("GIFT"),

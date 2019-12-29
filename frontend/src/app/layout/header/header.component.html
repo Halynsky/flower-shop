@@ -10,7 +10,7 @@
 
   <div class="main-navigation">
     <a routerLink="/shop" mat-button routerLinkActive="active-link">Магазин</a>
-    <a routerLink="/forum" mat-button routerLinkActive="active-link">Блог</a>
+<!--    <a routerLink="/forum" mat-button routerLinkActive="active-link">Блог</a>-->
     <a routerLink="/contacts" mat-button routerLinkActive="active-link">Контакти</a>
   </div>
 
@@ -20,8 +20,8 @@
       <button mat-button [matMenuTriggerFor]="bucket" class="bucket-button">
         <div class="bucket">
           <i class="fas fa-shopping-cart"></i>
-            <div class="bucket-index" *ngIf="bucketService.getBucket().length > 0">
-            <div>{{bucketService.getBucket().length}}</div>
+            <div class="bucket-index" *ngIf="bucketLocalService.bucketInfo.totalItems > 0">
+            <div>{{bucketLocalService.bucketInfo.totalItems}}</div>
             </div>
         </div>
       </button>
@@ -45,8 +45,8 @@
       <button mat-button [matMenuTriggerFor]="bucket" class="bucket-button">
         <div class="bucket" >
           <i class="fas fa-shopping-cart"></i>
-          <div class="bucket-index" *ngIf="bucketService.getBucket().length > 0">
-            <div>{{bucketService.getBucket().length}}</div>
+          <div class="bucket-index" *ngIf="bucketLocalService.bucketInfo.totalItems > 0">
+            <div>{{bucketLocalService.bucketInfo.totalItems}}</div>
           </div>
         </div>
       </button>
@@ -60,15 +60,12 @@
         <mat-icon aria-label="Login">account_circle</mat-icon>
       </button>
     </div>
-
   </div>
-
-
 
 </div>
 
 <mat-menu #userMenu="matMenu" class="auth-menu">
-  <div class="profile-menu user-menu" (click)="openBucketDialog()" *ngIf="securityService.hasRole(Role.USER)">
+  <div class="profile-menu user-menu" *ngIf="securityService.hasRole(Role.USER)">
     <button mat-flat-button class="user-menu-button" routerLink="/my/profile">
       <i class="material-icons">perm_identity</i>
       <span>Мій профіль</span>
@@ -87,7 +84,7 @@
     </button>
   </div>
 
-  <div class="profile-menu admin-menu" (click)="openBucketDialog()" *ngIf="securityService.hasRole(Role.ADMIN) || securityService.hasRole(Role.SUPPORT)">
+  <div class="profile-menu admin-menu" *ngIf="securityService.hasRole(Role.ADMIN) || securityService.hasRole(Role.SUPPORT)">
     <button mat-flat-button class="user-menu-button" routerLink="/admin">
       <i class="material-icons">table_chart</i>
       <span>Адмін Панель</span>
@@ -102,20 +99,25 @@
 </mat-menu>
 
 <mat-menu #bucket="matMenu" class="bucket-menu">
-  <div class="default-bucket-info" *ngIf="bucketService.getBucket().length == 0">Кошик порожній</div>
-  <div *ngIf="bucketService.getBucket().length > 0">
-    <div class="bucket-wrapper">
-      <div class="bucket-flower-button" *ngFor="let bucketFlower of bucketService.getBucket()"><div class="name-in-bucket">{{bucketFlower.name}}</div><div class="size-in-bucket">{{bucketFlower.size}}</div><div class="price-in-bucket">{{(bucketFlower.price*bucketFlower.amount)/100}} грн</div></div>
+  <div class="default-bucket-info" *ngIf="bucketLocalService.bucketInfo.totalItems == 0">Кошик порожній</div>
+  <div *ngIf="bucketLocalService.bucketInfo.totalItems > 0">
+    <div class="bucket-info-wrapper">
+      <div>В вашій корзині <span class="bucket-items-amount">{{bucketLocalService.bucketInfo.totalItems}}</span> позиції</div>
+      <div>На сумму <span class="bucket-items-price">{{bucketLocalService.bucketInfo.totalPrice / 100}}</span> грн</div>
     </div>
-    <div class="accept-but"><button (click)="modalWindowService.showModal()">Оформити замовлення</button></div>
+    <button mat-flat-button color="accent" routerLink="/order">
+      <i class="material-icons">shopping_basket</i>
+      <span>Оформити замовлення</span>
+    </button>
+    <button mat-button color="primary" class="check-bucket-button" (click)="openBucketDialog()">Переглянути товари</button>
   </div>
 </mat-menu>
 
 
 <mat-menu #mainNavigationMenu="matMenu" class="main-navigation-menu">
     <a routerLink="/" mat-button routerLinkActive="active-link">Головна</a>
-    <a routerLink="/forum" mat-button routerLinkActive="active-link">Блог</a>
-    <a routerLink="/shop" mat-button routerLinkActive="active-link">Магазин</a>
+<!--    <a routerLink="/forum" mat-button routerLinkActive="active-link">Блог</a>-->
+<!--    <a routerLink="/shop" mat-button routerLinkActive="active-link">Магазин</a>-->
     <a routerLink="/contacts" mat-button routerLinkActive="active-link">Контакти</a>
 </mat-menu>
 

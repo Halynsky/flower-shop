@@ -3,6 +3,7 @@ import { FlowerShort } from "../../../../api/models/Flower";
 import { SnackBarService } from "../../../../services/snak-bar.service";
 import { FavoritesService } from "../../../../api/services/favorites.service";
 import { getErrorMessage } from "../../../../utils/Functions";
+import { SecurityService } from "../../../../services/security.service";
 
 @Component({
   selector: 'shop-content-item',
@@ -17,7 +18,8 @@ export class ShopContentItemComponent implements OnInit {
   public inFavorites: boolean = false;
 
   constructor(private snackBar: SnackBarService,
-              private favoritesService: FavoritesService) { }
+              private favoritesService: FavoritesService,
+              public securityService: SecurityService) { }
 
   ngOnInit() {
   }

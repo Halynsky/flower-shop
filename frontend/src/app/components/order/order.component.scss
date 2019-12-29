@@ -1,0 +1,107 @@
+@import '~@angular/material/theming';
+@import "theme";
+@import 'mixins';
+
+:host {
+  justify-content: center;
+  @extend .content-thin;
+  display: grid;
+  grid-template-columns: minmax(300px, 400px) minmax(300px, 400px);
+  width: 100%;
+  padding-top: 2em;
+
+  @include response-to(sm) {
+    grid-template-columns: auto;
+    justify-content: stretch;
+  }
+
+  ::ng-deep.mat-step {
+    input, textarea {
+      max-width: 300px;
+    }
+    button {
+      margin-right: 48px;
+      margin-top: 12px;
+    }
+    form {
+      margin-top: 12px;
+    }
+  }
+
+  .final-purchase-block-wrapper {
+    padding: 0px 24px 24px;
+
+    @include response-to(sm) {
+      padding: 0px;
+    }
+
+    .final-purchase-block {
+      display: grid;
+      justify-content: center;
+
+      @include response-to(sm) {
+        grid-template-columns: 1fr;
+      }
+
+
+      button {
+        margin-top: 8px;
+        i {
+          margin-right: 8px;
+        }
+      }
+
+      .final-purchase-info-wrapper {
+        padding: 24px 36px;
+        background-color: mat-color($primary, 50);
+        max-height: 400px;
+        overflow-y: auto;
+        margin-bottom: 12px;
+        line-height: 160%;
+
+        @include response-to(sm) {
+          justify-content: center;
+          display: grid;
+        }
+
+
+        .final-purchase-items-amount {
+          color: mat-color($accent);
+        }
+
+        .final-purchase-items-price {
+          color: mat-color($accent);
+        }
+
+        .final-purchase-flower-button {
+          color: #4caf50;
+          padding: 12px;
+          display: flex;
+          border-bottom: 1px solid $grey-700;
+          .name-in-final-purchase {
+            display: flex;
+            width: 150px;
+          }
+
+          .size-in-final-purchase {
+            justify-content: center;
+            color: $grey-400;
+            display: flex;
+            width: 60px;
+          }
+
+          .price-in-final-purchase {
+            justify-content: flex-end;
+            color: mat-color($accent);
+            display: flex;
+            width: 70px;
+          }
+        }
+      }
+
+    }
+  }
+
+
+
+}

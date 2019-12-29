@@ -75,7 +75,7 @@
 
 
 .mat-snack-bar-container {
-  color: white;
+  color: white !important;
 
   button {
     span {
@@ -99,8 +99,28 @@
 }
 
 .modal-panel-class {
+  border-radius: 2px;
   @include response-from(sm) {
     max-width: initial;
+  }
+  @include response(xs) {
+    width: 100vw !important;
+  }
+}
+
+.modal-panel-no-padding {
+  border-radius: 2px;
+  mat-dialog-container {
+    padding: 0px !important;
+  }
+  @include response-from(sm) {
+    max-width: initial;
+  }
+  @include response(sm) {
+    min-width: 599px;
+  }
+  @include response(xs) {
+    width: 100vw !important;
   }
 }
 
@@ -111,3 +131,9 @@
 mat-card {
   border-radius: 2px !important;
 }
+
+//mat-card {
+//  border-radius: 0px !important;
+//  box-shadow: none !important;
+//  background-color: $grey-30 !important;
+//}

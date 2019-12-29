@@ -1,6 +1,8 @@
 import { Component } from "@angular/core";
-import { ModalWindowService } from "../../../../services/modal-window.service";
-import { BucketService } from "../../../../services/bucket.service";
+import { BucketLocalService } from "../../../../services/bucket-local.service";
+import { MatDialogRef } from "@angular/material";
+import { OrderService } from "../../../../api/services/order.service";
+import { SnackBarService } from "../../../../services/snak-bar.service";
 
 
 @Component({
@@ -11,14 +13,16 @@ import { BucketService } from "../../../../services/bucket.service";
 export class BucketDialogComponent {
 
 
-  constructor(public modalPageService: ModalWindowService, public bucketService: BucketService){
+  constructor(public bucketLocalService: BucketLocalService,
+              public dialogRef: MatDialogRef<BucketDialogComponent>,
+              public orderService: OrderService,
+              public snackBarService: SnackBarService){
+
   }
 
-//   trackElement() {
-//     this.bucket.forEach((item) => {
-//       this.bucketService.setSum(item.price, true);
-//     })
-// }
+  onBucketChange() {
+    this.bucketLocalService.updateBucket();
+  }
 
 
 }

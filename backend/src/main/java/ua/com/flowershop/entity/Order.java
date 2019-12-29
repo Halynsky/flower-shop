@@ -10,6 +10,8 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+import static ua.com.flowershop.entity.Order.Status.*;
+
 @Getter
 @Setter
 @Accessors(chain = true)
@@ -27,7 +29,7 @@ public class Order {
     private LocalDateTime closed;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, columnDefinition = "varchar(32) default 'NEW'")
-    private Status status = Status.NEW;
+    private Status status = NEW;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

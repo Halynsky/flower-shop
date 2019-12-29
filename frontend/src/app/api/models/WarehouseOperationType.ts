@@ -14,7 +14,7 @@ export namespace WarehouseOperationType {
   }
   export enum OperationType {
     GOODS_ARRIVAL = 'GOODS_ARRIVAL',
-    INTERNAL_SALE = 'INTERNAL_SALE',
+    SALE = 'SALE',
     EXTERNAL_SALE = 'EXTERNAL_SALE',
     GIFT = 'GIFT',
     DEFECT = 'DEFECT',

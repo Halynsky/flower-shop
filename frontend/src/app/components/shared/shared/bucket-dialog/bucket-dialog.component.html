@@ -1,42 +1,66 @@
-<div id="filter" (click)="modalPageService.hideModal()"></div>
-<div id="modalForm">
-  <div class="header">
-  <div class="info-head">Обрані товари</div>
-  <div class="logo-close" (click)="modalPageService.hideModal()">
-    <i class="material-icons">
-      close
-    </i>
-  </div>
-</div>
-  <div class="main">
+<div class="dialog-container">
 
-    <div class="content">
-      <div class="item" *ngFor="let item of bucketService.getBucket(); let i = index">
-        <div class="logo"><img src="{{item.image}}" alt="image"></div>
-        <div class="item-main">
-          <div class="name-size">
-            <div id="name">
-              <div>{{item.name}}</div>
-              <div id="size">{{item.size}}</div>
+  <i class="material-icons close" (click)="dialogRef.close()">close</i>
+
+  <div class="dialog-header">
+    Кошик
+  </div>
+
+  <div class="dialog-content">
+
+    <div class="bucket-table">
+
+      <div class="header">
+        <div></div>
+        <div></div>
+        <div class="price">Ціна</div>
+        <div class="amount">Кількість</div>
+        <div class="total-price">Сума</div>
+      </div>
+
+      <div class="content">
+
+        <ng-template ngFor let-bucketItem [ngForOf]="bucketLocalService.bucket" let-i="index">
+          <div class="bucket-table-row">
+            <div  class="bucket-item-image">
+              <img [src]="bucketItem.image">
             </div>
-            <div id="price">{{(item.price/100)*item.amount}} грн</div>
+            <div class="bucket-item-name">
+              <div class="flower-type-name">{{bucketItem.flowerTypeName}}</div>
+              <div class="flower-name">{{bucketItem.name}}</div>
+              <div class="flower-size-name">{{bucketItem.sizeName}}</div>
+            </div>
+            <div class="bucket-item-price">{{bucketItem.price / 100}} грн <span class="label"> за шт.</span></div>
+            <div class="bucket-item-amount">
+              <amount-controlled-input [(ngModel)]="bucketItem.amount" name="amount" minAmount="1" (ngModelChange)="onBucketChange()"></amount-controlled-input>
+            </div>
+            <div class="bucket-item-total-price"><span class="label">Сума: </span> {{bucketItem.price * bucketItem.amount / 100}} грн</div>
           </div>
-          <div class="amount-delete">
-            <div class="amount">
-              <button (click)="bucketService.updateBucketItem(item, false)">-</button>
-              <div id="counter-output"><span>{{item.amount}}</span></div>
-              <button (click)="bucketService.updateBucketItem(item, true)">+</button>
-            </div>
-            <div class="delete" (click)="bucketService.deleteItem(item ,i)">
-              <i class="fas fa-trash-alt"></i>
-            </div>
-          </div>
-        </div>
+        </ng-template>
+
+      </div>
+
+    </div>
+
+    <div class="total-price-wrapper">
+      <div class="total-price-block">
+        <div class="label">Разом:</div>
+        <div class="total-price">{{bucketLocalService.bucketInfo.totalPrice / 100}} грн</div>
       </div>
     </div>
+
+    <div class="buttons-wrapper">
+      <button mat-stroked-button color="primary" (click)="dialogRef.close()">
+        <i class="material-icons">add_shopping_cart</i>
+        <span>Продовжити купувати</span>
+      </button>
+      <button mat-flat-button color="accent" routerlink="/order">
+        <i class="material-icons">shopping_basket</i>
+        <span>Оформити замовлення</span>
+      </button>
+    </div>
+
   </div>
-  <div class="button-menu">
-    <div class="sum">До оплати: <span>{{bucketService.getSum()/100}} грн</span></div>
-    <button mat-raised-button id="buy-but">Підтвердити замовлення</button>
-  </div>
+
 </div>
+

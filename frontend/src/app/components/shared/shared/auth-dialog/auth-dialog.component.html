@@ -108,7 +108,7 @@
                   #name="ngModel"
                   name="name"
                   [(ngModel)]="userRegistration.name"
-                  placeholder="Імя"
+                  placeholder="Ім'я та прізвище"
                   required/>
 
               <div class="error-wrapper" *ngIf="name.dirty || name.touched || regForm.submitted">
@@ -198,7 +198,7 @@
     </div>
     <div class="message-secondary">
       Якщо ви не отримали лист з підтвердженням на протязі 10 хвили - зверніться в службу підтримки сайту за адресою <a class="support-request"
-                                                                                                                        href="mailto:vlad@htmlbook.ru">meryflowersua@gmal.com</a>
+                                                                                                                        href="mailto:meryflowersua@gmal.com">meryflowersua@gmal.com</a>
     </div>
 
     <button type="submit" (click)="dialogRef.close()" color="primary">ОК</button>
@@ -257,7 +257,7 @@
     </div>
     <div class="message-secondary">
       Якщо ви не отримали лист з підтвердженням на протязі 10 хвили - зверніться в службу підтримки сайту за адресою <a class="support-request"
-                                                                                                                        href="mailto:vlad@htmlbook.ru">meryflowersua@gmal.com</a>
+                                                                                                                        href="mailto:meryflowersua@gmal.com">meryflowersua@gmal.com</a>
     </div>
 
     <button type="submit" mat-raised-button (click)="dialogRef.close()" color="primary">ОК</button>

@@ -1,14 +1,14 @@
 import { Component } from "@angular/core";
 import { MatBottomSheetRef } from "@angular/material";
-import { BucketService } from "../../../../services/bucket.service";
-import { ModalWindowService } from "../../../../services/modal-window.service";
+import { BucketLocalService } from "../../../../services/bucket-local.service";
 
 @Component({
   selector: 'bottom-sheet-overview',
   templateUrl: './bottom-sheet.component.html',
 })
 export class BottomSheetOverview {
-  constructor(private bottomSheetRef: MatBottomSheetRef<BottomSheetOverview>, private bucketService: BucketService, public modalWindowService: ModalWindowService) {
+  constructor(private bottomSheetRef: MatBottomSheetRef<BottomSheetOverview>,
+              private bucketLocalService: BucketLocalService) {
   }
 
   openLink(event: MouseEvent): void {

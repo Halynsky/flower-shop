@@ -2,166 +2,251 @@
 @import "mixins.scss";
 
 :host {
-  #filter {
-    background-color: rgba(0, 0, 0, 0.7);
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 100;
-  }
-  #modalForm {
-    background-color: white;
-    position: fixed;
-    top: 100px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 150;
-    width: 500px;
-    height: 550px;
-    margin: 0 auto;
+
+  .dialog-container {
+    position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    .header {
+
+    .dialog-header {
+      height: 48px;
+      background-color: $grey-50;
       display: flex;
-      height: 30px;
-      background-color: $grey-100;
       align-items: center;
-      .info-head {
-        display: flex;
-        margin-left: 190px;
-        color: black;
-      }
-      .logo-close {
-        margin-left: auto;
-        height: 30px;
-        width: 30px;
-        i {
-          font-size: 30px;
-        }
-        i:hover {
-          background-color: red;
-          color: white;
-          cursor: pointer;
-        }
-      }
+      padding-left: 24px;
+      font-size: 24px;
+      font-weight: 500;
+      color: $black-200;
 
     }
-    .main {
-      overflow: auto;
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      padding: 12px;
 
-      .content {
+    i.close {
+      cursor: pointer;
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      color: $grey-400;
+      font-size: 24px;
+    }
 
+    .dialog-content {
+      padding: 24px;
+
+      .bucket-table {
+        display: grid;
+        text-align: right;
+        font-size: 18px;
+
+        .header {
+          display: grid;
+          grid-template-columns: 100px 27fr 18fr 35fr 20fr;
+          font-weight: 500;
+          color: $grey-800;
+          border-bottom: 1px solid $grey-200;
+          padding-bottom: 8px;
+
+          @include response-to(xs) {
+            display: none;
+          }
+
+          .amount {
+            padding-right: 28px;
+          }
+
+        }
+
+        .content {
+          display: grid;
+          grid-template-columns: 1fr;
+          color: $black-200;
+
+          .bucket-table-row {
+            display: grid;
+            grid-template-columns: 100px 27fr 18fr 35fr 20fr;
+            align-items: center;
+            border-bottom: 1px solid $grey-200;
+            color: $grey-900;
+            // height: 100px;
+            padding: 10px 0;
+            grid-template-areas: "bucket-item-image bucket-item-name bucket-item-price bucket-item-amount bucket-item-total-price";
+
+            @include response-to(xs) {
+              grid-template-columns: 2fr;
+              grid-template-areas: "bucket-item-image bucket-item-name" "bucket-item-image bucket-item-price" "bucket-item-image bucket-item-amount" "bucket-item-image bucket-item-total-price";
+
+            }
+
+            @include response-to(sm) {
+              font-size: 16px;
+            }
+
+            .bucket-item-image {
+              grid-area: bucket-item-image;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+
+              @include response-to(xs) {
+                justify-content: initial;
+                align-items: initial;
+              }
+
+              img {
+                height: 80px;
+                width: 80px;
+                background-position: center;
+                background-size: contain;
+                background-color: mat-color($primary, 100);
+
+                @include response-to(xs) {
+                  height: 150px;
+                  width: 150px;
+                }
+
+              }
+            }
+
+            .bucket-item-name {
+              grid-area: bucket-item-name;
+              padding: 0 0 0 12px;
+
+              @include response-to(xs) {
+                padding-bottom: 12px;
+              }
+
+              .flower-type-name {
+                color: $grey-600
+              }
+
+              .flower-size-name {
+                color: $grey-600
+              }
+
+              .flower-name {
+                color: mat-color($primary);
+              }
+
+            }
+
+            .bucket-item-price {
+              grid-area: bucket-item-price;
+
+              .label {
+                display: none;
+                @include response-to(xs) {
+                  display: inline-block;
+                }
+              }
+
+              @include response-to(xs) {
+                padding-bottom: 4px;
+              }
+
+            }
+
+            .bucket-item-amount {
+              grid-area: bucket-item-amount;
+
+              @include response-to(xs) {
+                padding-bottom: 4px;
+              }
+
+              amount-controlled-input {
+                justify-content: flex-end;
+              }
+            }
+
+            .bucket-item-total-price {
+              grid-area: bucket-item-total-price;
+              color: $black-500;
+              font-weight: 500;
+
+              @include response-to(xs) {
+                padding-top: 8px;
+              }
+
+              .label {
+                display: none;
+                font-weight: 400;
+                font-size: 14px;
+                color: $grey-600;
+                @include response-to(xs) {
+                  display: inline-block;
+                }
+              }
+            }
+
+          }
+
+        }
+
+      }
+
+      .total-price-wrapper {
         display: flex;
-        flex-grow: 1;
-        flex-direction: column;
+        flex-direction: row;
+        font-size: 24px;
+        justify-content: flex-end;
 
-        .item {
-          @include mat-elevation(2);
-          height: 50px;
-          width: 475px;//410
+        @include response-to(xs) {
+          justify-content: center;
+        }
+
+        .total-price-block {
           display: flex;
           flex-direction: row;
-          margin-bottom: 10px;
-          .logo {
-            img {
-              width: 50px;
-              height: 50px;
-            }
-          }
-          .item-main{
-            display: flex;
-            flex-direction: row;
-            .name-size {
-              color: #4caf50;
+          background-color: mat-color($primary, 50);
+          padding: 8px 16px;
+          justify-content: space-between;
 
-              font-size: 14px;
-              margin-left: 10px;
-              height: 50px;
-              width: 220px;
-              display: flex;
-              align-items: center;
-              justify-content: space-between;
-              #name {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                width: 150px;
-                #size {
-                  margin-left: 5px;
-                }
-              }
-              #price {
-                margin-left: 5px;
-              }
-            }
-            .amount-delete {
-              width: 185px;
-              height: 50px;
-              display: flex;
-              align-items: center;
-              justify-content: space-between;
-              .amount {
-                color: #4caf50;
-                display: flex;
-                align-items: center;
-                margin-left: 30px;
-                width: 100px;
-                justify-content: space-between;
-                button {
-                  color: white;
-                  height: 30px;
-                  width: 30px;
-                  border-radius: 2px;
-                  border: none;
-                  background-color: mat-color($accent);
-                  cursor: pointer;
-                }
-              }
-              .delete {
-                font-size: 25px;
-              }
-              .delete:hover {
-                color: red;
-                cursor: pointer;
-              }
+          .label {
+            margin-right: 12px;
+            color: $grey-800
+          }
+          .total-price {
+            font-weight: 500;
+            color: $black-500;
+          }
+        }
+
+
+      }
+
+      .buttons-wrapper {
+        display: flex;
+        margin-top: 24px;
+        width: 100%;
+        justify-content: space-between;
+
+        @include response-to(sm) {
+          flex-direction: column-reverse;
+          align-items: center;
+        }
+
+        button {
+          font-size: 22px;
+          height: 42px;
+          font-weight: 400;
+
+          @include response-to(sm) {
+            max-width: 300px;
+            &:last-of-type {
+              margin-bottom: 24px;
             }
           }
 
+          i {
+           margin-right: 8px;
+          }
+
         }
+
       }
 
     }
-    .button-menu {
-      min-height: 60px;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      #buy-but {
-        background-color: mat-color($accent);
-      }
-      .sum {
-        color: $grey-500;
-        span {
-          color: mat-color($accent);
-          font-size: 20px;
-        }
-      }
-    }
-  }
 
-  button {
-    color: white;
-    background-color: $grey-400;
-    width: 300px;
-    font-size: 20px;
+
+
   }
 
 }
