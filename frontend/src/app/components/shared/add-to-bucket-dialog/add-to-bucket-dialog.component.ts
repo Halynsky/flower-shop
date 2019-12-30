@@ -1,40 +1,34 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
-import { FlowerService } from "../../../api/services/flower.service";
+import { Component, OnInit } from "@angular/core";
+import { MatDialog, MatDialogRef } from "@angular/material";
 import { FlowerFull } from "../../../api/models/Flower";
+import { BucketItem } from "../../../models/Bucket";
+import { FlowerService } from "../../../api/services/flower.service";
 import { BucketLocalService } from "../../../services/bucket-local.service";
 import { SnackBarService } from "../../../services/snak-bar.service";
 import { getErrorMessage } from "../../../utils/Functions";
-import { BucketItem } from "../../../models/Bucket";
-import { BucketDialogComponent } from "../../shared/bucket-dialog/bucket-dialog.component";
-import { MatDialog } from "@angular/material";
-
+import { BucketDialogComponent } from "../bucket-dialog/bucket-dialog.component";
 
 @Component({
-  selector: 'shop-item-page',
-  templateUrl: './shop-item-page.component.html',
-  styleUrls: ['./shop-item-page.component.scss']
+  selector: 'add-to-bucket-dialog',
+  templateUrl: './add-to-bucket-dialog.component.html',
+  styleUrls: ['./add-to-bucket-dialog.component.scss']
 })
-export class ShopItemPageComponent implements OnInit {
+export class AddToBucketDialogComponent implements OnInit {
 
   id: number;
   flower: FlowerFull;
   bucketItems: BucketItem[] = [];
 
-  constructor(private route: ActivatedRoute,
+  constructor(public dialogRef: MatDialogRef<AddToBucketDialogComponent>,
+              public dialog: MatDialog,
               private flowerService: FlowerService,
               private bucketLocalService: BucketLocalService,
-              private snackBarService: SnackBarService,
-              public dialog: MatDialog) {
-    this.route.params.subscribe(params => {
-      this.id = params['id'];
-      this.getFlowerById();
-    });
+              private snackBarService: SnackBarService) {
   }
 
   ngOnInit() {
+    this.getFlowerById();
   }
-
 
   fillBucketItems(flower: FlowerFull) {
     for (let flowerSize of flower.flowerSizes) {
@@ -65,9 +59,8 @@ export class ShopItemPageComponent implements OnInit {
       this.bucketLocalService.addToBucket(this.bucketItems.filter(item => item.amount > 0));
       this.bucketItems = [];
       this.fillBucketItems(this.flower);
-
+      this.dialogRef.close();
       this.dialog.open(BucketDialogComponent, {width: "80%", panelClass: "modal-panel-no-padding", maxWidth: 800});
-
     } else {
       this.snackBarService.showWarning("Вкажіть, будь ласка, кількість товару яку ви хочете придбати");
     }
@@ -77,5 +70,7 @@ export class ShopItemPageComponent implements OnInit {
   countSelectedAmount() {
     return this.bucketItems.reduce(((accumulator, item) => accumulator + item.amount), 0)
   }
+
+
 
 }

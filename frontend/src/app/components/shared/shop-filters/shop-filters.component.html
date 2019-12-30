@@ -2,8 +2,10 @@
 
   <div class="filter-title">
     <span>Квіти</span>
-    <mat-icon *ngIf="filters.flowerTypeFilters.length > 0" title="Очистити фільтр"
-              (click)="clearFlowerTypeFilters()">close</mat-icon>
+    <div class="clear-filter">
+      <mat-icon *ngIf="filters.flowerTypeFilters.length > 0" title="Очистити фільтр"
+                (click)="clearFlowerTypeFilters()">close</mat-icon>
+    </div>
   </div>
 
   <div class="filter-content">
@@ -24,8 +26,10 @@
 
   <div class="filter-title">
     <span>Колір</span>
-    <mat-icon *ngIf="filters.colorFilters.length > 0" title="Очистити фільтр"
-              (click)="clearColorFilters()">close</mat-icon>
+    <div class="clear-filter">
+      <mat-icon *ngIf="filters.colorFilters.length > 0" title="Очистити фільтр"
+                (click)="clearColorFilters()">close</mat-icon>
+    </div>
   </div>
 
   <div class="filter-content">
@@ -42,8 +46,10 @@
 
   <div class="filter-title">
     <span>Розмір</span>
-    <mat-icon *ngIf="filters.sizeFilters.length > 0" title="Очистити фільтр"
-              (click)="clearSizeFilters()">close</mat-icon>
+    <div class="clear-filter">
+      <mat-icon *ngIf="filters.sizeFilters.length > 0" title="Очистити фільтр"
+                (click)="clearSizeFilters()">close</mat-icon>
+    </div>
   </div>
 
   <div class="filter-content">

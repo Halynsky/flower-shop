@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Article } from "../../../../api/models/Article";
-import { SnackBarService } from "../../../../services/snak-bar.service";
+import { Article } from "../../../api/models/Article";
+import { SnackBarService } from "../../../services/snak-bar.service";
 
 @Component({
   selector: 'article-card',
@@ -11,7 +11,7 @@ export class ArticleCardComponent implements OnInit {
 
   @Input()
   article: Article;
-  
+
   constructor(private snackBar: SnackBarService) {
   }
 

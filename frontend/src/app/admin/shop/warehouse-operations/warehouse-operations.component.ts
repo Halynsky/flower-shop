@@ -20,7 +20,7 @@ import { RestPage } from "../../../api/models/RestPage";
 })
 export class WarehouseOperationsComponent implements OnInit {
 
-  @ViewChild('dt') private table: Table;
+  @ViewChild('dt', { static: false }) private table: Table;
 
   ItemSaveMode = ItemSaveMode;
   WarehouseOperationType = WarehouseOperationType;

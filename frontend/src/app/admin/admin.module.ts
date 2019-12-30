@@ -2,16 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdminLayoutComponent } from './admin-layout/admin-layout.component';
 import { routing } from "./admin.routing";
-import { GrowlModule } from "primeng/growl";
 import { DialogModule } from "primeng/dialog";
-import {
-  ButtonModule, CalendarModule, CardModule, CheckboxModule, ColorPickerModule, ConfirmationService,
-  ConfirmDialogModule, ContextMenuModule, DropdownModule, InputSwitchModule, InputTextModule, ListboxModule,
-  MenuModule, MessageModule,
-  MultiSelectModule,
-  PanelMenuModule, RatingModule, SliderModule,
-  TieredMenuModule, ToggleButtonModule
-} from "primeng/primeng";
 import { AdminSidebarComponent } from './admin-layout/admin-sidebar/admin-sidebar.component';
 import { UsersComponent } from './users/users.component';
 import { AdminHeaderComponent } from './admin-layout/admin-header/admin-header.component';
@@ -32,11 +23,32 @@ import { FlowerTypeItemComponent } from "./types/flower-types/flower-type-item/f
 import { FlowerItemComponent } from "./types/flowers/flower-item/flower-item.component";
 import { PipesModule } from "../pipes/pipes.module";
 import { UserItemComponent } from "./users/user-item/user-item.component";
-import { EqualValidator } from "../validators/equal-validator.directive";
 import { WarehouseOperationItemComponent } from "./shop/warehouse-operations/warehouse-operation-item/warehouse-operation-item.component";
 import { ValidatorModule } from "../validators/validator.module";
 import { ImagePreviewComponent } from "./shared/image-preview/image-preview.component";
 import { WarehouseComponent } from "./shop/warehouse/warehouse.component";
+import {
+  ButtonModule,
+  CalendarModule,
+  CardModule,
+  CheckboxModule,
+  ColorPickerModule,
+  ConfirmationService,
+  ConfirmDialogModule,
+  ContextMenuModule,
+  DropdownModule,
+  InputSwitchModule,
+  InputTextModule,
+  ListboxModule,
+  MenuModule,
+  MessageModule,
+  MultiSelectModule,
+  PanelMenuModule,
+  RatingModule,
+  SliderModule,
+  TieredMenuModule,
+  ToggleButtonModule
+} from "primeng";
 
 @NgModule({
   declarations: [
@@ -69,7 +81,6 @@ import { WarehouseComponent } from "./shop/warehouse/warehouse.component";
     FormsModule,
     ReactiveFormsModule,
     NgArrayPipesModule,
-    GrowlModule,
     DialogModule,
     ConfirmDialogModule,
     MenuModule,

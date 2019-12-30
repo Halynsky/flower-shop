@@ -1,9 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FlowerShort } from "../../../../api/models/Flower";
-import { SnackBarService } from "../../../../services/snak-bar.service";
-import { FavoritesService } from "../../../../api/services/favorites.service";
-import { getErrorMessage } from "../../../../utils/Functions";
-import { SecurityService } from "../../../../services/security.service";
+import { FlowerShort } from "../../../api/models/Flower";
+import { SnackBarService } from "../../../services/snak-bar.service";
+import { FavoritesService } from "../../../api/services/favorites.service";
+import { getErrorMessage } from "../../../utils/Functions";
+import { SecurityService } from "../../../services/security.service";
+import { MatDialog, MatDialogRef } from "@angular/material";
+import { AddToBucketDialogComponent } from "../add-to-bucket-dialog/add-to-bucket-dialog.component";
 
 @Component({
   selector: 'shop-content-item',
@@ -17,8 +19,11 @@ export class ShopContentItemComponent implements OnInit {
   @Input()
   public inFavorites: boolean = false;
 
+  addToBucketDialogRef: MatDialogRef<AddToBucketDialogComponent>;
+
   constructor(private snackBar: SnackBarService,
               private favoritesService: FavoritesService,
+              public dialog: MatDialog,
               public securityService: SecurityService) { }
 
   ngOnInit() {
@@ -30,7 +35,6 @@ export class ShopContentItemComponent implements OnInit {
     this.favoritesService.addFavoriteFlower(this.flower.id).subscribe(
       favoriteFlowersIds => {
         this.favoritesService.favoriteFlowerIds = favoriteFlowersIds;
-        // this.snackBar.showSuccess(`${this.flower.flowerType.nameSingle} ${this.flower.name} успішно додано до вашого списку бажаннь`)
       },
       error => this.snackBar.showError(getErrorMessage(error)))
   }
@@ -45,9 +49,10 @@ export class ShopContentItemComponent implements OnInit {
       error => this.snackBar.showError(getErrorMessage(error)))
   }
 
-  addToCard(event) {
+  openAddToCardModal(event) {
     event.stopPropagation();
-    this.snackBar.methodNotImplemented();
+    this.addToBucketDialogRef = this.dialog.open(AddToBucketDialogComponent, {maxWidth: 630, minWidth: 320, minHeight: 320});
+    this.addToBucketDialogRef.componentInstance.id = this.flower.id;
   }
 
 }

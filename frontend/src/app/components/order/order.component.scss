@@ -28,6 +28,25 @@
     }
   }
 
+  .delivery-type-label {
+    color: $black-100;
+    font-size: 18px;
+    margin-bottom: 2px;
+  }
+
+  mat-radio-group {
+    margin-bottom: 24px;
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+
+    mat-radio-button {
+      padding-top: 4px;
+      padding-bottom: 4px;
+    }
+
+  }
+
   .final-purchase-block-wrapper {
     padding: 0px 24px 24px;
 

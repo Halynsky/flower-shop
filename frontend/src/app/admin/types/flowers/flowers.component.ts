@@ -34,7 +34,7 @@ import { FlowerTypeService } from "../../../api/services/flower-type.service";
 })
 export class FlowersComponent implements OnInit {
 
-  @ViewChild('dt') private table: Table;
+  @ViewChild('dt', { static: false }) private table: Table;
 
   ItemSaveMode = ItemSaveMode;
 

@@ -1,12 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ItemSaveMode } from "../../../models/ItemSaveMode";
-import { ConfirmationService } from "primeng/api";
 import { SnackBarService } from "../../../services/snak-bar.service";
-import { ActivatedRoute, Router } from "@angular/router";
-import { TranslationService } from "../../../utils/translation.service";
-import { WarehouseOperationType } from "../../../api/models/WarehouseOperationType";
 import { Table } from "primeng/table";
-import { EnumToObjectsPipe } from "../../../pipes/enum-to-objects";
 import { getErrorMessage, ngPrimeFiltersToParams } from "../../../utils/Functions";
 import { Pagination } from "../../../api/models/Pagination";
 import { RestPage } from "../../../api/models/RestPage";
@@ -21,7 +16,7 @@ import { FlowerTypeService } from "../../../api/services/flower-type.service";
 })
 export class WarehouseComponent implements OnInit {
 
-  @ViewChild('dt') private table: Table;
+  @ViewChild('dt', { static: false }) private table: Table;
 
   ItemSaveMode = ItemSaveMode;
 

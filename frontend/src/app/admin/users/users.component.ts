@@ -17,7 +17,7 @@ import { Pagination } from "../../api/models/Pagination";
 })
 export class UsersComponent implements OnInit {
 
-  @ViewChild('dt') private table: Table;
+  @ViewChild('dt', { static: false }) private table: Table;
 
   ItemSaveMode = ItemSaveMode;
 

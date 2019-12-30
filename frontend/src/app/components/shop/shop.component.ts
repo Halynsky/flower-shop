@@ -6,7 +6,7 @@ import { ShopFilter } from "../../api/models/ShopFilter";
 import { Pagination } from "../../api/models/Pagination";
 import { RestPage } from "../../api/models/RestPage";
 import { MatDialog, MatDialogRef } from "@angular/material";
-import { ShopFilterDialogComponent } from "../shared/shared/shop-filter-dialog/shop-filter-dialog.component";
+import { ShopFilterDialogComponent } from "../shared/shop-filter-dialog/shop-filter-dialog.component";
 
 @Component({
   selector: 'shop',

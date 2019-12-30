@@ -15,6 +15,8 @@ import {
   MatInputModule,
   MatListModule,
   MatMenuModule,
+  MatProgressSpinnerModule,
+  MatRadioModule,
   MatSelectModule,
   MatSnackBarModule,
   MatStepperModule,
@@ -24,16 +26,17 @@ import {
 import { ArticleCardComponent } from './article-card/article-card.component';
 import { RouterModule } from "@angular/router";
 import { BottomSheetOverview } from "./bottom-sheet/bottom-sheet.component";
-import { PipesModule } from "../../../pipes/pipes.module";
+import { PipesModule } from "../../pipes/pipes.module";
 import { MessageModule } from "primeng/message";
 import { AuthDialogComponent } from "./auth-dialog/auth-dialog.component";
 import { BucketDialogComponent } from "./bucket-dialog/bucket-dialog.component";
-import { ValidatorModule } from "../../../validators/validator.module";
+import { ValidatorModule } from "../../validators/validator.module";
 import { ShopContentItemComponent } from "./shop-content-item/shop-content-item.component";
 import { ShopFiltersComponent } from "./shop-filters/shop-filters.component";
 import { ShopFilterDialogComponent } from "./shop-filter-dialog/shop-filter-dialog.component";
-import { DigitOnlyDirective } from "../../../directives/ditgits-only.directive";
+import { DigitOnlyDirective } from "../../directives/ditgits-only.directive";
 import { AmountControlledInputComponent } from './amount-controled-input/amount-controlled-input.component';
+import { AddToBucketDialogComponent } from "./add-to-bucket-dialog/add-to-bucket-dialog.component";
 
 const PROVIDERS = [
   {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 4000, panelClass: "snack-custom-class"}},
@@ -46,6 +49,7 @@ const PROVIDERS = [
     BottomSheetOverview,
     AuthDialogComponent,
     BucketDialogComponent,
+    AddToBucketDialogComponent,
     ShopContentItemComponent,
     ShopFiltersComponent,
     ShopFilterDialogComponent,
@@ -71,6 +75,8 @@ const PROVIDERS = [
     MatBottomSheetModule,
     MatStepperModule,
     MatTreeModule,
+    MatProgressSpinnerModule,
+    MatRadioModule,
     PipesModule,
     MatDialogModule,
     MessageModule,
@@ -94,13 +100,14 @@ const PROVIDERS = [
     MatTooltipModule,
     MatStepperModule,
     MatTreeModule,
+    MatProgressSpinnerModule,
+    MatRadioModule,
     PipesModule,
     ValidatorModule,
     // Developed Components
     ArticleCardComponent,
     ShopContentItemComponent,
     ShopFiltersComponent,
-    ShopFilterDialogComponent,
     AmountControlledInputComponent,
     // Developed Directives
     DigitOnlyDirective

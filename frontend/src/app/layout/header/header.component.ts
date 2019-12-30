@@ -6,8 +6,8 @@ import { AuthService } from "../../api/services/auth.service";
 import { SnackBarService } from "../../services/snak-bar.service";
 import { Router } from "@angular/router";
 import { Role } from "../../models/Role";
-import { AuthDialogComponent } from "../../components/shared/shared/auth-dialog/auth-dialog.component";
-import { BucketDialogComponent } from "../../components/shared/shared/bucket-dialog/bucket-dialog.component";
+import { AuthDialogComponent } from "../../components/shared/auth-dialog/auth-dialog.component";
+import { BucketDialogComponent } from "../../components/shared/bucket-dialog/bucket-dialog.component";
 
 @Component({
   selector: 'layout-header',

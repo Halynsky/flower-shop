@@ -1,8 +1,8 @@
 import { Component } from "@angular/core";
-import { BucketLocalService } from "../../../../services/bucket-local.service";
+import { BucketLocalService } from "../../../services/bucket-local.service";
 import { MatDialogRef } from "@angular/material";
-import { OrderService } from "../../../../api/services/order.service";
-import { SnackBarService } from "../../../../services/snak-bar.service";
+import { OrderService } from "../../../api/services/order.service";
+import { SnackBarService } from "../../../services/snak-bar.service";
 
 
 @Component({

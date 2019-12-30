@@ -20,13 +20,22 @@
     align-items: center;
     //justify-content: space-between;
 
-    mat-icon {
-      color: $grey-600;
-      cursor: pointer;
-      font-size: 19px;
-      height: initial;
-      width: initial;
-      margin-left: auto;
+    .clear-filter {
+      display: flex;
+      color: $grey-400;
+      margin-left: 8px;
+
+      @include response-from(md) {
+        margin-left: auto;
+      }
+
+      mat-icon {
+        cursor: pointer;
+        font-size: 19px;
+        height: initial;
+        width: initial;
+      }
+
     }
 
   }

@@ -1,14 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter, Inject,
-  Input, OnChanges,
-  OnDestroy,
-  Output,
-  Renderer,
-  Renderer2,
-  ViewChild
-} from '@angular/core';
+import { Component, ElementRef, EventEmitter, Inject, Input, Output, Renderer2, ViewChild } from '@angular/core';
 import { ConfirmationService } from "primeng/api";
 import { SnackBarService } from "../../../services/snak-bar.service";
 
@@ -34,7 +24,7 @@ export class ImagePreviewComponent {
   @Input() confirmTitle: string = 'Delete image';
   @Output() fileChange: EventEmitter<File> = new EventEmitter<File>();
   @Output() delete: EventEmitter<any> = new EventEmitter<any>();
-  @ViewChild('file') fileInput: ElementRef;
+  @ViewChild('file', { static: false }) fileInput: ElementRef;
 
   index = index++;
   hash: number;

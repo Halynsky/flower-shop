@@ -1,16 +1,15 @@
 import { Component } from "@angular/core";
-import { AuthService } from "../../../../api/services/auth.service";
-import { SecurityService } from "../../../../services/security.service";
-import { User, UserRegistration } from "../../../../api/models/User";
-import { SnackBarService } from "../../../../services/snak-bar.service";
+import { AuthService } from "../../../api/services/auth.service";
+import { SecurityService } from "../../../services/security.service";
+import { UserRegistration } from "../../../api/models/User";
+import { SnackBarService } from "../../../services/snak-bar.service";
 import { MatDialogRef } from "@angular/material";
-import { getErrorMessage } from "../../../../utils/Functions";
-import { Credentials } from "../../../../api/models/Credentials";
-import { UserService } from "../../../../api/services/user.service";
+import { getErrorMessage } from "../../../utils/Functions";
+import { Credentials } from "../../../api/models/Credentials";
+import { UserService } from "../../../api/services/user.service";
 import { finalize } from "rxjs/operators";
-import { FacebookLoginProvider } from "angularx-social-login";
-import { AuthService as SocialAuthService } from 'angularx-social-login'
-import { SocialService } from "../../../../api/services/social.service";
+import { AuthService as SocialAuthService, FacebookLoginProvider } from "angularx-social-login";
+import { SocialService } from "../../../api/services/social.service";
 
 @Component({
   selector: 'auth-dialog',

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { AuthService } from "../../../../api/services/auth.service";
+import { AuthService } from "../../../api/services/auth.service";
 import { MatDialogRef } from "@angular/material";
-import { ShopFilter } from "../../../../api/models/ShopFilter";
+import { ShopFilter } from "../../../api/models/ShopFilter";
 
 @Component({
   selector: 'shop-filter-dialog',

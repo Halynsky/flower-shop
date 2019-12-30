@@ -1,0 +1,43 @@
+<div class="dialog-container">
+
+  <i class="material-icons close" (click)="dialogRef.close()">close</i>
+
+  <div class="wrapper" *ngIf="flower">
+
+    <div class="title">
+      <span class="flower-type-name">{{flower.flowerType.nameSingle}} </span>
+      <span class="flower-name">{{flower.name}}</span>
+    </div>
+    <div class="content">
+
+      <div class="image" [ngStyle]="{'background-image':'url(' + flower.image + ')'}"></div>
+
+      <div class="add-to-card-block">
+        <div class="header">
+          <div class="size-title">Розмір</div>
+          <div class="amount-title">Кількість</div>
+        </div>
+        <ng-template ngFor let-flowerSize [ngForOf]="flower.flowerSizes" let-i="index">
+          <div class="add-flower-size">
+            <div class="flower-size-name">{{flowerSize.size.name}}</div>
+            <amount-controlled-input [(ngModel)]="bucketItems[i].amount" name="amount"></amount-controlled-input>
+          </div>
+        </ng-template>
+        <button mat-flat-button color="accent" class="add-to-card-button" (click)="addToBucket()">
+          <i class="material-icons">add_shopping_cart</i>
+          <span>Купити</span>
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div *ngIf="!flower" class="spinner-wrapper">
+    <mat-spinner style="margin:0 auto" diameter="30" mode="indeterminate"></mat-spinner>
+  </div>
+
+</div>
+
+
+

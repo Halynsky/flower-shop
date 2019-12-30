@@ -7,21 +7,22 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { routing } from "./app.routing";
 import { LayoutComponent } from "./layout/layout.component";
 import { LandingModule } from "./components/landing/landing.module";
-import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogConfig, MatDialogModule, MatIconModule, MatIconRegistry } from '@angular/material';
+import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogConfig, MatDialogModule, MatIconModule, MatIconRegistry, MatProgressSpinnerModule } from '@angular/material';
 import { LayoutModule } from "./layout/layout.module";
 import { DatePipe, registerLocaleData } from '@angular/common';
 import localeRuUa from '@angular/common/locales/uk';
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { RouterModule } from "@angular/router";
-import { SharedModule } from "./components/shared/shared/shared.module";
+import { SharedModule } from "./components/shared/shared.module";
 import { MainInterceptor } from "./inteceptors/main.interceptor";
-import { AuthDialogComponent } from "./components/shared/shared/auth-dialog/auth-dialog.component";
-import { BucketDialogComponent } from "./components/shared/shared/bucket-dialog/bucket-dialog.component";
+import { AuthDialogComponent } from "./components/shared/auth-dialog/auth-dialog.component";
+import { BucketDialogComponent } from "./components/shared/bucket-dialog/bucket-dialog.component";
 import { AuthServiceConfig, FacebookLoginProvider, SocialLoginModule } from "angularx-social-login";
 import { ValidatorModule } from "./validators/validator.module";
 import { UserCabinetModule } from "./components/user-cabinet/user-cabinet.module";
-import { ShopFilterDialogComponent } from "./components/shared/shared/shop-filter-dialog/shop-filter-dialog.component";
+import { ShopFilterDialogComponent } from "./components/shared/shop-filter-dialog/shop-filter-dialog.component";
 import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
+import { AddToBucketDialogComponent } from "./components/shared/add-to-bucket-dialog/add-to-bucket-dialog.component";
 
 registerLocaleData(localeRuUa);
 
@@ -45,7 +46,8 @@ export function getAuthServiceConfigs() {
   entryComponents: [
     AuthDialogComponent,
     BucketDialogComponent,
-    ShopFilterDialogComponent
+    ShopFilterDialogComponent,
+    AddToBucketDialogComponent
   ],
   imports: [
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
@@ -56,6 +58,7 @@ export function getAuthServiceConfigs() {
     HttpClientModule,
     MatIconModule,
     MatDialogModule,
+    MatProgressSpinnerModule,
     // Developed modules
     LayoutModule,
     LandingModule,

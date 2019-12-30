@@ -13,6 +13,8 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 public class OrderShippingModel {
     private String city;
+    private String house;
+    private String apartment;
     private String novaPoshtaDepartment;
     private String comment;
 }

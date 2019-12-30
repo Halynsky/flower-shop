@@ -6,13 +6,9 @@ import { UserSidebarComponent } from "./user-cabinet-sidebar/user-sidebar.compon
 import { FavouriteArticlesComponent } from "./favourite-articles/favourite-articles.component";
 import { PurchaseHistoryComponent } from "./purchase-history/purchase-history.component";
 import { RouterModule } from "@angular/router";
-import { InputTextModule } from "primeng/primeng";
-import { MatButtonModule, MatCardModule } from "@angular/material";
-import { MatInputModule } from "@angular/material";
-import { SharedModule } from "../shared/shared/shared.module";
-import { ValidatorModule } from "../../validators/validator.module";
+import { MatButtonModule, MatCardModule, MatInputModule } from "@angular/material";
+import { SharedModule } from "../shared/shared.module";
 import { NgArrayPipesModule } from "angular-pipes";
-import { ShopContentItemComponent } from "../shared/shared/shop-content-item/shop-content-item.component";
 
 
 @NgModule({
@@ -27,7 +23,6 @@ import { ShopContentItemComponent } from "../shared/shared/shop-content-item/sho
   imports: [
     RouterModule,
     SharedModule,
-    InputTextModule,
     MatButtonModule,
     MatInputModule,
     MatCardModule,

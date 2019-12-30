@@ -50,9 +50,20 @@
       </div>
     </form>
   </mat-step>
-  <mat-step [stepControl]="shippingFormGroup">
-    <form [formGroup]="shippingFormGroup">
+  <mat-step [stepControl]="deliveryFormGroup">
+    <form [formGroup]="deliveryFormGroup">
       <ng-template matStepLabel>Доставка</ng-template>
+
+      <label class="delivery-type-label">Оберіть спосіб доставки </label>
+      <mat-radio-group
+        color="primary"
+        aria-labelledby="delivery-type"
+        class="delivery-type-radio-group"
+        formControlName="deliveryType">
+        <mat-radio-button class="delivery-type-radio-button" *ngFor="let deliveryTypeOption of deliveryTypeOptions" [value]="deliveryTypeOption.key">
+          {{deliveryTypeOption.label}}
+        </mat-radio-button>
+      </mat-radio-group>
 
       <div class="input-group">
         <label>Місто</label>
@@ -61,8 +72,8 @@
           formControlName="city"
           placeholder="Місто"
           required>
-        <div class="error-wrapper" *ngIf="shippingFormGroup.get('city').dirty || shippingFormGroup.get('city').touched">
-          <div class="error-message" *ngIf="shippingFormGroup.get('city').errors?.required">Повинно бути вказано</div>
+        <div class="error-wrapper" *ngIf="deliveryFormGroup.get('city').dirty || deliveryFormGroup.get('city').touched">
+          <div class="error-message" *ngIf="deliveryFormGroup.get('city').errors?.required">Повинно бути вказано</div>
         </div>
       </div>
 
@@ -73,8 +84,8 @@
           formControlName="novaPoshtaDepartment"
           placeholder="Відділення Нової пошти"
           required>
-        <div class="error-wrapper" *ngIf="shippingFormGroup.get('novaPoshtaDepartment').dirty || shippingFormGroup.get('novaPoshtaDepartment').touched">
-          <div class="error-message" *ngIf="shippingFormGroup.get('novaPoshtaDepartment').errors?.required">Повинно бути вказано</div>
+        <div class="error-wrapper" *ngIf="deliveryFormGroup.get('novaPoshtaDepartment').dirty || deliveryFormGroup.get('novaPoshtaDepartment').touched">
+          <div class="error-message" *ngIf="deliveryFormGroup.get('novaPoshtaDepartment').errors?.required">Повинно бути вказано</div>
         </div>
       </div>
 
@@ -103,7 +114,7 @@
       <div><span class="final-purchase-items-amount">{{bucketLocalService.bucketInfo.totalItems}}</span> позиції</div>
       <div>На сумму <span class="final-purchase-items-price">{{bucketLocalService.bucketInfo.totalPrice / 100}}</span> грн</div>
 
-      <button mat-flat-button color="accent" routerLink="/order" [disabled]="contactInfoGroup.invalid || shippingFormGroup.invalid" (click)="submitOrder()">
+      <button mat-flat-button color="accent" routerLink="/order" [disabled]="contactInfoGroup.invalid || deliveryFormGroup.invalid" (click)="submitOrder()">
         <i class="material-icons">check</i>
         <span>Підтвердити замовлення</span>
       </button>

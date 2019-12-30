@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { HeaderComponent } from './header/header.component';
-import { SharedModule } from "../components/shared/shared/shared.module";
-import { ValidatorModule } from "../validators/validator.module";
+import { SharedModule } from "../components/shared/shared.module";
 
 
 @NgModule({

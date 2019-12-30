@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { BucketLocalService } from "../../services/bucket-local.service";
+import { deliveryTypeOptions } from 'app/models/DeliveryType';
 
 @Component({
   selector: 'order',
@@ -9,8 +10,10 @@ import { BucketLocalService } from "../../services/bucket-local.service";
 })
 export class OrderComponent implements OnInit {
 
+  deliveryTypeOptions = deliveryTypeOptions;
+
   contactInfoGroup: FormGroup;
-  shippingFormGroup: FormGroup;
+  deliveryFormGroup: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
               public bucketLocalService: BucketLocalService) {}
@@ -23,8 +26,11 @@ export class OrderComponent implements OnInit {
       phone: ['']
     });
 
-    this.shippingFormGroup = this.formBuilder.group({
+    this.deliveryFormGroup = this.formBuilder.group({
+      deliveryType: [''],
       city: [''],
+      house: [''],
+      apartment: [''],
       novaPoshtaDepartment: [''],
       comment: ['']
     });
