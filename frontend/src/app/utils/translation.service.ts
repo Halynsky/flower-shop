@@ -4,14 +4,25 @@ import { Injectable } from "@angular/core";
 export class TranslationService {
 
   text = {
-    IN: 'Прихід',
-    OUT: 'Відхід',
-    GOODS_ARRIVAL: 'Прибуття товару',
-    RETURN: 'Повернення',
-    SALE: 'Продаж',
-    EXTERNAL_SALE: 'Продаж (поза системою)',
-    GIFT: 'Подарунок',
-    DEFECT: 'Списання (Брак)'
+    directions: {
+      IN: 'Прихід',
+      OUT: 'Відхід'
+    },
+    operationTypes: {
+      GOODS_ARRIVAL: 'Прибуття товару',
+      RETURN: 'Повернення',
+      SALE: 'Продаж',
+      EXTERNAL_SALE: 'Продаж (поза системою)',
+      GIFT: 'Подарунок',
+      DEFECT: 'Списання (Брак)'
+    },
+    orderStatuses: {
+      NEW: "Нове",
+      PROCESSING: "В обробці",
+      SHIPPED: "Відправлено",
+      CANCELED: "Відмінено",
+      RETURNED: "Повернено"
+    }
   };
 
   calendar_ua = {

@@ -57,7 +57,7 @@ export class FlowersComponent implements OnInit {
     {field: 'amount', header: 'Кількість'}
   ];
 
-  cols = [
+  columns = [
     {field: 'id', header: 'Id', active: true},
     {field: 'image', header: 'Фото', active: true},
     {field: 'name', header: 'Назва', active: true},
@@ -73,7 +73,7 @@ export class FlowersComponent implements OnInit {
     {field: 'created', header: 'Створено', active: false}
   ];
 
-  selectedColumns = this.cols.filter(column => column.active);
+  selectedColumns = this.columns.filter(column => column.active);
 
   items: RestPage<Flower> = new RestPage<Flower>();
   selected: Flower;
@@ -193,13 +193,13 @@ export class FlowersComponent implements OnInit {
   }
 
   onColumnSelect(event) {
-    let changedColumn = this.cols.find(column => column.field == event.itemValue.field);
+    let changedColumn = this.columns.find(column => column.field == event.itemValue.field);
     changedColumn.active = !changedColumn.active;
     this.filterSelectedColumns()
   }
 
   filterSelectedColumns() {
-    this.selectedColumns = this.cols.filter(column => column.active);
+    this.selectedColumns = this.columns.filter(column => column.active);
   }
 
   getTypes() {

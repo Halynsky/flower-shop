@@ -17,10 +17,9 @@
       font-size: 24px;
       font-weight: 500;
       color: $black-200;
-
     }
 
-    i.close {
+    & > i.close {
       cursor: pointer;
       position: absolute;
       top: 12px;
@@ -42,7 +41,6 @@
           grid-template-columns: 100px 27fr 18fr 35fr 20fr;
           font-weight: 500;
           color: $grey-800;
-          border-bottom: 1px solid $grey-200;
           padding-bottom: 8px;
 
           @include response-to(xs) {
@@ -61,6 +59,7 @@
           color: $black-200;
 
           .bucket-table-row {
+            position: relative;
             display: grid;
             grid-template-columns: 100px 27fr 18fr 35fr 20fr;
             align-items: center;
@@ -70,6 +69,10 @@
             padding: 10px 0;
             grid-template-areas: "bucket-item-image bucket-item-name bucket-item-price bucket-item-amount bucket-item-total-price";
 
+            &:first-of-type {
+              border-top: 1px solid $grey-200;
+            }
+
             @include response-to(xs) {
               grid-template-columns: 2fr;
               grid-template-areas: "bucket-item-image bucket-item-name" "bucket-item-image bucket-item-price" "bucket-item-image bucket-item-amount" "bucket-item-image bucket-item-total-price";
@@ -78,6 +81,16 @@
 
             @include response-to(sm) {
               font-size: 16px;
+            }
+
+            .remove-icon-wrapper {
+              cursor: pointer;
+              position: absolute;
+              top: 0px;
+              right: -5px;
+              i {
+                color: mat-color($accent);
+              }
             }
 
             .bucket-item-image {
@@ -112,6 +125,7 @@
 
               @include response-to(xs) {
                 padding-bottom: 12px;
+                margin-top: 12px;
               }
 
               .flower-type-name {
@@ -190,6 +204,7 @@
 
         @include response-to(xs) {
           justify-content: center;
+          margin-top: 16px;
         }
 
         .total-price-block {

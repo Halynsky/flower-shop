@@ -9,7 +9,7 @@
   padding-top: 24px;
   padding-left: 24px;
   padding-right: 24px;
-  @include response(xs) {
+  @include response-to(sm) {
     padding-left: 0px;
     padding-right: 0px;
   }

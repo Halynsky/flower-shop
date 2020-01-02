@@ -36,7 +36,8 @@ public class UserService {
             .setEmail(userModel.getEmail())
             .setPhone(userModel.getPhone())
             .setIsEnabled(userModel.getIsEnabled())
-            .setNote(userModel.getNote());
+            .setNote(userModel.getNote())
+            .setFacebookNickname(userModel.getFacebookNickname());
 
         userRepository.save(user);
     }

@@ -3,124 +3,191 @@
 @import 'mixins';
 
 :host {
+  display: grid;
   justify-content: center;
   @extend .content-thin;
-  display: grid;
-  grid-template-columns: minmax(300px, 400px) minmax(300px, 400px);
-  width: 100%;
-  padding-top: 2em;
 
   @include response-to(sm) {
     grid-template-columns: auto;
     justify-content: stretch;
   }
 
-  ::ng-deep.mat-step {
-    input, textarea {
-      max-width: 300px;
-    }
-    button {
-      margin-right: 48px;
-      margin-top: 12px;
-    }
-    form {
-      margin-top: 12px;
-    }
-  }
-
-  .delivery-type-label {
-    color: $black-100;
-    font-size: 18px;
-    margin-bottom: 2px;
-  }
-
-  mat-radio-group {
-    margin-bottom: 24px;
-    margin-top: 8px;
-    display: flex;
-    flex-direction: column;
-
-    mat-radio-button {
-      padding-top: 4px;
-      padding-bottom: 4px;
-    }
-
-  }
-
-  .final-purchase-block-wrapper {
-    padding: 0px 24px 24px;
+  .order-wrapper {
+    justify-content: center;
+    display: grid;
+    grid-template-columns: minmax(300px, 400px) minmax(300px, 400px);
+    width: 100%;
+    padding-top: 2em;
 
     @include response-to(sm) {
-      padding: 0px;
+      grid-template-columns: auto;
+      justify-content: stretch;
     }
 
-    .final-purchase-block {
-      display: grid;
-      justify-content: center;
+    mat-vertical-stepper {
+      @include response-to(sm) {
+        justify-self: center;
+      }
+    }
+
+    ::ng-deep.mat-step {
+      input, textarea {
+        max-width: 300px;
+      }
+      button {
+        margin-right: 48px;
+        margin-top: 12px;
+      }
+      form {
+        margin-top: 12px;
+      }
+    }
+
+    .delivery-type-label {
+      color: $black-100;
+      font-size: 18px;
+      margin-bottom: 2px;
+    }
+
+    mat-radio-group {
+      margin-bottom: 24px;
+      margin-top: 8px;
+      display: flex;
+      flex-direction: column;
+
+      mat-radio-button {
+        padding-top: 4px;
+        padding-bottom: 4px;
+      }
+
+    }
+
+    .final-purchase-block-wrapper {
+      padding: 0px 24px 24px;
 
       @include response-to(sm) {
-        grid-template-columns: 1fr;
+        padding: 0px;
       }
 
-
-      button {
-        margin-top: 8px;
-        i {
-          margin-right: 8px;
-        }
-      }
-
-      .final-purchase-info-wrapper {
-        padding: 24px 36px;
-        background-color: mat-color($primary, 50);
-        max-height: 400px;
-        overflow-y: auto;
-        margin-bottom: 12px;
-        line-height: 160%;
+      .final-purchase-block {
+        display: grid;
+        justify-content: center;
 
         @include response-to(sm) {
-          justify-content: center;
-          display: grid;
+          grid-template-columns: 1fr;
         }
 
 
-        .final-purchase-items-amount {
-          color: mat-color($accent);
-        }
-
-        .final-purchase-items-price {
-          color: mat-color($accent);
-        }
-
-        .final-purchase-flower-button {
-          color: #4caf50;
-          padding: 12px;
-          display: flex;
-          border-bottom: 1px solid $grey-700;
-          .name-in-final-purchase {
-            display: flex;
-            width: 150px;
+        button {
+          margin-top: 8px;
+          i {
+            margin-right: 8px;
           }
+        }
 
-          .size-in-final-purchase {
+        .final-purchase-info-wrapper {
+          padding: 24px 36px;
+          background-color: mat-color($primary, 50);
+          max-height: 400px;
+          overflow-y: auto;
+          margin-bottom: 12px;
+          line-height: 160%;
+
+          @include response-to(sm) {
             justify-content: center;
-            color: $grey-400;
-            display: flex;
-            width: 60px;
+            display: grid;
           }
 
-          .price-in-final-purchase {
-            justify-content: flex-end;
+          .check-items {
+            color: mat-color($primary);
+            cursor: pointer;
+          }
+
+          .final-purchase-items-amount {
             color: mat-color($accent);
+          }
+
+          .final-purchase-items-price {
+            color: mat-color($accent);
+          }
+
+          .final-purchase-flower-button {
+            color: #4caf50;
+            padding: 12px;
             display: flex;
-            width: 70px;
+            border-bottom: 1px solid $grey-700;
+            .name-in-final-purchase {
+              display: flex;
+              width: 150px;
+            }
+
+            .size-in-final-purchase {
+              justify-content: center;
+              color: $grey-400;
+              display: flex;
+              width: 60px;
+            }
+
+            .price-in-final-purchase {
+              justify-content: flex-end;
+              color: mat-color($accent);
+              display: flex;
+              width: 70px;
+            }
           }
         }
-      }
 
+      }
     }
+
   }
 
+  .order-done-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: 48px;
+    padding: 24px;
 
+    .title {
+      font-size: 32px;
+      color: mat-color($primary, 900);
+      margin-bottom: 24px;
+    }
+
+    .message {
+      font-size: 20px;
+      color: $grey-800;
+      margin-bottom: 16px;
+    }
+
+    .order-info {
+      font-size: 20px;
+      color: $black-400;
+      margin-bottom: 16px;
+      .order-id {
+        color: mat-color($primary);
+        font-size: 24px;
+      }
+    }
+
+  }
+
+  .order-empty-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: 48px;
+    padding: 24px;
+
+    .message {
+      font-size: 20px;
+      color: $grey-800;
+      margin-bottom: 16px;
+    }
+
+  }
 
 }

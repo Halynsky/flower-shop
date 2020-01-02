@@ -60,12 +60,12 @@ export class WarehouseOperationsComponent implements OnInit {
               private confirmationService: ConfirmationService,
               private router: Router,
               private route: ActivatedRoute,
-              private translation: TranslationService,
-              private enumToObjectsPipe: EnumToObjectsPipe) {
+              public translation: TranslationService,
+              public enumToObjectsPipe: EnumToObjectsPipe) {
     this.directionOptions = enumToObjectsPipe.transform(WarehouseOperationType.Direction);
-    this.directionOptions.forEach(e => e.label = translation.text[e.label]);
+    this.directionOptions.forEach(e => e.label = translation.text.directions[e.label]);
     this.operationTypes = enumToObjectsPipe.transform(WarehouseOperationType.OperationType);
-    this.operationTypes.forEach(e => e.label = translation.text[e.label]);
+    this.operationTypes.forEach(e => e.label = translation.text.operationTypes[e.label]);
 
   }
 

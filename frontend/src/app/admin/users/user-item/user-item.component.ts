@@ -5,7 +5,6 @@ import { getErrorMessage } from "../../../utils/Functions";
 import { UserService } from "../../../api/services/user.service";
 import { SnackBarService } from "../../../services/snak-bar.service";
 import { ActivatedRoute, Router } from "@angular/router";
-import { TranslationService } from "../../../utils/translation.service";
 
 @Component({
   selector: 'user-item',
@@ -56,7 +55,7 @@ export class UserItemComponent implements OnInit {
   create() {
     this.dataService.create(this.item).subscribe(
       response => {
-        this.snackBarService.showSuccess("'Користувача' успішно створено");
+        this.snackBarService.showSuccess("'Користувач' успішно створений");
         this.router.navigate(['../../'], {relativeTo: this.route})
       },
       error => this.snackBarService.showError(getErrorMessage(error))
@@ -66,7 +65,7 @@ export class UserItemComponent implements OnInit {
   update() {
     this.dataService.update(this.item.id, this.item).subscribe(
       response => {
-        this.snackBarService.showSuccess("'Користувача' успішно оновлено");
+        this.snackBarService.showSuccess("'Користувач' успішно оновленей");
         this.router.navigate(['../../'], {relativeTo: this.route})
       },
       error => this.snackBarService.showError(getErrorMessage(error))

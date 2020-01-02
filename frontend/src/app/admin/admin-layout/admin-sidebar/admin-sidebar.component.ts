@@ -72,11 +72,11 @@ export class AdminSidebarComponent implements OnInit {
           }
         ]
       },
-      {
-        label: 'Блог',
-        icon: 'far fa-newspaper',
-        routerLink: 'blog'
-      }
+      // {
+      //   label: 'Блог',
+      //   icon: 'far fa-newspaper',
+      //   routerLink: 'blog'
+      // }
     ];
   }
 

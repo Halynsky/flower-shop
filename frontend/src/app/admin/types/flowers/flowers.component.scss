@@ -24,36 +24,6 @@
     cursor: pointer;
   }
 
-  .flower-size-table {
-    display: table;
-    width: 100%;
-
-    .body {
-      display: table-row-group;
-
-      .row {
-        display: table-row;
-
-        .cell {
-          border: 1px solid #c8c8c8;
-          display: table-cell;
-          padding: 3px 10px;
-          background-color: white;
-        }
-        .head {
-          border: 1px solid #c8c8c8;
-          display: table-cell;
-          padding: 3px 10px;
-          font-weight: bold;
-          color: white;
-          background-color: #007ad9;
-        }
-      }
-    }
-
-  }
-
-
 }
 
 

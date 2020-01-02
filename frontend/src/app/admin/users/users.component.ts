@@ -33,6 +33,7 @@ export class UsersComponent implements OnInit {
     {field: 'created', header: 'Дата реєстрації', active: false},
     {field: 'lastOrderDate', header: 'Дата останньої покупки', active: true},
     {field: 'note', header: 'Примітка', active: false},
+    {field: 'facebookNickname', header: 'Нік на Facebook', active: true},
   ];
 
   selectedColumns = this.cols.filter(column => column.active);

@@ -12,14 +12,22 @@
            [tableStyle]="{'table-layout':'auto'}" [contextMenu]="cm" [(contextMenuSelection)]="selected"
            [customSort]="true" (sortFunction)="sortData($event)" dataKey="id" rowExpandMode="single" [columns]="selectedColumns"
            (onLazyLoad)="onLazyLoad($event)" [lazy]="true" [totalRecords]="items.totalElements">
+
+    <!--Column selector-->
     <ng-template pTemplate="caption">
       <div style="text-align:left">
-        <p-multiSelect [options]="cols" [(ngModel)]="selectedColumns" optionLabel="header"
+        <p-multiSelect [options]="columns" [(ngModel)]="selectedColumns" optionLabel="header"
                        selectedItemsLabel="{0} колонок обрано" [style]="{minWidth: '300px'}" defaultLabel="Оберіть колонки"
                        (onChange)="onColumnSelect($event)"></p-multiSelect>
       </div>
     </ng-template>
+
+    <!--Headers-->
+
     <ng-template pTemplate="header" let-columns>
+
+      <!--Titles-->
+
       <tr>
         <th></th>
         <ng-container *ngFor="let col of selectedColumns" [ngSwitch]="col.field">
@@ -72,6 +80,9 @@
         </ng-container>
 
       </tr>
+
+      <!--Filters-->
+
       <tr>
         <th></th>
         <th *ngFor="let col of selectedColumns" [ngSwitch]="col.field">
@@ -131,8 +142,11 @@
         </th>
       </tr>
     </ng-template>
+
+    <!--Rows-->
+
     <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns">
-      <tr [pContextMenuRow]="rowData">
+      <tr [pContextMenuRow]="rowData" [ngClass]="{'expanded' : expanded}">
         <td>
           <a [pRowToggler]="rowData">
             <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
@@ -196,10 +210,11 @@
         </td>
       </tr>
     </ng-template>
+
     <ng-template pTemplate="rowexpansion" let-rowData>
       <tr>
-        <td [attr.colspan]="cols.length + 1">
-          <div class="flower-size-table">
+        <td [attr.colspan]="columns.length + 1">
+          <div class="expanded-row-table">
             <div class="body">
               <div class="row">
                 <div class="head">Розмір</div>
@@ -216,6 +231,7 @@
         </td>
       </tr>
     </ng-template>
+
   </p-table>
 </div>
 

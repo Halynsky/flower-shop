@@ -9,10 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.com.flowershop.entity.User;
 import ua.com.flowershop.model.SecurityUserModel;
-import ua.com.flowershop.model.UserModel;
 import ua.com.flowershop.repository.UserRepository;
-
-import javax.servlet.http.HttpServletResponse;
 
 @Service
 public class SecurityService {
@@ -26,6 +23,10 @@ public class SecurityService {
 
     public String getEmail() {
         return getAuthentication().getName();
+    }
+
+    public User getUserOrNull() {
+        return userRepository.findByEmail(getEmail()).orElse(null);
     }
 
     public User getUser() {

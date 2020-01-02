@@ -35,6 +35,11 @@
               <amount-controlled-input [(ngModel)]="bucketItem.amount" name="amount" minAmount="1" (ngModelChange)="onBucketChange()"></amount-controlled-input>
             </div>
             <div class="bucket-item-total-price"><span class="label">Сума: </span> {{bucketItem.price * bucketItem.amount / 100}} грн</div>
+
+            <div class="remove-icon-wrapper">
+              <i class="material-icons close" (click)="removeBucketItem(bucketItem)">close</i>
+            </div>
+
           </div>
         </ng-template>
 
@@ -54,7 +59,7 @@
         <i class="material-icons">add_shopping_cart</i>
         <span>Продовжити купувати</span>
       </button>
-      <button mat-flat-button color="accent" routerlink="/order">
+      <button mat-flat-button color="accent" routerLink="/order" (click)="dialogRef.close()">
         <i class="material-icons">shopping_basket</i>
         <span>Оформити замовлення</span>
       </button>

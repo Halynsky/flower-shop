@@ -1,7 +1,8 @@
 import { Injectable } from "@angular/core";
-import { HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { API_URL } from "../../utils/Costants";
-import { BucketItem } from "../../models/Bucket";
+import { RestPage } from "../models/RestPage";
+import { Order, OrderRequest } from "../models/Order";
 
 @Injectable({providedIn: 'root'})
 export class OrderService {
@@ -10,8 +11,13 @@ export class OrderService {
 
   constructor(private http: HttpClient) {}
 
-  create(bucketItems: BucketItem[]) {
-    return this.http.post(`${this.URL}`, bucketItems);
+  getAllForAdmin(params, pagination) {
+    params = Object.assign(params, ...pagination);
+    return this.http.get<RestPage<Order>>(`${this.URL}/forAdmin`, {params: params});
+  }
+
+  create(orderRequest: OrderRequest) {
+    return this.http.post(`${this.URL}`, orderRequest, {responseType: 'text'});
   }
 
 }

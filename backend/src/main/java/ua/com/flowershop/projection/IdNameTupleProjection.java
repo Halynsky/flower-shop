@@ -1,6 +1,5 @@
 package ua.com.flowershop.projection;
 
-public interface IdNameTuple {
-    Long getId();
+public interface IdNameTupleProjection extends IdProjection {
     String getName();
 }

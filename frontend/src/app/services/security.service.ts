@@ -19,7 +19,7 @@ export class SecurityService {
               public socialAuthService: SocialAuthService) {
     this.onLogin.subscribe(() => {
       if (this.hasAnyRole([Role.ADMIN, Role.SUPPORT])) {
-        this.router.navigate(['admin']);
+        this.router.navigate(['admin', 'shop', 'orders']);
       }
     })
   }

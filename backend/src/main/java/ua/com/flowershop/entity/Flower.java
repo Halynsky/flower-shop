@@ -46,6 +46,7 @@ public class Flower {
     @Column(columnDefinition = "timestamp default timezone('utc'::text, now())")
     private LocalDateTime created = LocalDateTime.now();
     private LocalDateTime lastSupply;
+    private LocalDateTime nextSupply;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "flower_type_id", foreignKey = @ForeignKey(name = "flower_flower_type_fkey"), nullable = false)

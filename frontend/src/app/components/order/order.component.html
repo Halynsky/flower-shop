@@ -1,123 +1,166 @@
-<mat-vertical-stepper [linear]="false" #stepper>
-  <mat-step [stepControl]="contactInfoGroup">
+<div class="order-wrapper" *ngIf="!orderId && bucketLocalService.bucket.length > 0">
 
-    <form [formGroup]="contactInfoGroup">
-      <ng-template matStepLabel>Контактні данні</ng-template>
+  <mat-vertical-stepper [linear]="false" #stepper>
+    <mat-step [stepControl]="contactInfoFormGroup">
 
-      <div class="input-group">
-        <label>Ім'я та прізвище</label>
-        <input
-          name="name"
-          formControlName="name"
-          placeholder="Ім'я та прізвище"
-          required>
-        <div class="error-wrapper" *ngIf="contactInfoGroup.get('name').dirty || contactInfoGroup.get('name').touched">
-          <div class="error-message" *ngIf="contactInfoGroup.get('name').errors?.required">Повинно бути вказано</div>
+      <form [formGroup]="contactInfoFormGroup">
+        <ng-template matStepLabel>Контактні данні</ng-template>
+
+        <div class="input-group">
+          <label>Ім'я та прізвище</label>
+          <input
+            name="name"
+            formControlName="name"
+            placeholder="Ім'я та прізвище"
+            required>
+          <div class="error-wrapper" *ngIf="contactInfoFormGroup.get('name').dirty || contactInfoFormGroup.get('name').touched">
+            <div class="error-message" *ngIf="contactInfoFormGroup.get('name').errors?.required">Повинно бути вказано</div>
+          </div>
+
         </div>
 
-      </div>
-
-      <div class="input-group">
-        <label>Електронна адреса</label>
-        <input
+        <div class="input-group">
+          <label>Електронна адреса</label>
+          <input
             type="email"
             name="email"
             formControlName="email"
             placeholder="Електронна адреса"
             required
             email>
-        <div class="error-wrapper" *ngIf="contactInfoGroup.get('email').dirty || contactInfoGroup.get('email').touched">
-          <div class="error-message" *ngIf="contactInfoGroup.get('email').errors?.required">Повинно бути вказано</div>
-          <div class="error-message" *ngIf="!contactInfoGroup.get('email').errors?.required && contactInfoGroup.get('email').errors?.email">Введіть валідний email</div>
+          <div class="error-wrapper" *ngIf="contactInfoFormGroup.get('email').dirty || contactInfoFormGroup.get('email').touched">
+            <div class="error-message" *ngIf="contactInfoFormGroup.get('email').errors?.required">Повинно бути вказано</div>
+            <div class="error-message" *ngIf="!contactInfoFormGroup.get('email').errors?.required && contactInfoFormGroup.get('email').errors?.email">Введіть валідний email</div>
+          </div>
         </div>
-      </div>
 
-      <div class="input-group">
-        <label>Телефон</label>
-        <input
-          name="phone"
-          formControlName="phone"
-          placeholder="Телефон"
-          required>
-        <div class="error-wrapper" *ngIf="contactInfoGroup.get('phone').dirty || contactInfoGroup.get('phone').touched">
-          <div class="error-message" *ngIf="contactInfoGroup.get('phone').errors?.required">Повинно бути вказано</div>
-          <div class="error-message" *ngIf="!contactInfoGroup.get('phone').errors?.required && contactInfoGroup.get('phone').errors?.pattern">Введіть валідний номер телефону</div>
+        <div class="input-group">
+          <label>Телефон</label>
+          <input
+            name="phone"
+            formControlName="phone"
+            placeholder="Телефон"
+            required>
+          <div class="error-wrapper" *ngIf="contactInfoFormGroup.get('phone').dirty || contactInfoFormGroup.get('phone').touched">
+            <div class="error-message" *ngIf="contactInfoFormGroup.get('phone').errors?.required">Повинно бути вказано</div>
+            <div class="error-message" *ngIf="!contactInfoFormGroup.get('phone').errors?.required && contactInfoFormGroup.get('phone').errors?.pattern">Введіть валідний номер телефону</div>
+          </div>
         </div>
-      </div>
 
-      <div class="buttons-wrapper">
-        <button mat-flat-button color="primary" matStepperNext>Далі</button>
-      </div>
-    </form>
-  </mat-step>
-  <mat-step [stepControl]="deliveryFormGroup">
-    <form [formGroup]="deliveryFormGroup">
-      <ng-template matStepLabel>Доставка</ng-template>
-
-      <label class="delivery-type-label">Оберіть спосіб доставки </label>
-      <mat-radio-group
-        color="primary"
-        aria-labelledby="delivery-type"
-        class="delivery-type-radio-group"
-        formControlName="deliveryType">
-        <mat-radio-button class="delivery-type-radio-button" *ngFor="let deliveryTypeOption of deliveryTypeOptions" [value]="deliveryTypeOption.key">
-          {{deliveryTypeOption.label}}
-        </mat-radio-button>
-      </mat-radio-group>
-
-      <div class="input-group">
-        <label>Місто</label>
-        <input
-          name="city"
-          formControlName="city"
-          placeholder="Місто"
-          required>
-        <div class="error-wrapper" *ngIf="deliveryFormGroup.get('city').dirty || deliveryFormGroup.get('city').touched">
-          <div class="error-message" *ngIf="deliveryFormGroup.get('city').errors?.required">Повинно бути вказано</div>
+        <div class="buttons-wrapper">
+          <button mat-flat-button color="primary" matStepperNext>Далі</button>
         </div>
-      </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="deliveryInfoFormGroup">
+      <form [formGroup]="deliveryInfoFormGroup">
 
-      <div class="input-group">
-        <label>Відділення Нової пошти</label>
-        <input
-          name="novaPoshtaDepartment"
-          formControlName="novaPoshtaDepartment"
-          placeholder="Відділення Нової пошти"
-          required>
-        <div class="error-wrapper" *ngIf="deliveryFormGroup.get('novaPoshtaDepartment').dirty || deliveryFormGroup.get('novaPoshtaDepartment').touched">
-          <div class="error-message" *ngIf="deliveryFormGroup.get('novaPoshtaDepartment').errors?.required">Повинно бути вказано</div>
+        <ng-template matStepLabel>Доставка</ng-template>
+
+        <label class="delivery-type-label">Оберіть спосіб доставки </label>
+        <mat-radio-group
+          color="primary"
+          aria-labelledby="delivery-type"
+          class="delivery-type-radio-group"
+          formControlName="deliveryType"
+          (change)="onDeliveryTypeChange($event)">
+          <mat-radio-button class="delivery-type-radio-button" *ngFor="let deliveryTypeOption of deliveryTypeOptions" [value]="deliveryTypeOption.key">
+            {{deliveryTypeOption.label}}
+          </mat-radio-button>
+        </mat-radio-group>
+
+        <div class="input-group" *ngIf="deliveryInfoFormGroup.get('deliveryType').value != 'SELF_UZHGOROD'">
+          <label>Місто</label>
+          <input
+            name="city"
+            formControlName="city"
+            placeholder="Місто"
+            required>
+          <div class="error-wrapper" *ngIf="deliveryInfoFormGroup.get('city').dirty || deliveryInfoFormGroup.get('city').touched">
+            <div class="error-message" *ngIf="deliveryInfoFormGroup.get('city').errors?.required">Повинно бути вказано</div>
+          </div>
         </div>
-      </div>
 
-      <div class="input-group">
-        <label>Коментар до замовлення</label>
-        <textarea
-          name="comment"
-          formControlName="comment"
-          cols="30" rows="10"
-          placeholder="Коментар до замовлення">
+        <div class="input-group" *ngIf="directAddressRequired()">
+          <label>Вулиця</label>
+          <input
+            name="street"
+            formControlName="street"
+            placeholder="Вулиця"
+            [required]="directAddressRequired()" >
+          <div class="error-wrapper" *ngIf="deliveryInfoFormGroup.get('street').dirty || deliveryInfoFormGroup.get('street').touched">
+            <div class="error-message" *ngIf="deliveryInfoFormGroup.get('street').errors?.required">Повинно бути вказано</div>
+          </div>
+        </div>
+
+        <div class="input-group" *ngIf="directAddressRequired()">
+          <label>Будинок</label>
+          <input
+            name="house"
+            formControlName="house"
+            placeholder="Будинок"
+            [required]="directAddressRequired()" >
+          <div class="error-wrapper" *ngIf="deliveryInfoFormGroup.get('house').dirty || deliveryInfoFormGroup.get('house').touched">
+            <div class="error-message" *ngIf="deliveryInfoFormGroup.get('house').errors?.required">Повинно бути вказано</div>
+          </div>
+        </div>
+
+        <div class="input-group" *ngIf="directAddressRequired()">
+          <label>Квартира</label>
+          <input
+            name="apartment"
+            formControlName="apartment"
+            placeholder="Квартира"
+            [required]="directAddressRequired()">
+          <div class="error-wrapper" *ngIf="deliveryInfoFormGroup.get('apartment').dirty || deliveryInfoFormGroup.get('apartment').touched">
+            <div class="error-message" *ngIf="deliveryInfoFormGroup.get('apartment').errors?.required">Повинно бути вказано</div>
+          </div>
+        </div>
+
+        <div class="input-group" *ngIf="deliveryInfoFormGroup.get('deliveryType').value == 'NOVA_POSHTA_DEPARTMENT'">
+          <label>Відділення Нової пошти</label>
+          <input
+            name="novaPoshtaDepartment"
+            formControlName="novaPoshtaDepartment"
+            placeholder="Відділення Нової пошти"
+            [required]="deliveryInfoFormGroup.get('deliveryType').value == 'NOVA_POSHTA_DEPARTMENT'">
+          <div class="error-wrapper" *ngIf="deliveryInfoFormGroup.get('novaPoshtaDepartment').dirty || deliveryInfoFormGroup.get('novaPoshtaDepartment').touched">
+            <div class="error-message" *ngIf="deliveryInfoFormGroup.get('novaPoshtaDepartment').errors?.required">Повинно бути вказано</div>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label>Коментар до замовлення</label>
+          <textarea
+            name="comment"
+            formControlName="comment"
+            cols="30" rows="10"
+            maxlength="500"
+            placeholder="Коментар до замовлення">
         </textarea>
+        </div>
+
+        <div class="buttons-wrapper">
+          <button mat-stroked-button color="primary" matStepperPrevious>Назад</button>
+        </div>
+      </form>
+    </mat-step>
+
+  </mat-vertical-stepper>
+
+  <div class="final-purchase-block-wrapper">
+
+    <div class="final-purchase-block">
+      <div class="final-purchase-info-wrapper">
+        <div><span class="final-purchase-items-amount">{{bucketLocalService.bucketInfo.totalItems}}</span> позиції <span class="check-items" (click)="openBucketDialog()">(переглянути товари)</span></div>
+        <div>На сумму <span class="final-purchase-items-price">{{bucketLocalService.bucketInfo.totalPrice / 100}}</span> грн</div>
+
+        <button mat-flat-button color="accent" routerLink="/order" [disabled]="isFormValid() | async" (click)="submitOrder()">
+          <i class="material-icons">check</i>
+          <span>Підтвердити замовлення</span>
+        </button>
+
       </div>
-
-      <div class="buttons-wrapper">
-        <button mat-stroked-button color="primary" matStepperPrevious>Назад</button>
-      </div>
-    </form>
-  </mat-step>
-
-</mat-vertical-stepper>
-
-<div class="final-purchase-block-wrapper">
-
-  <div class="final-purchase-block">
-    <div class="final-purchase-info-wrapper">
-      <div><span class="final-purchase-items-amount">{{bucketLocalService.bucketInfo.totalItems}}</span> позиції</div>
-      <div>На сумму <span class="final-purchase-items-price">{{bucketLocalService.bucketInfo.totalPrice / 100}}</span> грн</div>
-
-      <button mat-flat-button color="accent" routerLink="/order" [disabled]="contactInfoGroup.invalid || deliveryFormGroup.invalid" (click)="submitOrder()">
-        <i class="material-icons">check</i>
-        <span>Підтвердити замовлення</span>
-      </button>
 
     </div>
 
@@ -125,4 +168,17 @@
 
 </div>
 
+<div class="order-empty-wrapper" *ngIf="bucketLocalService.bucket.length == 0 && !orderId">
+  <div class="message">Ваш кошик порожній</div>
+  <button mat-flat-button color="primary" routerLink="/shop">Перейти до магазину</button>
+</div>
 
+<div class="order-done-wrapper" *ngIf="orderId">
+
+  <div class="title">Ваше замовлення успішно прийнято. Дякуємо!</div>
+
+  <div class="message">Ми звяжемось з вами в найближчий час</div>
+
+  <div class="order-info">Номер вашого замовлення: <span class="order-id">{{orderId}}</span></div>
+
+</div>

@@ -12,7 +12,6 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -33,6 +32,8 @@ public class User {
     private String email;
     @Column(unique = true)
     private String newEmail;
+    @Column(columnDefinition = "varchar(64)")
+    private String facebookNickname;
     @JsonIgnore
     private String password;
     private String phone;

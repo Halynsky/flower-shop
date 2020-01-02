@@ -54,10 +54,13 @@
           <th *ngSwitchCase="'created'">
             {{col.header}}
           </th>
+          <th *ngSwitchCase="'note'">
+            {{col.header}}
+          </th>
           <th *ngSwitchCase="'lastOrderDate'">
             {{col.header}}
           </th>
-          <th *ngSwitchCase="'note'">
+          <th *ngSwitchCase="'facebookNickname'">
             {{col.header}}
           </th>
         </ng-container>
@@ -84,8 +87,9 @@
           <div *ngSwitchCase="'isVirtual'"></div>
           <div *ngSwitchCase="'isActivated'"></div>
           <div *ngSwitchCase="'created'"></div>
-          <div *ngSwitchCase="'lastOrderDate'"></div>
           <div *ngSwitchCase="'note'"></div>
+          <div *ngSwitchCase="'lastOrderDate'"></div>
+          <div *ngSwitchCase="'facebookNickname'"></div>
         </th>
       </tr>
     </ng-template>
@@ -140,10 +144,13 @@
           <span *ngSwitchCase="'created'">
             {{rowData[col.field] | date }}
           </span>
+          <span *ngSwitchCase="'note'">
+            {{rowData[col.field]}}
+          </span>
           <span *ngSwitchCase="'lastOrderDate'">
             {{rowData[col.field] | date }}
           </span>
-          <span *ngSwitchCase="'note'">
+          <span *ngSwitchCase="'facebookNickname'">
             {{rowData[col.field]}}
           </span>
         </td>

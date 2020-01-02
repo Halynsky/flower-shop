@@ -1,3 +1,209 @@
-<p>
-  orders works!
-</p>
+<div class="panel-header">
+  <h1>Замовлення</h1>
+  <div class="navigation-buttons">
+    <button pButton (click)="refresh()" icon="pi pi-refresh" label="&nbsp;&nbsp;Оновити"></button>
+  </div>
+</div>
+
+<div class="panel-content">
+  <p-table #dt [columns]="selectedColumns" [value]="items.content" sortField="id" [paginator]="true" [rows]="10" [totalRecords]="items.totalElements"
+           [tableStyle]="{'table-layout':'auto'}" dataKey="id" rowExpandMode="single"
+           (onLazyLoad)="onLazyLoad($event)" [lazy]="true">
+
+    <!--Column selector-->
+    <ng-template pTemplate="caption">
+      <div style="text-align:left">
+        <p-multiSelect [options]="columns" [(ngModel)]="selectedColumns" optionLabel="header"
+                       selectedItemsLabel="{0} колонок обрано" [style]="{minWidth: '300px'}" defaultLabel="Оберіть колонки"
+                       (onChange)="onColumnSelect($event)"></p-multiSelect>
+      </div>
+    </ng-template>
+
+    <!--Headers-->
+
+    <ng-template pTemplate="header" let-columns>
+
+      <!--Titles-->
+
+      <tr>
+
+        <th></th>
+
+        <ng-container *ngFor="let col of columns" [ngSwitch]="col.field">
+
+          <th *ngSwitchDefault [pSortableColumn]="col.field" >
+            {{col.header}}
+            <p-sortIcon [field]="col.field"></p-sortIcon>
+          </th>
+
+          <th *ngSwitchCase="'user'" [pSortableColumn]="'user.name'" >
+            {{col.header}}
+            <p-sortIcon [field]="'user.name'"></p-sortIcon>
+          </th>
+
+          <th *ngSwitchCase="'userFacebookNickname'" [pSortableColumn]="'user.facebookNickname'" >
+            {{col.header}}
+            <p-sortIcon [field]="'user.facebookNickname'"></p-sortIcon>
+          </th>
+
+          <th *ngSwitchCase="'phone'" >
+            {{col.header}}
+          </th>
+
+          <th *ngSwitchCase="'deliveryAddress'" >
+            {{col.header}}
+          </th>
+
+          <th *ngSwitchCase="'note'" >
+            {{col.header}}
+          </th>
+
+          <th *ngSwitchCase="'comment'" >
+            {{col.header}}
+          </th>
+
+          <th *ngSwitchCase="'totalPrice'" >
+            {{col.header}}
+          </th>
+
+        </ng-container>
+
+      </tr>
+
+      <!--Filters-->
+
+      <tr>
+        <th></th>
+        <th *ngFor="let col of columns" [ngSwitch]="col.field">
+          <input *ngSwitchCase="'id'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'equals')" class="table-filter">
+          <input *ngSwitchCase="'user'" pInputText type="text" (input)="dt.filter($event.target.value, 'userNamePart', 'contains')" class="table-filter">
+          <input *ngSwitchCase="'userFacebookNickname'" pInputText type="text" (input)="dt.filter($event.target.value, 'userFacebookNicknamePart', 'startsWith')" class="table-filter">
+          <input *ngSwitchCase="'phone'" pInputText type="text" (input)="dt.filter($event.target.value, 'phonePart', 'contains')" class="table-filter">
+
+          <div *ngSwitchCase="'status'">
+            <p-multiSelect [options]="statusesOptions" defaultLabel="Всі"
+                           class="table-filter"
+                           (onChange)="dt.filter($event.value, 'statusNames', 'in')"></p-multiSelect>
+          </div>
+
+          <div *ngSwitchCase="'created'">
+            <p-calendar
+              [(ngModel)]="createdFilters"
+              appendTo="body"
+              selectionMode="range"
+              [readonlyInput]="false"
+              dateFormat="dd.mm.yy"
+              (onSelect)="dt.filter(createdFilters, col.field, 'dateRange')"
+              [locale]="translation.calendar_ua">
+            </p-calendar>
+          </div>
+
+          <div *ngSwitchCase="'closed'">
+            <p-calendar
+              [(ngModel)]="closedFilters"
+              appendTo="body"
+              selectionMode="range"
+              [readonlyInput]="false"
+              dateFormat="dd.mm.yy"
+              (onSelect)="dt.filter(closedFilters, col.field, 'dateRange')"
+              [locale]="translation.calendar_ua">
+            </p-calendar>
+          </div>
+
+        </th>
+      </tr>
+    </ng-template>
+
+    <!--Rows-->
+
+    <ng-template pTemplate="body" let-rowData let-columns="columns" let-expanded="expanded">
+      <tr [pContextMenuRow]="rowData" [ngClass]="{'expanded' : expanded}">
+
+        <td>
+          <a [pRowToggler]="rowData">
+            <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
+          </a>
+        </td>
+
+        <td *ngFor="let col of columns" [ngSwitch]="col.field">
+
+          <span *ngSwitchCase="'user'">
+            {{rowData[col.field]?.name}}
+          </span>
+
+          <span *ngSwitchCase="'userFacebookNickname'">
+            {{rowData.user?.facebookNickname}}
+          </span>
+
+          <span *ngSwitchCase="'phone'">
+            {{rowData[col.field]}}
+          </span>
+
+          <span *ngSwitchCase="'created'">
+            {{rowData[col.field] | date: 'dd.MM.yy HH:mm' }}
+          </span>
+
+          <span *ngSwitchCase="'closed'">
+            {{rowData[col.field] | date:'dd.MM.yy HH:mm' }}
+          </span>
+
+          <span *ngSwitchCase="'status'">
+            {{translation.text.orderStatuses[rowData[col.field]]}}
+          </span>
+
+          <span *ngSwitchCase="'totalPrice'">
+            {{rowData[col.field] / 100 + ' грн'}}
+          </span>
+
+          <span *ngSwitchCase="'isPaid'">
+             <div class="true-false-ico">
+              <div *ngIf="rowData['isPaid']">
+                <i class="material-icons">check_box</i>
+              </div>
+              <div *ngIf="!rowData['isPaid']">
+                <i class="material-icons">indeterminate_check_box</i>
+              </div>
+            </div>
+          </span>
+
+          <span *ngSwitchDefault>
+            {{rowData[col.field]}}
+          </span>
+
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="rowexpansion" let-rowData>
+      <tr>
+        <td [attr.colspan]="columns.length + 1">
+          <div class="expanded-row-table">
+            <div class="body">
+              <div class="row">
+                <div class="head">Фото</div>
+                <div class="head">Назва</div>
+                <div class="head">Розмір</div>
+                <div class="head">Ціна</div>
+                <div class="head">Кількість</div>
+                <div class="head">Сума</div>
+              </div>
+              <div class="row" *ngFor="let orderItem of rowData.orderItems">
+                <div class="cell image-wrapper">
+                  <img [src]="orderItem.image" class="order-item-logo">
+                </div>
+                <div class="cell">{{orderItem.name}}</div>
+                <div class="cell">{{orderItem.sizeName}}</div>
+                <div class="cell">{{orderItem.price / 100 + ' грн'}}</div>
+                <div class="cell">{{orderItem.amount}}</div>
+                <div class="cell">{{orderItem.amount * orderItem.price / 100 + ' грн'}}</div>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+  </p-table>
+</div>
+
+

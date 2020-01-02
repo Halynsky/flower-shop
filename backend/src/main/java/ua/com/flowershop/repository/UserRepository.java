@@ -22,7 +22,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     UserAdminProjection findProjectedById(Long id);
     ProfileProjection findProfileById(Long id);
 
-    @Query("SELECT u.id as id, u.name as name, u.email as email, u.phone as phone, u.role as role, u.isEnabled as isEnabled, u.isVirtual as isVirtual, u.created as created " +
+    @Query("SELECT u.id as id, u.name as name, u.email as email, u.phone as phone, u.role as role, u.isEnabled as isEnabled, u.isVirtual as isVirtual, " +
+        "u.created as created, u.facebookNickname as  facebookNickname " +
         "FROM User u " +
         "WHERE (:id IS NULL OR  u.id = :id) " +
         "AND (:namePart IS NULL OR :namePart = '' OR lower(u.name) LIKE '%' || lower(cast(:namePart as string)) || '%') " +

@@ -14,8 +14,8 @@
 
   h1 {
     font-size: 24px;
-    margin: 0;
     font-weight: 500;
+    margin: 0 0 0 24px;
   }
 
   .navigation-buttons {
@@ -43,3 +43,52 @@ input.table-filter {
   }
 }
 
+
+.expanded-row-table {
+  display: table;
+  width: 100%;
+
+  .body {
+    display: table-row-group;
+
+    .row {
+      display: table-row;
+
+      .cell {
+        border: 1px solid #c8c8c8;
+        display: table-cell;
+        padding: 3px 10px;
+        background-color: white;
+        vertical-align: middle;
+
+        &.image-wrapper {
+          text-align: center;
+        }
+
+        .order-item-logo {
+          height: 50px;
+          width: 50px;
+          background-position: center;
+          background-size: contain;
+        }
+
+      }
+      .head {
+        border: 1px solid #c8c8c8;
+        display: table-cell;
+        padding: 3px 10px;
+        font-weight: bold;
+        color: white;
+        background-color: #007ad9;
+      }
+    }
+  }
+
+}
+
+tr {
+  &.expanded {
+    background-color: #e67700 !important;
+    color: white !important;
+  }
+}

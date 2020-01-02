@@ -29,8 +29,13 @@ mat-card-content, .content {
   }
 }
 
-.empty-wishlist-text {
+.empty-wishlist-block {
   color: $grey-500;
   text-align: center;
   margin-top: 16px;
+
+  .message {
+    margin-bottom: 24px;
+  }
+
 }

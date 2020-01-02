@@ -51,7 +51,7 @@ export class ShopContentItemComponent implements OnInit {
 
   openAddToCardModal(event) {
     event.stopPropagation();
-    this.addToBucketDialogRef = this.dialog.open(AddToBucketDialogComponent, {maxWidth: 630, minWidth: 320, minHeight: 320});
+    this.addToBucketDialogRef = this.dialog.open(AddToBucketDialogComponent, {maxWidth: 800, minWidth: 320, minHeight: 320});
     this.addToBucketDialogRef.componentInstance.id = this.flower.id;
   }
 

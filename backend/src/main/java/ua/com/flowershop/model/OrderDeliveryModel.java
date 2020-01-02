@@ -5,14 +5,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import ua.com.flowershop.entity.Order;
 
 @Getter
 @Setter
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderShippingModel {
+public class OrderDeliveryModel {
+    private Order.DeliveryType deliveryType;
     private String city;
+    private String street;
     private String house;
     private String apartment;
     private String novaPoshtaDepartment;

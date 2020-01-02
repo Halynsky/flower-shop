@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 import java.util.List;
 
-public interface FlowerTypeWithFlowersProjection extends IdNameTuple {
+public interface FlowerTypeWithFlowersProjection extends IdNameTupleProjection {
     @Value("#{@flowerRepository.findProjectedByFlowerTypeIdOrderByName(target.id)}")
-    List<IdNameTuple> getFlowers();
+    List<IdNameTupleProjection> getFlowers();
 }

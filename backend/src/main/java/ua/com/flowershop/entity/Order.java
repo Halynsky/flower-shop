@@ -10,7 +10,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-import static ua.com.flowershop.entity.Order.Status.*;
+import static ua.com.flowershop.entity.Order.Status.NEW;
 
 @Getter
 @Setter
@@ -30,6 +30,21 @@ public class Order {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, columnDefinition = "varchar(32) default 'NEW'")
     private Status status = NEW;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, columnDefinition = "varchar(256) default 'NEW'")
+    private DeliveryType deliveryType;
+    @Column(columnDefinition = "varchar(500)")
+    private String comment;
+    @Column(columnDefinition = "varchar(2000)")
+    private String note;
+    @Column(columnDefinition = "varchar(32)")
+    private String postDeclaration;
+    @Column(columnDefinition = "varchar(500)")
+    private String deliveryAddress;
+    private Boolean isPaid = false;
+    private String phone;
+    private Integer totalPrice;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -40,7 +55,6 @@ public class Order {
     public enum Status {
         NEW("NEW"),
         PROCESSING("PROCESSING"),
-        PAID("PAID"),
         SHIPPED("SHIPPED"),
         CANCELED("CANCELED"),
         RETURNING("RETURNING"),
@@ -55,4 +69,19 @@ public class Order {
 
     }
 
+    @AllArgsConstructor
+    public enum DeliveryType {
+        NOVA_POSHTA_DEPARTMENT("NOVA_POSHTA_DEPARTMENT"),
+        NOVA_POSHTA_COURIER("NOVA_POSHTA_COURIER"),
+        UKR_POSHTA_DEPARTMENT("UKR_POSHTA_DEPARTMENT"),
+        SELF_UZHGOROD("SELF_UZHGOROD");
+
+        private final String value;
+
+        @Override
+        public String toString() {
+            return this.value;
+        }
+
+    }
 }

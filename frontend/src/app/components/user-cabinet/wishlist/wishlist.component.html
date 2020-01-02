@@ -1,7 +1,8 @@
 <div class="user-cabinet-title">Список Бажаннь</div>
 
-<div class="empty-wishlist-text" *ngIf="favoriteFlowers && favoriteFlowers.length == 0">
-  У вас ще немає жодного товару в списку бажаннь
+<div class="empty-wishlist-block" *ngIf="favoriteFlowers && favoriteFlowers.length == 0">
+  <div class="message">У вас ще немає жодного товару в списку бажаннь</div>
+  <button mat-flat-button color="primary" routerLink="/shop">Перейти в магазин</button>
 </div>
 
 <div class="content">

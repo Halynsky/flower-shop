@@ -78,10 +78,10 @@
       <i class="material-icons">shopping_basket</i>
       <span>Мої покупки</span>
     </button>
-    <button mat-flat-button class="user-menu-button" routerLink="/my/favourite-articles">
-      <i class="material-icons">notes</i>
-      <span>Улюблені статті</span>
-    </button>
+<!--    <button mat-flat-button class="user-menu-button" routerLink="/my/favourite-articles">-->
+<!--      <i class="material-icons">notes</i>-->
+<!--      <span>Улюблені статті</span>-->
+<!--    </button>-->
   </div>
 
   <div class="profile-menu admin-menu" *ngIf="securityService.hasRole(Role.ADMIN) || securityService.hasRole(Role.SUPPORT)">
@@ -115,9 +115,9 @@
 
 
 <mat-menu #mainNavigationMenu="matMenu" class="main-navigation-menu">
-    <a routerLink="/" mat-button routerLinkActive="active-link">Головна</a>
+<!--    <a routerLink="/" mat-button routerLinkActive="active-link">Головна</a>-->
 <!--    <a routerLink="/forum" mat-button routerLinkActive="active-link">Блог</a>-->
-<!--    <a routerLink="/shop" mat-button routerLinkActive="active-link">Магазин</a>-->
+    <a routerLink="/shop" mat-button routerLinkActive="active-link">Магазин</a>
     <a routerLink="/contacts" mat-button routerLinkActive="active-link">Контакти</a>
 </mat-menu>
 

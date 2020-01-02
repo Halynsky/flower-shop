@@ -37,7 +37,7 @@
       width: 400px;
     }
 
-    i.close {
+    & > i.close {
       cursor: pointer;
       position: absolute;
       top: -16px;

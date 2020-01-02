@@ -146,6 +146,18 @@
   padding: 12px 24px;
   max-width: 270px !important;
 
+  .mat-menu-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $grey-800;
+    font-weight: 500;
+
+    .default-bucket-info {
+    }
+
+  }
+
   .bucket-info-wrapper {
     max-height: 400px;
     overflow-y: auto;

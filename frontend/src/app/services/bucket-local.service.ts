@@ -78,9 +78,17 @@ export class BucketLocalService {
 
   }
 
+  removeItemFromBucket(bucketItem: BucketItem): BucketItem[] {
+    let bucket = this.getBucket();
+    bucket = bucket.filter(item => !(item.name == bucketItem.name && item.sizeName == bucketItem.sizeName));
+    this.updateBucket(bucket);
+    return bucket;
+  }
+
   clearBucket() {
     localStorage.removeItem(this.BUCKET_STORAGE_KEY);
     this.bucket = [];
+    this.updateBucketInfo();
   }
 
 }

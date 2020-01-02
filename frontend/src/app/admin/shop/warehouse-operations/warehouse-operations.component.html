@@ -75,7 +75,6 @@
                       (onSlideEnd)="dt.filter(amountFilter, col.field, 'range')" [min]="amountMin" [max]="amountMax"></p-slider>
           </div>
 
-
           <div *ngSwitchCase="'date'">
             <p-calendar
               [(ngModel)]="dateFilters"
@@ -116,11 +115,11 @@
           <span *ngSwitchCase="'direction'">
             <img class="direction-arrow" *ngIf="rowData.warehouseOperationType.direction == WarehouseOperationType.Direction.IN" src="/assets/icons/interface/arrow-in-green.png">
             <img class="direction-arrow" *ngIf="rowData.warehouseOperationType.direction == WarehouseOperationType.Direction.OUT" src="/assets/icons/interface/arrow-out-red.png">
-            <span>{{translation.text[rowData.warehouseOperationType.direction]}}</span>
+            <span>{{translation.text.directions[rowData.warehouseOperationType.direction]}}</span>
           </span>
 
           <span *ngSwitchCase="'operationType'">
-            {{translation.text[rowData.warehouseOperationType.operationType]}}
+            {{translation.text.operationTypes[rowData.warehouseOperationType.operationType]}}
           </span>
 
           <span *ngSwitchCase="'date'">
