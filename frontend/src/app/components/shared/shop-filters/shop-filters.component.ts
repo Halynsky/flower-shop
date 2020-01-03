@@ -59,7 +59,6 @@ export class ShopFiltersComponent implements OnInit {
 
   readHash() {
     this.route.fragment.subscribe((fragment: string) => {
-      console.log("My hash fragment is here => ", fragment)
       if (fragment) {
         this.getHashParams(fragment);
       }
@@ -79,15 +78,10 @@ export class ShopFiltersComponent implements OnInit {
     if (event.checked) {
       if (this.hashFlowerTypes.find(item => item == event.source.value) == undefined)
         this.hashFlowerTypes.push(event.source.value);
-      this.filters.flowerTypeFilters.push(event.source.value)
     } else {
       let indexOfHash = this.hashFlowerTypes.indexOf(event.source.value);
       if (indexOfHash > -1) {
         this.hashFlowerTypes.splice(indexOfHash, 1);
-      }
-      let index = this.filters.flowerTypeFilters.indexOf(event.source.value);
-      if (index > -1) {
-        this.filters.flowerTypeFilters.splice(index, 1);
       }
     }
     this.emitFilterChange();
@@ -97,15 +91,10 @@ export class ShopFiltersComponent implements OnInit {
     if (event.checked) {
       if (this.hashColors.find(item => item == event.source.value) == undefined)
         this.hashColors.push(event.source.value);
-      this.filters.colorFilters.push(event.source.value)
     } else {
       let indexOfHash = this.hashColors.indexOf(event.source.value);
       if (indexOfHash > -1) {
         this.hashColors.splice(indexOfHash, 1);
-      }
-      let index = this.filters.colorFilters.indexOf(event.source.value);
-      if (index > -1) {
-        this.filters.colorFilters.splice(index, 1);
       }
     }
     this.emitFilterChange();
@@ -115,15 +104,10 @@ export class ShopFiltersComponent implements OnInit {
     if (event.checked) {
       if (this.hashSizes.find(item => item == event.source.value) == undefined)
         this.hashSizes.push(event.source.value);
-      this.filters.sizeFilters.push(event.source.value)
     } else {
       let indexOfHash = this.hashSizes.indexOf(event.source.value);
       if (indexOfHash > -1) {
         this.hashSizes.splice(indexOfHash, 1);
-      }
-      let index = this.filters.sizeFilters.indexOf(event.source.value);
-      if (index > -1) {
-        this.filters.sizeFilters.splice(index, 1);
       }
     }
     this.emitFilterChange();
