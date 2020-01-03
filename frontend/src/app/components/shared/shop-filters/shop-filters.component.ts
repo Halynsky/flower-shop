@@ -136,7 +136,6 @@ export class ShopFiltersComponent implements OnInit {
 
   emitFilterChange() {
     this.addPath();
-    console.log(this.hashFlowerTypes)
     this.onFilterChange.emit(this.filters);
   }
 
@@ -146,14 +145,16 @@ export class ShopFiltersComponent implements OnInit {
 
   addPath() {
     let path = [];
+    let hash = '#';
     if (this.hashFlowerTypes.length > 0)
       path.push('flowerTypes=' + this.hashFlowerTypes);
     if (this.hashColors.length > 0)
       path.push('colors=' + this.hashColors);
     if (this.hashSizes.length > 0)
       path.push('sizes=' + this.hashSizes);
-
-    this.location.go('shop#' + path.join('&'));
+    if (this.hashFlowerTypes.length == 0 && this.hashColors.length == 0 && this.hashSizes.length == 0)
+      hash = '';
+    this.location.go('shop' + hash + path.join('&'));
   }
 
   getHashParams(hash) {
