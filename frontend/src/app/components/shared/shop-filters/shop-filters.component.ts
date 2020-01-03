@@ -64,11 +64,11 @@ export class ShopFiltersComponent implements OnInit {
         this.getHashParams(fragment);
       }
     });
-    let filtersHash = new ShopFilter();
-    filtersHash.colorFilters = this.hashColors;
-    filtersHash.flowerTypeFilters = this.hashFlowerTypes;
-    filtersHash.sizeFilters = this.hashSizes;
-    this.emitFilterChange(filtersHash);
+
+    this.filters.colorFilters = this.hashColors;
+    this.filters.flowerTypeFilters = this.hashFlowerTypes;
+    this.filters.sizeFilters = this.hashSizes;
+    this.emitFilterChange();
   }
 
   ngOnInit() {
@@ -90,7 +90,7 @@ export class ShopFiltersComponent implements OnInit {
         this.filters.flowerTypeFilters.splice(index, 1);
       }
     }
-    this.emitFilterChange(this.filters);
+    this.emitFilterChange();
   }
 
   onColorFilterChange(event: MatCheckboxChange) {
@@ -108,7 +108,7 @@ export class ShopFiltersComponent implements OnInit {
         this.filters.colorFilters.splice(index, 1);
       }
     }
-    this.emitFilterChange(this.filters);
+    this.emitFilterChange();
   }
 
   onSizeFilterChange(event: MatCheckboxChange) {
@@ -126,33 +126,34 @@ export class ShopFiltersComponent implements OnInit {
         this.filters.sizeFilters.splice(index, 1);
       }
     }
-    this.emitFilterChange(this.filters);
+    this.emitFilterChange();
   }
 
   clearFlowerTypeFilters() {
     this.filters.flowerTypeFilters = [];
     this.flowerTypeCheckboxes.forEach(checkbox => checkbox.writeValue(false));
     this.hashFlowerTypes = [];
-    this.emitFilterChange(this.filters)
+    this.emitFilterChange()
   }
 
   clearColorFilters() {
     this.filters.colorFilters = [];
     this.colorCheckboxes.forEach(checkbox => checkbox.writeValue(false));
     this.hashColors = [];
-    this.emitFilterChange(this.filters)
+    this.emitFilterChange()
   }
 
   clearSizeFilters() {
     this.filters.sizeFilters = [];
     this.sizeCheckboxes.forEach(checkbox => checkbox.writeValue(false));
     this.hashSizes = [];
-    this.emitFilterChange(this.filters)
+    this.emitFilterChange()
   }
 
-  emitFilterChange(filter) {
+  emitFilterChange() {
     this.addPath();
-    this.onFilterChange.emit(filter);
+    console.log(this.hashFlowerTypes)
+    this.onFilterChange.emit(this.filters);
   }
 
   trackByFn(index, item) {
