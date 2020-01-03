@@ -135,7 +135,7 @@ export class ShopFiltersComponent implements OnInit {
   }
 
   emitFilterChange() {
-    this.addPath();
+    this.addFiltersToUrl();
     this.onFilterChange.emit(this.filters);
   }
 
@@ -143,7 +143,7 @@ export class ShopFiltersComponent implements OnInit {
     return item.id
   }
 
-  addPath() {
+  addFiltersToUrl() {
     let path = [];
     let hash = '#';
     if (this.hashFlowerTypes.length > 0)
