@@ -179,16 +179,19 @@ export class ShopFiltersComponent implements OnInit {
       let arrayOfNumbers = numbers.split(',');
       if (key == 'flowerTypes') {
         arrayOfNumbers.forEach(item => {
+          item = parseInt(item);
           this.hashFlowerTypes.push(item);
         });
       }
       if (key == 'colors') {
         arrayOfNumbers.forEach(item => {
+          item = parseInt(item);
           this.hashColors.push(item);
         });
       }
       if (key == 'sizes') {
         arrayOfNumbers.forEach(item => {
+          item = parseInt(item);
           this.hashSizes.push(item);
         });
       }
