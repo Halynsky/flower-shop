@@ -1,9 +1,9 @@
 import { BucketItem } from "../../models/Bucket";
 import { UserShortForAdmin } from "./User";
 
-export class Order {
+export class OrderAdmin {
   id: number;
-  // orderItems: BucketItem[];
+  orderItems: OrderItemAdmin[];
   closed: string;
   created: string;
   status: Order.Status;
@@ -17,6 +17,16 @@ export class Order {
   totalPrice: number;
 }
 
+export class OrderItemAdmin {
+  id: number;
+  name: string;
+  amount: number;
+  price: number;
+  image: string;
+  sizeName: string;
+  flowerSizeId: number;
+  orderId: number;
+}
 
 export class OrderRequest {
   orderItems: BucketItem[];
@@ -28,9 +38,17 @@ export namespace Order {
   export enum Status {
     NEW = 'NEW',
     PROCESSING = 'PROCESSING',
-    SHIPPED = 'SHIPPED',
+    DELIVERING = 'DELIVERING',
+    RETURNED = 'RETURNED',
     CANCELED = 'CANCELED',
-    RETURNED = 'RETURNED'
+    DONE = 'DONE',
   }
+}
+
+export class OrderStatusChangeRequest {
+  id: number;
+  status: Order.Status;
+  comment: string;
+  postDeclaration: string
 }
 

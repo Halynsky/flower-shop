@@ -74,7 +74,8 @@ export class UsersComponent implements OnInit {
         label: 'Розблокувати',
         icon: 'fas fa-user-check',
         command: (event) => this.updateDisabled(event, false),
-        visible: this.selected && !this.selected.isEnabled
+        visible: this.selected && !this.selected.isEnabled,
+        styleClass: 'cm-danger',
       },
     ];
   }

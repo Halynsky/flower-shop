@@ -19,9 +19,10 @@ export class TranslationService {
     orderStatuses: {
       NEW: "Нове",
       PROCESSING: "В обробці",
-      SHIPPED: "Відправлено",
+      DELIVERING: "Відправлено",
+      RETURNED: "Повернено",
       CANCELED: "Відмінено",
-      RETURNED: "Повернено"
+      DONE: "Виконано"
     }
   };
 

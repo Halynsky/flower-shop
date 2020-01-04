@@ -92,3 +92,13 @@ tr {
     color: white !important;
   }
 }
+
+input[readonly] {
+  background-color: #f4f4f4;
+}
+
+.prime-form-group {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+}

@@ -20,13 +20,14 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query("SELECT o FROM Order o " +
         "LEFT JOIN o.user u " +
         "WHERE (:id IS null OR o.id = :id) " +
+        "AND (:userId IS null OR u.id = :userId) " +
         "AND (u IS null OR :userNamePart IS null OR lower(u.name) LIKE '%' || lower(CAST(:userNamePart as string)) || '%' ) " +
         "AND (u IS null OR :userFacebookNicknamePart IS null OR lower(u.facebookNickname) LIKE '%' || lower(cast(:userFacebookNicknamePart as string)) || '%' ) " +
         "AND (:phonePart IS null OR lower(o.phone) LIKE '%' || lower(cast(:phonePart as string)) || '%' ) " +
         "AND (COALESCE(:statusNames, NULL) IS NULL OR CAST(o.status as string) IN :statusNames) " +
         "AND ((CAST(:createdFrom AS date) IS null OR CAST(:createdTo AS date) IS null) OR o.created BETWEEN :createdFrom AND :createdTo) " +
         "AND ((CAST(:closedFrom AS date) IS null OR CAST(:closedTo AS date) IS null) OR o.closed BETWEEN :closedFrom AND :closedTo) ")
-    Page<OrderAdminProjection> findForAdminProjectedByFilters(Long id, List<String> statusNames, String userNamePart, String userFacebookNicknamePart, String phonePart,
+    Page<OrderAdminProjection> findForAdminProjectedByFilters(Long id, List<String> statusNames, Long userId, String userNamePart, String userFacebookNicknamePart, String phonePart,
                                                               LocalDateTime createdFrom, LocalDateTime createdTo, LocalDateTime closedFrom, LocalDateTime closedTo,
                                                               Pageable pageRequest);
 }

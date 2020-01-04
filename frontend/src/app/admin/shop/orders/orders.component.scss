@@ -1,0 +1,10 @@
+.display-status-change-dialog {
+  ::ng-deep .ui-dialog {
+    width: 600px;
+  }
+
+  .new-status-name {
+    font-weight: 600;
+  }
+
+}

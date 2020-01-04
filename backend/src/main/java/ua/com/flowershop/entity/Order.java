@@ -8,6 +8,8 @@ import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 import static ua.com.flowershop.entity.Order.Status.NEW;
@@ -55,16 +57,24 @@ public class Order {
     public enum Status {
         NEW("NEW"),
         PROCESSING("PROCESSING"),
-        SHIPPED("SHIPPED"),
+        DELIVERING("DELIVERING"),
+        RETURNED("RETURNED"),
         CANCELED("CANCELED"),
-        RETURNING("RETURNING"),
-        RETURNED("RETURNED");
+        DONE("DONE");
 
         private final String value;
 
         @Override
         public String toString() {
             return this.value;
+        }
+
+        public static List<Status> getClosed() {
+            return Arrays.asList(RETURNED, CANCELED, DONE);
+        }
+
+        public static List<Status> getEditable() {
+            return Arrays.asList(NEW, PROCESSING);
         }
 
     }

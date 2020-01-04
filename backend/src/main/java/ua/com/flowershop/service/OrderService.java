@@ -8,10 +8,12 @@ import ua.com.flowershop.entity.FlowerSize;
 import ua.com.flowershop.entity.Order;
 import ua.com.flowershop.entity.OrderItem;
 import ua.com.flowershop.entity.User;
+import ua.com.flowershop.exception.ConflictException;
 import ua.com.flowershop.exception.NotFoundException;
 import ua.com.flowershop.exception.ValidationException;
 import ua.com.flowershop.model.OrderDeliveryModel;
 import ua.com.flowershop.model.OrderModel;
+import ua.com.flowershop.model.OrderStatusChangeRequestModel;
 import ua.com.flowershop.repository.*;
 import ua.com.flowershop.security.SecurityService;
 
@@ -76,6 +78,43 @@ public class OrderService {
 
     }
 
+    public void confirmPayment(Long orderId) {
+        Order order = orderRepository.findById(orderId).orElseThrow(NotFoundException::new);
+        order.setIsPaid(true);
+        orderRepository.save(order);
+    }
+
+    public void changeStatus(Long orderId, OrderStatusChangeRequestModel orderStatusChangeRequest) {
+        Order order = orderRepository.findById(orderId).orElseThrow(NotFoundException::new);
+
+        switch (orderStatusChangeRequest.getStatus()) {
+            case PROCESSING:
+                if (!order.getStatus().equals(Order.Status.NEW)) {
+                    throw new ConflictException("Вказано невалідний статус замовлення");
+                }
+                break;
+            case DELIVERING:
+                if (!Order.Status.getEditable().contains(order.getStatus())) {
+                    throw new ConflictException("Вказано невалідний статус замовлення");
+                }
+                order.setPostDeclaration(orderStatusChangeRequest.getPostDeclaration());
+                break;
+            case DONE:
+            case RETURNED:
+            case CANCELED:
+                if (Order.Status.getClosed().contains(order.getStatus())) {
+                    throw new ConflictException("Вказано невалідний статус замовлення");
+                }
+                break;
+            default:
+                throw new ConflictException("Вказано невалідний статус замовлення");
+
+        }
+
+        order.setStatus(orderStatusChangeRequest.getStatus());
+        orderRepository.save(order);
+    }
+
     private String retrieveAddress (OrderDeliveryModel orderDeliveryModel) {
         String deliveryAddress = "";
         switch(orderDeliveryModel.getDeliveryType()) {
@@ -97,6 +136,7 @@ public class OrderService {
         }
         return deliveryAddress;
     }
+
 
 
 }

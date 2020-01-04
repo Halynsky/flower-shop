@@ -8,7 +8,7 @@
 <div class="panel-content">
   <p-table #dt [columns]="selectedColumns" [value]="items.content" sortField="id" [paginator]="true" [rows]="10" [totalRecords]="items.totalElements"
            [tableStyle]="{'table-layout':'auto'}" dataKey="id" rowExpandMode="single"
-           (onLazyLoad)="onLazyLoad($event)" [lazy]="true">
+           (onLazyLoad)="onLazyLoad($event)" [lazy]="true" [contextMenu]="cm" [(contextMenuSelection)]="selected" (onContextMenuSelect)="onRowSelect($event)">
 
     <!--Column selector-->
     <ng-template pTemplate="caption">
@@ -34,6 +34,11 @@
           <th *ngSwitchDefault [pSortableColumn]="col.field" >
             {{col.header}}
             <p-sortIcon [field]="col.field"></p-sortIcon>
+          </th>
+
+          <th *ngSwitchCase="'userId'" [pSortableColumn]="'user.id'" >
+            {{col.header}}
+            <p-sortIcon [field]="'user.id'"></p-sortIcon>
           </th>
 
           <th *ngSwitchCase="'user'" [pSortableColumn]="'user.name'" >
@@ -79,6 +84,7 @@
           <input *ngSwitchCase="'user'" pInputText type="text" (input)="dt.filter($event.target.value, 'userNamePart', 'contains')" class="table-filter">
           <input *ngSwitchCase="'userFacebookNickname'" pInputText type="text" (input)="dt.filter($event.target.value, 'userFacebookNicknamePart', 'startsWith')" class="table-filter">
           <input *ngSwitchCase="'phone'" pInputText type="text" (input)="dt.filter($event.target.value, 'phonePart', 'contains')" class="table-filter">
+          <input *ngSwitchCase="'userId'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'equals')" class="table-filter">
 
           <div *ngSwitchCase="'status'">
             <p-multiSelect [options]="statusesOptions" defaultLabel="Всі"
@@ -129,6 +135,10 @@
 
           <span *ngSwitchCase="'user'">
             {{rowData[col.field]?.name}}
+          </span>
+
+          <span *ngSwitchCase="'userId'">
+            {{rowData.user?.id}}
           </span>
 
           <span *ngSwitchCase="'userFacebookNickname'">
@@ -206,4 +216,70 @@
   </p-table>
 </div>
 
+<p-contextMenu #cm [model]="menuItems"></p-contextMenu>
 
+<p-dialog [(visible)]="displayStatusChangeDialog" class="display-status-change-dialog" [modal]="true" (onHide)="resetStatusChangeForm(statusChangeForm)">
+  <p-header>
+    Зміна статусу замовлення №{{selected?.id}}
+  </p-header>
+
+  <form id="status_change_form" #statusChangeForm="ngForm" class="status-change-dialog-content" (ngSubmit)="statusChangeForm.valid && changeStatus()">
+
+    <div class="ui-grid ui-grid-responsive ui-fluid">
+
+      <div class="prime-form-group">
+        <div class="ui-grid-col-4">
+          <label>Статус буде змінено на:</label>
+        </div>
+        <div class="ui-grid-col-4">
+          <label class="new-status-name"
+                 [ngClass]="{'png-primary': orderStatusChangeRequest.status == Status.PROCESSING || orderStatusChangeRequest.status == Status.DELIVERING,
+                 'png-accent': orderStatusChangeRequest.status == Status.DONE,
+                 'png-warn': orderStatusChangeRequest.status == Status.RETURNED,
+                 'png-danger': orderStatusChangeRequest.status == Status.CANCELED}">
+            {{translation.text.orderStatuses[orderStatusChangeRequest.status]}}
+          </label>
+        </div>
+      </div>
+
+      <div class="prime-form-group" *ngIf="orderStatusChangeRequest.status == Status.DELIVERING">
+        <div class="ui-grid-col-4">
+          <label>Номер декларації</label>
+        </div>
+        <div class="ui-grid-col-4">
+          <input
+            pInputText
+            #postDeclaration="ngModel"
+            name="postDeclaration"
+            [(ngModel)]="orderStatusChangeRequest.postDeclaration"
+            required/>
+        </div>
+        <div class="ui-grid-col-4">
+          <ng-container *ngIf="postDeclaration.dirty || postDeclaration.touched || statusChangeForm.submitted">
+            <p-message *ngIf="postDeclaration.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="prime-form-group">
+        <div class="ui-grid-col-4">
+          <label>Коментар</label>
+        </div>
+        <div class="ui-grid-col-4">
+          <textarea pInputTextarea
+                    #comment="ngModel"
+                    name="comment"
+                    [(ngModel)]="orderStatusChangeRequest.comment"
+                    cols="23" rows="6" maxlength="500">
+          </textarea>
+        </div>
+      </div>
+
+    </div>
+
+  </form>
+
+  <p-footer>
+    <button pButton form="status_change_form" icon="pi pi-check" label="&nbsp;&nbsp;Підтвердити" type="submit"></button>
+  </p-footer>
+</p-dialog>

@@ -41,4 +41,55 @@ p-multiselect.table-filter > div {
 
 }
 
+.ui-contextmenu{
+  white-space: nowrap;
+  width: auto;
+}
+
+.cm-primary {
+  span {
+    color: #007ad9 !important;
+  }
+}
+
+.cm-accent {
+  span {
+    color: #34A835 !important;
+  }
+}
+
+.cm-warn {
+  span {
+    color: darkorange !important;
+  }
+}
+
+.cm-danger {
+  span {
+    color: #e91224 !important;
+  }
+}
+
+.png-primary {
+  color: #007ad9 !important;
+}
+
+.png-accent {
+  color: #34A835 !important;
+}
+
+.png-warn  {
+  color: darkorange !important;
+}
+
+.png-danger {
+  color: #e91224 !important;
+}
+
+p-contextmenu {
+  .ui-menuitem-icon {
+    min-width: 22px;
+    font-size: 18px;
+  }
+}
 

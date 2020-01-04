@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ua.com.flowershop.model.OrderModel;
+import ua.com.flowershop.model.OrderStatusChangeRequestModel;
 import ua.com.flowershop.projection.OrderAdminProjection;
 import ua.com.flowershop.repository.OrderRepository;
 import ua.com.flowershop.service.OrderService;
@@ -30,6 +31,7 @@ public class OrderController {
     @GetMapping("/forAdmin")
     public ResponseEntity<Page<OrderAdminProjection>> getAllForAdmin(@RequestParam(required = false) Long id,
                                                                      @RequestParam(required = false) List<String> statusNames,
+                                                                     @RequestParam(required = false) Long userId,
                                                                      @RequestParam(required = false) String userNamePart,
                                                                      @RequestParam(required = false) String userFacebookNicknamePart,
                                                                      @RequestParam(required = false) String phonePart,
@@ -38,7 +40,7 @@ public class OrderController {
                                                                      @RequestParam(required = false) LocalDateTime closedFrom,
                                                                      @RequestParam(required = false) LocalDateTime closedTo,
                                                                      @PageableDefault(sort = "id", page = 0, size = 10, direction = Sort.Direction.ASC) Pageable pageRequest) {
-        return new ResponseEntity<>(orderRepository.findForAdminProjectedByFilters(id, statusNames, userNamePart, userFacebookNicknamePart, phonePart, createdFrom, createdTo, closedFrom, closedTo, pageRequest), OK);
+        return new ResponseEntity<>(orderRepository.findForAdminProjectedByFilters(id, statusNames, userId, userNamePart, userFacebookNicknamePart, phonePart, createdFrom, createdTo, closedFrom, closedTo, pageRequest), OK);
     }
 
     @PostMapping
@@ -46,5 +48,18 @@ public class OrderController {
         return new ResponseEntity<>(orderService.create(orderModel), OK);
     }
 
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
+    @PutMapping("/{id}/confirmPayment")
+    public ResponseEntity<Void> confirmPayment(@PathVariable Long id) {
+        orderService.confirmPayment(id);
+        return new ResponseEntity<>(OK);
+    }
+
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
+    @PutMapping("/{id}/changeStatus")
+    public ResponseEntity<Void> changeStatus(@PathVariable Long id, @RequestBody OrderStatusChangeRequestModel orderStatusChangeRequest) {
+        orderService.changeStatus(id, orderStatusChangeRequest);
+        return new ResponseEntity<>(OK);
+    }
 
 }
