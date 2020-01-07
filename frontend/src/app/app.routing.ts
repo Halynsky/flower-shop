@@ -25,7 +25,7 @@ const routes: Routes = [
       { path: 'confirm', loadChildren: './components/confirmation/confirmation.module#ConfirmationModule'},
       { path: 'shop', loadChildren: './components/shop/shop.module#ShopModule'},
       // { path: 'forum', loadChildren: './components/forum/forum.module#ForumModule'},
-      { path: 'contacts', loadChildren: './components/contacts/contacts.module#ContactsModule'},
+      { path: 'about-us', loadChildren: './components/contacts/about-us.module#AboutUsModule'},
       { path: '403', loadChildren: './components/forbidden/forbidden.module#ForbiddenModule'}
     ]
   },
