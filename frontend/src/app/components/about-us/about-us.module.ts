@@ -1,22 +1,22 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from "../shared/shared.module";
-import { ContactsComponent } from "./contacts.component";
+import { AboutUsComponent } from "./about-us.component";
 import { RouterModule, Routes } from "@angular/router";
 
 const routes: Routes = [
-  { path: '', component: ContactsComponent},
+  { path: '', component: AboutUsComponent},
 ];
 
 @NgModule({
   declarations: [
-    ContactsComponent
+    AboutUsComponent
   ],
   imports: [
     RouterModule.forChild(routes),
     SharedModule.forRoot()
   ],
   bootstrap: [
-    ContactsComponent
+    AboutUsComponent
   ]
 })
-export class ContactsModule { }
+export class AboutUsModule { }

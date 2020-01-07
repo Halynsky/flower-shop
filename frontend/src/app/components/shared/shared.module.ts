@@ -37,6 +37,7 @@ import { ShopFilterDialogComponent } from "./shop-filter-dialog/shop-filter-dial
 import { DigitOnlyDirective } from "../../directives/ditgits-only.directive";
 import { AmountControlledInputComponent } from './amount-controled-input/amount-controlled-input.component';
 import { AddToBucketDialogComponent } from "./add-to-bucket-dialog/add-to-bucket-dialog.component";
+import { TermsAndConditionsComponent } from "./terms-and-conditions/terms-and-conditions.component";
 
 const PROVIDERS = [
   {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 4000, panelClass: "snack-custom-class"}},
@@ -54,7 +55,8 @@ const PROVIDERS = [
     ShopFiltersComponent,
     ShopFilterDialogComponent,
     DigitOnlyDirective,
-    AmountControlledInputComponent
+    AmountControlledInputComponent,
+    TermsAndConditionsComponent
   ],
   imports: [
     RouterModule,
