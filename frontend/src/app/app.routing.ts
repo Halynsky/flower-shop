@@ -8,6 +8,7 @@ import { PurchaseHistoryComponent } from "./components/user-cabinet/purchase-his
 import { FavouriteArticlesComponent } from "./components/user-cabinet/favourite-articles/favourite-articles.component";
 import { AdminPanelGuard } from "./guards/admin-panel.guard";
 import { UserGuard } from "./guards/user.guard";
+import { TermsAndConditionsComponent } from "./components/shared/terms-and-conditions/terms-and-conditions.component";
 
 const routes: Routes = [
   { path: '',
@@ -25,8 +26,9 @@ const routes: Routes = [
       { path: 'confirm', loadChildren: './components/confirmation/confirmation.module#ConfirmationModule'},
       { path: 'shop', loadChildren: './components/shop/shop.module#ShopModule'},
       // { path: 'forum', loadChildren: './components/forum/forum.module#ForumModule'},
-      { path: 'about-us', loadChildren: './components/contacts/about-us.module#AboutUsModule'},
-      { path: '403', loadChildren: './components/forbidden/forbidden.module#ForbiddenModule'}
+      { path: 'about-us', loadChildren: './components/about-us/about-us.module#AboutUsModule'},
+      { path: '403', loadChildren: './components/forbidden/forbidden.module#ForbiddenModule'},
+      { path: 'terms-and-conditions', component: TermsAndConditionsComponent}
     ]
   },
   { path: 'admin', loadChildren: './admin/admin.module#AdminModule', canLoad: [AdminPanelGuard]}

@@ -1,0 +1,76 @@
+@import "theme";
+@import "mixins.scss";
+
+
+:host {
+  padding:0px 26px 26px 26px;
+
+  .main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    padding-top: 26px;
+
+    .title {
+      color: mat-color($accent);
+      font-size: 1.5em;
+      font-weight: 500;
+      margin: 0px 0px 26px;
+      align-items: center;
+      display: flex;
+      @include response-to(xs) {
+        font-size: 1em;
+        font-weight: 500;
+      }
+    }
+    .header {
+      h2 {
+        color: black;
+        @include response-to(xs) {
+          font-size: 0.75em;
+        }
+      }
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 32px;
+      .page-title {
+        color: mat-color($accent);
+        font-size: 2em;
+        font-weight: 600;
+        margin: 0px 0px 26px;
+        align-items: center;
+        display: flex;
+        padding: 6px;
+        @include response-to(xs) {
+          font-size: 1em;
+          font-weight: 500;
+        }
+      }
+    }
+
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      .faq-block {
+        color: $grey-900;
+        font-size: 18px;
+        max-width: 888px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        margin-bottom: 26px;
+        @include response-to(xs) {
+          font-size: 16px;
+
+        }
+      }
+    }
+
+  }
+}
