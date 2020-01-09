@@ -18,7 +18,7 @@ import { MainInterceptor } from "./inteceptors/main.interceptor";
 import { AuthDialogComponent } from "./components/shared/auth-dialog/auth-dialog.component";
 import { BucketDialogComponent } from "./components/shared/bucket-dialog/bucket-dialog.component";
 import { AuthServiceConfig, FacebookLoginProvider, SocialLoginModule } from "angularx-social-login";
-import { ValidatorModule } from "./validators/validator.module";
+import { ValidatorsModule } from "./validators/validators.module";
 import { UserCabinetModule } from "./components/user-cabinet/user-cabinet.module";
 import { ShopFilterDialogComponent } from "./components/shared/shop-filter-dialog/shop-filter-dialog.component";
 import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
@@ -65,7 +65,7 @@ export function getAuthServiceConfigs() {
     SharedModule,
     UserCabinetModule,
     SocialLoginModule,
-    ValidatorModule.forRoot()
+    ValidatorsModule.forRoot()
   ],
   providers: [
     DatePipe,

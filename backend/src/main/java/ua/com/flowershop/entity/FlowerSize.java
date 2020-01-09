@@ -46,4 +46,8 @@ public class FlowerSize {
     @OneToMany(mappedBy = "flowerSize")
     private Set<WarehouseOperation> warehouseOperations;
 
+    public Integer getAvailable() {
+        return amount - reserved;
+    }
+
 }

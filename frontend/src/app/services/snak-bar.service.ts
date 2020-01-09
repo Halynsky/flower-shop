@@ -31,7 +31,7 @@ export class SnackBarService {
   }
 
   methodNotImplemented() {
-    return this.snackBar.open("Method not implemented");
+    return this.snackBar.open("Функція ще не реалізована");
   }
 
 }

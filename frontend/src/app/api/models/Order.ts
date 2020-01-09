@@ -25,6 +25,7 @@ export class OrderItemAdmin {
   image: string;
   sizeName: string;
   flowerSizeId: number;
+  available: number;
   orderId: number;
 }
 
@@ -50,5 +51,11 @@ export class OrderStatusChangeRequest {
   status: Order.Status;
   comment: string;
   postDeclaration: string
+}
+
+export class OrderContactsChangeRequest {
+  id: number;
+  phone: string;
+  deliveryAddress: string
 }
 

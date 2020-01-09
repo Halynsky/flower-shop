@@ -2,7 +2,7 @@ package ua.com.flowershop.projection;
 
 import org.springframework.beans.factory.annotation.Value;
 
-public interface FlowerSizeShortProjection {
+public interface FlowerSizeTinyProjection {
     Long getId();
     Integer getPrice();
     Integer getAmount();

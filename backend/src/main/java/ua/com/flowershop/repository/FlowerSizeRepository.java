@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ua.com.flowershop.entity.FlowerSize;
 import ua.com.flowershop.projection.FlowerSizeFullProjection;
+import ua.com.flowershop.projection.FlowerSizeTinyProjection;
 
 import java.util.List;
 
@@ -22,6 +23,8 @@ public interface FlowerSizeRepository extends JpaRepository<FlowerSize, Long> {
         "AND (:colorNamePart IS null OR lower(fs.flower.color.name) LIKE '%' || lower(cast(:colorNamePart as string)) || '%' ) ")
     Page<FlowerSizeFullProjection> findForAdminProjectedByFilters(Long id, String flowerNamePart, List<String> flowerTypeNames, Integer sizeFrom, Integer sizeTo,
                                                                   Integer priceFrom, Integer priceTo, String colorNamePart, Pageable pageRequest);
+
+    List<FlowerSizeTinyProjection> findAllForAdminProjectedByOrderByFlowerNameAscSizeNameAsc();
 
     @Query("SELECT min(fs.price) FROM FlowerSize fs " +
         "WHERE fs.flower.id = :id")

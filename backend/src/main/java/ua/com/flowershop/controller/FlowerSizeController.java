@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ua.com.flowershop.projection.FlowerSizeFullProjection;
+import ua.com.flowershop.projection.FlowerSizeTinyProjection;
 import ua.com.flowershop.repository.FlowerSizeRepository;
 
 import java.util.List;
@@ -39,6 +40,12 @@ public class FlowerSizeController {
         Page<FlowerSizeFullProjection> flowerSizes = flowerSizeRepository.findForAdminProjectedByFilters(id, flowerNamePart, flowerTypeNames,
             sizeFrom, sizeTo, priceFrom, priceTo, colorNamePart, pageRequest);
         return new ResponseEntity<>(flowerSizes, OK);
+    }
+
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
+    @GetMapping("/forAdmin/asList")
+    public ResponseEntity<List<FlowerSizeTinyProjection>> getAllForAdmin() {
+        return new ResponseEntity<>(flowerSizeRepository.findAllForAdminProjectedByOrderByFlowerNameAscSizeNameAsc(), OK);
     }
 
 }

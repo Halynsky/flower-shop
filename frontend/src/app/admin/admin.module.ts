@@ -24,7 +24,7 @@ import { FlowerItemComponent } from "./types/flowers/flower-item/flower-item.com
 import { PipesModule } from "../pipes/pipes.module";
 import { UserItemComponent } from "./users/user-item/user-item.component";
 import { WarehouseOperationItemComponent } from "./shop/warehouse-operations/warehouse-operation-item/warehouse-operation-item.component";
-import { ValidatorModule } from "../validators/validator.module";
+import { ValidatorsModule } from "../validators/validators.module";
 import { ImagePreviewComponent } from "./shared/image-preview/image-preview.component";
 import { WarehouseComponent } from "./shop/warehouse/warehouse.component";
 import {
@@ -50,6 +50,7 @@ import {
   TieredMenuModule,
   ToggleButtonModule
 } from "primeng";
+import { DirectivesModule } from "../directives/directives.module";
 
 @NgModule({
   declarations: [
@@ -99,7 +100,8 @@ import {
     NgArrayPipesModule,
     SliderModule,
     PipesModule.forRoot(),
-    ValidatorModule.forRoot(),
+    DirectivesModule.forRoot(),
+    ValidatorsModule.forRoot(),
     ColorPickerModule,
     SliderModule,
     DropdownModule,

@@ -53,7 +53,7 @@ public class User {
     @Column(columnDefinition = "timestamp default timezone('utc'::text, now())")
     private LocalDateTime created = LocalDateTime.now();
     private LocalDateTime lastOrderDate;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "user")
     private List<Order> orders;
     @JsonIgnore
     @OneToMany(mappedBy = "user")

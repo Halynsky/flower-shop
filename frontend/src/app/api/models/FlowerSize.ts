@@ -6,6 +6,8 @@ export class FlowerSize {
   price: number;
   priceOld: number;
   amount: number;
+  reserved: number;
+  available: number;
   size: Size;
   flower: Flower;
 }

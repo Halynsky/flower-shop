@@ -3,8 +3,6 @@ package ua.com.flowershop.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,10 +12,7 @@ import ua.com.flowershop.exception.NotFoundException;
 import ua.com.flowershop.repository.ImageRepository;
 
 import javax.validation.ValidationException;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import static ua.com.flowershop.util.Constants.SLASH;
 import static ua.com.flowershop.util.Path.IMAGES_PATH;
@@ -98,7 +93,7 @@ public class ImageService {
         if (i >= 0) {
             log.info("Image {} successfully removed", imageName);
         } else {
-            throw new NotFoundException("Image already deleted or does not exist" + imageName);
+            throw new NotFoundException("Картинка не істнує або вже видалена " + imageName);
         }
     }
 

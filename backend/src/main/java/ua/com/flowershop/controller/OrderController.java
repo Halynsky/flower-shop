@@ -8,6 +8,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import ua.com.flowershop.model.IdAmountTuple;
+import ua.com.flowershop.model.OrderContactsChangeRequestModel;
 import ua.com.flowershop.model.OrderModel;
 import ua.com.flowershop.model.OrderStatusChangeRequestModel;
 import ua.com.flowershop.projection.OrderAdminProjection;
@@ -59,6 +61,41 @@ public class OrderController {
     @PutMapping("/{id}/changeStatus")
     public ResponseEntity<Void> changeStatus(@PathVariable Long id, @RequestBody OrderStatusChangeRequestModel orderStatusChangeRequest) {
         orderService.changeStatus(id, orderStatusChangeRequest);
+        return new ResponseEntity<>(OK);
+    }
+
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
+    @PutMapping("/{id}/changeContacts")
+    public ResponseEntity<Void> changeContacts(@PathVariable Long id, @RequestBody OrderContactsChangeRequestModel orderContactsChangeRequest) {
+        orderService.changeContacts(id, orderContactsChangeRequest);
+        return new ResponseEntity<>(OK);
+    }
+
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
+    @PutMapping("/{id}/changeNote")
+    public ResponseEntity<Void> changeNote(@PathVariable Long id, @RequestBody String note) {
+        orderService.changeNote(id, note);
+        return new ResponseEntity<>(OK);
+    }
+
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
+    @PutMapping("/{id}/merge")
+    public ResponseEntity<Void> merge(@PathVariable Long id, @RequestBody String otherId) {
+        orderService.merge(id, Long.parseLong(otherId));
+        return new ResponseEntity<>(OK);
+    }
+
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
+    @PutMapping("/{id}/split")
+    public ResponseEntity<Void> split(@PathVariable Long id, @RequestBody List <Long> orderItemIds) {
+        orderService.split(id, orderItemIds);
+        return new ResponseEntity<>(OK);
+    }
+
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
+    @PutMapping("/{id}/items")
+    public ResponseEntity<Void> updateItems(@PathVariable Long id, @RequestBody List <IdAmountTuple> orderItems) {
+        orderService.updateItems(id, orderItems);
         return new ResponseEntity<>(OK);
     }
 

@@ -32,9 +32,6 @@ public class Order {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, columnDefinition = "varchar(32) default 'NEW'")
     private Status status = NEW;
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, columnDefinition = "varchar(256) default 'NEW'")
-    private DeliveryType deliveryType;
     @Column(columnDefinition = "varchar(500)")
     private String comment;
     @Column(columnDefinition = "varchar(2000)")
@@ -50,7 +47,7 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-    @OneToMany(mappedBy = "order", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "order")
     private Set<OrderItem> orderItems;
 
     @AllArgsConstructor

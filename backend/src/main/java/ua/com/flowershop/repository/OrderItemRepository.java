@@ -15,7 +15,7 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
     Optional<OrderItem> findById(Long id);
 
     @Query("SELECT DISTINCT(oi.id) as id, oi.amount as amount, o.id as orderId, fs.id as flowerSizeId, fs.price as price, f.image as image, s.name as sizeName, " +
-        "f.name as name FROM OrderItem oi " +
+        "f.name as name, (fs.amount - fs.reserved) as available FROM OrderItem oi " +
         "INNER JOIN oi.order o " +
         "INNER JOIN oi.flowerSize fs " +
         "INNER JOIN fs.flower f " +

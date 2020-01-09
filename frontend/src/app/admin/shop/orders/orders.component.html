@@ -8,7 +8,8 @@
 <div class="panel-content">
   <p-table #dt [columns]="selectedColumns" [value]="items.content" sortField="id" [paginator]="true" [rows]="10" [totalRecords]="items.totalElements"
            [tableStyle]="{'table-layout':'auto'}" dataKey="id" rowExpandMode="single"
-           (onLazyLoad)="onLazyLoad($event)" [lazy]="true" [contextMenu]="cm" [(contextMenuSelection)]="selected" (onContextMenuSelect)="onRowSelect($event)">
+           (onLazyLoad)="onLazyLoad($event)" [lazy]="true"
+           [contextMenu]="cm" selectionMode="single" (onContextMenuSelect)="onContextMenuSelect($event)" contextMenuSelectionMode="joint">
 
     <!--Column selector-->
     <ng-template pTemplate="caption">
@@ -122,11 +123,11 @@
 
     <!--Rows-->
 
-    <ng-template pTemplate="body" let-rowData let-columns="columns" let-expanded="expanded">
-      <tr [pContextMenuRow]="rowData" [ngClass]="{'expanded' : expanded}">
+    <ng-template pTemplate="body" let-rowData let-columns="columns" let-expanded="expanded" >
+      <tr [pContextMenuRow]="rowData" [ngClass]="{'selected' : isContextMenuOpened && selected?.id == rowData?.id, 'expanded' : expanded && !(isContextMenuOpened && selected?.id == rowData?.id)}">
 
         <td>
-          <a [pRowToggler]="rowData">
+          <a [pRowToggler]="rowData" class="row-expander">
             <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
           </a>
         </td>
@@ -216,9 +217,9 @@
   </p-table>
 </div>
 
-<p-contextMenu #cm [model]="menuItems"></p-contextMenu>
+<p-contextMenu #cm [model]="menuItems" (onHide)="onContextMenuHide($event)"></p-contextMenu>
 
-<p-dialog [(visible)]="displayStatusChangeDialog" class="display-status-change-dialog" [modal]="true" (onHide)="resetStatusChangeForm(statusChangeForm)">
+<p-dialog [(visible)]="displayStatusChangeDialog" class="status-change-dialog" [modal]="true" (onHide)="resetStatusChangeForm(statusChangeForm)">
   <p-header>
     Зміна статусу замовлення №{{selected?.id}}
   </p-header>
@@ -280,6 +281,301 @@
   </form>
 
   <p-footer>
-    <button pButton form="status_change_form" icon="pi pi-check" label="&nbsp;&nbsp;Підтвердити" type="submit"></button>
+    <button pButton form="status_change_form" icon="pi pi-check" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog [(visible)]="displayContactsChangeDialog" class="contacts-change-dialog" [modal]="true" (onHide)="resetContactsChangeForm(contactsChangeForm)">
+  <p-header>
+    Зміна реквізитів замовлення №{{selected?.id}}
+  </p-header>
+
+  <form id="contacts_change_form" #contactsChangeForm="ngForm" class="contacts-change-dialog-content" (ngSubmit)="contactsChangeForm.valid && changeContacts()">
+
+    <div class="ui-grid ui-grid-responsive ui-fluid">
+
+      <div class="prime-form-group">
+        <div class="ui-grid-col-4">
+          <label>Телефон</label>
+        </div>
+        <div class="ui-grid-col-4">
+          <input
+            pInputText
+            #phone="ngModel"
+            name="phone"
+            [(ngModel)]="orderContactsChangeRequest.phone"
+            required/>
+        </div>
+        <div class="ui-grid-col-4">
+          <ng-container *ngIf="phone.dirty || phone.touched || contactsChangeForm.submitted">
+            <p-message *ngIf="phone.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="prime-form-group">
+        <div class="ui-grid-col-4">
+          <label>Адреса доставки</label>
+        </div>
+        <div class="ui-grid-col-4">
+          <input
+            pInputText
+            #deliveryAddress="ngModel"
+            name="deliveryAddress"
+            [(ngModel)]="orderContactsChangeRequest.deliveryAddress"
+            required/>
+        </div>
+        <div class="ui-grid-col-4">
+          <ng-container *ngIf="deliveryAddress.dirty || deliveryAddress.touched || contactsChangeForm.submitted">
+            <p-message *ngIf="deliveryAddress.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
+          </ng-container>
+        </div>
+      </div>
+
+    </div>
+
+  </form>
+
+  <p-footer>
+    <button pButton form="contacts_change_form" icon="pi pi-check" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog [(visible)]="displayNoteChangeDialog" class="status-change-dialog" [modal]="true" (onHide)="resetNoteChangeForm(contactsChangeForm)">
+  <p-header>
+    Оновлення примітки для замовлення №{{selected?.id}}
+  </p-header>
+
+  <form id="note_change_form" #noteChangeForm="ngForm" class="status-change-dialog-content" (ngSubmit)="noteChangeForm.valid && changeNote()">
+
+    <div class="ui-grid ui-grid-responsive ui-fluid">
+
+      <div class="prime-form-group">
+        <div class="ui-grid-col-4">
+          <label>Примітка</label>
+        </div>
+        <div class="ui-grid-col-4">
+          <textarea pInputTextarea
+                    #note="ngModel"
+                    name="note"
+                    [(ngModel)]="orderNote"
+                    cols="23" rows="6" maxlength="500">
+          </textarea>
+        </div>
+        <div class="ui-grid-col-4">
+        </div>
+      </div>
+
+    </div>
+
+  </form>
+
+  <p-footer>
+    <button pButton form="note_change_form" icon="pi pi-check" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog [(visible)]="displayMergeDialog" class="merge-dialog" [modal]="true" (onHide)="resetMergeForm(mergeForm)">
+  <p-header>
+    Об'єднання замовлення №{{selected?.id}} з іншим замовленням
+  </p-header>
+
+  <form id="merge_form" #mergeForm="ngForm" class="merge-dialog-content" (ngSubmit)="mergeForm.valid && merge()">
+
+    <div class="ui-grid ui-grid-responsive ui-fluid">
+
+      <div class="prime-form-group">
+        <div class="ui-grid-col-4">
+          <label>Номер іншого замовлення</label>
+        </div>
+        <div class="ui-grid-col-4">
+          <input pInputText
+                    #mergingOrder="ngModel"
+                    name="mergingOrder"
+                    [(ngModel)]="mergingOrderId"
+                    required>
+        </div>
+        <div class="ui-grid-col-4">
+          <ng-container *ngIf="mergingOrder.dirty || mergingOrder.touched || mergeForm.submitted">
+            <p-message *ngIf="mergingOrder.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
+          </ng-container>
+        </div>
+      </div>
+
+    </div>
+
+  </form>
+
+  <p-footer>
+    <button pButton form="merge_form" icon="pi pi-check" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog [(visible)]="displaySplitDialog" class="split-dialog" [modal]="true" (onHide)="resetSplitForm(splitForm)">
+  <p-header>
+    Розділення замовлення №{{splittingOrder?.id}}
+  </p-header>
+
+  <form id="split_form" #splitForm="ngForm" class="split-dialog-content" (ngSubmit)="splitForm.valid && split()">
+
+      <div class="orders-splitting-block-wrapper" *ngIf="splittingOrder">
+        <div class="split-left">
+          <div class="title">Замовлення №<b>{{splittingOrder?.id}}</b></div>
+          <div class="split-panel-content">
+
+            <div class="expanded-row-table split-table" *ngIf="splittingOrder.orderItems.length > 0">
+              <div class="body">
+                <div class="row">
+                  <div class="head">Фото</div>
+                  <div class="head">Назва</div>
+                  <div class="head">Розмір</div>
+                  <div class="head">Кількість</div>
+                  <div class="head empty"></div>
+                </div>
+                <ng-template ngFor let-orderItem [ngForOf]="splittingOrder.orderItems" let-i="index">
+                  <div class="row">
+                    <div class="cell image-wrapper">
+                      <img [src]="orderItem.image" class="order-item-logo">
+                    </div>
+                    <div class="cell">{{orderItem.name}}</div>
+                    <div class="cell">{{orderItem.sizeName}}</div>
+                    <div class="cell">{{orderItem.amount}}</div>
+                    <div class="cell control-wrapper" (click)="moveToOtherOrder(i)">
+                      <i class="fas fa-caret-right"></i>
+                    </div>
+                  </div>
+                </ng-template>
+              </div>
+            </div>
+
+            <div class="order-empty" *ngIf="splittingOrder.orderItems.length == 0">
+              В основному замовленні повинна залишитись хоча б одна позиція
+            </div>
+
+          </div>
+        </div>
+        <div class="split-right">
+          <div class="title">Нове замовлення</div>
+          <div class="split-panel-content">
+
+            <div class="expanded-row-table split-table" *ngIf="splittingOtherOrderItems.length > 0">
+              <div class="body">
+                <div class="row">
+                  <div class="head empty"></div>
+                  <div class="head">Фото</div>
+                  <div class="head">Назва</div>
+                  <div class="head">Розмір</div>
+                  <div class="head">Кількість</div>
+                </div>
+                <ng-template ngFor let-orderItem [ngForOf]="splittingOtherOrderItems" let-i="index">
+                  <div class="row">
+                    <div class="cell control-wrapper" (click)="moveToMainOrder(i)">
+                      <i class="fas fa-caret-left"></i>
+                    </div>
+                    <div class="cell image-wrapper">
+                      <img [src]="orderItem.image" class="order-item-logo">
+                    </div>
+                    <div class="cell">{{orderItem.name}}</div>
+                    <div class="cell">{{orderItem.sizeName}}</div>
+                    <div class="cell">{{orderItem.amount}}</div>
+                  </div>
+                </ng-template>
+
+              </div>
+            </div>
+
+            <div class="order-empty" *ngIf="splittingOtherOrderItems.length == 0">
+              Перемістіть сюди позиції з основного замовлення
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+  </form>
+
+  <p-footer>
+    <button pButton form="split_form" icon="pi pi-check" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading || splittingOtherOrderItems.length == 0 || this.splittingOrder.orderItems.length == 0"></button>
+  </p-footer>
+</p-dialog>
+
+
+<p-dialog [(visible)]="displayUpdateOrderItemsDialog" class="update-order-items-dialog" [modal]="true" (onHide)="resetUpdateOrderItemsForm(updateOrderItemsForm)" positionTop="120">
+  <p-header>
+    Оновлення замовлення №{{selected?.id}}
+  </p-header>
+
+  <form id="update_order_items" #updateOrderItemsForm="ngForm" class="update-order-items-dialog-content" (ngSubmit)="updateOrderItemsForm.valid && updateOrderItems()">
+
+    <!--TODO: Add loading spinner-->
+
+    <div class="update-order-items-block-wrapper" *ngIf="updatingOrder && flowerSizes">
+
+      <div class="expanded-row-table update-order-items-table">
+        <div class="body">
+          <div class="row">
+            <div class="head">Фото</div>
+            <div class="head">Назва</div>
+            <div class="head">Розмір</div>
+            <div class="head">Кількість</div>
+            <div class="head">Сума</div>
+            <div class="head"></div>
+          </div>
+          <ng-template ngFor let-orderItem [ngForOf]="updatingOrder.orderItems" let-i="index">
+            <div class="row">
+              <div class="cell image-wrapper">
+                <img [src]="orderItem.image" class="order-item-logo">
+              </div>
+              <div class="cell">{{orderItem.name}}</div>
+              <div class="cell">{{orderItem.sizeName}}</div>
+              <div class="cell">
+                <div class="input-wrapper">
+                  <i class="fas fa-angle-left" (click)="minusAmount(i)"></i>
+                  <input [name]="'orderItem_' + orderItem.flowerSizeId" (ngModelChange)="onAmountModelChange($event, orderItem)" [(ngModel)]="orderItem.amount" maxlength="5" required type="text" digitOnly minValue="1" [maxValue]="getMaxForFlowerSize(orderItem)" >
+                  <i class="fas fa-angle-right" (click)="plusAmount(i)"></i>
+                </div>
+              </div>
+              <div class="cell">{{orderItem.amount * orderItem.price / 100 + ' грн'}}</div>
+              <div class="cell control-wrapper" (click)="removeOrderItem(i)">
+                <i class="fas fa-times"></i>
+              </div>
+            </div>
+
+          </ng-template>
+        </div>
+      </div>
+
+      <div class="add-block">
+
+        <p-dropdown class="add-flower-size-dropdown" [options]="flowerSizes" [(ngModel)]="flowerSizeToAdd" name="flowerSizeToAdd" filter="true" placeholder="Оберіть товар" emptyFilterMessage="Не знайдено" optionLabel="flower.name" appendTo="body">
+          <ng-template let-selectedItem pTemplate="selectedItem">
+            <div class="flower-size-selected">
+              <img [src]="selectedItem.value.flower.image"/>
+              <div><b>{{selectedItem.value.flower.name}}</b> {{selectedItem.value.size.name}}, {{selectedItem.value.flower.flowerType.nameSingle}}</div>
+            </div>
+          </ng-template>
+          <ng-template let-item pTemplate="item">
+            <div class="ui-helper-clearfix">
+              <div class="flower-size-option">
+                <img [src]="item.value.flower.image"/>
+                <div class="flower-size-option-info">
+                  <div class="flower-size-option-info-main"><b>{{item.value.flower.name}}</b> {{item.value.size.name}}, {{item.value.flower.flowerType.nameSingle}}</div>
+                  <div class="flower-size-option-info-additional">Ціна: {{item.value.price / 100}} грн, Доступно: {{item.value.available}} шт</div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+
+        <button pButton icon="pi pi-plus" label="&nbsp;&nbsp;Додати" type="button" class="ui-button-success" [disabled]="loading" (click)="addOrderItem()"></button>
+
+      </div>
+
+    </div>
+
+  </form>
+
+  <p-footer>
+    <button pButton form="update_order_items" icon="pi pi-check" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading || updateOrderItemsForm.invalid"></button>
   </p-footer>
 </p-dialog>

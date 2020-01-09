@@ -18,10 +18,10 @@ import { EqualValidator } from "./equal-validator.directive";
   ],
   providers: []
 })
-export class ValidatorModule {
+export class ValidatorsModule {
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule: ValidatorModule,
+      ngModule: ValidatorsModule,
     };
   }
 }

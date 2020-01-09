@@ -7,6 +7,7 @@ import { Pagination } from "../../api/models/Pagination";
 import { RestPage } from "../../api/models/RestPage";
 import { MatDialog, MatDialogRef } from "@angular/material";
 import { ShopFilterDialogComponent } from "../shared/shop-filter-dialog/shop-filter-dialog.component";
+import { finalize } from "rxjs/operators";
 
 @Component({
   selector: 'shop',
@@ -15,27 +16,42 @@ import { ShopFilterDialogComponent } from "../shared/shop-filter-dialog/shop-fil
 })
 export class ShopComponent implements OnInit {
 
+  private DEFAULT_PAGE_SIZE = 9;
+
   flowersPage: RestPage<FlowerShort> = new RestPage<FlowerShort>();
   filters: ShopFilter = new ShopFilter();
   sort = 'popularity,ASC';
   searchTerm = '';
 
-  pagination: Pagination = new Pagination(0, 12);
+  pagination: Pagination;
 
   shopFilterDialogRef: MatDialogRef<any>;
+  loading = true;
 
   constructor(private flowerService: FlowerService,
               private snackBarService: SnackBarService,
               public dialog: MatDialog) {
-    this.getShopItems(this.searchTerm, this.pagination);
+    this.getShopItems(this.searchTerm);
   }
 
   ngOnInit() {
   }
 
-  getShopItems(searchTerm: string, pagination: Pagination, filters?: ShopFilter) {
-    this.flowerService.getForShop(searchTerm, pagination, filters).subscribe(
-      page => this.flowersPage = page,
+  getShopItems(searchTerm: string, filters?: ShopFilter, showMore: boolean = false) {
+    this.pagination = showMore ? this.pagination.nextPage() : new Pagination(0, this.DEFAULT_PAGE_SIZE);
+    this.loading = true;
+    this.flowerService.getForShop(searchTerm, this.pagination, filters)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(
+      page => {
+        if (!showMore) {
+          this.flowersPage = page
+        } else {
+          page.content.unshift(...this.flowersPage.content);
+          page.numberOfElements += this.flowersPage.numberOfElements;
+          this.flowersPage = page;
+        }
+      },
       error => this.snackBarService.showError(error)
       )
   }
@@ -46,20 +62,20 @@ export class ShopComponent implements OnInit {
 
   onFilterChange(event) {
     this.filters = event;
-    this.getShopItems(this.searchTerm, this.pagination, this.filters)
+    this.getShopItems(this.searchTerm, this.filters)
   }
 
   sortSelectionChange(event) {
     this.pagination.sort = this.sort;
-    this.getShopItems(this.searchTerm, this.pagination, this.filters)
+    this.getShopItems(this.searchTerm, this.filters)
   }
 
   searchTermChange(event) {
-    this.getShopItems(this.searchTerm, this.pagination, this.filters)
+    this.getShopItems(this.searchTerm, this.filters)
   }
 
   searchTermCleared() {
-    this.getShopItems(this.searchTerm, this.pagination, this.filters)
+    this.getShopItems(this.searchTerm, this.filters)
   }
 
   openFilterModal() {
@@ -72,6 +88,10 @@ export class ShopComponent implements OnInit {
       this.onFilterChange(filter);
     });
     this.shopFilterDialogRef.componentInstance.filters = this.filters;
+  }
+
+  showMore() {
+    this.getShopItems(this.searchTerm, null, true);
   }
 
 }

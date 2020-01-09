@@ -9,6 +9,8 @@ import { Observable, of } from "rxjs";
 import { timeout } from "rxjs/operators";
 import { OrderRequest } from "../../api/models/Order";
 import { BucketDialogComponent } from "../shared/bucket-dialog/bucket-dialog.component";
+import { SnackBarService } from "../../services/snak-bar.service";
+import { getErrorMessage } from "../../utils/Functions";
 
 @Component({
   selector: 'order',
@@ -29,7 +31,9 @@ export class OrderComponent implements OnInit {
               public bucketLocalService: BucketLocalService,
               private securityService: SecurityService,
               private orderService: OrderService,
-              public dialog: MatDialog) {}
+              public snackBarService: SnackBarService,
+              public dialog: MatDialog) {
+  }
 
   ngOnInit() {
 
@@ -54,7 +58,7 @@ export class OrderComponent implements OnInit {
   }
 
   fillUserData() {
-    if(this.securityService.isAuthenticated()) {
+    if (this.securityService.isAuthenticated()) {
       let user = this.securityService.getUser();
       this.contactInfoFormGroup.get('name').setValue(user.name);
       this.contactInfoFormGroup.get('email').setValue(user.email);
@@ -70,7 +74,7 @@ export class OrderComponent implements OnInit {
     this.orderService.create(orderRequest).subscribe(orderId => {
       this.bucketLocalService.clearBucket();
       this.orderId = orderId;
-    })
+    }, error => this.snackBarService.showError(getErrorMessage(error)))
   }
 
   directAddressRequired() {
@@ -86,7 +90,7 @@ export class OrderComponent implements OnInit {
     this.deliveryInfoFormGroup.get('apartment').clearValidators();
     this.deliveryInfoFormGroup.get('novaPoshtaDepartment').clearValidators();
 
-    switch(event.value) {
+    switch (event.value) {
       case DeliveryType.NOVA_POSHTA_COURIER:
       case DeliveryType.UKR_POSHTA_DEPARTMENT: {
         this.deliveryInfoFormGroup.get('city').setValidators([Validators.required]);

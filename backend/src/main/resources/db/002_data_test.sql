@@ -55,7 +55,7 @@ INSERT INTO flowers__sizes (flower_id, size_id, amount, price) VALUES (1, 1, 31,
 INSERT INTO flowers__sizes (flower_id, size_id, amount, price) VALUES (2, 1, 81, 1000);
 INSERT INTO flowers__sizes (flower_id, size_id, amount, price) VALUES (2, 2, 12, 1800);
 INSERT INTO flowers__sizes (flower_id, size_id, amount, price) VALUES (3, 2, 23, 1500);
-INSERT INTO flowers__sizes (flower_id, size_id, amount, price) VALUES (3, 1, 10, 1300);
+INSERT INTO flowers__sizes (flower_id, size_id, amount, price) VALUES (3, 1, 40, 1300);
 
 INSERT INTO flowers__sizes (flower_id, size_id, amount, price, price_old) VALUES (4, 1, 42, 1100, 1200);
 INSERT INTO flowers__sizes (flower_id, size_id, amount, price) VALUES (5, 1, 38, 1000);
@@ -93,7 +93,7 @@ INSERT INTO warehouse_operations (amount, flower_size_id, date, warehouse_operat
 INSERT INTO warehouse_operations (amount, flower_size_id, date, warehouse_operation_type_id) VALUES (9, 3, '2019-07-15 22:26:12', (SELECT id FROM warehouse_operation_types WHERE operation_type = 'GIFT'));
 INSERT INTO warehouse_operations (amount, flower_size_id, date, warehouse_operation_type_id) VALUES (61, 4, '2019-07-10 10:26:12', (SELECT id FROM warehouse_operation_types WHERE operation_type = 'SALE'));
 INSERT INTO warehouse_operations (amount, flower_size_id, date, warehouse_operation_type_id) VALUES (85, 5, '2019-07-12 13:26:12',(SELECT id FROM warehouse_operation_types WHERE operation_type = 'EXTERNAL_SALE'));
-INSERT INTO warehouse_operations (amount, flower_size_id, date, warehouse_operation_type_id) VALUES (130, 6, '2019-07-15 22:26:12', (SELECT id FROM warehouse_operation_types WHERE operation_type = 'DEFECT'));
+INSERT INTO warehouse_operations (amount, flower_size_id, date, warehouse_operation_type_id) VALUES (100, 6, '2019-07-15 22:26:12', (SELECT id FROM warehouse_operation_types WHERE operation_type = 'DEFECT'));
 INSERT INTO warehouse_operations (amount, flower_size_id, date, warehouse_operation_type_id) VALUES (56, 7, '2019-07-10 10:26:12', (SELECT id FROM warehouse_operation_types WHERE operation_type = 'SALE'));
 INSERT INTO warehouse_operations (amount, flower_size_id, date, warehouse_operation_type_id) VALUES (161, 8, '2019-07-12 13:26:12',(SELECT id FROM warehouse_operation_types WHERE operation_type = 'GIFT'));
 INSERT INTO warehouse_operations (amount, flower_size_id, date, warehouse_operation_type_id) VALUES (133, 9, '2019-07-15 22:26:12', (SELECT id FROM warehouse_operation_types WHERE operation_type = 'GIFT'));
@@ -101,3 +101,29 @@ INSERT INTO warehouse_operations (amount, flower_size_id, date, warehouse_operat
 INSERT INTO users (email, phone, password, name, role, is_enabled, is_virtual, is_activated) VALUES ('admin@gmail.com', '0501111111', '$2a$10$Sl0X5/wPiIi6LxdkBoLq1O5/vonmz/wwr7zb3XKyMNUqszBtM/ynO', 'Admin', 'ADMIN', true, false, true);
 INSERT INTO users (email, phone, password, name, role, is_enabled, is_virtual, is_activated) VALUES ('support@gmail.com', '0502222222', '$2a$10$Sl0X5/wPiIi6LxdkBoLq1O5/vonmz/wwr7zb3XKyMNUqszBtM/ynO', 'Support', 'SUPPORT', true, false, true);
 INSERT INTO users (email, phone, password, name, role, is_enabled, is_virtual, is_activated) VALUES ('user@gmail.com', '0503333333', '$2a$10$Sl0X5/wPiIi6LxdkBoLq1O5/vonmz/wwr7zb3XKyMNUqszBtM/ynO', 'User', 'USER', true, false, true);
+INSERT INTO users (email, phone, password, name, role, is_enabled, is_virtual, is_activated) VALUES ('virtual@gmail.com', '0503345999', '$2a$10$Sl0X5/wPiIi6LxdkBoLq1O5/vonmz/wwr7zb3XKyMNUqszBtM/ynO', 'User', 'USER', true, true, true);
+
+
+INSERT INTO orders (closed, comment, created, delivery_address, is_paid, note, phone, post_declaration, status, total_price, user_id) VALUES (null, 'Доставте, будь ласка, як найшвидше', '2020-01-04 12:18:55.744632', 'м.Калуш, Нова Пошта, Відділення №8', false, null, '0503333333', null, 'NEW', 22500, 3);
+INSERT INTO order_items (amount, flower_size_id, order_id, warehouse_operation_id) VALUES (10, 7, 1, null);
+UPDATE flowers__sizes SET reserved = reserved + 10 WHERE id = 7;
+INSERT INTO order_items (amount, flower_size_id, order_id, warehouse_operation_id) VALUES (5, 15, 1, null);
+UPDATE flowers__sizes SET reserved = reserved + 5 WHERE id = 15;
+INSERT INTO order_items (amount, flower_size_id, order_id, warehouse_operation_id) VALUES (5, 6, 1, null);
+UPDATE flowers__sizes SET reserved = reserved + 5 WHERE id = 6;
+
+INSERT INTO orders (closed, comment, created, delivery_address, is_paid, note, phone, post_declaration, status, total_price, user_id) VALUES (null, 'Дуже хочу', '2020-01-05 12:18:55.744632', 'м.Калуш, Нова Пошта, Відділення №8', false, null, '0503345675', null, 'NEW', 22500, 3);
+INSERT INTO order_items (amount, flower_size_id, order_id, warehouse_operation_id) VALUES (10, 7, 2, null);
+UPDATE flowers__sizes SET reserved = reserved + 10 WHERE id = 7;
+INSERT INTO order_items (amount, flower_size_id, order_id, warehouse_operation_id) VALUES (5, 15, 2, null);
+UPDATE flowers__sizes SET reserved = reserved + 5 WHERE id = 15;
+INSERT INTO order_items (amount, flower_size_id, order_id, warehouse_operation_id) VALUES (5, 6, 2, null);
+UPDATE flowers__sizes SET reserved = reserved + 5 WHERE id = 6;
+
+INSERT INTO orders (closed, comment, created, delivery_address, is_paid, note, phone, post_declaration, status, total_price, user_id) VALUES (null, '', '2020-01-05 12:18:55.744632', 'м.Калуш, Нова Пошта, Відділення №8', false, null, '0503345999', null, 'NEW', 22500, 4);
+INSERT INTO order_items (amount, flower_size_id, order_id, warehouse_operation_id) VALUES (10, 7, 3, null);
+UPDATE flowers__sizes SET reserved = reserved + 10 WHERE id = 7;
+INSERT INTO order_items (amount, flower_size_id, order_id, warehouse_operation_id) VALUES (5, 15, 3, null);
+UPDATE flowers__sizes SET reserved = reserved + 5 WHERE id = 15;
+INSERT INTO order_items (amount, flower_size_id, order_id, warehouse_operation_id) VALUES (5, 6, 3, null);
+UPDATE flowers__sizes SET reserved = reserved + 5 WHERE id = 6;

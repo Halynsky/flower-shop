@@ -9,4 +9,5 @@ public interface OrderItemAdminProjection {
     String getSizeName();
     Long getFlowerSizeId();
     Long getOrderId();
+    Integer getAvailable();
 }

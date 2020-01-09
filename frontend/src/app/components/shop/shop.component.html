@@ -34,4 +34,9 @@
     </ng-template>
   </div>
 
+  <div class="show-more-block">
+    <button mat-stroked-button color="primary" *ngIf="!loading && !flowersPage.last" (click)="showMore()">Показати ще</button>
+    <mat-spinner style="margin:0 auto" diameter="30" mode="indeterminate" *ngIf="loading"></mat-spinner>
+  </div>
+
 </div>

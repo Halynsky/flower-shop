@@ -30,13 +30,13 @@ import { PipesModule } from "../../pipes/pipes.module";
 import { MessageModule } from "primeng/message";
 import { AuthDialogComponent } from "./auth-dialog/auth-dialog.component";
 import { BucketDialogComponent } from "./bucket-dialog/bucket-dialog.component";
-import { ValidatorModule } from "../../validators/validator.module";
+import { ValidatorsModule } from "../../validators/validators.module";
 import { ShopContentItemComponent } from "./shop-content-item/shop-content-item.component";
 import { ShopFiltersComponent } from "./shop-filters/shop-filters.component";
 import { ShopFilterDialogComponent } from "./shop-filter-dialog/shop-filter-dialog.component";
-import { DigitOnlyDirective } from "../../directives/ditgits-only.directive";
 import { AmountControlledInputComponent } from './amount-controled-input/amount-controlled-input.component';
 import { AddToBucketDialogComponent } from "./add-to-bucket-dialog/add-to-bucket-dialog.component";
+import { DirectivesModule } from "../../directives/directives.module";
 
 const PROVIDERS = [
   {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 4000, panelClass: "snack-custom-class"}},
@@ -53,7 +53,6 @@ const PROVIDERS = [
     ShopContentItemComponent,
     ShopFiltersComponent,
     ShopFilterDialogComponent,
-    DigitOnlyDirective,
     AmountControlledInputComponent
   ],
   imports: [
@@ -78,9 +77,10 @@ const PROVIDERS = [
     MatProgressSpinnerModule,
     MatRadioModule,
     PipesModule,
+    DirectivesModule,
     MatDialogModule,
     MessageModule,
-    ValidatorModule.forRoot()
+    ValidatorsModule.forRoot()
   ],
   exports: [
     RouterModule,
@@ -103,14 +103,14 @@ const PROVIDERS = [
     MatProgressSpinnerModule,
     MatRadioModule,
     PipesModule,
-    ValidatorModule,
+    DirectivesModule,
+    ValidatorsModule,
     // Developed Components
     ArticleCardComponent,
     ShopContentItemComponent,
     ShopFiltersComponent,
     AmountControlledInputComponent,
-    // Developed Directives
-    DigitOnlyDirective
+
   ],
   providers: [
     ...PROVIDERS
