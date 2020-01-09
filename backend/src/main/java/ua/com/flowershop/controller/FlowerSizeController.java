@@ -18,10 +18,10 @@ import ua.com.flowershop.repository.FlowerSizeRepository;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.OK;
-import static ua.com.flowershop.util.Path.FLOWER_SIZE_PATH;
+import static ua.com.flowershop.util.Path.FLOWER_SIZES_PATH;
 
 @RestController
-@RequestMapping(FLOWER_SIZE_PATH)
+@RequestMapping(FLOWER_SIZES_PATH)
 public class FlowerSizeController {
 
     @Autowired private FlowerSizeRepository flowerSizeRepository;

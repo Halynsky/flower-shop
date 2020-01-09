@@ -6,10 +6,12 @@ import org.springframework.data.jpa.repository.Query;
 import ua.com.flowershop.entity.Image;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 public interface ImageRepository extends JpaRepository<Image, Long> {
 
     Image findByName(String name);
+    Optional<Image> findOptionalByName(String name);
 
     @Modifying
     @Transactional

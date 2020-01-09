@@ -81,5 +81,8 @@ public interface FlowerRepository extends JpaRepository<Flower, Long> {
 
     Optional<FlowerFullProjection> findFullProjectedById(Long id);
 
+    @Query("SELECT f.image FROM Flower f WHERE f.id = ?1")
+    Optional<String> getImage(long id);
+
 
 }

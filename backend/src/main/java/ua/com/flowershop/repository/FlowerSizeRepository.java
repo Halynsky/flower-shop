@@ -10,6 +10,7 @@ import ua.com.flowershop.projection.FlowerSizeFullProjection;
 import ua.com.flowershop.projection.FlowerSizeTinyProjection;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface FlowerSizeRepository extends JpaRepository<FlowerSize, Long> {
@@ -33,6 +34,11 @@ public interface FlowerSizeRepository extends JpaRepository<FlowerSize, Long> {
     List<FlowerSizeFullProjection> findProjectedByFlowerId(Long id);
 
     List<FlowerSizeFullProjection> findProjectedBy();
+
+    @Query("SELECT f.image FROM FlowerSize fs " +
+        "INNER JOIN fs.flower f " +
+        "WHERE fs.id = ?1")
+    Optional<String> getImage(long id);
 
 
 }

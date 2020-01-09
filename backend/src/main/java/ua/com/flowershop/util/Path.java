@@ -17,7 +17,7 @@ public class Path {
     public static final String FLOWERS				= "flowers";
     public static final String FLOWER_TYPES			= "flower-types";
     public static final String SIZES				= "sizes";
-    public static final String FLOWER_SIZE			= "flower-sizes";
+    public static final String FLOWER_SIZES = "flower-sizes";
     public static final String WAREHOUSE_OPERATIONS	= "warehouse-operations";
     public static final String ORDERS	            = "orders";
     public static final String BUCKET	            = "buckets";
@@ -33,7 +33,7 @@ public class Path {
 	public static final String FLOWERS_PATH 			    = API + SLASH + FLOWERS;
 	public static final String FLOWER_TYPES_PATH 			= API + SLASH + FLOWER_TYPES;
 	public static final String SIZES_PATH			        = API + SLASH + SIZES;
-    public static final String FLOWER_SIZE_PATH			    = API + SLASH + FLOWER_SIZE;
+    public static final String FLOWER_SIZES_PATH            = API + SLASH + FLOWER_SIZES;
 	public static final String WAREHOUSE_OPERATIONS_PATH 	= API + SLASH + WAREHOUSE_OPERATIONS;
 	public static final String ORDERS_PATH 		            = API + SLASH + ORDERS;
     public static final String BUCKET_PATH 		            = API + SLASH + BUCKET;
