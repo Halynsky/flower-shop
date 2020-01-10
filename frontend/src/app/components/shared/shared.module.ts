@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import {
   MAT_BOTTOM_SHEET_DEFAULT_OPTIONS,
   MAT_SNACK_BAR_DEFAULT_OPTIONS,
+  MatAutocompleteModule,
   MatBottomSheetModule,
   MatButtonModule,
   MatButtonToggleModule,
@@ -79,6 +80,7 @@ const PROVIDERS = [
     MatTreeModule,
     MatProgressSpinnerModule,
     MatRadioModule,
+    MatAutocompleteModule,
     PipesModule,
     DirectivesModule,
     MatDialogModule,
@@ -105,6 +107,7 @@ const PROVIDERS = [
     MatTreeModule,
     MatProgressSpinnerModule,
     MatRadioModule,
+    MatAutocompleteModule,
     PipesModule,
     DirectivesModule,
     ValidatorsModule,
