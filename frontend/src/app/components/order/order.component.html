@@ -57,7 +57,7 @@
 
         <ng-template matStepLabel>Доставка</ng-template>
 
-        <label class="delivery-type-label">Оберіть спосіб доставки </label>
+        <label class="delivery-type-label">Оберіть спосіб доставки</label>
         <mat-radio-group
           color="primary"
           aria-labelledby="delivery-type"
@@ -71,13 +71,14 @@
 
         <div class="input-group" *ngIf="deliveryInfoFormGroup.get('deliveryType').value != 'SELF_UZHGOROD'">
           <label>Місто</label>
-          <input
-            name="city"
-            formControlName="city"
-            placeholder="Місто"
-            required>
+          <input type="text" placeholder="Місто" formControlName="city" [matAutocomplete]="cityAutocomplete" required isObjectValidator>
+          <mat-autocomplete #cityAutocomplete="matAutocomplete" (optionSelected)="onCitySelect($event)" [displayWith]="displayCityFn">
+            <mat-option *ngFor="let city of cities" [value]="city" class="order-option">
+              {{city.Present}}
+            </mat-option>
+          </mat-autocomplete>
           <div class="error-wrapper" *ngIf="deliveryInfoFormGroup.get('city').dirty || deliveryInfoFormGroup.get('city').touched">
-            <div class="error-message" *ngIf="deliveryInfoFormGroup.get('city').errors?.required">Повинно бути вказано</div>
+            <div class="error-message" *ngIf="deliveryInfoFormGroup.get('city').errors?.required || deliveryInfoFormGroup.get('city').errors?.isObject">Оберіть населений пункт</div>
           </div>
         </div>
 
@@ -118,14 +119,19 @@
         </div>
 
         <div class="input-group" *ngIf="deliveryInfoFormGroup.get('deliveryType').value == 'NOVA_POSHTA_DEPARTMENT'">
-          <label>Відділення Нової пошти</label>
-          <input
-            name="novaPoshtaDepartment"
-            formControlName="novaPoshtaDepartment"
-            placeholder="Відділення Нової пошти"
-            [required]="deliveryInfoFormGroup.get('deliveryType').value == 'NOVA_POSHTA_DEPARTMENT'">
+          <label class="with-loader">
+            <span>Відділення Нової Пошти</span>
+            <mat-spinner *ngIf="loadingWarehouses" diameter="16" mode="indeterminate"></mat-spinner>
+          </label>
+
+          <input type="text" placeholder="Відділення" formControlName="novaPoshtaDepartment" [matAutocomplete]="novaPoshtaDepartmentAutocomplete" required isObjectValidator [disabled]="loadingWarehouses">
+          <mat-autocomplete #novaPoshtaDepartmentAutocomplete="matAutocomplete" (optionSelected)="onNovaPoshtaDepartmentSelect($event)" [displayWith]="displayWarehouseFn">
+            <mat-option *ngFor="let warehouse of filteredWarehouses | async" [value]="warehouse" class="order-option">
+              {{warehouse.Description}}
+            </mat-option>
+          </mat-autocomplete>
           <div class="error-wrapper" *ngIf="deliveryInfoFormGroup.get('novaPoshtaDepartment').dirty || deliveryInfoFormGroup.get('novaPoshtaDepartment').touched">
-            <div class="error-message" *ngIf="deliveryInfoFormGroup.get('novaPoshtaDepartment').errors?.required">Повинно бути вказано</div>
+            <div class="error-message" *ngIf="deliveryInfoFormGroup.get('novaPoshtaDepartment').errors?.required || deliveryInfoFormGroup.get('novaPoshtaDepartment').errors?.isObject">Оберіть відділення</div>
           </div>
         </div>
 

@@ -15,7 +15,7 @@
   .order-wrapper {
     justify-content: center;
     display: grid;
-    grid-template-columns: minmax(300px, 400px) minmax(300px, 400px);
+    grid-template-columns: minmax(300px, 500px) minmax(300px, 400px);
     width: 100%;
     padding-top: 2em;
 
@@ -32,7 +32,7 @@
 
     ::ng-deep.mat-step {
       input, textarea {
-        max-width: 300px;
+        max-width: 400px;
       }
       button {
         margin-right: 48px;
@@ -190,4 +190,14 @@
 
   }
 
+}
+
+.input-group {
+  label.with-loader {
+    display: flex;
+  }
+  ::ng-deep mat-spinner {
+    margin-top: 3px;
+    margin-left: 4px;
+  }
 }
