@@ -8,6 +8,7 @@ export class NovaPoshtaService {
   private readonly URL = `https://api.novaposhta.ua/v2.0/json`;
   private readonly SEARCH_SETTLEMENTS_URL = `/Address/searchSettlements/`;
   private readonly GET_WAREHOUSES_URL = `/AddressGeneral/getWarehouses`;
+  private readonly GET_STREET_URL = `/Address/searchSettlementStreets`;
 
   constructor(private  http: HttpClient) {}
 
@@ -40,6 +41,23 @@ export class NovaPoshtaService {
     };
 
     return this.http.post<any>(`${this.URL}${this.GET_WAREHOUSES_URL}`, request);
+
+  }
+
+  getStreets(settlementRef: string, streetNamePart: string) {
+
+    let request = {
+      modelName: "Address",
+      calledMethod: "searchSettlementStreets",
+      methodProperties: {
+        StreetName: streetNamePart,
+        SettlementRef: settlementRef,
+        Limit: 5
+      },
+      apiKey: environment.novaPoshtaApiKey,
+    };
+
+    return this.http.post<any>(`${this.URL}${this.GET_STREET_URL}`, request);
 
   }
 

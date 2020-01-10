@@ -73,25 +73,32 @@
           <label>Місто</label>
           <input type="text" placeholder="Місто" formControlName="city" [matAutocomplete]="cityAutocomplete" required isObjectValidator>
           <mat-autocomplete #cityAutocomplete="matAutocomplete" (optionSelected)="onCitySelect($event)" [displayWith]="displayCityFn">
-            <mat-option *ngFor="let city of cities" [value]="city" class="order-option">
+            <mat-option *ngFor="let city of cities" [value]="city" class="order-page-autocomplete-option">
               {{city.Present}}
             </mat-option>
           </mat-autocomplete>
           <div class="error-wrapper" *ngIf="deliveryInfoFormGroup.get('city').dirty || deliveryInfoFormGroup.get('city').touched">
-            <div class="error-message" *ngIf="deliveryInfoFormGroup.get('city').errors?.required || deliveryInfoFormGroup.get('city').errors?.isObject">Оберіть населений пункт</div>
+            <div class="error-message" *ngIf="deliveryInfoFormGroup.get('city').errors?.required || deliveryInfoFormGroup.get('city').errors?.isObject">Вкажіть населений пункт</div>
           </div>
         </div>
 
         <div class="input-group" *ngIf="directAddressRequired()">
-          <label>Вулиця</label>
-          <input
-            name="street"
-            formControlName="street"
-            placeholder="Вулиця"
-            [required]="directAddressRequired()" >
+
+          <label class="with-loader">
+            <span>Вулиця</span>
+            <mat-spinner *ngIf="loadingWarehouses" diameter="16" mode="indeterminate"></mat-spinner>
+          </label>
+
+          <input type="text" placeholder="Вулиця" formControlName="street" [matAutocomplete]="streetAutocomplete" required isObjectValidator [disabled]="loadingStreets">
+          <mat-autocomplete #streetAutocomplete="matAutocomplete" (optionSelected)="onStreetSelect($event)" [displayWith]="displayStreetFn">
+            <mat-option *ngFor="let street of streets" [value]="street" class="order-page-autocomplete-option">
+              {{street.Present}}
+            </mat-option>
+          </mat-autocomplete>
           <div class="error-wrapper" *ngIf="deliveryInfoFormGroup.get('street').dirty || deliveryInfoFormGroup.get('street').touched">
-            <div class="error-message" *ngIf="deliveryInfoFormGroup.get('street').errors?.required">Повинно бути вказано</div>
+            <div class="error-message" *ngIf="deliveryInfoFormGroup.get('street').errors?.required || deliveryInfoFormGroup.get('street').errors?.isObject">Вкажіть вулицю</div>
           </div>
+
         </div>
 
         <div class="input-group" *ngIf="directAddressRequired()">
@@ -126,7 +133,7 @@
 
           <input type="text" placeholder="Відділення" formControlName="novaPoshtaDepartment" [matAutocomplete]="novaPoshtaDepartmentAutocomplete" required isObjectValidator [disabled]="loadingWarehouses">
           <mat-autocomplete #novaPoshtaDepartmentAutocomplete="matAutocomplete" (optionSelected)="onNovaPoshtaDepartmentSelect($event)" [displayWith]="displayWarehouseFn">
-            <mat-option *ngFor="let warehouse of filteredWarehouses | async" [value]="warehouse" class="order-option">
+            <mat-option *ngFor="let warehouse of filteredWarehouses" [value]="warehouse" class="order-page-autocomplete-option">
               {{warehouse.Description}}
             </mat-option>
           </mat-autocomplete>
@@ -160,6 +167,9 @@
       <div class="final-purchase-info-wrapper">
         <div><span class="final-purchase-items-amount">{{bucketLocalService.bucketInfo.totalItems}}</span> позиції <span class="check-items" (click)="openBucketDialog()">(переглянути товари)</span></div>
         <div>На сумму <span class="final-purchase-items-price">{{bucketLocalService.bucketInfo.totalPrice / 100}}</span> грн</div>
+
+
+        <div>deliveryInfoFormGroup {{deliveryInfoFormGroup.valid}}</div>
 
         <button mat-flat-button color="accent" routerLink="/order" [disabled]="isFormValid() | async" (click)="submitOrder()">
           <i class="material-icons">check</i>
