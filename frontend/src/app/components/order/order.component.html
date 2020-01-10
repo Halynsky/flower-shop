@@ -168,9 +168,6 @@
         <div><span class="final-purchase-items-amount">{{bucketLocalService.bucketInfo.totalItems}}</span> позиції <span class="check-items" (click)="openBucketDialog()">(переглянути товари)</span></div>
         <div>На сумму <span class="final-purchase-items-price">{{bucketLocalService.bucketInfo.totalPrice / 100}}</span> грн</div>
 
-
-        <div>deliveryInfoFormGroup {{deliveryInfoFormGroup.valid}}</div>
-
         <button mat-flat-button color="accent" routerLink="/order" [disabled]="isFormValid() | async" (click)="submitOrder()">
           <i class="material-icons">check</i>
           <span>Підтвердити замовлення</span>
