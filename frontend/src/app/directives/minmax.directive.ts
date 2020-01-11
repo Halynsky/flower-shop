@@ -18,7 +18,11 @@ export class MinMaxDirective {
   @HostListener('input',['$event']) onEvent($event){
     let value = parseInt(this.el.nativeElement.value);
 
-    if (this.minValue && value < this.minValue) {
+    console.log("minmax", this.minValue, this.maxValue);
+
+    if (this.minValue == this.maxValue) {
+      value = this.minValue;
+    } else if (this.minValue && value < this.minValue) {
       value = this.minValue;
     } else if (this.maxValue && value > this.maxValue) {
       value = this.maxValue;

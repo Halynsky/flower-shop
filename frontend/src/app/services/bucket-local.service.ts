@@ -108,4 +108,10 @@ export class BucketLocalService {
         this.updateBucket();
       })
   }
+
+  getMaxAmountForFlowerSize(flowerSizeId, available) {
+    let foundBucketItem = this.bucket.find(bucketItem => bucketItem.flowerSizeId == flowerSizeId);
+    return foundBucketItem ? available - foundBucketItem.amount : available
+  }
+
 }
