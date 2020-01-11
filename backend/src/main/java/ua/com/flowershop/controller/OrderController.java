@@ -99,4 +99,11 @@ public class OrderController {
         return new ResponseEntity<>(OK);
     }
 
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
+    @PutMapping("/{id}/discount")
+    public ResponseEntity<Void> updateDiscount(@PathVariable Long id, @RequestBody String discount) {
+        orderService.updateDiscount(id, Integer.parseInt(discount));
+        return new ResponseEntity<>(OK);
+    }
+
 }

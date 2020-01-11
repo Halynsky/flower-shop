@@ -15,6 +15,7 @@ export class OrderAdmin {
   isPaid: boolean;
   phone: string;
   totalPrice: number;
+  discount: number;
 }
 
 export class OrderItemAdmin {

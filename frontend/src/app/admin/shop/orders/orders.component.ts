@@ -29,7 +29,8 @@ export class OrdersComponent implements OnInit {
   displayNoteChangeDialog = false;
   displayMergeDialog = false;
   displaySplitDialog = false;
-  displayUpdateOrderItemsDialog= false;
+  displayUpdateOrderItemsDialog = false;
+  displayDiscountChangeDialog = false;
 
   loading = false;
 
@@ -48,7 +49,9 @@ export class OrdersComponent implements OnInit {
     {field: 'postDeclaration', header: 'Номер декларації', active: true},
     {field: 'comment', header: 'Коментар', active: true},
     {field: 'note', header: 'Примітки', active: true},
-    {field: 'totalPrice', header: 'До оплати', active: true},
+    {field: 'totalPrice', header: 'Вартість', active: false},
+    {field: 'discount', header: 'Знижка', active: false},
+    {field: 'priceToPay', header: 'До сплати', active: true},
     {field: 'isPaid', header: 'Оплачено', active: true},
   ];
 
@@ -75,6 +78,7 @@ export class OrdersComponent implements OnInit {
   splittingOrder: OrderAdmin;
   updatingOrder: OrderAdmin;
   flowerSizeToAdd: FlowerSize;
+  orderDiscount;
 
   constructor(private dataService: OrderService,
               private flowerSizeService: FlowerSizeService,
@@ -228,6 +232,15 @@ export class OrdersComponent implements OnInit {
           this.displayNoteChangeDialog = true;
           this.orderNote = this.selected.note;
         },
+      },
+      {
+        label: "Встановити знижку",
+        icon: 'fas fa-percent',
+        command: (event) => {
+          this.displayDiscountChangeDialog = true;
+          this.orderDiscount = this.selected.discount / 100;
+        },
+        visible: this.orderIsEditable(this.selected.status),
       },
       {
         separator: true
@@ -444,6 +457,23 @@ export class OrdersComponent implements OnInit {
   getMaxForFlowerSize(orderItem: OrderItemAdmin) {
     let foundFlowerSize = this.flowerSizes.find(item => item.id == orderItem.flowerSizeId);
     return parseInt(orderItem.amount as any) + parseInt(foundFlowerSize.available as any);
+  }
+
+  changeDiscount() {
+    this.loading = true;
+    this.dataService.changeDiscount(this.selected.id, this.orderDiscount * 100)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(() => {
+        this.snackBarService.showSuccess(`Знижку для замовлення №${this.selected.id} успішно змінено`);
+        this.refresh();
+        this.displayDiscountChangeDialog = false;
+      }, error => this.snackBarService.showError(getErrorMessage(error)))
+  }
+
+
+  resetDiscountChangeForm(form: NgForm) {
+    this.orderDiscount = null;
+    form.resetForm();
   }
 
 }

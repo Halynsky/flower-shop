@@ -49,4 +49,7 @@ export class OrderService {
     return this.http.put(`${this.URL}/${id}/items`, orderItems);
   }
 
+  changeDiscount(id: number, orderDiscount: number) {
+    return this.http.put(`${this.URL}/${id}/discount`, orderDiscount);
+  }
 }

@@ -43,6 +43,8 @@ public class Order {
     private Boolean isPaid = false;
     private String phone;
     private Integer totalPrice;
+    @Column(columnDefinition = "integer default 0")
+    private Integer discount = 0;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

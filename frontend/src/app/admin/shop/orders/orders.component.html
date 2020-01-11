@@ -68,7 +68,7 @@
             {{col.header}}
           </th>
 
-          <th *ngSwitchCase="'totalPrice'" >
+          <th *ngSwitchCase="'priceToPay'" >
             {{col.header}}
           </th>
 
@@ -164,6 +164,14 @@
 
           <span *ngSwitchCase="'totalPrice'">
             {{rowData[col.field] / 100 + ' грн'}}
+          </span>
+
+          <span *ngSwitchCase="'discount'">
+            {{rowData[col.field] / 100 + ' грн'}}
+          </span>
+
+          <span *ngSwitchCase="'priceToPay'">
+            {{(rowData['totalPrice'] - rowData['discount']) / 100 + ' грн'}}
           </span>
 
           <span *ngSwitchCase="'isPaid'">
@@ -341,7 +349,7 @@
   </p-footer>
 </p-dialog>
 
-<p-dialog [(visible)]="displayNoteChangeDialog" class="status-change-dialog" [modal]="true" (onHide)="resetNoteChangeForm(contactsChangeForm)">
+<p-dialog [(visible)]="displayNoteChangeDialog" class="status-change-dialog" [modal]="true" (onHide)="resetNoteChangeForm(noteChangeForm)">
   <p-header>
     Оновлення примітки для замовлення №{{selected?.id}}
   </p-header>
@@ -577,5 +585,43 @@
 
   <p-footer>
     <button pButton form="update_order_items" icon="pi pi-check" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading || updateOrderItemsForm.invalid"></button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog [(visible)]="displayDiscountChangeDialog" class="discount-change-dialog" [modal]="true" (onHide)="resetDiscountChangeForm(discountChangeForm)">
+  <p-header>
+    Встановлення знижки для замовлення №{{selected?.id}}
+  </p-header>
+
+  <form id="discount_change_form" #discountChangeForm="ngForm" class="status-change-dialog-content" (ngSubmit)="discountChangeForm.valid && changeDiscount()">
+
+    <div class="ui-grid ui-grid-responsive ui-fluid">
+
+      <div class="prime-form-group">
+        <div class="ui-grid-col-4">
+          <label>Знижка (грн)</label>
+        </div>
+        <div class="ui-grid-col-4">
+          <input pInputText
+                    #discount="ngModel"
+                    name="discount"
+                    [(ngModel)]="orderDiscount"
+                    maxlength="4"
+                    digitOnly
+                    required>
+        </div>
+        <div class="ui-grid-col-4">
+          <ng-container *ngIf="discountChangeForm.dirty || discountChangeForm.touched || discountChangeForm.submitted">
+            <p-message *ngIf="discount.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
+          </ng-container>
+        </div>
+      </div>
+
+    </div>
+
+  </form>
+
+  <p-footer>
+    <button pButton form="discount_change_form" icon="pi pi-check" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
   </p-footer>
 </p-dialog>

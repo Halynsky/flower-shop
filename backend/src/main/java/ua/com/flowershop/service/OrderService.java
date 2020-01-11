@@ -343,4 +343,11 @@ public class OrderService {
 
 
     }
+
+    public void updateDiscount(Long orderId, Integer discount) {
+        Order order = orderRepository.findById(orderId).orElseThrow(NotFoundException::new);
+        order.setDiscount(discount);
+        orderRepository.save(order);
+    }
+
 }

@@ -19,6 +19,7 @@ public interface OrderAdminProjection {
     Boolean getIsPaid();
     String getPhone();
     Integer getTotalPrice();
+    Integer getDiscount();
     @Value("#{@orderItemRepository.findProjectedByOrderId(target.id)}")
     List<OrderItemAdminProjection> getOrderItems();
 }
