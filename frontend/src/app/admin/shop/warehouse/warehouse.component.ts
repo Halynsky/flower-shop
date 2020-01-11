@@ -30,7 +30,8 @@ export class WarehouseComponent implements OnInit {
     {field: 'priceOld', header: 'Ціна(до знижки), грн', active: false},
     {field: 'amount', header: 'Кількість', active: true},
     {field: 'sold', header: 'Продано', active: true},
-    {field: 'reserved', header: 'Резерв', active: true},
+    {field: 'reserved', header: 'Зарезервовано', active: true},
+    {field: 'available', header: 'Доступно', active: true},
   ];
 
   selectedColumns = this.columns.filter(column => column.active);

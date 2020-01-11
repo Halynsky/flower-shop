@@ -46,6 +46,10 @@
               <p-sortIcon [field]="col.field"></p-sortIcon>
             </th>
 
+            <th *ngSwitchCase="'available'" >
+              {{col.header}}
+            </th>
+
           </ng-container>
 
       </tr>

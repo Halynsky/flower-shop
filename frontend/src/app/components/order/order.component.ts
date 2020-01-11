@@ -62,6 +62,7 @@ export class OrderComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.bucketLocalService.updateBucketFlowerSizes();
   }
 
   getCities(namePart: string = '') {

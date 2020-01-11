@@ -26,7 +26,6 @@ import {
 } from "@angular/material";
 import { ArticleCardComponent } from './article-card/article-card.component';
 import { RouterModule } from "@angular/router";
-import { BottomSheetOverview } from "./bottom-sheet/bottom-sheet.component";
 import { PipesModule } from "../../pipes/pipes.module";
 import { MessageModule } from "primeng/message";
 import { AuthDialogComponent } from "./auth-dialog/auth-dialog.component";
@@ -52,7 +51,6 @@ export const ngxMaskOptions: Partial<IConfig> | (() => Partial<IConfig>) = {};
 @NgModule({
   declarations: [
     ArticleCardComponent,
-    BottomSheetOverview,
     AuthDialogComponent,
     BucketDialogComponent,
     AddToBucketDialogComponent,
@@ -127,10 +125,8 @@ export const ngxMaskOptions: Partial<IConfig> | (() => Partial<IConfig>) = {};
     ...PROVIDERS
   ],
   entryComponents: [
-    BottomSheetOverview
   ],
   bootstrap: [
-    BottomSheetOverview
   ]
 })
 export class SharedModule {

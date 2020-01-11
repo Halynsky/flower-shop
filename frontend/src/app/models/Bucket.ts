@@ -6,6 +6,7 @@ export class BucketItem {
   sizeName: string;
   flowerTypeName: string;
   flowerSizeId: any;
+  available: number;
 
   constructor(){
   }

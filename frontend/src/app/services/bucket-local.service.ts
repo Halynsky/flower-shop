@@ -2,6 +2,8 @@ import { Injectable } from "@angular/core";
 import { BucketInfo, BucketItem } from "../models/Bucket";
 import { SecurityService } from "./security.service";
 import { BucketService } from "../api/services/bucket.service";
+import { FlowerSize } from "../api/models/FlowerSize";
+import { FlowerSizeService } from "../api/services/flower-size.service";
 
 
 @Injectable({providedIn: 'root'})
@@ -11,7 +13,8 @@ export class BucketLocalService {
   public bucket: BucketItem[];
 
   constructor(private securityService: SecurityService,
-              private bucketService: BucketService) {
+              private bucketService: BucketService,
+              private flowerSizeService: FlowerSizeService) {
     this.bucket = this.getBucket();
     this.updateBucketInfo();
     this.securityService.onLogin.subscribe(() => {
@@ -91,4 +94,18 @@ export class BucketLocalService {
     this.updateBucketInfo();
   }
 
+  // TODO: return Observable and show loader while updating
+  updateBucketFlowerSizes() {
+    this.flowerSizeService.getByIds(this.bucket.map(item => item.flowerSizeId))
+      .subscribe(flowerSizes => {
+        this.bucket.forEach(bucketItem => {
+          let foundFlowerSize: FlowerSize = flowerSizes.find(fs => fs.id == bucketItem.flowerSizeId);
+          bucketItem.available = foundFlowerSize.available;
+          bucketItem.image = foundFlowerSize.flower.image;
+          bucketItem.price = foundFlowerSize.price;
+          bucketItem.amount = bucketItem.amount <= foundFlowerSize.available ? bucketItem.amount: foundFlowerSize.available;
+        });
+        this.updateBucket();
+      })
+  }
 }

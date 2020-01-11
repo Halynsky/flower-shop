@@ -21,7 +21,7 @@
           <div class="add-flower-size">
             <div class="flower-size-name">{{flowerSize.size.name}}</div>
             <div class="flower-size-price">{{flowerSize.price / 100 + ' грн'}}</div>
-            <amount-controlled-input [(ngModel)]="bucketItems[i].amount" name="amount"></amount-controlled-input>
+            <amount-controlled-input name="amount" [(ngModel)]="bucketItems[i].amount" [availableAmount]="flower.flowerSizes[i].available"></amount-controlled-input>
           </div>
         </ng-template>
         <button mat-flat-button color="accent" class="add-to-card-button" (click)="addToBucket()">
@@ -46,11 +46,11 @@
         <div class="specification-value">{{flower.groupName}}</div>
       </div>
       <div class="specification">
-        <div class="specification-label">Висота</div>
+        <div class="specification-label">Висота стебла</div>
         <div class="specification-value">{{flower.flowerHeightMin}} см - {{flower.flowerHeightMax}} см</div>
       </div>
       <div class="specification">
-        <div class="specification-label">Розмір</div>
+        <div class="specification-label">Розмір квітки</div>
         <div class="specification-value">{{flower.flowerSizeMin}} см - {{flower.flowerSizeMax}} см</div>
       </div>
     </div>
