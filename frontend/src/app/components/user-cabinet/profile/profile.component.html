@@ -49,7 +49,9 @@
               #phone="ngModel"
               name="phone"
               [(ngModel)]="profile.phone"
-              placeholder="Телефон"
+              prefix="+38 "
+              mask='(000) 000-0000'
+              maxlength="18"
               required/>
 
           <div class="error-wrapper" *ngIf="phone.dirty || phone.touched || profileForm.submitted">

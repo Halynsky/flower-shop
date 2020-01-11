@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Getter
@@ -18,6 +19,7 @@ public class OrderContactsModel {
     private List<OrderItemModel> orderItems;
     private Long userId;
     private String name;
+    @Size(min = 10, max = 10)
     private String phone;
     private String email;
 }

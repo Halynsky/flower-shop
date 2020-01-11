@@ -40,6 +40,9 @@
             name="phone"
             formControlName="phone"
             placeholder="Телефон"
+            prefix="+38 "
+            mask='(000) 000-0000'
+            maxlength="18"
             required>
           <div class="error-wrapper" *ngIf="contactInfoFormGroup.get('phone').dirty || contactInfoFormGroup.get('phone').touched">
             <div class="error-message" *ngIf="contactInfoFormGroup.get('phone').errors?.required">Повинно бути вказано</div>

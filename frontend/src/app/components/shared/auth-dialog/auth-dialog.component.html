@@ -118,10 +118,14 @@
 
             <div class="input-group">
               <input
+                  id="tel"
                   #phone="ngModel"
                   name="phone"
                   [(ngModel)]="userRegistration.phone"
+                  maxlength="18"
                   placeholder="Телефон"
+                  prefix="+38 "
+                  mask='(000) 000-0000'
                   required/>
 
               <div class="error-wrapper" *ngIf="phone.dirty || phone.touched || regForm.submitted">

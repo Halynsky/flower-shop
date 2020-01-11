@@ -51,6 +51,9 @@ import {
   ToggleButtonModule
 } from "primeng";
 import { DirectivesModule } from "../directives/directives.module";
+import { IConfig, NgxMaskModule } from "ngx-mask";
+
+export const ngxMaskOptions: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
 @NgModule({
   declarations: [
@@ -111,7 +114,7 @@ import { DirectivesModule } from "../directives/directives.module";
     ListboxModule,
     CheckboxModule,
     CardModule,
-
+    NgxMaskModule.forRoot(ngxMaskOptions)
   ],
   providers: [
     ConfirmationService

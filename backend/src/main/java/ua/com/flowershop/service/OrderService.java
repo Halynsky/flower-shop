@@ -65,6 +65,9 @@ public class OrderService {
 
         if (nonNull(user)) {
             order.setUser(user);
+            if (isNull(user.getPhone())) {
+                user.setPhone(order.getPhone());
+            }
             orderRepository.save(order);
         }
 

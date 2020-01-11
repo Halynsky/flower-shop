@@ -39,11 +39,15 @@ import { AmountControlledInputComponent } from './amount-controled-input/amount-
 import { AddToBucketDialogComponent } from "./add-to-bucket-dialog/add-to-bucket-dialog.component";
 import { DirectivesModule } from "../../directives/directives.module";
 import { TermsAndConditionsComponent } from "./terms-and-conditions/terms-and-conditions.component";
+import { IConfig, NgxMaskModule } from "ngx-mask";
+
 
 const PROVIDERS = [
   {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 4000, panelClass: "snack-custom-class"}},
   {provide: MAT_BOTTOM_SHEET_DEFAULT_OPTIONS, useValue: {hasBackdrop: true, backdropClass: "bottom-sheet-custom-class", closeOnNavigation: true}},
 ];
+
+export const ngxMaskOptions: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
 @NgModule({
   declarations: [
@@ -85,7 +89,8 @@ const PROVIDERS = [
     DirectivesModule,
     MatDialogModule,
     MessageModule,
-    ValidatorsModule.forRoot()
+    ValidatorsModule.forRoot(),
+    NgxMaskModule.forRoot(ngxMaskOptions)
   ],
   exports: [
     RouterModule,
@@ -111,12 +116,12 @@ const PROVIDERS = [
     PipesModule,
     DirectivesModule,
     ValidatorsModule,
+    NgxMaskModule,
     // Developed Components
     ArticleCardComponent,
     ShopContentItemComponent,
     ShopFiltersComponent,
     AmountControlledInputComponent,
-
   ],
   providers: [
     ...PROVIDERS

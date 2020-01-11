@@ -7,6 +7,8 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 import ua.com.flowershop.entity.User;
 
+import javax.validation.constraints.Size;
+
 @Getter
 @Setter
 @Accessors(chain = true)
@@ -16,6 +18,7 @@ public class ProfileModel {
     private Long id;
     private String email;
     private String name;
+    @Size(min = 10, max = 10)
     private String phone;
 
     public static ProfileModel of(User user) {
