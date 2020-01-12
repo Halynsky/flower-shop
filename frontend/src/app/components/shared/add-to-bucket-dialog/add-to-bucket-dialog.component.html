@@ -16,18 +16,26 @@
 
         <div class="add-to-card-inner">
 
-          <div class="header">
-            <div class="size-title">Розмір</div>
-            <div class="price-title">Ціна</div>
-            <div class="amount-title">Кількість</div>
-          </div>
-          <ng-template ngFor let-flowerSize [ngForOf]="flower.flowerSizes" let-i="index">
-            <div class="add-flower-size">
-              <div class="flower-size-name">{{flowerSize.size.name}}</div>
-              <div class="flower-size-price">{{flowerSize.price / 100 + ' грн'}}</div>
-              <amount-controlled-input name="amount"  [(ngModel)]="bucketItems[i].amount" [availableAmount]="bucketLocalService.getMaxAmountForFlowerSize(flower.flowerSizes[i].id, flower.flowerSizes[i].available)"></amount-controlled-input>
-            </div>
-          </ng-template>
+          <table>
+
+            <tr class="header">
+              <th>Розмір</th>
+              <th>Ціна</th>
+              <th>Кількість</th>
+            </tr>
+
+            <ng-template ngFor let-flowerSize [ngForOf]="flower.flowerSizes" let-i="index">
+              <tr>
+                <td>{{flowerSize.size.name}}</td>
+                <td>{{flowerSize.price / 100 + ' грн'}}</td>
+                <td>
+                  <amount-controlled-input name="amount"  [(ngModel)]="bucketItems[i].amount" [availableAmount]="bucketLocalService.getMaxAmountForFlowerSize(flower.flowerSizes[i].id, flower.flowerSizes[i].available)"></amount-controlled-input>
+                </td>
+              </tr>
+            </ng-template>
+
+          </table>
+
           <button mat-flat-button color="accent" class="add-to-card-button" (click)="addToBucket()">
             <i class="material-icons">add_shopping_cart</i>
             <span>Купити</span>
