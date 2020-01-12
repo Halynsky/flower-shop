@@ -66,7 +66,7 @@
     }
 
     .mini-title {
-      max-width: 375px;
+      max-width: 360px;
       text-align: center;
       color: mat-color($accent);
       font-size: 22px;
@@ -87,34 +87,36 @@
 
       .contact-card {
         color: $grey-900;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
-        height: 130px;
-        width: 600px;
+        height: 90px;
         background-color: $grey-100;
         border-radius: 2px;
         display: flex;
         flex-direction: row;
         margin-bottom: 20px;
+        width: 550px;
 
         @include response-to(xs) {
           height: 65px;
-          width: 350px;
+          width: 375px;
           border-radius: 2px;
           display: flex;
           flex-direction: row;
         }
 
         .logo {
-          margin-right: 20px;
-          font-size: 90px;
-          width: 100px;
+          font-size: 50px;
+          width: 50px;
           display: flex;
+          margin-right: 24px;
+          margin-left: 28px;
           align-items: center;
           justify-content: center;
           @include response-to(xs) {
             width: 40px;
-            margin-right: 10px;
+            margin-right: 16px;
+            margin-left: 24px;
             display: flex;
             font-size: 40px;
             justify-content: center;
@@ -147,8 +149,7 @@
 
         .card-info {
           font-size: 26px;
-          height: 100px;
-          width: 420px;
+          height: 90px;
           display: flex;
           flex-direction: column;
           align-items: flex-start;
@@ -164,7 +165,10 @@
 
           .phone {
             &:not(:last-of-type) {
-              margin-bottom: 16px;
+              margin-bottom: 8px;
+              @include response-to(xs) {
+                margin-bottom: 0px;
+              }
             }
 
           }
@@ -184,6 +188,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    padding: 0px 16px;
 
     @include response-to(xs) {
       font-size: 16px;

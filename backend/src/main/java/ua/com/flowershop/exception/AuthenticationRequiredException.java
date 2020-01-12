@@ -3,7 +3,7 @@ package ua.com.flowershop.exception;
 public class AuthenticationRequiredException extends RuntimeException {
 
     public AuthenticationRequiredException() {
-        super("Authentication is required");
+        super("Необхідно авторизуватися");
     }
 
     public AuthenticationRequiredException(String message) {

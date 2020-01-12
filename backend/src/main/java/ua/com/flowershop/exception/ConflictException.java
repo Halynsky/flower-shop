@@ -3,7 +3,7 @@ package ua.com.flowershop.exception;
 public class ConflictException extends RuntimeException {
 
     public ConflictException() {
-        super("");
+        super("Конфлік данних");
     }
 
     public ConflictException(String message) {

@@ -1,11 +1,9 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { Article } from "../models/Article";
 import { RestPage } from "../models/RestPage";
 import { Pagination } from "../models/Pagination";
 import { API_URL } from "../../utils/Costants";
-import { User, UserForAdmin, UserRegistration } from "../models/User";
-import { Flower } from "../models/Flower";
+import { UserForAdmin } from "../models/User";
 import { Observable } from "rxjs";
 
 @Injectable({providedIn: 'root'})
@@ -43,6 +41,10 @@ export class UserService {
 
   isEmailFree(email: string): Observable<any> {
     return this.http.get(`${this.URL}/isEmailFree/?email=${email}`, {responseType: 'text'});
+  }
+
+  merge(id: number, mergingUserId: any) {
+    return this.http.put(`${this.URL}/${id}/merge`, mergingUserId);
   }
 
 }

@@ -9,6 +9,8 @@ import { UserService } from "../../api/services/user.service";
 import { ConfirmationService, SortEvent } from "primeng/api";
 import { SnackBarService } from "../../services/snak-bar.service";
 import { Pagination } from "../../api/models/Pagination";
+import { NgForm } from "@angular/forms";
+import { finalize } from "rxjs/operators";
 
 @Component({
   selector: 'app-users',
@@ -19,7 +21,9 @@ export class UsersComponent implements OnInit {
 
   @ViewChild('dt', { static: false }) private table: Table;
 
+  displayMergeDialog = false;
   ItemSaveMode = ItemSaveMode;
+  loading = false;
 
   cols = [
     {field: 'id', header: 'Id', active: true},
@@ -42,6 +46,8 @@ export class UsersComponent implements OnInit {
   selected: UserForAdmin;
 
   menuItems = [];
+
+  mergingUserId;
 
   constructor(private dataService: UserService,
               private confirmationService: ConfirmationService,
@@ -76,6 +82,16 @@ export class UsersComponent implements OnInit {
         command: (event) => this.updateDisabled(event, false),
         visible: this.selected && !this.selected.isEnabled,
         styleClass: 'cm-danger',
+      },
+      {
+        separator: true
+      },
+      {
+        label: "Об'єднати замовлення",
+        icon: 'fas fa-object-group',
+        command: (event) => {
+          this.displayMergeDialog = true;
+        }
       },
     ];
   }
@@ -151,6 +167,22 @@ export class UsersComponent implements OnInit {
 
   onRowSelect(event) {
     this.initContextMenu();
+  }
+
+  resetMergeForm(form: NgForm) {
+    this.mergingUserId = null;
+    form.resetForm();
+  }
+
+  merge() {
+    this.loading = true;
+    this.dataService.merge(this.selected.id, this.mergingUserId)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(() => {
+        this.snackBarService.showSuccess(`Користувача №${this.selected.id} об'єднано з користувачем №${this.mergingUserId}`);
+        this.refresh();
+        this.displayMergeDialog = false;
+      }, error => this.snackBarService.showError(getErrorMessage(error)))
   }
 
 }

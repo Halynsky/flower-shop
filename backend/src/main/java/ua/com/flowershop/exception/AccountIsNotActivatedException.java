@@ -5,7 +5,7 @@ import org.springframework.security.authentication.AccountStatusException;
 public class AccountIsNotActivatedException extends AccountStatusException {
 
     public AccountIsNotActivatedException() {
-        super("Account is not activated");
+        super("Акаунт не активовано");
     }
 
     public AccountIsNotActivatedException(String msg) {

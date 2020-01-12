@@ -2,7 +2,7 @@ package ua.com.flowershop.exception;
 
 public class NotFoundException extends RuntimeException {
     public NotFoundException() {
-        super("Resource not found");
+        super("Об'єкт не знайдено");
     }
 
     public NotFoundException(String message) {

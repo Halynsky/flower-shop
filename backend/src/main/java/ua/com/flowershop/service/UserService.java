@@ -7,15 +7,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.flowershop.entity.SocialConnection;
 import ua.com.flowershop.entity.User;
+import ua.com.flowershop.exception.ConflictException;
+import ua.com.flowershop.exception.NotFoundException;
 import ua.com.flowershop.model.PasswordRestoreConfirmModel;
 import ua.com.flowershop.model.UserAdminModel;
 import ua.com.flowershop.model.UserModel;
 import ua.com.flowershop.model.socials.SocialUser;
+import ua.com.flowershop.repository.OrderRepository;
 import ua.com.flowershop.repository.SocialConnectionRepository;
 import ua.com.flowershop.repository.UserRepository;
 import ua.com.flowershop.util.mail.MailService;
-
-import javax.persistence.EntityNotFoundException;
 
 import static java.util.Objects.nonNull;
 
@@ -27,10 +28,11 @@ public class UserService {
     @Autowired private PasswordEncoder passwordEncoder;
     @Autowired private MailService mailService;
     @Autowired private SocialConnectionRepository socialConnectionRepository;
+    @Autowired private OrderRepository orderRepository;
 
     public void update(Long id, UserAdminModel userModel) {
         User user = userRepository.findById(id)
-            .orElseThrow(EntityNotFoundException::new);
+            .orElseThrow(NotFoundException::new);
 
         user.setName(userModel.getName())
             .setEmail(userModel.getEmail())
@@ -55,7 +57,7 @@ public class UserService {
 
     public void updateDisabled(Long id, Boolean disabled) {
         User user = userRepository.findById(id)
-            .orElseThrow(EntityNotFoundException::new);
+            .orElseThrow(NotFoundException::new);
         user.setIsEnabled(!disabled);
         userRepository.save(user);
     }
@@ -83,7 +85,7 @@ public class UserService {
 
     public void activate(String secretKey) {
         User user = userRepository.findBySecretKeyAndIsActivated(secretKey, false)
-            .orElseThrow(EntityNotFoundException::new);
+            .orElseThrow(NotFoundException::new);
 
         userRepository.save(user.setSecretKey(null)
             .setIsActivated(true));
@@ -99,9 +101,28 @@ public class UserService {
 
     public void passwordRestoreConfirm(PasswordRestoreConfirmModel passwordRestoreConfirmModel) {
         User user = userRepository.findBySecretKey(passwordRestoreConfirmModel.getSecretKey())
-            .orElseThrow(EntityNotFoundException::new);
+            .orElseThrow(NotFoundException::new);
         user.setPassword(passwordEncoder.encode(passwordRestoreConfirmModel.getPassword()));
         userRepository.save(user);
     }
 
+    public void merge(Long id, long otherId) {
+        User user = userRepository.findById(id)
+            .orElseThrow(NotFoundException::new);
+
+        User otherUser = userRepository.findById(otherId)
+            .orElseThrow(NotFoundException::new);
+
+        if (user.getIsVirtual() && !otherUser.getIsVirtual()) {
+            throw new ConflictException("Ви намагаетесь приеднати реального користувача до віртуального");
+        }
+
+        otherUser.getOrders().forEach(order -> {
+            order.setUser(user);
+            orderRepository.save(order);
+        });
+
+        userRepository.delete(otherUser);
+
+    }
 }

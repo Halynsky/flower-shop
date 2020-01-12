@@ -60,7 +60,7 @@ export class AuthDialogComponent {
             break;
           }
           default: {
-            this.snackBarService.showError('Помилка авторизації');
+            this.snackBarService.showError(getErrorMessage(error));
             break;
           }
         }

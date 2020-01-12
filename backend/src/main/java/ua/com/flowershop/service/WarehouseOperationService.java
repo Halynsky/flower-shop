@@ -5,12 +5,12 @@ import org.springframework.stereotype.Service;
 import ua.com.flowershop.entity.FlowerSize;
 import ua.com.flowershop.entity.WarehouseOperation;
 import ua.com.flowershop.entity.WarehouseOperationType;
+import ua.com.flowershop.exception.NotFoundException;
 import ua.com.flowershop.model.WarehouseOperationModel;
 import ua.com.flowershop.repository.FlowerSizeRepository;
 import ua.com.flowershop.repository.WarehouseOperationRepository;
 import ua.com.flowershop.repository.WarehouseOperationTypeRepository;
 
-import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 @Service
@@ -24,10 +24,10 @@ public class WarehouseOperationService {
     public void create(WarehouseOperationModel warehouseOperationModel) {
 
         FlowerSize flowerSize = flowerSizeRepository.findById(warehouseOperationModel.getFlowerSize().getId())
-            .orElseThrow(EntityNotFoundException::new);
+            .orElseThrow(NotFoundException::new);
 
         WarehouseOperationType warehouseOperationType = warehouseOperationTypeRepository.findById(warehouseOperationModel.getWarehouseOperationType().getId())
-            .orElseThrow(EntityNotFoundException::new);
+            .orElseThrow(NotFoundException::new);
 
         warehouseOperationRepository.save(new WarehouseOperation()
             .setAmount(warehouseOperationModel.getAmount())
@@ -45,10 +45,10 @@ public class WarehouseOperationService {
 
     public void cancel(Long id) {
         WarehouseOperation warehouseOperation = warehouseOperationRepository.findById(id)
-            .orElseThrow(EntityNotFoundException::new);
+            .orElseThrow(NotFoundException::new);
 
         FlowerSize flowerSize = flowerSizeRepository.findById(warehouseOperation.getFlowerSize().getId())
-            .orElseThrow(EntityNotFoundException::new);
+            .orElseThrow(NotFoundException::new);
 
         if (warehouseOperation.getWarehouseOperationType().getDirection().equals(WarehouseOperationType.Direction.IN)) {
             if (flowerSize.getAmount() < warehouseOperation.getAmount()) {

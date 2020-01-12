@@ -3,7 +3,7 @@ package ua.com.flowershop.exception;
 public class ThirdPartyException extends Exception {
 
     public ThirdPartyException() {
-        super("Unknown error with 3rd party API");
+        super("Невідома помилка при роботі з API стороннього сервісу");
     }
 
     public ThirdPartyException(String message) {

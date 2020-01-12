@@ -77,4 +77,11 @@ public class UserController {
         return new ResponseEntity<>(OK);
     }
 
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
+    @PutMapping("/{id}/merge")
+    public ResponseEntity<Void> merge(@PathVariable Long id, @RequestBody String otherId) {
+        userService.merge(id, Long.parseLong(otherId));
+        return new ResponseEntity<>(OK);
+    }
+
 }

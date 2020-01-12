@@ -161,3 +161,39 @@
 
 <p-contextMenu #cm [model]="menuItems"></p-contextMenu>
 
+<p-dialog [(visible)]="displayMergeDialog" class="merge-dialog" [modal]="true" (onHide)="resetMergeForm(mergeForm)">
+  <p-header>
+    Об'єднання користувача №{{selected?.id}} з іншим користувачем
+  </p-header>
+
+  <form id="merge_form" #mergeForm="ngForm" class="merge-dialog-content" (ngSubmit)="mergeForm.valid && merge()">
+
+    <div class="ui-grid ui-grid-responsive ui-fluid">
+
+      <div class="prime-form-group">
+        <div class="ui-grid-col-4">
+          <label>Id іншого користувача</label>
+        </div>
+        <div class="ui-grid-col-4">
+          <input pInputText
+                 #mergingUser="ngModel"
+                 name="mergingUser"
+                 [(ngModel)]="mergingUserId"
+                 required>
+        </div>
+        <div class="ui-grid-col-4">
+          <ng-container *ngIf="mergingUser.dirty || mergingUser.touched || mergeForm.submitted">
+            <p-message *ngIf="mergingUser.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
+          </ng-container>
+        </div>
+      </div>
+
+    </div>
+
+  </form>
+
+  <p-footer>
+    <button pButton form="merge_form" icon="pi pi-check" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
+  </p-footer>
+</p-dialog>
+
