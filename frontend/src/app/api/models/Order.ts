@@ -36,17 +36,6 @@ export class OrderRequest {
   contactInfo: any;
 }
 
-export namespace Order {
-  export enum Status {
-    NEW = 'NEW',
-    PROCESSING = 'PROCESSING',
-    DELIVERING = 'DELIVERING',
-    RETURNED = 'RETURNED',
-    CANCELED = 'CANCELED',
-    DONE = 'DONE',
-  }
-}
-
 export class OrderStatusChangeRequest {
   id: number;
   status: Order.Status;
@@ -60,3 +49,38 @@ export class OrderContactsChangeRequest {
   deliveryAddress: string
 }
 
+
+export class Order {
+  id: number;
+  orderItems: OrderItem[];
+  closed: string;
+  created: string;
+  status: Order.Status;
+  postDeclaration: string;
+  isPaid: boolean;
+  totalPrice: number;
+  discount: number;
+}
+
+export class OrderItem{
+  id: number;
+  name: string;
+  amount: number;
+  price: number;
+  image: string;
+  sizeName: string;
+  flowerSizeId: number;
+  flowerTypeName: number;
+  orderId: number;
+}
+
+export namespace Order {
+  export enum Status {
+    NEW = 'NEW',
+    PROCESSING = 'PROCESSING',
+    DELIVERING = 'DELIVERING',
+    RETURNED = 'RETURNED',
+    CANCELED = 'CANCELED',
+    DONE = 'DONE',
+  }
+}

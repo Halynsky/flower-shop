@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { API_URL } from "../../utils/Costants";
 import { RestPage } from "../models/RestPage";
-import { OrderAdmin, OrderContactsChangeRequest, OrderRequest, OrderStatusChangeRequest } from "../models/Order";
+import { Order, OrderAdmin, OrderContactsChangeRequest, OrderRequest, OrderStatusChangeRequest } from "../models/Order";
 import { IdAmountTuple } from "../models/IdAmountTuple";
 
 @Injectable({providedIn: 'root'})
@@ -52,4 +52,9 @@ export class OrderService {
   changeDiscount(id: number, orderDiscount: number) {
     return this.http.put(`${this.URL}/${id}/discount`, orderDiscount);
   }
+
+  getMyOrders(pagination) {
+    return this.http.get<RestPage<Order>>(`${this.URL}/my`, {params: pagination});
+  }
+
 }

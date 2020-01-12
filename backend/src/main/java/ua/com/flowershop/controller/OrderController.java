@@ -13,8 +13,11 @@ import ua.com.flowershop.model.OrderContactsChangeRequestModel;
 import ua.com.flowershop.model.OrderModel;
 import ua.com.flowershop.model.OrderStatusChangeRequestModel;
 import ua.com.flowershop.projection.OrderAdminProjection;
+import ua.com.flowershop.projection.OrderProjection;
 import ua.com.flowershop.repository.OrderRepository;
+import ua.com.flowershop.security.SecurityService;
 import ua.com.flowershop.service.OrderService;
+import ua.com.flowershop.util.annotation.PageableSwagger;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,9 +31,12 @@ public class OrderController {
 
     @Autowired private OrderService orderService;
     @Autowired private OrderRepository orderRepository;
+    @Autowired private SecurityService securityService;
+
 
     @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @GetMapping("/forAdmin")
+    @PageableSwagger
     public ResponseEntity<Page<OrderAdminProjection>> getAllForAdmin(@RequestParam(required = false) Long id,
                                                                      @RequestParam(required = false) List<String> statusNames,
                                                                      @RequestParam(required = false) Long userId,
@@ -104,6 +110,13 @@ public class OrderController {
     public ResponseEntity<Void> updateDiscount(@PathVariable Long id, @RequestBody String discount) {
         orderService.updateDiscount(id, Integer.parseInt(discount));
         return new ResponseEntity<>(OK);
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/my")
+    @PageableSwagger
+    public ResponseEntity<Page<OrderProjection>> getMyOrders(@PageableDefault(sort = "id", page = 0, size = 10, direction = Sort.Direction.ASC) Pageable pageRequest) {
+        return new ResponseEntity<>(orderRepository.findProjectedByUserEmail(securityService.getCurrentUserEmail(), pageRequest) ,OK);
     }
 
 }

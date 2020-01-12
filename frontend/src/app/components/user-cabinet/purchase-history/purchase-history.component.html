@@ -4,6 +4,90 @@
   <mat-card-header>
   </mat-card-header>
   <mat-card-content>
-    Purchase history
+
+    <div *ngIf="orders && orders.totalElements > 0">
+
+      <mat-accordion>
+
+        <ng-template ngFor let-order [ngForOf]="orders.content" [ngForTrackBy]="trackByFn">
+
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                №{{order.id}}
+              </mat-panel-title>
+              <mat-panel-description>
+                <span>{{order.created | date:'d MMMM yyyy H:mm'}}</span>
+                <span class="separator-vert"></span>
+                <span class="order-status" [ngClass]="order.status | toclassname">{{translationService.text.orderStatuses[order.status]}}</span>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <div class="order-table">
+
+              <div class="header">
+                <div></div>
+                <div></div>
+                <div class="price">Ціна</div>
+                <div class="amount">Кількість</div>
+                <div class="total-price">Сума</div>
+              </div>
+
+              <div class="content">
+
+                <ng-template ngFor let-orderItem [ngForOf]="order.orderItems" let-i="index">
+                  <div class="order-table-row">
+                    <div  class="order-item-image">
+                      <img [src]="orderItem.image">
+                    </div>
+                    <div class="bucket-item-name">
+                      <div class="flower-type-name">{{orderItem.flowerTypeName}}</div>
+                      <div class="flower-name">{{orderItem.name}}</div>
+                      <div class="flower-size-name">{{orderItem.sizeName}}</div>
+                    </div>
+                    <div class="bucket-item-price">{{orderItem.price / 100}} грн <span class="label"> за шт</span></div>
+                    <div class="bucket-item-amount">
+                      <span class="amount">
+                        <span>{{orderItem.amount}}</span>
+                        <span class="units">&nbsp;шт</span>
+                      </span>
+                    </div>
+                    <div class="bucket-item-total-price"><span class="label">Сума: </span> {{orderItem.price * orderItem.amount / 100}} грн</div>
+                  </div>
+                </ng-template>
+
+              </div>
+
+            </div>
+
+            <div class="total-price-wrapper">
+              <div class="discount-block" *ngIf="order.discount > 0">
+                <div class="label">Знижка:</div>
+                <div class="discount">{{(order.discount) / 100}} грн</div>
+              </div>
+              <div class="total-price-block">
+                <div class="label">Разом:</div>
+                <div class="total-price">{{(order.totalPrice - order.discount) / 100}} грн</div>
+              </div>
+            </div>
+
+          </mat-expansion-panel>
+
+        </ng-template>
+
+      </mat-accordion>
+
+      <div class="show-more-block">
+        <button mat-stroked-button color="primary" *ngIf="!loading && !orders.last" (click)="showMore()">Показати ще</button>
+        <mat-spinner style="margin:0 auto" diameter="30" mode="indeterminate" *ngIf="loading"></mat-spinner>
+      </div>
+
+    </div>
+
+    <div class="empty-purchases-block" *ngIf="orders && orders.totalElements == 0">
+      <div class="message">Ви ще не здійснили жодної покупки</div>
+      <button mat-flat-button color="primary" routerLink="/shop">Перейти в магазин</button>
+    </div>
+
   </mat-card-content>
 </mat-card>

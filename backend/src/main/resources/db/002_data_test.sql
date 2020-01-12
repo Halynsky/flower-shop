@@ -105,25 +105,25 @@ INSERT INTO users (email, phone, password, name, role, is_enabled, is_virtual, i
 
 
 INSERT INTO orders (closed, comment, created, delivery_address, is_paid, note, phone, post_declaration, status, total_price, user_id) VALUES (null, 'Доставте, будь ласка, як найшвидше', '2020-01-04 12:18:55.744632', 'м.Калуш, Нова Пошта, Відділення №8', false, null, '0503333333', null, 'NEW', 22500, 3);
-INSERT INTO order_items (amount, flower_size_id, order_id, warehouse_operation_id) VALUES (10, 7, 1, null);
+INSERT INTO order_items (amount, flower_size_id, order_id, warehouse_operation_id, price) VALUES (10, 7, 1, null, 1100);
 UPDATE flowers__sizes SET reserved = reserved + 10 WHERE id = 7;
-INSERT INTO order_items (amount, flower_size_id, order_id, warehouse_operation_id) VALUES (5, 15, 1, null);
+INSERT INTO order_items (amount, flower_size_id, order_id, warehouse_operation_id, price) VALUES (5, 15, 1, null, 1000);
 UPDATE flowers__sizes SET reserved = reserved + 5 WHERE id = 15;
-INSERT INTO order_items (amount, flower_size_id, order_id, warehouse_operation_id) VALUES (5, 6, 1, null);
+INSERT INTO order_items (amount, flower_size_id, order_id, warehouse_operation_id, price) VALUES (5, 6, 1, null, 1300);
 UPDATE flowers__sizes SET reserved = reserved + 5 WHERE id = 6;
 
 INSERT INTO orders (closed, comment, created, delivery_address, is_paid, note, phone, post_declaration, status, total_price, user_id) VALUES (null, 'Дуже хочу', '2020-01-05 12:18:55.744632', 'м.Калуш, Нова Пошта, Відділення №8', false, null, '0503345675', null, 'NEW', 22500, 3);
-INSERT INTO order_items (amount, flower_size_id, order_id, warehouse_operation_id) VALUES (10, 7, 2, null);
+INSERT INTO order_items (amount, flower_size_id, order_id, warehouse_operation_id, price) VALUES (10, 7, 2, null, 1100);
 UPDATE flowers__sizes SET reserved = reserved + 10 WHERE id = 7;
-INSERT INTO order_items (amount, flower_size_id, order_id, warehouse_operation_id) VALUES (5, 15, 2, null);
+INSERT INTO order_items (amount, flower_size_id, order_id, warehouse_operation_id, price) VALUES (5, 15, 2, null, 1000);
 UPDATE flowers__sizes SET reserved = reserved + 5 WHERE id = 15;
-INSERT INTO order_items (amount, flower_size_id, order_id, warehouse_operation_id) VALUES (5, 6, 2, null);
+INSERT INTO order_items (amount, flower_size_id, order_id, warehouse_operation_id, price) VALUES (5, 6, 2, null, 1300);
 UPDATE flowers__sizes SET reserved = reserved + 5 WHERE id = 6;
 
 INSERT INTO orders (closed, comment, created, delivery_address, is_paid, note, phone, post_declaration, status, total_price, user_id) VALUES (null, '', '2020-01-05 12:18:55.744632', 'м.Калуш, Нова Пошта, Відділення №8', false, null, '0503345999', null, 'NEW', 22500, 4);
-INSERT INTO order_items (amount, flower_size_id, order_id, warehouse_operation_id) VALUES (10, 7, 3, null);
+INSERT INTO order_items (amount, flower_size_id, order_id, warehouse_operation_id, price) VALUES (10, 7, 3, null, 1100);
 UPDATE flowers__sizes SET reserved = reserved + 10 WHERE id = 7;
-INSERT INTO order_items (amount, flower_size_id, order_id, warehouse_operation_id) VALUES (5, 15, 3, null);
+INSERT INTO order_items (amount, flower_size_id, order_id, warehouse_operation_id, price) VALUES (5, 15, 3, null, 1000);
 UPDATE flowers__sizes SET reserved = reserved + 5 WHERE id = 15;
-INSERT INTO order_items (amount, flower_size_id, order_id, warehouse_operation_id) VALUES (5, 6, 3, null);
+INSERT INTO order_items (amount, flower_size_id, order_id, warehouse_operation_id, price) VALUES (5, 6, 3, null, 1300);
 UPDATE flowers__sizes SET reserved = reserved + 5 WHERE id = 6;

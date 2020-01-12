@@ -21,16 +21,16 @@ public class SecurityService {
         return SecurityContextHolder.getContext().getAuthentication();
     }
 
-    public String getEmail() {
+    public String getCurrentUserEmail() {
         return getAuthentication().getName();
     }
 
     public User getUserOrNull() {
-        return userRepository.findByEmail(getEmail()).orElse(null);
+        return userRepository.findByEmail(getCurrentUserEmail()).orElse(null);
     }
 
     public User getUser() {
-        return userRepository.findByEmail(getEmail()).orElseThrow(() -> new RuntimeException("Current User not found in Database"));
+        return userRepository.findByEmail(getCurrentUserEmail()).orElseThrow(() -> new RuntimeException("Current User not found in Database"));
     }
 
     public String generatePassword(String rawPassword) {

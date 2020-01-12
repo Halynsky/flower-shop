@@ -6,20 +6,15 @@ import ua.com.flowershop.entity.Order;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public interface OrderAdminProjection {
+public interface OrderProjection {
     Long getId();
     LocalDateTime getCreated();
     LocalDateTime getClosed();
     Order.Status getStatus();
-    UserShortAdminProjection getUser();
-    String getComment();
-    String getNote();
-    String getDeliveryAddress();
     String getPostDeclaration();
     Boolean getIsPaid();
-    String getPhone();
     Integer getTotalPrice();
     Integer getDiscount();
-    @Value("#{@orderItemRepository.findProjectedForAdminByOrderId(target.id)}")
-    List<OrderItemAdminProjection> getOrderItems();
+    @Value("#{@orderItemRepository.findProjectedByOrderId(target.id)}")
+    List<OrderItemProjection> getOrderItems();
 }

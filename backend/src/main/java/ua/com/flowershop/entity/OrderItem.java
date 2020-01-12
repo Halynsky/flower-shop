@@ -21,6 +21,7 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private int amount;
+    private int price;
 
     @OneToOne
     @JoinColumn(name = "warehouse_operation_id")

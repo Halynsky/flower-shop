@@ -5,4 +5,307 @@
 
 :host {
   flex: 0 1 812px;
+
+  ::ng-deep mat-card-content {
+    margin-bottom: -16px;
+  }
+
+}
+
+.show-more-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.empty-purchases-block {
+  color: $grey-500;
+  text-align: center;
+  margin-top: 16px;
+
+  .message {
+    margin-bottom: 24px;
+  }
+
+}
+
+::ng-deep mat-expansion-panel-header {
+  font-weight: 500;
+  border-radius: 0px !important;
+  display: flex;
+  align-items: center;
+
+  .mat-content {
+    align-items: center;
+    .mat-expansion-panel-header-description {
+      align-items: center;
+    }
+  }
+
+  &.mat-expanded {
+    background-color: $grey-30 !important;
+  }
+
+  .separator-vert {
+    border-right: 1px solid $grey-200;
+    margin: 0px 12px;
+    align-self: stretch;
+  }
+
+  .order-status {
+    &.new {
+      color: #009ede;
+    }
+
+    &.in-progress {
+      color: #009ede;
+    }
+
+    &.done {
+      color: mat-color($primary);
+    }
+
+    &.returned {
+      color: $grey-200;
+    }
+
+    &.canceled {
+      color: $grey-200;
+    }
+
+  }
+
+}
+
+::ng-deep .mat-expansion-panel-body {
+  padding-top: 24px !important;
+
+  .order-table {
+    display: grid;
+    text-align: right;
+    font-size: 18px;
+
+    .header {
+      display: grid;
+      grid-template-columns: 100px 27fr 18fr 35fr 20fr;
+      font-weight: 500;
+      color: $grey-800;
+      padding-bottom: 8px;
+
+      @include response-to(xs) {
+        display: none;
+      }
+
+      .amount {
+      }
+
+    }
+
+    .content {
+      display: grid;
+      grid-template-columns: 1fr;
+      color: $black-200;
+
+      .order-table-row {
+        position: relative;
+        display: grid;
+        grid-template-columns: 100px 27fr 18fr 35fr 20fr;
+        align-items: center;
+        border-bottom: 1px solid $grey-200;
+        color: $grey-900;
+        // height: 100px;
+        padding: 10px 0;
+        grid-template-areas: "bucket-item-image bucket-item-name bucket-item-price bucket-item-amount bucket-item-total-price";
+
+        &:first-of-type {
+          border-top: 1px solid $grey-200;
+        }
+
+        @include response-to(xs) {
+          grid-template-columns: 2fr;
+          grid-template-areas: "bucket-item-image bucket-item-name" "bucket-item-image bucket-item-price" "bucket-item-image bucket-item-amount" "bucket-item-image bucket-item-total-price";
+
+        }
+
+        @include response-to(sm) {
+          font-size: 16px;
+        }
+
+        .remove-icon-wrapper {
+          cursor: pointer;
+          position: absolute;
+          top: 0px;
+          right: -5px;
+          i {
+            color: mat-color($accent);
+          }
+        }
+
+        .order-item-image {
+          grid-area: bucket-item-image;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          @include response-to(xs) {
+            justify-content: initial;
+            align-items: initial;
+          }
+
+          img {
+            height: 80px;
+            width: 80px;
+            background-position: center;
+            background-size: contain;
+            background-color: mat-color($primary, 100);
+
+            @include response-to(xs) {
+              height: 150px;
+              width: 150px;
+            }
+
+          }
+        }
+
+        .bucket-item-name {
+          grid-area: bucket-item-name;
+          padding: 0 0 0 12px;
+
+          @include response-to(xs) {
+            padding-bottom: 12px;
+            margin-top: 12px;
+          }
+
+          .flower-type-name {
+            color: $grey-600
+          }
+
+          .flower-size-name {
+            color: $grey-600
+          }
+
+          .flower-name {
+            color: mat-color($primary);
+          }
+
+        }
+
+        .bucket-item-price {
+          grid-area: bucket-item-price;
+
+          @include response-to(xs) {
+            font-weight: 400;
+            color: $grey-400;
+          }
+
+          .label {
+            display: none;
+            @include response-to(xs) {
+              display: inline-block;
+            }
+          }
+
+          @include response-to(xs) {
+            padding-bottom: 4px;
+          }
+
+        }
+
+        .bucket-item-amount {
+          grid-area: bucket-item-amount;
+
+          span.amount {
+            padding: 4px 8px;
+            background-color: $grey-50;
+          }
+
+          @include response-to(xs) {
+            padding-bottom: 4px;
+
+
+
+          }
+
+          amount-controlled-input {
+            justify-content: flex-end;
+          }
+        }
+
+        .bucket-item-total-price {
+          grid-area: bucket-item-total-price;
+          color: $black-500;
+          font-weight: 500;
+
+          @include response-to(xs) {
+            padding-top: 8px;
+          }
+
+          .label {
+            display: none;
+            font-weight: 400;
+            font-size: 14px;
+            color: $grey-600;
+            @include response-to(xs) {
+              display: inline-block;
+            }
+          }
+        }
+
+      }
+
+    }
+
+  }
+
+  .total-price-wrapper {
+    display: flex;
+    flex-direction: row;
+    font-size: 24px;
+    justify-content: flex-end;
+
+    @include response-to(xs) {
+      justify-content: center;
+      flex-direction: column;
+      margin-top: 16px;
+    }
+
+    .discount-block {
+      display: flex;
+      flex-direction: row;
+      background-color: $grey-20;
+      padding: 8px 16px;
+      justify-content: space-between;
+      font-weight: 400;
+
+      .label {
+        margin-right: 12px;
+        color: $grey-800
+      }
+      .discount-price {
+        font-weight: 500;
+        color: $black-500;
+      }
+    }
+
+    .total-price-block {
+      display: flex;
+      flex-direction: row;
+      background-color: mat-color($primary, 50);
+      padding: 8px 16px;
+      justify-content: space-between;
+
+      .label {
+        margin-right: 12px;
+        color: $grey-800
+      }
+      .total-price {
+        font-weight: 500;
+        color: $black-500;
+      }
+    }
+
+
+  }
+
 }

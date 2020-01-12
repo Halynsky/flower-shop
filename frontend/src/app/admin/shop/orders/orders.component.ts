@@ -166,7 +166,7 @@ export class OrdersComponent implements OnInit {
           this.displayStatusChangeDialog = true;
           this.orderStatusChangeRequest.status = this.Status.RETURNED;
         },
-        visible: !this.orderIsClosed(this.selected.status),
+        visible: this.selected.status == Order.Status.DELIVERING,
         styleClass: 'cm-warn',
       },
       {

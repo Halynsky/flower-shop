@@ -1,14 +1,17 @@
 import { ModuleWithProviders, NgModule } from "@angular/core";
 import { EnumToObjectsPipe } from "./enum-to-objects";
+import { ToClassNamePipe } from "./to-class-name.pipe";
 
 
 @NgModule({
   imports: [],
   declarations: [
-    EnumToObjectsPipe
+    EnumToObjectsPipe,
+    ToClassNamePipe
   ],
   exports: [
-    EnumToObjectsPipe
+    EnumToObjectsPipe,
+    ToClassNamePipe
   ]
 })
 

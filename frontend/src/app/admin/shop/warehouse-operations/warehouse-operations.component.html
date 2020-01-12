@@ -7,7 +7,7 @@
 </div>
 
 <div class="panel-content">
-  <p-table #dt [columns]="selectedColumns" [value]="items.content" sortField="id" [paginator]="true" [rows]="10" [totalRecords]="items.totalElements"
+  <p-table #dt [columns]="selectedColumns" [value]="items.content" sortField="created" [sortOrder]="-1" ] [paginator]="true" [rows]="10" [totalRecords]="items.totalElements"
            [tableStyle]="{'table-layout':'auto'}" [contextMenu]="cm" [(contextMenuSelection)]="selected"
            (onLazyLoad)="onLazyLoad($event)" [lazy]="true">
 

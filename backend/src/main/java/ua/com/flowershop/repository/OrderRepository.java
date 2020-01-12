@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ua.com.flowershop.entity.Order;
 import ua.com.flowershop.projection.OrderAdminProjection;
+import ua.com.flowershop.projection.OrderProjection;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -30,4 +31,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     Page<OrderAdminProjection> findForAdminProjectedByFilters(Long id, List<String> statusNames, Long userId, String userNamePart, String userFacebookNicknamePart, String phonePart,
                                                               LocalDateTime createdFrom, LocalDateTime createdTo, LocalDateTime closedFrom, LocalDateTime closedTo,
                                                               Pageable pageRequest);
+
+    Page<OrderProjection> findProjectedByUserEmail(String userEmail, Pageable pageRequest);
+
 }

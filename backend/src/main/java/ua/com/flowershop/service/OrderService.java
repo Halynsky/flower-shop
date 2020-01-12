@@ -40,6 +40,7 @@ public class OrderService {
                     .orElseThrow(() -> new NotFoundException("Товарну позицію не знайдено"));
                 return new OrderItem().setAmount(om.getAmount())
                     .setFlowerSize(flowerSize)
+                    .setPrice(flowerSize.getPrice())
                     .setOrder(order);
             }).collect(Collectors.toSet());
 
@@ -133,7 +134,7 @@ public class OrderService {
                 break;
 
             case RETURNED:
-                if (Order.Status.getClosed().contains(order.getStatus())) {
+                if (order.getStatus() != Order.Status.DELIVERING) {
                     throw new ConflictException("Вказано невалідний статус замовлення");
                 }
                 order.getOrderItems().forEach(oi -> {
@@ -151,7 +152,7 @@ public class OrderService {
                 break;
 
             case CANCELED:
-                if (Order.Status.getEditable().contains(order.getStatus())) {
+                if (!Order.Status.getEditable().contains(order.getStatus())) {
                     throw new ConflictException("Вказано невалідний статус замовлення");
                 }
 
