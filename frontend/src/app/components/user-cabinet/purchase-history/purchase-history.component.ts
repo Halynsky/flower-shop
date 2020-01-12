@@ -35,7 +35,15 @@ export class PurchaseHistoryComponent {
     this.orderService.getMyOrders(this.pagination)
       .pipe(finalize(() => this.loading = false))
       .subscribe(
-      orders => this.orders = orders,
+      orders => {
+        if (!showMore) {
+          this.orders = orders
+        } else {
+          orders.content.unshift(...this.orders.content);
+          orders.numberOfElements += this.orders.numberOfElements;
+          this.orders = orders;
+        }
+      },
       error => this.snackBarService.showError(getErrorMessage(error))
     )
   }
