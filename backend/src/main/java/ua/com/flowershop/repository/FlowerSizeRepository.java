@@ -40,5 +40,6 @@ public interface FlowerSizeRepository extends JpaRepository<FlowerSize, Long> {
         "WHERE fs.id = ?1")
     Optional<String> getImage(long id);
 
+    List<FlowerSizeTinyProjection> findProjectedByIdIn(List<Long> ids);
 
 }

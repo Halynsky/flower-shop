@@ -9,7 +9,8 @@ export class FlowerSizeService {
 
   private readonly URL = `${API_URL}/flower-sizes`;
 
-  constructor(private  http: HttpClient) {}
+  constructor(private  http: HttpClient) {
+  }
 
   getAllForAdmin(params, pagination) {
     params = Object.assign(params, ...pagination);
@@ -18,6 +19,10 @@ export class FlowerSizeService {
 
   getAllForAdminAsList() {
     return this.http.get<FlowerSize[]>(`${this.URL}/forAdmin/asList`);
+  }
+
+  getByIds(ids: any[]) {
+    return this.http.get<FlowerSize[]>(`${this.URL}/byIds`, {params: {ids: ids}});
   }
 
 }

@@ -17,7 +17,7 @@
   <div class="login-button-wrapper" *ngIf="!securityService.isAuthenticated()">
 
     <div class="login-with-bucket">
-      <button mat-button [matMenuTriggerFor]="bucket" class="bucket-button">
+      <button mat-button [matMenuTriggerFor]="bucket" class="bucket-button" (click)="bucketLocalService.updateBucketFlowerSizes()">
         <div class="bucket">
           <i class="fas fa-shopping-cart"></i>
             <div class="bucket-index" *ngIf="bucketLocalService.bucketInfo.totalItems > 0">
@@ -76,7 +76,7 @@
     </button>
     <button mat-flat-button class="user-menu-button" routerLink="/my/purchases">
       <i class="material-icons">shopping_basket</i>
-      <span>Мої покупки</span>
+      <span>Мої замовлення</span>
     </button>
 <!--    <button mat-flat-button class="user-menu-button" routerLink="/my/favourite-articles">-->
 <!--      <i class="material-icons">notes</i>-->

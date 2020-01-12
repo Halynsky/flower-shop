@@ -37,6 +37,11 @@ export class AmountControlledInputComponent implements ControlValueAccessor, OnI
 
   ngOnInit() {
     this.ngControl = this.injector.get(NgControl);
+
+    this.ngControl.valueChanges.subscribe(value => {
+
+    })
+
   }
 
   ngOnDestroy(): void {
@@ -44,12 +49,12 @@ export class AmountControlledInputComponent implements ControlValueAccessor, OnI
 
   minusAmount() {
     if (this.value > this.minAmount) {
-      this.value--
+      this.value--;
     }
   }
 
   plusAmount() {
-    if (this.value < this.maxAmount) {
+    if (this.value < this.maxAmount && this.value < this.availableAmount) {
       this.value++;
     }
   }

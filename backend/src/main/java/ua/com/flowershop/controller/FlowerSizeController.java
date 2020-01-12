@@ -48,4 +48,9 @@ public class FlowerSizeController {
         return new ResponseEntity<>(flowerSizeRepository.findAllForAdminProjectedByOrderByFlowerNameAscSizeNameAsc(), OK);
     }
 
+    @GetMapping("/byIds")
+    public ResponseEntity<List<FlowerSizeTinyProjection>> getByIds(@RequestParam(required = false) List<Long> ids) {
+        return new ResponseEntity<>(flowerSizeRepository.findProjectedByIdIn(ids), OK);
+    }
+
 }

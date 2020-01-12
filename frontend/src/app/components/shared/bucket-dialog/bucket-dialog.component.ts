@@ -1,8 +1,9 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { BucketLocalService } from "../../../services/bucket-local.service";
 import { MatDialogRef } from "@angular/material";
 import { SnackBarService } from "../../../services/snak-bar.service";
 import { BucketItem } from "../../../models/Bucket";
+import { FlowerSizeService } from "../../../api/services/flower-size.service";
 
 
 @Component({
@@ -10,12 +11,13 @@ import { BucketItem } from "../../../models/Bucket";
   templateUrl: './bucket-dialog.component.html',
   styleUrls: ['./bucket-dialog.component.scss']
 })
-export class BucketDialogComponent {
+export class BucketDialogComponent implements OnInit {
 
 
   constructor(public bucketLocalService: BucketLocalService,
               public dialogRef: MatDialogRef<BucketDialogComponent>,
-              public snackBarService: SnackBarService){
+              public snackBarService: SnackBarService,
+              public flowerSizeService: FlowerSizeService){
   }
 
   onBucketChange() {
@@ -27,6 +29,10 @@ export class BucketDialogComponent {
     if (bucket.length <= 0) {
       this.dialogRef.close()
     }
+  }
+
+  ngOnInit() {
+    this.bucketLocalService.updateBucketFlowerSizes()
   }
 
 
