@@ -26,7 +26,7 @@
     "@angular/material": "8.2.3",
     "@angular/platform-browser": "8.2.14",
     "@angular/platform-browser-dynamic": "8.2.14",
-    "@angular/pwa": "0.803.21",
+    "@angular/pwa": "0.803.22",
     "@angular/router": "8.2.14",
     "@angular/service-worker": "8.2.14",
     "@fortawesome/fontawesome-free": "5.12.0",
@@ -46,7 +46,7 @@
     "zone.js": "0.9.1"
   },
   "devDependencies": {
-    "@angular/cli": "8.3.21",
+    "@angular/cli": "8.3.22",
     "@angular/compiler-cli": "8.2.14",
     "@angular/language-service": "8.2.14",
     "@types/jasmine": "2.8.8",

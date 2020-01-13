@@ -43,7 +43,7 @@ public class GenericExceptionHandler {
     @ExceptionHandler(AuthenticationRequiredException.class)
     public ResponseEntity<Object> handleAuthenticationRequiredException(AuthenticationRequiredException exception, WebRequest request) {
         log.debug(exception.getMessage());
-        return new ResponseEntity<>(new RestError(BAD_REQUEST.value(), exception.getMessage()), BAD_REQUEST);
+        return new ResponseEntity<>(new RestError(UNAUTHORIZED.value(), exception.getMessage()), UNAUTHORIZED);
     }
 
     @ExceptionHandler({InternalServerException.class})
