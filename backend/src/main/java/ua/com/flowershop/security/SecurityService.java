@@ -8,6 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.com.flowershop.entity.User;
+import ua.com.flowershop.exception.AuthenticationRequiredException;
 import ua.com.flowershop.model.SecurityUserModel;
 import ua.com.flowershop.repository.UserRepository;
 
@@ -30,7 +31,7 @@ public class SecurityService {
     }
 
     public User getUser() {
-        return userRepository.findByEmail(getCurrentUserEmail()).orElseThrow(() -> new RuntimeException("Current User not found in Database"));
+        return userRepository.findByEmail(getCurrentUserEmail()).orElseThrow(() -> new AuthenticationRequiredException("Current User not found in Database"));
     }
 
     public String generatePassword(String rawPassword) {
