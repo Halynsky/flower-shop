@@ -19,13 +19,13 @@ import static ua.com.flowershop.util.Path.*;
 public class MailService {
 
     // Defaults
-    private static final String COMPANY_NAME = "Mery Flowers";
+    private static final String COMPANY_NAME = "Merry Flowers";
     private static final String COMPANY_PHONE = "+380507072637";
-    private static final String SIGNATURE = "З повагою, Mery Flowers";
+    private static final String SIGNATURE = "З повагою, Merry Flowers";
     private static final String THANK_YOU_FOR_JOIN = "Дякуємо за те що приєднались до нас!";
     private static final String LOGO_URL = "/assets/icons/logo/icon-192x192.png";
 
-    private static final String SUPPORT_EMAIL = "meryflowersua@gmail.com";
+    private static final String SUPPORT_EMAIL = "merryflowersua@gmail.com";
     private static final String SUPPORT_TEXT = "Якщо у вас виникли якісь запитання, ви можете звязатись з нами";
 
     private static final String SECRET_KEY_PARAM = "?secretKey=";
@@ -157,7 +157,7 @@ public class MailService {
         context.setVariable(USER_NAME, user.getName());
         String newStatus = !user.getIsEnabled() ? "заблоковано" : "розблоковано";
         String title = "Ваш аккаунт " + newStatus;
-        StringBuilder body = new StringBuilder("Ваш аккаунт на meryflowers.com.ua ");
+        StringBuilder body = new StringBuilder("Ваш аккаунт на merryflowers.com.ua ");
         body.append(newStatus);
         body.append(".");
         if (!user.getIsEnabled()) {

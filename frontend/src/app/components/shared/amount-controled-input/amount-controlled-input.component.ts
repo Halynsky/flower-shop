@@ -16,11 +16,13 @@ export const AMOUNT_CONTROLLED_VALUE_ACCESSOR: Provider = {
 export class AmountControlledInputComponent implements ControlValueAccessor, OnInit, OnDestroy {
 
   @Input()
+  minAmount = 0;
+  @Input()
   maxAmount = 999;
   @Input()
   availableAmount = 999;
   @Input()
-  minAmount = 0;
+  disabled: boolean = false;
 
   private ngControl: NgControl;
 

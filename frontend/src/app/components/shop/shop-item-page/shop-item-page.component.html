@@ -21,11 +21,11 @@
           </tr>
 
           <ng-template ngFor let-flowerSize [ngForOf]="flower.flowerSizes" let-i="index">
-            <tr>
+            <tr [ngClass]="{'flower-size-empty': flower.flowerSizes[i].available == 0}">
               <td>{{flowerSize.size.name}}</td>
               <td>{{flowerSize.price / 100 + ' грн'}}</td>
               <td>
-                <amount-controlled-input name="amount"  [(ngModel)]="bucketItems[i].amount" [availableAmount]="bucketLocalService.getMaxAmountForFlowerSize(flower.flowerSizes[i].id, flower.flowerSizes[i].available)"></amount-controlled-input>
+                <amount-controlled-input name="amount" [(ngModel)]="bucketItems[i].amount" [availableAmount]="bucketLocalService.getMaxAmountForFlowerSize(flower.flowerSizes[i].id, flower.flowerSizes[i].available)" [disabled]="flower.flowerSizes[i].available == 0"></amount-controlled-input>
               </td>
             </tr>
           </ng-template>

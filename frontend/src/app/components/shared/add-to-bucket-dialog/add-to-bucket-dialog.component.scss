@@ -80,9 +80,14 @@
 
           table {
             border-collapse: separate;
-            border-spacing: 16px 0px;
+            border-spacing: 20px 0px;
 
             tr {
+
+              &.flower-size-empty {
+                opacity: 0.4;
+              }
+
 
               &.header {
                 th {
@@ -92,9 +97,8 @@
                 }
               }
 
-
-
               td {
+                text-align: right;
                 font-size: 20px;
                 padding-bottom: 16px;
               }

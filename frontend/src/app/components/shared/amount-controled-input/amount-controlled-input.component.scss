@@ -13,7 +13,13 @@
     font-size: 20px;
     color: $black-500;
     border-radius: 2px;
-    border: solid 1px $grey-200;
+    border: solid 1px $grey-600;
+
+    &[readOnly] {
+      //color: $grey-100;
+      //border-color: $grey-200;
+    }
+
   }
 
   button {
@@ -28,6 +34,11 @@
     font-size: 30px;
     font-weight: 400;
     background-color: white;
+    border: solid 1px $grey-600 !important;
+
+    &[disabled] {
+      //border-color: $grey-200 !important;
+    }
 
 
     &.plus {
@@ -35,3 +46,5 @@
     }
   }
 }
+
+
