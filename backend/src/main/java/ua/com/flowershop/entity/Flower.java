@@ -41,8 +41,8 @@ public class Flower {
     private Boolean isNew = true;
     private Boolean isPopular;
     @Min(1)
-    @Max(10)
-    private Integer popularity = 1;
+    @Max(100)
+    private Double popularity = 1.0;
     @Column(columnDefinition = "timestamp default timezone('utc'::text, now())")
     private LocalDateTime created = LocalDateTime.now();
     private LocalDateTime lastSupply;
