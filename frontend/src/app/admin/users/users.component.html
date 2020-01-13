@@ -42,6 +42,10 @@
             {{col.header}}
             <p-sortIcon [field]="'role'"></p-sortIcon>
           </th>
+          <th *ngSwitchCase="'lastOrderDate'" [pSortableColumn]="'lastOrderDate'">
+            {{col.header}}
+            <p-sortIcon [field]="'lastOrderDate'"></p-sortIcon>
+          </th>
           <th *ngSwitchCase="'isEnabled'">
             {{col.header}}
           </th>
@@ -57,9 +61,7 @@
           <th *ngSwitchCase="'note'">
             {{col.header}}
           </th>
-          <th *ngSwitchCase="'lastOrderDate'">
-            {{col.header}}
-          </th>
+
           <th *ngSwitchCase="'facebookNickname'">
             {{col.header}}
           </th>

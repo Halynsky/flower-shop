@@ -87,7 +87,7 @@ export class UsersComponent implements OnInit {
         separator: true
       },
       {
-        label: "Об'єднати замовлення",
+        label: "Об'єднати користувачів",
         icon: 'fas fa-object-group',
         command: (event) => {
           this.displayMergeDialog = true;

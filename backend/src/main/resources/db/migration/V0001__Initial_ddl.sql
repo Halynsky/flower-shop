@@ -9,8 +9,6 @@ create table articles
     title varchar(255)
 );
 
-alter table articles owner to postgres;
-
 create table colors
 (
     id bigserial not null
@@ -23,8 +21,6 @@ create table colors
         constraint uk_kfulqa7c70otb7t3uwkgcpy43
             unique
 );
-
-alter table colors owner to postgres;
 
 create table flower_types
 (
@@ -42,8 +38,6 @@ create table flower_types
         constraint uk_eswcnmv6pxk02s5310l4fkk4r
             unique
 );
-
-alter table flower_types owner to postgres;
 
 create table flowers
 (
@@ -82,8 +76,6 @@ create table flowers
             references flower_types
 );
 
-alter table flowers owner to postgres;
-
 create table images
 (
     id bigserial not null
@@ -98,8 +90,6 @@ create table images
     size integer
 );
 
-alter table images owner to postgres;
-
 create table sizes
 (
     id bigserial not null
@@ -111,8 +101,6 @@ create table sizes
         constraint uk_rmd719hqv99q34v9yfelrkq3v
             unique
 );
-
-alter table sizes owner to postgres;
 
 create table flower_types__sizes
 (
@@ -126,8 +114,6 @@ create table flower_types__sizes
         constraint fk9i9cqf0uq4wbbp3b457ga5cd0
             references sizes
 );
-
-alter table flower_types__sizes owner to postgres;
 
 create table flowers__sizes
 (
@@ -146,8 +132,6 @@ create table flowers__sizes
         constraint fkbicwcfxcj7hf6h0pgr63pi19
             references sizes
 );
-
-alter table flowers__sizes owner to postgres;
 
 create table users
 (
@@ -175,8 +159,6 @@ create table users
     secret_key varchar(255)
 );
 
-alter table users owner to postgres;
-
 create table bucket_items
 (
     id bigserial not null
@@ -191,8 +173,6 @@ create table bucket_items
             references users
 );
 
-alter table bucket_items owner to postgres;
-
 create table favorite_flowers_list
 (
     id bigserial not null
@@ -205,8 +185,6 @@ create table favorite_flowers_list
             references users
 );
 
-alter table favorite_flowers_list owner to postgres;
-
 create table flowers__favorite_flowers_lists
 (
     favorite_flowers_list_id bigint not null
@@ -218,8 +196,6 @@ create table flowers__favorite_flowers_lists
     constraint flowers__favorite_flowers_lists_pkey
         primary key (favorite_flowers_list_id, flower_id)
 );
-
-alter table flowers__favorite_flowers_lists owner to postgres;
 
 create table orders
 (
@@ -242,8 +218,6 @@ create table orders
             references users
 );
 
-alter table orders owner to postgres;
-
 create table order_items
 (
     id bigserial not null
@@ -260,8 +234,6 @@ create table order_items
     warehouse_operation_id bigint
 );
 
-alter table order_items owner to postgres;
-
 create table social_connections
 (
     id bigserial not null
@@ -275,8 +247,6 @@ create table social_connections
             references users
 );
 
-alter table social_connections owner to postgres;
-
 create table warehouse_operation_types
 (
     id bigserial not null
@@ -285,8 +255,6 @@ create table warehouse_operation_types
     direction varchar(255) not null,
     operation_type varchar(255) not null
 );
-
-alter table warehouse_operation_types owner to postgres;
 
 create table warehouse_operations
 (
@@ -307,8 +275,6 @@ create table warehouse_operations
         constraint fkiuf71hcaosp8kq8th0cnrkh48
             references warehouse_operation_types
 );
-
-alter table warehouse_operations owner to postgres;
 
 alter table order_items
     add constraint fkagvd3xqgqq3metdngm58991nd
