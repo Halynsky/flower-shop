@@ -23,6 +23,7 @@ export class FlowerShort {
   id: number;
   name: string;
   image: string;
+  flowerSizes: Array<FlowerSize> = [];
   flowerType: FlowerType;
   priceMin: number;
 }

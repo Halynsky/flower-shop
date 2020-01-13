@@ -28,10 +28,16 @@
 
   </div>
 
+  <div *ngIf="flowersPage.content.length == 0" class="empty-search-block">
+    <div class="message">
+      За вашим запитом нічого не знайдено
+    </div>
+  </div>
+
   <div class="content">
-    <ng-template ngFor let-flower [ngForOf]="flowersPage.content" [ngForTrackBy]="trackByFn">
-      <shop-content-item [flower]="flower" [routerLink]="['item', flower.id]"></shop-content-item>
-    </ng-template>
+      <ng-template ngFor let-flower [ngForOf]="flowersPage.content" [ngForTrackBy]="trackByFn">
+        <shop-content-item [flower]="flower" [routerLink]="['item', flower.id]"></shop-content-item>
+      </ng-template>
   </div>
 
   <div class="show-more-block">

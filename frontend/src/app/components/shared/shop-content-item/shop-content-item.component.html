@@ -1,31 +1,35 @@
-<div class="cover" [ngStyle]="flower.image && {'background-image':'url(' + flower.image  + ')'}">
+<div class="wrapper" [ngStyle]="{'opacity': opacity ? '100%' : '50%'}">
+  <div class="cover" [ngStyle]="flower.image && {'background-image':'url(' + flower.image  + ')'}">
 
-  <div class="favorites-button-wrapper" *ngIf="!inFavorites && securityService.isAuthenticated()">
+    <div class="favorites-button-wrapper" *ngIf="!inFavorites && securityService.isAuthenticated()">
 
-    <button mat-icon-button class="in-favorites" (click)="removeFromFavorites()" *ngIf="favoritesService.favoriteFlowerIds.includes(flower.id); else addToFavoritesBlock">
-      <mat-icon  aria-label="Remove from favorites">favorite</mat-icon>
-    </button>
-
-    <ng-template #addToFavoritesBlock>
-      <button mat-icon-button (click)="addToFavorites()">
-        <mat-icon aria-label="Add to favorites">favorite_border</mat-icon>
+      <button mat-icon-button class="in-favorites" (click)="removeFromFavorites()"
+              *ngIf="favoritesService.favoriteFlowerIds.includes(flower.id); else addToFavoritesBlock">
+        <mat-icon aria-label="Remove from favorites">favorite</mat-icon>
       </button>
-    </ng-template>
+
+      <ng-template #addToFavoritesBlock>
+        <button mat-icon-button (click)="addToFavorites()">
+          <mat-icon aria-label="Add to favorites">favorite_border</mat-icon>
+        </button>
+      </ng-template>
+
+    </div>
+
+    <div class="add-to-card" (click)="openAddToCardModal($event)">
+      <mat-icon aria-label="Add to card">add_shopping_cart</mat-icon>
+      <span>Купити</span>
+    </div>
 
   </div>
 
-  <div class="add-to-card" (click)="openAddToCardModal($event)" >
-    <mat-icon aria-label="Add to card">add_shopping_cart</mat-icon>
-    <span>Купити</span>
+  <div class="info">
+
+    <div class="flower-type-name">{{flower.flowerType.nameSingle}}</div>
+    <div class="name">{{flower.name}}</div>
+    <div class="price">від {{flower.priceMin / 100}} грн</div>
+
   </div>
-
-</div>
-
-<div class="info">
-
-  <div class="flower-type-name">{{flower.flowerType.nameSingle}}</div>
-  <div class="name">{{flower.name}}</div>
-  <div class="price">від {{flower.priceMin / 100}} грн</div>
 
 </div>
 
