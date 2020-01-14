@@ -19,5 +19,7 @@ public class OrderDeliveryModel {
     private String house;
     private String apartment;
     private String novaPoshtaDepartment;
+    private String receiverFullName;
+    private String receiverPhone;
     private String comment;
 }

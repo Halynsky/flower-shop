@@ -3,7 +3,7 @@ import { Role } from "../models/Role";
 
 import { Router } from "@angular/router";
 
-import { User } from "../api/models/User";
+import { SecurityUserModel } from "../api/models/User";
 import { USER_KEY } from "../utils/Costants";
 import { AuthService as SocialAuthService } from "angularx-social-login";
 import { ReplaySubject } from "rxjs";
@@ -29,9 +29,13 @@ export class SecurityService {
     return localStorage.getItem(USER_KEY) !== null;
   }
 
-  login(user: User) {
+  updateUser(user: SecurityUserModel) {
     localStorage.setItem(USER_KEY, JSON.stringify(user));
-    this.onLogin.next();
+  }
+
+  login(user: SecurityUserModel) {
+    this.updateUser(user);
+    this.onLogin.next(user);
   }
 
   logout() {
@@ -53,8 +57,10 @@ export class SecurityService {
     return roles.includes(this.getUser().role);
   }
 
-  getUser(): User {
+  getUser(): SecurityUserModel {
     return JSON.parse(localStorage.getItem(USER_KEY));
   }
+
+
 
 }

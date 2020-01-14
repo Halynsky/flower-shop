@@ -145,6 +145,34 @@
           </div>
         </div>
 
+        <div class="input-group" *ngIf="receiverInfoRequired()">
+          <label>ПІП отримувача</label>
+          <input
+            name="receiverFullName"
+            formControlName="receiverFullName"
+            placeholder="ПІП отримувача"
+            [required]="receiverInfoRequired()">
+          <div class="error-wrapper" *ngIf="deliveryInfoFormGroup.get('receiverFullName').dirty || deliveryInfoFormGroup.get('receiverFullName').touched">
+            <div class="error-message" *ngIf="deliveryInfoFormGroup.get('receiverFullName').errors?.required">Повинно бути вказано</div>
+          </div>
+        </div>
+
+        <div class="input-group" *ngIf="receiverInfoRequired() && deliveryInfoFormGroup.get('receiverPhone')">
+          <label>Телефон отримувача</label>
+          <input
+            name="receiverPhone"
+            formControlName="receiverPhone"
+            placeholder="Телефон отримувача"
+            prefix="+38 "
+            mask='(000) 000-0000'
+            maxlength="18"
+            required>
+          <div class="error-wrapper" *ngIf="deliveryInfoFormGroup.get('receiverPhone').dirty || deliveryInfoFormGroup.get('receiverPhone').touched">
+            <div class="error-message" *ngIf="deliveryInfoFormGroup.get('receiverPhone').errors?.required">Повинно бути вказано</div>
+            <div class="error-message" *ngIf="!deliveryInfoFormGroup.get('receiverPhone').errors?.required && deliveryInfoFormGroup.get('receiverPhone').errors?.pattern">Введіть валідний номер телефону</div>
+          </div>
+        </div>
+
         <div class="input-group">
           <label>Коментар до замовлення</label>
           <textarea

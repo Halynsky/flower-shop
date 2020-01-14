@@ -34,3 +34,20 @@ export class UserRegistration {
   passwordConfirm: string;
   phone: string;
 }
+
+export class SecurityUserModel {
+  id: any;
+  name: string;
+  email: string;
+  role: Role;
+  phone: string;
+
+  constructor(id: any, name: string, email: string, role: Role, phone: string) {
+    this.id = id;
+    this.name = name;
+    this.email = email;
+    this.role = role;
+    this.phone = phone;
+  }
+
+}
