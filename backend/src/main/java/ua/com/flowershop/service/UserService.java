@@ -125,4 +125,11 @@ public class UserService {
         userRepository.delete(otherUser);
 
     }
+
+    public void changeNote(Long userId, String note) {
+        User user = userRepository.findById(userId).orElseThrow(NotFoundException::new);
+        user.setNote(note);
+        userRepository.save(user);
+    }
+
 }

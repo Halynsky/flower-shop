@@ -165,7 +165,7 @@
 
 <p-dialog [(visible)]="displayMergeDialog" class="merge-dialog" [modal]="true" (onHide)="resetMergeForm(mergeForm)">
   <p-header>
-    Об'єднання користувача №{{selected?.id}} з іншим користувачем
+    Об'єднання користувача з Id - {{selected?.id}} з іншим користувачем
   </p-header>
 
   <form id="merge_form" #mergeForm="ngForm" class="merge-dialog-content" (ngSubmit)="mergeForm.valid && merge()">
@@ -196,6 +196,40 @@
 
   <p-footer>
     <button pButton form="merge_form" icon="pi pi-check" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog [(visible)]="displayNoteChangeDialog" class="status-change-dialog" [modal]="true" (onHide)="resetNoteChangeForm(noteChangeForm)">
+  <p-header>
+    Оновлення примітки для користувача за Id - {{selected?.id}}
+  </p-header>
+
+  <form id="note_change_form" #noteChangeForm="ngForm" class="note-change-dialog-content" (ngSubmit)="noteChangeForm.valid && changeNote()">
+
+    <div class="ui-grid ui-grid-responsive ui-fluid">
+
+      <div class="prime-form-group">
+        <div class="ui-grid-col-4">
+          <label>Примітка</label>
+        </div>
+        <div class="ui-grid-col-4">
+          <textarea pInputTextarea
+                    #note="ngModel"
+                    name="note"
+                    [(ngModel)]="userNote"
+                    cols="23" rows="6" maxlength="500">
+          </textarea>
+        </div>
+        <div class="ui-grid-col-4">
+        </div>
+      </div>
+
+    </div>
+
+  </form>
+
+  <p-footer>
+    <button pButton form="note_change_form" icon="pi pi-check" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
   </p-footer>
 </p-dialog>
 

@@ -22,6 +22,7 @@ export class UsersComponent implements OnInit {
   @ViewChild('dt', { static: false }) private table: Table;
 
   displayMergeDialog = false;
+  displayNoteChangeDialog = false;
   ItemSaveMode = ItemSaveMode;
   loading = false;
 
@@ -48,6 +49,7 @@ export class UsersComponent implements OnInit {
   menuItems = [];
 
   mergingUserId;
+  userNote;
 
   constructor(private dataService: UserService,
               private confirmationService: ConfirmationService,
@@ -82,6 +84,14 @@ export class UsersComponent implements OnInit {
         command: (event) => this.updateDisabled(event, false),
         visible: this.selected && !this.selected.isEnabled,
         styleClass: 'cm-danger',
+      },
+      {
+        label: "Додати примітку",
+        icon: 'fas fa-clipboard',
+        command: (event) => {
+          this.displayNoteChangeDialog = true;
+          this.userNote = this.selected.note;
+        }
       },
       {
         separator: true
@@ -169,11 +179,6 @@ export class UsersComponent implements OnInit {
     this.initContextMenu();
   }
 
-  resetMergeForm(form: NgForm) {
-    this.mergingUserId = null;
-    form.resetForm();
-  }
-
   merge() {
     this.loading = true;
     this.dataService.merge(this.selected.id, this.mergingUserId)
@@ -183,6 +188,27 @@ export class UsersComponent implements OnInit {
         this.refresh();
         this.displayMergeDialog = false;
       }, error => this.snackBarService.showError(getErrorMessage(error)))
+  }
+
+  resetMergeForm(form: NgForm) {
+    this.mergingUserId = null;
+    form.resetForm();
+  }
+
+  changeNote() {
+    this.loading = true;
+    this.dataService.changeNote(this.selected.id, this.userNote)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(() => {
+        this.snackBarService.showSuccess(`Примітку для користувача з Id - ${this.selected.id} успішно змінено`);
+        this.refresh();
+        this.displayNoteChangeDialog = false;
+      }, error => this.snackBarService.showError(getErrorMessage(error)))
+  }
+
+  resetNoteChangeForm(form: NgForm) {
+    form.resetForm();
+    this.userNote = null;
   }
 
 }

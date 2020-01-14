@@ -79,7 +79,7 @@ public class OrderController {
 
     @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @PutMapping("/{id}/changeNote")
-    public ResponseEntity<Void> changeNote(@PathVariable Long id, @RequestBody String note) {
+    public ResponseEntity<Void> changeNote(@PathVariable Long id, @RequestBody(required=false) String note) {
         orderService.changeNote(id, note);
         return new ResponseEntity<>(OK);
     }

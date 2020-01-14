@@ -84,4 +84,11 @@ public class UserController {
         return new ResponseEntity<>(OK);
     }
 
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
+    @PutMapping("/{id}/changeNote")
+    public ResponseEntity<Void> changeNote(@PathVariable Long id, @RequestBody(required=false) String note) {
+        userService.changeNote(id, note);
+        return new ResponseEntity<>(OK);
+    }
+
 }

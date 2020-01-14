@@ -13,15 +13,6 @@
 
         <div class="wrapper">
 
-          <button type="button" mat-button class="auth-facebook" (click)="facebookAuth()">
-            <i class="fab fa-facebook-square"></i>
-            <span>Увійти з Facebook</span>
-          </button>
-
-          <div class="auth-social-hint">
-            <span>або увійти з Email</span>
-          </div>
-
           <div class="dialog-content">
 
             <div class="input-group">
@@ -65,8 +56,16 @@
             <button type="button" mat-stroked-button color="primary" (click)="mode = 'registration'" [disabled]="loading">Зареєструватись</button>
           </div>
 
-        </div>
+          <div class="auth-social-hint">
+            <span>або увійти з Facebook</span>
+          </div>
 
+          <button type="button" mat-button class="auth-facebook" (click)="facebookAuth()">
+            <i class="fab fa-facebook-square"></i>
+            <span>Увійти з Facebook</span>
+          </button>
+
+        </div>
 
       </form>
     </div>
@@ -268,6 +267,3 @@
   </div>
 
 </div>
-
-
-
