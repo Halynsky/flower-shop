@@ -3,7 +3,7 @@ import { Flower } from "./Flower";
 
 export class FlowerSize {
   id: number;
-  price: number;
+  price: number = 0;
   priceOld: number;
   amount: number;
   reserved: number;

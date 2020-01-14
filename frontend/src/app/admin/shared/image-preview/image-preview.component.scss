@@ -2,8 +2,11 @@ input[type=file] {
   display: none;
 }
 .preview {
-  background-size: cover;
   position: relative;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #dedede;
   &:hover {
 
   }

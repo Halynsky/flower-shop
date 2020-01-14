@@ -86,14 +86,29 @@
 
   &.snack-custom-error {
     background-color: mat-color($warn, 600);
+    .mat-simple-snackbar {
+      span {
+        word-break: break-all;
+      }
+    }
   }
 
   &.snack-custom-warning {
     background-color: darkorange;
+    .mat-simple-snackbar {
+      span {
+        word-break: break-all;
+      }
+    }
   }
 
   &.snack-custom-success {
     background-color: mat-color($primary, 500);
+    .mat-simple-snackbar {
+      span {
+        word-break: break-all;
+      }
+    }
   }
 
 }
