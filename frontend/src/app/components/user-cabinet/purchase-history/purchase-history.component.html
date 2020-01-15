@@ -67,9 +67,11 @@
               </div>
               <div class="total-price-block">
                 <div class="label">Разом:</div>
-                <div class="total-price">{{(order.totalPrice - order.discount) / 100}} грн</div>
+                <div class="total-price"><span class="old-price" *ngIf="order.discount > 0">{{order.totalPrice / 100}}</span>{{(order.totalPrice - order.discount) / 100}} грн</div>
               </div>
             </div>
+
+            <div class="how-to-pay" (click)="openHowToPayDialog($event)">Як провести оплату?</div>
 
           </mat-expansion-panel>
 

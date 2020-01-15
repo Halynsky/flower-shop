@@ -190,6 +190,20 @@
     justify-content: flex-start;
     padding: 0px 16px;
 
+    .ident {
+      margin-left: 24px;
+    }
+
+    a {
+      color: mat-color($primary);
+      display: inline-block;
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+    }
+
     @include response-to(xs) {
       font-size: 16px;
       padding-left: 16px;
@@ -197,7 +211,13 @@
     }
 
     .payment-info-report-main-content {
-      margin: 16px 0px;
+      margin-top: 16px;
+    }
+
+    .about-us-main-content {
+      & > div {
+        margin-bottom: 8px;
+      }
     }
 
   }

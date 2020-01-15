@@ -188,7 +188,8 @@
           }
 
           .flower-name {
-            color: mat-color($primary);
+            color: mat-color($primary, 800);
+            //color: $black-400;
           }
 
         }
@@ -254,6 +255,8 @@
           }
         }
 
+
+
       }
 
     }
@@ -304,9 +307,48 @@
       .total-price {
         font-weight: 500;
         color: $black-500;
+
+        .old-price {
+          color: $grey-300;
+          font-size: 20px;
+          font-weight: 500;
+          margin-right: 8px;
+
+          white-space:pre;
+          position:relative;
+          display:inline-block;
+
+          &:after{
+            content:"";
+            display:block;
+            position:absolute;
+            left:0;top:50%;
+            color:mat-color($accent);
+            width:100%;
+            height:0;
+            border-bottom:1px solid mat-color($accent);
+            transform:rotate(-30deg);
+          }
+
+        }
       }
     }
 
+
+  }
+
+  .how-to-pay {
+    color: mat-color($primary);
+    text-align: right;
+    margin-top: 16px;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-right: 16px;
+
+    @include response-to(xs) {
+      text-align: center;
+      margin-right: 0px;
+    }
 
   }
 

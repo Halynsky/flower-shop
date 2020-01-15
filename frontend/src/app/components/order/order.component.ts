@@ -50,9 +50,9 @@ export class OrderComponent implements OnInit {
     this.getStreets();
 
     this.contactInfoFormGroup = this.formBuilder.group({
-      name: [''],
-      email: [''],
-      phone: ['']
+      name: [],
+      email: [],
+      phone: []
     });
 
     this.initFormGroups(DeliveryType.NOVA_POSHTA_DEPARTMENT);
@@ -142,7 +142,9 @@ export class OrderComponent implements OnInit {
       let user = this.securityService.getUser();
       this.contactInfoFormGroup.get('name').setValue(user.name);
       this.contactInfoFormGroup.get('email').setValue(user.email);
-      this.contactInfoFormGroup.get('phone').setValue(user.phone);
+      if (user.phone) {
+        this.contactInfoFormGroup.get('phone').setValue(user.phone);
+      }
     }
   }
 

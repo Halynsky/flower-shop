@@ -206,6 +206,10 @@ public class OrderService {
             throw new ConflictException("Замовлення належать двом різним реальним користувачам");
         }
 
+        if(!mainOrder.getIsPaid().equals(otherOrder.getIsPaid())) {
+            throw new ConflictException("Ви намагаєтесь об’єднати оплачене та не оплачене замовлення");
+        }
+
         otherOrder.getOrderItems().forEach(oi -> {
             OrderItem sameOrderItem = mainOrder.getOrderItems().stream()
                 .filter(item -> item.getFlowerSize().getId().equals(oi.getFlowerSize().getId()))
@@ -245,6 +249,7 @@ public class OrderService {
                     ", отримувач: " + orderDeliveryModel.getReceiverFullName() + ", тел. " + orderDeliveryModel.getReceiverPhone();
                 break;
             case SELF_UZHGOROD:
+                deliveryAddress = "м.Ужгород, самовивіз";
                 break;
             default:
                 throw new ValidationException("Delivery Type not allowed");

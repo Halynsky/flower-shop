@@ -23,6 +23,7 @@ import { UserCabinetModule } from "./components/user-cabinet/user-cabinet.module
 import { ShopFilterDialogComponent } from "./components/shared/shop-filter-dialog/shop-filter-dialog.component";
 import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
 import { AddToBucketDialogComponent } from "./components/shared/add-to-bucket-dialog/add-to-bucket-dialog.component";
+import { HowToPayDialogComponent } from "./components/shared/how-to-pay-dialog/how-to-pay-dialog.component";
 
 registerLocaleData(localeRuUa);
 
@@ -47,7 +48,8 @@ export function getAuthServiceConfigs() {
     AuthDialogComponent,
     BucketDialogComponent,
     ShopFilterDialogComponent,
-    AddToBucketDialogComponent
+    AddToBucketDialogComponent,
+    HowToPayDialogComponent
   ],
   imports: [
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),

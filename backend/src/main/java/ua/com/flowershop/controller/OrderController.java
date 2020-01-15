@@ -116,7 +116,7 @@ public class OrderController {
     @GetMapping("/my")
     @PageableSwagger
     public ResponseEntity<Page<OrderProjection>> getMyOrders(@PageableDefault(sort = "id", page = 0, size = 10, direction = Sort.Direction.ASC) Pageable pageRequest) {
-        return new ResponseEntity<>(orderRepository.findProjectedByUserEmail(securityService.getCurrentUserEmail(), pageRequest) ,OK);
+        return new ResponseEntity<>(orderRepository.findProjectedByUserEmailOrderByCreatedDesc(securityService.getCurrentUserEmail(), pageRequest) ,OK);
     }
 
 }

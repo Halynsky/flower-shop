@@ -32,6 +32,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
                                                               LocalDateTime createdFrom, LocalDateTime createdTo, LocalDateTime closedFrom, LocalDateTime closedTo,
                                                               Pageable pageRequest);
 
-    Page<OrderProjection> findProjectedByUserEmail(String userEmail, Pageable pageRequest);
+    Page<OrderProjection> findProjectedByUserEmailOrderByCreatedDesc(String userEmail, Pageable pageRequest);
 
 }

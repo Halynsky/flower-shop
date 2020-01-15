@@ -39,6 +39,8 @@ import { AddToBucketDialogComponent } from "./add-to-bucket-dialog/add-to-bucket
 import { DirectivesModule } from "../../directives/directives.module";
 import { TermsAndConditionsComponent } from "./terms-and-conditions/terms-and-conditions.component";
 import { IConfig, NgxMaskModule } from "ngx-mask";
+import { HowToPayDialogComponent } from "./how-to-pay-dialog/how-to-pay-dialog.component";
+import { HowToPayComponent } from "./how-to-pay/how-to-pay.component";
 
 
 const PROVIDERS = [
@@ -54,12 +56,14 @@ export const ngxMaskOptions: Partial<IConfig> | (() => Partial<IConfig>) = {};
     AuthDialogComponent,
     BucketDialogComponent,
     AddToBucketDialogComponent,
+    HowToPayDialogComponent,
     ShopContentItemComponent,
     ShopFiltersComponent,
     ShopFilterDialogComponent,
     AmountControlledInputComponent,
     TermsAndConditionsComponent,
-    AmountControlledInputComponent
+    AmountControlledInputComponent,
+    HowToPayComponent
   ],
   imports: [
     RouterModule,
@@ -120,6 +124,7 @@ export const ngxMaskOptions: Partial<IConfig> | (() => Partial<IConfig>) = {};
     ShopContentItemComponent,
     ShopFiltersComponent,
     AmountControlledInputComponent,
+    HowToPayComponent
   ],
   providers: [
     ...PROVIDERS
