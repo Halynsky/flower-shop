@@ -124,6 +124,13 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- OTHER -->
+        <dependency>
+            <groupId>com.tinify</groupId>
+            <artifactId>tinify</artifactId>
+            <version>RELEASE</version>
+        </dependency>
+
     </dependencies>
 
     <build>

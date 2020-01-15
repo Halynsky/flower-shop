@@ -10,8 +10,14 @@ import ua.com.flowershop.entity.Image;
 import ua.com.flowershop.exception.InternalServerException;
 import ua.com.flowershop.exception.NotFoundException;
 import ua.com.flowershop.repository.ImageRepository;
+import ua.com.flowershop.util.Scalr;
 
+import javax.imageio.ImageIO;
 import javax.validation.ValidationException;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.UUID;
 
 import static ua.com.flowershop.util.Constants.SLASH;
@@ -26,7 +32,7 @@ public class ImageService {
 
     @Autowired private ImageRepository imageRepository;
 
-    public String saveImage(MultipartFile file) {
+    public String saveImage(MultipartFile file, int maxSize) {
 
         if (file == null || file.isEmpty()) {
             log.error("Image is empty");
@@ -34,7 +40,7 @@ public class ImageService {
         }
 
         try {
-            Image image = buildImage(file.getBytes(), file.getOriginalFilename());
+            Image image = buildImage(file.getBytes(), file.getOriginalFilename(), maxSize);
             return saveGenericImage(image);
         } catch (Exception e) {
             log.error("Could not save image", e);
@@ -49,7 +55,7 @@ public class ImageService {
      *
      * @return image url
      */
-    public String saveBase64Image(String imageInBase64) throws ValidationException, InternalServerException {
+    public String saveBase64Image(String imageInBase64, int maxSize) throws ValidationException, InternalServerException {
         String imageUrl;
         int startOfBase64Data = imageInBase64.indexOf(COMMA) + 1;
         imageInBase64 = imageInBase64.substring(startOfBase64Data, imageInBase64.length());
@@ -60,7 +66,7 @@ public class ImageService {
 
         try {
             byte[] data = Base64.decodeBase64(imageInBase64);
-            Image image = buildImage(data,null);
+            Image image = buildImage(data,null, maxSize);
             imageUrl = saveGenericImage(image);
         } catch (Exception e) {
             throw new InternalServerException("Could not upload image", e);
@@ -82,10 +88,11 @@ public class ImageService {
         return IMAGES_PATH + SLASH + image.getName();
     }
 
-    private Image buildImage(byte[] data, String filename) {
+    private Image buildImage(byte[] data, String filename, Integer maxSize) {
         String ext = (filename == null) ? ".jpg" : filename.substring(filename.lastIndexOf(FILE_EXTENSION_SEPARATOR));
         String name = UUID.randomUUID().toString().toLowerCase() + ext;
-        return new Image(name, ext, data);
+
+        return new Image(name, ext, resize(data, ext.replace(".", ""), maxSize));
     }
 
     public void remove(String imageName) throws NotFoundException {
@@ -98,7 +105,7 @@ public class ImageService {
     }
 
 
-    public String updateBase64Image(String base64, String oldImageUrl) throws ValidationException, InternalServerException {
+    public String updateBase64Image(String base64, String oldImageUrl, int maxSize) throws ValidationException, InternalServerException {
         if (base64 == null || base64.isEmpty()) {
             return oldImageUrl;
         }
@@ -107,10 +114,10 @@ public class ImageService {
             silentDelete(oldImageUrl);
         }
 
-        return saveBase64Image(base64);
+        return saveBase64Image(base64, maxSize);
     }
 
-    public String updateImage(MultipartFile file, String oldImageUrl) throws ValidationException, InternalServerException {
+    public String updateImage(MultipartFile file, String oldImageUrl, int maxSize) throws ValidationException, InternalServerException {
         if (file == null) {
             return oldImageUrl;
         }
@@ -118,7 +125,7 @@ public class ImageService {
         if (oldImageUrl != null && !oldImageUrl.isEmpty()) {
             silentDelete(oldImageUrl);
         }
-        return saveImage(file);
+        return saveImage(file, maxSize);
     }
 
     /**
@@ -141,5 +148,25 @@ public class ImageService {
         return imageUrl.substring(imageUrl.lastIndexOf(SLASH) + 1);
     }
 
+    public byte[] resize(byte[] data, String format, Integer maxSize) {
+
+        BufferedImage bufferedImage;
+
+        try (ByteArrayInputStream bis = new ByteArrayInputStream(data)) {
+            bufferedImage = ImageIO.read(bis);
+        } catch (IOException e) {
+            throw new InternalServerException("Failed to compress image");
+        }
+
+        bufferedImage = Scalr.resize(bufferedImage, Scalr.Method.QUALITY, Scalr.Mode.BEST_FIT_BOTH, maxSize);
+
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+            ImageIO.write(bufferedImage, format, baos);
+            return baos.toByteArray();
+        } catch (IOException e) {
+            throw new InternalServerException("Failed to compress image");
+        }
+
+    }
 
 }

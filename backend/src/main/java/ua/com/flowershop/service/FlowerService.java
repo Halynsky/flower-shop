@@ -26,6 +26,8 @@ import static java.util.Objects.nonNull;
 @Service
 public class FlowerService {
 
+    private static final int MAX_FLOWER_TYPE_IMG_SIZE = 600;
+
     @Autowired private FlowerRepository flowerRepository;
     @Autowired private ImageService imageService;
     @Autowired private FlowerSizeRepository flowerSizeRepository;
@@ -59,7 +61,7 @@ public class FlowerService {
     public void create(FlowerModel flower, MultipartFile image) {
         Flower flowerToCreate = new Flower();
         if(nonNull(image)) {
-            String imageUrl = imageService.saveImage(image);
+            String imageUrl = imageService.saveImage(image, MAX_FLOWER_TYPE_IMG_SIZE);
             flower.setImage(imageUrl);
         }
         flowerToCreate.setColor(flower.getColor())
@@ -83,7 +85,7 @@ public class FlowerService {
     public void update(Long id, FlowerModel flower, MultipartFile image) {
         Flower flowerToUpdate = flowerRepository.findById(id).orElseThrow(NotFoundException::new);
         if(nonNull(image)) {
-            String imageUrl = imageService.saveImage(image);
+            String imageUrl = imageService.saveImage(image, MAX_FLOWER_TYPE_IMG_SIZE);
             flower.setImage(imageUrl);
         }
 

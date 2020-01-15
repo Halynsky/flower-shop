@@ -14,6 +14,7 @@ import ua.com.flowershop.entity.Image;
 import ua.com.flowershop.repository.FlowerRepository;
 import ua.com.flowershop.repository.FlowerTypeRepository;
 import ua.com.flowershop.repository.ImageRepository;
+import ua.com.flowershop.service.ImageService;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
@@ -32,6 +33,7 @@ public class TestDataInitializer {
     @Autowired private ImageRepository imageRepository;
     @Autowired private FlowerTypeRepository flowerTypeRepository;
     @Autowired private FlowerRepository flowerRepository;
+    @Autowired private ImageService imageService;
 
     @PostConstruct
     public void init() {
@@ -79,7 +81,7 @@ public class TestDataInitializer {
         String name = UUID.randomUUID().toString().toLowerCase() + ext;
         byte[] bytes = IOUtils.toByteArray(resource.getInputStream());
         imageRepository.save(new Image().setName(name)
-            .setData(bytes)
+            .setData(imageService.resize(bytes, ext.replace(".", ""), 600))
             .setExtension(ext)
         );
         return IMAGES_PATH + '/' + name;
