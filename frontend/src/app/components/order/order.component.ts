@@ -36,6 +36,7 @@ export class OrderComponent implements OnInit {
 
   loadingWarehouses = false;
   loadingStreets = false;
+  loading = false;
 
   constructor(private formBuilder: FormBuilder,
               public bucketLocalService: BucketLocalService,
@@ -149,6 +150,7 @@ export class OrderComponent implements OnInit {
   }
 
   submitOrder() {
+    this.loading = true;
     let orderRequest = new OrderRequest();
     orderRequest.orderItems = this.bucketLocalService.bucket;
     orderRequest.contactInfo = this.contactInfoFormGroup.getRawValue();
@@ -163,7 +165,9 @@ export class OrderComponent implements OnInit {
       orderRequest.deliveryInfo.novaPoshtaDepartment = orderRequest.deliveryInfo.novaPoshtaDepartment.Description;
     }
 
-    this.orderService.create(orderRequest).subscribe(orderId => {
+    this.orderService.create(orderRequest)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(orderId => {
       this.bucketLocalService.clearBucket();
       this.orderId = orderId;
     }, error => this.snackBarService.showError(getErrorMessage(error)))

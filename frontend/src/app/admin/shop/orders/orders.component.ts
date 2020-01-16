@@ -98,7 +98,7 @@ export class OrdersComponent implements OnInit {
   loadDataLazy(filters = {}, pagination: Pagination = new Pagination()) {
     this.dataService.getAllForAdmin(filters, pagination).subscribe(
       items => this.items = items,
-      error => this.snackBarService.showError(error.error.message)
+      error => this.snackBarService.showError(getErrorMessage(error))
     )
   }
 
@@ -113,7 +113,7 @@ export class OrdersComponent implements OnInit {
   getAllFlowerSizes() {
     this.flowerSizeService.getAllForAdminAsList().subscribe(
       flowerSizes => this.flowerSizes = flowerSizes,
-      error => this.snackBarService.showError(error.error.message)
+      error => this.snackBarService.showError(getErrorMessage(error))
     )
   }
 

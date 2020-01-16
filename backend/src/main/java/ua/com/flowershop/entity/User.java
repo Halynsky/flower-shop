@@ -30,7 +30,6 @@ public class User {
     private String name;
     @Column(unique = true)
     private String email;
-    @Column(unique = true)
     private String newEmail;
     @Column(columnDefinition = "varchar(64)")
     private String facebookNickname;
@@ -49,7 +48,7 @@ public class User {
     private String note;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Role role;
+    private Role role = Role.USER;
     @Column(columnDefinition = "timestamp default timezone('utc'::text, now())")
     private LocalDateTime created = LocalDateTime.now();
     private LocalDateTime lastOrderDate;
@@ -98,6 +97,10 @@ public class User {
             this.socialConnections.add(socialConnection);
         }
         return this;
+    }
+
+    public void generateSecretKey() {
+        this.setSecretKey(UUID.randomUUID().toString());
     }
 
 }

@@ -8,8 +8,9 @@ import { FlowerType } from "../../../api/models/FlowerType";
 import { Size } from "../../../api/models/Size";
 import { Color } from "../../../api/models/Color";
 import { ShopFilter } from "../../../api/models/ShopFilter";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import { Location } from "@angular/common";
+import { getErrorMessage } from "../../../utils/Functions";
 
 @Component({
   selector: 'shop-filters',
@@ -43,17 +44,17 @@ export class ShopFiltersComponent implements OnInit {
               private location: Location) {
     flowerTypeService.getAll().subscribe(
       flowerTypes => this.flowerTypes = flowerTypes,
-      error => snackBarService.showError(error)
+      error => this.snackBarService.showError(getErrorMessage(error))
     );
 
     sizeService.getAll().subscribe(
       sizes => this.sizes = sizes,
-      error => snackBarService.showError(error)
+      error => this.snackBarService.showError(getErrorMessage(error))
     );
 
     colorService.getAll().subscribe(
       colors => this.colors = colors,
-      error => snackBarService.showError(error)
+      error => this.snackBarService.showError(getErrorMessage(error))
     );
   }
 

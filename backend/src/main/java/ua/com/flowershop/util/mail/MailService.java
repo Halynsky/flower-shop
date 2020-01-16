@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+import ua.com.flowershop.entity.Order;
 import ua.com.flowershop.entity.User;
 
 import javax.annotation.PostConstruct;
@@ -33,6 +34,7 @@ public class MailService {
     // Templates
     private static final String NOTICE_TEMPLATE = "parts/notice";
     private static final String CONFIRMATION_TEMPLATE = "parts/confirmation";
+    private static final String ORDER_TEMPLATE = "parts/order";
 
     // Template parts keys
     private static final String TITLE = "title";
@@ -140,7 +142,7 @@ public class MailService {
     public void sendEmailChangedNotice(User user) {
         Context context = contextTemplate();
         context.setVariable(USER_NAME, user.getName());
-        context.setVariable(TITLE, "Ви зробили запит на зміну своєї Email адреси yf " + user.getNewEmail());
+        context.setVariable(TITLE, "Ви зробили запит на зміну своєї Email адреси на " + user.getNewEmail());
         context.setVariable(BODY, "Перевірте, будь ласка, вхідні повідомлення в " + user.getNewEmail() + " і підтвердіть свою нову адресу." +
             "<br/>Якщо ви не проводили данну дію, негайно звяжіться з службою підтримки.");
         mailClient.sendMail("Зміна Email адреси аккаунту", NOTICE_TEMPLATE, context, MailHolder.MessageType.NOREPLY, user.getEmail());
@@ -157,7 +159,7 @@ public class MailService {
         context.setVariable(USER_NAME, user.getName());
         String newStatus = !user.getIsEnabled() ? "заблоковано" : "розблоковано";
         String title = "Ваш аккаунт " + newStatus;
-        StringBuilder body = new StringBuilder("Ваш аккаунт на merryflowers.com.ua ");
+        StringBuilder body = new StringBuilder("Ваш аккаунт на merryflowers.com.ua");
         body.append(newStatus);
         body.append(".");
         if (!user.getIsEnabled()) {
@@ -166,6 +168,23 @@ public class MailService {
         context.setVariable(TITLE, title);
         context.setVariable(BODY, body);
         mailClient.sendMail("Ваш аккаунт " + newStatus, NOTICE_TEMPLATE, context, MailHolder.MessageType.NOREPLY, user.getEmail());
+    }
+
+    /**
+     * Send email to User that created new Order
+     *
+     * @param order order that was created by user
+     */
+    public void sendOrder(Order order) {
+        User user = order.getUser();
+        Context context = contextTemplate();
+        context.setVariable(USER_NAME, order.getUser().getName());
+        context.setVariable(TITLE, "Ваше замовлення успішно прийняте. Дякуємо!");
+        context.setVariable(BODY, "Замовлення №" + highlight(order.getId().toString()));
+        context.setVariable(CONFIRM_URL, siteUrl + SLASH + "my" + SLASH + "purchases");
+        context.setVariable(CONFIRM_BTN_TEXT, "Переглянути на сайті");
+        context.setVariable("order", order);
+        mailClient.sendMail("Нове замовлення", ORDER_TEMPLATE, context, MailHolder.MessageType.NOREPLY, user.getEmail());
     }
 
 

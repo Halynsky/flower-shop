@@ -11,6 +11,7 @@ import ua.com.flowershop.exception.ValidationException;
 import ua.com.flowershop.model.*;
 import ua.com.flowershop.repository.*;
 import ua.com.flowershop.security.SecurityService;
+import ua.com.flowershop.util.mail.MailService;
 
 import java.util.List;
 import java.util.Set;
@@ -29,7 +30,9 @@ public class OrderService {
     @Autowired private FlowerSizeRepository flowerSizeRepository;
     @Autowired private WarehouseOperationRepository warehouseOperationRepository;
     @Autowired private WarehouseOperationTypeRepository warehouseOperationTypeRepository;
+    @Autowired private UserRepository userRepository;
     @Autowired private SecurityService securityService;
+    @Autowired private MailService mailService;
 
     @Transactional
     public Long create(OrderModel orderModel) {
@@ -64,13 +67,38 @@ public class OrderService {
 
         User user = securityService.getUserOrNull();
 
-        if (nonNull(user)) {
-            order.setUser(user);
-            if (isNull(user.getPhone())) {
-                user.setPhone(order.getPhone());
+        if (isNull(user)) {
+            user = userRepository.findByEmail(orderModel.getContactInfo().getEmail()).orElse(null);
+
+            if (nonNull(user) && !user.getIsVirtual()) {
+                throw new ConflictException("Авторизуйтесь та створіть замовлення через свій аккаунт");
             }
-            orderRepository.save(order);
+
         }
+
+        if (isNull(user)) {
+            user = userRepository.findByPhoneAndIsVirtual(orderModel.getContactInfo().getPhone(), true).orElse(null);
+        }
+
+        if (isNull(user)) {
+            user = new User();
+            user.setName(orderModel.getContactInfo().getName());
+            user.setEmail(orderModel.getContactInfo().getEmail());
+            user.setPhone(orderModel.getContactInfo().getPhone());
+            user.setIsVirtual(true);
+            user.setIsActivated(true);
+        }
+
+        order.setUser(user);
+
+        if (isNull(user.getPhone())) {
+            user.setPhone(order.getPhone());
+        }
+
+        userRepository.save(user);
+        orderRepository.save(order);
+
+        mailService.sendOrder(order);
 
         return order.getId();
 

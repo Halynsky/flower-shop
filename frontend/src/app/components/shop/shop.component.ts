@@ -8,6 +8,7 @@ import { RestPage } from "../../api/models/RestPage";
 import { MatDialog, MatDialogRef } from "@angular/material";
 import { ShopFilterDialogComponent } from "../shared/shop-filter-dialog/shop-filter-dialog.component";
 import { finalize } from "rxjs/operators";
+import { getErrorMessage } from "../../utils/Functions";
 
 @Component({
   selector: 'shop',
@@ -52,7 +53,7 @@ export class ShopComponent implements OnInit {
           this.flowersPage = page;
         }
       },
-      error => this.snackBarService.showError(error)
+      error => this.snackBarService.showError(getErrorMessage(error))
       )
   }
 

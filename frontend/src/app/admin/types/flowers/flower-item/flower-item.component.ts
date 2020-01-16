@@ -62,17 +62,17 @@ export class FlowerItemComponent implements OnInit {
 
     this.flowerTypeService.getAll().subscribe(
       flowerTypes => this.flowerTypes = flowerTypes,
-      error => this.snackBarService.showError(error.error.message)
+      error => this.snackBarService.showError(getErrorMessage(error))
     );
 
     this.colorService.getForAdmin().subscribe(
       colors => this.colors = colors,
-      error => this.snackBarService.showError(error.error.message)
+      error => this.snackBarService.showError(getErrorMessage(error))
     );
 
     this.sizeService.getAll().subscribe(
       sizes => this.sizes = sizes,
-      error => this.snackBarService.showError(error.error.message)
+      error => this.snackBarService.showError(getErrorMessage(error))
     );
 
   }

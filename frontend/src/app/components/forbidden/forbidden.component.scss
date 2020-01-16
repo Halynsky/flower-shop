@@ -21,11 +21,26 @@
   font-weight
 }
 
+.try-authorize-block {
+  margin-top: 24px;
+  color: $grey-800;
+  font-weight: 400;
+
+  a {
+    color: mat-color($primary);
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: 500;
+  }
+
+}
+
 .back-to-home-button {
   margin-top: 24px;
   &.mat-raised-button.mat-primary {
     color: white;
   }
+
 }
 
 

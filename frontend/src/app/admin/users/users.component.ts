@@ -109,7 +109,7 @@ export class UsersComponent implements OnInit {
   loadDataLazy(filters = {}, pagination: Pagination = new Pagination()) {
     this.dataService.getForAdmin(filters, pagination).subscribe(
       items => this.items = items,
-      error => this.snackBarService.showError(error.error.message)
+      error => this.snackBarService.showError(getErrorMessage(error))
     )
   }
 
