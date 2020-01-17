@@ -95,7 +95,9 @@ export class FlowerItemComponent implements OnInit {
 
   create() {
     const formData: FormData = new FormData();
-    formData.append('data', JSON.stringify(this.item));
+    let item = clone(this.item);
+    item.flowerSizes.forEach(fs => fs.price = fs.price * 100);
+    formData.append('data', JSON.stringify(item));
     if (this.newImage) {
       formData.append('file', this.newImage);
     }

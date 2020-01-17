@@ -61,7 +61,7 @@ export class AdminSidebarComponent implements OnInit {
             routerLink: 'types/flower-types'
           },
           {
-            label: 'Розміри цибулин',
+            label: 'Розміри',
             icon: 'fas fa-table',
             routerLink: 'types/sizes'
           },

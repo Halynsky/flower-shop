@@ -12,7 +12,7 @@ export class AdminHeaderComponent implements OnInit {
   sidebar: boolean = true;
   @Output() toggleSidebar: EventEmitter<void> = new EventEmitter<void>();
   userActions: Array<MenuItem> = [
-    {icon: 'fas fa-sign-out-alt', label: 'Logout', command: () => this.logout()}
+    {icon: 'fas fa-sign-out-alt', label: 'Вихід', command: () => this.logout()}
   ];
 
   constructor(public securityService: SecurityService) {

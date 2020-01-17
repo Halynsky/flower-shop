@@ -22,6 +22,8 @@ public interface FlowerRepository extends JpaRepository<Flower, Long> {
 
     List<FlowerProjection> findProjectedByOrderByName();
 
+    List<IdNameTupleProjection> findProjectedShortByOrderByName();
+
     Boolean existsByName(String name);
 
     Boolean existsByNameOriginal(String name);

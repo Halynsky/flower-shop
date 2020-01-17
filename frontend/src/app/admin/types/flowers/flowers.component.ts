@@ -51,12 +51,6 @@ export class FlowersComponent implements OnInit {
 
   flowerTypes = [];
 
-  flowerSizeCols = [
-    {field: 'size', header: 'Розмір'},
-    {field: 'price', header: 'Ціна, грн'},
-    {field: 'amount', header: 'Кількість'}
-  ];
-
   columns = [
     {field: 'id', header: 'Id', active: true},
     {field: 'image', header: 'Фото', active: true},
@@ -69,7 +63,8 @@ export class FlowersComponent implements OnInit {
     {field: 'isNew', header: 'Новинка', active: false},
     {field: 'isPopular', header: 'Популярна', active: false},
     {field: 'popularity', header: 'Рейтинг', active: true},
-    {field: 'color', header: 'Колір', active: true},
+    {field: 'color', header: 'Колір1', active: true},
+    {field: 'colorSecondary', header: 'Колір2', active: true},
     {field: 'created', header: 'Створено', active: false}
   ];
 

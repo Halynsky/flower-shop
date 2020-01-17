@@ -116,6 +116,64 @@
 
       <div class="prime-form-group">
         <div class="ui-grid-col-3">
+          <label>Опис</label>
+        </div>
+        <div class="ui-grid-col-3">
+          <textarea pInputTextarea
+                    #description="ngModel"
+                    name="description"
+                    [(ngModel)]="item.description"
+                    cols="23" rows="6" maxlength="5000">
+          </textarea>
+        </div>
+      </div>
+
+      <div class="prime-form-group">
+        <div class="ui-grid-col-3">
+          <label for="color">Колір</label>
+        </div>
+        <div class="ui-grid-col-3">
+          <div class="dropdown-block color-dropdown-block">
+            <p-dropdown [options]="colors" id="color" name="color" [(ngModel)]="item.color" placeholder="Оберіть колір"
+                        optionLabel="name" dataKey="id"  #color="ngModel" showClear="true" filter="true" required></p-dropdown>
+            <div class="chosen-item">
+              <div class="color-square" [ngStyle]="{'background-color': item.color?.hex ? item.color.hex : '#ffffff'}"></div>
+            </div>
+          </div>
+        </div>
+        <div class="ui-grid-col-3">
+          <div *ngIf="color.errors">
+            <ng-container *ngIf="color.dirty || color.touched || form.submitted">
+              <p-message *ngIf="color.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+      <div class="prime-form-group">
+        <div class="ui-grid-col-3">
+          <label for="color">Другорядний колір</label>
+        </div>
+        <div class="ui-grid-col-3">
+          <div class="dropdown-block color-dropdown-block">
+            <p-dropdown [options]="colors" id="colorSecondary" name="colorSecondary" [(ngModel)]="item.colorSecondary" placeholder="Оберіть колір"
+                        optionLabel="name" dataKey="id" #colorSecondary="ngModel" showClear="true" filter="true"></p-dropdown>
+            <div class="chosen-item">
+              <div class="color-square" [ngStyle]="{'background-color': item.colorSecondary?.hex ? item.colorSecondary.hex : '#ffffff'}"></div>
+            </div>
+          </div>
+        </div>
+        <div class="ui-grid-col-3">
+          <div *ngIf="colorSecondary.errors">
+            <ng-container *ngIf="colorSecondary.dirty || colorSecondary.touched || form.submitted">
+              <p-message *ngIf="colorSecondary.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+      <div class="prime-form-group">
+        <div class="ui-grid-col-3">
           <label for="flowerSizeMin">Розмір квітки (від-до), см</label>
         </div>
         <div class="ui-grid-col-3">
@@ -223,50 +281,6 @@
               id="isPopular"
               name="isPopular"
               [(ngModel)]="item.isPopular"></p-inputSwitch>
-        </div>
-      </div>
-
-      <div class="prime-form-group">
-        <div class="ui-grid-col-3">
-          <label for="color">Колір</label>
-        </div>
-        <div class="ui-grid-col-3">
-          <div class="dropdown-block color-dropdown-block">
-            <p-dropdown [options]="colors" id="color" name="color" [(ngModel)]="item.color" placeholder="Оберіть колір"
-                        optionLabel="name" dataKey="id"  #color="ngModel" showClear="true" filter="true" required></p-dropdown>
-            <div class="chosen-item">
-              <div class="color-square" [ngStyle]="{'background-color': item.color?.hex ? item.color.hex : '#ffffff'}"></div>
-            </div>
-          </div>
-        </div>
-        <div class="ui-grid-col-3">
-          <div *ngIf="color.errors">
-            <ng-container *ngIf="color.dirty || color.touched || form.submitted">
-              <p-message *ngIf="color.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
-            </ng-container>
-          </div>
-        </div>
-      </div>
-
-      <div class="prime-form-group">
-        <div class="ui-grid-col-3">
-          <label for="color">Другорядний колір</label>
-        </div>
-        <div class="ui-grid-col-3">
-          <div class="dropdown-block color-dropdown-block">
-            <p-dropdown [options]="colors" id="colorSecondary" name="colorSecondary" [(ngModel)]="item.colorSecondary" placeholder="Оберіть колір"
-                        optionLabel="name" dataKey="id" #colorSecondary="ngModel" showClear="true" filter="true" required></p-dropdown>
-            <div class="chosen-item">
-              <div class="color-square" [ngStyle]="{'background-color': item.colorSecondary?.hex ? item.colorSecondary.hex : '#ffffff'}"></div>
-            </div>
-          </div>
-        </div>
-        <div class="ui-grid-col-3">
-          <div *ngIf="colorSecondary.errors">
-            <ng-container *ngIf="colorSecondary.dirty || colorSecondary.touched || form.submitted">
-              <p-message *ngIf="colorSecondary.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
-            </ng-container>
-          </div>
         </div>
       </div>
 

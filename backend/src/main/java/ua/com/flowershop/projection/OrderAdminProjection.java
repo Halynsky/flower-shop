@@ -3,6 +3,7 @@ package ua.com.flowershop.projection;
 import org.springframework.beans.factory.annotation.Value;
 import ua.com.flowershop.entity.Order;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public interface OrderAdminProjection {
     String getNote();
     String getDeliveryAddress();
     String getPostDeclaration();
-    LocalDateTime getPaid();
+    LocalDate getPaid();
     String getPhone();
     Integer getTotalPrice();
     Integer getDiscount();

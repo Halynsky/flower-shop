@@ -73,6 +73,9 @@
           <th *ngSwitchCase="'color'">
             {{col.header}}
           </th>
+          <th *ngSwitchCase="'colorSecondary'">
+            {{col.header}}
+          </th>
           <th *ngSwitchCase="'created'" [pSortableColumn]="'created'">
             {{col.header}}
             <p-sortIcon [field]="'created'"></p-sortIcon>
@@ -125,6 +128,11 @@
                       [max]="10" [step]="1" (onSlideEnd)="dt.filter(popularityFilter, col.field, 'range')" [range]="true"></p-slider>
           </div>
           <div *ngSwitchCase="'color'">
+            <input pInputText type="text" (input)="dt.filter($event.target.value, 'colorNamePart', 'contains')"
+                   class="table-filter">
+          </div>
+
+          <div *ngSwitchCase="'colorSecondary'">
             <input pInputText type="text" (input)="dt.filter($event.target.value, 'colorNamePart', 'contains')"
                    class="table-filter">
           </div>
@@ -202,7 +210,12 @@
                       {{rowData[col.field]}}/10
           </span>
           <span *ngSwitchCase="'color'">
-             <div class="color-example" [ngStyle]="{backgroundColor: rowData[col.field].hex}"></div>
+            <div *ngIf="rowData[col.field]">{{rowData[col.field]?.name}}</div>
+            <div *ngIf="rowData[col.field]" class="color-example" [ngStyle]="{backgroundColor: rowData[col.field]?.hex}"></div>
+          </span>
+          <span *ngSwitchCase="'colorSecondary'">
+             <div *ngIf="rowData[col.field]">{{rowData[col.field]?.name}}</div>
+             <div *ngIf="rowData[col.field]" class="color-example" [ngStyle]="{backgroundColor: rowData[col.field]?.hex}"></div>
           </span>
           <span *ngSwitchCase="'created'">
             {{rowData[col.field] | date:'dd.MM.yyyy H:mm'}}

@@ -19,6 +19,7 @@ import ua.com.flowershop.security.SecurityService;
 import ua.com.flowershop.service.OrderService;
 import ua.com.flowershop.util.annotation.PageableSwagger;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -58,7 +59,7 @@ public class OrderController {
 
     @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @PutMapping("/{id}/confirmPayment")
-    public ResponseEntity<Void> confirmPayment(@PathVariable Long id, @RequestBody(required = false) LocalDateTime paid) {
+    public ResponseEntity<Void> confirmPayment(@PathVariable Long id, @RequestBody(required = false) LocalDate paid) {
         orderService.confirmPayment(id, paid);
         return new ResponseEntity<>(OK);
     }

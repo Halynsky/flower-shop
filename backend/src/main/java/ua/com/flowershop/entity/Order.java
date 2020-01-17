@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -40,7 +41,7 @@ public class Order {
     private String postDeclaration;
     @Column(columnDefinition = "varchar(500)")
     private String deliveryAddress;
-    private LocalDateTime paid;
+    private LocalDate paid;
     private String phone;
     private Integer totalPrice;
     @Column(columnDefinition = "integer default 0")

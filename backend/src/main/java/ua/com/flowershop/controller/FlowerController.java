@@ -64,7 +64,12 @@ public class FlowerController {
 
     @GetMapping
     public ResponseEntity<List<FlowerProjection>> getAll() {
-        return new ResponseEntity<>(flowerRepository.findProjectedBy(), OK);
+        return new ResponseEntity<>(flowerRepository.findProjectedByOrderByName(), OK);
+    }
+
+    @GetMapping("/forSelector")
+    public ResponseEntity<List<FlowerProjection>> getForSelector() {
+        return new ResponseEntity<>(flowerRepository.findProjectedByOrderByName(), OK);
     }
 
     @GetMapping("/{id}/flowerSizes")
@@ -113,22 +118,21 @@ public class FlowerController {
     }
 
     @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
+    @PostMapping
+    public ResponseEntity<Void> create(@RequestPart(value = "data") String data,
+                                       @RequestPart(value = "file", required = false) MultipartFile image) throws IOException {
+        FlowerModel flowerModel = objectMapper.readValue(data, FlowerModel.class);
+        flowerService.create(flowerModel, image);
+        return new ResponseEntity<>(OK);
+    }
+
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@PathVariable Long id,
                                        @RequestPart(value = "data") String data,
                                        @RequestPart(value = "file", required = false) MultipartFile image) throws IOException {
         FlowerModel flowerModel = objectMapper.readValue(data, FlowerModel.class);
         flowerService.update(id, flowerModel, image);
-        return new ResponseEntity<>(OK);
-    }
-
-
-    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
-    @PostMapping
-    public ResponseEntity<Void> create(@RequestPart(value = "data") String data,
-                                       @RequestPart(value = "file", required = false) MultipartFile image) throws IOException {
-        FlowerModel flowerModel = objectMapper.readValue(data, FlowerModel.class);
-        flowerService.create(flowerModel, image);
         return new ResponseEntity<>(OK);
     }
 

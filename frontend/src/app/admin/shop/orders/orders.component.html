@@ -188,7 +188,7 @@
           <span *ngSwitchCase="'paid'">
              <div class="true-false-ico">
               <div *ngIf="rowData['paid']">
-                 {{rowData[col.field] | date: 'dd.MM.yy HH:mm' }}
+                 {{rowData[col.field] | date: 'dd.MM.yy' }}
               </div>
               <div *ngIf="!rowData['paid']">
                 <i class="material-icons">indeterminate_check_box</i>
@@ -665,7 +665,6 @@
             appendTo="body"
             [readonlyInput]="false"
             dateFormat="dd.mm.yy"
-            showTime="true"
             [locale]="translation.calendar_ua">
           </p-calendar>
         </div>

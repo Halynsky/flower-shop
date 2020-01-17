@@ -9,9 +9,6 @@ import ua.com.flowershop.entity.Color;
 import ua.com.flowershop.entity.FlowerSize;
 import ua.com.flowershop.entity.FlowerType;
 
-import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -37,5 +34,7 @@ public class FlowerModel {
     private LocalDateTime created;
     private FlowerType flowerType;
     private Color color;
+    private Color colorSecondary;
     private Set<FlowerSize> flowerSizes;
+
 }

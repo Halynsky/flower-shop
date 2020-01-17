@@ -27,9 +27,12 @@ export class FlowerService {
     return this.http.get(`${this.URL}/isNameFree/?name=${name}`, {responseType: 'text'});
   }
 
-
   getAll() {
     return this.http.get<Flower[]>(`${this.URL}`);
+  }
+
+  getForSelector() {
+    return this.http.get<Flower[]>(`${this.URL}/forSelector`);
   }
 
   getFlowerSizeById(id: number) {

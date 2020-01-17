@@ -12,6 +12,8 @@ import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+import static java.time.LocalDateTime.now;
+
 @Getter
 @Setter
 @Accessors(chain = true)
@@ -31,7 +33,7 @@ public class Flower {
     private String image;
     // Asiatic Lilium, Oriental Lilium etc
     private String groupName;
-    @Column(columnDefinition = "varchar(2000)")
+    @Column(columnDefinition = "varchar(5000)")
     private String description;
     private Integer flowerSizeMin;
     private Integer flowerSizeMax;
@@ -44,7 +46,7 @@ public class Flower {
     @Max(10)
     private Double popularity = 1.0;
     @Column(columnDefinition = "timestamp default timezone('utc'::text, now())")
-    private LocalDateTime created = LocalDateTime.now();
+    private LocalDateTime created = now();
     private LocalDateTime lastSupply;
     private LocalDateTime nextSupply;
 

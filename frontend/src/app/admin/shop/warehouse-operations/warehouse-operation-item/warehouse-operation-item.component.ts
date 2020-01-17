@@ -75,7 +75,7 @@ export class WarehouseOperationItemComponent {
   }
 
   getAllFlowers() {
-    this.flowerService.getAll().subscribe(items => {
+    this.flowerService.getForSelector().subscribe(items => {
         this.flowersOptions = items;
       },
       error => this.snackBarService.showError(getErrorMessage(error)))

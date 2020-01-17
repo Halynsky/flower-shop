@@ -64,18 +64,26 @@ public class FlowerService {
             String imageUrl = imageService.saveImage(image, MAX_FLOWER_TYPE_IMG_SIZE);
             flower.setImage(imageUrl);
         }
-        flowerToCreate.setColor(flower.getColor())
+
+        flower.getFlowerSizes().forEach(flowerSize -> {
+            flowerSize.setFlower(flowerToCreate);
+            flowerSizeRepository.save(flowerSize);
+        });
+
+        flowerToCreate
             .setName(flower.getName())
             .setNameOriginal(flower.getNameOriginal())
             .setImage(flower.getImage())
             .setGroupName(flower.getGroupName())
+            .setDescription(flower.getDescription())
+            .setColor(flower.getColor())
+            .setColorSecondary(flower.getColorSecondary())
             .setFlowerHeightMax(flower.getFlowerHeightMax())
             .setFlowerHeightMin(flower.getFlowerHeightMin())
             .setFlowerSizeMax(flower.getFlowerSizeMax())
             .setFlowerSizeMin(flower.getFlowerSizeMin())
             .setIsNew(flower.getIsNew())
             .setIsPopular(flower.getIsPopular())
-            .setCreated(flower.getCreated())
             .setFlowerType(flower.getFlowerType()).setColor(flower.getColor())
             .setFlowerSizes(flower.getFlowerSizes());
         flowerRepository.save(flowerToCreate);
@@ -114,11 +122,14 @@ public class FlowerService {
         });
 
 
-        flowerToUpdate.setColor(flower.getColor())
+        flowerToUpdate
             .setName(flower.getName())
             .setNameOriginal(flower.getNameOriginal())
             .setImage(flower.getImage())
             .setGroupName(flower.getGroupName())
+            .setDescription(flower.getDescription())
+            .setColor(flower.getColor())
+            .setColorSecondary(flower.getColorSecondary())
             .setFlowerHeightMax(flower.getFlowerHeightMax())
             .setFlowerHeightMin(flower.getFlowerHeightMin())
             .setFlowerSizeMax(flower.getFlowerSizeMax())
@@ -127,7 +138,6 @@ public class FlowerService {
             .setIsPopular(flower.getIsPopular())
             .setCreated(flower.getCreated())
             .setFlowerType(flower.getFlowerType()).setColor(flower.getColor());
-//            .setFlowerSizes(flower.getFlowerSizes());
         flowerRepository.save(flowerToUpdate);
 
 

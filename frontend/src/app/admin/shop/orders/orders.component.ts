@@ -48,7 +48,7 @@ export class OrdersComponent implements OnInit {
     {field: 'priceToPay', header: 'До сплати', active: true},
     {field: 'paid', header: 'Оплачено', active: true},
     {field: 'phone', header: 'Телефон', active: true},
-    {field: 'deliveryAddress', header: 'Адреса доставки', active: true},
+    {field: 'deliveryAddress', header: 'Адреса доставки', active: false},
     {field: 'postDeclaration', header: 'Номер декларації', active: false},
     {field: 'comment', header: 'Коментар', active: true},
     {field: 'note', header: 'Примітки', active: false},

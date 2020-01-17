@@ -13,7 +13,7 @@ import ua.com.flowershop.repository.*;
 import ua.com.flowershop.security.SecurityService;
 import ua.com.flowershop.util.mail.MailService;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -105,7 +105,7 @@ public class OrderService {
 
     }
 
-    public void confirmPayment(Long orderId, LocalDateTime paid) {
+    public void confirmPayment(Long orderId, LocalDate paid) {
         Order order = orderRepository.findById(orderId).orElseThrow(NotFoundException::new);
         order.setPaid(paid);
         orderRepository.save(order);
