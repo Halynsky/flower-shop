@@ -74,24 +74,4 @@ export class SizeItemComponent implements OnInit {
     this.mode == ItemSaveMode.new ? this.add() : this.update()
   }
 
-  onSizeChange() {
-
-    if (this.item.min && this.item.max) {
-        this.item.name = `${this.item.min ? this.item.min : ''}/${this.item.max ? this.item.max : ''}`;
-    }
-
-    if (this.item.min && !this.item.max ) {
-      this.item.name = `${this.item.min}/`;
-    }
-
-    if (!this.item.min && this.item.max ) {
-      this.item.name = `${this.item.max}+`;
-    }
-
-    if (!this.item.min && !this.item.max) {
-      this.item.name = '';
-    }
-
-  }
-
 }

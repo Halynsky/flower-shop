@@ -13,7 +13,5 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 public class SizeModel {
     private Long id;
-    private Integer min;
-    private Integer max;
     private String name;
 }

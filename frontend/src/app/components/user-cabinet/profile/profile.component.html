@@ -49,13 +49,16 @@
               #phone="ngModel"
               name="phone"
               [(ngModel)]="profile.phone"
+              validation="false"
               prefix="+38 "
               mask='(000) 000-0000'
               maxlength="18"
+              pattern=".{10,10}"
               required/>
 
           <div class="error-wrapper" *ngIf="phone.dirty || phone.touched || profileForm.submitted">
             <div class="error-message" *ngIf="phone.errors?.required">Повинно бути вказано</div>
+            <div class="error-message" *ngIf="!phone.errors?.required && phone.errors?.pattern">Введіть валідний номер телефону</div>
           </div>
         </div>
 

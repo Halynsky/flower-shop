@@ -45,6 +45,13 @@ public class UserService {
     }
 
     public void createVirtual(UserAdminModel userModel) {
+
+        User existed = userRepository.findByEmail(userModel.getEmail()).orElse(null);
+
+        if (nonNull(existed)) {
+            throw new ConflictException("Користувач з вказаним емелом вже існує");
+        }
+
         userRepository.save(new User()
             .setName(userModel.getName())
             .setEmail(userModel.getEmail())
@@ -74,7 +81,14 @@ public class UserService {
 
     @Transactional
     public User registerBySocial(SocialUser socialUser) {
+        User existed = userRepository.findByEmail(socialUser.getEmail()).orElse(null);
+
+        if (nonNull(existed)) {
+            throw new ConflictException("Користувач з вказаним емелом вже існує");
+        }
+
         User user = User.of(socialUser);
+        user.setIsVirtual(false);
         userRepository.save(user);
         SocialConnection socialConnection = new SocialConnection(socialUser, user);
         user.addSocialConnection(socialConnection);
@@ -125,4 +139,11 @@ public class UserService {
         userRepository.delete(otherUser);
 
     }
+
+    public void changeNote(Long userId, String note) {
+        User user = userRepository.findById(userId).orElseThrow(NotFoundException::new);
+        user.setNote(note);
+        userRepository.save(user);
+    }
+
 }

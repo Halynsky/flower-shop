@@ -71,13 +71,15 @@
       color: mat-color($accent);
       font-size: 22px;
       font-weight: 400;
-      margin: 0px;
       align-items: center;
       display: flex;
       padding: 8px 16px;
+      margin: 0px 0px 8px;
+
       @include response-to(xs) {
         font-size: 18px;
       }
+
     }
 
     .contacts {
@@ -182,13 +184,27 @@
   }
 
   .faq-block {
-    color: $grey-900;
+    color: $black-100;
     font-size: 18px;
     max-width: 888px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     padding: 0px 16px;
+
+    .ident {
+      margin-left: 24px;
+    }
+
+    .block {
+      margin-bottom: 8px;
+    }
+
+    a {
+      color: mat-color($primary);
+      display: inline-block;
+      text-decoration: underline;
+    }
 
     @include response-to(xs) {
       font-size: 16px;
@@ -197,7 +213,13 @@
     }
 
     .payment-info-report-main-content {
-      margin: 16px 0px;
+
+    }
+
+    .about-us-main-content {
+      & > div {
+        margin-bottom: 8px;
+      }
     }
 
   }

@@ -2,35 +2,63 @@
 @import "mixins.scss";
 
 :host {
-  .size-wrapper {
+
+  .sizes-block {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
     width: 100%;
 
-    p-multiselect {
-      width: 100%;
-    }
-
-    .size-price-block {
-      font-size: 12px;
+    .size-selector-wrapper {
       display: flex;
-      padding: 10px;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+      width: 100%;
 
-      .size-block {
-        display: flex;
-        align-items: center;
-        width: 40px;
+      button {
+        width: 36px;
+        margin-left: 11px;
       }
 
-      .price-block {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        width: 70px;
+      p-dropdown {
+        width: 100%;
       }
+
+
+
     }
+
+    .sizes-list {
+      margin-top: 16px;
+      flex-direction: column;
+
+      .size-wrapper {
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+
+        .size-label-wrapper {
+          width: 80px;
+        }
+
+        .size-input-wrapper {
+          width: 60px;
+        }
+
+        .units {
+          margin-left: 8px;
+        }
+
+        button {
+          margin-left: 16px;
+        }
+
+      }
+
+    }
+
   }
+
 
   .dropdown-block {
     display: flex;
@@ -59,11 +87,18 @@
       }
 
       .color-square {
-        margin-left: 5px;
-        width: 25px;
-        height: 25px;
+        margin-left: 6px;
+        border-radius: 3px;
+        width: 36px;
+        height: 36px;
+        border: 1px solid #cccccc;
       }
     }
+  }
+
+  .between-separator {
+    margin-left: 8px;
+    margin-right: 8px;
   }
 
 

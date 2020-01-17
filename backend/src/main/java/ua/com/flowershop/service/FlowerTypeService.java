@@ -13,13 +13,14 @@ import ua.com.flowershop.repository.FlowerTypeRepository;
 import ua.com.flowershop.repository.ImageRepository;
 
 import java.util.List;
-import java.util.Objects;
 
 import static java.util.Objects.nonNull;
 
 @Slf4j
 @Service
 public class FlowerTypeService {
+
+    private static final int MAX_FLOWER_TYPE_IMG_SIZE = 600;
 
     @Autowired private FlowerTypeRepository flowerTypeRepository;
     @Autowired private ImageService imageService;
@@ -45,7 +46,7 @@ public class FlowerTypeService {
     public FlowerType create(FlowerTypeModel flowerTypeModel, MultipartFile image) {
         FlowerType flowerType = FlowerType.of(flowerTypeModel);
         if(nonNull(image)) {
-            String imageUrl = imageService.saveImage(image);
+            String imageUrl = imageService.saveImage(image, MAX_FLOWER_TYPE_IMG_SIZE);
             flowerType.setImage(imageUrl);
         }
         return flowerTypeRepository.save(flowerType);
@@ -57,7 +58,7 @@ public class FlowerTypeService {
         flowerType.setName(flowerTypeModel.getName());
         flowerType.setNameSingle(flowerTypeModel.getNameSingle());
         if(nonNull(image)) {
-            String imageUrl = imageService.updateImage(image, flowerType.getImage());
+            String imageUrl = imageService.updateImage(image, flowerType.getImage(), MAX_FLOWER_TYPE_IMG_SIZE);
             flowerType.setImage(imageUrl);
         }
         return flowerTypeRepository.save(flowerType);

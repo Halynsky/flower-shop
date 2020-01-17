@@ -12,6 +12,15 @@
     justify-content: stretch;
   }
 
+  how-to-pay {
+    max-width: 600px;
+    text-align: left;
+    margin-top: 24px;
+    border: 1px solid $grey-400;
+    background-color: $grey-30;
+    padding: 24px;
+  }
+
   .order-wrapper {
     justify-content: center;
     display: grid;
@@ -206,3 +215,4 @@
   padding: 0 7px;
   font-size: 15px;
 }
+

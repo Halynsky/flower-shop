@@ -40,7 +40,7 @@ public class Order {
     private String postDeclaration;
     @Column(columnDefinition = "varchar(500)")
     private String deliveryAddress;
-    private Boolean isPaid = false;
+    private LocalDateTime paid;
     private String phone;
     private Integer totalPrice;
     @Column(columnDefinition = "integer default 0")

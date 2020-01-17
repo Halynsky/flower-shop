@@ -1,7 +1,8 @@
 import { Injectable } from "@angular/core";
-import { HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { API_URL } from "../../utils/Costants";
 import { PasswordUpdate, Profile } from "../models/Profile";
+import { Observable } from "rxjs";
 
 @Injectable({providedIn: 'root'})
 export class ProfileService {
@@ -21,5 +22,10 @@ export class ProfileService {
   updatePassword(passwordUpdate: PasswordUpdate) {
     return this.http.put(`${this.URL}/password`, passwordUpdate);
   }
+
+  emailChangeConfirm(secretKey: string): Observable<any> {
+    return this.http.post(`${this.URL}/email/change/confirm`, secretKey);
+  }
+
 }
 

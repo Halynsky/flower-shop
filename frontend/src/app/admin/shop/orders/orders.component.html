@@ -185,6 +185,17 @@
             </div>
           </span>
 
+          <span *ngSwitchCase="'paid'">
+             <div class="true-false-ico">
+              <div *ngIf="rowData['paid']">
+                 {{rowData[col.field] | date: 'dd.MM.yy HH:mm' }}
+              </div>
+              <div *ngIf="!rowData['paid']">
+                <i class="material-icons">indeterminate_check_box</i>
+              </div>
+            </div>
+          </span>
+
           <span *ngSwitchDefault>
             {{rowData[col.field]}}
           </span>
@@ -312,11 +323,17 @@
             #phone="ngModel"
             name="phone"
             [(ngModel)]="orderContactsChangeRequest.phone"
+            validation="false"
+            prefix="+38 "
+            mask='(000) 000-0000'
+            maxlength="18"
+            pattern=".{10,10}"
             required/>
         </div>
         <div class="ui-grid-col-4">
           <ng-container *ngIf="phone.dirty || phone.touched || contactsChangeForm.submitted">
             <p-message *ngIf="phone.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
+            <p-message *ngIf="!phone.errors?.required && phone.errors?.pattern" severity="error" text="Введіть валідний номер телефону"></p-message>
           </ng-container>
         </div>
       </div>
@@ -326,12 +343,13 @@
           <label>Адреса доставки</label>
         </div>
         <div class="ui-grid-col-4">
-          <input
-            pInputText
+          <textarea pInputTextarea
             #deliveryAddress="ngModel"
             name="deliveryAddress"
             [(ngModel)]="orderContactsChangeRequest.deliveryAddress"
-            required/>
+            cols="23" rows="6" maxlength="500"
+            required>
+          </textarea>
         </div>
         <div class="ui-grid-col-4">
           <ng-container *ngIf="deliveryAddress.dirty || deliveryAddress.touched || contactsChangeForm.submitted">
@@ -354,7 +372,7 @@
     Оновлення примітки для замовлення №{{selected?.id}}
   </p-header>
 
-  <form id="note_change_form" #noteChangeForm="ngForm" class="status-change-dialog-content" (ngSubmit)="noteChangeForm.valid && changeNote()">
+  <form id="note_change_form" #noteChangeForm="ngForm" class="note-change-dialog-content" (ngSubmit)="noteChangeForm.valid && changeNote()">
 
     <div class="ui-grid ui-grid-responsive ui-fluid">
 
@@ -593,7 +611,7 @@
     Встановлення знижки для замовлення №{{selected?.id}}
   </p-header>
 
-  <form id="discount_change_form" #discountChangeForm="ngForm" class="status-change-dialog-content" (ngSubmit)="discountChangeForm.valid && changeDiscount()">
+  <form id="discount_change_form" #discountChangeForm="ngForm" class="discount-change-dialog" (ngSubmit)="discountChangeForm.valid && changeDiscount()">
 
     <div class="ui-grid ui-grid-responsive ui-fluid">
 
@@ -623,5 +641,46 @@
 
   <p-footer>
     <button pButton form="discount_change_form" icon="pi pi-check" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog [(visible)]="displayPaymentConfirmDialog" class="payment-confirm-dialog" [modal]="true" (onHide)="resetPaymentConfirmForm(discountChangeForm)">
+  <p-header>
+    Підтвердження оплати для замовлення №{{selected?.id}}
+  </p-header>
+
+  <form id="payment_confirm_form" #paymentConfirmForm="ngForm" class="payment-confirm-dialog-content" (ngSubmit)="paymentConfirmForm.valid && confirmPayment()">
+
+    <div class="ui-grid ui-grid-responsive ui-fluid">
+
+      <div class="prime-form-group">
+        <div class="ui-grid-col-4">
+          <label>Дата оплати</label>
+        </div>
+        <div class="ui-grid-col-4">
+          <p-calendar
+            #paymentDateCalendar="ngModel"
+            name="paymentDate"
+            [(ngModel)]="paymentDate"
+            appendTo="body"
+            [readonlyInput]="false"
+            dateFormat="dd.mm.yy"
+            showTime="true"
+            [locale]="translation.calendar_ua">
+          </p-calendar>
+        </div>
+        <div class="ui-grid-col-4">
+          <ng-container *ngIf="paymentConfirmForm.dirty || paymentConfirmForm.touched || paymentConfirmForm.submitted">
+            <p-message *ngIf="paymentDateCalendar.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
+          </ng-container>
+        </div>
+      </div>
+
+    </div>
+
+  </form>
+
+  <p-footer>
+    <button pButton form="payment_confirm_form" icon="pi pi-check" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
   </p-footer>
 </p-dialog>

@@ -76,7 +76,7 @@ export class WarehouseOperationsComponent implements OnInit {
   loadDataLazy(filters = {}, pagination: Pagination = new Pagination()) {
     this.dataService.getAll(filters, pagination).subscribe(
       items => this.items = items,
-      error => this.snackBarService.showError(error.error.message)
+      error => this.snackBarService.showError(getErrorMessage(error))
     )
   }
 

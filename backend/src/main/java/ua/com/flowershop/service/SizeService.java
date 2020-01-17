@@ -27,8 +27,6 @@ public class SizeService {
 
     public Size update(Long id, SizeModel sizeModel) {
         Size size = sizeRepository.findById(id).orElseThrow(NotFoundException::new);
-        size.setMin(sizeModel.getMin());
-        size.setMax(sizeModel.getMax());
         size.setName(sizeModel.getName());
         return sizeRepository.save(size);
     }

@@ -85,6 +85,25 @@
         </div>
       </div>
 
+      <div class="prime-form-group">
+        <div class="ui-grid-col-3">
+          <label for="plantingMaterialType">Посадковий матеріал</label>
+        </div>
+        <div class="ui-grid-col-3">
+          <div class="dropdown-block color-dropdown-block">
+            <p-dropdown [options]="plantingMaterialTypes" id="plantingMaterialType" name="plantingMaterialType" [(ngModel)]="item.plantingMaterialType" placeholder="Оберіть тип посадкового матеріалу"
+                        optionLabel="name" dataKey="id" #plantingMaterialType="ngModel" required></p-dropdown>
+          </div>
+        </div>
+        <div class="ui-grid-col-3">
+          <div *ngIf="plantingMaterialType.errors">
+            <ng-container *ngIf="plantingMaterialType.dirty || plantingMaterialType.touched || form.submitted">
+              <p-message *ngIf="plantingMaterialType.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <div class="ui-grid-row ui-grid-field">

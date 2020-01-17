@@ -30,6 +30,7 @@ public class FlowerType {
     @Column(unique = true)
     private String nameOriginal;
     private String image;
+    private String plantingMaterialType;
 
     @OneToMany(mappedBy = "flowerType", fetch = FetchType.LAZY)
     private List<Flower> flowers;
@@ -39,7 +40,8 @@ public class FlowerType {
 
     public static FlowerType of(FlowerTypeModel flowerTypeModel) {
         return new FlowerType().setName(flowerTypeModel.getName())
-            .setNameSingle(flowerTypeModel.getNameSingle());
+            .setNameSingle(flowerTypeModel.getNameSingle())
+            .setNameOriginal(flowerTypeModel.getNameOriginal());
     }
 
 }

@@ -16,6 +16,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findById(Long id);
     Optional<User> findByEmail(String email);
+    Optional<User> findByIdNotAndEmail(Long id, String email);
+    Optional<User> findByEmailAndIsVirtual(String email, Boolean isVirtual);
+    Optional<User> findByPhone(String phone);
+    Optional<User> findByPhoneAndIsVirtual(String phone, Boolean isVirtual);
     Optional<User> findBySecretKey(String secretKey);
     Optional<User> findBySecretKeyAndIsActivated(String secretKey, Boolean isActivated);
 
@@ -23,7 +27,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     ProfileProjection findProfileById(Long id);
 
     @Query("SELECT u.id as id, u.name as name, u.email as email, u.phone as phone, u.role as role, u.isEnabled as isEnabled, u.isVirtual as isVirtual, " +
-        "u.created as created, u.facebookNickname as  facebookNickname " +
+        "u.created as created, u.facebookNickname as  facebookNickname, u.note as note " +
         "FROM User u " +
         "WHERE (:id IS NULL OR  u.id = :id) " +
         "AND (:namePart IS NULL OR :namePart = '' OR lower(u.name) LIKE '%' || lower(cast(:namePart as string)) || '%') " +

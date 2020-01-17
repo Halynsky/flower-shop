@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import { Component } from "@angular/core";
 import { SecurityService } from "../../../services/security.service";
 import { PasswordUpdate, Profile } from "../../../api/models/Profile";
 import { ProfileService } from "../../../api/services/profile.service";
@@ -8,6 +8,7 @@ import { SnackBarService } from "../../../services/snak-bar.service";
 import { getErrorMessage } from "../../../utils/Functions";
 import { SocialService } from "../../../api/services/social.service";
 import { AuthService as SocialAuthService, FacebookLoginProvider } from 'angularx-social-login'
+import { SecurityUserModel } from "../../../api/models/User";
 
 @Component({
   selector: 'profile',
@@ -52,7 +53,12 @@ export class ProfileComponent {
     this.profileService.update(this.profile)
       .pipe(finalize(() => this.loadingProfile = false))
       .subscribe(() => {
-          this.snackBarService.showSuccess("Ваш профіль успішно оновлено")
+          this.snackBarService.showSuccess("Ваш профіль успішно оновлено");
+          let user: SecurityUserModel = this.securityService.getUser();
+          user.email = this.profile.email;
+          user.name = this.profile.name;
+          user.phone = this.profile.phone;
+          this.securityService.updateUser(user)
       },
         error => this.snackBarService.showError(getErrorMessage(error))
       )

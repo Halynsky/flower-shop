@@ -22,12 +22,20 @@
             [(ngModel)]="item.name"
             [uniqueValidator]="dataService.isNameFree.bind(dataService)"
             [previousValue]="previousName"
+            required
           />
         </div>
         <div class="ui-grid-col-3" *ngIf="name.errors?.unique">
           <ng-container>
             <p-message severity="error" text="Дана квітка вже існує"></p-message>
           </ng-container>
+        </div>
+        <div class="ui-grid-col-3">
+          <div *ngIf="name.errors">
+            <ng-container *ngIf="name.dirty || name.touched || form.submitted">
+              <p-message *ngIf="name.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
+            </ng-container>
+          </div>
         </div>
       </div>
 
@@ -44,12 +52,20 @@
             [(ngModel)]="item.nameOriginal"
             [uniqueValidator]="dataService.isNameOriginalFree.bind(dataService)"
             [previousValue]="previousNameOriginal"
+            required
           />
         </div>
         <div class="ui-grid-col-3" *ngIf="nameOriginal.errors?.unique">
           <ng-container>
             <p-message severity="error" text="Дана квітка вже існує"></p-message>
           </ng-container>
+        </div>
+        <div class="ui-grid-col-3">
+          <div *ngIf="nameOriginal.errors">
+            <ng-container *ngIf="nameOriginal.dirty || nameOriginal.touched || form.submitted">
+              <p-message *ngIf="nameOriginal.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
+            </ng-container>
+          </div>
         </div>
       </div>
 
@@ -71,8 +87,15 @@
         </div>
         <div class="ui-grid-col-3">
           <div class="dropdown-block">
-            <p-dropdown [options]="flowerTypes" name="flowerType" optionLabel="name" dataKey="id" [(ngModel)]="item.flowerType"
-                        placeholder="Оберіть тип квітки" id="flowerType"></p-dropdown>
+            <p-dropdown [options]="flowerTypes" name="flowerType" optionLabel="name"  #flowerType="ngModel" dataKey="id" [(ngModel)]="item.flowerType"
+                        placeholder="Оберіть тип квітки" id="flowerType" required></p-dropdown>
+          </div>
+        </div>
+        <div class="ui-grid-col-3">
+          <div *ngIf="flowerType.errors">
+            <ng-container *ngIf="flowerType.dirty || flowerType.touched || form.submitted">
+              <p-message *ngIf="flowerType.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
+            </ng-container>
           </div>
         </div>
       </div>
@@ -93,7 +116,7 @@
 
       <div class="prime-form-group">
         <div class="ui-grid-col-3">
-          <label for="flowerSizeMin">Розмір(cm)</label>
+          <label for="flowerSizeMin">Розмір квітки (від-до), см</label>
         </div>
         <div class="ui-grid-col-3">
           <input
@@ -105,7 +128,7 @@
             rangePair
             [rangePairMax]="item.flowerSizeMax"
             [rangePair]="'flowerSizeMax'"
-          /> — <input
+          /><span class="between-separator">до</span><input
           pInputText
           #flowerSizeMax="ngModel"
           id="flowerSizeMax"
@@ -123,14 +146,14 @@
             </ng-container>
           </div>
           <ng-container *ngIf="flowerSizeMax.errors?.rangePair">
-            <p-message  severity="error" text="Максимальне значення повинне бути більше ніж мінімальне"></p-message>
+            <p-message severity="error" text="Максимальне значення повинне бути більше ніж мінімальне"></p-message>
           </ng-container>
         </div>
       </div>
 
       <div class="prime-form-group">
         <div class="ui-grid-col-3">
-          <label for="flowerHeightMin">Висота(cm)</label>
+          <label for="flowerHeightMin">Висота стебла (від-до), см</label>
         </div>
         <div class="ui-grid-col-3">
           <input
@@ -142,7 +165,7 @@
             rangePair
             [rangePairMax]="item.flowerHeightMax"
             [rangePair]="'flowerHeightMax'"
-          /> — <input
+          /><span class="between-separator">до</span><input
           pInputText
           #flowerHeightMax="ngModel"
           id="flowerHeightMax"
@@ -160,7 +183,7 @@
             </ng-container>
           </div>
           <ng-container *ngIf="flowerHeightMax.errors?.rangePair">
-            <p-message  severity="error" text="Максимальне значення повинне бути більше ніж мінімальне"></p-message>
+            <p-message severity="error" text="Максимальне значення повинне бути більше ніж мінімальне"></p-message>
           </ng-container>
         </div>
       </div>
@@ -170,10 +193,10 @@
           <label for="popularity">Рейтинг</label>
         </div>
         <p-rating
-          #popularity="ngModel"
-          id="popularity"
-          name="popularity"
-          [(ngModel)]="item.popularity" stars="10"></p-rating>
+            #popularity="ngModel"
+            id="popularity"
+            name="popularity"
+            [(ngModel)]="item.popularity" stars="10"></p-rating>
       </div>
 
 
@@ -183,10 +206,10 @@
         </div>
         <div class="ui-grid-col-3">
           <p-inputSwitch
-            #isNew="ngModel"
-            id="isNew"
-            name="isNew"
-            [(ngModel)]="item.isNew"></p-inputSwitch>
+              #isNew="ngModel"
+              id="isNew"
+              name="isNew"
+              [(ngModel)]="item.isNew"></p-inputSwitch>
         </div>
       </div>
 
@@ -196,10 +219,10 @@
         </div>
         <div class="ui-grid-col-3">
           <p-inputSwitch
-            #isPopular="ngModel"
-            id="isPopular"
-            name="isPopular"
-            [(ngModel)]="item.isPopular"></p-inputSwitch>
+              #isPopular="ngModel"
+              id="isPopular"
+              name="isPopular"
+              [(ngModel)]="item.isPopular"></p-inputSwitch>
         </div>
       </div>
 
@@ -209,45 +232,101 @@
         </div>
         <div class="ui-grid-col-3">
           <div class="dropdown-block color-dropdown-block">
-            <p-dropdown [options]="colors" id="color" name="color" [(ngModel)]="item.color" placeholder="Оберіть колір квітки"
-                        optionLabel="name" dataKey="id"></p-dropdown>
-            <div *ngIf="item.color" class="chosen-item">
-              <div class="color-square" [ngStyle]="{'background-color': item.color.hex}"></div>
+            <p-dropdown [options]="colors" id="color" name="color" [(ngModel)]="item.color" placeholder="Оберіть колір"
+                        optionLabel="name" dataKey="id"  #color="ngModel" showClear="true" filter="true" required></p-dropdown>
+            <div class="chosen-item">
+              <div class="color-square" [ngStyle]="{'background-color': item.color?.hex ? item.color.hex : '#ffffff'}"></div>
             </div>
+          </div>
+        </div>
+        <div class="ui-grid-col-3">
+          <div *ngIf="color.errors">
+            <ng-container *ngIf="color.dirty || color.touched || form.submitted">
+              <p-message *ngIf="color.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+      <div class="prime-form-group">
+        <div class="ui-grid-col-3">
+          <label for="color">Другорядний колір</label>
+        </div>
+        <div class="ui-grid-col-3">
+          <div class="dropdown-block color-dropdown-block">
+            <p-dropdown [options]="colors" id="colorSecondary" name="colorSecondary" [(ngModel)]="item.colorSecondary" placeholder="Оберіть колір"
+                        optionLabel="name" dataKey="id" #colorSecondary="ngModel" showClear="true" filter="true" required></p-dropdown>
+            <div class="chosen-item">
+              <div class="color-square" [ngStyle]="{'background-color': item.colorSecondary?.hex ? item.colorSecondary.hex : '#ffffff'}"></div>
+            </div>
+          </div>
+        </div>
+        <div class="ui-grid-col-3">
+          <div *ngIf="colorSecondary.errors">
+            <ng-container *ngIf="colorSecondary.dirty || colorSecondary.touched || form.submitted">
+              <p-message *ngIf="colorSecondary.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
+            </ng-container>
           </div>
         </div>
       </div>
 
       <div class="prime-form-group" style="align-items: flex-start;">
-        <div class="ui-grid-col-3" style="margin-top: 7px;">
-          <label for="size">Розмір та ціна(коп.)</label>
-        </div>
 
-        <div class="ui-grid-col-3">
+        <fieldset class="ui-grid-col-6">
+          <legend>Доступні розміри</legend>
 
-          <div class="size-wrapper ">
-            <p-multiSelect id="size" [options]="sizes" [(ngModel)]="sizesToChange" name="flowerSizesToChange"
-                           (onClick)="isEditFlowerSizesShowed=true" (onChange)="initializeFlowerSizes()" optionLabel="name"
-                           defaultLabel="Оберіть розміри квітки"></p-multiSelect>
-            <div *ngIf="isEditFlowerSizesShowed">
-              <div class="size-price-block" *ngFor="let sizeToChange of sizesToChange; let i = index">
-                <div class="size-block">{{sizeToChange.name}}</div>
-                —
-                <div class="price-block"><input name="priceToChange" [(ngModel)]="flowerSizes[i].price"
-                                                (ngModelChange)="onSizeChange(sizeToChange, i)" style="width: 60px"></div>
+          <div style="margin: 8px 0px;">
+            <label for="size">Додати розмір</label>
+          </div>
+
+          <div>
+
+            <div class="sizes-block">
+
+              <div class="size-selector-wrapper">
+                <p-dropdown id="size" [options]="sizes" [(ngModel)]="sizeToAdd" name="flowerSizesToAdd" optionLabel="name"
+                            placeholder="Оберіть розмір" [filter]="true" emptyFilterMessage="не знайдено"></p-dropdown>
+
+                <button type="button" pButton icon="pi pi-plus" class="ui-button-success" (click)="addFlowerSize()"></button>
+
               </div>
-            </div>
-            <div *ngIf="!isEditFlowerSizesShowed">
-              <div class="size-price-block" *ngFor="let sizeToChange of this.item.flowerSizes; let i = index">
-                <div class="size-block">{{sizeToChange.size.name}}</div>
-                —
-                <div class="price-block"><input name="sizesToChange" [(ngModel)]="this.item.flowerSizes[i].price" style="width: 60px"></div>
+
+              <div class="sizes-list">
+
+                <ng-template ngFor let-flowerSize [ngForOf]="item.flowerSizes" let-i="index">
+
+                  <div class="size-wrapper">
+
+                    <div class="size-label-wrapper">
+                      <label for="color">{{flowerSize.size.name}}</label>
+                    </div>
+                    <div class="size-input-wrapper">
+                      <input
+                        pInputText
+                        #flowerSizeInput="ngModel"
+                        [name]="'flower_size_' + i"
+                        [(ngModel)]="flowerSize.price"
+                        maxlength="5"/>
+                    </div>
+
+                    <div class="units">грн</div>
+
+                    <button pButton type="button" icon="fa fa-trash" class="ui-button-danger" (click)="removeFlowerSize(i)"></button>
+
+                  </div>
+
+                </ng-template>
+
               </div>
+
             </div>
+
 
           </div>
 
-        </div>
+
+        </fieldset>
+
       </div>
 
     </div>

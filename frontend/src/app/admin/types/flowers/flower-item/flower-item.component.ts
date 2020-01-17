@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SnackBarService } from "../../../../services/snak-bar.service";
 import { ActivatedRoute, Router } from "@angular/router";
-import { getErrorMessage } from "../../../../utils/Functions";
+import { clone, getErrorMessage } from "../../../../utils/Functions";
 import { ItemSaveMode } from "../../../../models/ItemSaveMode";
 import { FlowerTypeService } from "../../../../api/services/flower-type.service";
 import { FlowerFull } from "../../../../api/models/Flower";
@@ -32,19 +32,9 @@ export class FlowerItemComponent implements OnInit {
   item: FlowerFull = new FlowerFull();
 
   colors: Color[] = [];
+  sizes: Size [] = [];
 
-  sizes: Size[] = [];
-  sizesToChange: Size[] = [];
-
-  isInitialised: boolean = false;
-  isEqual: boolean = false;
-
-  flowerSizes: FlowerSize[] = [];
-
-  isEditFlowerSizesShowed: boolean = false;
-
-  date;
-
+  sizeToAdd: Size;
 
   constructor(public dataService: FlowerService,
               public translation: TranslationService,
@@ -65,8 +55,6 @@ export class FlowerItemComponent implements OnInit {
               this.getItem(queryParams['id']);
             }
           })
-        } else {
-          this.isEditFlowerSizesShowed = true;
         }
 
       }
@@ -74,32 +62,18 @@ export class FlowerItemComponent implements OnInit {
 
     this.flowerTypeService.getAll().subscribe(
       flowerTypes => this.flowerTypes = flowerTypes,
-      error => this.snackBarService.showError(error.error.message)
+      error => this.snackBarService.showError(getErrorMessage(error))
     );
 
     this.colorService.getForAdmin().subscribe(
       colors => this.colors = colors,
-      error => this.snackBarService.showError(error.error.message)
+      error => this.snackBarService.showError(getErrorMessage(error))
     );
 
     this.sizeService.getAll().subscribe(
       sizes => this.sizes = sizes,
-      error => this.snackBarService.showError(error.error.message)
+      error => this.snackBarService.showError(getErrorMessage(error))
     );
-
-  }
-
-  initializeFlowerSizes() {
-      if (!this.isInitialised) {
-        this.flowerSizes = [];
-        for (let i = 0; i < this.sizes.length; i++) {
-          this.flowerSizes[i] = new FlowerSize();
-        }
-        this.isInitialised = true;
-      }
-      if (this.isEqual) {
-        this.flowerSizes.push(new FlowerSize());
-      }
 
   }
 
@@ -110,6 +84,7 @@ export class FlowerItemComponent implements OnInit {
   getItem(id) {
     this.dataService.getById(id).subscribe(
       item => {
+        item.flowerSizes.forEach(fs => fs.price = fs.price / 100);
         this.item = item;
         this.previousNameOriginal = item.nameOriginal;
         this.previousName = item.name;
@@ -118,25 +93,8 @@ export class FlowerItemComponent implements OnInit {
     )
   }
 
-  compareArrays(sizes, flowerSizes) {
-    if (sizes.length < flowerSizes.length) {
-      let fs: FlowerSize[] = [];
-      for (let i = 0; i < sizes.length; i++) {
-        fs[i] = new FlowerSize();
-        fs[i].size = sizes[i];
-      }
-      this.flowerSizes = fs;
-      this.isEqual = true;
-    } else if (flowerSizes.length <= this.sizes) {
-      this.isEqual = false;
-    }
-  }
-
-
   create() {
     const formData: FormData = new FormData();
-    this.compareArrays(this.sizesToChange, this.flowerSizes);
-    this.item.flowerSizes = this.flowerSizes;
     formData.append('data', JSON.stringify(this.item));
     if (this.newImage) {
       formData.append('file', this.newImage);
@@ -152,11 +110,9 @@ export class FlowerItemComponent implements OnInit {
 
   update() {
     const formData: FormData = new FormData();
-    if (this.isEditFlowerSizesShowed) {
-      this.compareArrays(this.sizesToChange, this.flowerSizes);
-      this.item.flowerSizes = this.flowerSizes;
-    }
-    formData.append('data', JSON.stringify(this.item));
+    let item = clone(this.item);
+    item.flowerSizes.forEach(fs => fs.price = fs.price * 100);
+    formData.append('data', JSON.stringify(item));
     if (this.newImage) {
       formData.append('file', this.newImage);
     }
@@ -165,7 +121,10 @@ export class FlowerItemComponent implements OnInit {
         this.snackBarService.showSuccess("'Квітку' успішно оновлено");
         this.router.navigate(['../../'], {relativeTo: this.route})
       },
-      error => this.snackBarService.showError(getErrorMessage(error))
+      error => {
+        this.snackBarService.showError(getErrorMessage(error));
+        this.getItem(item.id);
+      }
     )
   }
 
@@ -173,19 +132,37 @@ export class FlowerItemComponent implements OnInit {
     this.mode == ItemSaveMode.new ? this.create() : this.update()
   }
 
-  changeDate() {
-    this.item.created = this.datepipe.transform(this.date, 'yyyy-MM-dd');
-  }
-
-  onSizeChange(size, i) {
-    this.flowerSizes[i].size = size;
-  }
-
   addImage(event: File): void {
     if (!event) {
       this.item.image = null;
     }
     this.newImage = event;
+  }
+
+  removeFlowerSize(i) {
+    this.item.flowerSizes.splice(i, 1);
+  }
+
+  addFlowerSize() {
+    console.log(this.sizeToAdd);
+
+    if (!this.sizeToAdd) {
+      this.snackBarService.showWarning('Оберіть розмір квітки який ви хочете додати');
+      return;
+    }
+
+    let found = this.item.flowerSizes.find(item => item.size.id == this.sizeToAdd.id);
+
+    if (found) {
+      this.snackBarService.showWarning('Обраний Розмір вже додано');
+      return;
+    }
+
+    let flowerSize = new FlowerSize();
+    flowerSize.size = this.sizeToAdd;
+
+    this.item.flowerSizes.push(flowerSize);
+
   }
 
 }

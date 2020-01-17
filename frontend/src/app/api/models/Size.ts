@@ -1,12 +1,8 @@
 export class Size {
   id?: number;
   name: string;
-  min: number;
-  max: number;
 }
 
-export class SizeAdmin {
-  id: number;
-  name: string;
+export class SizeAdmin extends Size {
   flowersCount: number;
 }

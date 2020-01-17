@@ -7,6 +7,8 @@ import { Order } from "../../../api/models/Order";
 import { Pagination } from "../../../api/models/Pagination";
 import { finalize } from "rxjs/operators";
 import { TranslationService } from "../../../utils/translation.service";
+import { MatDialog } from "@angular/material";
+import { HowToPayDialogComponent } from "../../shared/how-to-pay-dialog/how-to-pay-dialog.component";
 
 @Component({
   selector: 'purchase-history',
@@ -23,7 +25,8 @@ export class PurchaseHistoryComponent {
 
   constructor (public orderService: OrderService,
                public snackBarService: SnackBarService,
-               public translationService: TranslationService) {
+               public translationService: TranslationService,
+               public dialog: MatDialog) {
 
     this.getMyOrders(false);
 
@@ -54,6 +57,10 @@ export class PurchaseHistoryComponent {
 
   showMore() {
     this.getMyOrders(true);
+  }
+
+  openHowToPayDialog(event) {
+    this.dialog.open(HowToPayDialogComponent, {maxWidth: 800, minWidth: 320, minHeight: 320, width: '600px'});
   }
 
 }

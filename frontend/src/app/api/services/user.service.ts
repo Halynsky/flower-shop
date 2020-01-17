@@ -47,4 +47,8 @@ export class UserService {
     return this.http.put(`${this.URL}/${id}/merge`, mergingUserId);
   }
 
+  changeNote(id: number, userNote: any) {
+    return this.http.put(`${this.URL}/${id}/changeNote`, userNote);
+  }
+
 }

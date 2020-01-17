@@ -19,21 +19,19 @@ import { FlowerService } from "../../../../api/services/flower.service";
 })
 export class WarehouseOperationItemComponent {
 
-  isFlowerChosen: boolean = false;
-
   ItemSaveMode = ItemSaveMode;
   mode: ItemSaveMode = ItemSaveMode.new;
 
   item: WarehouseOperation = new WarehouseOperation();
-  itemFlowerSize: FlowerSize = new FlowerSize();
+  itemFlowerSize: FlowerSize;
   itemWarehouseOperationType = new WarehouseOperationType();
 
   operationTypes = [];
-  directionOption = '—';
+  directionOption = '';
 
   flowersOptions;
   sizeOptions;
-  flowerChosen: FlowerFull = new FlowerFull();
+  flowerChosen: FlowerFull;
 
   constructor(public dataService: WarehouseOperationService,
               private snackBarService: SnackBarService,
@@ -50,7 +48,7 @@ export class WarehouseOperationItemComponent {
 
     this.getAllFlowers();
     this.operationTypes = enumToObjectsPipe.transform(WarehouseOperationType.OperationType);
-    this.operationTypes.forEach(e => e.label = translation.text[e.label]);
+    this.operationTypes.forEach(e => e.label = translation.text.operationTypes[e.label]);
   }
 
 
@@ -74,7 +72,6 @@ export class WarehouseOperationItemComponent {
       },
       error => this.snackBarService.showError(getErrorMessage(error))
     );
-    this.isFlowerChosen = true;
   }
 
   getAllFlowers() {

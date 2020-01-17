@@ -31,6 +31,7 @@ export class OrdersComponent implements OnInit {
   displaySplitDialog = false;
   displayUpdateOrderItemsDialog = false;
   displayDiscountChangeDialog = false;
+  displayPaymentConfirmDialog = false;
 
   loading = false;
 
@@ -41,18 +42,19 @@ export class OrdersComponent implements OnInit {
     {field: 'created', header: 'Дата створення', active: true},
     {field: 'closed', header: 'Дата закриття', active: false},
     {field: 'status', header: 'Статус', active: true},
-    {field: 'userId', header: 'Користувач(Id)', active: true},
-    {field: 'user', header: 'Користувач', active: true},
+    {field: 'userId', header: 'Корист.Id', active: true},
+    {field: 'user', header: 'Корист.', active: true},
     {field: 'userFacebookNickname', header: 'Нік на Facebook', active: true},
+    {field: 'priceToPay', header: 'До сплати', active: true},
+    {field: 'paid', header: 'Оплачено', active: true},
     {field: 'phone', header: 'Телефон', active: true},
     {field: 'deliveryAddress', header: 'Адреса доставки', active: true},
-    {field: 'postDeclaration', header: 'Номер декларації', active: true},
+    {field: 'postDeclaration', header: 'Номер декларації', active: false},
     {field: 'comment', header: 'Коментар', active: true},
-    {field: 'note', header: 'Примітки', active: true},
+    {field: 'note', header: 'Примітки', active: false},
     {field: 'totalPrice', header: 'Вартість', active: false},
     {field: 'discount', header: 'Знижка', active: false},
-    {field: 'priceToPay', header: 'До сплати', active: true},
-    {field: 'isPaid', header: 'Оплачено', active: true},
+
   ];
 
   selectedColumns = this.columns.filter(column => column.active);
@@ -79,6 +81,7 @@ export class OrdersComponent implements OnInit {
   updatingOrder: OrderAdmin;
   flowerSizeToAdd: FlowerSize;
   orderDiscount;
+  paymentDate;
 
   constructor(private dataService: OrderService,
               private flowerSizeService: FlowerSizeService,
@@ -98,7 +101,7 @@ export class OrdersComponent implements OnInit {
   loadDataLazy(filters = {}, pagination: Pagination = new Pagination()) {
     this.dataService.getAllForAdmin(filters, pagination).subscribe(
       items => this.items = items,
-      error => this.snackBarService.showError(error.error.message)
+      error => this.snackBarService.showError(getErrorMessage(error))
     )
   }
 
@@ -113,7 +116,7 @@ export class OrdersComponent implements OnInit {
   getAllFlowerSizes() {
     this.flowerSizeService.getAllForAdminAsList().subscribe(
       flowerSizes => this.flowerSizes = flowerSizes,
-      error => this.snackBarService.showError(error.error.message)
+      error => this.snackBarService.showError(getErrorMessage(error))
     )
   }
 
@@ -185,7 +188,10 @@ export class OrdersComponent implements OnInit {
       {
         label: 'Підтвердити оплату',
         icon: 'fas fa-comments-dollar',
-        command: (event) => this.confirmPayment(this.selected.id),
+        command: (event) => {
+          this.displayPaymentConfirmDialog = true;
+          this.paymentDate = this.selected.paymentDate;
+        },
         visible: !this.orderIsClosed(this.selected.status) && !this.selected.isPaid,
       },
       {
@@ -276,14 +282,21 @@ export class OrdersComponent implements OnInit {
     return !this.orderIsClosed(status) && status != this.Status.DELIVERING
   }
 
-  confirmPayment(id: number) {
+  confirmPayment() {
     this.loading = true;
-    this.dataService.confirmPayment(id)
+    console.log(this.paymentDate);
+    this.dataService.confirmPayment(this.selected.id, this.paymentDate)
       .pipe(finalize(() => this.loading = false))
       .subscribe(() => {
-      this.snackBarService.showSuccess(`Оплату для замовлення №${id} успішно підтверджено`);
+      this.snackBarService.showSuccess(`Оплату для замовлення №${this.selected.id} успішно підтверджено`);
       this.refresh();
+      this.displayPaymentConfirmDialog = false;
     }, error => this.snackBarService.showError(getErrorMessage(error)))
+  }
+
+  resetPaymentConfirmForm(form: NgForm) {
+    form.resetForm();
+    this.paymentDate = null;
   }
 
   changeStatus() {

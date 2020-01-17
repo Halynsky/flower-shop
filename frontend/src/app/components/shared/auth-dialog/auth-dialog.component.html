@@ -5,7 +5,7 @@
   <div class="login-form-wrapper" *ngIf="mode == 'login'">
 
     <div class="dialog-header">
-      <h1>Авторизація</h1>
+      <h1>Вхід</h1>
     </div>
 
     <div class="content">
@@ -57,16 +57,17 @@
           </div>
 
           <div class="auth-social-hint">
-            <span>або увійти з данними</span>
+            <span>або увійти з Facebook</span>
           </div>
 
-          <button type="button" mat-button class="auth-facebook" (click)="facebookAuth()">
+          <button type="button" mat-button class="auth-facebook" (click)="facebookAuth()" [disabled]="loading">
             <i class="fab fa-facebook-square"></i>
-            <span>Facebook</span>
+            <span>Увійти з Facebook</span>
           </button>
 
-        </div>
+          <div class="terms-block">Продовжуючи ви погоджуєтесь з <a href="/terms-and-conditions">умовами використання сайту</a></div>
 
+        </div>
 
       </form>
     </div>
@@ -126,10 +127,12 @@
                   placeholder="Телефон"
                   prefix="+38 "
                   mask='(000) 000-0000'
+                  pattern=".{10,10}"
                   required/>
 
               <div class="error-wrapper" *ngIf="phone.dirty || phone.touched || regForm.submitted">
                 <div class="error-message" *ngIf="phone.errors?.required">Повинно бути вказано</div>
+                <div class="error-message" *ngIf="!phone.errors?.required && phone.errors?.pattern">Введіть валідний номер телефону</div>
               </div>
             </div>
 
@@ -182,10 +185,12 @@
             <span>або продовжити з данними</span>
           </div>
 
-          <button type="button" mat-button class="auth-facebook" (click)="facebookAuth()">
+          <button type="button" mat-button class="auth-facebook" (click)="facebookAuth()" [disabled]="loading">
             <i class="fab fa-facebook-square"></i>
-            <span>Facebook</span>
+            <span>Продовжити з Facebook</span>
           </button>
+
+          <div class="terms-block">Продовжуючи ви погоджуєтесь з <a href="/terms-and-conditions">умовами використання сайту</a></div>
 
         </div>
 
@@ -230,8 +235,7 @@
                   name="email"
                   [(ngModel)]="passwordRestoreEmail"
                   placeholder="Електронна адреса"
-                  required
-              />
+                  required/>
 
               <div class="error-wrapper" *ngIf="(email.dirty || email.touched) && passwordRestore.submitted">
                 <div class="error-message" *ngIf="email.errors?.required">Повинно бути вказано</div>
@@ -269,6 +273,3 @@
   </div>
 
 </div>
-
-
-

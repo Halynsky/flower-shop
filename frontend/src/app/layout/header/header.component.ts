@@ -8,6 +8,7 @@ import { Router } from "@angular/router";
 import { Role } from "../../models/Role";
 import { AuthDialogComponent } from "../../components/shared/auth-dialog/auth-dialog.component";
 import { BucketDialogComponent } from "../../components/shared/bucket-dialog/bucket-dialog.component";
+import { getErrorMessage } from "../../utils/Functions";
 
 @Component({
   selector: 'layout-header',
@@ -38,7 +39,7 @@ export class HeaderComponent {
   logout() {
     this.authService.logot().subscribe(
       res => this.securityService.logout(),
-      error => this.snackBarService.showError(error)
+      error => this.snackBarService.showError(getErrorMessage(error))
     )
   }
 

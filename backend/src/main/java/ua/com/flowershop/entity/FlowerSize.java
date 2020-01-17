@@ -38,6 +38,7 @@ public class FlowerSize {
 
     @ManyToOne
     @JoinColumn(name = "size_id")
+    @OrderBy("name")
     private Size size;
 
     @OneToMany(mappedBy = "flowerSize")

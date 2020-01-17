@@ -40,9 +40,11 @@
             name="phone"
             formControlName="phone"
             placeholder="Телефон"
+            validation="false"
             prefix="+38 "
             mask='(000) 000-0000'
             maxlength="18"
+            pattern=".{10,10}"
             required>
           <div class="error-wrapper" *ngIf="contactInfoFormGroup.get('phone').dirty || contactInfoFormGroup.get('phone').touched">
             <div class="error-message" *ngIf="contactInfoFormGroup.get('phone').errors?.required">Повинно бути вказано</div>
@@ -145,6 +147,36 @@
           </div>
         </div>
 
+        <div class="input-group" *ngIf="receiverInfoRequired()">
+          <label>ПІП отримувача</label>
+          <input
+            name="receiverFullName"
+            formControlName="receiverFullName"
+            placeholder="ПІП отримувача"
+            [required]="receiverInfoRequired()">
+          <div class="error-wrapper" *ngIf="deliveryInfoFormGroup.get('receiverFullName').dirty || deliveryInfoFormGroup.get('receiverFullName').touched">
+            <div class="error-message" *ngIf="deliveryInfoFormGroup.get('receiverFullName').errors?.required">Повинно бути вказано</div>
+          </div>
+        </div>
+
+        <div class="input-group" *ngIf="receiverInfoRequired() && deliveryInfoFormGroup.get('receiverPhone')">
+          <label>Телефон отримувача</label>
+          <input
+            name="receiverPhone"
+            formControlName="receiverPhone"
+            placeholder="Телефон отримувача"
+            validation="false"
+            prefix="+38 "
+            mask='(000) 000-0000'
+            maxlength="18"
+            pattern=".{10,10}"
+            required>
+          <div class="error-wrapper" *ngIf="deliveryInfoFormGroup.get('receiverPhone').dirty || deliveryInfoFormGroup.get('receiverPhone').touched">
+            <div class="error-message" *ngIf="deliveryInfoFormGroup.get('receiverPhone').errors?.required">Повинно бути вказано</div>
+            <div class="error-message" *ngIf="!deliveryInfoFormGroup.get('receiverPhone').errors?.required && deliveryInfoFormGroup.get('receiverPhone').errors?.pattern">Введіть валідний номер телефону</div>
+          </div>
+        </div>
+
         <div class="input-group">
           <label>Коментар до замовлення</label>
           <textarea
@@ -171,7 +203,7 @@
         <div><span class="final-purchase-items-amount">{{bucketLocalService.bucketInfo.totalItems}}</span> позиції <span class="check-items" (click)="openBucketDialog()">(переглянути товари)</span></div>
         <div>На сумму <span class="final-purchase-items-price">{{bucketLocalService.bucketInfo.totalPrice / 100}}</span> грн</div>
 
-        <button mat-flat-button color="accent" routerLink="/order" [disabled]="isFormValid() | async" (click)="submitOrder()">
+        <button mat-flat-button color="accent" routerLink="/order" [disabled]="(isFormValid() | async) || loading" (click)="submitOrder()">
           <i class="material-icons">check</i>
           <span>Підтвердити замовлення</span>
         </button>
@@ -196,5 +228,7 @@
   <div class="message">Ми звяжемось з вами в найближчий час</div>
 
   <div class="order-info">Номер вашого замовлення: <span class="order-id">{{orderId}}</span></div>
+
+  <how-to-pay></how-to-pay>
 
 </div>

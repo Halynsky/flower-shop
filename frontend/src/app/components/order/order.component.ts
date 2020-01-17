@@ -36,6 +36,7 @@ export class OrderComponent implements OnInit {
 
   loadingWarehouses = false;
   loadingStreets = false;
+  loading = false;
 
   constructor(private formBuilder: FormBuilder,
               public bucketLocalService: BucketLocalService,
@@ -50,14 +51,18 @@ export class OrderComponent implements OnInit {
     this.getStreets();
 
     this.contactInfoFormGroup = this.formBuilder.group({
-      name: [''],
-      email: [''],
-      phone: ['']
+      name: [],
+      email: [],
+      phone: []
     });
 
     this.initFormGroups(DeliveryType.NOVA_POSHTA_DEPARTMENT);
 
     this.fillUserData();
+
+    this.securityService.onLogin.subscribe(() => {
+      this.fillUserData();
+    })
 
   }
 
@@ -138,11 +143,14 @@ export class OrderComponent implements OnInit {
       let user = this.securityService.getUser();
       this.contactInfoFormGroup.get('name').setValue(user.name);
       this.contactInfoFormGroup.get('email').setValue(user.email);
-      this.contactInfoFormGroup.get('phone').setValue(user.phone);
+      if (user.phone) {
+        this.contactInfoFormGroup.get('phone').setValue(user.phone);
+      }
     }
   }
 
   submitOrder() {
+    this.loading = true;
     let orderRequest = new OrderRequest();
     orderRequest.orderItems = this.bucketLocalService.bucket;
     orderRequest.contactInfo = this.contactInfoFormGroup.getRawValue();
@@ -157,7 +165,9 @@ export class OrderComponent implements OnInit {
       orderRequest.deliveryInfo.novaPoshtaDepartment = orderRequest.deliveryInfo.novaPoshtaDepartment.Description;
     }
 
-    this.orderService.create(orderRequest).subscribe(orderId => {
+    this.orderService.create(orderRequest)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(orderId => {
       this.bucketLocalService.clearBucket();
       this.orderId = orderId;
     }, error => this.snackBarService.showError(getErrorMessage(error)))
@@ -166,6 +176,12 @@ export class OrderComponent implements OnInit {
   directAddressRequired() {
     return this.deliveryInfoFormGroup.get('deliveryType').value == DeliveryType.NOVA_POSHTA_COURIER
       || this.deliveryInfoFormGroup.get('deliveryType').value == DeliveryType.UKR_POSHTA_DEPARTMENT
+  }
+
+  receiverInfoRequired() {
+    return this.deliveryInfoFormGroup.get('deliveryType').value == DeliveryType.NOVA_POSHTA_COURIER
+      || this.deliveryInfoFormGroup.get('deliveryType').value == DeliveryType.UKR_POSHTA_DEPARTMENT
+      || this.deliveryInfoFormGroup.get('deliveryType').value == DeliveryType.NOVA_POSHTA_DEPARTMENT
   }
 
   onDeliveryTypeChange(event: MatRadioChange) {
@@ -179,6 +195,8 @@ export class OrderComponent implements OnInit {
     let previousStreet;
     let previousHouse;
     let previousApartment;
+    let previousReceiverFullName;
+    let previousReceiverPhone;
 
     let previousFormGroup = this.deliveryInfoFormGroup;
 
@@ -188,6 +206,8 @@ export class OrderComponent implements OnInit {
       previousStreet = previousFormGroup.get('street') ? previousFormGroup.get('street').value : null;
       previousHouse = previousFormGroup.get('house') ? previousFormGroup.get('house').value : null;
       previousApartment = previousFormGroup.get('apartment') ? previousFormGroup.get('apartment').value : null;
+      previousReceiverFullName = previousFormGroup.get('receiverFullName') ? previousFormGroup.get('receiverFullName').value : null;
+      previousReceiverPhone = previousFormGroup.get('receiverPhone') ? previousFormGroup.get('receiverPhone').value : null;
     }
 
     this.deliveryInfoFormGroup = new FormGroup({});
@@ -201,10 +221,14 @@ export class OrderComponent implements OnInit {
         this.deliveryInfoFormGroup.addControl('street', new FormControl(previousStreet));
         this.deliveryInfoFormGroup.addControl('house', new FormControl(previousHouse));
         this.deliveryInfoFormGroup.addControl('apartment', new FormControl(previousApartment));
+        this.deliveryInfoFormGroup.addControl('receiverFullName', new FormControl(previousReceiverFullName));
+        this.deliveryInfoFormGroup.addControl('receiverPhone', new FormControl(previousReceiverPhone));
         break;
       }
       case DeliveryType.NOVA_POSHTA_DEPARTMENT: {
         this.deliveryInfoFormGroup.addControl('city', new FormControl(previousCity));
+        this.deliveryInfoFormGroup.addControl('receiverFullName', new FormControl(previousReceiverFullName));
+        this.deliveryInfoFormGroup.addControl('receiverPhone', new FormControl(previousReceiverPhone));
         this.deliveryInfoFormGroup.addControl('novaPoshtaDepartment', new FormControl());
         break;
       }

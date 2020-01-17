@@ -58,8 +58,8 @@ public class OrderController {
 
     @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @PutMapping("/{id}/confirmPayment")
-    public ResponseEntity<Void> confirmPayment(@PathVariable Long id) {
-        orderService.confirmPayment(id);
+    public ResponseEntity<Void> confirmPayment(@PathVariable Long id, @RequestBody(required = false) LocalDateTime paid) {
+        orderService.confirmPayment(id, paid);
         return new ResponseEntity<>(OK);
     }
 
@@ -79,7 +79,7 @@ public class OrderController {
 
     @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @PutMapping("/{id}/changeNote")
-    public ResponseEntity<Void> changeNote(@PathVariable Long id, @RequestBody String note) {
+    public ResponseEntity<Void> changeNote(@PathVariable Long id, @RequestBody(required=false) String note) {
         orderService.changeNote(id, note);
         return new ResponseEntity<>(OK);
     }
@@ -116,7 +116,7 @@ public class OrderController {
     @GetMapping("/my")
     @PageableSwagger
     public ResponseEntity<Page<OrderProjection>> getMyOrders(@PageableDefault(sort = "id", page = 0, size = 10, direction = Sort.Direction.ASC) Pageable pageRequest) {
-        return new ResponseEntity<>(orderRepository.findProjectedByUserEmail(securityService.getCurrentUserEmail(), pageRequest) ,OK);
+        return new ResponseEntity<>(orderRepository.findProjectedByUserEmailOrderByCreatedDesc(securityService.getCurrentUserEmail(), pageRequest) ,OK);
     }
 
 }

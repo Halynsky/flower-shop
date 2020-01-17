@@ -11,7 +11,9 @@ import ua.com.flowershop.exception.ValidationException;
 import ua.com.flowershop.model.*;
 import ua.com.flowershop.repository.*;
 import ua.com.flowershop.security.SecurityService;
+import ua.com.flowershop.util.mail.MailService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -29,7 +31,9 @@ public class OrderService {
     @Autowired private FlowerSizeRepository flowerSizeRepository;
     @Autowired private WarehouseOperationRepository warehouseOperationRepository;
     @Autowired private WarehouseOperationTypeRepository warehouseOperationTypeRepository;
+    @Autowired private UserRepository userRepository;
     @Autowired private SecurityService securityService;
+    @Autowired private MailService mailService;
 
     @Transactional
     public Long create(OrderModel orderModel) {
@@ -64,21 +68,46 @@ public class OrderService {
 
         User user = securityService.getUserOrNull();
 
-        if (nonNull(user)) {
-            order.setUser(user);
-            if (isNull(user.getPhone())) {
-                user.setPhone(order.getPhone());
+        if (isNull(user)) {
+            user = userRepository.findByEmail(orderModel.getContactInfo().getEmail()).orElse(null);
+
+            if (nonNull(user) && !user.getIsVirtual()) {
+                throw new ConflictException("Авторизуйтесь та створіть замовлення через свій аккаунт");
             }
-            orderRepository.save(order);
+
         }
+
+        if (isNull(user)) {
+            user = userRepository.findByPhoneAndIsVirtual(orderModel.getContactInfo().getPhone(), true).orElse(null);
+        }
+
+        if (isNull(user)) {
+            user = new User();
+            user.setName(orderModel.getContactInfo().getName());
+            user.setEmail(orderModel.getContactInfo().getEmail());
+            user.setPhone(orderModel.getContactInfo().getPhone());
+            user.setIsVirtual(true);
+            user.setIsActivated(true);
+        }
+
+        order.setUser(user);
+
+        if (isNull(user.getPhone())) {
+            user.setPhone(order.getPhone());
+        }
+
+        userRepository.save(user);
+        orderRepository.save(order);
+
+        mailService.sendOrder(order);
 
         return order.getId();
 
     }
 
-    public void confirmPayment(Long orderId) {
+    public void confirmPayment(Long orderId, LocalDateTime paid) {
         Order order = orderRepository.findById(orderId).orElseThrow(NotFoundException::new);
-        order.setIsPaid(true);
+        order.setPaid(paid);
         orderRepository.save(order);
     }
 
@@ -206,6 +235,10 @@ public class OrderService {
             throw new ConflictException("Замовлення належать двом різним реальним користувачам");
         }
 
+        if((isNull(mainOrder.getPaid()) || isNull(otherOrder.getPaid())) && !(isNull(mainOrder.getPaid()) && isNull(otherOrder.getPaid()))) {
+            throw new ConflictException("Ви намагаєтесь об’єднати оплачене та не оплачене замовлення");
+        }
+
         otherOrder.getOrderItems().forEach(oi -> {
             OrderItem sameOrderItem = mainOrder.getOrderItems().stream()
                 .filter(item -> item.getFlowerSize().getId().equals(oi.getFlowerSize().getId()))
@@ -232,16 +265,20 @@ public class OrderService {
         switch(orderDeliveryModel.getDeliveryType()) {
             case NOVA_POSHTA_COURIER:
                 deliveryAddress = orderDeliveryModel.getCity() + ", Нова Пошта (Адресна доставка), " + orderDeliveryModel.getStreet() +
-                    ", буд." + orderDeliveryModel.getHouse() + ", кв. " + orderDeliveryModel.getApartment();
+                    ", буд." + orderDeliveryModel.getHouse() + ", кв. " + orderDeliveryModel.getApartment() +
+                    ", отримувач: " + orderDeliveryModel.getReceiverFullName() + ", тел. " + orderDeliveryModel.getReceiverPhone();
                 break;
             case UKR_POSHTA_DEPARTMENT:
                 deliveryAddress = "м." + orderDeliveryModel.getCity() + ", Укр Пошта, " + orderDeliveryModel.getStreet() +
-                    ", буд." + orderDeliveryModel.getHouse() + ", кв. " + orderDeliveryModel.getApartment();
+                    ", буд." + orderDeliveryModel.getHouse() + ", кв. " + orderDeliveryModel.getApartment() +
+                    ", отримувач: " + orderDeliveryModel.getReceiverFullName() + ", тел. " + orderDeliveryModel.getReceiverPhone();
                 break;
             case NOVA_POSHTA_DEPARTMENT:
-                deliveryAddress = orderDeliveryModel.getCity() + ", Нова Пошта, " + orderDeliveryModel.getNovaPoshtaDepartment();
+                deliveryAddress = orderDeliveryModel.getCity() + ", Нова Пошта, " + orderDeliveryModel.getNovaPoshtaDepartment() +
+                    ", отримувач: " + orderDeliveryModel.getReceiverFullName() + ", тел. " + orderDeliveryModel.getReceiverPhone();
                 break;
             case SELF_UZHGOROD:
+                deliveryAddress = "м.Ужгород, самовивіз";
                 break;
             default:
                 throw new ValidationException("Delivery Type not allowed");
@@ -264,7 +301,7 @@ public class OrderService {
         otherOrder.setDeliveryAddress(mainOrder.getDeliveryAddress());
         otherOrder.setPhone(mainOrder.getPhone());
         otherOrder.setStatus(Order.Status.NEW);
-        otherOrder.setIsPaid(mainOrder.getIsPaid());
+        otherOrder.setPaid(mainOrder.getPaid());
         otherOrder.setCreated(now());
 
         orderRepository.save(otherOrder);

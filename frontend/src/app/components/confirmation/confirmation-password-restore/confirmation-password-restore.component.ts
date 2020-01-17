@@ -13,7 +13,7 @@ export class ConfirmationPasswordRestoreComponent implements OnInit {
   hasError = false;
   confirmed = false;
   passwordRestoreConfirm: PasswordRestoreConfirm = new PasswordRestoreConfirm();
-  loading = false
+  loading = false;
 
   constructor(private route: ActivatedRoute,
               private authService: AuthService) {
@@ -34,7 +34,5 @@ export class ConfirmationPasswordRestoreComponent implements OnInit {
       error => this.hasError = true
     )
   }
-
-  // TODO: Implement activation
 
 }

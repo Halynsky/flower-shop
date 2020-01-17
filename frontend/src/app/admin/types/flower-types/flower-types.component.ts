@@ -54,7 +54,7 @@ export class FlowerTypesComponent implements OnInit {
   loadData() {
     this.dataService.getAll().subscribe(
       items => this.items = items,
-      error => this.snackBarService.showError(error.error.message)
+      error => this.snackBarService.showError(getErrorMessage(error))
     )
   }
 

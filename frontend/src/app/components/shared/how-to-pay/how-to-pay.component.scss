@@ -1,0 +1,49 @@
+@import "theme";
+@import "mixins";
+
+:host {
+
+    .wrapper > .title {
+      color: mat-color($primary);
+      font-size: 26px;
+      margin-bottom: 24px;
+      text-align: center;
+
+    }
+
+    .content {
+      display: grid;
+      color: $black-400;
+      line-height: 140%;
+
+      ul {
+        padding-left: 16px;
+        li {
+          margin-bottom: 8px;
+        }
+      }
+
+      b {
+        font-weight: 500;
+        color: $black-500;
+      }
+
+      .info-block {
+        margin-bottom: 16px;
+        .sub-title {
+          font-weight: 500;
+          color: mat-color($accent);
+          margin-bottom: 8px;
+        }
+
+        a {
+          display: inline-block;
+          color: mat-color($primary);
+          text-decoration: underline;
+          font-weight: 500;
+        }
+      }
+
+    }
+
+}

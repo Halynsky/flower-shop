@@ -111,7 +111,7 @@ export class FlowersComponent implements OnInit {
   loadDataLazy(filters = {}, pagination: Pagination = new Pagination()) {
     this.dataService.getAllForAdmin(filters, pagination).subscribe(
       items => this.items = items,
-      error => this.snackBarService.showError(error.error.message)
+      error => this.snackBarService.showError(getErrorMessage(error))
     )
   }
 
