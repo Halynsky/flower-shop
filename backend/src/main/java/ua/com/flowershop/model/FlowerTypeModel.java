@@ -15,4 +15,5 @@ public class FlowerTypeModel {
     private Long id;
     private String name;
     private String nameSingle;
+    private String nameOriginal;
 }

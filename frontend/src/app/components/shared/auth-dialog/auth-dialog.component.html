@@ -60,7 +60,7 @@
             <span>або увійти з Facebook</span>
           </div>
 
-          <button type="button" mat-button class="auth-facebook" (click)="facebookAuth()">
+          <button type="button" mat-button class="auth-facebook" (click)="facebookAuth()" [disabled]="loading">
             <i class="fab fa-facebook-square"></i>
             <span>Увійти з Facebook</span>
           </button>
@@ -127,10 +127,12 @@
                   placeholder="Телефон"
                   prefix="+38 "
                   mask='(000) 000-0000'
+                  pattern=".{10,10}"
                   required/>
 
               <div class="error-wrapper" *ngIf="phone.dirty || phone.touched || regForm.submitted">
                 <div class="error-message" *ngIf="phone.errors?.required">Повинно бути вказано</div>
+                <div class="error-message" *ngIf="!phone.errors?.required && phone.errors?.pattern">Введіть валідний номер телефону</div>
               </div>
             </div>
 
@@ -183,7 +185,7 @@
             <span>або продовжити з данними</span>
           </div>
 
-          <button type="button" mat-button class="auth-facebook" (click)="facebookAuth()">
+          <button type="button" mat-button class="auth-facebook" (click)="facebookAuth()" [disabled]="loading">
             <i class="fab fa-facebook-square"></i>
             <span>Продовжити з Facebook</span>
           </button>

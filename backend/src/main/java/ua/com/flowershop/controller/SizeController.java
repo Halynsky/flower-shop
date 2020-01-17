@@ -28,8 +28,8 @@ public class SizeController {
     @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @GetMapping("/forAdmin")
     public ResponseEntity<List<SizeAdminProjection>> getAllForAdmin() {
-        List<SizeAdminProjection> colors = sizeRepository.findForAdminProjectedBy();
-        return new ResponseEntity<>(colors, OK);
+        List<SizeAdminProjection> sizes = sizeRepository.findForAdminProjectedBy();
+        return new ResponseEntity<>(sizes, OK);
     }
 
     @GetMapping

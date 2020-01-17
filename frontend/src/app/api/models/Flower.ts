@@ -33,4 +33,5 @@ export class FlowerFull extends Flower{
   flowerSizes: Array<FlowerSize> = [];
   created?: string;
   lastSupply?: string;
+  plantingMaterialType: string
 }

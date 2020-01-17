@@ -20,6 +20,15 @@ export class FlowerTypeItemComponent implements OnInit {
 
   item: FlowerType = new FlowerType();
 
+  plantingMaterialTypes = [
+    {name: 'Бульба', value: 'Бульба'},
+    {name: 'Бульбоцибулина', value: 'Бульбоцибулина'},
+    {name: 'Коренева шийка', value: 'Коренева шийка'},
+    {name: 'Корінь', value: 'Корінь'},
+    {name: 'Корінь з бруньками', value: 'Корінь з бруньками'},
+    {name: 'Цибулина', value: 'Цибулина'},
+  ];
+
   constructor(public dataService: FlowerTypeService,
               private snackBarService: SnackBarService,
               private router: Router,

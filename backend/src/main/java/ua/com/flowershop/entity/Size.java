@@ -10,7 +10,6 @@ import ua.com.flowershop.model.SizeModel;
 import javax.persistence.*;
 import java.util.Set;
 
-import static ua.com.flowershop.util.Constants.SLASH;
 
 @Getter
 @Setter
@@ -26,8 +25,6 @@ public class Size {
     private Long id;
     @Column(unique = true, nullable = false)
     private String name;
-    private Integer min;
-    private Integer max;
 
     @OneToMany(mappedBy = "size")
     private Set<FlowerTypeSize> flowerTypeSizes;
@@ -36,8 +33,7 @@ public class Size {
     private Set<FlowerSize> flowerSizes;
 
     public static Size of(SizeModel sizeModel) {
-        return new Size().setMin(sizeModel.getMin())
-            .setMax(sizeModel.getMax())
+        return new Size()
             .setName(sizeModel.getName());
     }
 

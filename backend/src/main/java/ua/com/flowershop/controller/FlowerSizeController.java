@@ -31,14 +31,12 @@ public class FlowerSizeController {
     public ResponseEntity<Page<FlowerSizeFullProjection>> getAllForAdmin(@RequestParam(required = false) Long id,
                                                                          @RequestParam(required = false) String flowerNamePart,
                                                                          @RequestParam(required = false) List<String> flowerTypeNames,
-                                                                         @RequestParam(required = false) Integer sizeFrom,
-                                                                         @RequestParam(required = false) Integer sizeTo,
                                                                          @RequestParam(required = false) Integer priceFrom,
                                                                          @RequestParam(required = false) Integer priceTo,
                                                                          @RequestParam(required = false) String colorNamePart,
                                                                          @PageableDefault(sort = "id", page = 0, size = 10, direction = Sort.Direction.ASC) Pageable pageRequest) {
-        Page<FlowerSizeFullProjection> flowerSizes = flowerSizeRepository.findForAdminProjectedByFilters(id, flowerNamePart, flowerTypeNames,
-            sizeFrom, sizeTo, priceFrom, priceTo, colorNamePart, pageRequest);
+        Page<FlowerSizeFullProjection> flowerSizes = flowerSizeRepository.findForAdminProjectedByFilters(id, flowerNamePart, flowerTypeNames, priceFrom, priceTo,
+            colorNamePart, pageRequest);
         return new ResponseEntity<>(flowerSizes, OK);
     }
 

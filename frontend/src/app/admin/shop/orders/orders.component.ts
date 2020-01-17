@@ -41,18 +41,19 @@ export class OrdersComponent implements OnInit {
     {field: 'created', header: 'Дата створення', active: true},
     {field: 'closed', header: 'Дата закриття', active: false},
     {field: 'status', header: 'Статус', active: true},
-    {field: 'userId', header: 'Користувач(Id)', active: true},
-    {field: 'user', header: 'Користувач', active: true},
+    {field: 'userId', header: 'Корист.Id', active: true},
+    {field: 'user', header: 'Корист.', active: true},
     {field: 'userFacebookNickname', header: 'Нік на Facebook', active: true},
-    {field: 'phone', header: 'Телефон', active: true},
-    {field: 'deliveryAddress', header: 'Адреса доставки', active: true},
-    {field: 'postDeclaration', header: 'Номер декларації', active: true},
-    {field: 'comment', header: 'Коментар', active: true},
-    {field: 'note', header: 'Примітки', active: true},
-    {field: 'totalPrice', header: 'Вартість', active: false},
-    {field: 'discount', header: 'Знижка', active: false},
     {field: 'priceToPay', header: 'До сплати', active: true},
     {field: 'isPaid', header: 'Оплачено', active: true},
+    {field: 'phone', header: 'Телефон', active: true},
+    {field: 'deliveryAddress', header: 'Адреса доставки', active: true},
+    {field: 'postDeclaration', header: 'Номер декларації', active: false},
+    {field: 'comment', header: 'Коментар', active: true},
+    {field: 'note', header: 'Примітки', active: false},
+    {field: 'totalPrice', header: 'Вартість', active: false},
+    {field: 'discount', header: 'Знижка', active: false},
+
   ];
 
   selectedColumns = this.columns.filter(column => column.active);

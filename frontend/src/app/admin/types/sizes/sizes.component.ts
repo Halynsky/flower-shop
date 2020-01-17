@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SnackBarService } from "../../../services/snak-bar.service";
 import { SizeService } from "../../../api/services/size.service";
-import { Size, SizeAdmin } from "../../../api/models/Size";
-import { ConfirmationService, MenuItem } from "primeng/api";
+import { SizeAdmin } from "../../../api/models/Size";
+import { ConfirmationService } from "primeng/api";
 import { getErrorMessage } from "../../../utils/Functions";
 import { ItemSaveMode } from "../../../models/ItemSaveMode";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -19,7 +19,7 @@ export class SizesComponent implements OnInit {
   cols = [
     { field: 'id', header: 'Id' },
     { field: 'name', header: 'Назва' },
-    { field: 'flowersCount', header: 'Кількість квітів' },
+    { field: 'flowersCount', header: 'Приєднано до квітів' },
   ];
 
   items: SizeAdmin[] = [];
