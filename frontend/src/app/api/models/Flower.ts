@@ -23,7 +23,7 @@ export class FlowerShort {
   id: number;
   name: string;
   image: string;
-  isAvailableFlowerSize: boolean;
+  hasAvailableFlowerSize: boolean;
   flowerType: FlowerType;
   priceMin: number;
 }
