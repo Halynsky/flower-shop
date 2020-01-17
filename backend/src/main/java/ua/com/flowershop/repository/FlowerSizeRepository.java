@@ -41,4 +41,7 @@ public interface FlowerSizeRepository extends JpaRepository<FlowerSize, Long> {
 
     List<FlowerSizeTinyProjection> findProjectedByIdIn(List<Long> ids);
 
+    @Query("SELECT CASE WHEN MAX(fs.amount - fs.reserved) > 0 THEN false ELSE true END FROM FlowerSize fs WHERE fs.flower.id = :flowerId")
+    Boolean hasAnyAvailableFlowerSIze(Long flowerId);
+
 }

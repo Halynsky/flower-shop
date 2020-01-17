@@ -11,6 +11,11 @@
     border-radius: 2px;
     display: grid;
     grid-template-rows: 200px auto;
+    opacity: 100%;
+
+    &.not-available {
+      opacity: 50%;
+    }
 
     .cover {
       width: 100%;

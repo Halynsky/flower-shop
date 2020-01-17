@@ -20,8 +20,6 @@ export class ShopContentItemComponent implements OnInit {
   @Input()
   public inFavorites: boolean = false;
 
-  opacity = false;
-
   addToBucketDialogRef: MatDialogRef<AddToBucketDialogComponent>;
 
   constructor(private snackBar: SnackBarService,
@@ -30,15 +28,6 @@ export class ShopContentItemComponent implements OnInit {
               public securityService: SecurityService) { }
 
   ngOnInit() {
-    this.getAnyAmountOfSizes();
-  }
-
-  getAnyAmountOfSizes() {
-    this.flower.flowerSizes.forEach(item => {
-      if (item.available > 0) {
-        this.opacity = true
-      }
-    });
   }
 
   addToFavorites() {
