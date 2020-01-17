@@ -58,8 +58,8 @@ public class OrderController {
 
     @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @PutMapping("/{id}/confirmPayment")
-    public ResponseEntity<Void> confirmPayment(@PathVariable Long id) {
-        orderService.confirmPayment(id);
+    public ResponseEntity<Void> confirmPayment(@PathVariable Long id, @RequestBody(required = false) LocalDateTime paid) {
+        orderService.confirmPayment(id, paid);
         return new ResponseEntity<>(OK);
     }
 

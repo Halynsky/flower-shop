@@ -16,7 +16,7 @@ public interface OrderAdminProjection {
     String getNote();
     String getDeliveryAddress();
     String getPostDeclaration();
-    Boolean getIsPaid();
+    LocalDateTime getPaid();
     String getPhone();
     Integer getTotalPrice();
     Integer getDiscount();

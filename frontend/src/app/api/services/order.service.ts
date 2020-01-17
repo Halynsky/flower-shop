@@ -21,8 +21,8 @@ export class OrderService {
     return this.http.post(`${this.URL}`, orderRequest, {responseType: 'text'});
   }
 
-  confirmPayment(id: number) {
-    return this.http.put(`${this.URL}/${id}/confirmPayment`, null);
+  confirmPayment(id: number, date) {
+    return this.http.put(`${this.URL}/${id}/confirmPayment`, date);
   }
 
   changeStatus(id: number, orderStatusChangeRequest: OrderStatusChangeRequest) {

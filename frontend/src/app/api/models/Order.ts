@@ -6,6 +6,7 @@ export class OrderAdmin {
   orderItems: OrderItemAdmin[];
   closed: string;
   created: string;
+  paymentDate: string;
   status: Order.Status;
   user: UserShortForAdmin;
   comment: string;

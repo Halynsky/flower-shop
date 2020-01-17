@@ -12,7 +12,7 @@ public interface OrderProjection {
     LocalDateTime getClosed();
     Order.Status getStatus();
     String getPostDeclaration();
-    Boolean getIsPaid();
+    LocalDateTime getPaid();
     Integer getTotalPrice();
     Integer getDiscount();
     @Value("#{@orderItemRepository.findProjectedByOrderId(target.id)}")

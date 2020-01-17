@@ -13,6 +13,7 @@ import ua.com.flowershop.repository.*;
 import ua.com.flowershop.security.SecurityService;
 import ua.com.flowershop.util.mail.MailService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -104,9 +105,9 @@ public class OrderService {
 
     }
 
-    public void confirmPayment(Long orderId) {
+    public void confirmPayment(Long orderId, LocalDateTime paid) {
         Order order = orderRepository.findById(orderId).orElseThrow(NotFoundException::new);
-        order.setIsPaid(true);
+        order.setPaid(paid);
         orderRepository.save(order);
     }
 
@@ -234,7 +235,7 @@ public class OrderService {
             throw new ConflictException("Замовлення належать двом різним реальним користувачам");
         }
 
-        if(!mainOrder.getIsPaid().equals(otherOrder.getIsPaid())) {
+        if((isNull(mainOrder.getPaid()) || isNull(otherOrder.getPaid())) && !(isNull(mainOrder.getPaid()) && isNull(otherOrder.getPaid()))) {
             throw new ConflictException("Ви намагаєтесь об’єднати оплачене та не оплачене замовлення");
         }
 
@@ -300,7 +301,7 @@ public class OrderService {
         otherOrder.setDeliveryAddress(mainOrder.getDeliveryAddress());
         otherOrder.setPhone(mainOrder.getPhone());
         otherOrder.setStatus(Order.Status.NEW);
-        otherOrder.setIsPaid(mainOrder.getIsPaid());
+        otherOrder.setPaid(mainOrder.getPaid());
         otherOrder.setCreated(now());
 
         orderRepository.save(otherOrder);
