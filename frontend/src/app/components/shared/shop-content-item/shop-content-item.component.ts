@@ -1,11 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FlowerShort } from "../../../api/models/Flower";
+import { FlowerFull, FlowerShort } from "../../../api/models/Flower";
 import { SnackBarService } from "../../../services/snak-bar.service";
 import { FavoritesService } from "../../../api/services/favorites.service";
 import { getErrorMessage } from "../../../utils/Functions";
 import { SecurityService } from "../../../services/security.service";
 import { MatDialog, MatDialogRef } from "@angular/material";
 import { AddToBucketDialogComponent } from "../add-to-bucket-dialog/add-to-bucket-dialog.component";
+import { FlowerService } from "../../../api/services/flower.service";
 
 @Component({
   selector: 'shop-content-item',
@@ -41,7 +42,7 @@ export class ShopContentItemComponent implements OnInit {
 
   removeFromFavorites() {
     event.stopPropagation();
-    this.favoritesService.favoriteFlowerIds.splice(this.favoritesService.favoriteFlowerIds.indexOf(this.flower.id), 1 );
+    this.favoritesService.favoriteFlowerIds.splice(this.favoritesService.favoriteFlowerIds.indexOf(this.flower.id), 1);
     this.favoritesService.removeFavoriteFlower(this.flower.id).subscribe(
       favoriteFlowersIds => {
         this.favoritesService.favoriteFlowerIds = favoriteFlowersIds;

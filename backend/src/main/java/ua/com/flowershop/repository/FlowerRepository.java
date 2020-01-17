@@ -54,7 +54,7 @@ public interface FlowerRepository extends JpaRepository<Flower, Long> {
     Integer countByFlowerSizesSizeId(Long flowerSizeId);
 
     @Query("SELECT DISTINCT(f.id) as id, f.name as name, f.nameOriginal as nameOriginal, f.image as image, f.popularity as popularity, f.created as created, " +
-        "min(fs.price) as price, f.flowerType as flowerType FROM Flower f " +
+        "min(fs.price) as price, f.flowerType as flowerType, (CASE WHEN MAX(fs.amount - fs.reserved) > 0 THEN true ELSE false END) as hasAvailableFlowerSize FROM Flower f " +
         "INNER JOIN f.flowerType ft " +
         "INNER JOIN f.color c " +
         "INNER JOIN f.flowerSizes fs " +
