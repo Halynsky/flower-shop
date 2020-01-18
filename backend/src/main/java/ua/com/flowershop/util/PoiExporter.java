@@ -9,10 +9,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ua.com.flowershop.entity.FlowerSize;
-import ua.com.flowershop.entity.Order;
-import ua.com.flowershop.entity.OrderItem;
-import ua.com.flowershop.entity.User;
+import ua.com.flowershop.entity.*;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -41,7 +38,8 @@ public class PoiExporter {
 
         XSSFSheet sheet = workbook.createSheet("Замовлення № " + order.getId());
 
-        sheet.setDefaultColumnWidth(16);
+        sheet.setDefaultColumnWidth(15);
+        sheet.setColumnWidth(0, 1200);
 
         XSSFFont defaultFont = workbook.createFont();
         defaultFont.setFontName(FONT_NAME);
@@ -70,8 +68,8 @@ public class PoiExporter {
         Integer rowNum = 0;
         int colNum = 0;
 
-        sheet.addMergedRegion(new CellRangeAddress(3,3,0,4));
-        sheet.addMergedRegion(new CellRangeAddress(6,6,0,4));
+        sheet.addMergedRegion(new CellRangeAddress(3,3,0,5));
+        sheet.addMergedRegion(new CellRangeAddress(6,6,0,5));
 
         //  MAIN TITLE
 
@@ -135,27 +133,32 @@ public class PoiExporter {
         tableHeaderStyle.setBorderRight(BorderStyle.THIN);
         tableHeaderStyle.setBorderLeft(BorderStyle.THIN);
         tableHeaderStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+        tableHeaderStyle.setAlignment(HorizontalAlignment.CENTER);
 
         row = sheet.createRow(rowNum++);
         row.setHeight((short) (row.getHeight() * 2));
 
         cell = row.createCell(0);
         cell.setCellStyle(tableHeaderStyle);
-        cell.setCellValue("Назва");
+        cell.setCellValue("№");
 
         cell = row.createCell(1);
         cell.setCellStyle(tableHeaderStyle);
-        cell.setCellValue("Розмір");
+        cell.setCellValue("Назва");
 
         cell = row.createCell(2);
         cell.setCellStyle(tableHeaderStyle);
-        cell.setCellValue("Ціна");
+        cell.setCellValue("Розмір");
 
         cell = row.createCell(3);
         cell.setCellStyle(tableHeaderStyle);
-        cell.setCellValue("Кількість");
+        cell.setCellValue("Ціна");
 
         cell = row.createCell(4);
+        cell.setCellStyle(tableHeaderStyle);
+        cell.setCellValue("Кількість");
+
+        cell = row.createCell(5);
         cell.setCellStyle(tableHeaderStyle);
         cell.setCellValue("Сума");
 
@@ -170,14 +173,14 @@ public class PoiExporter {
         row = sheet.createRow(rowNum++);
 
         if (order.getDiscount() > 0) {
-            cell = row.createCell(3);
+            cell = row.createCell(4);
             cellStyle = workbook.createCellStyle();
             cellStyle.setFont(defaultFont);
             cell.setCellValue("ЗНИЖКА:");
             cell.setCellStyle(cellStyle);
         }
 
-        cell = row.createCell(4);
+        cell = row.createCell(5);
         cellStyle = workbook.createCellStyle();
         cellStyle.setFont(defaultFont);
         cell.setCellValue("РАЗОМ:");
@@ -188,7 +191,7 @@ public class PoiExporter {
         row = sheet.createRow(rowNum++);
 
         if (order.getDiscount() > 0) {
-            cell = row.createCell(3);
+            cell = row.createCell(4);
             cellStyle = workbook.createCellStyle();
             cellStyle.setFont(boldFont);
             cell.setCellValue(order.getDiscount() / 100 + " грн");
@@ -196,7 +199,7 @@ public class PoiExporter {
         }
 
 
-        cell = row.createCell(4);
+        cell = row.createCell(5);
         cellStyle = workbook.createCellStyle();
         cellStyle.setFont(boldFont);
         cell.setCellValue((order.getTotalPrice() - order.getDiscount())/ 100 + " грн");
@@ -251,7 +254,6 @@ public class PoiExporter {
         cellStyle.setFont(defaultFont);
         cell.setCellStyle(cellStyle);
 
-
         return workbook;
     }
 
@@ -267,29 +269,41 @@ public class PoiExporter {
         tableCellStyle.setBorderLeft(BorderStyle.THIN);
         tableCellStyle.setWrapText(true);
         tableCellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+        tableCellStyle.setAlignment(HorizontalAlignment.RIGHT);
 
         for (int i = 0; i < orderItems.size(); i++) {
             OrderItem orderItem = orderItems.get(i);
             FlowerSize flowerSize = orderItem.getFlowerSize();
+            Flower flower = flowerSize.getFlower();
+
 
             Row row = sheet.createRow(rowNum++);
+
             Cell cell = row.createCell(0);
             cell.setCellStyle(tableCellStyle);
-            cell.setCellValue(flowerSize.getFlower().getName());
+            cell.setCellValue(i + 1);
 
             cell = row.createCell(1);
             cell.setCellStyle(tableCellStyle);
-            cell.setCellValue(flowerSize.getSize().getName());
+            String name = flower.getNameOriginal();
+            if (isNull(name)) {
+                name = flower.getName();
+            }
+            cell.setCellValue(name);
 
             cell = row.createCell(2);
             cell.setCellStyle(tableCellStyle);
-            cell.setCellValue(orderItem.getPrice() / 100 + " грн");
+            cell.setCellValue(flowerSize.getSize().getName());
 
             cell = row.createCell(3);
             cell.setCellStyle(tableCellStyle);
-            cell.setCellValue(orderItem.getAmount() + " шт");
+            cell.setCellValue(orderItem.getPrice() / 100 + " грн");
 
             cell = row.createCell(4);
+            cell.setCellStyle(tableCellStyle);
+            cell.setCellValue(orderItem.getAmount() + " шт");
+
+            cell = row.createCell(5);
             cell.setCellStyle(tableCellStyle);
             cell.setCellValue(orderItem.getAmount() * orderItem.getPrice() / 100 + " грн");
 

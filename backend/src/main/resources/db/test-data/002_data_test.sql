@@ -112,7 +112,7 @@ UPDATE flowers__sizes SET reserved = reserved + 5 WHERE id = 15;
 INSERT INTO order_items (amount, flower_size_id, order_id, warehouse_operation_id, price) VALUES (5, 6, 1, null, 1300);
 UPDATE flowers__sizes SET reserved = reserved + 5 WHERE id = 6;
 
-INSERT INTO orders (closed, comment, created, delivery_address, note, phone, post_declaration, status, discount, total_price, user_id) VALUES (null, 'Дуже хочу', '2020-01-05 12:18:55.744632', 'м. Івано-Франківськ, Івано-Франківська обл., Нова Пошта, Відділення №8 (до 30 кг): вул. Миколайчука, 30, отримувач: Галинський Тарас Володимирович, тел.0503179433', null, '0503345675', null, 'NEW', 2500, 22500, 3);
+INSERT INTO orders (closed, comment, created, delivery_address, note, phone, post_declaration, status, discount, total_price, user_id) VALUES (null, 'Дуже хочу', '2020-01-05 12:18:55.744632', 'м. Івано-Франківськ, Івано-Франківська обл., Нова Пошта, Відділення №8 (до 30 кг): вул. Миколайчука, 30, Галинський Тарас Володимирович, тел.0503179433', null, '0503345675', null, 'NEW', 2500, 22500, 3);
 INSERT INTO order_items (amount, flower_size_id, order_id, warehouse_operation_id, price) VALUES (10, 7, 2, null, 1100);
 UPDATE flowers__sizes SET reserved = reserved + 10 WHERE id = 7;
 INSERT INTO order_items (amount, flower_size_id, order_id, warehouse_operation_id, price) VALUES (5, 15, 2, null, 1000);
