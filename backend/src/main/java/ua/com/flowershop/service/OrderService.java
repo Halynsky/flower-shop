@@ -51,7 +51,7 @@ public class OrderService {
         orderItemRepository.saveAll(orderItems);
 
         order.setOrderItems(orderItems);
-        order.setTotalPrice(orderItems.stream().reduce(0, (left, right) -> left + right.getAmount() * right.getFlowerSize().getPrice(), Integer::sum));
+        order.setTotalPrice(orderItems.stream().reduce(0, (left, right) -> left + right.getAmount() * right.getPrice(), Integer::sum));
         order.setComment(orderModel.getDeliveryInfo().getComment());
         order.setDeliveryAddress(retrieveAddress(orderModel.getDeliveryInfo()));
         order.setPhone(orderModel.getContactInfo().getPhone());
@@ -254,7 +254,7 @@ public class OrderService {
 
         });
 
-        mainOrder.setTotalPrice(mainOrder.getOrderItems().stream().reduce(0, (left, right) -> left + right.getAmount() * right.getFlowerSize().getPrice(), Integer::sum));
+        mainOrder.setTotalPrice(mainOrder.getOrderItems().stream().reduce(0, (left, right) -> left + right.getAmount() * right.getPrice(), Integer::sum));
 
         orderRepository.delete(otherOrder);
 
@@ -317,8 +317,8 @@ public class OrderService {
             throw new ConflictException("Для розєднання к вожному з замовленнь повинно бути хоча б по одній позиції");
         }
 
-        mainOrder.setTotalPrice(mainOrderItems.stream().reduce(0, (left, right) -> left + right.getAmount() * right.getFlowerSize().getPrice(), Integer::sum));
-        otherOrder.setTotalPrice(otherOrderItems.stream().reduce(0, (left, right) -> left + right.getAmount() * right.getFlowerSize().getPrice(), Integer::sum));
+        mainOrder.setTotalPrice(mainOrderItems.stream().reduce(0, (left, right) -> left + right.getAmount() * right.getPrice(), Integer::sum));
+        otherOrder.setTotalPrice(otherOrderItems.stream().reduce(0, (left, right) -> left + right.getAmount() * right.getPrice(), Integer::sum));
 
         otherOrderItems.forEach(oi -> {
             oi.setOrder(otherOrder);
@@ -348,6 +348,7 @@ public class OrderService {
 
                 orderItem = new OrderItem().setOrder(order)
                     .setAmount(oi.getAmount())
+                    .setPrice(flowerSize.getPrice())
                     .setFlowerSize(flowerSize);
                 addedAmount = oi.getAmount();
             } else {
@@ -361,6 +362,7 @@ public class OrderService {
 
             orderItem.setAmount(oi.getAmount());
             orderItemRepository.save(orderItem);
+            order.getOrderItems().add(orderItem);
 
         });
 
@@ -379,6 +381,8 @@ public class OrderService {
             }
         });
 
+        order.setTotalPrice(order.getOrderItems().stream().reduce(0, (left, right) -> left + right.getAmount() * right.getPrice(), Integer::sum));
+
 
     }
 
@@ -388,4 +392,13 @@ public class OrderService {
         orderRepository.save(order);
     }
 
+    public Long createAsAdmin(Long userIdToCreateFor) {
+        User user = userRepository.findById(userIdToCreateFor).orElseThrow(() -> new NotFoundException("Користувачf з id - " + userIdToCreateFor + " не знайдено"));
+
+        Order order = new Order()
+            .setUser(user);
+        orderRepository.save(order);
+
+        return order.getId();
+    }
 }

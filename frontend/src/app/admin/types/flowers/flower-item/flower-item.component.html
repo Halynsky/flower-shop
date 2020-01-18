@@ -301,7 +301,8 @@
                 <p-dropdown id="size" [options]="sizes" [(ngModel)]="sizeToAdd" name="flowerSizesToAdd" optionLabel="name"
                             placeholder="Оберіть розмір" [filter]="true" emptyFilterMessage="не знайдено"></p-dropdown>
 
-                <button type="button" pButton icon="pi pi-plus" class="ui-button-success" (click)="addFlowerSize()"></button>
+                <button type="button" pButton icon="pi pi-check" class="ui-button-success" (click)="addFlowerSize()"></button>
+                <button type="button" pButton icon="pi pi-plus" class="ui-button-secondary" (click)="displayAddSizeDialog = true"></button>
 
               </div>
 
@@ -355,3 +356,41 @@
 
 </div>
 
+
+<p-dialog [(visible)]="displayAddSizeDialog" class="add-size-dialog" [modal]="true" (onHide)="resetAddSizeForm(addSizeForm)">
+  <p-header>
+    Створення нового розміру
+  </p-header>
+
+  <form id="add_size_form" #addSizeForm="ngForm" class="add-size-dialog-content" (ngSubmit)="addSizeForm.valid && createSize()">
+
+    <div class="ui-grid ui-grid-responsive ui-fluid">
+
+      <div class="prime-form-group">
+        <div class="ui-grid-col-4">
+          <label for="name">Назва розміру</label>
+        </div>
+        <div class="ui-grid-col-4">
+          <input
+            pInputText
+            #name="ngModel"
+            name="name"
+            [(ngModel)]="sizeToCreate.name"
+            [uniqueValidator]="sizeService.isNameFree.bind(sizeService)"
+          />
+        </div>
+        <div class="ui-grid-col-4" *ngIf="name.errors?.unique">
+          <ng-container>
+            <p-message severity="error" text="Данний розмір вже існує"></p-message>
+          </ng-container>
+        </div>
+      </div>
+
+    </div>
+
+  </form>
+
+  <p-footer>
+    <button pButton form="add_size_form" icon="pi pi-check" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
+  </p-footer>
+</p-dialog>

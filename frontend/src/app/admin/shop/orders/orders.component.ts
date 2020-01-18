@@ -33,6 +33,7 @@ export class OrdersComponent implements OnInit {
   displayUpdateOrderItemsDialog = false;
   displayDiscountChangeDialog = false;
   displayPaymentConfirmDialog = false;
+  displayCreateOrderDialog = false;
 
   loading = false;
 
@@ -83,6 +84,7 @@ export class OrdersComponent implements OnInit {
   flowerSizeToAdd: FlowerSize;
   orderDiscount;
   paymentDate;
+  userIdToCreateOrder;
 
   lastLazyLoadEvent;
 
@@ -118,7 +120,10 @@ export class OrdersComponent implements OnInit {
   }
 
   getAllFlowerSizes() {
-    this.flowerSizeService.getAllForAdminAsList().subscribe(
+    this.loading = true;
+    this.flowerSizeService.getAllForAdminAsList()
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(
       flowerSizes => this.flowerSizes = flowerSizes,
       error => this.snackBarService.showError(getErrorMessage(error))
     )
@@ -415,7 +420,6 @@ export class OrdersComponent implements OnInit {
 
   resetUpdateOrderItemsForm(form: NgForm) {
     this.updatingOrder = null;
-    this.flowerSizes = null;
     form.resetForm();
   }
 
@@ -429,7 +433,7 @@ export class OrdersComponent implements OnInit {
   addOrderItem() {
 
     if (this.flowerSizeToAdd && this.flowerSizeToAdd.available > 0) {
-      let found = this.updatingOrder.orderItems.find(item => item.flowerSizeId == this.flowerSizeToAdd.id);
+      let found =  !this.updatingOrder.orderItems ? null : this.updatingOrder.orderItems.find(item => item.flowerSizeId == this.flowerSizeToAdd.id);
 
       if (found) {
         found.amount++;
@@ -517,6 +521,23 @@ export class OrdersComponent implements OnInit {
       .subscribe(response => {
         fileSaver.saveAs(response.body, `СписокЗамовлень.xlsx`);
       }, error => this.snackBarService.showError(getErrorMessage(error)))
+  }
+
+  createOrder() {
+    this.loading = true;
+    this.dataService.createAsAdmin(this.userIdToCreateOrder)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(() => {
+        this.snackBarService.showSuccess(`Замовлення для користувача з Id ${this.userIdToCreateOrder} успішно створено`);
+        this.refresh();
+        this.displayCreateOrderDialog = false;
+      }, error => this.snackBarService.showError(getErrorMessage(error)))
+  }
+
+
+  resetCreateOrderForm(form: NgForm) {
+    this.userIdToCreateOrder = null;
+    form.resetForm();
   }
 
 }

@@ -3,7 +3,7 @@ import { UserShortForAdmin } from "./User";
 
 export class OrderAdmin {
   id: number;
-  orderItems: OrderItemAdmin[];
+  orderItems: OrderItemAdmin[] = [];
   closed: string;
   created: string;
   paymentDate: string;

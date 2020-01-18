@@ -159,6 +159,11 @@ public class OrderController {
         return new ResponseEntity<>(OK);
     }
 
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
+    @PostMapping("/createAsAdmin/{userIdToCreateFor}")
+    public ResponseEntity<Long> createAsAdmin(@PathVariable Long userIdToCreateFor) {
+        return new ResponseEntity<>(orderService.createAsAdmin(userIdToCreateFor), OK);
+    }
 
 
 }

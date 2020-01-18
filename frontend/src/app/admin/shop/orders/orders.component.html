@@ -2,6 +2,7 @@
   <h1>Замовлення</h1>
   <div class="navigation-buttons">
     <button pButton (click)="exportPageToExcel()" icon="fas fa-file-excel" class="ui-button-success" label="&nbsp;Експортувати в Excel"></button>
+    <button pButton (click)="displayCreateOrderDialog = true" icon="pi pi-plus" class="ui-button-success" label="&nbsp;&nbsp;Додати"></button>
     <button pButton (click)="refresh()" icon="pi pi-refresh" label="&nbsp;&nbsp;Оновити"></button>
   </div>
 
@@ -683,5 +684,41 @@
 
   <p-footer>
     <button pButton form="payment_confirm_form" icon="pi pi-check" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog [(visible)]="displayCreateOrderDialog" class="create-order-dialog" [modal]="true" (onHide)="resetCreateOrderForm(createOrderForm)">
+  <p-header>
+    Створення пустого замовлення
+  </p-header>
+
+  <form id="create_order_form" #createOrderForm="ngForm" class="create-order-dialog-content" (ngSubmit)="createOrderForm.valid && createOrder()">
+
+    <div class="ui-grid ui-grid-responsive ui-fluid">
+
+      <div class="prime-form-group">
+        <div class="ui-grid-col-4">
+          <label>Id користувача</label>
+        </div>
+        <div class="ui-grid-col-4">
+          <input pInputText
+                 #userIdToCreateOrderInput="ngModel"
+                 name="userIdToCreateOrder"
+                 [(ngModel)]="userIdToCreateOrder"
+                 required>
+        </div>
+        <div class="ui-grid-col-4">
+          <ng-container *ngIf="userIdToCreateOrderInput.dirty || userIdToCreateOrderInput.touched || createOrderForm.submitted">
+            <p-message *ngIf="createOrderForm.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
+          </ng-container>
+        </div>
+      </div>
+
+    </div>
+
+  </form>
+
+  <p-footer>
+    <button pButton form="create_order_form" icon="pi pi-check" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
   </p-footer>
 </p-dialog>

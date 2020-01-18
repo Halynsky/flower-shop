@@ -104,3 +104,9 @@
 
 }
 
+p-dialog {
+  ::ng-deep .ui-dialog {
+    min-width: 600px;
+  }
+}
+

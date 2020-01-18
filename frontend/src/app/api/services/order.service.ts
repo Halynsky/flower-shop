@@ -65,4 +65,9 @@ export class OrderService {
     params = Object.assign(params, ...pagination);
     return this.http.get(`${this.URL}/export/excel`, {responseType: 'blob', observe: 'response', params: params});
   }
+
+  createAsAdmin(userIdToCreateOrder: number) {
+    return this.http.post(`${this.URL}/createAsAdmin/${userIdToCreateOrder}`, {responseType: 'text'});
+  }
+
 }

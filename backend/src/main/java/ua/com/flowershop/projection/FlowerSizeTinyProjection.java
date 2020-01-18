@@ -9,7 +9,7 @@ public interface FlowerSizeTinyProjection {
     Integer getReserved();
     Integer getSold();
     SizeProjection getSize();
-    FlowerShortProjection getFlower();
+    FlowerTinyProjection getFlower();
     @Value("#{target.amount - target.reserved}")
     Integer getAvailable();
 }

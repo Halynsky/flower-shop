@@ -14,6 +14,8 @@ import { SizeService } from "../../../../api/services/size.service";
 import { Size } from "../../../../api/models/Size";
 import { FlowerSize } from "../../../../api/models/FlowerSize";
 import { TranslationService } from "../../../../utils/translation.service";
+import { NgForm } from "@angular/forms";
+import { finalize } from "rxjs/operators";
 
 @Component({
   selector: 'flower-item',
@@ -21,6 +23,8 @@ import { TranslationService } from "../../../../utils/translation.service";
   styleUrls: ['./flower-item.component.scss']
 })
 export class FlowerItemComponent implements OnInit {
+
+  displayAddSizeDialog = false;
 
   previousNameOriginal;
   previousName;
@@ -35,6 +39,10 @@ export class FlowerItemComponent implements OnInit {
   sizes: Size [] = [];
 
   sizeToAdd: Size;
+
+  loading;
+
+  sizeToCreate: Size = new Size();
 
   constructor(public dataService: FlowerService,
               public translation: TranslationService,
@@ -60,24 +68,34 @@ export class FlowerItemComponent implements OnInit {
       }
     );
 
-    this.flowerTypeService.getAll().subscribe(
-      flowerTypes => this.flowerTypes = flowerTypes,
-      error => this.snackBarService.showError(getErrorMessage(error))
-    );
-
-    this.colorService.getForAdmin().subscribe(
-      colors => this.colors = colors,
-      error => this.snackBarService.showError(getErrorMessage(error))
-    );
-
-    this.sizeService.getAll().subscribe(
-      sizes => this.sizes = sizes,
-      error => this.snackBarService.showError(getErrorMessage(error))
-    );
+    this.getAllFlowerTypes();
+    this.getAllColors();
+    this.getAllSizes();
 
   }
 
   ngOnInit() {
+  }
+
+  getAllFlowerTypes() {
+    this.flowerTypeService.getAll().subscribe(
+      flowerTypes => this.flowerTypes = flowerTypes,
+      error => this.snackBarService.showError(getErrorMessage(error))
+    );
+  }
+
+  getAllColors() {
+    this.colorService.getForAdmin().subscribe(
+      colors => this.colors = colors,
+      error => this.snackBarService.showError(getErrorMessage(error))
+    );
+  }
+
+  getAllSizes() {
+    this.sizeService.getAll().subscribe(
+      sizes => this.sizes = sizes,
+      error => this.snackBarService.showError(getErrorMessage(error))
+    );
   }
 
 
@@ -167,4 +185,22 @@ export class FlowerItemComponent implements OnInit {
 
   }
 
+  createSize() {
+    this.loading = true;
+    this.sizeService.add(this.sizeToCreate)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(
+      response => {
+        this.displayAddSizeDialog = false;
+        this.snackBarService.showSuccess("Розмір успішно створено");
+        this.getAllSizes();
+      },
+      error => this.snackBarService.showError(getErrorMessage(error))
+    )
+  }
+
+  resetAddSizeForm(form: NgForm) {
+    this.sizeToCreate = new Size();
+    form.resetForm();
+  }
 }
