@@ -41,6 +41,7 @@ public class Order {
     private String postDeclaration;
     @Column(columnDefinition = "varchar(500)")
     private String deliveryAddress;
+    @Column(columnDefinition = "DATE")
     private LocalDate paid;
     private String phone;
     private Integer totalPrice;

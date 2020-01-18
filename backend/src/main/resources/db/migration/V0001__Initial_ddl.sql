@@ -205,7 +205,7 @@ create table orders
     delivery_address varchar(500),
     discount integer default 0,
     note varchar(2000),
-    paid timestamp,
+    paid date,
     phone varchar(255),
     post_declaration varchar(32),
     status varchar(32) default 'NEW'::character varying not null,
