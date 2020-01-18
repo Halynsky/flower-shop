@@ -50,7 +50,7 @@ export class FlowerItemComponent implements OnInit {
               private router: Router,
               private route: ActivatedRoute,
               private flowerTypeService: FlowerTypeService,
-              private sizeService: SizeService,
+              public sizeService: SizeService,
               private colorService: ColorService,
               public datepipe: DatePipe) {
     this.route.params.subscribe(

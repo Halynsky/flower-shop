@@ -36,7 +36,8 @@ create table flower_types
             unique,
     name_single varchar(255)
         constraint uk_eswcnmv6pxk02s5310l4fkk4r
-            unique
+            unique,
+    planting_material_type varchar(255)
 );
 
 create table flowers
@@ -64,7 +65,7 @@ create table flowers
     next_supply timestamp,
     popularity double precision
         constraint flowers_popularity_check
-            check ((popularity <= (100)::double precision) AND (popularity >= (1)::double precision)),
+            check ((popularity >= (1)::double precision) AND (popularity <= (10)::double precision)),
     color_id bigint not null
         constraint flower_color_fkey
             references colors,
@@ -95,8 +96,6 @@ create table sizes
     id bigserial not null
         constraint sizes_pkey
             primary key,
-    max integer,
-    min integer,
     name varchar(255) not null
         constraint uk_rmd719hqv99q34v9yfelrkq3v
             unique
@@ -149,9 +148,7 @@ create table users
     is_virtual boolean default false,
     last_order_date timestamp,
     name varchar(255) not null,
-    new_email varchar(255)
-        constraint uk_3xurg673vujjqiapp8uijx8jj
-            unique,
+    new_email varchar(255),
     note varchar(2000),
     password varchar(255),
     phone varchar(255),
@@ -207,8 +204,8 @@ create table orders
     created timestamp default timezone('utc'::text, now()),
     delivery_address varchar(500),
     discount integer default 0,
-    is_paid boolean,
     note varchar(2000),
+    paid timestamp,
     phone varchar(255),
     post_declaration varchar(32),
     status varchar(32) default 'NEW'::character varying not null,
