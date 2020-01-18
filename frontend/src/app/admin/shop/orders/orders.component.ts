@@ -504,7 +504,7 @@ export class OrdersComponent implements OnInit {
     form.resetForm();
   }
 
-  private exportToExcel(id: number) {
+  exportToExcel(id: number) {
     this.loading = true;
     this.dataService.exportToExcel(id)
       .pipe(finalize(() => this.loading = false))
@@ -514,7 +514,7 @@ export class OrdersComponent implements OnInit {
       }, error => this.snackBarService.showError(getErrorMessage(error)))
   }
 
-  private exportPageToExcel() {
+  exportPageToExcel() {
     this.loading = true;
     this.dataService.exportPageToExcel(ngPrimeFiltersToParams(this.lastLazyLoadEvent.filters), new Pagination().fromPrimeNg(this.lastLazyLoadEvent))
       .pipe(finalize(() => this.loading = false))
