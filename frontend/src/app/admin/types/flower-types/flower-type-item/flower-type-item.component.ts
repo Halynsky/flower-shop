@@ -5,6 +5,7 @@ import { getErrorMessage } from "../../../../utils/Functions";
 import { ItemSaveMode } from "../../../../models/ItemSaveMode";
 import { FlowerTypeService } from "../../../../api/services/flower-type.service";
 import { FlowerType } from "../../../../api/models/FlowerType";
+import { finalize } from "rxjs/operators";
 
 @Component({
   selector: 'flower-type-item',
@@ -20,13 +21,15 @@ export class FlowerTypeItemComponent implements OnInit {
 
   item: FlowerType = new FlowerType();
 
+  loading = false;
+
   plantingMaterialTypes = [
-    {name: 'Бульба', value: 'Бульба'},
-    {name: 'Бульбоцибулина', value: 'Бульбоцибулина'},
-    {name: 'Коренева шийка', value: 'Коренева шийка'},
-    {name: 'Корінь', value: 'Корінь'},
-    {name: 'Корінь з бруньками', value: 'Корінь з бруньками'},
-    {name: 'Цибулина', value: 'Цибулина'},
+    {label: 'Бульба', value: 'Бульба'},
+    {label: 'Бульбоцибулина', value: 'Бульбоцибулина'},
+    {label: 'Коренева шийка', value: 'Коренева шийка'},
+    {label: 'Корінь', value: 'Корінь'},
+    {label: 'Корінь з бруньками', value: 'Корінь з бруньками'},
+    {label: 'Цибулина', value: 'Цибулина'},
   ];
 
   constructor(public dataService: FlowerTypeService,
@@ -53,7 +56,10 @@ export class FlowerTypeItemComponent implements OnInit {
   }
 
   getItem(id) {
-    this.dataService.getById(id).subscribe(
+    this.loading = true;
+    this.dataService.getById(id)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(
       item => {
         this.item = item;
         this.previousName = item.name;
@@ -63,12 +69,15 @@ export class FlowerTypeItemComponent implements OnInit {
   }
 
   create() {
+    this.loading = true;
     const formData: FormData = new FormData();
     formData.append('data', JSON.stringify(this.item));
     if (this.newImage) {
       formData.append('file', this.newImage);
     }
-    this.dataService.create(formData).subscribe(
+    this.dataService.create(formData)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(
       response => {
         this.snackBarService.showSuccess("Тип квітів успішно створено");
         this.router.navigate(['../../'], {relativeTo: this.route})
@@ -78,12 +87,15 @@ export class FlowerTypeItemComponent implements OnInit {
   }
 
   update() {
+    this.loading = true;
     const formData: FormData = new FormData();
     formData.append('data', JSON.stringify(this.item));
     if (this.newImage) {
       formData.append('file', this.newImage);
     }
-    this.dataService.update(this.item.id, formData).subscribe(
+    this.dataService.update(this.item.id, formData)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(
       response => {
         this.snackBarService.showSuccess("Тип квітів успішно оновлено");
         this.router.navigate(['../../'], {relativeTo: this.route})

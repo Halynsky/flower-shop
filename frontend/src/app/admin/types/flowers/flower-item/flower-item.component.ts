@@ -40,7 +40,7 @@ export class FlowerItemComponent implements OnInit {
 
   sizeToAdd: Size;
 
-  loading;
+  loading = false;
 
   sizeToCreate: Size = new Size();
 
@@ -100,7 +100,9 @@ export class FlowerItemComponent implements OnInit {
 
 
   getItem(id) {
-    this.dataService.getById(id).subscribe(
+    this.dataService.getById(id)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(
       item => {
         item.flowerSizes.forEach(fs => fs.price = fs.price / 100);
         this.item = item;
@@ -119,7 +121,9 @@ export class FlowerItemComponent implements OnInit {
     if (this.newImage) {
       formData.append('file', this.newImage);
     }
-    this.dataService.create(formData).subscribe(
+    this.dataService.create(formData)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(
       response => {
         this.snackBarService.showSuccess("'Квітку' успішно створено");
         this.router.navigate(['../../'], {relativeTo: this.route})
@@ -136,7 +140,9 @@ export class FlowerItemComponent implements OnInit {
     if (this.newImage) {
       formData.append('file', this.newImage);
     }
-    this.dataService.update(this.item.id, formData).subscribe(
+    this.dataService.update(this.item.id, formData)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(
       response => {
         this.snackBarService.showSuccess("'Квітку' успішно оновлено");
         this.router.navigate(['../../'], {relativeTo: this.route})

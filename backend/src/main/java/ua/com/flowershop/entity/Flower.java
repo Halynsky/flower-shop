@@ -33,7 +33,7 @@ public class Flower {
     private String image;
     // Asiatic Lilium, Oriental Lilium etc
     private String groupName;
-    @Column(columnDefinition = "varchar(5000)")
+    @Column(columnDefinition = "text")
     private String description;
     private Integer flowerSizeMin;
     private Integer flowerSizeMax;

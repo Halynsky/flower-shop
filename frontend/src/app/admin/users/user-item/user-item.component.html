@@ -133,7 +133,7 @@
 
     <div class="ui-grid-row ui-grid-field">
       <div class="ui-grid-col-4 footer">
-        <button type="submit" pButton icon="pi pi-check" class="ui-button-success" label="{{mode == ItemSaveMode.new ? 'Зберегти' : 'Оновити'}}"></button>
+        <button type="submit" pButton icon="pi pi-check" class="ui-button-success" label="{{mode == ItemSaveMode.new ? 'Зберегти' : 'Оновити'}}" [disabled]="loading"></button>
       </div>
     </div>
 

@@ -5,4 +5,5 @@ public interface FlowerTypeTinyProjection extends IdNameTupleProjection {
     String getNameOriginal();
     String getImage();
     String getPlantingMaterialType();
+    String getDescription();
 }

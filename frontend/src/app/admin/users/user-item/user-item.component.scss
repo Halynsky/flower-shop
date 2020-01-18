@@ -2,6 +2,10 @@
 @import "mixins.scss";
 
 :host {
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+
   .size-selector-wrapper {
     display: flex;
     flex-direction: column;

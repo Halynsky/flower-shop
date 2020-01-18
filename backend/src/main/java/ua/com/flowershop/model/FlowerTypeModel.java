@@ -16,4 +16,6 @@ public class FlowerTypeModel {
     private String name;
     private String nameSingle;
     private String nameOriginal;
+    private String plantingMaterialType;
+    private String description;
 }

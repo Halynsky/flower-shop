@@ -5,6 +5,7 @@ import { getErrorMessage } from "../../../utils/Functions";
 import { UserService } from "../../../api/services/user.service";
 import { SnackBarService } from "../../../services/snak-bar.service";
 import { ActivatedRoute, Router } from "@angular/router";
+import { finalize } from "rxjs/operators";
 
 @Component({
   selector: 'user-item',
@@ -18,6 +19,8 @@ export class UserItemComponent implements OnInit {
   item: UserForAdmin = new UserForAdmin();
 
   previousEmail: string;
+
+  loading = false;
 
   constructor(public dataService: UserService,
               private snackBarService: SnackBarService,
@@ -43,7 +46,9 @@ export class UserItemComponent implements OnInit {
 
 
   getItem(id) {
-    this.dataService.getById(id).subscribe(
+    this.dataService.getById(id)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(
       item => {
         this.item = item;
         this.previousEmail = item.email
@@ -53,7 +58,9 @@ export class UserItemComponent implements OnInit {
   }
 
   create() {
-    this.dataService.create(this.item).subscribe(
+    this.dataService.create(this.item)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(
       response => {
         this.snackBarService.showSuccess("'Користувач' успішно створений");
         this.router.navigate(['../../'], {relativeTo: this.route})
@@ -63,7 +70,9 @@ export class UserItemComponent implements OnInit {
   }
 
   update() {
-    this.dataService.update(this.item.id, this.item).subscribe(
+    this.dataService.update(this.item.id, this.item)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(
       response => {
         this.snackBarService.showSuccess("'Користувач' успішно оновленей");
         this.router.navigate(['../../'], {relativeTo: this.route})

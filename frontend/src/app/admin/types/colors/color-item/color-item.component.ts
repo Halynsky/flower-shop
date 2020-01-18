@@ -5,6 +5,7 @@ import { Color } from "../../../../api/models/Color";
 import { ColorService } from "../../../../api/services/color.service";
 import { getErrorMessage } from "../../../../utils/Functions";
 import { ItemSaveMode } from "../../../../models/ItemSaveMode";
+import { finalize } from "rxjs/operators";
 
 @Component({
   selector: 'color-item',
@@ -19,6 +20,8 @@ export class ColorItemComponent implements OnInit {
   item: Color = new Color();
   previousName;
   previousColor;
+
+  loading = false;
 
   constructor(public dataService: ColorService,
               private snackBarService: SnackBarService,
@@ -45,7 +48,9 @@ export class ColorItemComponent implements OnInit {
   }
 
   getItem(id) {
-    this.dataService.getById(id).subscribe(
+    this.dataService.getById(id)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(
       item => {
         this.item = item;
         this.previousName = item.name;
@@ -56,7 +61,9 @@ export class ColorItemComponent implements OnInit {
   }
 
   add() {
-    this.dataService.add(this.item).subscribe(
+    this.dataService.add(this.item)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(
       response => {
         this.snackBarService.showSuccess("Колір успішно створено");
         this.router.navigate(['../../'], {relativeTo: this.route})
@@ -66,7 +73,9 @@ export class ColorItemComponent implements OnInit {
   }
 
   update() {
-    this.dataService.update(this.item.id, this.item).subscribe(
+    this.dataService.update(this.item.id, this.item)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(
       response => {
         this.snackBarService.showSuccess("Колір успішно оновлено");
         this.router.navigate(['../../'], {relativeTo: this.route})

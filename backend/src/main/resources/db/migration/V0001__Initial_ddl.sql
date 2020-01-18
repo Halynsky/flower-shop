@@ -27,6 +27,7 @@ create table flower_types
     id bigserial not null
         constraint flower_types_pkey
             primary key,
+    description text,
     image varchar(255),
     name varchar(255)
         constraint uk_gaffviqnuwkki1rb67qoflloq
@@ -46,7 +47,7 @@ create table flowers
         constraint flowers_pkey
             primary key,
     created timestamp default timezone('utc'::text, now()),
-    description varchar(2000),
+    description text,
     flower_height_max integer,
     flower_height_min integer,
     flower_size_max integer,

@@ -31,13 +31,13 @@ export class UsersComponent implements OnInit {
     {field: 'name', header: 'Імя', active: true},
     {field: 'email', header: 'Email', active: true},
     {field: 'phone', header: 'Телефон', active: true},
-    {field: 'role', header: 'Роль', active: true},
+    {field: 'role', header: 'Роль', active: false},
     {field: 'isEnabled', header: 'Розблокований', active: false},
     {field: 'isVirtual', header: 'Віртуальний', active: true},
     {field: 'isActivated', header: 'Активований', active: false},
     {field: 'created', header: 'Дата реєстрації', active: false},
-    {field: 'lastOrderDate', header: 'Дата останньої покупки', active: true},
-    {field: 'note', header: 'Примітка', active: false},
+    {field: 'lastOrderDate', header: 'Остання покупка', active: true},
+    {field: 'note', header: 'Примітка', active: true},
     {field: 'facebookNickname', header: 'Нік на Facebook', active: true},
   ];
 

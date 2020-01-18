@@ -22,6 +22,7 @@ export class FlowerTypesComponent implements OnInit {
     {field: 'name', header: 'Назва'},
     {field: 'nameSingle', header: 'Назва(однина)'},
     {field: 'nameOriginal', header: 'Назва(Англ)'},
+    {field: 'plantingMaterialType', header: 'Посадковий матеріал'},
     {field: 'flowersCount', header: 'Кількість Квітів'},
   ];
 

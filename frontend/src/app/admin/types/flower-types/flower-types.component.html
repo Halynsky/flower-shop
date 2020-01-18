@@ -21,7 +21,7 @@
           <input *ngSwitchCase="'name'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" class="table-filter">
           <input *ngSwitchCase="'nameSingle'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" class="table-filter">
           <input *ngSwitchCase="'nameOriginal'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" class="table-filter">
-
+          <input *ngSwitchCase="'plantingMaterialType'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" class="table-filter">
         </th>
       </tr>
     </ng-template>

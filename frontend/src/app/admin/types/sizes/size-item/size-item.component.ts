@@ -5,6 +5,7 @@ import { SnackBarService } from "../../../../services/snak-bar.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { getErrorMessage } from "../../../../utils/Functions";
 import { ItemSaveMode } from "../../../../models/ItemSaveMode";
+import { finalize } from "rxjs/operators";
 
 @Component({
   selector: 'size-item',
@@ -17,6 +18,8 @@ export class SizeItemComponent implements OnInit {
   mode: ItemSaveMode = ItemSaveMode.new;
   item: Size = new Size();
   previousName;
+
+  loading = false;
 
   constructor(public dataService: SizeService,
               private snackBarService: SnackBarService,
@@ -41,7 +44,9 @@ export class SizeItemComponent implements OnInit {
   }
 
   getItem(id) {
-    this.dataService.getById(id).subscribe(
+    this.dataService.getById(id)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(
       item => {
         this.item = item;
         this.previousName = item.name;
@@ -51,7 +56,9 @@ export class SizeItemComponent implements OnInit {
   }
 
   add() {
-    this.dataService.add(this.item).subscribe(
+    this.dataService.add(this.item)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(
       response => {
         this.snackBarService.showSuccess("Розмір успішно створено");
         this.router.navigate(['../../'], {relativeTo: this.route})
@@ -61,7 +68,9 @@ export class SizeItemComponent implements OnInit {
   }
 
   update() {
-    this.dataService.update(this.item.id, this.item).subscribe(
+    this.dataService.update(this.item.id, this.item)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(
       response => {
         this.snackBarService.showSuccess("Розмір успішно оновлено");
         this.router.navigate(['../../'], {relativeTo: this.route})

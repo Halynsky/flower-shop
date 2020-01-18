@@ -6,4 +6,5 @@ export class FlowerType {
   flowersCount: number;
   image: string;
   plantingMaterialType: string;
+  description: string;
 }
