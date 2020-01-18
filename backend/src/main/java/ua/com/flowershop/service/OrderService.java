@@ -266,16 +266,16 @@ public class OrderService {
             case NOVA_POSHTA_COURIER:
                 deliveryAddress = orderDeliveryModel.getCity() + ", Нова Пошта (Адресна доставка), " + orderDeliveryModel.getStreet() +
                     ", буд." + orderDeliveryModel.getHouse() + ", кв. " + orderDeliveryModel.getApartment() +
-                    ", отримувач: " + orderDeliveryModel.getReceiverFullName() + ", тел. " + orderDeliveryModel.getReceiverPhone();
+                    ", " + orderDeliveryModel.getReceiverFullName() + ", тел." + orderDeliveryModel.getReceiverPhone();
                 break;
             case UKR_POSHTA_DEPARTMENT:
                 deliveryAddress = "м." + orderDeliveryModel.getCity() + ", Укр Пошта, " + orderDeliveryModel.getStreet() +
                     ", буд." + orderDeliveryModel.getHouse() + ", кв. " + orderDeliveryModel.getApartment() +
-                    ", отримувач: " + orderDeliveryModel.getReceiverFullName() + ", тел. " + orderDeliveryModel.getReceiverPhone();
+                    ", " + orderDeliveryModel.getReceiverFullName() + ", тел." + orderDeliveryModel.getReceiverPhone();
                 break;
             case NOVA_POSHTA_DEPARTMENT:
                 deliveryAddress = orderDeliveryModel.getCity() + ", Нова Пошта, " + orderDeliveryModel.getNovaPoshtaDepartment() +
-                    ", отримувач: " + orderDeliveryModel.getReceiverFullName() + ", тел. " + orderDeliveryModel.getReceiverPhone();
+                    ", " + orderDeliveryModel.getReceiverFullName() + ", тел." + orderDeliveryModel.getReceiverPhone();
                 break;
             case SELF_UZHGOROD:
                 deliveryAddress = "м.Ужгород, самовивіз";

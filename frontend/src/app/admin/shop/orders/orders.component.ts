@@ -15,6 +15,7 @@ import { finalize } from "rxjs/operators";
 import { IdAmountTuple } from "../../../api/models/IdAmountTuple";
 import { FlowerSize } from "../../../api/models/FlowerSize";
 import { FlowerSizeService } from "../../../api/services/flower-size.service";
+import * as fileSaver from 'file-saver';
 
 @Component({
   selector: 'app-orders',
@@ -83,6 +84,8 @@ export class OrdersComponent implements OnInit {
   orderDiscount;
   paymentDate;
 
+  lastLazyLoadEvent;
+
   constructor(private dataService: OrderService,
               private flowerSizeService: FlowerSizeService,
               private snackBarService: SnackBarService,
@@ -106,6 +109,7 @@ export class OrdersComponent implements OnInit {
   }
 
   onLazyLoad(event: any) {
+    this.lastLazyLoadEvent = event;
     this.loadDataLazy(ngPrimeFiltersToParams(event.filters), new Pagination().fromPrimeNg(event));
   }
 
@@ -247,6 +251,13 @@ export class OrdersComponent implements OnInit {
           this.orderDiscount = this.selected.discount / 100;
         },
         visible: this.orderIsEditable(this.selected.status),
+      },
+      {
+        label: 'Експортувати в Excel',
+        icon: 'fas fa-file-excel',
+        command: (event) => this.exportToExcel(this.selected.id),
+        visible: !this.orderIsClosed(this.selected.status) && !this.selected.isPaid,
+        styleClass: 'excel-export-button'
       },
       {
         separator: true
@@ -487,6 +498,25 @@ export class OrdersComponent implements OnInit {
   resetDiscountChangeForm(form: NgForm) {
     this.orderDiscount = null;
     form.resetForm();
+  }
+
+  private exportToExcel(id: number) {
+    this.loading = true;
+    this.dataService.exportToExcel(id)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(response => {
+        let fileName = response.headers.get('content-disposition').replace("attachment; filename=", "");
+        fileSaver.saveAs(response.body, `Замовлення№${id}.xlsx`);
+      }, error => this.snackBarService.showError(getErrorMessage(error)))
+  }
+
+  private exportPageToExcel() {
+    this.loading = true;
+    this.dataService.exportPageToExcel(ngPrimeFiltersToParams(this.lastLazyLoadEvent.filters), new Pagination().fromPrimeNg(this.lastLazyLoadEvent))
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(response => {
+        fileSaver.saveAs(response.body, `СписокЗамовлень.xlsx`);
+      }, error => this.snackBarService.showError(getErrorMessage(error)))
   }
 
 }

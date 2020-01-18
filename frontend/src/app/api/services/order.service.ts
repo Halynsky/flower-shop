@@ -57,4 +57,12 @@ export class OrderService {
     return this.http.get<RestPage<Order>>(`${this.URL}/my`, {params: pagination});
   }
 
+  exportToExcel(id: number) {
+    return this.http.get(`${this.URL}/${id}/export/excel`,  {responseType: 'blob', observe: 'response'});
+  }
+
+  exportPageToExcel(params, pagination) {
+    params = Object.assign(params, ...pagination);
+    return this.http.get(`${this.URL}/export/excel`, {responseType: 'blob', observe: 'response', params: params});
+  }
 }
