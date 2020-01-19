@@ -5,7 +5,6 @@ import { SizeService } from "../../../api/services/size.service";
 import { MatCheckbox, MatCheckboxChange } from "@angular/material";
 import { ColorService } from "../../../api/services/color.service";
 import { FlowerType } from "../../../api/models/FlowerType";
-import { Size } from "../../../api/models/Size";
 import { Color } from "../../../api/models/Color";
 import { ShopFilter } from "../../../api/models/ShopFilter";
 import { ActivatedRoute } from "@angular/router";
@@ -25,7 +24,7 @@ export class ShopFiltersComponent implements OnInit {
   onFilterChange: EventEmitter<any> = new EventEmitter();
 
   flowerTypes: FlowerType[] = [];
-  sizes: Size[] = [];
+  // sizes: Size[] = [];
   colors: Color[] = [];
 
   hashFlowerTypes: Array<string> = [];
@@ -47,10 +46,10 @@ export class ShopFiltersComponent implements OnInit {
       error => this.snackBarService.showError(getErrorMessage(error))
     );
 
-    sizeService.getAll().subscribe(
-      sizes => this.sizes = sizes,
-      error => this.snackBarService.showError(getErrorMessage(error))
-    );
+    // sizeService.getAll().subscribe(
+    //   sizes => this.sizes = sizes,
+    //   error => this.snackBarService.showError(getErrorMessage(error))
+    // );
 
     colorService.getAll().subscribe(
       colors => this.colors = colors,

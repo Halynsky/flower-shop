@@ -1,4 +1,4 @@
-<div class="filter-block flower-color-filter-wrapper">
+<div class="filter-block flower-type-filter-wrapper">
 
   <div class="filter-title">
     <span>Квіти</span>
@@ -42,22 +42,22 @@
 
 </div>
 
-<div class="filter-block bulb-size-filter-wrapper">
+<!--<div class="filter-block bulb-size-filter-wrapper">-->
 
-  <div class="filter-title">
-    <span>Розмір</span>
-    <div class="clear-filter">
-      <mat-icon *ngIf="filters.sizeFilters.length > 0" title="Очистити фільтр"
-                (click)="clearSizeFilters()">close</mat-icon>
-    </div>
-  </div>
+<!--  <div class="filter-title">-->
+<!--    <span>Розмір</span>-->
+<!--    <div class="clear-filter">-->
+<!--      <mat-icon *ngIf="filters.sizeFilters.length > 0" title="Очистити фільтр"-->
+<!--                (click)="clearSizeFilters()">close</mat-icon>-->
+<!--    </div>-->
+<!--  </div>-->
 
-  <div class="filter-content">
-    <ng-template ngFor let-size [ngForOf]="sizes" [ngForTrackBy]="trackByFn">
-      <div class="filter-item" [ngClass]="{'inactive': filters.sizeFilters.length > 0 && !filters.sizeFilters.includes(size.id)}">
-        <mat-checkbox (change)="onSizeFilterChange($event)" [value]="size.id"  #sizeCheckbox [checked]="filters.sizeFilters.includes(size.id)">{{size.name}}</mat-checkbox>
-      </div>
-    </ng-template>
-  </div>
+<!--  <div class="filter-content">-->
+<!--    <ng-template ngFor let-size [ngForOf]="sizes" [ngForTrackBy]="trackByFn">-->
+<!--      <div class="filter-item" [ngClass]="{'inactive': filters.sizeFilters.length > 0 && !filters.sizeFilters.includes(size.id)}">-->
+<!--        <mat-checkbox (change)="onSizeFilterChange($event)" [value]="size.id"  #sizeCheckbox [checked]="filters.sizeFilters.includes(size.id)">{{size.name}}</mat-checkbox>-->
+<!--      </div>-->
+<!--    </ng-template>-->
+<!--  </div>-->
 
-</div>
+<!--</div>-->

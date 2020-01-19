@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FlowerService } from "../../api/services/flower.service";
 import { FlowerShort } from "../../api/models/Flower";
 import { SnackBarService } from "../../services/snak-bar.service";
@@ -9,11 +9,13 @@ import { MatDialog, MatDialogRef } from "@angular/material";
 import { ShopFilterDialogComponent } from "../shared/shop-filter-dialog/shop-filter-dialog.component";
 import { finalize } from "rxjs/operators";
 import { getErrorMessage } from "../../utils/Functions";
+import { DOCUMENT } from "@angular/common";
 
 @Component({
   selector: 'shop',
   templateUrl: './shop.component.html',
-  styleUrls: ['./shop.component.scss']
+  styleUrls: ['./shop.component.scss'],
+  host: {'(window:scroll)': 'trackScroll($event)'}
 })
 export class ShopComponent implements OnInit {
 
@@ -31,7 +33,9 @@ export class ShopComponent implements OnInit {
 
   constructor(private flowerService: FlowerService,
               private snackBarService: SnackBarService,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              @Inject('Window') private window: Window,
+              @Inject(DOCUMENT) private document: Document) {
     this.getShopItems(this.searchTerm);
   }
 
@@ -67,7 +71,6 @@ export class ShopComponent implements OnInit {
   }
 
   sortSelectionChange(event) {
-    console.log("sortSelectionChange");
     this.pagination.sort = this.sort;
     this.getShopItems(this.searchTerm, this.filters)
   }
@@ -93,7 +96,18 @@ export class ShopComponent implements OnInit {
   }
 
   showMore() {
-    this.getShopItems(this.searchTerm, null, true);
+    this.getShopItems(this.searchTerm, this.filters, true);
+  }
+
+  trackScroll(event: any) {
+
+    let scrollToBottom = this.document.scrollingElement.scrollHeight - this.window.innerHeight - this.window.pageYOffset;
+    console.log(scrollToBottom);
+
+    if (scrollToBottom < 100 && !this.flowersPage.last) {
+      this.showMore();
+    }
+
   }
 
 }

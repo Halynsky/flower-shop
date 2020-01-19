@@ -10,7 +10,7 @@
     min-height: 200px;
     border-radius: 2px;
     display: grid;
-    grid-template-rows: 200px auto;
+    grid-template-rows: 250px auto;
     opacity: 1;
 
     &.not-available {
@@ -19,7 +19,7 @@
 
     .cover {
       width: 100%;
-      height: 200px;
+      height: 250px;
       background-position: center;
       background-size: cover;
       border-top-left-radius: 2px;
