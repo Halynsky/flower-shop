@@ -11,10 +11,10 @@
     border-radius: 2px;
     display: grid;
     grid-template-rows: 200px auto;
-    opacity: 100%;
+    opacity: 1;
 
     &.not-available {
-      opacity: 50%;
+      // opacity: 0.5;
     }
 
     .cover {
@@ -128,21 +128,57 @@
     }
 
     .info {
-      background: $grey-50;
+      background: #f3f3f3;
       text-align: center;
       padding: 12px 8px 12px;
+      position: relative;
+
+      .angle-left {
+        position: absolute;
+        width: 70px;
+        height: 70px;
+        background: url(/assets/icons/interface/floral-design.svg);
+        transform: rotateZ(-90deg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        bottom: 4px;
+        left: 2px;
+        //opacity: 0.4;
+        z-index: 1;
+      }
+
+      .angle-right {
+        position: absolute;
+        width: 70px;
+        height: 70px;
+        background: url(/assets/icons/interface/floral-design.svg);
+        transform: rotateZ(180deg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        bottom: 4px;
+        right: 2px;
+        //opacity: 0.4;
+        z-index: 1;
+      }
 
       .flower-type-name {
         color: $grey-800;
         font-weight: 500;
         font-size: 14px;
         line-height: 120%;
+        position: relative;
+        z-index: 2;
       }
 
       .name {
         //color: $grey-800;
         color: mat-color($primary);
         font-size: 20px;
+        position: relative;
+        z-index: 2;
+        font-weight: 500;
       }
 
       .price {
@@ -150,6 +186,8 @@
         color: mat-color($accent, 400);
         font-weight: 500;
         margin-top: 4px;
+        position: relative;
+        z-index: 2;
       }
     }
   }

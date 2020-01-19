@@ -6,7 +6,7 @@
       <div class="is-popular" *ngIf="flower.isPopular">ХІТ</div>
     </div>
 
-    <div class="favorites-button-wrapper" *ngIf="!inFavorites && securityService.isAuthenticated()">
+    <div class="favorites-button-wrapper" *ngIf="securityService.isAuthenticated()">
 
       <button mat-icon-button class="in-favorites" (click)="removeFromFavorites()"
               *ngIf="favoritesService.favoriteFlowerIds.includes(flower.id); else addToFavoritesBlock">
@@ -29,6 +29,9 @@
   </div>
 
   <div class="info">
+
+    <div class="angle-left"></div>
+    <div class="angle-right"></div>
 
     <div class="flower-type-name">{{flower.flowerType.nameSingle}}</div>
     <div class="name">{{flower.nameOriginal}}</div>
