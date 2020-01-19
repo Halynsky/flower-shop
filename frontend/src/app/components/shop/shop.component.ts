@@ -100,14 +100,11 @@ export class ShopComponent implements OnInit {
   }
 
   trackScroll(event: any) {
-
     let scrollToBottom = this.document.scrollingElement.scrollHeight - this.window.innerHeight - this.window.pageYOffset;
-    console.log(scrollToBottom);
 
     if (scrollToBottom < 100 && !this.flowersPage.last) {
       this.showMore();
     }
-
   }
 
 }

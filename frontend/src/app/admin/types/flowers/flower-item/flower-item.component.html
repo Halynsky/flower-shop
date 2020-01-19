@@ -135,10 +135,22 @@
         <div class="ui-grid-col-3">
           <div class="dropdown-block color-dropdown-block">
             <p-dropdown [options]="colors" id="color" name="color" [(ngModel)]="item.color" placeholder="Оберіть колір"
-                        optionLabel="name" dataKey="id"  #color="ngModel" showClear="true" filter="true" required></p-dropdown>
-            <div class="chosen-item">
-              <div class="color-square" [ngStyle]="{'background-color': item.color?.hex ? item.color.hex : '#ffffff'}"></div>
-            </div>
+                        optionLabel="name" dataKey="id"  #color="ngModel" showClear="true" filter="true" emptyFilterMessage="Не знайдено" required>
+              <ng-template let-selectedItem pTemplate="selectedItem">
+                <div class="color-selected">
+                  <div>{{selectedItem.value.name}}</div>
+                  <div class="color-square" [ngStyle]="{'background-color': selectedItem.value.hex}"></div>
+                </div>
+              </ng-template>
+              <ng-template let-item pTemplate="item">
+                <div class="ui-helper-clearfix">
+                  <div class="color-option">
+                    <div>{{item.value.name}}</div>
+                    <div class="color-square" [ngStyle]="{'background-color': item.value.hex}"></div>
+                  </div>
+                </div>
+              </ng-template>
+            </p-dropdown>
           </div>
         </div>
         <div class="ui-grid-col-3">
@@ -157,10 +169,22 @@
         <div class="ui-grid-col-3">
           <div class="dropdown-block color-dropdown-block">
             <p-dropdown [options]="colors" id="colorSecondary" name="colorSecondary" [(ngModel)]="item.colorSecondary" placeholder="Оберіть колір"
-                        optionLabel="name" dataKey="id" #colorSecondary="ngModel" showClear="true" filter="true"></p-dropdown>
-            <div class="chosen-item">
-              <div class="color-square" [ngStyle]="{'background-color': item.colorSecondary?.hex ? item.colorSecondary.hex : '#ffffff'}"></div>
-            </div>
+                        optionLabel="name" dataKey="id" #colorSecondary="ngModel" showClear="true" filter="true" emptyFilterMessage="Не знайдено">
+              <ng-template let-selectedItem pTemplate="selectedItem">
+                <div class="color-selected">
+                  <div>{{selectedItem.value.name}}</div>
+                  <div class="color-square" [ngStyle]="{'background-color': selectedItem.value.hex}"></div>
+                </div>
+              </ng-template>
+              <ng-template let-item pTemplate="item">
+                <div class="ui-helper-clearfix">
+                  <div class="color-option">
+                    <div>{{item.value.name}}</div>
+                    <div class="color-square" [ngStyle]="{'background-color': item.value.hex}"></div>
+                  </div>
+                </div>
+              </ng-template>
+            </p-dropdown>
           </div>
         </div>
         <div class="ui-grid-col-3">
@@ -171,6 +195,26 @@
           </div>
         </div>
       </div>
+
+<!--      <p-dropdown class="add-flower-size-dropdown" [options]="flowerSizes" [(ngModel)]="flowerSizeToAdd" name="flowerSizeToAdd" filter="true" placeholder="Оберіть товар" emptyFilterMessage="Не знайдено" optionLabel="flower.name" appendTo="body">-->
+<!--        <ng-template let-selectedItem pTemplate="selectedItem">-->
+<!--          <div class="flower-size-selected">-->
+<!--            <img [src]="selectedItem.value.flower.image"/>-->
+<!--            <div><b>{{selectedItem.value.flower.name}}</b> {{selectedItem.value.size.name}}, {{selectedItem.value.flower.flowerType.nameSingle}}</div>-->
+<!--          </div>-->
+<!--        </ng-template>-->
+<!--        <ng-template let-item pTemplate="item">-->
+<!--          <div class="ui-helper-clearfix">-->
+<!--            <div class="flower-size-option">-->
+<!--              <img [src]="item.value.flower.image"/>-->
+<!--              <div class="flower-size-option-info">-->
+<!--                <div class="flower-size-option-info-main"><b>{{item.value.flower.name}}</b> {{item.value.size.name}}, {{item.value.flower.flowerType.nameSingle}}</div>-->
+<!--                <div class="flower-size-option-info-additional">Ціна: {{item.value.price / 100}} грн, Доступно: {{item.value.available}} шт</div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </ng-template>-->
+<!--      </p-dropdown>-->
 
       <div class="prime-form-group">
         <div class="ui-grid-col-3">
