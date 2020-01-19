@@ -1,6 +1,11 @@
 <div class="wrapper" [ngClass]="{'not-available': !flower.hasAvailableFlowerSize}">
   <div class="cover" [ngStyle]="flower.image && {'background-image':'url(' + flower.image  + ')'}">
 
+    <div class="flags-wrapper">
+      <div class="is-new" *ngIf="flower.isNew">НОВИНКА</div>
+      <div class="is-popular" *ngIf="flower.isPopular">ХІТ</div>
+    </div>
+
     <div class="favorites-button-wrapper" *ngIf="!inFavorites && securityService.isAuthenticated()">
 
       <button mat-icon-button class="in-favorites" (click)="removeFromFavorites()"

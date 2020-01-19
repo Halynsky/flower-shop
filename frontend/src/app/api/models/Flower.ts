@@ -26,6 +26,8 @@ export class FlowerShort {
   image: string;
   hasAvailableFlowerSize: boolean;
   flowerType: FlowerType;
+  isNew: boolean = false;
+  isPopular: boolean = false;
   priceMin: number;
 }
 

@@ -79,7 +79,7 @@ public interface FlowerRepository extends JpaRepository<Flower, Long> {
         "INNER JOIN f.flowerSizes fs " +
         "INNER JOIN f.favoriteFlowersLists ffl " +
         "WHERE ffl.user.id = :userId " +
-        "GROUP BY f.id, f.name, f.nameOriginal, f.image, f.popularity, f.created, f.isNew, f.isPopular, ft.id, ft.name, ft.nameSingle, hasAvailableFlowerSize")
+        "GROUP BY f.id, f.name, f.nameOriginal, f.image, f.popularity, f.created, f.isNew, f.isPopular, ft.id, ft.name, ft.nameSingle")
     List<FlowerWithAvailableMarkProjection> findFavoriteFlowers(Long userId);
 
 

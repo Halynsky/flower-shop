@@ -27,6 +27,31 @@
       position: relative;
       overflow: hidden;
 
+      .flags-wrapper {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: flex-end;
+        color: white;
+        right: 0px;
+        top: 4px;
+        font-size: 12px;
+
+        .is-new {
+          background-color: mat-color($primary);
+          padding: 2px 4px;
+          margin-top: 4px;
+        }
+
+        .is-popular {
+          background-color: mat-color($accent);
+          padding: 2px 4px;
+          margin-top: 4px;
+        }
+
+      }
+
       .add-to-card {
         height: 50px;
         position: absolute;
@@ -62,11 +87,8 @@
         left: 8px;
         position: absolute;
         display: flex;
-        //visibility: hidden;
         align-items: center;
         width: 100%;
-        //opacity: 0;
-        //transition: opacity .3s, visibility .3s;
 
         .mat-icon-button {
           color: $black-100;

@@ -21,7 +21,7 @@ export class ShopComponent implements OnInit {
 
   flowersPage: RestPage<FlowerShort> = new RestPage<FlowerShort>();
   filters: ShopFilter = new ShopFilter();
-  sort = 'popularity,ASC';
+  sort = 'isPopular,DESC,popularity,ASC';
   searchTerm = '';
 
   pagination: Pagination;

@@ -43,8 +43,9 @@ export class FlowerService {
     return this.http.get<FlowerFull>(`${this.URL}/${id}`);
   }
 
-  getForShop(searchTerm: string, pagination: Pagination, filtersObject) {
+  getForShop(searchTerm: string, paginationObject: Pagination, filtersObject) {
     let filters = copy(filtersObject);
+    let pagination = copy(paginationObject);
     for (let key in filters) {
       filters[key] = arrayToHttpParam(filters[key])
     }
