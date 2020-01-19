@@ -64,10 +64,10 @@ export class FlowerService {
       for (let i = 0; i < sortParamsAndDirections.length; i = i + 2) {
         sortParams.push(sortParamsAndDirections[i] + ',' + sortParamsAndDirections[i + 1])
       }
-
-      params.append('searchTerm', searchTerm);
       sortParams.forEach(param => params = params.append('sort', param));
     }
+
+    params = params.append('searchTerm', searchTerm);
 
     return this.http.get<RestPage<FlowerShort>>(`${this.URL}/shop`, {params: params});
   }
