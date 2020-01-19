@@ -43,7 +43,7 @@ public class ColorController {
 
     @GetMapping
     public ResponseEntity<List<ColorProjection>> getAll() {
-        List<ColorProjection> colors = colorRepository.findProjectedBy();
+        List<ColorProjection> colors = colorRepository.findProjectedByOrderByName();
         return new ResponseEntity<>(colors, OK);
     }
 

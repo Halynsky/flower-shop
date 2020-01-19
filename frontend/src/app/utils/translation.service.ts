@@ -43,7 +43,10 @@ export class TranslationService {
     firstDay: 1,
     isRTL: false,
     showMonthAfterYear: false,
-    yearSuffix: "" };
+    yearSuffix: "",
+    today: 'Сьогодні',
+    clear: 'Очистити'
+  };
 
   constructor() {}
 

@@ -75,7 +75,7 @@
         <td *ngFor="let col of columns" [ngSwitch]="col.field">
 
           <span *ngSwitchCase="'image'" class="table-row-image-wrapper">
-            <div class="table-row-image" [ngStyle]="{'background-image': 'url(' + rowData.flower.image + ''}"></div>
+            <div class="table-row-image zoomable" [ngStyle]="{'background-image': 'url(' + rowData.flower.image + ''}" (click)="zoomImage(rowData.flower.image)"></div>
           </span>
 
           <span *ngSwitchCase="'flowerType'">
@@ -91,12 +91,12 @@
           </span>
 
           <span *ngSwitchCase="'price'">
-            {{rowData[col.field] / 100}}
+            {{rowData[col.field] / 100 + ' грн'}}
           </span>
 
           <span *ngSwitchCase="'priceOld'">
             <span *ngIf="!rowData[col.field]"></span>
-            <span *ngIf="rowData[col.field]">{{rowData[col.field] / 100}}</span>
+            <span *ngIf="rowData[col.field]">{{rowData[col.field] / 100 + ' грн'}}</span>
           </span>
 
           <span *ngSwitchDefault>
@@ -109,3 +109,10 @@
 
   </p-table>
 </div>
+
+<p-dialog [(visible)]="displayZoomDialog" class="zoom-image-dialog" [modal]="true" (onHide)="resetZoomedImage()">
+
+  <div class="zoomed-image" [ngStyle]="{'background-image': 'url(' + zoomedImage + ''}"></div>
+
+</p-dialog>
+

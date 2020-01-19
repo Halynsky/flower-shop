@@ -2,10 +2,9 @@ package ua.com.flowershop.projection;
 
 import org.springframework.beans.factory.annotation.Value;
 
-public interface FlowerShortProjection extends FlowerTinyProjection {
+public interface FlowerWithAvailableMarkProjection extends FlowerTinyProjection {
     @Value("#{@flowerSizeRepository.findMinPriceByFlowerId(target.id)}")
     Integer getPriceMin();
-    @Value("#{@flowerRepository.hasAvailableFlowerSize(target.id)}")
     Boolean  getHasAvailableFlowerSize();
     Boolean getIsNew();
     Boolean getIsPopular();

@@ -19,10 +19,10 @@
 
     <mat-form-field class="ordering-selector-wrapper">
       <mat-select placeholder="Сортування" [(ngModel)]="sort" value="popularity,ASC" (selectionChange)="sortSelectionChange($event)">
-        <mat-option value="popularity,ASC">За популярністю</mat-option>
+        <mat-option value="isPopular,DESC,popularity,ASC">За популярністю</mat-option>
         <mat-option value="price,ASC">Від дешевших до дорожчих</mat-option>
         <mat-option value="price,DESC">Від дорожчих до дешевших</mat-option>
-        <mat-option value="created,ASC">За новизною</mat-option>
+        <mat-option value="isNew,DESC,created,ASC">За новизною</mat-option>
       </mat-select>
     </mat-form-field>
 

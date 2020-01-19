@@ -104,6 +104,8 @@
               [readonlyInput]="false"
               dateFormat="dd.mm.yy"
               (onSelect)="dt.filter(createdFilters, col.field, 'dateRange')"
+              (onClearClick)="dt.filter(createdFilters, col.field, 'dateRange')"
+              showButtonBar="true"
               [locale]="translation.calendar_ua">
             </p-calendar>
           </div>
@@ -116,6 +118,8 @@
               [readonlyInput]="false"
               dateFormat="dd.mm.yy"
               (onSelect)="dt.filter(closedFilters, col.field, 'dateRange')"
+              (onClearClick)="dt.filter(closedFilters, col.field, 'dateRange')"
+              showButtonBar="true"
               [locale]="translation.calendar_ua">
             </p-calendar>
           </div>
@@ -221,8 +225,8 @@
                 <div class="head">Сума</div>
               </div>
               <div class="row" *ngFor="let orderItem of rowData.orderItems">
-                <div class="cell image-wrapper">
-                  <img [src]="orderItem.image" class="order-item-logo">
+                <div class="cell table-row-image-wrapper">
+                  <img [src]="orderItem.image" class="table-row-image zoomable" (click)="zoomImage(orderItem.image)">
                 </div>
                 <div class="cell">{{orderItem.name}}</div>
                 <div class="cell">{{orderItem.sizeName}}</div>
@@ -668,6 +672,7 @@
             appendTo="body"
             [readonlyInput]="false"
             dateFormat="dd.mm.yy"
+            showButtonBar="true"
             [locale]="translation.calendar_ua">
           </p-calendar>
         </div>
@@ -721,4 +726,10 @@
   <p-footer>
     <button pButton form="create_order_form" icon="pi pi-check" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
   </p-footer>
+</p-dialog>
+
+<p-dialog [(visible)]="displayZoomDialog" class="zoom-image-dialog" [modal]="false" (onHide)="resetZoomedImage()">
+
+  <div class="zoomed-image" [ngStyle]="{'background-image': 'url(' + zoomedImage + ''}"></div>
+
 </p-dialog>

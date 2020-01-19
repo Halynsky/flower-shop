@@ -8,11 +8,12 @@ import ua.com.flowershop.entity.Flower;
 import ua.com.flowershop.entity.User;
 import ua.com.flowershop.exception.InternalServerException;
 import ua.com.flowershop.exception.NotFoundException;
-import ua.com.flowershop.projection.FlowerShortProjection;
+import ua.com.flowershop.projection.FlowerWithAvailableMarkProjection;
 import ua.com.flowershop.repository.FavoriteFlowersListRepository;
 import ua.com.flowershop.repository.FlowerRepository;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -24,7 +25,7 @@ public class FavoritesService {
     @Autowired private FavoriteFlowersListRepository favoriteFlowersListRepository;
     @Autowired private FlowerRepository flowerRepository;
 
-    public List<FlowerShortProjection> getFavoriteFlowers(User user) {
+    public List<FlowerWithAvailableMarkProjection> getFavoriteFlowers(User user) {
         return flowerRepository.findFavoriteFlowers(user.getId());
     }
 

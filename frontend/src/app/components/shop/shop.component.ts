@@ -39,7 +39,7 @@ export class ShopComponent implements OnInit {
   }
 
   getShopItems(searchTerm: string, filters?: ShopFilter, showMore: boolean = false) {
-    this.pagination = showMore ? this.pagination.nextPage() : new Pagination(0, this.DEFAULT_PAGE_SIZE);
+    this.pagination = showMore ? this.pagination.nextPage() : new Pagination(0, this.DEFAULT_PAGE_SIZE, this.pagination ? this.pagination.sort : '');
     this.loading = true;
     this.flowerService.getForShop(searchTerm, this.pagination, filters)
       .pipe(finalize(() => this.loading = false))
@@ -67,6 +67,7 @@ export class ShopComponent implements OnInit {
   }
 
   sortSelectionChange(event) {
+    console.log("sortSelectionChange");
     this.pagination.sort = this.sort;
     this.getShopItems(this.searchTerm, this.filters)
   }

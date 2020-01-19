@@ -88,6 +88,9 @@ export class OrdersComponent implements OnInit {
 
   lastLazyLoadEvent;
 
+  displayZoomDialog = false;
+  zoomedImage;
+
   constructor(private dataService: OrderService,
               private flowerSizeService: FlowerSizeService,
               private snackBarService: SnackBarService,
@@ -538,6 +541,15 @@ export class OrdersComponent implements OnInit {
   resetCreateOrderForm(form: NgForm) {
     this.userIdToCreateOrder = null;
     form.resetForm();
+  }
+
+  zoomImage(image) {
+    this.displayZoomDialog = true;
+    this.zoomedImage = image;
+  }
+
+  resetZoomedImage() {
+    this.zoomedImage = null;
   }
 
 }

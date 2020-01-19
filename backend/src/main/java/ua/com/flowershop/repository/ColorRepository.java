@@ -16,6 +16,8 @@ public interface ColorRepository extends JpaRepository<Color, Long> {
 
     List<ColorProjection> findProjectedBy();
 
+    List<ColorProjection> findProjectedByOrderByName();
+
     Optional<ColorProjection> findProjectedById(Long id);
 
     Boolean existsByName(String name);

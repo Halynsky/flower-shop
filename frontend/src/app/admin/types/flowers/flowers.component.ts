@@ -51,17 +51,20 @@ export class FlowersComponent implements OnInit {
 
   flowerTypes = [];
 
+  displayZoomDialog = false;
+  zoomedImage;
+
   columns = [
     {field: 'id', header: 'Id', active: true},
     {field: 'image', header: 'Фото', active: true},
-    {field: 'name', header: 'Назва', active: true},
-    {field: 'nameOriginal', header: 'Назва(англ)', active: false},
+    {field: 'name', header: 'Назва(укр)', active: false},
+    {field: 'nameOriginal', header: 'Назва', active: true},
     {field: 'flowerType', header: 'Тип квітки', active: true},
     {field: 'groupName', header: 'Група', active: false},
-    {field: 'flowerSizeMin', header: 'Розмір', active: true},
-    {field: 'flowerHeightMin', header: 'Висота', active: true},
-    {field: 'isNew', header: 'Новинка', active: false},
-    {field: 'isPopular', header: 'Популярна', active: false},
+    {field: 'flowerSizeMin', header: 'Розмір квітки', active: false},
+    {field: 'flowerHeightMin', header: 'Висота стебла', active: false},
+    {field: 'isNew', header: 'Новинка', active: true},
+    {field: 'isPopular', header: 'Популярна', active: true},
     {field: 'popularity', header: 'Рейтинг', active: true},
     {field: 'color', header: 'Колір1', active: true},
     {field: 'colorSecondary', header: 'Колір2', active: true},
@@ -204,6 +207,16 @@ export class FlowersComponent implements OnInit {
       error => this.snackBarService.showError(getErrorMessage(error))
     )
   }
+
+  zoomImage(image) {
+    this.displayZoomDialog = true;
+    this.zoomedImage = image;
+  }
+
+  resetZoomedImage() {
+    this.zoomedImage = null;
+  }
+
 
 }
 

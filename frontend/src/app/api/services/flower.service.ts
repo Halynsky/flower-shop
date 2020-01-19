@@ -48,10 +48,26 @@ export class FlowerService {
     for (let key in filters) {
       filters[key] = arrayToHttpParam(filters[key])
     }
-    let params = {...filters, ...pagination};
-    params.searchTerm = searchTerm;
 
-    const httpParams = new HttpParams({fromObject: filters as any});
+    let sort = pagination.sort;
+    delete pagination.sort;
+
+    let params = new HttpParams({
+      fromObject : {...filters, ...pagination}
+    });
+
+    if (sort) {
+      let sortParamsAndDirections = sort.split(",");
+      let sortParams = [];
+
+      for (let i = 0; i < sortParamsAndDirections.length; i = i + 2) {
+        sortParams.push(sortParamsAndDirections[i] + ',' + sortParamsAndDirections[i + 1])
+      }
+
+      params.append('searchTerm', searchTerm);
+      sortParams.forEach(param => params = params.append('sort', param));
+    }
+
     return this.http.get<RestPage<FlowerShort>>(`${this.URL}/shop`, {params: params});
   }
 

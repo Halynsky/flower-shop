@@ -165,8 +165,7 @@
             {{rowData[col.field]}}
           </span>
           <span *ngSwitchCase="'image'" class="table-row-image-wrapper">
-            <div class="table-row-image" [ngStyle]="{'background-image': 'url(' + rowData.image + ''}">
-            </div>
+            <div class="table-row-image zoomable" [ngStyle]="{'background-image': 'url(' + rowData.image + ''}" (click)="zoomImage(rowData.image)"></div>
           </span>
           <span *ngSwitchCase="'name'">
             {{rowData[col.field]}}
@@ -249,4 +248,10 @@
 </div>
 
 <p-contextMenu #cm [model]="menuItems"></p-contextMenu>
+
+<p-dialog [(visible)]="displayZoomDialog" class="zoom-image-dialog" [modal]="true" (onHide)="resetZoomedImage()">
+
+  <div class="zoomed-image" [ngStyle]="{'background-image': 'url(' + zoomedImage + ''}"></div>
+
+</p-dialog>
 

@@ -31,17 +31,36 @@ input.table-filter {
 }
 
 .table-row-image-wrapper {
+  text-align: center;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   .table-row-image {
     height: 50px;
     width: 50px;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
+    &.zoomable {
+      cursor: pointer;
+    }
   }
 }
+.zoom-image-dialog {
+  .ui-dialog {
+    .ui-dialog-titlebar {
+      padding: 4px 8px;
+    }
+  }
+
+  .zoomed-image {
+    height: 500px;
+    width: 500px;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+}
+
 
 
 .expanded-row-table {

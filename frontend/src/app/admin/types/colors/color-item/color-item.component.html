@@ -54,15 +54,17 @@
             #hex="ngModel"
             id="hex"
             name="hex"
-            readonly
+            maxlength="7"
             [uniqueValidator]="dataService.isHexFree.bind(dataService)"
             [previousValue]="previousColor"
             [(ngModel)]="item.hex"
+            pattern="^#([0-9a-f]{6})$"
           />
         </div>
-        <div class="ui-grid-col-3" *ngIf="hex.errors?.unique">
+        <div class="ui-grid-col-3" *ngIf="hex.errors">
           <ng-container>
-            <p-message severity="error" text="Даний HEX вже існує"></p-message>
+            <p-message *ngIf="hex.errors?.unique" severity="error" text="Даний HEX вже існує"></p-message>
+            <p-message *ngIf="hex.errors?.pattern" severity="error" text="Введіть ваділдний код кольору"></p-message>
           </ng-container>
         </div>
       </div>

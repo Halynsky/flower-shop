@@ -26,7 +26,7 @@ export class WarehouseComponent implements OnInit {
     {field: 'flower', header: 'Назва', active: true},
     {field: 'flowerType', header: 'Тип', active: true},
     {field: 'size', header: 'Розмір', active: true},
-    {field: 'price', header: 'Ціна, грн', active: true},
+    {field: 'price', header: 'Ціна', active: true},
     {field: 'priceOld', header: 'Ціна(до знижки), грн', active: false},
     {field: 'amount', header: 'Кількість', active: true},
     {field: 'sold', header: 'Продано', active: true},
@@ -39,6 +39,9 @@ export class WarehouseComponent implements OnInit {
   items: RestPage<FlowerSize> = new RestPage<FlowerSize>();
 
   flowerTypes = [];
+
+  displayZoomDialog = false;
+  zoomedImage;
 
   constructor(private dataService: FlowerSizeService,
               private flowerTypeService: FlowerTypeService,
@@ -80,6 +83,15 @@ export class WarehouseComponent implements OnInit {
       },
       error => this.snackBarService.showError(getErrorMessage(error))
     )
+  }
+
+  zoomImage(image) {
+    this.displayZoomDialog = true;
+    this.zoomedImage = image;
+  }
+
+  resetZoomedImage() {
+    this.zoomedImage = null;
   }
 
 }

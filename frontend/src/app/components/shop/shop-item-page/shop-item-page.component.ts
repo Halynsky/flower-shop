@@ -42,7 +42,7 @@ export class ShopItemPageComponent implements OnInit {
       bucketItem.amount = 0;
       bucketItem.price = flowerSize.price;
       bucketItem.image = flower.image;
-      bucketItem.name = flower.name;
+      bucketItem.name = flower.nameOriginal;
       bucketItem.sizeName = flowerSize.size.name;
       bucketItem.flowerSizeId = flowerSize.id;
       bucketItem.flowerTypeName = flower.flowerType.nameSingle;

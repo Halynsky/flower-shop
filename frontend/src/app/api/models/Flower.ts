@@ -22,6 +22,7 @@ export class Flower {
 export class FlowerShort {
   id: number;
   name: string;
+  nameOriginal: string;
   image: string;
   hasAvailableFlowerSize: boolean;
   flowerType: FlowerType;
