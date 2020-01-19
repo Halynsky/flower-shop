@@ -60,6 +60,9 @@ public class FlowerTypeService {
         flowerType.setPlantingMaterialType(flowerTypeModel.getPlantingMaterialType());
         flowerType.setDescription(flowerTypeModel.getDescription());
         if(nonNull(image)) {
+            if (nonNull(flowerType.getImage())) {
+                imageService.silentDelete(flowerType.getImage());
+            }
             String imageUrl = imageService.updateImage(image, flowerType.getImage(), MAX_FLOWER_TYPE_IMG_SIZE);
             flowerType.setImage(imageUrl);
         }

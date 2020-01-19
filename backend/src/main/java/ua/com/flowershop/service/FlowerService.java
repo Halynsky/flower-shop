@@ -93,6 +93,9 @@ public class FlowerService {
     public void update(Long id, FlowerModel flower, MultipartFile image) {
         Flower flowerToUpdate = flowerRepository.findById(id).orElseThrow(NotFoundException::new);
         if(nonNull(image)) {
+            if (nonNull(flowerToUpdate.getImage())) {
+                imageService.silentDelete(flowerToUpdate.getImage());
+            }
             String imageUrl = imageService.saveImage(image, MAX_FLOWER_TYPE_IMG_SIZE);
             flower.setImage(imageUrl);
         }
