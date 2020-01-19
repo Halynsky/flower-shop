@@ -28,7 +28,7 @@ export class FlowerTypeItemComponent implements OnInit {
     {label: 'Бульбоцибулина', value: 'Бульбоцибулина'},
     {label: 'Коренева шийка', value: 'Коренева шийка'},
     {label: 'Корінь', value: 'Корінь'},
-    {label: 'Корінь з бруньками', value: 'Корінь з бруньками'},
+    {label: 'Кореневище', value: 'Кореневище'},
     {label: 'Цибулина', value: 'Цибулина'},
   ];
 
