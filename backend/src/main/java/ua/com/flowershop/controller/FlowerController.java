@@ -3,10 +3,8 @@ package ua.com.flowershop.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.JpaSort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,13 +18,11 @@ import ua.com.flowershop.projection.FlowerWithAvailableMarkProjection;
 import ua.com.flowershop.repository.FlowerRepository;
 import ua.com.flowershop.repository.FlowerSizeRepository;
 import ua.com.flowershop.service.FlowerService;
-import ua.com.flowershop.util.HibernateUtil;
 import ua.com.flowershop.util.annotation.PageableSwagger;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.OK;
@@ -100,16 +96,8 @@ public class FlowerController {
         @RequestParam(required = false) List<Long> sizeFilters,
         @RequestParam(required = false) List<Long> colorFilters,
         @PageableDefault(sort = "popularity", direction = Sort.Direction.DESC) Pageable pageRequest) {
-        flowerTypeFilters = HibernateUtil.fixEmptyFilter(flowerTypeFilters);
-        sizeFilters = HibernateUtil.fixEmptyFilter(sizeFilters);
-        colorFilters = HibernateUtil.fixEmptyFilter(colorFilters);
 
-        Sort.Order sortOrder = pageRequest.getSort().get().findFirst().orElse(null);
-        if (Objects.nonNull(sortOrder) && sortOrder.getProperty().equals("price")) {
-            pageRequest = PageRequest.of(pageRequest.getPageNumber(), pageRequest.getPageSize(), JpaSort.unsafe(sortOrder.getDirection(), "(" + sortOrder.getProperty() + ")"));
-        }
-
-        return new ResponseEntity<>(flowerRepository.findProjectedByFilters(searchTerm, flowerTypeFilters, colorFilters, sizeFilters, pageRequest), OK);
+        return new ResponseEntity<>(flowerService.getForShop(searchTerm, flowerTypeFilters, colorFilters, sizeFilters, pageRequest), OK);
     }
 
     @GetMapping("/{id}/full")

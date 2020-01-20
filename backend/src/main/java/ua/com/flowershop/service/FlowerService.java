@@ -3,7 +3,10 @@ package ua.com.flowershop.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.JpaSort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,11 +16,14 @@ import ua.com.flowershop.exception.ConflictException;
 import ua.com.flowershop.exception.NotFoundException;
 import ua.com.flowershop.model.FlowerModel;
 import ua.com.flowershop.projection.FlowerFullProjection;
+import ua.com.flowershop.projection.FlowerWithAvailableMarkProjection;
 import ua.com.flowershop.repository.FlowerRepository;
 import ua.com.flowershop.repository.FlowerSizeRepository;
+import ua.com.flowershop.util.HibernateUtil;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
@@ -51,6 +57,22 @@ public class FlowerService {
 
     public FlowerFullProjection getFlowerById(Long id) {
         return flowerRepository.findProjectedById(id).orElseThrow(NotFoundException::new);
+    }
+
+    public Page<FlowerWithAvailableMarkProjection> getForShop (String searchTerm, List<Long> flowerTypeFilters, List<Long> sizeFilters,
+                                                               List<Long> colorFilters, Pageable pageRequest) {
+
+        flowerTypeFilters = HibernateUtil.fixEmptyFilter(flowerTypeFilters);
+        sizeFilters = HibernateUtil.fixEmptyFilter(sizeFilters);
+        colorFilters = HibernateUtil.fixEmptyFilter(colorFilters);
+
+        Sort.Order sortOrder = pageRequest.getSort().get().findFirst().orElse(null);
+        if (Objects.nonNull(sortOrder) && sortOrder.getProperty().equals("price")) {
+            pageRequest = PageRequest.of(pageRequest.getPageNumber(), pageRequest.getPageSize(), JpaSort.unsafe(sortOrder.getDirection(), "(" + sortOrder.getProperty() + ")"));
+        }
+
+        return flowerRepository.findProjectedByFilters(searchTerm, flowerTypeFilters, colorFilters, sizeFilters, pageRequest);
+
     }
 
     public FlowerFullProjection getFlowerFullById(Long id) {

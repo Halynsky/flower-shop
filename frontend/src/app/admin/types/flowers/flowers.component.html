@@ -144,6 +144,8 @@
               [readonlyInput]="false"
               dateFormat="dd.mm.yy"
               (onSelect)="dt.filter(dateFilters, col.field, 'dateRange')"
+              (onClearClick)="dt.filter(dateFilters, col.field, 'dateRange')"
+              showButtonBar="true"
               [locale]="translation.calendar_ua">
             </p-calendar>
           </div>
@@ -180,10 +182,10 @@
             {{rowData[col.field]}}
           </span>
           <span *ngSwitchCase="'flowerSizeMin'">
-            {{rowData[col.field]}} см - {{rowData['flowerSizeMax']}} см
+            <span *ngIf="rowData.flowerSizeMin && rowData.flowerSizeMax">{{rowData.flowerSizeMin}} см - {{rowData.flowerSizeMax}} см</span>
           </span>
           <span *ngSwitchCase="'flowerHeightMin'">
-            {{rowData[col.field]}} см - {{rowData['flowerHeightMax']}} см
+            {{rowData.flowerHeightMin}} см - {{rowData.flowerHeightMax}} см
           </span>
           <span *ngSwitchCase="'isNew'">
             <div class="true-false-ico">

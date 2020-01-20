@@ -57,12 +57,12 @@
         <div class="specification-label">Посадковий матеріал</div>
         <div class="specification-value">{{flower.flowerType.plantingMaterialType}}</div>
       </div>
-      <div class="specification">
-        <div class="specification-label" *ngIf="flower.flowerHeightMin && flower.flowerHeightMax">Висота стебла</div>
+      <div class="specification" *ngIf="flower.flowerHeightMin && flower.flowerHeightMax">
+        <div class="specification-label" >Висота стебла</div>
         <div class="specification-value">{{flower.flowerHeightMin}} см - {{flower.flowerHeightMax}} см</div>
       </div>
-      <div class="specification">
-        <div class="specification-label" *ngIf="flower.flowerSizeMin && flower.flowerSizeMax">Розмір квітки</div>
+      <div class="specification" *ngIf="flower.flowerSizeMin && flower.flowerSizeMax">
+        <div class="specification-label" >Розмір квітки</div>
         <div class="specification-value">{{flower.flowerSizeMin}} см - {{flower.flowerSizeMax}} см</div>
       </div>
     </div>
