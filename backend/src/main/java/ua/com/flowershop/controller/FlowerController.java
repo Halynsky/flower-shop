@@ -14,7 +14,7 @@ import ua.com.flowershop.model.FlowerModel;
 import ua.com.flowershop.projection.FlowerFullProjection;
 import ua.com.flowershop.projection.FlowerProjection;
 import ua.com.flowershop.projection.FlowerSizeFullProjection;
-import ua.com.flowershop.projection.FlowerWithAvailableMarkProjection;
+import ua.com.flowershop.projection.FlowerWithAvailableFlagProjection;
 import ua.com.flowershop.repository.FlowerRepository;
 import ua.com.flowershop.repository.FlowerSizeRepository;
 import ua.com.flowershop.service.FlowerService;
@@ -90,7 +90,7 @@ public class FlowerController {
 
     @PageableSwagger
     @GetMapping("/shop")
-    public ResponseEntity<Page<FlowerWithAvailableMarkProjection>> getForShop(
+    public ResponseEntity<Page<FlowerWithAvailableFlagProjection>> getForShop(
         @RequestParam(required = false) String searchTerm,
         @RequestParam(required = false) List<Long> flowerTypeFilters,
         @RequestParam(required = false) List<Long> sizeFilters,

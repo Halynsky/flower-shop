@@ -1,6 +1,7 @@
 package ua.com.flowershop.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -8,8 +9,6 @@ import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.com.flowershop.entity.User;
@@ -23,13 +22,13 @@ import javax.validation.ValidationException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
+@Slf4j
 @Service
 public class FacebookSocialService {
 
     @Autowired private SocialConnectionService socialConnectionService;
     @Autowired private ObjectMapper objectMapper;
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
     private final String FB_API_VERSION = "v3.1";
 
     private HttpClient client;

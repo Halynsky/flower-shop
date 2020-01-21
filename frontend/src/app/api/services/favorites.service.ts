@@ -2,7 +2,6 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { API_URL } from "../../utils/Costants";
 import { SecurityService } from "../../services/security.service";
-import { takeUntil } from "rxjs/operators";
 import { FlowerShort } from "../models/Flower";
 
 @Injectable({providedIn: 'root'})
@@ -16,15 +15,17 @@ export class FavoritesService {
               private securityService: SecurityService) {
     if(securityService.isAuthenticated()) {
       this.loadFavoriteFlowersIds();
-    } else {
-      this.securityService.onLogin
-        .pipe(takeUntil(this.securityService.onLogout))
-        .subscribe(() => {
-        this.loadFavoriteFlowersIds();
-      })
     }
 
+    this.securityService.onLogin
+      .subscribe(() => {
+        this.loadFavoriteFlowersIds();
+      });
 
+    this.securityService.onLogout
+      .subscribe(() => {
+        this.favoriteFlowerIds = [];
+      });
   }
 
   getFavoriteFlowersIds() {

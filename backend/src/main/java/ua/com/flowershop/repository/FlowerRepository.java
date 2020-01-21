@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import ua.com.flowershop.entity.Flower;
 import ua.com.flowershop.projection.FlowerFullProjection;
 import ua.com.flowershop.projection.FlowerProjection;
-import ua.com.flowershop.projection.FlowerWithAvailableMarkProjection;
+import ua.com.flowershop.projection.FlowerWithAvailableFlagProjection;
 import ua.com.flowershop.projection.IdNameTupleProjection;
 
 import java.time.LocalDateTime;
@@ -56,8 +56,8 @@ public interface FlowerRepository extends JpaRepository<Flower, Long> {
     Integer countByFlowerSizesSizeId(Long flowerSizeId);
 
     @Query("SELECT DISTINCT(f.id) as id, f.name as name, f.nameOriginal as nameOriginal, f.image as image, f.popularity as popularity, f.created as created, " +
-        "min(fs.price) as price, f.flowerType as flowerType, (CASE WHEN MAX(fs.amount - fs.reserved) > 0 THEN true ELSE false END) as hasAvailableFlowerSize, " +
-        "f.isNew as isNew, f.isPopular as isPopular " +
+        "min(fs.price) as priceMin, f.flowerType as flowerType, f.isNew as isNew, f.isPopular as isPopular, f.groupName as groupName, " +
+        "(CASE WHEN MAX(fs.amount - fs.reserved) > 0 THEN true ELSE false END) as hasAvailableFlowerSize " +
         "FROM Flower f " +
         "INNER JOIN f.flowerType ft " +
         "INNER JOIN f.color c " +
@@ -70,17 +70,20 @@ public interface FlowerRepository extends JpaRepository<Flower, Long> {
         "AND (COALESCE(:colorFilters, NULL) IS NULL OR c.id IN :colorFilters) " +
         "AND (COALESCE(:sizeFilters, NULL) IS NULL OR fs.size.id IN :sizeFilters) " +
         "GROUP BY f.id, f.name, f.nameOriginal, f.image, f.popularity, f.created, f.isNew, f.isPopular, ft.id, ft.name, ft.nameSingle")
-    Page<FlowerWithAvailableMarkProjection> findProjectedByFilters(String searchTerm, List<Long> flowerTypeFilters, List<Long> colorFilters, List<Long> sizeFilters, Pageable pageable);
+    Page<FlowerWithAvailableFlagProjection> findProjectedByFilters(String searchTerm, List<Long> flowerTypeFilters, List<Long> colorFilters, List<Long> sizeFilters, Pageable pageable);
 
     @Query("SELECT DISTINCT(f.id) as id, f.name as name, f.nameOriginal as nameOriginal, f.image as image, f.popularity as popularity, f.created as created, " +
-        "min(fs.price) as price, f.isNew as isNew, f.isPopular as isPopular, f.flowerType as flowerType, (CASE WHEN MAX(fs.amount - fs.reserved) > 0 THEN true ELSE false END) as hasAvailableFlowerSize FROM Flower f " +
+        "min(fs.price) as priceMin, f.isNew as isNew, f.isPopular as isPopular, f.flowerType as flowerType, f.groupName as groupName, " +
+        "(CASE WHEN MAX(fs.amount - fs.reserved) > 0 THEN true ELSE false END) as hasAvailableFlowerSize " +
+        "FROM Flower f " +
         "INNER JOIN f.flowerType ft " +
         "INNER JOIN f.color c " +
         "INNER JOIN f.flowerSizes fs " +
         "INNER JOIN f.favoriteFlowersLists ffl " +
         "WHERE ffl.user.id = :userId " +
-        "GROUP BY f.id, f.name, f.nameOriginal, f.image, f.popularity, f.created, f.isNew, f.isPopular, ft.id, ft.name, ft.nameSingle")
-    List<FlowerWithAvailableMarkProjection> findFavoriteFlowers(Long userId);
+        "GROUP BY f.id, f.name, f.nameOriginal, f.image, f.popularity, f.created, f.isNew, f.isPopular, ft.id, ft.name, ft.nameSingle " +
+        "ORDER BY isPopular DESC, popularity ASC")
+    List<FlowerWithAvailableFlagProjection> findFavoriteFlowers(Long userId);
 
 
     Optional<FlowerFullProjection> findFullProjectedById(Long id);

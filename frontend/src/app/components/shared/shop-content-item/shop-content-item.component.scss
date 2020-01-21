@@ -10,22 +10,67 @@
     min-height: 200px;
     border-radius: 2px;
     display: grid;
-    grid-template-rows: 250px 1fr;
+    grid-template-rows: 200px 1fr;
     opacity: 1;
 
+    @include response(xs) {
+      grid-template-rows: 280px 1fr;
+    }
+
+    @include response(sm) {
+      grid-template-rows: 250px 1fr;
+    }
+
+    .not-available-mark {
+      display: none;
+      font-size: 14px;
+    }
+
     &.not-available {
-      opacity: 0.5;
+
+      .info {
+
+        .price {
+          color: $grey-400;
+        }
+
+        .flower-type-name {
+          opacity: 0.6;
+        }
+
+        .name {
+          opacity: 0.6;
+        }
+
+      }
+
+      .not-available-mark {
+        display: block;
+        color: mat-color($accent);
+        margin-top: 2px;
+      }
+
+
+
     }
 
     .cover {
       width: 100%;
-      height: 250px;
+      height: 200px;
       background-position: center;
       background-size: cover;
       border-top-left-radius: 2px;
       border-top-right-radius: 2px;
       position: relative;
       overflow: hidden;
+
+      @include response(xs) {
+        height: 280px;
+      }
+
+      @include response(sm) {
+        height: 250px;
+      }
 
       .flags-wrapper {
         position: absolute;
@@ -170,22 +215,23 @@
         line-height: 120%;
         position: relative;
         z-index: 2;
+        margin-bottom: 2px;
       }
 
       .name {
         //color: $grey-800;
         color: mat-color($primary);
-        font-size: 20px;
+        font-size: 18px;
         position: relative;
         z-index: 2;
         font-weight: 500;
+        margin-bottom: 2px;
       }
 
       .price {
         //color: $black-100;
         color: mat-color($accent, 400);
         font-weight: 500;
-        margin-top: 4px;
         position: relative;
         z-index: 2;
       }

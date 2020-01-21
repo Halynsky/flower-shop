@@ -8,7 +8,7 @@ import ua.com.flowershop.entity.Flower;
 import ua.com.flowershop.entity.User;
 import ua.com.flowershop.exception.InternalServerException;
 import ua.com.flowershop.exception.NotFoundException;
-import ua.com.flowershop.projection.FlowerWithAvailableMarkProjection;
+import ua.com.flowershop.projection.FlowerWithAvailableFlagProjection;
 import ua.com.flowershop.repository.FavoriteFlowersListRepository;
 import ua.com.flowershop.repository.FlowerRepository;
 
@@ -25,7 +25,7 @@ public class FavoritesService {
     @Autowired private FavoriteFlowersListRepository favoriteFlowersListRepository;
     @Autowired private FlowerRepository flowerRepository;
 
-    public List<FlowerWithAvailableMarkProjection> getFavoriteFlowers(User user) {
+    public List<FlowerWithAvailableFlagProjection> getFavoriteFlowers(User user) {
         return flowerRepository.findFavoriteFlowers(user.getId());
     }
 

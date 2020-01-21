@@ -23,7 +23,7 @@ export class ShopComponent implements OnInit {
 
   flowersPage: RestPage<FlowerShort> = new RestPage<FlowerShort>();
   filters: ShopFilter = new ShopFilter();
-  sort = 'isPopular,DESC,popularity,ASC';
+  sort = 'hasAvailableFlowerSize,DESC,isPopular,DESC,popularity,ASC';
   searchTerm = '';
 
   pagination: Pagination;
@@ -36,7 +36,7 @@ export class ShopComponent implements OnInit {
               public dialog: MatDialog,
               @Inject('Window') private window: Window,
               @Inject(DOCUMENT) private document: Document) {
-    this.getShopItems(this.searchTerm);
+    //this.getShopItems(this.searchTerm);
   }
 
   ngOnInit() {

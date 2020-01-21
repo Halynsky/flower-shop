@@ -3,6 +3,7 @@ export class FlowerType {
   name: string;
   nameSingle: string;
   nameOriginal: string;
+  groupName: string;
   flowersCount: number;
   image: string;
   plantingMaterialType: string;

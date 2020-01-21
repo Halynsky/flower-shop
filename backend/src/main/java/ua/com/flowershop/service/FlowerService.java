@@ -16,14 +16,15 @@ import ua.com.flowershop.exception.ConflictException;
 import ua.com.flowershop.exception.NotFoundException;
 import ua.com.flowershop.model.FlowerModel;
 import ua.com.flowershop.projection.FlowerFullProjection;
-import ua.com.flowershop.projection.FlowerWithAvailableMarkProjection;
+import ua.com.flowershop.projection.FlowerWithAvailableFlagProjection;
 import ua.com.flowershop.repository.FlowerRepository;
 import ua.com.flowershop.repository.FlowerSizeRepository;
 import ua.com.flowershop.util.HibernateUtil;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
@@ -33,6 +34,7 @@ import static java.util.Objects.nonNull;
 public class FlowerService {
 
     private static final int MAX_FLOWER_TYPE_IMG_SIZE = 600;
+    private static final List<String> unsafeSortingFields =  Arrays.asList("hasAvailableFlowerSize");
 
     @Autowired private FlowerRepository flowerRepository;
     @Autowired private ImageService imageService;
@@ -59,19 +61,14 @@ public class FlowerService {
         return flowerRepository.findProjectedById(id).orElseThrow(NotFoundException::new);
     }
 
-    public Page<FlowerWithAvailableMarkProjection> getForShop (String searchTerm, List<Long> flowerTypeFilters, List<Long> sizeFilters,
+    public Page<FlowerWithAvailableFlagProjection> getForShop (String searchTerm, List<Long> flowerTypeFilters, List<Long> sizeFilters,
                                                                List<Long> colorFilters, Pageable pageRequest) {
 
         flowerTypeFilters = HibernateUtil.fixEmptyFilter(flowerTypeFilters);
         sizeFilters = HibernateUtil.fixEmptyFilter(sizeFilters);
         colorFilters = HibernateUtil.fixEmptyFilter(colorFilters);
 
-        Sort.Order sortOrder = pageRequest.getSort().get().findFirst().orElse(null);
-        if (Objects.nonNull(sortOrder) && sortOrder.getProperty().equals("price")) {
-            pageRequest = PageRequest.of(pageRequest.getPageNumber(), pageRequest.getPageSize(), JpaSort.unsafe(sortOrder.getDirection(), "(" + sortOrder.getProperty() + ")"));
-        }
-
-        return flowerRepository.findProjectedByFilters(searchTerm, flowerTypeFilters, colorFilters, sizeFilters, pageRequest);
+        return flowerRepository.findProjectedByFilters(searchTerm, flowerTypeFilters, colorFilters, sizeFilters, replaceUnsafeFields(pageRequest));
 
     }
 
@@ -165,9 +162,31 @@ public class FlowerService {
             .setFlowerType(flower.getFlowerType()).setColor(flower.getColor());
         flowerRepository.save(flowerToUpdate);
 
-
     }
 
+    private Pageable replaceUnsafeFields (Pageable pageRequest) {
+        Iterator sortIterator = pageRequest.getSort().iterator();
+        Sort sort = null;
 
+        while (sortIterator.hasNext()) {
+            Sort.Order sortOrder = ((Sort.Order) sortIterator.next());
+            Sort sortPart;
+
+            if (unsafeSortingFields.contains("hasAvailableFlowerSize")) {
+                sortPart = JpaSort.unsafe(sortOrder.getDirection(), "(" + sortOrder.getProperty() + ")");
+            } else {
+                sortPart = JpaSort.by(sortOrder);
+            }
+
+            if(isNull(sort)) {
+                sort = sortPart;
+            } else {
+                sort =  sort.and(sortPart);
+            }
+
+        }
+
+        return PageRequest.of(pageRequest.getPageNumber(), pageRequest.getPageSize(), sort);
+    }
 
 }
