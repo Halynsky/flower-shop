@@ -26,7 +26,7 @@ export class FlowerTypeItemComponent implements OnInit {
   plantingMaterialTypes = [
     {label: 'Бульба', value: 'Бульба'},
     {label: 'Бульбоцибулина', value: 'Бульбоцибулина'},
-    {label: 'Коренева шийка', value: 'Коренева шийка'},
+    {label: 'Коренева шишка', value: 'Коренева шишка'},
     {label: 'Корінь', value: 'Корінь'},
     {label: 'Кореневище', value: 'Кореневище'},
     {label: 'Цибулина', value: 'Цибулина'},
