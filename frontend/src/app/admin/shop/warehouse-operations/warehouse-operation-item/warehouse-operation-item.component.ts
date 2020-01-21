@@ -52,8 +52,8 @@ export class WarehouseOperationItemComponent {
   }
 
 
-  getWarehouseOperationType(operationType) {
-    this.dataService.getWarehouseOperationType(operationType).subscribe(
+  getWarehouseOperationType() {
+    this.dataService.getWarehouseOperationType(this.itemWarehouseOperationType.operationType).subscribe(
       item => {
         this.itemWarehouseOperationType = item;
         if (item.direction === WarehouseOperationType.Direction.IN) {

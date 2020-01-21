@@ -11,10 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ua.com.flowershop.model.FlowerModel;
-import ua.com.flowershop.projection.FlowerFullProjection;
-import ua.com.flowershop.projection.FlowerProjection;
-import ua.com.flowershop.projection.FlowerSizeFullProjection;
-import ua.com.flowershop.projection.FlowerWithAvailableFlagProjection;
+import ua.com.flowershop.projection.*;
 import ua.com.flowershop.repository.FlowerRepository;
 import ua.com.flowershop.repository.FlowerSizeRepository;
 import ua.com.flowershop.service.FlowerService;
@@ -64,8 +61,8 @@ public class FlowerController {
     }
 
     @GetMapping("/forSelector")
-    public ResponseEntity<List<FlowerProjection>> getForSelector() {
-        return new ResponseEntity<>(flowerRepository.findProjectedByOrderByName(), OK);
+    public ResponseEntity<List<FlowerSelectorProjection>> getForSelector() {
+        return new ResponseEntity<>(flowerRepository.findProjectedForSelectorByOrderByName(), OK);
     }
 
     @GetMapping("/{id}/flowerSizes")

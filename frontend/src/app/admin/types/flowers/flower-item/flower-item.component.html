@@ -25,15 +25,11 @@
             required
           />
         </div>
-        <div class="ui-grid-col-3" *ngIf="nameOriginal.errors?.unique">
-          <ng-container>
-            <p-message severity="error" text="Дана квітка вже існує"></p-message>
-          </ng-container>
-        </div>
         <div class="ui-grid-col-3">
           <div *ngIf="nameOriginal.errors">
             <ng-container *ngIf="nameOriginal.dirty || nameOriginal.touched || form.submitted">
               <p-message *ngIf="nameOriginal.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
+              <p-message *ngIf="nameOriginal.errors?.unique" severity="error" text="Дана квітка вже існує"></p-message>
             </ng-container>
           </div>
         </div>
@@ -55,15 +51,11 @@
             required
           />
         </div>
-        <div class="ui-grid-col-3" *ngIf="name.errors?.unique">
-          <ng-container>
-            <p-message severity="error" text="Дана квітка вже існує"></p-message>
-          </ng-container>
-        </div>
         <div class="ui-grid-col-3">
           <div *ngIf="name.errors">
             <ng-container *ngIf="name.dirty || name.touched || form.submitted">
               <p-message *ngIf="name.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
+              <p-message *ngIf="name.errors?.unique" severity="error" text="Дана квітка вже існує"></p-message>
             </ng-container>
           </div>
         </div>
@@ -416,7 +408,7 @@
         <div class="ui-grid-col-4">
           <input
             pInputText
-            #name="ngModel"
+            #sizeName="ngModel"
             name="name"
             [(ngModel)]="sizeToCreate.name"
             [uniqueValidator]="sizeService.isNameFree.bind(sizeService)"
