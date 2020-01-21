@@ -11,7 +11,47 @@
 
       <div class="prime-form-group">
         <div class="ui-grid-col-3">
-          <label for="name">Назва</label>
+          <label for="nameOriginal">Назва (англ)</label>
+        </div>
+        <div class="ui-grid-col-3">
+          <input
+            pInputText
+            #nameOriginal="ngModel"
+            id="nameOriginal"
+            name="nameOriginal"
+            [(ngModel)]="item.nameOriginal"
+            required/>
+        </div>
+        <div class="ui-grid-col-32" *ngIf="name.errors">
+          <ng-container>
+            <p-message severity="error" text="Повинно бути вказано" *ngIf="name.errors?.required"></p-message>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="prime-form-group">
+        <div class="ui-grid-col-3">
+          <label for="nameSingle">Назва (одн)</label>
+        </div>
+        <div class="ui-grid-col-3">
+          <input
+            pInputText
+            #nameSingle="ngModel"
+            id="nameSingle"
+            name="nameSingle"
+            [(ngModel)]="item.nameSingle"
+            required/>
+        </div>
+        <div class="ui-grid-col-3" *ngIf="name.errors">
+          <ng-container>
+            <p-message severity="error" text="Повинно бути вказано" *ngIf="name.errors?.required"></p-message>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="prime-form-group">
+        <div class="ui-grid-col-3">
+          <label for="name">Назва (множ)</label>
         </div>
         <div class="ui-grid-col-3">
           <input
@@ -33,45 +73,7 @@
         </div>
       </div>
 
-      <div class="prime-form-group">
-        <div class="ui-grid-col-3">
-          <label for="nameSingle">Назва(однина)</label>
-        </div>
-        <div class="ui-grid-col-3">
-          <input
-            pInputText
-            #nameSingle="ngModel"
-            id="nameSingle"
-            name="nameSingle"
-            [(ngModel)]="item.nameSingle"
-            required/>
-        </div>
-        <div class="ui-grid-col-3" *ngIf="name.errors">
-          <ng-container>
-            <p-message severity="error" text="Повинно бути вказано" *ngIf="name.errors?.required"></p-message>
-          </ng-container>
-        </div>
-      </div>
 
-      <div class="prime-form-group">
-        <div class="ui-grid-col-3">
-          <label for="nameOriginal">Назва(Англ)</label>
-        </div>
-        <div class="ui-grid-col-3">
-          <input
-            pInputText
-            #nameOriginal="ngModel"
-            id="nameOriginal"
-            name="nameOriginal"
-            [(ngModel)]="item.nameOriginal"
-            required/>
-        </div>
-        <div class="ui-grid-col-32" *ngIf="name.errors">
-          <ng-container>
-            <p-message severity="error" text="Повинно бути вказано" *ngIf="name.errors?.required"></p-message>
-          </ng-container>
-        </div>
-      </div>
 
       <div class="prime-form-group">
         <div class="ui-grid-col-3">
