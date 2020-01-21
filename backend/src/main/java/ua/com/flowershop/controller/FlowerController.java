@@ -94,7 +94,7 @@ public class FlowerController {
         @RequestParam(required = false) List<Long> colorFilters,
         @PageableDefault(sort = "popularity", direction = Sort.Direction.DESC) Pageable pageRequest) {
 
-        return new ResponseEntity<>(flowerService.getForShop(searchTerm, flowerTypeFilters, colorFilters, sizeFilters, pageRequest), OK);
+        return new ResponseEntity<>(flowerService.getForShop(searchTerm, flowerTypeFilters, sizeFilters, colorFilters, pageRequest), OK);
     }
 
     @GetMapping("/{id}/full")

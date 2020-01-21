@@ -14,7 +14,7 @@
     opacity: 1;
 
     @include response(xs) {
-      grid-template-rows: 280px 1fr;
+      grid-template-rows: 300px 1fr;
     }
 
     @include response(sm) {
@@ -65,7 +65,7 @@
       overflow: hidden;
 
       @include response(xs) {
-        height: 280px;
+        height: 300px;
       }
 
       @include response(sm) {
