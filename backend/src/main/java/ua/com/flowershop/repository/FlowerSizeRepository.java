@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ua.com.flowershop.entity.FlowerSize;
 import ua.com.flowershop.projection.FlowerSizeFullProjection;
+import ua.com.flowershop.projection.FlowerSizeFullProjectionWithAvailable;
 import ua.com.flowershop.projection.FlowerSizeTinyProjection;
 
 import java.util.List;
@@ -15,14 +16,15 @@ import java.util.Optional;
 @Repository
 public interface FlowerSizeRepository extends JpaRepository<FlowerSize, Long> {
 
-    @Query("SELECT fs FROM FlowerSize fs WHERE " +
+    @Query("SELECT fs.id as id, fs.price as price, fs.priceOld as priceOld, fs.amount as amount, fs.sold as sold, fs.reserved as reserved, " +
+        "(fs.amount - fs.reserved) as available, fs.flower as flower, fs.size as size FROM FlowerSize fs WHERE " +
         "(:id IS null OR fs.id = :id) " +
         "AND (:flowerNamePart IS null OR lower(fs.flower.nameOriginal) LIKE '%' || lower(cast(:flowerNamePart as string)) || '%' ) " +
         "AND (COALESCE(:flowerTypeNames, NULL) IS NULL OR fs.flower.flowerType.name IN :flowerTypeNames) " +
         "AND (:priceFrom IS null OR fs.price >= :priceFrom) AND (:priceTo IS null OR fs.price <= :priceTo) " +
         "AND (:colorNamePart IS null OR lower(fs.flower.color.name) LIKE '%' || lower(cast(:colorNamePart as string)) || '%' ) ")
-    Page<FlowerSizeFullProjection> findForAdminProjectedByFilters(Long id, String flowerNamePart, List<String> flowerTypeNames, Integer priceFrom, Integer priceTo,
-                                                                  String colorNamePart, Pageable pageRequest);
+    Page<FlowerSizeFullProjectionWithAvailable> findForAdminProjectedByFilters(Long id, String flowerNamePart, List<String> flowerTypeNames, Integer priceFrom, Integer priceTo,
+                                                                               String colorNamePart, Pageable pageRequest);
 
     List<FlowerSizeTinyProjection> findAllForAdminProjectedByOrderByFlowerNameAscSizeNameAsc();
 

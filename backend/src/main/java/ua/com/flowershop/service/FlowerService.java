@@ -3,10 +3,7 @@ package ua.com.flowershop.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.JpaSort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,7 +20,6 @@ import ua.com.flowershop.util.HibernateUtil;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 import static java.util.Objects.isNull;
@@ -60,7 +56,8 @@ public class FlowerService {
         sizeFilters = HibernateUtil.fixEmptyFilter(sizeFilters);
         colorFilters = HibernateUtil.fixEmptyFilter(colorFilters);
 
-        return flowerRepository.findProjectedByFilters(searchTerm, flowerTypeFilters, colorFilters, sizeFilters, replaceUnsafeFields(pageRequest));
+        return flowerRepository.findProjectedByFilters(searchTerm, flowerTypeFilters, colorFilters, sizeFilters,
+            HibernateUtil.replaceUnsafeFields(pageRequest, unsafeSortingFields));
 
     }
 
@@ -154,31 +151,6 @@ public class FlowerService {
             .setFlowerType(flower.getFlowerType()).setColor(flower.getColor());
         flowerRepository.save(flowerToUpdate);
 
-    }
-
-    private Pageable replaceUnsafeFields (Pageable pageRequest) {
-        Iterator sortIterator = pageRequest.getSort().iterator();
-        Sort sort = null;
-
-        while (sortIterator.hasNext()) {
-            Sort.Order sortOrder = ((Sort.Order) sortIterator.next());
-            Sort sortPart;
-
-            if (unsafeSortingFields.contains("hasAvailableFlowerSize")) {
-                sortPart = JpaSort.unsafe(sortOrder.getDirection(), "(" + sortOrder.getProperty() + ")");
-            } else {
-                sortPart = JpaSort.by(sortOrder);
-            }
-
-            if(isNull(sort)) {
-                sort = sortPart;
-            } else {
-                sort =  sort.and(sortPart);
-            }
-
-        }
-
-        return PageRequest.of(pageRequest.getPageNumber(), pageRequest.getPageSize(), sort);
     }
 
 }

@@ -278,8 +278,7 @@
             pInputText
             #postDeclaration="ngModel"
             name="postDeclaration"
-            [(ngModel)]="orderStatusChangeRequest.postDeclaration"
-            required/>
+            [(ngModel)]="orderStatusChangeRequest.postDeclaration"/>
         </div>
         <div class="ui-grid-col-4">
           <ng-container *ngIf="postDeclaration.dirty || postDeclaration.touched || statusChangeForm.submitted">

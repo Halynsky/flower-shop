@@ -1,2 +1,2 @@
-ALTER TABLE flowers DROP CONSTRAINT uk_5nkpissta07qa16yf9xjw5915;
-ALTER TABLE flowers DROP CONSTRAINT uk_eswcnmv6pxk02s5310l4fkk4r;
+ALTER TABLE flowers DROP CONSTRAINT uk_p2ig9l0p39rd93y1m29t5xjs3;
+ALTER TABLE flowers DROP CONSTRAINT uk_a7rda1j2knvtnqp3qxsu2gsrt;

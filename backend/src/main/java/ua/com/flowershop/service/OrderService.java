@@ -160,6 +160,14 @@ public class OrderService {
                 if (nonNull(user)) {
                     user.setLastOrderDate(now());
                 }
+
+                order.getOrderItems().forEach(oi -> {
+                        FlowerSize flowerSize = oi.getFlowerSize();
+                        flowerSize.setSold(flowerSize.getSold() + oi.getAmount());
+                        flowerSizeRepository.save(flowerSize);
+                    }
+                );
+
                 break;
 
             case RETURNED:
