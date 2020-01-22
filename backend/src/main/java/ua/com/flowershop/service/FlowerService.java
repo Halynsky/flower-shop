@@ -49,14 +49,6 @@ public class FlowerService {
             heightTo, popularityFrom, popularityTo, colorNamePart, createdFrom, createdTo, pageRequest);
     }
 
-    public Boolean isNameOriginalFree(String name) {
-        return !flowerRepository.existsByNameOriginal(name);
-    }
-
-    public Boolean isNameFree(String name) {
-        return !flowerRepository.existsByName(name);
-    }
-
     public FlowerFullProjection getFlowerById(Long id) {
         return flowerRepository.findProjectedById(id).orElseThrow(NotFoundException::new);
     }

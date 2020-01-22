@@ -20,8 +20,6 @@
             id="nameOriginal"
             name="nameOriginal"
             [(ngModel)]="item.nameOriginal"
-            [uniqueValidator]="dataService.isNameOriginalFree.bind(dataService)"
-            [previousValue]="previousNameOriginal"
             required
           />
         </div>
@@ -46,8 +44,6 @@
             id="name"
             name="name"
             [(ngModel)]="item.name"
-            [uniqueValidator]="dataService.isNameFree.bind(dataService)"
-            [previousValue]="previousName"
             required
           />
         </div>
@@ -188,26 +184,6 @@
         </div>
       </div>
 
-<!--      <p-dropdown class="add-flower-size-dropdown" [options]="flowerSizes" [(ngModel)]="flowerSizeToAdd" name="flowerSizeToAdd" filter="true" placeholder="Оберіть товар" emptyFilterMessage="Не знайдено" optionLabel="flower.name" appendTo="body">-->
-<!--        <ng-template let-selectedItem pTemplate="selectedItem">-->
-<!--          <div class="flower-size-selected">-->
-<!--            <img [src]="selectedItem.value.flower.image"/>-->
-<!--            <div><b>{{selectedItem.value.flower.name}}</b> {{selectedItem.value.size.name}}, {{selectedItem.value.flower.flowerType.nameSingle}}</div>-->
-<!--          </div>-->
-<!--        </ng-template>-->
-<!--        <ng-template let-item pTemplate="item">-->
-<!--          <div class="ui-helper-clearfix">-->
-<!--            <div class="flower-size-option">-->
-<!--              <img [src]="item.value.flower.image"/>-->
-<!--              <div class="flower-size-option-info">-->
-<!--                <div class="flower-size-option-info-main"><b>{{item.value.flower.name}}</b> {{item.value.size.name}}, {{item.value.flower.flowerType.nameSingle}}</div>-->
-<!--                <div class="flower-size-option-info-additional">Ціна: {{item.value.price / 100}} грн, Доступно: {{item.value.available}} шт</div>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </ng-template>-->
-<!--      </p-dropdown>-->
-
       <div class="prime-form-group">
         <div class="ui-grid-col-3">
           <label for="flowerSizeMin">Розмір квітки (від-до), см</label>
@@ -265,7 +241,6 @@
           name="flowerHeightMax"
           [(ngModel)]="item.flowerHeightMax"
           rangePair
-          required
           [rangePairMin]="item.flowerHeightMin"
         />
         </div>

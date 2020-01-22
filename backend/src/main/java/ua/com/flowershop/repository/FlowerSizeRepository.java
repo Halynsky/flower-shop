@@ -17,7 +17,7 @@ public interface FlowerSizeRepository extends JpaRepository<FlowerSize, Long> {
 
     @Query("SELECT fs FROM FlowerSize fs WHERE " +
         "(:id IS null OR fs.id = :id) " +
-        "AND (:flowerNamePart IS null OR lower(fs.flower.name) LIKE '%' || lower(cast(:flowerNamePart as string)) || '%' ) " +
+        "AND (:flowerNamePart IS null OR lower(fs.flower.nameOriginal) LIKE '%' || lower(cast(:flowerNamePart as string)) || '%' ) " +
         "AND (COALESCE(:flowerTypeNames, NULL) IS NULL OR fs.flower.flowerType.name IN :flowerTypeNames) " +
         "AND (:priceFrom IS null OR fs.price >= :priceFrom) AND (:priceTo IS null OR fs.price <= :priceTo) " +
         "AND (:colorNamePart IS null OR lower(fs.flower.color.name) LIKE '%' || lower(cast(:colorNamePart as string)) || '%' ) ")

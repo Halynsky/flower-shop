@@ -584,7 +584,7 @@
           <ng-template let-selectedItem pTemplate="selectedItem">
             <div class="flower-size-selected">
               <img [src]="selectedItem.value.flower.image"/>
-              <div><b>{{selectedItem.value.flower.name}}</b> {{selectedItem.value.size.name}}, {{selectedItem.value.flower.flowerType.nameSingle}}</div>
+              <div><b>{{selectedItem.value.flower.nameOriginal}}</b> {{selectedItem.value.size.name}}, {{selectedItem.value.flower.flowerType.nameSingle}}</div>
             </div>
           </ng-template>
           <ng-template let-item pTemplate="item">
@@ -592,7 +592,7 @@
               <div class="flower-size-option">
                 <img [src]="item.value.flower.image"/>
                 <div class="flower-size-option-info">
-                  <div class="flower-size-option-info-main"><b>{{item.value.flower.name}}</b> {{item.value.size.name}}, {{item.value.flower.flowerType.nameSingle}}</div>
+                  <div class="flower-size-option-info-main"><b>{{item.value.flower.nameOriginal}}</b> {{item.value.size.name}}, {{item.value.flower.flowerType.nameSingle}}</div>
                   <div class="flower-size-option-info-additional">Ціна: {{item.value.price / 100}} грн, Доступно: {{item.value.available}} шт</div>
                 </div>
               </div>

@@ -19,6 +19,8 @@ public interface SizeRepository extends JpaRepository<Size, Long> {
 
     List<SizeProjection> findProjectedBy();
 
+    List<SizeProjection> findProjectedByOrderByName();
+
     Optional<SizeProjection> findProjectedById(Long id);
 
     Optional<SizeAdminProjection> findForAdminProjectedById(Long id);

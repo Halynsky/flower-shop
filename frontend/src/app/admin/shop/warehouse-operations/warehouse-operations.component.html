@@ -37,9 +37,9 @@
               <p-sortIcon [field]="'flowerSize.flower.name'"></p-sortIcon>
             </th>
 
-            <th *ngSwitchCase="'size'" [pSortableColumn]="'flowerSize.size.name'" >
+            <th *ngSwitchCase="'size'" [pSortableColumn]="'flowerSize.size.nameOriginal'" >
               {{col.header}}
-              <p-sortIcon [field]="'flowerSize.size.name'"></p-sortIcon>
+              <p-sortIcon [field]="'flowerSize.size.nameOriginal'"></p-sortIcon>
             </th>
 
             <th *ngSwitchCase="'operationType'" >
@@ -107,7 +107,7 @@
           </span>
 
           <span *ngSwitchCase="'flower'">
-            {{rowData.flowerSize.flower.name}}
+            {{rowData.flowerSize.flower.nameOriginal}}
           </span>
 
           <span *ngSwitchCase="'size'">

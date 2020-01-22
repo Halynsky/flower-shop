@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ua.com.flowershop.entity.FlowerSize;
 import ua.com.flowershop.entity.WarehouseOperation;
 import ua.com.flowershop.entity.WarehouseOperationType;
+import ua.com.flowershop.exception.ConflictException;
 import ua.com.flowershop.exception.NotFoundException;
 import ua.com.flowershop.model.WarehouseOperationModel;
 import ua.com.flowershop.repository.FlowerSizeRepository;
@@ -37,6 +38,9 @@ public class WarehouseOperationService {
         if (warehouseOperationModel.getWarehouseOperationType().getDirection().equals(WarehouseOperationType.Direction.IN)) {
             flowerSize.setAmount(flowerSize.getAmount() + warehouseOperationModel.getAmount());
         } else {
+            if (flowerSize.getAvailable() < warehouseOperationModel.getAmount()) {
+                throw new ConflictException("Недостатньо доступного товару для проведення операці");
+            }
             flowerSize.setAmount(flowerSize.getAmount() - warehouseOperationModel.getAmount());
         }
 
@@ -51,8 +55,8 @@ public class WarehouseOperationService {
             .orElseThrow(NotFoundException::new);
 
         if (warehouseOperation.getWarehouseOperationType().getDirection().equals(WarehouseOperationType.Direction.IN)) {
-            if (flowerSize.getAmount() < warehouseOperation.getAmount()) {
-                flowerSize.setAmount(0);
+            if (flowerSize.getAvailable() < warehouseOperation.getAmount()) {
+                throw new ConflictException("Недостатньо доступного товару для відміни операці");
             } else {
                 flowerSize.setAmount(flowerSize.getAmount() - warehouseOperation.getAmount());
             }

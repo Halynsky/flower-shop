@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.OK;
 import static ua.com.flowershop.util.Path.FLOWERS_PATH;
 
@@ -68,16 +67,6 @@ public class FlowerController {
     @GetMapping("/{id}/flowerSizes")
     public ResponseEntity<List<FlowerSizeFullProjection>> getAllFlowerSize(@PathVariable Long id) {
         return new ResponseEntity<>(flowerSizeRepository.findProjectedByFlowerId(id), OK);
-    }
-
-    @GetMapping("/isNameOriginalFree")
-    public ResponseEntity<Void> isNameOriginalFree(@RequestParam("name") String name) {
-        return new ResponseEntity<>(flowerService.isNameOriginalFree(name) ? OK : CONFLICT);
-    }
-
-    @GetMapping("/isNameFree")
-    public ResponseEntity<Void> isNameFree(@RequestParam("name") String name) {
-        return new ResponseEntity<>(flowerService.isNameFree(name) ? OK : CONFLICT);
     }
 
     @GetMapping("/{id}")

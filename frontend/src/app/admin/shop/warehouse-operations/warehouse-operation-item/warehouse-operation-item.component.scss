@@ -6,3 +6,37 @@
     width: 300px;
   }
 }
+
+
+.flower-option {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  img {
+    height: 32px;
+    width: 32px;
+    margin-right: 8px;
+  }
+
+  .flower-size-option-info {
+    line-height: 130%;
+
+    .flower-size-info-additional {
+      color: #a8a8a8;
+    }
+
+  }
+
+}
+
+.flower-selected {
+  display: flex;
+  flex-direction: row;
+
+  img {
+    height: 24px;
+    width: 24px;
+    margin-right: 4px;
+  }
+}

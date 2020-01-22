@@ -2,12 +2,13 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ItemSaveMode } from "../../../models/ItemSaveMode";
 import { SnackBarService } from "../../../services/snak-bar.service";
 import { Table } from "primeng/table";
-import { getErrorMessage, ngPrimeFiltersToParams } from "../../../utils/Functions";
+import { clone, getErrorMessage, ngPrimeFiltersToParams } from "../../../utils/Functions";
 import { Pagination } from "../../../api/models/Pagination";
 import { RestPage } from "../../../api/models/RestPage";
 import { FlowerSizeService } from "../../../api/services/flower-size.service";
 import { FlowerSize } from "../../../api/models/FlowerSize";
 import { FlowerTypeService } from "../../../api/services/flower-type.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'warehouse',
@@ -28,7 +29,7 @@ export class WarehouseComponent implements OnInit {
     {field: 'size', header: 'Розмір', active: true},
     {field: 'price', header: 'Ціна', active: true},
     {field: 'priceOld', header: 'Ціна(до знижки), грн', active: false},
-    {field: 'amount', header: 'Кількість', active: true},
+    {field: 'amount', header: 'На складі', active: true},
     {field: 'sold', header: 'Продано', active: true},
     {field: 'reserved', header: 'Зарезервовано', active: true},
     {field: 'available', header: 'Доступно', active: true},
@@ -43,13 +44,32 @@ export class WarehouseComponent implements OnInit {
   displayZoomDialog = false;
   zoomedImage;
 
+  menuItems = [];
+
+  isContextMenuOpened = false;
+  selected :FlowerSize;
+
   constructor(private dataService: FlowerSizeService,
               private flowerTypeService: FlowerTypeService,
-              private snackBarService: SnackBarService) {
+              private snackBarService: SnackBarService,
+              private router: Router) {
     this.getTypes();
+    this.initContextMenu();
   }
 
   ngOnInit() {
+  }
+
+  initContextMenu() {
+    this.menuItems = [
+      {
+        label: 'Додати складську операцію',
+        icon: 'fas fa-boxes',
+        command: (event) => {
+          this.router.navigate([`/admin/shop/warehouse-operations/item/new`], { queryParams: {flowerId: this.selected.flower.id, sizeId: this.selected.size.id}});
+        },
+      }
+    ];
   }
 
   loadDataLazy(filters = {}, pagination: Pagination = new Pagination()) {
@@ -92,6 +112,16 @@ export class WarehouseComponent implements OnInit {
 
   resetZoomedImage() {
     this.zoomedImage = null;
+  }
+
+  onContextMenuSelect(event) {
+    this.selected = clone(event.data);
+    this.initContextMenu();
+    this.isContextMenuOpened = true;
+  }
+
+  onContextMenuHide(event) {
+    this.isContextMenuOpened = false;
   }
 
 }

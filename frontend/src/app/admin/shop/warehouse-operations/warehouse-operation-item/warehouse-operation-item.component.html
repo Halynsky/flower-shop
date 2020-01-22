@@ -1,5 +1,5 @@
-<div class="panel-header item ui-grid-col-6">
-  <button pButton icon="fa fa-arrow-left" class="button-back" label="Назад" routerLink="../../"></button>
+<div class="panel-header item ui-grid-col-7">
+  <button pButton icon="fa fa-arrow-left" class="button-back" label="Назад" (click)="location.back()"></button>
   <h1>{{mode == ItemSaveMode.new ? 'Додати' : 'Оновити'}} <b>Товарну Операцію</b></h1>
 </div>
 
@@ -14,12 +14,29 @@
         <div class="ui-grid-col-3">
           <label for="flower">Квітка</label>
         </div>
-        <div class="ui-grid-col-3">
+        <div class="ui-grid-col-4">
           <p-dropdown class="input-element" [options]="flowersOptions" name="flower" [(ngModel)]="flowerChosen"
                       optionLabel="nameOriginal" dataKey="id" filter="true" #flower="ngModel" required
-                      placeholder="Оберіть квітку" id="flower" (ngModelChange)="getFlowersSizeById(flowerChosen.id)"></p-dropdown>
+                      placeholder="Оберіть квітку" id="flower" (ngModelChange)="getFlowersSizeById(flowerChosen.id)">
+            <ng-template let-selectedItem pTemplate="selectedItem">
+              <div class="flower-selected" >
+                <img [src]="selectedItem.value.image"/>
+                <div><b>{{selectedItem.value.nameOriginal}}</b>, {{selectedItem.value.flowerType.nameSingle}}</div>
+              </div>
+            </ng-template>
+            <ng-template let-item pTemplate="item">
+              <div class="ui-helper-clearfix">
+                <div class="flower-option">
+                  <img [src]="item.value.image"/>
+                  <div class="flower-option-info">
+                    <div class="flower-option-info-main"><b>{{item.value.nameOriginal}}</b>, {{item.value.flowerType.nameSingle}}</div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </p-dropdown>
         </div>
-        <div class="ui-grid-col-3">
+        <div class="ui-grid-col-4">
           <div *ngIf="flower.errors">
             <ng-container *ngIf="flower.dirty || flower.touched || form.submitted">
               <p-message *ngIf="flower.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
@@ -32,12 +49,12 @@
         <div class="ui-grid-col-3">
           <label for="size">Розмір</label>
         </div>
-        <div class="ui-grid-col-3">
-          <p-dropdown class="input-element" [options]="sizeOptions" name="size" [(ngModel)]="itemFlowerSize"
+        <div class="ui-grid-col-4">
+          <p-dropdown class="input-element" [options]="sizeOptions" name="size" [(ngModel)]="flowerSizeChosen"
                       optionLabel="size.name" dataKey="id" #flowerSize="ngModel"
                       placeholder="Оберіть розмір" id="size" required></p-dropdown>
         </div>
-        <div class="ui-grid-col-3">
+        <div class="ui-grid-col-4">
           <div *ngIf="flowerSize.errors">
             <ng-container *ngIf="flowerSize.dirty || flowerSize.touched || form.submitted">
               <p-message *ngIf="flowerSize.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
@@ -50,7 +67,7 @@
         <div class="ui-grid-col-3">
           <label for="operation">Операція</label>
         </div>
-        <div class="ui-grid-col-3">
+        <div class="ui-grid-col-4">
           <p-dropdown class="input-element"  [options]="operationTypes"
                       id="operation"  placeholder="Оберіть операцію"
                       name="operationType" #operationType="ngModel"
@@ -59,7 +76,7 @@
                       required>
           </p-dropdown>
         </div>
-        <div class="ui-grid-col-3">
+        <div class="ui-grid-col-4">
           <div *ngIf="operationType.errors">
             <ng-container *ngIf="operationType.dirty || operationType.touched || form.submitted">
               <p-message *ngIf="operationType.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
@@ -72,7 +89,7 @@
         <div class="ui-grid-col-3">
           <label for="direction">Прихід/Відхід</label>
         </div>
-        <div class="ui-grid-col-3">
+        <div class="ui-grid-col-4">
           <input class="input-element" required="true" pInputText name="direction" disabled [(ngModel)]="directionOption" id="direction"/>
         </div>
       </div>
@@ -81,7 +98,7 @@
         <div class="ui-grid-col-3">
           <label for="amount">Кількість</label>
         </div>
-        <div class="ui-grid-col-3">
+        <div class="ui-grid-col-4">
           <input
             class="input-element"
             pInputText
@@ -94,7 +111,7 @@
             required
           />
         </div>
-        <div class="ui-grid-col-3">
+        <div class="ui-grid-col-4">
           <div *ngIf="amount.errors">
             <ng-container *ngIf="amount.dirty || amount.touched || form.submitted">
               <p-message *ngIf="amount.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
@@ -106,7 +123,7 @@
     </div>
 
     <div class="ui-grid-row ui-grid-field">
-      <div class="ui-grid-col-6 footer">
+      <div class="ui-grid-col-7 footer">
         <button type="submit" pButton icon="pi pi-check" class="ui-button-success" label="{{mode == ItemSaveMode.new ? 'Зберегти' : 'Оновити'}}"></button>
       </div>
     </div>

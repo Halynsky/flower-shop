@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 import ua.com.flowershop.entity.WarehouseOperation;
 import ua.com.flowershop.entity.WarehouseOperationType;
 import ua.com.flowershop.projection.WarehouseOperationProjection;
-import ua.com.flowershop.projection.WarehouseOperationTypeProjection;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,7 +24,7 @@ public interface WarehouseOperationRepository extends JpaRepository<WarehouseOpe
     @Query("SELECT wo FROM WarehouseOperation wo WHERE " +
         "(:id IS null OR wo.id = :id) " +
         "AND (:flowerTypeNamePart IS null OR lower(wo.flowerSize.flower.flowerType.nameSingle) LIKE '%' || lower(cast(:flowerTypeNamePart as string)) || '%' ) " +
-        "AND (:flowerNamePart IS null OR lower(wo.flowerSize.flower.name) LIKE '%' || lower(cast(:flowerNamePart as string)) || '%' ) " +
+        "AND (:flowerNamePart IS null OR lower(wo.flowerSize.flower.nameOriginal) LIKE '%' || lower(cast(:flowerNamePart as string)) || '%' ) " +
         "AND (:flowerSizeNamePart IS null OR lower(wo.flowerSize.size.name) LIKE '%' || lower(cast(:flowerSizeNamePart as string)) || '%' ) " +
         "AND (:amountFrom IS null or wo.amount >= :amountFrom) AND (:amountTo IS null or wo.amount <= :amountTo) " +
         "AND ((CAST(:dateFrom AS date) IS null OR CAST(:dateTo AS date) IS null) OR wo.date BETWEEN :dateFrom AND :dateTo) " +

@@ -7,7 +7,7 @@
 
 <div class="panel-content">
   <p-table #dt [columns]="selectedColumns" [value]="items.content" sortField="flower.flowerType.nameSingle" [paginator]="true" [rows]="10" [totalRecords]="items.totalElements"
-           [tableStyle]="{'table-layout':'auto'}"
+           [tableStyle]="{'table-layout':'auto'}" [contextMenu]="cm" (onContextMenuSelect)="onContextMenuSelect($event)"
            (onLazyLoad)="onLazyLoad($event)" [lazy]="true">
 
     <!--Column selector-->
@@ -31,9 +31,9 @@
               <p-sortIcon [field]="'flower.flowerType.nameSingle'"></p-sortIcon>
             </th>
 
-            <th *ngSwitchCase="'flower'" [pSortableColumn]="'flower.name'" >
+            <th *ngSwitchCase="'flower'" [pSortableColumn]="'flower.nameOriginal'" >
               {{col.header}}
-              <p-sortIcon [field]="'flower.name'"></p-sortIcon>
+              <p-sortIcon [field]="'flower.nameOriginal'"></p-sortIcon>
             </th>
 
             <th *ngSwitchCase="'size'" [pSortableColumn]="'size.name'" >
@@ -109,6 +109,8 @@
 
   </p-table>
 </div>
+
+<p-contextMenu #cm [model]="menuItems" (onHide)="onContextMenuHide($event)"></p-contextMenu>
 
 <p-dialog [(visible)]="displayZoomDialog" class="zoom-image-dialog" [modal]="true" (onHide)="resetZoomedImage()">
 
