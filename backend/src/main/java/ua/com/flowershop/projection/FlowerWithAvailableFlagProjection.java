@@ -5,5 +5,5 @@ public interface FlowerWithAvailableFlagProjection extends FlowerTinyProjection 
     Boolean  getHasAvailableFlowerSize();
     Boolean getIsNew();
     Boolean getIsPopular();
-    String getGroupName();
+    GroupProjection getGroup();
 }

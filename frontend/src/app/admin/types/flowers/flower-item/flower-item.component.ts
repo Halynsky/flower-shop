@@ -16,6 +16,8 @@ import { FlowerSize } from "../../../../api/models/FlowerSize";
 import { TranslationService } from "../../../../utils/translation.service";
 import { NgForm } from "@angular/forms";
 import { finalize } from "rxjs/operators";
+import { Group } from "../../../../api/models/Group";
+import { GroupService } from "../../../../api/services/group.service";
 
 @Component({
   selector: 'flower-item',
@@ -33,6 +35,7 @@ export class FlowerItemComponent implements OnInit {
   private newImage: File;
 
   flowerTypes: FlowerType[] = [];
+  groups: Group[] = [];
   item: FlowerFull = new FlowerFull();
 
   colors: Color[] = [];
@@ -51,7 +54,8 @@ export class FlowerItemComponent implements OnInit {
               private route: ActivatedRoute,
               private flowerTypeService: FlowerTypeService,
               public sizeService: SizeService,
-              private colorService: ColorService,
+              public colorService: ColorService,
+              private groupService: GroupService,
               public datepipe: DatePipe) {
     this.route.params.subscribe(
       params => {
@@ -98,6 +102,13 @@ export class FlowerItemComponent implements OnInit {
     );
   }
 
+  getAllGroupsForFlowerType(flowerTypeId: number) {
+    this.groupService.getByFlowerTypeId(flowerTypeId).subscribe(
+      groups => this.groups = groups,
+      error => this.snackBarService.showError(getErrorMessage(error))
+    );
+  }
+
 
   getItem(id) {
     this.dataService.getById(id)
@@ -108,6 +119,7 @@ export class FlowerItemComponent implements OnInit {
         this.item = item;
         this.previousNameOriginal = item.nameOriginal;
         this.previousName = item.name;
+        this.getAllGroupsForFlowerType(this.item.flowerType.id);
       } ,
       error => this.snackBarService.showError(getErrorMessage(error))
     )

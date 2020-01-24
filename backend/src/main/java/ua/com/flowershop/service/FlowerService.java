@@ -81,8 +81,8 @@ public class FlowerService {
         flowerToCreate
             .setName(flower.getName())
             .setNameOriginal(flower.getNameOriginal())
+            .setGroup(flower.getGroup())
             .setImage(flower.getImage())
-            .setGroupName(flower.getGroupName())
             .setDescription(flower.getDescription())
             .setColor(flower.getColor())
             .setColorSecondary(flower.getColorSecondary())
@@ -132,12 +132,11 @@ public class FlowerService {
             }
         });
 
-
         flowerToUpdate
             .setName(flower.getName())
             .setNameOriginal(flower.getNameOriginal())
+            .setGroup(flower.getGroup())
             .setImage(flower.getImage())
-            .setGroupName(flower.getGroupName())
             .setDescription(flower.getDescription())
             .setColor(flower.getColor())
             .setColorSecondary(flower.getColorSecondary())

@@ -6,7 +6,7 @@ public interface FlowerProjection {
     String getImage();
     String getNameOriginal();
     String getDescription();
-    String getGroupName();
+    GroupProjection getGroup();
     Integer getFlowerHeightMin();
     Integer getFlowerHeightMax();
     Integer getFlowerSizeMin();
@@ -14,5 +14,5 @@ public interface FlowerProjection {
     Integer getPopularity();
     Boolean getIsNew();
     Boolean getIsPopular();
-    FlowerTypeTinyProjection getFlowerType();
+    FlowerTypeShortProjection getFlowerType();
 }

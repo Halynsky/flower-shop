@@ -29,8 +29,6 @@ public class Flower {
     private String nameOriginal;
     private String name;
     private String image;
-    // Asiatic Lilium, Oriental Lilium etc
-    private String groupName;
     @Column(columnDefinition = "text")
     private String description;
     private Integer flowerSizeMin;
@@ -61,10 +59,14 @@ public class Flower {
     @JoinColumn(name = "color_secondary_id", foreignKey = @ForeignKey(name = "flower_secondary_color_fkey"))
     private Color colorSecondary;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "group_id", foreignKey = @ForeignKey(name = "flower_group_fkey"))
+    private Group group;
+
     @OneToMany(mappedBy = "flower")
     private Set<FlowerSize> flowerSizes;
 
     @ManyToMany(mappedBy = "flowers")
-    Set<FavoriteFlowersList> favoriteFlowersLists;
+    private Set<FavoriteFlowersList> favoriteFlowersLists;
 
 }

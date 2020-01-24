@@ -33,7 +33,10 @@
     <div class="angle-left"></div>
     <div class="angle-right"></div>
 
-    <div class="flower-type-name">{{flower.flowerType.nameSingle}}</div>
+    <div class="flower-type-name">
+      <span>{{flower.flowerType.nameSingle}}</span>
+      <span *ngIf="flower.group">{{', ' + flower.group.nameSingle}}</span>
+    </div>
     <div class="name">{{flower.nameOriginal}}</div>
     <div class="price">
       <div><span>від </span> {{flower.priceMin / 100}} грн</div>

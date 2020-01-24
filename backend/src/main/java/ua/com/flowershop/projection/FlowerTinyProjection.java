@@ -5,5 +5,5 @@ public interface FlowerTinyProjection {
     String getName();
     String getNameOriginal();
     String getImage();
-    FlowerTypeTinyProjection getFlowerType();
+    FlowerTypeShortProjection getFlowerType();
 }

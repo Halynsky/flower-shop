@@ -1,0 +1,21 @@
+:host {
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+p-colorPicker {
+  width: 100%;
+  ::ng-deep .ui-colorpicker  {
+    width: 100%;
+  }
+}
+
+.dropdown-block {
+  width: 100%;
+  p-dropdown {
+    width: 100%;
+  }
+}
+
+

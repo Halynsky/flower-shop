@@ -1,5 +1,5 @@
 import { ModuleWithProviders } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { AdminLayoutComponent } from "./admin-layout/admin-layout.component";
 import { UsersComponent } from "./users/users.component";
 import { WarehouseOperationsComponent } from "./shop/warehouse-operations/warehouse-operations.component";
@@ -16,6 +16,8 @@ import { FlowerItemComponent } from "./types/flowers/flower-item/flower-item.com
 import { WarehouseOperationItemComponent } from "./shop/warehouse-operations/warehouse-operation-item/warehouse-operation-item.component";
 import { UserItemComponent } from "./users/user-item/user-item.component";
 import { WarehouseComponent } from "./shop/warehouse/warehouse.component";
+import { GroupsComponent } from "./types/groups/groups.component";
+import { GroupItemComponent } from "./types/groups/group-item/group-item.component";
 
 
 const routes: Routes = [
@@ -37,6 +39,8 @@ const routes: Routes = [
       {path: 'types/sizes/item/:mode', component: SizeItemComponent},
       {path: 'types/colors', component: ColorsComponent},
       {path: 'types/colors/item/:mode', component: ColorItemComponent},
+      {path: 'types/groups', component: GroupsComponent},
+      {path: 'types/groups/item/:mode', component: GroupItemComponent},
       {path: 'blog', component: BlogComponent}
     ]
   },

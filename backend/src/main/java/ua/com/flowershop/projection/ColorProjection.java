@@ -1,7 +1,5 @@
 package ua.com.flowershop.projection;
 
-public interface ColorProjection {
-    Long getId();
-    String getName();
+public interface ColorProjection extends IdNameTupleProjection {
     String getHex();
 }

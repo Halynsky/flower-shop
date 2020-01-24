@@ -25,12 +25,13 @@ public interface FlowerRepository extends JpaRepository<Flower, Long> {
 
     List<FlowerProjection> findProjectedBy();
 
-    @Query("SELECT f FROM Flower f WHERE " +
-        "(:id IS null OR f.id = :id) " +
+    @Query("SELECT f FROM Flower f " +
+        "LEFT JOIN f.group g " +
+        "WHERE (:id IS null OR f.id = :id)" +
         "AND (:flowerNamePart IS null OR lower(f.name) LIKE '%' || lower(cast(:flowerNamePart as string)) || '%' ) " +
         "AND (:flowerOriginalNamePart IS null OR lower(f.nameOriginal) LIKE '%' || lower(cast(:flowerOriginalNamePart as string)) || '%' ) " +
         "AND (COALESCE(:flowerTypeNames, NULL) IS NULL OR f.flowerType.name IN :flowerTypeNames) " +
-        "AND (:groupNamePart IS null OR lower(f.groupName) LIKE '%' || lower(cast(:groupNamePart as string)) || '%' ) " +
+        "AND (:groupNamePart IS null OR lower(g.name) LIKE '%' || lower(cast(:groupNamePart as string)) || '%'  OR lower(g.nameOriginal) LIKE '%' || lower(cast(:groupNamePart as string)) || '%' ) " +
         "AND (:sizeFrom IS null or f.flowerSizeMin >= :sizeFrom) AND (:sizeTo IS null or f.flowerSizeMax <= :sizeTo) " +
         "AND (:heightFrom IS null or f.flowerHeightMin >= :heightFrom) AND (:heightTo IS null or f.flowerHeightMax <= :heightTo) " +
         "AND (:popularityFrom IS null or f.popularity >= :popularityFrom AND (:popularityTo IS null or f.popularity <= :popularityTo))" +
@@ -51,24 +52,27 @@ public interface FlowerRepository extends JpaRepository<Flower, Long> {
     Integer countByFlowerSizesSizeId(Long flowerSizeId);
 
     @Query("SELECT DISTINCT(f.id) as id, f.name as name, f.nameOriginal as nameOriginal, f.image as image, f.popularity as popularity, f.created as created, " +
-        "min(fs.price) as priceMin, f.flowerType as flowerType, f.isNew as isNew, f.isPopular as isPopular, f.groupName as groupName, " +
+        "min(fs.price) as priceMin, f.flowerType as flowerType, f.isNew as isNew, f.isPopular as isPopular, f.group as group, " +
         "(CASE WHEN MAX(fs.amount - fs.reserved) > 0 THEN true ELSE false END) as hasAvailableFlowerSize " +
         "FROM Flower f " +
         "INNER JOIN f.flowerType ft " +
         "INNER JOIN f.color c " +
         "INNER JOIN f.flowerSizes fs " +
+        "LEFT JOIN f.group g " +
         "WHERE (:searchTerm IS NULL OR :searchTerm = '' OR lower(f.name) LIKE '%' || lower(cast(:searchTerm as string)) || '%' " +
         "OR lower(f.nameOriginal) LIKE '%' || lower(cast(:searchTerm as string)) || '%' " +
         "OR lower(ft.name) LIKE '%' || lower(cast(:searchTerm as string)) || '%' " +
-        "OR lower(ft.nameSingle) LIKE '%' || lower(cast(:searchTerm as string)) || '%') " +
+        "OR lower(ft.nameSingle) LIKE '%' || lower(cast(:searchTerm as string)) || '%' " +
+        "OR lower(g.name) LIKE '%' || lower(cast(:searchTerm as string)) || '%' " +
+        "OR lower(g.nameOriginal) LIKE '%' || lower(cast(:searchTerm as string)) || '%') " +
         "AND (COALESCE(:flowerTypeFilters, NULL) IS NULL OR ft.id IN :flowerTypeFilters) " +
         "AND (COALESCE(:colorFilters, NULL) IS NULL OR c.id IN :colorFilters) " +
         "AND (COALESCE(:sizeFilters, NULL) IS NULL OR fs.size.id IN :sizeFilters) " +
-        "GROUP BY f.id, f.name, f.nameOriginal, f.image, f.popularity, f.created, f.isNew, f.isPopular, ft.id, ft.name, ft.nameSingle")
+        "GROUP BY f.id, f.name, f.nameOriginal, f.image, f.popularity, f.created, f.isNew, f.isPopular, ft.id, ft.name, ft.nameSingle, g")
     Page<FlowerWithAvailableFlagProjection> findProjectedByFilters(String searchTerm, List<Long> flowerTypeFilters, List<Long> colorFilters, List<Long> sizeFilters, Pageable pageable);
 
     @Query("SELECT DISTINCT(f.id) as id, f.name as name, f.nameOriginal as nameOriginal, f.image as image, f.popularity as popularity, f.created as created, " +
-        "min(fs.price) as priceMin, f.isNew as isNew, f.isPopular as isPopular, f.flowerType as flowerType, f.groupName as groupName, " +
+        "min(fs.price) as priceMin, f.isNew as isNew, f.isPopular as isPopular, f.flowerType as flowerType, f.group as group, " +
         "(CASE WHEN MAX(fs.amount - fs.reserved) > 0 THEN true ELSE false END) as hasAvailableFlowerSize " +
         "FROM Flower f " +
         "INNER JOIN f.flowerType ft " +

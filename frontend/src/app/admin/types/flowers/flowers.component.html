@@ -31,55 +31,34 @@
       <tr>
         <th></th>
         <ng-container *ngFor="let col of selectedColumns" [ngSwitch]="col.field">
-          <th *ngSwitchCase="'id'" [pSortableColumn]="'id'">
+
+          <th *ngSwitchDefault [pSortableColumn]="col.field" >
             {{col.header}}
-            <p-sortIcon [field]="'id'"></p-sortIcon>
+            <p-sortIcon [field]="col.field"></p-sortIcon>
           </th>
+
           <th *ngSwitchCase="'image'">
             {{col.header}}
           </th>
-          <th *ngSwitchCase="'name'" [pSortableColumn]="'name'">
+
+          <th *ngSwitchCase="'flowerType'" [pSortableColumn]="'flowerType.name'">
             {{col.header}}
-            <p-sortIcon [field]="'name'"></p-sortIcon>
+            <p-sortIcon [field]="'flowerType.name'"></p-sortIcon>
           </th>
-          <th *ngSwitchCase="'nameOriginal'" [pSortableColumn]="'nameOriginal'">
+
+          <th *ngSwitchCase="'groupName'" [pSortableColumn]="'group.name'">
             {{col.header}}
-            <p-sortIcon [field]="'nameOriginal'"></p-sortIcon>
+            <p-sortIcon [field]="'group.name'"></p-sortIcon>
           </th>
-          <th *ngSwitchCase="'flowerType'">
-            {{col.header}}
-          </th>
-          <th *ngSwitchCase="'groupName'">
-            {{col.header}}
-          </th>
-          <th *ngSwitchCase="'flowerSizeMin'" [pSortableColumn]="'flowerSizeMin'">
-            {{col.header}}
-            <p-sortIcon [field]="'flowerSizeMin'"></p-sortIcon>
-          </th>
-          <th *ngSwitchCase="'flowerHeightMin'" [pSortableColumn]="'flowerHeightMin'">
-            {{col.header}}
-            <p-sortIcon [field]="'flowerHeightMin'"></p-sortIcon>
-          </th>
-          <th *ngSwitchCase="'isNew'">
-            {{col.header}}
-          </th>
-          <th *ngSwitchCase="'isPopular'">
-            {{col.header}}
-          </th>
-          <th *ngSwitchCase="'popularity'" [pSortableColumn]="'popularity'">
-            {{col.header}}
-            <p-sortIcon [field]="'popularity'"></p-sortIcon>
-          </th>
+
+
           <th *ngSwitchCase="'color'">
             {{col.header}}
           </th>
           <th *ngSwitchCase="'colorSecondary'">
             {{col.header}}
           </th>
-          <th *ngSwitchCase="'created'" [pSortableColumn]="'created'">
-            {{col.header}}
-            <p-sortIcon [field]="'created'"></p-sortIcon>
-          </th>
+
         </ng-container>
 
       </tr>
@@ -158,28 +137,24 @@
     <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns">
       <tr [pContextMenuRow]="rowData" [ngClass]="{'expanded' : expanded}">
         <td>
-          <a [pRowToggler]="rowData">
+          <a [pRowToggler]="rowData" *ngIf="rowData.flowerSizes.length > 0">
             <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
           </a>
         </td>
         <td *ngFor="let col of selectedColumns" [ngSwitch]="col.field">
-          <span *ngSwitchCase="'id'">
+
+          <span *ngSwitchDefault>
             {{rowData[col.field]}}
           </span>
+
           <span *ngSwitchCase="'image'" class="table-row-image-wrapper">
             <div class="table-row-image zoomable" [ngStyle]="{'background-image': 'url(' + rowData.image + ''}" (click)="zoomImage(rowData.image)"></div>
-          </span>
-          <span *ngSwitchCase="'name'">
-            {{rowData[col.field]}}
-          </span>
-          <span *ngSwitchCase="'nameOriginal'">
-            {{rowData[col.field]}}
           </span>
           <span *ngSwitchCase="'flowerType'">
             {{rowData[col.field].nameSingle}}
           </span>
           <span *ngSwitchCase="'groupName'">
-            {{rowData[col.field]}}
+            {{rowData.group?.name}}
           </span>
           <span *ngSwitchCase="'flowerSizeMin'">
             <span *ngIf="rowData.flowerSizeMin && rowData.flowerSizeMax">{{rowData.flowerSizeMin}} см - {{rowData.flowerSizeMax}} см</span>
@@ -208,15 +183,15 @@
             </div>
           </span>
           <span *ngSwitchCase="'popularity'">
-                      {{rowData[col.field]}}/10
+            {{rowData[col.field]}}/10
           </span>
           <span *ngSwitchCase="'color'">
             <div *ngIf="rowData[col.field]">{{rowData[col.field]?.name}}</div>
             <div *ngIf="rowData[col.field]" class="color-example" [ngStyle]="{backgroundColor: rowData[col.field]?.hex}"></div>
           </span>
           <span *ngSwitchCase="'colorSecondary'">
-             <div *ngIf="rowData[col.field]">{{rowData[col.field]?.name}}</div>
-             <div *ngIf="rowData[col.field]" class="color-example" [ngStyle]="{backgroundColor: rowData[col.field]?.hex}"></div>
+            <div *ngIf="rowData[col.field]">{{rowData[col.field]?.name}}</div>
+            <div *ngIf="rowData[col.field]" class="color-example" [ngStyle]="{backgroundColor: rowData[col.field]?.hex}"></div>
           </span>
           <span *ngSwitchCase="'created'">
             {{rowData[col.field] | date:'dd.MM.yyyy H:mm'}}

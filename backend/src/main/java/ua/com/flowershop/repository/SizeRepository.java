@@ -8,7 +8,6 @@ import ua.com.flowershop.projection.SizeProjection;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Repository
 public interface SizeRepository extends JpaRepository<Size, Long> {
@@ -24,8 +23,6 @@ public interface SizeRepository extends JpaRepository<Size, Long> {
     Optional<SizeProjection> findProjectedById(Long id);
 
     Optional<SizeAdminProjection> findForAdminProjectedById(Long id);
-
-    Set<SizeProjection> findProjectedByFlowerTypeSizesSizeId(Long id);
 
     Boolean existsByName(String name);
 
