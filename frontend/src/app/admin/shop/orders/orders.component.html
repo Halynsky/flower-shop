@@ -11,7 +11,7 @@
 <div class="panel-content">
   <p-table #dt [columns]="selectedColumns" [value]="items.content" sortField="created" [sortOrder]="-1" [paginator]="true" [rows]="10" [totalRecords]="items.totalElements"
            [tableStyle]="{'table-layout':'auto'}" dataKey="id" rowExpandMode="single"
-           (onLazyLoad)="onLazyLoad($event)" [lazy]="true"
+           (onLazyLoad)="onLazyLoad($event)" [lazy]="true" [filters]="filters"
            [contextMenu]="cm" selectionMode="single" (onContextMenuSelect)="onContextMenuSelect($event)" contextMenuSelectionMode="joint">
 
     <!--Column selector-->
@@ -88,7 +88,7 @@
           <input *ngSwitchCase="'user'" pInputText type="text" (input)="dt.filter($event.target.value, 'userNamePart', 'contains')" class="table-filter">
           <input *ngSwitchCase="'userFacebookNickname'" pInputText type="text" (input)="dt.filter($event.target.value, 'userFacebookNicknamePart', 'startsWith')" class="table-filter">
           <input *ngSwitchCase="'phone'" pInputText type="text" (input)="dt.filter($event.target.value, 'phonePart', 'contains')" class="table-filter">
-          <input *ngSwitchCase="'userId'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'equals')" class="table-filter">
+          <input *ngSwitchCase="'userId'" pInputText pKeyFilter="pint" type="text" (input)="dt.filter($event.target.value, col.field, 'equals')" class="table-filter" [ngModel]="filters?.userId?.value">
 
           <div *ngSwitchCase="'status'">
             <p-multiSelect [options]="statusesOptions" defaultLabel="Всі"
@@ -165,8 +165,13 @@
             {{rowData[col.field] | date:'dd.MM.yy HH:mm' }}
           </span>
 
-          <span *ngSwitchCase="'status'">
-            {{translation.text.orderStatuses[rowData[col.field]]}}
+          <span *ngSwitchCase="'status'"
+                [ngClass]="{'highlight-status': rowData.status == Status.NEW,
+                'pg-primary': rowData.status == Status.NEW || rowData.status == Status.PROCESSING || rowData.status == Status.DELIVERING,
+                 'pg-accent': rowData.status == Status.DONE,
+                 'pg-warn': rowData.status == Status.RETURNED,
+                 'pg-danger': rowData.status == Status.CANCELED}">
+            {{translation.text.orderStatuses[rowData.status]}}
           </span>
 
           <span *ngSwitchCase="'totalPrice'">
@@ -260,10 +265,10 @@
         </div>
         <div class="ui-grid-col-4">
           <label class="new-status-name"
-                 [ngClass]="{'png-primary': orderStatusChangeRequest.status == Status.PROCESSING || orderStatusChangeRequest.status == Status.DELIVERING,
-                 'png-accent': orderStatusChangeRequest.status == Status.DONE,
-                 'png-warn': orderStatusChangeRequest.status == Status.RETURNED,
-                 'png-danger': orderStatusChangeRequest.status == Status.CANCELED}">
+                 [ngClass]="{'pg-primary': orderStatusChangeRequest.status == Status.PROCESSING || orderStatusChangeRequest.status == Status.DELIVERING,
+                 'pg-accent': orderStatusChangeRequest.status == Status.DONE,
+                 'pg-warn': orderStatusChangeRequest.status == Status.RETURNED,
+                 'pg-danger': orderStatusChangeRequest.status == Status.CANCELED}">
             {{translation.text.orderStatuses[orderStatusChangeRequest.status]}}
           </label>
         </div>
@@ -373,7 +378,7 @@
   </p-footer>
 </p-dialog>
 
-<p-dialog [(visible)]="displayNoteChangeDialog" class="status-change-dialog" [modal]="true" (onHide)="resetNoteChangeForm(noteChangeForm)">
+<p-dialog [(visible)]="displayNoteChangeDialog" class="note-change-dialog" [modal]="true" (onHide)="resetNoteChangeForm(noteChangeForm)">
   <p-header>
     Оновлення примітки для замовлення №{{selected?.id}}
   </p-header>

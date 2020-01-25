@@ -11,7 +11,7 @@
   <p-table #dt [value]="items.content" sortField="id" [paginator]="true" [rows]="10"
            [tableStyle]="{'table-layout':'auto'}" [contextMenu]="cm" [(contextMenuSelection)]="selected" (onContextMenuSelect)="onRowSelect($event)"
            [customSort]="true" (sortFunction)="sortData($event)" dataKey="id" rowExpandMode="single" [columns]="selectedColumns"
-           (onLazyLoad)="onLazyLoad($event)" [lazy]="true" [totalRecords]="items.totalElements">
+           (onLazyLoad)="onLazyLoad($event)" [lazy]="true" [totalRecords]="items.totalElements" [filters]="filters">
     <ng-template pTemplate="caption">
       <div style="text-align:left">
         <p-multiSelect [options]="cols" [(ngModel)]="selectedColumns" optionLabel="header"
@@ -70,7 +70,7 @@
       </tr>
       <tr>
         <th *ngFor="let col of selectedColumns" [ngSwitch]="col.field">
-          <input *ngSwitchCase="'id'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'equals')" class="table-filter">
+          <input *ngSwitchCase="'id'" pInputText pKeyFilter="pint" type="text" (input)="dt.filter($event.target.value, col.field, 'equals')" class="table-filter" [ngModel]="filters?.id?.value">
           <div *ngSwitchCase="'name'">
             <input pInputText type="text" (input)="dt.filter($event.target.value, 'namePart', 'contains')"
                    class="table-filter">

@@ -40,6 +40,7 @@ import {
   InputSwitchModule,
   InputTextareaModule,
   InputTextModule,
+  KeyFilterModule,
   ListboxModule,
   MenuModule,
   MessageModule,
@@ -118,7 +119,8 @@ export const ngxMaskOptions: Partial<IConfig> | (() => Partial<IConfig>) = {};
     ListboxModule,
     CheckboxModule,
     CardModule,
-    NgxMaskModule.forRoot(ngxMaskOptions)
+    NgxMaskModule.forRoot(ngxMaskOptions),
+    KeyFilterModule
   ],
   providers: [
     ConfirmationService

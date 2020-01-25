@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { Table } from "primeng";
+import { FilterMetadata, Table } from "primeng";
 import { RestPage } from "../../../api/models/RestPage";
 import { ItemSaveMode } from "../../../models/ItemSaveMode";
 import { Pagination } from "../../../api/models/Pagination";
@@ -16,6 +16,7 @@ import { IdAmountTuple } from "../../../api/models/IdAmountTuple";
 import { FlowerSize } from "../../../api/models/FlowerSize";
 import { FlowerSizeService } from "../../../api/services/flower-size.service";
 import * as fileSaver from 'file-saver';
+import { dataTableFilter } from "../../util";
 
 @Component({
   selector: 'app-orders',
@@ -91,6 +92,8 @@ export class OrdersComponent implements OnInit {
   displayZoomDialog = false;
   zoomedImage;
 
+  filters: { [s: string]: FilterMetadata } = {};
+
   constructor(private dataService: OrderService,
               private flowerSizeService: FlowerSizeService,
               private snackBarService: SnackBarService,
@@ -104,6 +107,9 @@ export class OrdersComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      Object.assign(this.filters, dataTableFilter('userId', params['userId']));
+    });
   }
 
   loadDataLazy(filters = {}, pagination: Pagination = new Pagination()) {
@@ -273,7 +279,7 @@ export class OrdersComponent implements OnInit {
       {
         label: "Перейти до користувача",
         icon: 'fas fa-user-tag',
-        command: (event) => this.foo(event),
+        command: (event) => this.router.navigate(['admin/users'], {queryParams: {id: this.selected.user.id}}),
         visible: this.selected.user,
       },
     ];
@@ -287,10 +293,6 @@ export class OrdersComponent implements OnInit {
 
   onContextMenuHide(event) {
     this.isContextMenuOpened = false;
-  }
-
-  foo(event) {
-    this.snackBarService.methodNotImplemented()
   }
 
   orderIsClosed(status) {
