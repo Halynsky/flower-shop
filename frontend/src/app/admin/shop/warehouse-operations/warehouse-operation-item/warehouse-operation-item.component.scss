@@ -2,6 +2,8 @@
 @import "mixins.scss";
 
 :host {
+  max-width: 1000px;
+
   .input-element {
     width: 300px;
   }

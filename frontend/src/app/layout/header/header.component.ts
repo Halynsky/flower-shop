@@ -7,7 +7,6 @@ import { SnackBarService } from "../../services/snak-bar.service";
 import { Router } from "@angular/router";
 import { Role } from "../../models/Role";
 import { AuthDialogComponent } from "../../components/shared/auth-dialog/auth-dialog.component";
-import { BucketDialogComponent } from "../../components/shared/bucket-dialog/bucket-dialog.component";
 import { getErrorMessage } from "../../utils/Functions";
 
 @Component({
@@ -30,10 +29,6 @@ export class HeaderComponent {
 
   openAuthDialog() {
     this.dialog.open(AuthDialogComponent);
-  }
-
-  openBucketDialog() {
-    this.dialog.open(BucketDialogComponent, {width: "80%", panelClass: "modal-panel-no-padding", maxWidth: 800});
   }
 
   logout() {

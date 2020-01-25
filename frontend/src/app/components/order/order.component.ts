@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { BucketLocalService } from "../../services/bucket-local.service";
 import { DeliveryType, deliveryTypeOptions } from 'app/models/DeliveryType';
@@ -8,7 +8,6 @@ import { MatAutocompleteSelectedEvent, MatDialog, MatRadioChange } from "@angula
 import { Observable, of } from "rxjs";
 import { finalize, timeout } from "rxjs/operators";
 import { OrderRequest } from "../../api/models/Order";
-import { BucketDialogComponent } from "../shared/bucket-dialog/bucket-dialog.component";
 import { SnackBarService } from "../../services/snak-bar.service";
 import { getErrorMessage } from "../../utils/Functions";
 import { NovaPoshtaService } from "../../api/services/nova-poshta.service";
@@ -44,7 +43,8 @@ export class OrderComponent implements OnInit {
               private orderService: OrderService,
               public snackBarService: SnackBarService,
               public dialog: MatDialog,
-              public novaPoshtaService: NovaPoshtaService) {
+              public novaPoshtaService: NovaPoshtaService,
+              private changeDetectorRef: ChangeDetectorRef) {
 
     this.getCities();
     this.getWarehouses();
@@ -56,17 +56,15 @@ export class OrderComponent implements OnInit {
       phone: []
     });
 
-    this.initFormGroups(DeliveryType.NOVA_POSHTA_DEPARTMENT);
+  }
 
+  ngOnInit() {
+    this.initFormGroups(DeliveryType.NOVA_POSHTA_DEPARTMENT);
     this.fillUserData();
 
     this.securityService.onLogin.subscribe(() => {
       this.fillUserData();
-    })
-
-  }
-
-  ngOnInit() {
+    });
     this.bucketLocalService.updateBucketFlowerSizes();
   }
 
@@ -79,7 +77,7 @@ export class OrderComponent implements OnInit {
           this.cities = [];
         }
       }, error => {
-        this.snackBarService.showError("Помилка доступу до бази даних Новоъ Пошти")
+        this.snackBarService.showError("Помилка доступу до бази даних Нової Пошти")
       })
   }
 
@@ -90,7 +88,7 @@ export class OrderComponent implements OnInit {
       .subscribe(response => {
         this.warehouses = this.filteredWarehouses = response.data
       }, error => {
-        this.snackBarService.showError("Помилка доступу до бази даних Новоъ Пошти")
+        this.snackBarService.showError("Помилка доступу до бази даних Нової Пошти")
       })
   }
 
@@ -105,7 +103,7 @@ export class OrderComponent implements OnInit {
           this.streets = [];
         }
       }, error => {
-        this.snackBarService.showError("Помилка доступу до бази даних Новоъ Пошти")
+        this.snackBarService.showError("Помилка доступу до бази даних Нової Пошти")
       })
   }
 
@@ -123,7 +121,7 @@ export class OrderComponent implements OnInit {
     if (this.deliveryInfoFormGroup.get('street')) {
       this.deliveryInfoFormGroup.get('street').reset();
       this.deliveryInfoFormGroup.get('house').reset();
-      this.deliveryInfoFormGroup.get('house').reset();
+      this.deliveryInfoFormGroup.get('apartment').reset();
     }
 
     this.getWarehouses(event.option.value.Ref);
@@ -185,7 +183,7 @@ export class OrderComponent implements OnInit {
   }
 
   onDeliveryTypeChange(event: MatRadioChange) {
-    this.initFormGroups(event.value)
+    this.initFormGroups(event.value);
   }
 
   initFormGroups(deliveryType: DeliveryType) {
@@ -211,6 +209,7 @@ export class OrderComponent implements OnInit {
     }
 
     this.deliveryInfoFormGroup = new FormGroup({});
+
     this.deliveryInfoFormGroup.addControl('deliveryType', new FormControl(deliveryType));
     this.deliveryInfoFormGroup.addControl('comment', new FormControl(previousComment));
 
@@ -226,10 +225,10 @@ export class OrderComponent implements OnInit {
         break;
       }
       case DeliveryType.NOVA_POSHTA_DEPARTMENT: {
+        this.deliveryInfoFormGroup.addControl('novaPoshtaDepartment', new FormControl());
         this.deliveryInfoFormGroup.addControl('city', new FormControl(previousCity));
         this.deliveryInfoFormGroup.addControl('receiverFullName', new FormControl(previousReceiverFullName));
         this.deliveryInfoFormGroup.addControl('receiverPhone', new FormControl(previousReceiverPhone));
-        this.deliveryInfoFormGroup.addControl('novaPoshtaDepartment', new FormControl());
         break;
       }
       case DeliveryType.SELF_UZHGOROD: {
@@ -263,16 +262,12 @@ export class OrderComponent implements OnInit {
       });
     }
 
+    this.changeDetectorRef.detectChanges();
+
   }
 
   isFormValid(): Observable<boolean> {
     return of(this.contactInfoFormGroup.invalid || this.deliveryInfoFormGroup.invalid).pipe(timeout(0))
   }
-
-  openBucketDialog() {
-    this.dialog.open(BucketDialogComponent, {width: "80%", panelClass: "modal-panel-no-padding", maxWidth: 800});
-  }
-
-
 
 }

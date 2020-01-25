@@ -4,6 +4,8 @@ import { SecurityService } from "./security.service";
 import { BucketService } from "../api/services/bucket.service";
 import { FlowerSize } from "../api/models/FlowerSize";
 import { FlowerSizeService } from "../api/services/flower-size.service";
+import { BucketDialogComponent } from "../components/shared/bucket-dialog/bucket-dialog.component";
+import { MatDialog } from "@angular/material";
 
 
 @Injectable({providedIn: 'root'})
@@ -14,7 +16,8 @@ export class BucketLocalService {
 
   constructor(private securityService: SecurityService,
               private bucketService: BucketService,
-              private flowerSizeService: FlowerSizeService) {
+              private flowerSizeService: FlowerSizeService,
+              public dialog: MatDialog) {
     this.bucket = this.getBucket();
     this.updateBucketInfo();
     this.securityService.onLogin.subscribe(() => {
@@ -112,6 +115,10 @@ export class BucketLocalService {
   getMaxAmountForFlowerSize(flowerSizeId, available) {
     let foundBucketItem = this.bucket.find(bucketItem => bucketItem.flowerSizeId == flowerSizeId);
     return foundBucketItem ? available - foundBucketItem.amount : available
+  }
+
+  openBucketDialog() {
+    this.dialog.open(BucketDialogComponent, {width: "80%", panelClass: "modal-panel-no-padding", maxWidth: 800});
   }
 
 }

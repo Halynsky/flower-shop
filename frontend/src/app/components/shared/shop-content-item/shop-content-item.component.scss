@@ -98,7 +98,7 @@
       }
 
       .add-to-card {
-        height: 50px;
+        height: 40px;
         position: absolute;
         color: white;
         background: rgba(#000000, .45);
@@ -107,7 +107,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        bottom: -50px;
+        bottom: -40px;
         transition: bottom .3s, background .25s;
         text-transform: uppercase;
 
