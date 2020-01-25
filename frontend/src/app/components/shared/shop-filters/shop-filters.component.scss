@@ -67,7 +67,9 @@
 
 }
 
-filter-tree {
-  padding-bottom: 16px;
-
+.spinner-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
 }

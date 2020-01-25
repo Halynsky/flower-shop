@@ -1,8 +1,8 @@
 <div class="wrapper" *ngIf="flower">
 
   <div class="title">
-    <span class="flower-type-name">{{flower.flowerType.nameSingle}} </span>
-    <span class="flower-name">{{flower.nameOriginal}}</span>
+    <a class="flower-type-name" [routerLink]="['/shop']" [queryParams]="{flowerTypes: flower.flowerType.id}">{{flower.flowerType.nameSingle}}</a>
+    <span class="flower-name"> {{flower.nameOriginal}}</span>
   </div>
   <div class="content">
 

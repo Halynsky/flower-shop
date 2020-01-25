@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { FlowerService } from "../../api/services/flower.service";
 import { FlowerShort } from "../../api/models/Flower";
 import { SnackBarService } from "../../services/snak-bar.service";
@@ -33,6 +33,7 @@ export class ShopComponent implements OnInit {
 
   constructor(private flowerService: FlowerService,
               private snackBarService: SnackBarService,
+              private changeDetectorRef: ChangeDetectorRef,
               public dialog: MatDialog,
               @Inject('Window') private window: Window,
               @Inject(DOCUMENT) private document: Document) {
@@ -67,12 +68,13 @@ export class ShopComponent implements OnInit {
 
   onFilterChange(event) {
     this.filters = event;
-    this.getShopItems(this.searchTerm, this.filters)
+    this.getShopItems(this.searchTerm, this.filters);
+    this.changeDetectorRef.detectChanges();
   }
 
   sortSelectionChange(event) {
     this.pagination.sort = this.sort;
-    this.getShopItems(this.searchTerm, this.filters)
+    this.getShopItems(this.searchTerm, this.filters);
   }
 
   searchTermChange(event) {

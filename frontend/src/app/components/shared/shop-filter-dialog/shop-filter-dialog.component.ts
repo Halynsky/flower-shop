@@ -10,11 +10,8 @@ import { ShopFilter } from "../../../api/models/ShopFilter";
 })
 export class ShopFilterDialogComponent {
 
-  @Input()
-  filters = new ShopFilter();
-  @Output()
-  onFilterChange: EventEmitter<any> = new EventEmitter();
-
+  @Input() filters = new ShopFilter();
+  @Output() onFilterChange: EventEmitter<any> = new EventEmitter();
 
   constructor(public authService: AuthService,
               public dialogRef: MatDialogRef<ShopFilterDialogComponent>) {
