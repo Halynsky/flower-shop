@@ -12,6 +12,7 @@ import { EnumToObjectsPipe } from "../../../pipes/enum-to-objects";
 import { getErrorMessage, ngPrimeFiltersToParams } from "../../../utils/Functions";
 import { Pagination } from "../../../api/models/Pagination";
 import { RestPage } from "../../../api/models/RestPage";
+import { FlowerTypeService } from "../../../api/services/flower-type.service";
 
 @Component({
   selector: 'warehouse',
@@ -31,6 +32,8 @@ export class WarehouseOperationsComponent implements OnInit {
   amountMin = 1;
   amountMax = 10000;
   amountFilter = [this.amountMin, this.amountMax];
+
+  flowerTypes = [];
 
   columns = [
     {field: 'id', header: 'Id', active: true},
@@ -56,6 +59,7 @@ export class WarehouseOperationsComponent implements OnInit {
   ];
 
   constructor(private dataService: WarehouseOperationService,
+              private flowerTypeService: FlowerTypeService,
               private snackBarService: SnackBarService,
               private confirmationService: ConfirmationService,
               private router: Router,
@@ -67,6 +71,7 @@ export class WarehouseOperationsComponent implements OnInit {
     this.operationTypes = enumToObjectsPipe.transform(WarehouseOperationType.OperationType);
     this.operationTypes.forEach(e => e.label = translation.text.operationTypes[e.label]);
 
+    this.getFlowerTypes();
   }
 
   ngOnInit() {
@@ -86,6 +91,14 @@ export class WarehouseOperationsComponent implements OnInit {
 
   refresh(): void {
     this.table.onLazyLoad.emit(this.table.createLazyLoadMetadata());
+  }
+
+  getFlowerTypes() {
+    this.flowerTypeService.getAll().subscribe(flowerTypes => {
+        this.flowerTypes = flowerTypes.map(flowerType => { return {value: flowerType.name, label: flowerType.name}})
+      },
+      error => this.snackBarService.showError(getErrorMessage(error))
+    )
   }
 
   confirmRemove(event) {

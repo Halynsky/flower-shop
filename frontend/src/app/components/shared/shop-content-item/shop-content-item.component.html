@@ -21,7 +21,7 @@
 
     </div>
 
-    <div class="add-to-card" (click)="openAddToCardModal($event)">
+    <div class="add-to-card" (click)="openAddToCardModal($event)" *ngIf="flower.hasAvailableFlowerSize">
       <mat-icon aria-label="Add to card">add_shopping_cart</mat-icon>
       <span>Купити</span>
     </div>

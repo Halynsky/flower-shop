@@ -15,7 +15,7 @@
           <label for="flower">Квітка</label>
         </div>
         <div class="ui-grid-col-4">
-          <p-dropdown class="input-element" [options]="flowersOptions" name="flower" [(ngModel)]="flowerChosen"
+          <p-dropdown [options]="flowersOptions" name="flower" [(ngModel)]="flowerChosen"
                       optionLabel="nameOriginal" dataKey="id" filter="true" #flower="ngModel" required
                       placeholder="Оберіть квітку" id="flower" (ngModelChange)="getFlowersSizeById(flowerChosen.id)">
             <ng-template let-selectedItem pTemplate="selectedItem">
@@ -50,7 +50,7 @@
           <label for="size">Розмір</label>
         </div>
         <div class="ui-grid-col-4">
-          <p-dropdown class="input-element" [options]="sizeOptions" name="size" [(ngModel)]="flowerSizeChosen"
+          <p-dropdown [options]="sizeOptions" name="size" [(ngModel)]="flowerSizeChosen"
                       optionLabel="size.name" dataKey="id" #flowerSize="ngModel"
                       placeholder="Оберіть розмір" id="size" required></p-dropdown>
         </div>
@@ -68,7 +68,7 @@
           <label for="operation">Операція</label>
         </div>
         <div class="ui-grid-col-4">
-          <p-dropdown class="input-element"  [options]="operationTypes"
+          <p-dropdown [options]="operationTypes"
                       id="operation"  placeholder="Оберіть операцію"
                       name="operationType" #operationType="ngModel"
                       [(ngModel)]="itemWarehouseOperationType.operationType"
@@ -90,7 +90,7 @@
           <label for="direction">Прихід/Відхід</label>
         </div>
         <div class="ui-grid-col-4">
-          <input class="input-element" required="true" pInputText name="direction" disabled [(ngModel)]="directionOption" id="direction"/>
+          <input required="true" pInputText name="direction" disabled [(ngModel)]="directionOption" id="direction"/>
         </div>
       </div>
 
@@ -100,7 +100,6 @@
         </div>
         <div class="ui-grid-col-4">
           <input
-            class="input-element"
             pInputText
             id="amount"
             name="amount"

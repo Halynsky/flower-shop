@@ -44,6 +44,11 @@ public class WarehouseOperationService {
             flowerSize.setAmount(flowerSize.getAmount() - warehouseOperationModel.getAmount());
         }
 
+        if (warehouseOperationModel.getWarehouseOperationType().getOperationType().equals(WarehouseOperationType.OperationType.EXTERNAL_SALE) ||
+            warehouseOperationModel.getWarehouseOperationType().getOperationType().equals(WarehouseOperationType.OperationType.SALE)) {
+            flowerSize.setSold(flowerSize.getSold() + warehouseOperationModel.getAmount());
+        }
+
         flowerSizeRepository.save(flowerSize);
     }
 

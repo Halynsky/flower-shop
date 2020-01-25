@@ -37,7 +37,7 @@ public class WarehouseOperationController {
     @PageableSwagger
     @GetMapping
     public ResponseEntity<Page<WarehouseOperationProjection>> getAll(@RequestParam(required = false) Long id,
-                                                                     @RequestParam(required = false) String flowerTypeNamePart,
+                                                                     @RequestParam(required = false) List<String> flowerTypeNames,
                                                                      @RequestParam(required = false) String flowerNamePart,
                                                                      @RequestParam(required = false) String flowerSizeNamePart,
                                                                      @RequestParam(required = false) Integer amountFrom,
@@ -47,7 +47,7 @@ public class WarehouseOperationController {
                                                                      @RequestParam(required = false) List<WarehouseOperationType.OperationType> operationTypes,
                                                                      @RequestParam(required = false) List<WarehouseOperationType.Direction> directions,
                                                                      @PageableDefault(sort = "id", page = 0, size = 10, direction = Sort.Direction.ASC) Pageable pageRequest) {
-        Page<WarehouseOperationProjection> page = warehouseOperationRepository.findProjectedByFilters(id, flowerTypeNamePart, flowerNamePart, flowerSizeNamePart,
+        Page<WarehouseOperationProjection> page = warehouseOperationRepository.findProjectedByFilters(id, flowerTypeNames, flowerNamePart, flowerSizeNamePart,
             amountFrom, amountTo, dateFrom, dateTo, operationTypes, directions, pageRequest);
         return new ResponseEntity<>(page, OK);
     }

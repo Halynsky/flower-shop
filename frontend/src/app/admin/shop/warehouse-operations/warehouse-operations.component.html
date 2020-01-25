@@ -63,7 +63,13 @@
       <tr>
         <th *ngFor="let col of columns" [ngSwitch]="col.field">
           <input *ngSwitchCase="'id'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'equals')" class="table-filter">
-          <input *ngSwitchCase="'flowerType'" pInputText type="text" (input)="dt.filter($event.target.value, 'flowerTypeNamePart', 'startsWith')" class="table-filter">
+
+          <div *ngSwitchCase="'flowerType'">
+            <p-multiSelect [options]="flowerTypes" defaultLabel="Всі"
+                           class="table-filter"
+                           (onChange)="dt.filter($event.value, 'flowerTypeNames', 'in')"></p-multiSelect>
+          </div>
+
           <input *ngSwitchCase="'flower'" pInputText type="text" (input)="dt.filter($event.target.value, 'flowerNamePart', 'startsWith')" class="table-filter">
           <input *ngSwitchCase="'size'" pInputText type="text" (input)="dt.filter($event.target.value, 'flowerSizeNamePart', 'startsWith')" class="table-filter">
 

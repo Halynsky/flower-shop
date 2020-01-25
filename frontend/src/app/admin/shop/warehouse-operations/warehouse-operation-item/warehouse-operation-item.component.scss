@@ -3,10 +3,8 @@
 
 :host {
   max-width: 1000px;
-
-  .input-element {
-    width: 300px;
-  }
+  display: flex;
+  flex-direction: column;
 }
 
 
@@ -41,4 +39,8 @@
     width: 24px;
     margin-right: 4px;
   }
+}
+
+p-dropdown {
+  width: 100%;
 }

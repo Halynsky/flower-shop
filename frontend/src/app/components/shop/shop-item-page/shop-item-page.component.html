@@ -32,7 +32,7 @@
 
         </table>
 
-        <button mat-flat-button color="accent" class="add-to-card-button" (click)="addToBucket()">
+        <button mat-flat-button color="accent" class="add-to-card-button" (click)="addToBucket()" [disabled]="!hasAvailableFlowerSize(flower)">
           <i class="material-icons">add_shopping_cart</i>
           <span>Купити</span>
         </button>
@@ -49,9 +49,9 @@
         <div class="specification-label">Назва</div>
         <div class="specification-value">{{flower.nameOriginal}}</div>
       </div>
-      <div class="specification" *ngIf="flower.groupName">
+      <div class="specification" *ngIf="flower?.group?.name">
         <div class="specification-label">Група</div>
-        <div class="specification-value">{{flower.groupName}}</div>
+        <div class="specification-value">{{flower.group.name}}</div>
       </div>
       <div class="specification" *ngIf="flower.flowerType.plantingMaterialType">
         <div class="specification-label">Посадковий матеріал</div>
