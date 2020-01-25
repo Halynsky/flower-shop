@@ -146,10 +146,12 @@
                 [(ngModel)]="userRegistration.password"
                 validateEqual="confirmPassword"
                 validationEqualReverse="true"
+                minlength="8"
                 required/>
 
               <div class="error-wrapper" *ngIf="password.dirty || password.touched || regForm.submitted">
                 <div class="error-message" *ngIf="password.errors?.required">Повинно бути вказано</div>
+                <div class="error-message" *ngIf="!password.errors?.required && password.errors?.minlength">Пароль занадто короткий</div>
               </div>
 
             </div>

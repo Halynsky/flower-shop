@@ -79,8 +79,9 @@ public interface FlowerRepository extends JpaRepository<Flower, Long> {
         "INNER JOIN f.color c " +
         "INNER JOIN f.flowerSizes fs " +
         "INNER JOIN f.favoriteFlowersLists ffl " +
+        "LEFT JOIN f.group g " +
         "WHERE ffl.user.id = :userId " +
-        "GROUP BY f.id, f.name, f.nameOriginal, f.image, f.popularity, f.created, f.isNew, f.isPopular, ft.id, ft.name, ft.nameSingle " +
+        "GROUP BY f.id, f.name, f.nameOriginal, f.image, f.popularity, f.created, f.isNew, f.isPopular, ft.id, ft.name, ft.nameSingle, g " +
         "ORDER BY isPopular DESC, popularity ASC")
     List<FlowerWithAvailableFlagProjection> findFavoriteFlowers(Long userId);
 
