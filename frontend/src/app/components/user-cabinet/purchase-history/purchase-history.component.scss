@@ -55,6 +55,8 @@
 
   .order-status {
     min-width: 86px;
+    align-items: center;
+    display: flex;
 
     &.new {
       color: #009ede;
@@ -352,4 +354,34 @@
 
   }
 
+}
+
+::ng-deep mat-panel-description {
+  .description-right {
+    display: flex;
+    justify-content: space-between;
+
+    .order-price {
+
+      .desktop {
+        @include response-to(xs) {
+          display: none;
+        }
+      }
+
+      .mobile {
+        @include response-from(sm) {
+          display: none;
+        }
+      }
+
+      .highlighted-price {
+        font-weight: 500;
+      }
+
+
+
+    }
+
+  }
 }
