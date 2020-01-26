@@ -106,9 +106,9 @@ public class OrderService {
     }
 
     public void confirmPayment(Long orderId, LocalDate paid) {
-        Order order = orderRepository.findById(orderId).orElseThrow(NotFoundException::new);
-        order.setPaid(paid);
-        orderRepository.save(order);
+       Order order = orderRepository.findById(orderId).orElseThrow(NotFoundException::new);
+       order.setPaid(paid);
+       orderRepository.save(order);
     }
 
     @Transactional

@@ -27,8 +27,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import static java.util.Objects.nonNull;
 import static org.springframework.http.HttpStatus.OK;
 import static ua.com.flowershop.util.Path.ORDERS_PATH;
 
@@ -65,9 +67,10 @@ public class OrderController {
     }
 
     @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
-    @PutMapping("/{id}/confirmPayment")
-    public ResponseEntity<Void> confirmPayment(@PathVariable Long id, @RequestBody(required = false) LocalDate paid) {
-        orderService.confirmPayment(id, paid);
+    @PutMapping(value = "/{id}/confirmPayment")
+    public ResponseEntity<Void> confirmPayment(@PathVariable Long id, @RequestBody(required = false) String paid) {
+        LocalDate paymentDate = nonNull(paid) && !paid.equals("") ? LocalDate.parse(paid,  DateTimeFormatter.ofPattern("dd-MM-yyyy")) : null;
+        orderService.confirmPayment(id, paymentDate);
         return new ResponseEntity<>(OK);
     }
 

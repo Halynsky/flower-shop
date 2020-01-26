@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import ua.com.flowershop.exception.NotFoundException;
 import ua.com.flowershop.model.GroupModel;
 import ua.com.flowershop.projection.GroupAdminProjection;
-import ua.com.flowershop.projection.GroupProjection;
 import ua.com.flowershop.projection.GroupProjectionFull;
+import ua.com.flowershop.projection.GroupShortProjection;
 import ua.com.flowershop.repository.GroupRepository;
 import ua.com.flowershop.service.GroupService;
 
@@ -35,7 +35,7 @@ public class GroupController {
     }
 
     @GetMapping("byFlowerType/{flowerTypeId}")
-    public ResponseEntity<List<GroupProjection>> getByFlowerTypeId(@PathVariable Long flowerTypeId) {
+    public ResponseEntity<List<GroupShortProjection>> getByFlowerTypeId(@PathVariable Long flowerTypeId) {
         return new ResponseEntity<>(groupRepository.findProjectedByFlowerTypeId(flowerTypeId), OK);
     }
 

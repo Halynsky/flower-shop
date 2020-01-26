@@ -17,5 +17,6 @@ public class GroupModel {
     private String nameSingle;
     private String nameOriginal;
     private String nameOriginalSingle;
+    private String description;
     private FlowerTypeModel flowerType;
 }

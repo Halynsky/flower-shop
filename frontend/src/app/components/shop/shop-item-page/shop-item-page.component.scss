@@ -35,7 +35,7 @@
   .content {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-areas: "image add-to-card-block" "specifications specifications" "description description";
+    grid-template-areas: "image add-to-card-block" "specifications ." "description description";
     height: fit-content;
     grid-row-gap: 36px;
 
@@ -66,9 +66,7 @@
 
     .specifications {
       grid-area: specifications;
-      max-width: 600px;
       width: 100%;
-      justify-self: center;
 
       .title {
         font-size: 24px;
@@ -91,7 +89,7 @@
         font-size: 16px;
         display: grid;
         grid-template-columns: minmax(100px, 1fr) fit-content(100%);
-        padding: 8px;
+        padding: 8px 0px;
         border-bottom: 1px solid $grey-100;
 
         @include response-to(sm) {
@@ -181,14 +179,28 @@
       margin-bottom: 24px;
       line-height: 140%;
 
+      b {
+        font-weight: 500 !important;
+      }
+
       @include response-to(sm) {
         padding: 0px 16px;
+      }
+
+      .description-block {
+        margin-bottom: 24px;
       }
 
       .title {
         font-size: 24px;
         color: mat-color($primary, 900);
-        margin-bottom: 8px;
+        margin-bottom: 16px;
+      }
+
+      .sub-title {
+        font-size: 20px;
+        color: mat-color($primary, 900);
+        margin-bottom: 16px;
       }
 
       .value {

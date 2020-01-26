@@ -25,6 +25,8 @@ public class Group {
     private String nameSingle;
     private String nameOriginal;
     private String nameOriginalSingle;
+    @Column(columnDefinition = "text")
+    private String description;
 
     @ManyToOne
     @JoinColumn(name = "flower_type_id")

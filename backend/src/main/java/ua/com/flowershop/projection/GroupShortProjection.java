@@ -1,8 +1,7 @@
 package ua.com.flowershop.projection;
 
-public interface GroupProjection extends GroupShortProjection {
+public interface GroupShortProjection extends IdNameTupleProjection {
     String getNameOriginal();
     String getNameSingle();
     String getNameOriginalSingle();
-    String getDescription();
 }
