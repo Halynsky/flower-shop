@@ -19,7 +19,8 @@
             name="name"
             formControlName="name"
             placeholder="Ім'я та прізвище"
-            required>
+            required
+            [readonly]="securityService.isAuthenticated()">
           <div class="error-wrapper" *ngIf="contactInfoFormGroup.get('name').dirty || contactInfoFormGroup.get('name').touched">
             <div class="error-message" *ngIf="contactInfoFormGroup.get('name').errors?.required">Повинно бути вказано</div>
           </div>
@@ -34,7 +35,8 @@
             formControlName="email"
             placeholder="Електронна адреса"
             required
-            email>
+            email
+            [readonly]="securityService.isAuthenticated()">
           <div class="error-wrapper" *ngIf="contactInfoFormGroup.get('email').dirty || contactInfoFormGroup.get('email').touched">
             <div class="error-message" *ngIf="contactInfoFormGroup.get('email').errors?.required">Повинно бути вказано</div>
             <div class="error-message" *ngIf="!contactInfoFormGroup.get('email').errors?.required && contactInfoFormGroup.get('email').errors?.email">Введіть валідний email</div>
@@ -155,19 +157,18 @@
         </div>
 
         <div class="input-group" *ngIf="receiverInfoRequired()">
-          <label>ПІП отримувача</label>
+          <label>ПІП отримувача (додатково)</label>
           <input
             name="receiverFullName"
             formControlName="receiverFullName"
-            placeholder="ПІП отримувача"
-            [required]="receiverInfoRequired()">
+            placeholder="ПІП отримувача">
           <div class="error-wrapper" *ngIf="deliveryInfoFormGroup.get('receiverFullName').dirty || deliveryInfoFormGroup.get('receiverFullName').touched">
-            <div class="error-message" *ngIf="deliveryInfoFormGroup.get('receiverFullName').errors?.required">Повинно бути вказано</div>
+
           </div>
         </div>
 
         <div class="input-group" *ngIf="receiverInfoRequired()">
-          <label>Телефон отримувача</label>
+          <label>Телефон отримувача (додатково)</label>
           <input
             name="receiverPhone"
             formControlName="receiverPhone"
@@ -175,12 +176,9 @@
             validation="false"
             prefix="+38 "
             mask='(000) 000-0000'
-            maxlength="18"
-            pattern=".{10,10}"
-            required>
+            maxlength="18">
           <div class="error-wrapper" *ngIf="deliveryInfoFormGroup.get('receiverPhone').dirty || deliveryInfoFormGroup.get('receiverPhone').touched">
-            <div class="error-message" *ngIf="deliveryInfoFormGroup.get('receiverPhone').errors?.required">Повинно бути вказано</div>
-            <div class="error-message" *ngIf="!deliveryInfoFormGroup.get('receiverPhone').errors?.required && deliveryInfoFormGroup.get('receiverPhone').errors?.pattern">Введіть валідний номер телефону</div>
+
           </div>
         </div>
 
@@ -189,7 +187,7 @@
           <textarea
             name="comment"
             formControlName="comment"
-            cols="30" rows="10"
+            cols="30" rows="4"
             maxlength="500"
             placeholder="Коментар до замовлення">
         </textarea>
