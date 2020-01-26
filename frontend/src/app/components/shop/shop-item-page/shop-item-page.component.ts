@@ -56,7 +56,6 @@ export class ShopItemPageComponent implements OnInit {
     this.flowerService.getFlowerFullById(this.id).subscribe(
       flower => {
         this.flower = flower;
-        this.flower.image = null;
         this.fillBucketItems(this.flower)
       },
       error => this.snackBarService.showError(getErrorMessage(error))

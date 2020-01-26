@@ -18,6 +18,7 @@ export class AddToBucketDialogComponent implements OnInit {
   id: number;
   flower: FlowerFull;
   bucketItems: BucketItem[] = [];
+  placeholderPhoto = '../../../../assets/img/common/flower-placeholder.png';
 
   constructor(public dialogRef: MatDialogRef<AddToBucketDialogComponent>,
               public dialog: MatDialog,

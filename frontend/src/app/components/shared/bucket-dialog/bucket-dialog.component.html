@@ -23,7 +23,7 @@
         <ng-template ngFor let-bucketItem [ngForOf]="bucketLocalService.bucket" let-i="index">
           <div class="bucket-table-row">
             <div  class="bucket-item-image">
-              <img [src]="bucketItem.image">
+              <img [src]="bucketItem.image || placeholderPhoto">
             </div>
             <div class="bucket-item-name">
               <div class="flower-type-name">{{bucketItem.flowerTypeName}}</div>

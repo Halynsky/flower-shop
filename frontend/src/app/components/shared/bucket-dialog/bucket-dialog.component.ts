@@ -13,6 +13,7 @@ import { FlowerSizeService } from "../../../api/services/flower-size.service";
 })
 export class BucketDialogComponent implements OnInit {
 
+  placeholderPhoto = '../../../../assets/img/common/flower-placeholder.png';
 
   constructor(public bucketLocalService: BucketLocalService,
               public dialogRef: MatDialogRef<BucketDialogComponent>,
