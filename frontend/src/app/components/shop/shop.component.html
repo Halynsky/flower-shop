@@ -36,7 +36,7 @@
 
   <div class="content">
       <ng-template ngFor let-flower [ngForOf]="flowersPage.content" [ngForTrackBy]="trackByFn">
-        <shop-content-item [flower]="flower" [routerLink]="['item', flower.id]"></shop-content-item>
+        <shop-content-item [flower]="flower"></shop-content-item>
       </ng-template>
   </div>
 

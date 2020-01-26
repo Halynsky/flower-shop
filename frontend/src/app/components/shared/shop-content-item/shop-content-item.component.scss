@@ -12,6 +12,7 @@
     display: grid;
     grid-template-rows: 200px 1fr;
     opacity: 1;
+    text-decoration: none;
 
     @include response(xs) {
       grid-template-rows: 300px 1fr;

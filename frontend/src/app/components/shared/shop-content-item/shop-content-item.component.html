@@ -1,4 +1,4 @@
-<div class="wrapper" [ngClass]="{'not-available': !flower.hasAvailableFlowerSize}">
+<a class="wrapper" [ngClass]="{'not-available': !flower.hasAvailableFlowerSize}" [routerLink]="['item', flower.id]">
   <div class="cover" [ngStyle]="flower.image && {'background-image':'url(' + flower.image  + ')'}">
 
     <div class="flags-wrapper">
@@ -45,6 +45,6 @@
 
   </div>
 
-</div>
+</a>
 
 

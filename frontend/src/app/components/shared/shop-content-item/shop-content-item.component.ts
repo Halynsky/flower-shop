@@ -1,12 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FlowerFull, FlowerShort } from "../../../api/models/Flower";
+import { FlowerShort } from "../../../api/models/Flower";
 import { SnackBarService } from "../../../services/snak-bar.service";
 import { FavoritesService } from "../../../api/services/favorites.service";
 import { getErrorMessage } from "../../../utils/Functions";
 import { SecurityService } from "../../../services/security.service";
 import { MatDialog, MatDialogRef } from "@angular/material";
 import { AddToBucketDialogComponent } from "../add-to-bucket-dialog/add-to-bucket-dialog.component";
-import { FlowerService } from "../../../api/services/flower.service";
 
 @Component({
   selector: 'shop-content-item',
@@ -15,10 +14,8 @@ import { FlowerService } from "../../../api/services/flower.service";
 })
 export class ShopContentItemComponent implements OnInit {
 
-  @Input()
-  public flower: FlowerShort;
-  @Input()
-  public inFavorites: boolean = false;
+  @Input() public flower: FlowerShort;
+  @Input() public inFavorites: boolean = false;
 
   addToBucketDialogRef: MatDialogRef<AddToBucketDialogComponent>;
 
@@ -52,6 +49,7 @@ export class ShopContentItemComponent implements OnInit {
 
   openAddToCardModal(event) {
     event.stopPropagation();
+    event.preventDefault();
     this.addToBucketDialogRef = this.dialog.open(AddToBucketDialogComponent, {maxWidth: 800, minWidth: 320, minHeight: 320});
     this.addToBucketDialogRef.componentInstance.id = this.flower.id;
   }
