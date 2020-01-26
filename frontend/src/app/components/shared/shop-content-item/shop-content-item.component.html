@@ -1,5 +1,5 @@
 <div class="wrapper" [ngClass]="{'not-available': !flower.hasAvailableFlowerSize}">
-  <div class="cover" [ngStyle]="flower.image && {'background-image':'url(' + flower.image  + ')'}">
+  <div class="cover" [ngStyle]="flower.image && {'background-image':'url(' + flower.image + ')'} || {'background-image':'url(' + placeholderPhoto + ')'}">
 
     <div class="flags-wrapper">
       <div class="is-new" *ngIf="flower.isNew">НОВИНКА</div>

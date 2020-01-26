@@ -20,6 +20,7 @@ export class ShopItemPageComponent implements OnInit {
   id: number;
   flower: FlowerFull;
   bucketItems: BucketItem[] = [];
+  placeholderPhoto = '../../../../assets/img/common/flower-placeholder.png';
 
   constructor(private route: ActivatedRoute,
               private flowerService: FlowerService,
@@ -55,6 +56,7 @@ export class ShopItemPageComponent implements OnInit {
     this.flowerService.getFlowerFullById(this.id).subscribe(
       flower => {
         this.flower = flower;
+        this.flower.image = null;
         this.fillBucketItems(this.flower)
       },
       error => this.snackBarService.showError(getErrorMessage(error))

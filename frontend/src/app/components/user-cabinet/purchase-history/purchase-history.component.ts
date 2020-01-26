@@ -22,6 +22,7 @@ export class PurchaseHistoryComponent {
   orders: RestPage<Order> = new RestPage<Order>();
   loading = false;
   pagination: Pagination;
+  placeholderPhoto = '../../../../assets/img/common/flower-placeholder.png';
 
   constructor (public orderService: OrderService,
                public snackBarService: SnackBarService,
