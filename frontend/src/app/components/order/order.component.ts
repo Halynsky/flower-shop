@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { BucketLocalService } from "../../services/bucket-local.service";
 import { DeliveryType, deliveryTypeOptions } from 'app/models/DeliveryType';
@@ -8,10 +8,10 @@ import { MatAutocompleteSelectedEvent, MatDialog, MatRadioChange } from "@angula
 import { Observable, of } from "rxjs";
 import { finalize, timeout } from "rxjs/operators";
 import { OrderRequest } from "../../api/models/Order";
-import { BucketDialogComponent } from "../shared/bucket-dialog/bucket-dialog.component";
 import { SnackBarService } from "../../services/snak-bar.service";
 import { getErrorMessage } from "../../utils/Functions";
 import { NovaPoshtaService } from "../../api/services/nova-poshta.service";
+import { StepperSelectionEvent } from "@angular/cdk/stepper";
 
 @Component({
   selector: 'order',
@@ -38,13 +38,16 @@ export class OrderComponent implements OnInit {
   loadingStreets = false;
   loading = false;
 
+  selectedStepIndex = 0;
+
   constructor(private formBuilder: FormBuilder,
               public bucketLocalService: BucketLocalService,
               private securityService: SecurityService,
               private orderService: OrderService,
               public snackBarService: SnackBarService,
               public dialog: MatDialog,
-              public novaPoshtaService: NovaPoshtaService) {
+              public novaPoshtaService: NovaPoshtaService,
+              private changeDetectorRef: ChangeDetectorRef) {
 
     this.getCities();
     this.getWarehouses();
@@ -56,17 +59,15 @@ export class OrderComponent implements OnInit {
       phone: []
     });
 
-    this.initFormGroups(DeliveryType.NOVA_POSHTA_DEPARTMENT);
+  }
 
+  ngOnInit() {
+    this.initFormGroups(DeliveryType.NOVA_POSHTA_DEPARTMENT, true);
     this.fillUserData();
 
     this.securityService.onLogin.subscribe(() => {
       this.fillUserData();
-    })
-
-  }
-
-  ngOnInit() {
+    });
     this.bucketLocalService.updateBucketFlowerSizes();
   }
 
@@ -79,7 +80,7 @@ export class OrderComponent implements OnInit {
           this.cities = [];
         }
       }, error => {
-        this.snackBarService.showError("Помилка доступу до бази даних Новоъ Пошти")
+        this.snackBarService.showError("Помилка доступу до бази даних Нової Пошти")
       })
   }
 
@@ -90,7 +91,7 @@ export class OrderComponent implements OnInit {
       .subscribe(response => {
         this.warehouses = this.filteredWarehouses = response.data
       }, error => {
-        this.snackBarService.showError("Помилка доступу до бази даних Новоъ Пошти")
+        this.snackBarService.showError("Помилка доступу до бази даних Нової Пошти")
       })
   }
 
@@ -105,7 +106,7 @@ export class OrderComponent implements OnInit {
           this.streets = [];
         }
       }, error => {
-        this.snackBarService.showError("Помилка доступу до бази даних Новоъ Пошти")
+        this.snackBarService.showError("Помилка доступу до бази даних Нової Пошти")
       })
   }
 
@@ -123,7 +124,7 @@ export class OrderComponent implements OnInit {
     if (this.deliveryInfoFormGroup.get('street')) {
       this.deliveryInfoFormGroup.get('street').reset();
       this.deliveryInfoFormGroup.get('house').reset();
-      this.deliveryInfoFormGroup.get('house').reset();
+      this.deliveryInfoFormGroup.get('apartment').reset();
     }
 
     this.getWarehouses(event.option.value.Ref);
@@ -185,55 +186,53 @@ export class OrderComponent implements OnInit {
   }
 
   onDeliveryTypeChange(event: MatRadioChange) {
-    this.initFormGroups(event.value)
+    this.initFormGroups(event.value);
   }
 
-  initFormGroups(deliveryType: DeliveryType) {
+  initFormGroups(deliveryType: DeliveryType, init: boolean = false) {
 
-    let previousComment;
-    let previousCity;
-    let previousStreet;
-    let previousHouse;
-    let previousApartment;
-    let previousReceiverFullName;
-    let previousReceiverPhone;
-
-    let previousFormGroup = this.deliveryInfoFormGroup;
-
-    if (previousFormGroup) {
-      previousComment = previousFormGroup.get('comment') ? previousFormGroup.get('comment').value : null;
-      previousCity = previousFormGroup.get('city') ? previousFormGroup.get('city').value : null;
-      previousStreet = previousFormGroup.get('street') ? previousFormGroup.get('street').value : null;
-      previousHouse = previousFormGroup.get('house') ? previousFormGroup.get('house').value : null;
-      previousApartment = previousFormGroup.get('apartment') ? previousFormGroup.get('apartment').value : null;
-      previousReceiverFullName = previousFormGroup.get('receiverFullName') ? previousFormGroup.get('receiverFullName').value : null;
-      previousReceiverPhone = previousFormGroup.get('receiverPhone') ? previousFormGroup.get('receiverPhone').value : null;
+    if (init) {
+      this.deliveryInfoFormGroup = new FormGroup({});
+      this.deliveryInfoFormGroup.addControl('deliveryType', new FormControl(deliveryType));
+      this.deliveryInfoFormGroup.addControl('comment', new FormControl());
     }
-
-    this.deliveryInfoFormGroup = new FormGroup({});
-    this.deliveryInfoFormGroup.addControl('deliveryType', new FormControl(deliveryType));
-    this.deliveryInfoFormGroup.addControl('comment', new FormControl(previousComment));
 
     switch (deliveryType) {
       case DeliveryType.NOVA_POSHTA_COURIER:
       case DeliveryType.UKR_POSHTA_DEPARTMENT: {
-        this.deliveryInfoFormGroup.addControl('city', new FormControl(previousCity));
-        this.deliveryInfoFormGroup.addControl('street', new FormControl(previousStreet));
-        this.deliveryInfoFormGroup.addControl('house', new FormControl(previousHouse));
-        this.deliveryInfoFormGroup.addControl('apartment', new FormControl(previousApartment));
-        this.deliveryInfoFormGroup.addControl('receiverFullName', new FormControl(previousReceiverFullName));
-        this.deliveryInfoFormGroup.addControl('receiverPhone', new FormControl(previousReceiverPhone));
+        this.deliveryInfoFormGroup.removeControl('novaPoshtaDepartment');
+        if (!this.deliveryInfoFormGroup.get('city'))
+          this.deliveryInfoFormGroup.addControl('city', new FormControl());
+        if (!this.deliveryInfoFormGroup.get('street'))
+          this.deliveryInfoFormGroup.addControl('street', new FormControl());
+        if (!this.deliveryInfoFormGroup.get('house'))
+          this.deliveryInfoFormGroup.addControl('house', new FormControl());
+        if (!this.deliveryInfoFormGroup.get('apartment'))
+          this.deliveryInfoFormGroup.addControl('apartment', new FormControl());
+        if (!this.deliveryInfoFormGroup.get('receiverFullName'))
+          this.deliveryInfoFormGroup.addControl('receiverFullName', new FormControl());
+        if (!this.deliveryInfoFormGroup.get('receiverPhone'))
+          this.deliveryInfoFormGroup.addControl('receiverPhone', new FormControl());
         break;
       }
       case DeliveryType.NOVA_POSHTA_DEPARTMENT: {
-        this.deliveryInfoFormGroup.addControl('city', new FormControl(previousCity));
-        this.deliveryInfoFormGroup.addControl('receiverFullName', new FormControl(previousReceiverFullName));
-        this.deliveryInfoFormGroup.addControl('receiverPhone', new FormControl(previousReceiverPhone));
         this.deliveryInfoFormGroup.addControl('novaPoshtaDepartment', new FormControl());
+        if (!this.deliveryInfoFormGroup.get('city'))
+          this.deliveryInfoFormGroup.addControl('city', new FormControl());
+        if (!this.deliveryInfoFormGroup.get('receiverFullName'))
+          this.deliveryInfoFormGroup.addControl('receiverFullName', new FormControl());
+        if (!this.deliveryInfoFormGroup.get('receiverPhone'))
+          this.deliveryInfoFormGroup.addControl('receiverPhone', new FormControl());
         break;
       }
       case DeliveryType.SELF_UZHGOROD: {
-
+        this.deliveryInfoFormGroup.removeControl('novaPoshtaDepartment');
+        this.deliveryInfoFormGroup.removeControl('city');
+        this.deliveryInfoFormGroup.removeControl('street');
+        this.deliveryInfoFormGroup.removeControl('house');
+        this.deliveryInfoFormGroup.removeControl('apartment');
+        this.deliveryInfoFormGroup.removeControl('receiverFullName');
+        this.deliveryInfoFormGroup.removeControl('receiverPhone');
         break;
       }
 
@@ -263,16 +262,15 @@ export class OrderComponent implements OnInit {
       });
     }
 
+    this.changeDetectorRef.detectChanges();
+
   }
 
   isFormValid(): Observable<boolean> {
     return of(this.contactInfoFormGroup.invalid || this.deliveryInfoFormGroup.invalid).pipe(timeout(0))
   }
 
-  openBucketDialog() {
-    this.dialog.open(BucketDialogComponent, {width: "80%", panelClass: "modal-panel-no-padding", maxWidth: 800});
+  stepperSelectionChanged(event: StepperSelectionEvent) {
+    this.selectedStepIndex = event.selectedIndex;
   }
-
-
-
 }

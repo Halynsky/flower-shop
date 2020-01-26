@@ -81,4 +81,7 @@ export class ShopItemPageComponent implements OnInit {
     return this.bucketItems.reduce(((accumulator, item) => accumulator + item.amount), 0)
   }
 
+  hasAvailableFlowerSize(flower: FlowerFull) {
+    return flower.flowerSizes.some(item => item.available > 0)
+  }
 }

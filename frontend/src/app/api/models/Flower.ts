@@ -1,13 +1,14 @@
 import { FlowerType } from "./FlowerType";
 import { Color } from "./Color";
 import { FlowerSize } from "./FlowerSize";
+import { Group } from "./Group";
 
 export class Flower {
   id: number;
   name: string;
   image: string;
   nameOriginal: string;
-  groupName: string;
+  group: Group;
   description: string;
   flowerHeightMin: number;
   flowerHeightMax: number;
@@ -29,6 +30,7 @@ export class FlowerShort {
   isNew: boolean = false;
   isPopular: boolean = false;
   priceMin: number;
+  group: Group;
 }
 
 export class FlowerFull extends Flower{

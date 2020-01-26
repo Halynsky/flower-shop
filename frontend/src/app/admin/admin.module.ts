@@ -40,6 +40,7 @@ import {
   InputSwitchModule,
   InputTextareaModule,
   InputTextModule,
+  KeyFilterModule,
   ListboxModule,
   MenuModule,
   MessageModule,
@@ -52,6 +53,8 @@ import {
 } from "primeng";
 import { DirectivesModule } from "../directives/directives.module";
 import { IConfig, NgxMaskModule } from "ngx-mask";
+import { GroupItemComponent } from "./types/groups/group-item/group-item.component";
+import { GroupsComponent } from "./types/groups/groups.component";
 
 export const ngxMaskOptions: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
@@ -76,6 +79,8 @@ export const ngxMaskOptions: Partial<IConfig> | (() => Partial<IConfig>) = {};
     SizeItemComponent,
     ColorsComponent,
     ColorItemComponent,
+    GroupsComponent,
+    GroupItemComponent,
     WarehouseOperationItemComponent,
     WarehouseComponent,
     UserItemComponent
@@ -114,7 +119,8 @@ export const ngxMaskOptions: Partial<IConfig> | (() => Partial<IConfig>) = {};
     ListboxModule,
     CheckboxModule,
     CardModule,
-    NgxMaskModule.forRoot(ngxMaskOptions)
+    NgxMaskModule.forRoot(ngxMaskOptions),
+    KeyFilterModule
   ],
   providers: [
     ConfirmationService

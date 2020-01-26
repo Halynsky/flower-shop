@@ -1,4 +1,4 @@
-<div class="panel-header item ui-grid-col-6">
+<div class="panel-header item ui-grid-col-8">
   <button pButton icon="fa fa-arrow-left" class="button-back" label="Назад" routerLink="../../"></button>
   <h1>{{mode == ItemSaveMode.new ? 'Додати ВІРТУАЛЬНОГО' : 'Оновити'}} <b>Користувача</b></h1>
 </div>
@@ -10,10 +10,10 @@
     <div class="ui-grid ui-grid-responsive ui-fluid">
 
       <div class="prime-form-group">
-        <div class="ui-grid-col-2">
+        <div class="ui-grid-col-4">
           <label for="name">Імя</label>
         </div>
-        <div class="ui-grid-col-2">
+        <div class="ui-grid-col-4">
           <input
             pInputText
             #name="ngModel"
@@ -23,7 +23,7 @@
             required
           />
         </div>
-        <div class="ui-grid-col-3">
+        <div class="ui-grid-col-4">
           <ng-container>
             <p-message *ngIf="name.errors?.required" severity="error" text="Імя повинно бути вказано"></p-message>
           </ng-container>
@@ -31,10 +31,10 @@
       </div>
 
       <div class="prime-form-group">
-        <div class="ui-grid-col-2">
+        <div class="ui-grid-col-4">
           <label for="email">Email</label>
         </div>
-        <div class="ui-grid-col-2">
+        <div class="ui-grid-col-4">
           <input
             pInputText
             #email="ngModel"
@@ -48,7 +48,7 @@
           />
         </div>
 
-        <div class="ui-grid-col-3">
+        <div class="ui-grid-col-4">
           <ng-container>
             <p-message *ngIf="email.errors?.unique" severity="error" text="Користувач з данним Email вже існує"></p-message>
             <p-message *ngIf="email.errors?.required" severity="error" text="Email повинен бути вказаний"></p-message>
@@ -59,10 +59,10 @@
       </div>
 
       <div class="prime-form-group">
-        <div class="ui-grid-col-2">
+        <div class="ui-grid-col-4">
           <label for="phone">Телефон</label>
         </div>
-        <div class="ui-grid-col-2">
+        <div class="ui-grid-col-4">
           <input
             pInputText
             #phone="ngModel"
@@ -79,46 +79,46 @@
       </div>
 
       <div class="prime-form-group">
-        <div class="ui-grid-col-2">
+        <div class="ui-grid-col-4">
           <label for="phone">Роль</label>
         </div>
-        <div class="ui-grid-col-2">
+        <div class="ui-grid-col-4">
           {{item.role}}
         </div>
       </div>
 
       <div class="prime-form-group">
-        <div class="ui-grid-col-2">
+        <div class="ui-grid-col-4">
           <label for="phone">Віртуальний</label>
         </div>
-        <div class="ui-grid-col-2">
+        <div class="ui-grid-col-4">
           <p-checkbox name="isVirtual" binary="true" [(ngModel)]="item.isVirtual" disabled></p-checkbox>
         </div>
       </div>
 
       <div class="prime-form-group">
-        <div class="ui-grid-col-2">
+        <div class="ui-grid-col-4">
           <label for="phone">Розблокований</label>
         </div>
-        <div class="ui-grid-col-2">
+        <div class="ui-grid-col-4">
           <p-checkbox name="isEnabled" binary="true" [(ngModel)]="item.isEnabled" [disabled]="item.isVirtual"></p-checkbox>
         </div>
       </div>
 
       <div class="prime-form-group">
-        <div class="ui-grid-col-2">
+        <div class="ui-grid-col-4">
           <label for="phone">Активований</label>
         </div>
-        <div class="ui-grid-col-2">
+        <div class="ui-grid-col-4">
           <p-checkbox name="isActivated" binary="true" [(ngModel)]="item.isActivated" disabled></p-checkbox>
         </div>
       </div>
 
       <div class="prime-form-group">
-        <div class="ui-grid-col-2">
+        <div class="ui-grid-col-4">
           <label for="name">Нік на Facebook</label>
         </div>
-        <div class="ui-grid-col-2">
+        <div class="ui-grid-col-4">
           <input
             pInputText
             #name="ngModel"
@@ -132,7 +132,7 @@
     </div>
 
     <div class="ui-grid-row ui-grid-field">
-      <div class="ui-grid-col-4 footer">
+      <div class="ui-grid-col-8 footer">
         <button type="submit" pButton icon="pi pi-check" class="ui-button-success" label="{{mode == ItemSaveMode.new ? 'Зберегти' : 'Оновити'}}" [disabled]="loading"></button>
       </div>
     </div>

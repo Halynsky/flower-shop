@@ -14,6 +14,7 @@ public class Path {
     public static final String SOCIAL				= "social";
 	public static final String ARTICLES				= "articles";
     public static final String COLORS				= "colors";
+    public static final String GROUPS				= "groups";
     public static final String FLOWERS				= "flowers";
     public static final String FLOWER_TYPES			= "flower-types";
     public static final String SIZES				= "sizes";
@@ -30,6 +31,7 @@ public class Path {
     public static final String SOCIAL_PATH	                = API + SLASH + SOCIAL;
 	public static final String ARTICLES_PATH 			    = API + SLASH + ARTICLES;
 	public static final String COLORS_PATH 			        = API + SLASH + COLORS;
+    public static final String GROUPS_PATH 			        = API + SLASH + GROUPS;
 	public static final String FLOWERS_PATH 			    = API + SLASH + FLOWERS;
 	public static final String FLOWER_TYPES_PATH 			= API + SLASH + FLOWER_TYPES;
 	public static final String SIZES_PATH			        = API + SLASH + SIZES;

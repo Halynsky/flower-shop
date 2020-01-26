@@ -8,6 +8,7 @@ import lombok.experimental.Accessors;
 import ua.com.flowershop.entity.Color;
 import ua.com.flowershop.entity.FlowerSize;
 import ua.com.flowershop.entity.FlowerType;
+import ua.com.flowershop.entity.Group;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -22,7 +23,6 @@ public class FlowerModel {
     private String nameOriginal;
     private String name;
     private String image;
-    private String groupName;
     private String description;
     private Integer flowerSizeMin;
     private Integer flowerSizeMax;
@@ -36,5 +36,6 @@ public class FlowerModel {
     private Color color;
     private Color colorSecondary;
     private Set<FlowerSize> flowerSizes;
+    private Group group;
 
 }

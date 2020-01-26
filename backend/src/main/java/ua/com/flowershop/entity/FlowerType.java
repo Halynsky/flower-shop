@@ -37,8 +37,8 @@ public class FlowerType {
     @OneToMany(mappedBy = "flowerType", fetch = FetchType.LAZY)
     private List<Flower> flowers;
 
-    @OneToMany(mappedBy = "flowerType")
-    Set<FlowerTypeSize> flowerTypeSizes;
+    @OneToMany(mappedBy = "flowerType", fetch = FetchType.LAZY)
+    private Set<Group> groups;
 
     public static FlowerType of(FlowerTypeModel flowerTypeModel) {
         return new FlowerType().setName(flowerTypeModel.getName())

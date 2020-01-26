@@ -1,5 +1,5 @@
-<div class="wrapper" [ngClass]="{'not-available': !flower.hasAvailableFlowerSize}">
-  <div class="cover" [ngStyle]="flower.image && {'background-image':'url(' + flower.image + ')'} || {'background-image':'url(' + placeholderPhoto + ')'}">
+<a class="wrapper" [ngClass]="{'not-available': !flower.hasAvailableFlowerSize}" [routerLink]="['item', flower.id]">
+  <div class="cover" [ngStyle]="flower.image && {'background-image':'url(' + flower.image  + ')'}">
 
     <div class="flags-wrapper">
       <div class="is-new" *ngIf="flower.isNew">НОВИНКА</div>
@@ -21,7 +21,7 @@
 
     </div>
 
-    <div class="add-to-card" (click)="openAddToCardModal($event)">
+    <div class="add-to-card" (click)="openAddToCardModal($event)" *ngIf="flower.hasAvailableFlowerSize">
       <mat-icon aria-label="Add to card">add_shopping_cart</mat-icon>
       <span>Купити</span>
     </div>
@@ -33,7 +33,10 @@
     <div class="angle-left"></div>
     <div class="angle-right"></div>
 
-    <div class="flower-type-name">{{flower.flowerType.nameSingle}}</div>
+    <div class="flower-type-name">
+      <span>{{flower.flowerType.nameSingle}}</span>
+      <span *ngIf="flower.group">{{', ' + flower.group.nameSingle}}</span>
+    </div>
     <div class="name">{{flower.nameOriginal}}</div>
     <div class="price">
       <div><span>від </span> {{flower.priceMin / 100}} грн</div>
@@ -42,6 +45,6 @@
 
   </div>
 
-</div>
+</a>
 
 

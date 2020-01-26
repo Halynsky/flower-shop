@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ua.com.flowershop.projection.FlowerSizeFullProjection;
+import ua.com.flowershop.projection.FlowerSizeFullProjectionWithAvailable;
 import ua.com.flowershop.projection.FlowerSizeTinyProjection;
 import ua.com.flowershop.repository.FlowerSizeRepository;
+import ua.com.flowershop.service.FlowerSizeService;
 
 import java.util.List;
 
@@ -25,17 +26,18 @@ import static ua.com.flowershop.util.Path.FLOWER_SIZES_PATH;
 public class FlowerSizeController {
 
     @Autowired private FlowerSizeRepository flowerSizeRepository;
+    @Autowired private FlowerSizeService flowerSizeService;
 
     @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @GetMapping("/forAdmin")
-    public ResponseEntity<Page<FlowerSizeFullProjection>> getAllForAdmin(@RequestParam(required = false) Long id,
+    public ResponseEntity<Page<FlowerSizeFullProjectionWithAvailable>> getAllForAdmin(@RequestParam(required = false) Long id,
                                                                          @RequestParam(required = false) String flowerNamePart,
                                                                          @RequestParam(required = false) List<String> flowerTypeNames,
                                                                          @RequestParam(required = false) Integer priceFrom,
                                                                          @RequestParam(required = false) Integer priceTo,
                                                                          @RequestParam(required = false) String colorNamePart,
                                                                          @PageableDefault(sort = "id", page = 0, size = 10, direction = Sort.Direction.ASC) Pageable pageRequest) {
-        Page<FlowerSizeFullProjection> flowerSizes = flowerSizeRepository.findForAdminProjectedByFilters(id, flowerNamePart, flowerTypeNames, priceFrom, priceTo,
+        Page<FlowerSizeFullProjectionWithAvailable> flowerSizes = flowerSizeService.findForAdminProjectedByFilters(id, flowerNamePart, flowerTypeNames, priceFrom, priceTo,
             colorNamePart, pageRequest);
         return new ResponseEntity<>(flowerSizes, OK);
     }

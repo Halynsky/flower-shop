@@ -27,9 +27,6 @@ public class Size {
     private String name;
 
     @OneToMany(mappedBy = "size")
-    private Set<FlowerTypeSize> flowerTypeSizes;
-
-    @OneToMany(mappedBy = "size")
     private Set<FlowerSize> flowerSizes;
 
     public static Size of(SizeModel sizeModel) {

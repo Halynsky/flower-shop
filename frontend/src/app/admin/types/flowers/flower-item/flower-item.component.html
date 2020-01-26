@@ -1,4 +1,4 @@
-<div class="panel-header item ui-grid-col-6">
+<div class="panel-header item ui-grid-col-7">
   <button pButton icon="fa fa-arrow-left" class="button-back" label="Назад" routerLink="../../"></button>
   <h1>{{mode == ItemSaveMode.new ? 'Додати' : 'Оновити'}} <b>Квітку</b></h1>
 </div>
@@ -13,15 +13,13 @@
         <div class="ui-grid-col-3">
           <label for="nameOriginal">Назва (англ)</label>
         </div>
-        <div class="ui-grid-col-3">
+        <div class="ui-grid-col-4">
           <input
             pInputText
             #nameOriginal="ngModel"
             id="nameOriginal"
             name="nameOriginal"
             [(ngModel)]="item.nameOriginal"
-            [uniqueValidator]="dataService.isNameOriginalFree.bind(dataService)"
-            [previousValue]="previousNameOriginal"
             required
           />
         </div>
@@ -39,15 +37,13 @@
         <div class="ui-grid-col-3">
           <label for="name">Назва (укр)</label>
         </div>
-        <div class="ui-grid-col-3">
+        <div class="ui-grid-col-4">
           <input
             pInputText
             #name="ngModel"
             id="name"
             name="name"
             [(ngModel)]="item.name"
-            [uniqueValidator]="dataService.isNameFree.bind(dataService)"
-            [previousValue]="previousName"
             required
           />
         </div>
@@ -65,7 +61,7 @@
         <div class="ui-grid-col-3">
           <label for="image">Картинка</label>
         </div>
-        <div class="ui-grid-col-3">
+        <div class="ui-grid-col-4">
           <image-preview [previewSize]="80" (fileChange)="addImage($event)" class="image" id="image"
                          [image]="item.image"></image-preview>
         </div>
@@ -77,10 +73,10 @@
         <div class="ui-grid-col-3">
           <label for="flowerType">Тип квітки</label>
         </div>
-        <div class="ui-grid-col-3">
+        <div class="ui-grid-col-4">
           <div class="dropdown-block">
             <p-dropdown [options]="flowerTypes" name="flowerType" optionLabel="name"  #flowerType="ngModel" dataKey="id" [(ngModel)]="item.flowerType"
-                        placeholder="Оберіть тип квітки" id="flowerType" required></p-dropdown>
+                        placeholder="Оберіть тип квітки" id="flowerType" required (ngModelChange)="getAllGroupsForFlowerType(item.flowerType.id)"></p-dropdown>
           </div>
         </div>
         <div class="ui-grid-col-3">
@@ -94,15 +90,15 @@
 
       <div class="prime-form-group">
         <div class="ui-grid-col-3">
-          <label for="groupName">Група</label>
+          <label for="group">Група</label>
+        </div>
+        <div class="ui-grid-col-4">
+          <div class="dropdown-block">
+            <p-dropdown [options]="groups" name="group" optionLabel="name"  #group="ngModel" dataKey="id" [(ngModel)]="item.group"
+                        placeholder="Оберіть групу" id="group" showClear="true"></p-dropdown>
+          </div>
         </div>
         <div class="ui-grid-col-3">
-          <input
-            pInputText
-            #groupName="ngModel"
-            id="groupName"
-            name="groupName"
-            [(ngModel)]="item.groupName"/>
         </div>
       </div>
 
@@ -110,7 +106,7 @@
         <div class="ui-grid-col-3">
           <label>Опис</label>
         </div>
-        <div class="ui-grid-col-3">
+        <div class="ui-grid-col-4">
           <textarea pInputTextarea
                     #description="ngModel"
                     name="description"
@@ -124,7 +120,7 @@
         <div class="ui-grid-col-3">
           <label for="color">Колір</label>
         </div>
-        <div class="ui-grid-col-3">
+        <div class="ui-grid-col-4">
           <div class="dropdown-block color-dropdown-block">
             <p-dropdown [options]="colors" id="color" name="color" [(ngModel)]="item.color" placeholder="Оберіть колір"
                         optionLabel="name" dataKey="id"  #color="ngModel" showClear="true" filter="true" emptyFilterMessage="Не знайдено" required>
@@ -158,7 +154,7 @@
         <div class="ui-grid-col-3">
           <label for="color">Другорядний колір</label>
         </div>
-        <div class="ui-grid-col-3">
+        <div class="ui-grid-col-4">
           <div class="dropdown-block color-dropdown-block">
             <p-dropdown [options]="colors" id="colorSecondary" name="colorSecondary" [(ngModel)]="item.colorSecondary" placeholder="Оберіть колір"
                         optionLabel="name" dataKey="id" #colorSecondary="ngModel" showClear="true" filter="true" emptyFilterMessage="Не знайдено">
@@ -188,31 +184,11 @@
         </div>
       </div>
 
-<!--      <p-dropdown class="add-flower-size-dropdown" [options]="flowerSizes" [(ngModel)]="flowerSizeToAdd" name="flowerSizeToAdd" filter="true" placeholder="Оберіть товар" emptyFilterMessage="Не знайдено" optionLabel="flower.name" appendTo="body">-->
-<!--        <ng-template let-selectedItem pTemplate="selectedItem">-->
-<!--          <div class="flower-size-selected">-->
-<!--            <img [src]="selectedItem.value.flower.image"/>-->
-<!--            <div><b>{{selectedItem.value.flower.name}}</b> {{selectedItem.value.size.name}}, {{selectedItem.value.flower.flowerType.nameSingle}}</div>-->
-<!--          </div>-->
-<!--        </ng-template>-->
-<!--        <ng-template let-item pTemplate="item">-->
-<!--          <div class="ui-helper-clearfix">-->
-<!--            <div class="flower-size-option">-->
-<!--              <img [src]="item.value.flower.image"/>-->
-<!--              <div class="flower-size-option-info">-->
-<!--                <div class="flower-size-option-info-main"><b>{{item.value.flower.name}}</b> {{item.value.size.name}}, {{item.value.flower.flowerType.nameSingle}}</div>-->
-<!--                <div class="flower-size-option-info-additional">Ціна: {{item.value.price / 100}} грн, Доступно: {{item.value.available}} шт</div>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </ng-template>-->
-<!--      </p-dropdown>-->
-
       <div class="prime-form-group">
         <div class="ui-grid-col-3">
           <label for="flowerSizeMin">Розмір квітки (від-до), см</label>
         </div>
-        <div class="ui-grid-col-3">
+        <div class="ui-grid-col-4">
           <input
             pInputText
             #flowerSizeMin="ngModel"
@@ -248,7 +224,7 @@
         <div class="ui-grid-col-3">
           <label for="flowerHeightMin">Висота стебла (від-до), см</label>
         </div>
-        <div class="ui-grid-col-3">
+        <div class="ui-grid-col-4">
           <input
             pInputText
             #flowerHeightMin="ngModel"
@@ -265,7 +241,6 @@
           name="flowerHeightMax"
           [(ngModel)]="item.flowerHeightMax"
           rangePair
-          required
           [rangePairMin]="item.flowerHeightMin"
         />
         </div>
@@ -297,7 +272,7 @@
         <div class="ui-grid-col-3">
           <label for="isNew">Новинка</label>
         </div>
-        <div class="ui-grid-col-3">
+        <div class="ui-grid-col-4">
           <p-inputSwitch
               #isNew="ngModel"
               id="isNew"
@@ -310,7 +285,7 @@
         <div class="ui-grid-col-3">
           <label for="isPopular">Популярна</label>
         </div>
-        <div class="ui-grid-col-3">
+        <div class="ui-grid-col-4">
           <p-inputSwitch
               #isPopular="ngModel"
               id="isPopular"
@@ -321,7 +296,7 @@
 
       <div class="prime-form-group" style="align-items: flex-start;">
 
-        <fieldset class="ui-grid-col-6">
+        <fieldset class="ui-grid-col-7">
           <legend>Доступні розміри</legend>
 
           <div style="margin: 8px 0px;">
@@ -382,7 +357,7 @@
     </div>
 
     <div class="ui-grid-row ui-grid-field">
-      <div class="ui-grid-col-6 footer">
+      <div class="ui-grid-col-7 footer">
         <button type="submit" pButton icon="pi pi-check" class="ui-button-success" label="{{mode == ItemSaveMode.new ? 'Зберегти' : 'Оновити'}}"></button>
       </div>
     </div>

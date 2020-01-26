@@ -18,7 +18,7 @@ public class SizeService {
     @Autowired private SizeRepository sizeRepository;
 
     public List<SizeProjection> getAllSizes() {
-        return sizeRepository.findProjectedBy();
+        return sizeRepository.findProjectedByOrderByName();
     }
 
     public SizeProjection getSizeById(Long id) {

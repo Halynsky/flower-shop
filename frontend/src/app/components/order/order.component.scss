@@ -7,6 +7,10 @@
   justify-content: center;
   @extend .content-thin;
 
+  ::ng-deep .mat-step-label {
+    max-width: calc(100vw - 100px);
+  }
+
   @include response-to(sm) {
     grid-template-columns: auto;
     justify-content: stretch;
@@ -215,4 +219,15 @@
   padding: 0 7px;
   font-size: 15px;
 }
+
+.stepper-header-edit-button {
+  color: mat-color($primary);
+  font-weight: 400;
+}
+
+input[readonly] {
+  background-color: $grey-50;
+  color: $grey-800;
+}
+
 

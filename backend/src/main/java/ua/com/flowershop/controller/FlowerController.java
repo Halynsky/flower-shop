@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.OK;
 import static ua.com.flowershop.util.Path.FLOWERS_PATH;
 
@@ -70,16 +69,6 @@ public class FlowerController {
         return new ResponseEntity<>(flowerSizeRepository.findProjectedByFlowerId(id), OK);
     }
 
-    @GetMapping("/isNameOriginalFree")
-    public ResponseEntity<Void> isNameOriginalFree(@RequestParam("name") String name) {
-        return new ResponseEntity<>(flowerService.isNameOriginalFree(name) ? OK : CONFLICT);
-    }
-
-    @GetMapping("/isNameFree")
-    public ResponseEntity<Void> isNameFree(@RequestParam("name") String name) {
-        return new ResponseEntity<>(flowerService.isNameFree(name) ? OK : CONFLICT);
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<FlowerFullProjection> getById(@PathVariable Long id) {
         return new ResponseEntity<>(flowerService.getFlowerById(id), OK);
@@ -94,7 +83,7 @@ public class FlowerController {
         @RequestParam(required = false) List<Long> colorFilters,
         @PageableDefault(sort = "popularity", direction = Sort.Direction.DESC) Pageable pageRequest) {
 
-        return new ResponseEntity<>(flowerService.getForShop(searchTerm, flowerTypeFilters, colorFilters, sizeFilters, pageRequest), OK);
+        return new ResponseEntity<>(flowerService.getForShop(searchTerm, flowerTypeFilters, sizeFilters, colorFilters, pageRequest), OK);
     }
 
     @GetMapping("/{id}/full")

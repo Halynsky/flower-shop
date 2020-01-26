@@ -14,11 +14,8 @@ import { AddToBucketDialogComponent } from "../add-to-bucket-dialog/add-to-bucke
 })
 export class ShopContentItemComponent implements OnInit {
 
-  @Input()
-  public flower: FlowerShort;
-  @Input()
-  public inFavorites: boolean = false;
-  public placeholderPhoto = '../../../../assets/img/common/flower-placeholder.png';
+  @Input() public flower: FlowerShort;
+  @Input() public inFavorites: boolean = false;
 
   addToBucketDialogRef: MatDialogRef<AddToBucketDialogComponent>;
 
@@ -52,6 +49,7 @@ export class ShopContentItemComponent implements OnInit {
 
   openAddToCardModal(event) {
     event.stopPropagation();
+    event.preventDefault();
     this.addToBucketDialogRef = this.dialog.open(AddToBucketDialogComponent, {maxWidth: 800, minWidth: 320, minHeight: 320});
     this.addToBucketDialogRef.componentInstance.id = this.flower.id;
   }

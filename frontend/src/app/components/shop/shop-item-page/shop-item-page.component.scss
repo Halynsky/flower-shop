@@ -12,6 +12,16 @@
     color: $grey-800;
     font-size: 26px;
     margin-bottom: 24px;
+
+    .flower-type-name {
+      cursor: pointer;
+      color: $grey-800;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
     .flower-name {
       color: mat-color($accent);
     }

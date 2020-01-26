@@ -53,7 +53,7 @@ public class OrderService {
         order.setOrderItems(orderItems);
         order.setTotalPrice(orderItems.stream().reduce(0, (left, right) -> left + right.getAmount() * right.getPrice(), Integer::sum));
         order.setComment(orderModel.getDeliveryInfo().getComment());
-        order.setDeliveryAddress(retrieveAddress(orderModel.getDeliveryInfo()));
+        order.setDeliveryAddress(retrieveAddress(orderModel));
         order.setPhone(orderModel.getContactInfo().getPhone());
         orderRepository.save(order);
 
@@ -160,6 +160,14 @@ public class OrderService {
                 if (nonNull(user)) {
                     user.setLastOrderDate(now());
                 }
+
+                order.getOrderItems().forEach(oi -> {
+                        FlowerSize flowerSize = oi.getFlowerSize();
+                        flowerSize.setSold(flowerSize.getSold() + oi.getAmount());
+                        flowerSizeRepository.save(flowerSize);
+                    }
+                );
+
                 break;
 
             case RETURNED:
@@ -260,25 +268,38 @@ public class OrderService {
 
     }
 
-    private String retrieveAddress (OrderDeliveryModel orderDeliveryModel) {
-        String deliveryAddress = "";
+    private String retrieveAddress (OrderModel orderModel) {
+        OrderDeliveryModel orderDeliveryModel = orderModel.getDeliveryInfo();
+        String deliveryAddress;
+        String receiverFullName;
+        String receiverPhone;
+        if (nonNull(orderDeliveryModel.getReceiverFullName()) && !orderDeliveryModel.getReceiverFullName().equals("")) {
+            receiverFullName = orderDeliveryModel.getReceiverFullName();
+        } else {
+            receiverFullName = orderModel.getContactInfo().getName();
+        }
+        if (nonNull(orderDeliveryModel.getReceiverPhone()) && !orderDeliveryModel.getReceiverPhone().equals("")) {
+            receiverPhone = orderDeliveryModel.getReceiverPhone();
+        } else {
+            receiverPhone = orderModel.getContactInfo().getPhone();
+        }
         switch(orderDeliveryModel.getDeliveryType()) {
             case NOVA_POSHTA_COURIER:
                 deliveryAddress = orderDeliveryModel.getCity() + ", Нова Пошта (Адресна доставка), " + orderDeliveryModel.getStreet() +
                     ", буд." + orderDeliveryModel.getHouse() + ", кв. " + orderDeliveryModel.getApartment() +
-                    ", " + orderDeliveryModel.getReceiverFullName() + ", тел." + orderDeliveryModel.getReceiverPhone();
+                    ", " + receiverFullName + ", тел." + receiverPhone;
                 break;
             case UKR_POSHTA_DEPARTMENT:
                 deliveryAddress = "м." + orderDeliveryModel.getCity() + ", Укр Пошта, " + orderDeliveryModel.getStreet() +
                     ", буд." + orderDeliveryModel.getHouse() + ", кв. " + orderDeliveryModel.getApartment() +
-                    ", " + orderDeliveryModel.getReceiverFullName() + ", тел." + orderDeliveryModel.getReceiverPhone();
+                    ", " + receiverFullName + ", тел." + receiverPhone;
                 break;
             case NOVA_POSHTA_DEPARTMENT:
                 deliveryAddress = orderDeliveryModel.getCity() + ", Нова Пошта, " + orderDeliveryModel.getNovaPoshtaDepartment() +
-                    ", " + orderDeliveryModel.getReceiverFullName() + ", тел." + orderDeliveryModel.getReceiverPhone();
+                    ", " + receiverFullName + ", тел." + receiverPhone;
                 break;
             case SELF_UZHGOROD:
-                deliveryAddress = "м.Ужгород, самовивіз";
+                deliveryAddress = "м.Ужгород, самовивіз, " + receiverFullName + ", тел." + receiverPhone;
                 break;
             default:
                 throw new ValidationException("Delivery Type not allowed");

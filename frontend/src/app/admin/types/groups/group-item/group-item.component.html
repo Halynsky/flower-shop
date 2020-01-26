@@ -1,0 +1,124 @@
+<div class="panel-header item ui-grid-col-7">
+  <button pButton icon="fa fa-arrow-left" class="button-back" label="Назад" (click)="location.back()"></button>
+  <h1>{{mode == ItemSaveMode.new ? 'Додати' : 'Оновити'}}
+    <b>Група</b>
+  </h1>
+</div>
+
+<div class="panel-content">
+
+  <form #form="ngForm" class="item-form" (ngSubmit)="form.valid && onSubmit()">
+
+    <div class="ui-grid ui-grid-responsive ui-fluid">
+
+      <div class="prime-form-group">
+        <div class="ui-grid-col-3">
+          <label>Назва</label>
+        </div>
+        <div class="ui-grid-col-4">
+          <input
+            pInputText
+            #name="ngModel"
+            name="name"
+            [(ngModel)]="item.name"
+            required
+          />
+        </div>
+        <div class="ui-grid-col-3" *ngIf="name.errors?.required">
+          <ng-container>
+            <p-message severity="error" text="Повинно бути вказано"></p-message>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="prime-form-group">
+        <div class="ui-grid-col-3">
+          <label>Назва (одн)</label>
+        </div>
+        <div class="ui-grid-col-4">
+          <input
+            pInputText
+            #nameSingle="ngModel"
+            name="nameSingle"
+            [(ngModel)]="item.nameSingle"
+            required
+          />
+        </div>
+        <div class="ui-grid-col-3" *ngIf="nameSingle.errors?.required">
+          <ng-container>
+            <p-message severity="error" text="Повинно бути вказано"></p-message>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="prime-form-group">
+        <div class="ui-grid-col-3">
+          <label>Назва (англ)</label>
+        </div>
+        <div class="ui-grid-col-4">
+          <input
+            pInputText
+            #nameOriginal="ngModel"
+            name="nameOriginal"
+            [(ngModel)]="item.nameOriginal"
+            required
+          />
+        </div>
+        <div class="ui-grid-col-3" *ngIf="nameOriginal.errors?.required">
+          <ng-container>
+            <p-message severity="error" text="Повинно бути вказано"></p-message>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="prime-form-group">
+        <div class="ui-grid-col-3">
+          <label>Назва (англ.одн)</label>
+        </div>
+        <div class="ui-grid-col-4">
+          <input
+            pInputText
+            #nameOriginalSingle="ngModel"
+            name="nameOriginalSingle"
+            [(ngModel)]="item.nameOriginalSingle"
+            required
+          />
+        </div>
+        <div class="ui-grid-col-3" *ngIf="nameOriginalSingle.errors?.required">
+          <ng-container>
+            <p-message severity="error" text="Повинно бути вказано"></p-message>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="prime-form-group">
+        <div class="ui-grid-col-3">
+          <label for="flowerType">Тип квітки</label>
+        </div>
+        <div class="ui-grid-col-4">
+          <div class="dropdown-block">
+            <p-dropdown [options]="flowerTypes" name="flowerType" optionLabel="name"  #flowerType="ngModel" dataKey="id" [(ngModel)]="item.flowerType"
+                        placeholder="Оберіть тип квітки" id="flowerType" filter="true" required> </p-dropdown>
+          </div>
+        </div>
+        <div class="ui-grid-col-3">
+          <div *ngIf="flowerType.errors">
+            <ng-container *ngIf="flowerType.dirty || flowerType.touched || form.submitted">
+              <p-message *ngIf="flowerType.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="ui-grid-row ui-grid-field">
+      <div class="ui-grid-col-7 footer">
+        <button type="submit" pButton icon="pi pi-check" class="ui-button-success" label="{{mode == ItemSaveMode.new ? 'Зберегти' : 'Оновити'}}" [disabled]="loading"></button>
+      </div>
+    </div>
+
+  </form>
+
+</div>
+

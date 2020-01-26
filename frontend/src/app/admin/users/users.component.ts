@@ -6,11 +6,12 @@ import { ItemSaveMode } from "../../models/ItemSaveMode";
 import { ActivatedRoute, Router } from "@angular/router";
 import { getErrorMessage, ngPrimeFiltersToParams } from "../../utils/Functions";
 import { UserService } from "../../api/services/user.service";
-import { ConfirmationService, SortEvent } from "primeng/api";
+import { ConfirmationService, FilterMetadata, SortEvent } from "primeng/api";
 import { SnackBarService } from "../../services/snak-bar.service";
 import { Pagination } from "../../api/models/Pagination";
 import { NgForm } from "@angular/forms";
 import { finalize } from "rxjs/operators";
+import { dataTableFilter } from "../util";
 
 @Component({
   selector: 'app-users',
@@ -51,6 +52,8 @@ export class UsersComponent implements OnInit {
   mergingUserId;
   userNote;
 
+  filters: { [s: string]: FilterMetadata } = {};
+
   constructor(private dataService: UserService,
               private confirmationService: ConfirmationService,
               private snackBarService: SnackBarService,
@@ -60,6 +63,9 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      Object.assign(this.filters, dataTableFilter('id', params['id']));
+    });
   }
 
   initContextMenu() {
@@ -71,6 +77,11 @@ export class UsersComponent implements OnInit {
           relativeTo: this.route,
           queryParams: {id: this.selected.id}
         })
+      },
+      {
+        label: 'Переглянути замовлення',
+        icon: 'fas fa-shopping-basket',
+        command: () => this.router.navigate(['admin/shop/orders'], {queryParams: {userId: this.selected.id}})
       },
       {
         label: 'Заблокувати',

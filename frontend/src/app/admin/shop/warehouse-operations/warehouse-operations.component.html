@@ -37,9 +37,9 @@
               <p-sortIcon [field]="'flowerSize.flower.name'"></p-sortIcon>
             </th>
 
-            <th *ngSwitchCase="'size'" [pSortableColumn]="'flowerSize.size.name'" >
+            <th *ngSwitchCase="'size'" [pSortableColumn]="'flowerSize.size.nameOriginal'" >
               {{col.header}}
-              <p-sortIcon [field]="'flowerSize.size.name'"></p-sortIcon>
+              <p-sortIcon [field]="'flowerSize.size.nameOriginal'"></p-sortIcon>
             </th>
 
             <th *ngSwitchCase="'operationType'" >
@@ -63,7 +63,13 @@
       <tr>
         <th *ngFor="let col of columns" [ngSwitch]="col.field">
           <input *ngSwitchCase="'id'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'equals')" class="table-filter">
-          <input *ngSwitchCase="'flowerType'" pInputText type="text" (input)="dt.filter($event.target.value, 'flowerTypeNamePart', 'startsWith')" class="table-filter">
+
+          <div *ngSwitchCase="'flowerType'">
+            <p-multiSelect [options]="flowerTypes" defaultLabel="Всі"
+                           class="table-filter"
+                           (onChange)="dt.filter($event.value, 'flowerTypeNames', 'in')"></p-multiSelect>
+          </div>
+
           <input *ngSwitchCase="'flower'" pInputText type="text" (input)="dt.filter($event.target.value, 'flowerNamePart', 'startsWith')" class="table-filter">
           <input *ngSwitchCase="'size'" pInputText type="text" (input)="dt.filter($event.target.value, 'flowerSizeNamePart', 'startsWith')" class="table-filter">
 
@@ -107,7 +113,7 @@
           </span>
 
           <span *ngSwitchCase="'flower'">
-            {{rowData.flowerSize.flower.name}}
+            {{rowData.flowerSize.flower.nameOriginal}}
           </span>
 
           <span *ngSwitchCase="'size'">

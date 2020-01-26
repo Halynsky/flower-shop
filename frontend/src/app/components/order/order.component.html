@@ -1,10 +1,17 @@
 <div class="order-wrapper" *ngIf="!orderId && bucketLocalService.bucket.length > 0">
 
-  <mat-vertical-stepper [linear]="false" #stepper>
+  <mat-vertical-stepper [linear]="false" #stepper (selectionChange)="stepperSelectionChanged($event)">
     <mat-step [stepControl]="contactInfoFormGroup">
 
       <form [formGroup]="contactInfoFormGroup">
-        <ng-template matStepLabel>Контактні данні</ng-template>
+        <ng-template matStepLabel>
+          <span *ngIf="selectedStepIndex == 0 || contactInfoFormGroup.get('name').invalid || contactInfoFormGroup.get('phone').invalid; else showContactsBlock">Контактні данні</span>
+          <ng-template #showContactsBlock>
+            <span>{{contactInfoFormGroup.get('name').value}}</span>
+            <span>, {{contactInfoFormGroup.get('phone').value}}</span>
+            <span class="stepper-header-edit-button"> (редагувати)</span>
+          </ng-template>
+        </ng-template>
 
         <div class="input-group">
           <label>Ім'я та прізвище</label>
@@ -12,7 +19,8 @@
             name="name"
             formControlName="name"
             placeholder="Ім'я та прізвище"
-            required>
+            required
+            [readonly]="securityService.isAuthenticated()">
           <div class="error-wrapper" *ngIf="contactInfoFormGroup.get('name').dirty || contactInfoFormGroup.get('name').touched">
             <div class="error-message" *ngIf="contactInfoFormGroup.get('name').errors?.required">Повинно бути вказано</div>
           </div>
@@ -27,7 +35,8 @@
             formControlName="email"
             placeholder="Електронна адреса"
             required
-            email>
+            email
+            [readonly]="securityService.isAuthenticated()">
           <div class="error-wrapper" *ngIf="contactInfoFormGroup.get('email').dirty || contactInfoFormGroup.get('email').touched">
             <div class="error-message" *ngIf="contactInfoFormGroup.get('email').errors?.required">Повинно бути вказано</div>
             <div class="error-message" *ngIf="!contactInfoFormGroup.get('email').errors?.required && contactInfoFormGroup.get('email').errors?.email">Введіть валідний email</div>
@@ -94,7 +103,7 @@
             <mat-spinner *ngIf="loadingWarehouses" diameter="16" mode="indeterminate"></mat-spinner>
           </label>
 
-          <input type="text" placeholder="Вулиця" formControlName="street" [matAutocomplete]="streetAutocomplete" required isObjectValidator [disabled]="loadingStreets">
+          <input type="text" placeholder="Вулиця" formControlName="street" [matAutocomplete]="streetAutocomplete" required isObjectValidator [disabled]="loadingStreets" >
           <mat-autocomplete #streetAutocomplete="matAutocomplete" (optionSelected)="onStreetSelect($event)" [displayWith]="displayStreetFn">
             <mat-option *ngFor="let street of streets" [value]="street" class="order-page-autocomplete-option">
               {{street.Present}}
@@ -148,19 +157,18 @@
         </div>
 
         <div class="input-group" *ngIf="receiverInfoRequired()">
-          <label>ПІП отримувача</label>
+          <label>ПІП отримувача (додатково)</label>
           <input
             name="receiverFullName"
             formControlName="receiverFullName"
-            placeholder="ПІП отримувача"
-            [required]="receiverInfoRequired()">
+            placeholder="ПІП отримувача">
           <div class="error-wrapper" *ngIf="deliveryInfoFormGroup.get('receiverFullName').dirty || deliveryInfoFormGroup.get('receiverFullName').touched">
-            <div class="error-message" *ngIf="deliveryInfoFormGroup.get('receiverFullName').errors?.required">Повинно бути вказано</div>
+
           </div>
         </div>
 
-        <div class="input-group" *ngIf="receiverInfoRequired() && deliveryInfoFormGroup.get('receiverPhone')">
-          <label>Телефон отримувача</label>
+        <div class="input-group" *ngIf="receiverInfoRequired()">
+          <label>Телефон отримувача (додатково)</label>
           <input
             name="receiverPhone"
             formControlName="receiverPhone"
@@ -168,12 +176,9 @@
             validation="false"
             prefix="+38 "
             mask='(000) 000-0000'
-            maxlength="18"
-            pattern=".{10,10}"
-            required>
+            maxlength="18">
           <div class="error-wrapper" *ngIf="deliveryInfoFormGroup.get('receiverPhone').dirty || deliveryInfoFormGroup.get('receiverPhone').touched">
-            <div class="error-message" *ngIf="deliveryInfoFormGroup.get('receiverPhone').errors?.required">Повинно бути вказано</div>
-            <div class="error-message" *ngIf="!deliveryInfoFormGroup.get('receiverPhone').errors?.required && deliveryInfoFormGroup.get('receiverPhone').errors?.pattern">Введіть валідний номер телефону</div>
+
           </div>
         </div>
 
@@ -182,7 +187,7 @@
           <textarea
             name="comment"
             formControlName="comment"
-            cols="30" rows="10"
+            cols="30" rows="4"
             maxlength="500"
             placeholder="Коментар до замовлення">
         </textarea>
@@ -200,10 +205,10 @@
 
     <div class="final-purchase-block">
       <div class="final-purchase-info-wrapper">
-        <div><span class="final-purchase-items-amount">{{bucketLocalService.bucketInfo.totalItems}}</span> позиції <span class="check-items" (click)="openBucketDialog()">(переглянути товари)</span></div>
+        <div><span class="final-purchase-items-amount">{{bucketLocalService.bucketInfo.totalItems}}</span> позиції <span class="check-items" (click)="bucketLocalService.openBucketDialog()">(переглянути товари)</span></div>
         <div>На сумму <span class="final-purchase-items-price">{{bucketLocalService.bucketInfo.totalPrice / 100}}</span> грн</div>
 
-        <button mat-flat-button color="accent" routerLink="/order" [disabled]="(isFormValid() | async) || loading" (click)="submitOrder()">
+        <button mat-flat-button color="accent" routerLink="/order" [disabled]="deliveryInfoFormGroup.invalid || loading" (click)="submitOrder()">
           <i class="material-icons">check</i>
           <span>Підтвердити замовлення</span>
         </button>

@@ -27,8 +27,7 @@ public class ColorController {
 
     @GetMapping("/forAdmin")
     public ResponseEntity<List<ColorAdminProjection>> getAllForAdmin() {
-        List<ColorAdminProjection> colors = colorRepository.findForAdminProjectedByOrderByName();
-        return new ResponseEntity<>(colors, OK);
+        return new ResponseEntity<>(colorRepository.findForAdminProjectedByOrderByName(), OK);
     }
 
     @GetMapping("/isNameFree")
@@ -43,14 +42,12 @@ public class ColorController {
 
     @GetMapping
     public ResponseEntity<List<ColorProjection>> getAll() {
-        List<ColorProjection> colors = colorRepository.findProjectedByOrderByName();
-        return new ResponseEntity<>(colors, OK);
+        return new ResponseEntity<>(colorRepository.findProjectedByOrderByName(), OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ColorProjection> getById(@PathVariable Long id) {
-        ColorProjection color = colorRepository.findProjectedById(id).orElseThrow(NotFoundException::new);
-        return new ResponseEntity<>(color, OK);
+        return new ResponseEntity<>(colorRepository.findProjectedById(id).orElseThrow(NotFoundException::new), OK);
     }
 
     @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
