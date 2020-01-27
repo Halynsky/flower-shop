@@ -27,8 +27,9 @@ export class ShopContentItemComponent implements OnInit {
   ngOnInit() {
   }
 
-  addToFavorites() {
+  addToFavorites(event) {
     event.stopPropagation();
+    event.preventDefault();
     this.favoritesService.favoriteFlowerIds.push(this.flower.id);
     this.favoritesService.addFavoriteFlower(this.flower.id).subscribe(
       favoriteFlowersIds => {
@@ -37,8 +38,9 @@ export class ShopContentItemComponent implements OnInit {
       error => this.snackBar.showError(getErrorMessage(error)))
   }
 
-  removeFromFavorites() {
+  removeFromFavorites(event) {
     event.stopPropagation();
+    event.preventDefault();
     this.favoritesService.favoriteFlowerIds.splice(this.favoritesService.favoriteFlowerIds.indexOf(this.flower.id), 1);
     this.favoritesService.removeFavoriteFlower(this.flower.id).subscribe(
       favoriteFlowersIds => {

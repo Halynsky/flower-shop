@@ -8,13 +8,13 @@
 
     <div class="favorites-button-wrapper" *ngIf="securityService.isAuthenticated()">
 
-      <button mat-icon-button class="in-favorites" (click)="removeFromFavorites()"
+      <button mat-icon-button class="in-favorites" (click)="removeFromFavorites($event)"
               *ngIf="favoritesService.favoriteFlowerIds.includes(flower.id); else addToFavoritesBlock">
         <mat-icon aria-label="Remove from favorites">favorite</mat-icon>
       </button>
 
       <ng-template #addToFavoritesBlock>
-        <button mat-icon-button (click)="addToFavorites()">
+        <button mat-icon-button (click)="addToFavorites($event)">
           <mat-icon aria-label="Add to favorites">favorite_border</mat-icon>
         </button>
       </ng-template>
