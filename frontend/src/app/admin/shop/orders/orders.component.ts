@@ -47,7 +47,7 @@ export class OrdersComponent implements OnInit {
     {field: 'status', header: 'Статус', active: true},
     {field: 'userId', header: 'Корист.Id', active: true},
     {field: 'user', header: 'Корист.', active: true},
-    {field: 'userFacebookNickname', header: 'Нік на Facebook', active: true},
+    {field: 'userFacebookNickname', header: 'Нік на Facebook', active: false},
     {field: 'priceToPay', header: 'До сплати', active: true},
     {field: 'paid', header: 'Оплачено', active: true},
     {field: 'phone', header: 'Телефон', active: true},

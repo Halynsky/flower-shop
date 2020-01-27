@@ -79,7 +79,14 @@
               </div>
             </div>
 
-            <div class="how-to-pay" (click)="openHowToPayDialog($event)">Як провести оплату?</div>
+            <div class="how-to-pay" (click)="openHowToPayDialog($event)" *ngIf="!order.paid">Як провести оплату?</div>
+
+            <div class="paid-flag-wrapper" *ngIf="order.paid">
+              <div class="paid-flag">
+                <span>Оплачено</span>
+                <i class="material-icons">check_box</i>
+              </div>
+            </div>
 
           </mat-expansion-panel>
 

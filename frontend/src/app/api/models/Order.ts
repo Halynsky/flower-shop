@@ -58,7 +58,7 @@ export class Order {
   created: string;
   status: Order.Status;
   postDeclaration: string;
-  isPaid: boolean;
+  paid: string;
   totalPrice: number;
   discount: number;
 }

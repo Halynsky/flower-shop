@@ -354,6 +354,34 @@
 
   }
 
+  .paid-flag-wrapper {
+    display: flex;
+    justify-content: flex-end;
+
+    @include response-to(xs) {
+      justify-content: center;
+    }
+
+    .paid-flag {
+      display: flex;
+      color: $grey-600;
+      //border: $grey-200 1px solid;
+      align-items: center;
+      margin-top: 16px;
+      padding: 8px 12px;
+      background-color: $grey-30;
+
+      i {
+        color: mat-color($primary, 800);
+        margin-left: 8px;
+      }
+
+
+    }
+  }
+
+
+
 }
 
 ::ng-deep mat-panel-description {
