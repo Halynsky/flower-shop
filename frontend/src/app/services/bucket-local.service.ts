@@ -99,17 +99,19 @@ export class BucketLocalService {
 
   // TODO: return Observable and show loader while updating
   updateBucketFlowerSizes() {
-    this.flowerSizeService.getByIds(this.bucket.map(item => item.flowerSizeId))
-      .subscribe(flowerSizes => {
-        this.bucket.forEach(bucketItem => {
-          let foundFlowerSize: FlowerSize = flowerSizes.find(fs => fs.id == bucketItem.flowerSizeId);
-          bucketItem.available = foundFlowerSize.available;
-          bucketItem.image = foundFlowerSize.flower.image;
-          bucketItem.price = foundFlowerSize.price;
-          bucketItem.amount = bucketItem.amount <= foundFlowerSize.available ? bucketItem.amount: foundFlowerSize.available;
-        });
-        this.updateBucket();
-      })
+    if (this.bucket.length > 0) {
+      this.flowerSizeService.getByIds(this.bucket.map(item => item.flowerSizeId))
+        .subscribe(flowerSizes => {
+          this.bucket.forEach(bucketItem => {
+            let foundFlowerSize: FlowerSize = flowerSizes.find(fs => fs.id == bucketItem.flowerSizeId);
+            bucketItem.available = foundFlowerSize.available;
+            bucketItem.image = foundFlowerSize.flower.image;
+            bucketItem.price = foundFlowerSize.price;
+            bucketItem.amount = bucketItem.amount <= foundFlowerSize.available ? bucketItem.amount: foundFlowerSize.available;
+          });
+          this.updateBucket();
+        })
+    }
   }
 
   getMaxAmountForFlowerSize(flowerSizeId, available) {

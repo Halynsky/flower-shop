@@ -1,6 +1,9 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MenuItem } from "primeng/api";
 import { SecurityService } from "../../../services/security.service";
+import { getErrorMessage } from "../../../utils/Functions";
+import { AuthService } from "../../../api/services/auth.service";
+import { SnackBarService } from "../../../services/snak-bar.service";
 
 @Component({
   selector: 'admin-header',
@@ -15,11 +18,16 @@ export class AdminHeaderComponent implements OnInit {
     {icon: 'fas fa-sign-out-alt', label: 'Вихід', command: () => this.logout()}
   ];
 
-  constructor(public securityService: SecurityService) {
+  constructor(public securityService: SecurityService,
+              public authService: AuthService,
+              public snackBarService: SnackBarService) {
   }
 
   logout(): void {
-    this.securityService.logout();
+    this.authService.logout().subscribe(
+      res => this.securityService.logout(),
+      error => this.snackBarService.showError(getErrorMessage(error))
+    )
   }
 
   ngOnInit(): void {

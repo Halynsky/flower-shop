@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpParams } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { API_URL } from "../../utils/Costants";
 import { User, UserRegistration } from "../models/User";
 import { Credentials } from "../models/Credentials";
@@ -17,7 +17,7 @@ export class AuthService {
     return this.http.post<User>(`${this.URL}/login`, credentials);
   }
 
-  logot() {
+  logout() {
     return this.http.post(`${this.URL}/logout`, {responseType: 'text'});
   }
 
