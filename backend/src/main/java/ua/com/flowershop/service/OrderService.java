@@ -290,7 +290,7 @@ public class OrderService {
                     ", " + receiverFullName + ", тел." + receiverPhone;
                 break;
             case UKR_POSHTA_DEPARTMENT:
-                deliveryAddress = "м." + orderDeliveryModel.getCity() + ", Укр Пошта, " + orderDeliveryModel.getStreet() +
+                deliveryAddress = orderDeliveryModel.getCity() + ", Укр Пошта, " + orderDeliveryModel.getStreet() +
                     ", буд." + orderDeliveryModel.getHouse() + ", кв. " + orderDeliveryModel.getApartment() +
                     ", " + receiverFullName + ", тел." + receiverPhone;
                 break;
