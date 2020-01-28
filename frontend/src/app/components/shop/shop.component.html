@@ -1,5 +1,7 @@
-<div class="sidebar">
-  <shop-filters (onFilterChange)="onFilterChange($event)"></shop-filters>
+<div class="sidebar" [style.margin-top.px]="pageYOffset">
+  <perfect-scrollbar style="max-height: calc(100vh - 114px)">
+    <shop-filters (onFilterChange)="onFilterChange($event)"></shop-filters>
+  </perfect-scrollbar>
 </div>
 
 <div class="content-wrapper">

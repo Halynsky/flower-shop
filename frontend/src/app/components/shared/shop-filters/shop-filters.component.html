@@ -42,6 +42,6 @@
 
 </div>
 
-<div class="spinner-wrapper">
-  <mat-spinner *ngIf="!colors || !flowerTypes" diameter="32" mode="indeterminate"></mat-spinner>
+<div class="spinner-wrapper" *ngIf="!colors || !flowerTypes" >
+  <mat-spinner diameter="32" mode="indeterminate"></mat-spinner>
 </div>

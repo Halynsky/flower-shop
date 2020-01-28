@@ -2,6 +2,7 @@ package ua.com.flowershop.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.flowershop.entity.*;
@@ -13,6 +14,8 @@ import ua.com.flowershop.repository.*;
 import ua.com.flowershop.security.SecurityService;
 import ua.com.flowershop.util.mail.MailService;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
@@ -21,6 +24,8 @@ import java.util.stream.Collectors;
 import static java.time.LocalDateTime.now;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
+import static ua.com.flowershop.entity.Flower.RATING_MAX;
+import static ua.com.flowershop.entity.Flower.RATING_UPRISER;
 
 @Slf4j
 @Service
@@ -37,6 +42,7 @@ public class OrderService {
 
     @Transactional
     public Long create(OrderModel orderModel) {
+        log.info("create order");
         Order order = new Order();
         Set<OrderItem> orderItems = orderModel.getOrderItems().stream()
             .map(om -> {
@@ -100,6 +106,8 @@ public class OrderService {
         orderRepository.save(order);
 
         mailService.sendOrder(order);
+
+        upriseFlowerRatings(order);
 
         return order.getId();
 
@@ -414,7 +422,7 @@ public class OrderService {
     }
 
     public Long createAsAdmin(Long userIdToCreateFor) {
-        User user = userRepository.findById(userIdToCreateFor).orElseThrow(() -> new NotFoundException("Користувачf з id - " + userIdToCreateFor + " не знайдено"));
+        User user = userRepository.findById(userIdToCreateFor).orElseThrow(() -> new NotFoundException("Користувача з id - " + userIdToCreateFor + " не знайдено"));
 
         Order order = new Order()
             .setUser(user);
@@ -422,4 +430,26 @@ public class OrderService {
 
         return order.getId();
     }
+
+    @Async
+    public void upriseFlowerRatings (Order order) {
+        log.info("upriseFlowerRatings");
+        order.getOrderItems().forEach(oi -> {
+            Flower flower = oi.getFlowerSize().getFlower();
+            flower.setPopularity(countFlowerRatingRising(flower.getPopularity(), oi.getAmount()));
+        });
+    }
+
+
+    public double countFlowerRatingRising(double popularity, int amount) {
+        while (amount > 0) {
+            popularity += (RATING_MAX - popularity) * RATING_UPRISER;
+            amount--;
+        }
+
+        popularity = popularity > RATING_MAX ? RATING_MAX : popularity;
+
+        return new BigDecimal(popularity).setScale(2, RoundingMode.HALF_UP).doubleValue();
+    }
+
 }

@@ -31,6 +31,8 @@ export class ShopComponent implements OnInit {
   shopFilterDialogRef: MatDialogRef<any>;
   loading = true;
 
+  pageYOffset = 0;
+
   constructor(private flowerService: FlowerService,
               private snackBarService: SnackBarService,
               private changeDetectorRef: ChangeDetectorRef,
@@ -102,6 +104,7 @@ export class ShopComponent implements OnInit {
   }
 
   trackScroll(event: any) {
+    this.pageYOffset = this.window.pageYOffset;
     let scrollToBottom = this.document.scrollingElement.scrollHeight - this.window.innerHeight - this.window.pageYOffset;
 
     if (scrollToBottom < 100 && !this.flowersPage.last) {

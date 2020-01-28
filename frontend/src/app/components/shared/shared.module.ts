@@ -41,6 +41,7 @@ import { TermsAndConditionsComponent } from "./terms-and-conditions/terms-and-co
 import { IConfig, NgxMaskModule } from "ngx-mask";
 import { HowToPayDialogComponent } from "./how-to-pay-dialog/how-to-pay-dialog.component";
 import { HowToPayComponent } from "./how-to-pay/how-to-pay.component";
+import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
 
 
 const PROVIDERS = [
@@ -92,7 +93,8 @@ export const ngxMaskOptions: Partial<IConfig> | (() => Partial<IConfig>) = {};
     MatDialogModule,
     MessageModule,
     ValidatorsModule.forRoot(),
-    NgxMaskModule.forRoot(ngxMaskOptions)
+    NgxMaskModule.forRoot(ngxMaskOptions),
+    PerfectScrollbarModule
   ],
   exports: [
     RouterModule,
@@ -119,6 +121,7 @@ export const ngxMaskOptions: Partial<IConfig> | (() => Partial<IConfig>) = {};
     DirectivesModule,
     ValidatorsModule,
     NgxMaskModule,
+    PerfectScrollbarModule,
     // Developed Components
     ArticleCardComponent,
     ShopContentItemComponent,
