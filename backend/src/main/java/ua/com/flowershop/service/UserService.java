@@ -18,6 +18,8 @@ import ua.com.flowershop.repository.SocialConnectionRepository;
 import ua.com.flowershop.repository.UserRepository;
 import ua.com.flowershop.util.mail.MailService;
 
+import java.util.UUID;
+
 import static java.util.Objects.nonNull;
 
 @Slf4j
@@ -109,6 +111,8 @@ public class UserService {
     public void passwordRestoreRequest(String email) {
         User user = userRepository.findByEmail(email).orElse(null);
         if(nonNull(user)) {
+            user.setSecretKey(UUID.randomUUID().toString());
+            userRepository.save(user);
             mailService.sendPasswordRestore(user);
         }
     }
@@ -117,6 +121,8 @@ public class UserService {
         User user = userRepository.findBySecretKey(passwordRestoreConfirmModel.getSecretKey())
             .orElseThrow(NotFoundException::new);
         user.setPassword(passwordEncoder.encode(passwordRestoreConfirmModel.getPassword()));
+        userRepository.save(user.setSecretKey(null)
+            .setIsVirtual(false));
         userRepository.save(user);
     }
 
