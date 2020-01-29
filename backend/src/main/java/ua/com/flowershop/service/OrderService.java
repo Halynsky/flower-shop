@@ -15,6 +15,7 @@ import ua.com.flowershop.util.PopularityService;
 import ua.com.flowershop.util.mail.MailService;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -74,7 +75,7 @@ public class OrderService {
             user = userRepository.findByEmail(orderModel.getContactInfo().getEmail()).orElse(null);
 
             if (nonNull(user) && !user.getIsVirtual()) {
-                throw new ConflictException("Авторизуйтесь та створіть замовлення через свій аккаунт");
+                throw new ConflictException("Користувач з таким Email вже існує. Авторизуйтесь та створіть замовлення через свій аккаунт.");
             }
 
         }
@@ -242,6 +243,10 @@ public class OrderService {
         User mainUser = mainOrder.getUser();
         User otherUser = otherOrder.getUser();
 
+        if(mainUser.getIsVirtual() && !otherUser.getIsVirtual()) {
+            throw new ConflictException("Приєднання замовлення реального користувача до замовлення віртуального користувача заборонено");
+        }
+
         if(!mainUser.getIsVirtual() && !otherUser.getIsVirtual() && !mainUser.equals(otherUser)) {
             throw new ConflictException("Замовлення належать двом різним реальним користувачам");
         }
@@ -250,8 +255,8 @@ public class OrderService {
             throw new ConflictException("Ви намагаєтесь об’єднати оплачене та не оплачене замовлення");
         }
 
-        if (Order.Status.getClosed().contains(mainOrder.getStatus()) || Order.Status.getClosed().contains(otherOrder.getStatus())) {
-            throw new ConflictException("Неможливо обєднати закрите замовлення");
+        if (!Order.Status.getEditable().contains(mainOrder.getStatus()) || !Order.Status.getEditable().contains(otherOrder.getStatus())) {
+            throw new ConflictException("Неможливо обєднати замовлення на даній стадії");
         }
 
         otherOrder.getOrderItems().forEach(oi -> {
@@ -324,8 +329,8 @@ public class OrderService {
             throw new ConflictException("Для розєднання к вожному з замовленнь повинно бути хоча б по одній позиції");
         }
 
-        if (Order.Status.getClosed().contains(mainOrder.getStatus())) {
-            throw new ConflictException("Неможливо розділити закрите замовлення");
+        if (!Order.Status.getEditable().contains(mainOrder.getStatus())) {
+            throw new ConflictException("На данній стадії розєднання замовлення заборонено");
         }
 
         otherOrder.setUser(mainOrder.getUser());
@@ -366,6 +371,14 @@ public class OrderService {
     public void updateItems(Long orderId, List<IdAmountTuple> orderItemsUpdates) {
         Order order = orderRepository.findById(orderId).orElseThrow(NotFoundException::new);
 
+        if (!Order.Status.getEditable().contains(order.getStatus())) {
+            throw new ConflictException("На данній стадії зміна позицій в замовленні заборонена");
+        }
+
+        if (nonNull(order.getPaid())) {
+            throw new ConflictException("Зміна позицій в оплаченому замовленні заборонена");
+        }
+
         // Add and update items
 
         orderItemsUpdates.forEach(oi -> {
@@ -400,7 +413,7 @@ public class OrderService {
 
         // Remove deleted items
 
-        order.getOrderItems().forEach(oi -> {
+        new ArrayList<>(order.getOrderItems()).forEach(oi -> {
             IdAmountTuple orderItemUpdate = orderItemsUpdates.stream()
                 .filter(oiu -> oiu.getId().equals(oi.getFlowerSize().getId()))
                 .findFirst().orElse(null);
@@ -410,11 +423,11 @@ public class OrderService {
                 flowerSize.setReserved(flowerSize.getReserved() - oi.getAmount());
                 flowerSizeRepository.save(flowerSize);
                 orderItemRepository.delete(oi);
+                order.getOrderItems().remove(oi);
             }
         });
 
         order.setTotalPrice(order.getOrderItems().stream().reduce(0, (left, right) -> left + right.getAmount() * right.getPrice(), Integer::sum));
-
 
     }
 
