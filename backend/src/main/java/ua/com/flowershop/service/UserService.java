@@ -120,9 +120,9 @@ public class UserService {
     public void passwordRestoreConfirm(PasswordRestoreConfirmModel passwordRestoreConfirmModel) {
         User user = userRepository.findBySecretKey(passwordRestoreConfirmModel.getSecretKey())
             .orElseThrow(NotFoundException::new);
-        user.setPassword(passwordEncoder.encode(passwordRestoreConfirmModel.getPassword()));
-        userRepository.save(user.setSecretKey(null)
-            .setIsVirtual(false));
+        user.setPassword(passwordEncoder.encode(passwordRestoreConfirmModel.getPassword()))
+            .setSecretKey(null)
+            .setIsVirtual(false);
         userRepository.save(user);
     }
 
