@@ -23,7 +23,7 @@ export class ShopComponent implements OnInit {
 
   flowersPage: RestPage<FlowerShort> = new RestPage<FlowerShort>();
   filters: ShopFilter = new ShopFilter();
-  sort = 'hasAvailableFlowerSize,DESC,isPopular,DESC,popularity,ASC';
+  sort = 'hasAvailableFlowerSize,DESC,isPopular,DESC,popularity,DESC';
   searchTerm = '';
 
   pagination: Pagination;

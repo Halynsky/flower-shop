@@ -92,6 +92,7 @@ public class FlowerService {
             .setFlowerSizeMin(flower.getFlowerSizeMin())
             .setIsNew(flower.getIsNew())
             .setIsPopular(flower.getIsPopular())
+            .setPopularity(flower.getPopularity())
             .setFlowerType(flower.getFlowerType()).setColor(flower.getColor())
             .setFlowerSizes(flower.getFlowerSizes());
         flowerRepository.save(flowerToCreate);
@@ -146,6 +147,7 @@ public class FlowerService {
             .setFlowerSizeMin(flower.getFlowerSizeMin())
             .setIsNew(flower.getIsNew())
             .setIsPopular(flower.getIsPopular())
+            .setPopularity(flower.getPopularity())
             .setCreated(flower.getCreated())
             .setFlowerType(flower.getFlowerType()).setColor(flower.getColor());
         flowerRepository.save(flowerToUpdate);
