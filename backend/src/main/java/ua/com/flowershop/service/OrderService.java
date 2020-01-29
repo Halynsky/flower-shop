@@ -309,7 +309,7 @@ public class OrderService {
                 deliveryAddress = "м.Ужгород, самовивіз, " + receiverFullName + ", тел." + receiverPhone;
                 break;
             default:
-                throw new ValidationException("Delivery Type not allowed");
+                throw new ValidationException("Данний спосіб доставки не дозволений");
         }
         return deliveryAddress;
     }

@@ -28,7 +28,7 @@ public class SocialConnectionService {
         SocialConnection connection = socialConnectionRepository.findByProviderId(socialUser.getId());
         if (connection != null) {
             if (!connection.getUser().getIsEnabled()) {
-                throw new AuthenticationRequiredException("Account has been deleted");
+                throw new AuthenticationRequiredException("Аккаунт заблокований");
             }
             return connection.getUser();
         }
@@ -43,11 +43,11 @@ public class SocialConnectionService {
 
     public void connect(@Valid SocialUser socialUser, User user) throws ConflictException {
         if (user.getSocialConnections().stream().anyMatch(connection -> connection.getProvider().equals(socialUser.getProvider()))) {
-            throw new ConflictException("You have already connected " + StringUtils.capitalize(socialUser.getProvider().toString()));
+            throw new ConflictException("Ви вже приєднані до " + StringUtils.capitalize(socialUser.getProvider().toString()));
         }
         SocialConnection existedConnection = socialConnectionRepository.findByProviderId(socialUser.getId());
         if (existedConnection != null) {
-            throw new ConflictException(StringUtils.capitalize(socialUser.getProvider().toString()) + " account is already connected to another user");
+            throw new ConflictException(StringUtils.capitalize(socialUser.getProvider().toString()) + " аккаунт уже приєднаний до іншого користувача");
         }
         SocialConnection socialConnection = new SocialConnection(socialUser, user);
         socialConnectionRepository.save(socialConnection);
@@ -65,7 +65,7 @@ public class SocialConnectionService {
 
     private User addSocialConnection(User user, @Valid SocialUser socialUser) {
         if (!user.getIsEnabled()) {
-            throw new AuthenticationRequiredException("Account has been deleted");
+            throw new AuthenticationRequiredException("Аккаунт заблокований");
         }
         SocialConnection socialConnection = new SocialConnection(socialUser, user);
         user.addSocialConnection(socialConnection);
