@@ -2,7 +2,6 @@ package ua.com.flowershop.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.flowershop.entity.*;
@@ -12,10 +11,9 @@ import ua.com.flowershop.exception.ValidationException;
 import ua.com.flowershop.model.*;
 import ua.com.flowershop.repository.*;
 import ua.com.flowershop.security.SecurityService;
+import ua.com.flowershop.util.PopularityService;
 import ua.com.flowershop.util.mail.MailService;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
@@ -24,8 +22,6 @@ import java.util.stream.Collectors;
 import static java.time.LocalDateTime.now;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
-import static ua.com.flowershop.entity.Flower.RATING_MAX;
-import static ua.com.flowershop.entity.Flower.RATING_UPRISER;
 
 @Slf4j
 @Service
@@ -39,10 +35,10 @@ public class OrderService {
     @Autowired private UserRepository userRepository;
     @Autowired private SecurityService securityService;
     @Autowired private MailService mailService;
+    @Autowired private PopularityService popularityService;
 
     @Transactional
     public Long create(OrderModel orderModel) {
-        log.info("create order");
         Order order = new Order();
         Set<OrderItem> orderItems = orderModel.getOrderItems().stream()
             .map(om -> {
@@ -107,10 +103,9 @@ public class OrderService {
 
         mailService.sendOrder(order);
 
-        upriseFlowerRatings(order);
+        popularityService.upriseFlowerRatings(order);
 
         return order.getId();
-
     }
 
     public void confirmPayment(Long orderId, LocalDate paid) {
@@ -255,6 +250,10 @@ public class OrderService {
             throw new ConflictException("Ви намагаєтесь об’єднати оплачене та не оплачене замовлення");
         }
 
+        if (Order.Status.getClosed().contains(mainOrder.getStatus()) || Order.Status.getClosed().contains(otherOrder.getStatus())) {
+            throw new ConflictException("Неможливо обєднати закрите замовлення");
+        }
+
         otherOrder.getOrderItems().forEach(oi -> {
             OrderItem sameOrderItem = mainOrder.getOrderItems().stream()
                 .filter(item -> item.getFlowerSize().getId().equals(oi.getFlowerSize().getId()))
@@ -323,6 +322,10 @@ public class OrderService {
 
         if(orderItemIds.size() == 0 || mainOrder.getOrderItems().size() == orderItemIds.size()) {
             throw new ConflictException("Для розєднання к вожному з замовленнь повинно бути хоча б по одній позиції");
+        }
+
+        if (Order.Status.getClosed().contains(mainOrder.getStatus())) {
+            throw new ConflictException("Неможливо розділити закрите замовлення");
         }
 
         otherOrder.setUser(mainOrder.getUser());
@@ -429,27 +432,6 @@ public class OrderService {
         orderRepository.save(order);
 
         return order.getId();
-    }
-
-    @Async
-    public void upriseFlowerRatings (Order order) {
-        log.info("upriseFlowerRatings");
-        order.getOrderItems().forEach(oi -> {
-            Flower flower = oi.getFlowerSize().getFlower();
-            flower.setPopularity(countFlowerRatingRising(flower.getPopularity(), oi.getAmount()));
-        });
-    }
-
-
-    public double countFlowerRatingRising(double popularity, int amount) {
-        while (amount > 0) {
-            popularity += (RATING_MAX - popularity) * RATING_UPRISER;
-            amount--;
-        }
-
-        popularity = popularity > RATING_MAX ? RATING_MAX : popularity;
-
-        return new BigDecimal(popularity).setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
 
 }

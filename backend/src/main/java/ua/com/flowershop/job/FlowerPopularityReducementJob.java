@@ -17,13 +17,13 @@ import static ua.com.flowershop.entity.Flower.RATING_MIN;
 
 @Slf4j
 @Component
-public class FlowerRatingReducementJob {
+public class FlowerPopularityReducementJob {
 
     @Autowired private FlowerRepository flowerRepository;
 
-    @Scheduled(cron = "${job.flower.rating.reducement}")
-    public void reduceFlowerRating(){
-        log.info("Job | Reduce flower rating job started");
+    @Scheduled(cron = "${job.flower.popularity.reducement}")
+    public void reduceFlowerPopularity(){
+        log.info("Job | Reduce flower popularity job started");
 
         List<Flower> flowers = flowerRepository.findAll();
 
@@ -36,7 +36,7 @@ public class FlowerRatingReducementJob {
             flowerRepository.save(f);
         });
 
-        log.info("Job | Reduce flower rating job finished");
+        log.info("Job | Reduce flower popularity job finished");
     }
 
 }
