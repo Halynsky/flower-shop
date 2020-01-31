@@ -5,8 +5,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ua.com.flowershop.entity.Group;
 import ua.com.flowershop.projection.GroupAdminProjection;
-import ua.com.flowershop.projection.GroupProjection;
 import ua.com.flowershop.projection.GroupProjectionFull;
+import ua.com.flowershop.projection.GroupShortProjection;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +29,6 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
 
     Optional<GroupProjectionFull> findProjectedById(Long id);
 
-    List<GroupProjection> findProjectedByFlowerTypeId(Long id);
+    List<GroupShortProjection> findProjectedByFlowerTypeId(Long id);
 
 }

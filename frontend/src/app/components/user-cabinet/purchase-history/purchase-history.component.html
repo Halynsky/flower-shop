@@ -14,13 +14,10 @@
           <mat-expansion-panel>
             <mat-expansion-panel-header>
               <mat-panel-title>
-                №{{order.id}}
-              </mat-panel-title>
-              <mat-panel-description>
+                <div class="order-number">№{{order.id}}</div>
                 <div class="description-left">
                   <span>{{order.created | date:'d MMMM yyyy H:mm'}}</span>
                 </div>
-                <span class="separator-vert"></span>
                 <div class="description-right">
                   <span class="order-status" [ngClass]="order.status | toclassname">{{translationService.text.orderStatuses[order.status]}}</span>
                   <span class="order-price">
@@ -28,7 +25,8 @@
                     <span class="mobile"><span class="highlighted-price">{{(order.totalPrice - order.discount) / 100}} грн</span></span>
                   </span>
                 </div>
-              </mat-panel-description>
+              </mat-panel-title>
+
             </mat-expansion-panel-header>
 
             <div class="order-table">
@@ -79,7 +77,14 @@
               </div>
             </div>
 
-            <div class="how-to-pay" (click)="openHowToPayDialog($event)">Як провести оплату?</div>
+            <div class="how-to-pay" (click)="openHowToPayDialog($event)" *ngIf="!order.paid">Як провести оплату?</div>
+
+            <div class="paid-flag-wrapper" *ngIf="order.paid">
+              <div class="paid-flag">
+                <span>Оплачено</span>
+                <i class="material-icons">check_box</i>
+              </div>
+            </div>
 
           </mat-expansion-panel>
 

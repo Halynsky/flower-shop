@@ -42,6 +42,10 @@ public class SecurityService {
         Authentication authentication = new UsernamePasswordAuthenticationToken(user.getEmail(), null,
         AuthorityUtils.createAuthorityList("USER"));
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        if (user.getIsVirtual()) {
+            user.setIsVirtual(false);
+            userRepository.save(user);
+        }
         return SecurityUserModel.of(user);
     }
 

@@ -23,6 +23,11 @@ import static java.time.LocalDateTime.now;
 @Table(name = "flowers")
 public class Flower {
 
+    public static final Double RATING_MIN = 0.0;
+    public static final Double RATING_MAX = 10.0;
+    public static final double RATING_UPRISER = 0.01;
+    public static final double POPULARITY_REDUCER = 0.1;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,7 +43,7 @@ public class Flower {
 
     private Boolean isNew = true;
     private Boolean isPopular;
-    @Min(1)
+    @Min(0)
     @Max(10)
     private Double popularity = 1.0;
     @Column(columnDefinition = "timestamp default timezone('utc'::text, now())")

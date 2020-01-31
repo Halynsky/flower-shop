@@ -110,6 +110,20 @@
         </div>
       </div>
 
+      <div class="prime-form-group">
+        <div class="ui-grid-col-3">
+          <label>Опис</label>
+        </div>
+        <div class="ui-grid-col-4">
+          <textarea pInputTextarea
+                    #description="ngModel"
+                    name="description"
+                    [(ngModel)]="item.description"
+                    cols="23" rows="6">
+          </textarea>
+        </div>
+      </div>
+
     </div>
 
     <div class="ui-grid-row ui-grid-field">

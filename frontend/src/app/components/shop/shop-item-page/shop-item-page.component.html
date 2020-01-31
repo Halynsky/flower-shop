@@ -67,9 +67,19 @@
       </div>
     </div>
 
-    <div class="description" *ngIf="flower.description">
-      <div class="title">Опис</div>
-      <div class="value">{{flower.description}}</div>
+    <div class="description">
+      <div class="description-block" *ngIf="flower.description">
+        <div class="title">Опис</div>
+        <div class="value" [innerHTML]="flower.description | replaceLineBreaks"></div>
+      </div>
+      <div class="description-block" *ngIf="flower.group?.description">
+        <div class="sub-title">{{flower.group.name}}</div>
+        <div class="value" [innerHTML]="flower.group?.description | replaceLineBreaks"></div>
+      </div>
+      <div class="description-block" *ngIf="!flower.group?.description && flower.flowerType.description">
+        <div class="sub-title">{{flower.flowerType.name}}</div>
+        <div class="value" [innerHTML]="flower.flowerType.description | replaceLineBreaks"></div>
+      </div>
     </div>
 
   </div>

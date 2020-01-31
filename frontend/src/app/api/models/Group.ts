@@ -7,10 +7,11 @@ export class Group {
   nameSingle: string;
   nameOriginal: string;
   nameOriginalSingle: string;
+  description: string;
 }
 
 export class GroupAdmin extends Group {
   flowerType: FlowerType;
   flower: Flower;
-  flowersCount: number
+  flowersCount: number;
 }

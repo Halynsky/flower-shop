@@ -75,7 +75,7 @@ public class FacebookSocialService {
         try {
             response = client.execute(request);
         } catch (IOException e) {
-            String message = "Error while executing request to Facebook API. " + e.getMessage();
+            String message = "Помилка при спробі доступу до Facebook API. " + e.getMessage();
             log.error(message, e);
             throw new ThirdPartyException(message);
         }
@@ -87,7 +87,7 @@ public class FacebookSocialService {
         FacebookUserProfile userProfile = objectMapper.readValue(result, FacebookUserProfile.class);
 
         if (statusCode != 200) {
-            String message = "Error in request to Facebook API with statusCode " + statusCode + ". " + response.getStatusLine().getReasonPhrase();
+            String message = "Помилка при спробі доступу до Facebook API з кодом помилки " + statusCode + ". " + response.getStatusLine().getReasonPhrase();
             log.error(message);
             throw new ThirdPartyException(message);
         }
@@ -100,11 +100,12 @@ public class FacebookSocialService {
         try {
             userProfile = getFacebookUserProfile(accessToken);
         } catch (ThirdPartyException e) {
-            log.error("Could not connect to facebook api", e);
-            throw new AuthenticationRequiredException("Could not connect to facebook api", e);
+            log.error("Не вдалося підключитись до Facebook API", e);
+            throw new AuthenticationRequiredException("Не вдалося підключитись до Facebook API", e);
         }
         if (userProfile.getEmail() == null) {
-            throw new ValidationException("Email is required for Facebook login");
+            throw new ValidationException("Для реєстрації через Facebook у вашому аккаунті повинен бути вказаний email." +
+                " Внесіть email на Facebook аккаунт та спробуйте ще раз або зареєструйтесь через стандартну форму.");
         }
 
         return new SocialUser(userProfile);

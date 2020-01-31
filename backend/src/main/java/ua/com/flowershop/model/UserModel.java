@@ -20,7 +20,6 @@ public class UserModel {
     private String phone;
     private Boolean isEnabled;
     private User.Role role;
-    private String facebookNickname;
 
     public static UserModel of(User user) {
         return new UserModel()
@@ -29,8 +28,7 @@ public class UserModel {
             .setName(user.getName())
             .setPhone(user.getPhone())
             .setIsEnabled(user.getIsEnabled())
-            .setRole(user.getRole())
-            .setFacebookNickname(user.getFacebookNickname());
+            .setRole(user.getRole());
     }
 
 }

@@ -26,7 +26,7 @@ import static ua.com.flowershop.util.Path.IMAGES_PATH;
 
 @Slf4j
 @Component
-@Profile({"dev", "stg"})
+@Profile({"dev"})
 public class TestDataInitializer {
 
     @Autowired private ResourceLoader resourceLoader;

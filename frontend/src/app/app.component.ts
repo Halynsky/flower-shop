@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatIconRegistry } from "@angular/material";
 import { SwUpdate } from "@angular/service-worker";
+import { interval } from "rxjs";
+import { environment } from "../environments/environment";
 
 @Component({
   selector: 'app-root',
@@ -9,6 +11,8 @@ import { SwUpdate } from "@angular/service-worker";
 })
 export class AppComponent implements OnInit {
 
+  EACH_MINUTE_INTERVAL = 60 * 1000;
+
   constructor(public matIconRegistry: MatIconRegistry,
               private swUpdate: SwUpdate) {
     matIconRegistry.registerFontClassAlias('fontawesome', 'fa');
@@ -16,6 +20,15 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.checkSwUpdate();
+
+    if (environment.production) {
+      interval(this.EACH_MINUTE_INTERVAL).subscribe(() => {
+        this.swUpdate.checkForUpdate().then(() => {
+          console.log('SW checking for updates');
+        });
+      });
+
+    }
   }
 
   checkSwUpdate() {

@@ -32,7 +32,7 @@ export class HeaderComponent {
   }
 
   logout() {
-    this.authService.logot().subscribe(
+    this.authService.logout().subscribe(
       res => this.securityService.logout(),
       error => this.snackBarService.showError(getErrorMessage(error))
     )

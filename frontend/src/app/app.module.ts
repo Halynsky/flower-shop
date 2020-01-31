@@ -24,6 +24,7 @@ import { ShopFilterDialogComponent } from "./components/shared/shop-filter-dialo
 import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
 import { AddToBucketDialogComponent } from "./components/shared/add-to-bucket-dialog/add-to-bucket-dialog.component";
 import { HowToPayDialogComponent } from "./components/shared/how-to-pay-dialog/how-to-pay-dialog.component";
+import { PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface, PerfectScrollbarModule } from "ngx-perfect-scrollbar";
 
 registerLocaleData(localeRuUa);
 
@@ -38,6 +39,10 @@ export function getAuthServiceConfigs() {
   );
   return config;
 }
+
+const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
+  suppressScrollX: true
+};
 
 @NgModule({
   declarations: [
@@ -61,13 +66,14 @@ export function getAuthServiceConfigs() {
     MatIconModule,
     MatDialogModule,
     MatProgressSpinnerModule,
+    PerfectScrollbarModule,
     // Developed modules
     LayoutModule,
     LandingModule,
     SharedModule,
     UserCabinetModule,
     SocialLoginModule,
-    ValidatorsModule.forRoot()
+    ValidatorsModule.forRoot(),
   ],
   providers: [
     DatePipe,
@@ -87,6 +93,10 @@ export function getAuthServiceConfigs() {
     {
       provide: STEPPER_GLOBAL_OPTIONS,
       useValue: { displayDefaultIndicatorType: false }
+    },
+    {
+      provide: PERFECT_SCROLLBAR_CONFIG,
+      useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
     }
     ],
   exports: [

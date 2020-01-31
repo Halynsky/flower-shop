@@ -25,6 +25,7 @@ public class ColorController {
     @Autowired private ColorRepository colorRepository;
     @Autowired private ColorService colorService;
 
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @GetMapping("/forAdmin")
     public ResponseEntity<List<ColorAdminProjection>> getAllForAdmin() {
         return new ResponseEntity<>(colorRepository.findForAdminProjectedByOrderByName(), OK);

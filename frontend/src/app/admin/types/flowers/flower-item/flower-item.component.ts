@@ -129,6 +129,7 @@ export class FlowerItemComponent implements OnInit {
     const formData: FormData = new FormData();
     let item = clone(this.item);
     item.flowerSizes.forEach(fs => fs.price = fs.price * 100);
+    item.popularity = item.popularity ? item.popularity : 0;
     formData.append('data', JSON.stringify(item));
     if (this.newImage) {
       formData.append('file', this.newImage);
@@ -148,6 +149,7 @@ export class FlowerItemComponent implements OnInit {
     const formData: FormData = new FormData();
     let item = clone(this.item);
     item.flowerSizes.forEach(fs => fs.price = fs.price * 100);
+    item.popularity = item.popularity ? item.popularity : 0;
     formData.append('data', JSON.stringify(item));
     if (this.newImage) {
       formData.append('file', this.newImage);

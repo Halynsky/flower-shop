@@ -24,11 +24,14 @@ import ua.com.flowershop.util.PoiExporter;
 import ua.com.flowershop.util.annotation.PageableSwagger;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import static java.util.Objects.nonNull;
 import static org.springframework.http.HttpStatus.OK;
 import static ua.com.flowershop.util.Path.ORDERS_PATH;
 
@@ -49,25 +52,25 @@ public class OrderController {
                                                                      @RequestParam(required = false) List<String> statusNames,
                                                                      @RequestParam(required = false) Long userId,
                                                                      @RequestParam(required = false) String userNamePart,
-                                                                     @RequestParam(required = false) String userFacebookNicknamePart,
                                                                      @RequestParam(required = false) String phonePart,
                                                                      @RequestParam(required = false) LocalDateTime createdFrom,
                                                                      @RequestParam(required = false) LocalDateTime createdTo,
                                                                      @RequestParam(required = false) LocalDateTime closedFrom,
                                                                      @RequestParam(required = false) LocalDateTime closedTo,
                                                                      @PageableDefault(sort = "id", page = 0, size = 10, direction = Sort.Direction.ASC) Pageable pageRequest) {
-        return new ResponseEntity<>(orderRepository.findForAdminProjectedByFilters(id, statusNames, userId, userNamePart, userFacebookNicknamePart, phonePart, createdFrom, createdTo, closedFrom, closedTo, pageRequest), OK);
+        return new ResponseEntity<>(orderRepository.findForAdminProjectedByFilters(id, statusNames, userId, userNamePart, phonePart, createdFrom, createdTo, closedFrom, closedTo, pageRequest), OK);
     }
 
     @PostMapping
-    public ResponseEntity<Long> create(@RequestBody OrderModel orderModel) {
+    public ResponseEntity<Long> create(@Valid @RequestBody OrderModel orderModel) {
         return new ResponseEntity<>(orderService.create(orderModel), OK);
     }
 
     @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
-    @PutMapping("/{id}/confirmPayment")
-    public ResponseEntity<Void> confirmPayment(@PathVariable Long id, @RequestBody(required = false) LocalDate paid) {
-        orderService.confirmPayment(id, paid);
+    @PutMapping(value = "/{id}/confirmPayment")
+    public ResponseEntity<Void> confirmPayment(@PathVariable Long id, @RequestBody(required = false) String paid) {
+        LocalDate paymentDate = nonNull(paid) && !paid.equals("") ? LocalDate.parse(paid,  DateTimeFormatter.ofPattern("dd-MM-yyyy")) : null;
+        orderService.confirmPayment(id, paymentDate);
         return new ResponseEntity<>(OK);
     }
 
@@ -144,7 +147,6 @@ public class OrderController {
                                                                      @RequestParam(required = false) List<String> statusNames,
                                                                      @RequestParam(required = false) Long userId,
                                                                      @RequestParam(required = false) String userNamePart,
-                                                                     @RequestParam(required = false) String userFacebookNicknamePart,
                                                                      @RequestParam(required = false) String phonePart,
                                                                      @RequestParam(required = false) LocalDateTime createdFrom,
                                                                      @RequestParam(required = false) LocalDateTime createdTo,
@@ -152,7 +154,7 @@ public class OrderController {
                                                                      @RequestParam(required = false) LocalDateTime closedTo,
                                                                      @PageableDefault(sort = "id", page = 0, size = 10, direction = Sort.Direction.ASC) Pageable pageRequest,
                                                                      HttpServletResponse response) throws IOException {
-        Page<Order> page = orderRepository.findForAdminByFilters(id, statusNames, userId, userNamePart, userFacebookNicknamePart, phonePart, createdFrom, createdTo, closedFrom, closedTo, pageRequest);
+        Page<Order> page = orderRepository.findForAdminByFilters(id, statusNames, userId, userNamePart, phonePart, createdFrom, createdTo, closedFrom, closedTo, pageRequest);
         Workbook workbook = poiExporter.exportOrdersToExcel(page);
         response.setHeader("Content-disposition", "attachment; filename=Orders.xlsx");
         workbook.write(response.getOutputStream() );

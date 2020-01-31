@@ -23,13 +23,15 @@ export class ShopComponent implements OnInit {
 
   flowersPage: RestPage<FlowerShort> = new RestPage<FlowerShort>();
   filters: ShopFilter = new ShopFilter();
-  sort = 'hasAvailableFlowerSize,DESC,isPopular,DESC,popularity,ASC';
+  sort = 'hasAvailableFlowerSize,DESC,isPopular,DESC,popularity,DESC';
   searchTerm = '';
 
   pagination: Pagination;
 
   shopFilterDialogRef: MatDialogRef<any>;
   loading = true;
+
+  pageYOffset = 0;
 
   constructor(private flowerService: FlowerService,
               private snackBarService: SnackBarService,
@@ -102,6 +104,7 @@ export class ShopComponent implements OnInit {
   }
 
   trackScroll(event: any) {
+    this.pageYOffset = this.window.pageYOffset;
     let scrollToBottom = this.document.scrollingElement.scrollHeight - this.window.innerHeight - this.window.pageYOffset;
 
     if (scrollToBottom < 100 && !this.flowersPage.last) {

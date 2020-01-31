@@ -24,7 +24,8 @@ public class GroupService {
             .setNameSingle(groupModel.getNameSingle())
             .setNameOriginal(groupModel.getNameOriginal())
             .setNameOriginalSingle(groupModel.getNameOriginalSingle())
-            .setFlowerType(flowerType);
+            .setFlowerType(flowerType)
+            .setDescription(groupModel.getDescription());
         groupRepository.save(group);
     }
 
@@ -35,7 +36,8 @@ public class GroupService {
             .setNameSingle(groupModel.getNameSingle())
             .setNameOriginal(groupModel.getNameOriginal())
             .setNameOriginalSingle(groupModel.getNameOriginalSingle())
-            .setFlowerType(flowerType);
+            .setFlowerType(flowerType)
+            .setDescription(groupModel.getDescription());
         return groupRepository.save(group);
     }
 

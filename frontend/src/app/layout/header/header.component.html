@@ -65,7 +65,7 @@
 </div>
 
 <mat-menu #userMenu="matMenu" class="auth-menu">
-  <div class="profile-menu user-menu" *ngIf="securityService.hasRole(Role.USER)">
+  <div class="profile-menu user-menu">
     <button mat-flat-button class="user-menu-button" routerLink="/my/profile">
       <i class="material-icons">perm_identity</i>
       <span>Мій профіль</span>
@@ -85,7 +85,7 @@
   </div>
 
   <div class="profile-menu admin-menu" *ngIf="securityService.hasRole(Role.ADMIN) || securityService.hasRole(Role.SUPPORT)">
-    <button mat-flat-button class="user-menu-button" routerLink="/admin">
+    <button mat-stroked-button class="user-menu-button" routerLink="/admin" color="primary">
       <i class="material-icons">table_chart</i>
       <span>Адмін Панель</span>
     </button>

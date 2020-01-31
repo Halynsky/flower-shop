@@ -19,7 +19,14 @@ export function arrayToHttpParam(array: Array<any>) {
  */
 export function getErrorMessage(err: HttpErrorResponse | any): string {
   try {
-    return JSON.parse(err.error).message;
+    let jsonResponse = JSON.parse(err.error);
+    let message = jsonResponse.message;
+
+    if (jsonResponse.errors) {
+      message += jsonResponse.errors.reduce((accumulator, currentValue) => accumulator + " " + currentValue.defaultMessage + ".", ". ");
+    }
+
+    return message
   } catch (e) {
     if (err.error != null && typeof err.error == 'object') {
       return err.error.message ? err.error.message : httpStatusCodeResponses[err.status];

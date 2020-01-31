@@ -47,7 +47,7 @@ export class OrdersComponent implements OnInit {
     {field: 'status', header: 'Статус', active: true},
     {field: 'userId', header: 'Корист.Id', active: true},
     {field: 'user', header: 'Корист.', active: true},
-    {field: 'userFacebookNickname', header: 'Нік на Facebook', active: true},
+    {field: 'userFacebookNickname', header: 'Нік на Facebook', active: false},
     {field: 'priceToPay', header: 'До сплати', active: true},
     {field: 'paid', header: 'Оплачено', active: true},
     {field: 'phone', header: 'Телефон', active: true},
@@ -208,9 +208,9 @@ export class OrdersComponent implements OnInit {
         icon: 'fas fa-comments-dollar',
         command: (event) => {
           this.displayPaymentConfirmDialog = true;
-          this.paymentDate = this.selected.paymentDate;
+          this.paymentDate = this.selected.paid ? new Date(this.selected.paid) : null;
         },
-        visible: !this.orderIsClosed(this.selected.status) && !this.selected.isPaid,
+        visible: !this.orderIsClosed(this.selected.status),
       },
       {
         label: 'Редагувати реквізити',
@@ -305,8 +305,8 @@ export class OrdersComponent implements OnInit {
 
   confirmPayment() {
     this.loading = true;
-    console.log(this.paymentDate);
-    this.dataService.confirmPayment(this.selected.id, this.paymentDate)
+    let date = this.paymentDate ?  this.paymentDate.toLocaleDateString().replace(/\./g,'-') : null;
+    this.dataService.confirmPayment(this.selected.id, date)
       .pipe(finalize(() => this.loading = false))
       .subscribe(() => {
       this.snackBarService.showSuccess(`Оплату для замовлення №${this.selected.id} успішно підтверджено`);

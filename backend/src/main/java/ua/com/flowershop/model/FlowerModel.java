@@ -30,7 +30,7 @@ public class FlowerModel {
     private Integer flowerHeightMax;
     private Boolean isNew;
     private Boolean isPopular;
-    private Integer popularity;
+    private Double popularity;
     private LocalDateTime created;
     private FlowerType flowerType;
     private Color color;

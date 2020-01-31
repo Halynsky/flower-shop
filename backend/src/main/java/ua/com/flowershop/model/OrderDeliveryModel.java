@@ -18,6 +18,7 @@ public class OrderDeliveryModel {
     private String street;
     private String house;
     private String apartment;
+    private String postalCode;
     private String novaPoshtaDepartment;
     private String receiverFullName;
     private String receiverPhone;

@@ -38,7 +38,7 @@ public class MailClient {
 
     @Async
     public void sendMail(String subject, String template, Context context, MailHolder.MessageType messageType, String... recipients) {
-        if (recipients.length == 0) throw new IllegalArgumentException("recipients could not be empty");
+        if (recipients.length == 0) throw new IllegalArgumentException("Отримувач повинен бути вказаний");
         prepareAndSend(subject, template, context, messageType, recipients);
     }
 

@@ -37,9 +37,8 @@ export class UsersComponent implements OnInit {
     {field: 'isVirtual', header: 'Віртуальний', active: true},
     {field: 'isActivated', header: 'Активований', active: false},
     {field: 'created', header: 'Дата реєстрації', active: false},
-    {field: 'lastOrderDate', header: 'Остання покупка', active: true},
-    {field: 'note', header: 'Примітка', active: true},
-    {field: 'facebookNickname', header: 'Нік на Facebook', active: true},
+    {field: 'lastOrderDate', header: 'Останнє замовлення', active: true},
+    {field: 'note', header: 'Примітка', active: true}
   ];
 
   selectedColumns = this.cols.filter(column => column.active);
@@ -94,6 +93,18 @@ export class UsersComponent implements OnInit {
         icon: 'fas fa-user-check',
         command: (event) => this.updateDisabled(event, false),
         visible: this.selected && !this.selected.isEnabled,
+        styleClass: 'cm-danger',
+      },
+      {
+        label: 'Відправити запит на активацію',
+        icon: 'fas fa-user-check',
+        command: (event) => this.sendActivationRequest(event),
+        visible: this.selected && !this.selected.isActivated,
+      },
+      {
+        label: 'Скинути пароль',
+        icon: 'fas fa-key',
+        command: (event) => this.confirmSendPasswordRestoreRequest(event),
         styleClass: 'cm-danger',
       },
       {
@@ -220,6 +231,31 @@ export class UsersComponent implements OnInit {
   resetNoteChangeForm(form: NgForm) {
     form.resetForm();
     this.userNote = null;
+  }
+
+  private sendActivationRequest(event: any) {
+    this.dataService.resendActivationRequest(this.selected.id)
+      .subscribe(() => {
+        this.snackBarService.showSuccess(`Лист для активації користувача з Id - ${this.selected.id} відправлено успішно`);
+        this.refresh();
+      }, error => this.snackBarService.showError(getErrorMessage(error)))
+  }
+
+  private confirmSendPasswordRestoreRequest(event: any) {
+    this.confirmationService.confirm({
+      message: `Ви впевнені що хочете відправити запит на відновлення паролю Користувачу з Id - ${this.selected.id}?`,
+      accept: () => {
+        this.sendPasswordRestoreRequest()
+      }
+    });
+  }
+
+  private sendPasswordRestoreRequest() {
+    this.dataService.resendPasswordRestoredRequest(this.selected.id)
+      .subscribe(() => {
+        this.snackBarService.showSuccess(`Лист для відновлення паролю користувача з Id - ${this.selected.id} відправлено успішно`);
+        this.refresh();
+      }, error => this.snackBarService.showError(getErrorMessage(error)))
   }
 
 }

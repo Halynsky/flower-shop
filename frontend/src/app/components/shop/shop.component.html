@@ -1,5 +1,7 @@
-<div class="sidebar">
-  <shop-filters (onFilterChange)="onFilterChange($event)"></shop-filters>
+<div class="sidebar" [style.margin-top.px]="pageYOffset">
+  <perfect-scrollbar style="max-height: calc(100vh - 114px)">
+    <shop-filters (onFilterChange)="onFilterChange($event)"></shop-filters>
+  </perfect-scrollbar>
 </div>
 
 <div class="content-wrapper">
@@ -18,8 +20,8 @@
     </button>
 
     <mat-form-field class="ordering-selector-wrapper">
-      <mat-select placeholder="Сортування" [(ngModel)]="sort" value="created,DESC,isPopular,DESC,popularity,ASC" (selectionChange)="sortSelectionChange($event)">
-        <mat-option value="hasAvailableFlowerSize,DESC,isPopular,DESC,popularity,ASC">За популярністю</mat-option>
+      <mat-select placeholder="Сортування" [(ngModel)]="sort" value="created,DESC,isPopular,DESC,popularity,DESC" (selectionChange)="sortSelectionChange($event)">
+        <mat-option value="hasAvailableFlowerSize,DESC,isPopular,DESC,popularity,DESC">За популярністю</mat-option>
         <mat-option value="hasAvailableFlowerSize,DESC,priceMin,ASC">Від дешевших до дорожчих</mat-option>
         <mat-option value="hasAvailableFlowerSize,DESC,priceMin,DESC">Від дорожчих до дешевших</mat-option>
         <mat-option value="hasAvailableFlowerSize,DESC,isNew,DESC,created,ASC">За новизною</mat-option>

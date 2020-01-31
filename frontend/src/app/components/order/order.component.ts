@@ -1,12 +1,12 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { BucketLocalService } from "../../services/bucket-local.service";
 import { DeliveryType, deliveryTypeOptions } from 'app/models/DeliveryType';
 import { OrderService } from "../../api/services/order.service";
 import { SecurityService } from "../../services/security.service";
 import { MatAutocompleteSelectedEvent, MatDialog, MatRadioChange } from "@angular/material";
-import { Observable, of } from "rxjs";
-import { finalize, timeout } from "rxjs/operators";
+import { Observable, of, Subject, Subscription } from "rxjs";
+import { finalize, takeUntil, timeout } from "rxjs/operators";
 import { OrderRequest } from "../../api/models/Order";
 import { SnackBarService } from "../../services/snak-bar.service";
 import { getErrorMessage } from "../../utils/Functions";
@@ -18,7 +18,9 @@ import { StepperSelectionEvent } from "@angular/cdk/stepper";
   templateUrl: './order.component.html',
   styleUrls: ['./order.component.scss']
 })
-export class OrderComponent implements OnInit {
+export class OrderComponent implements OnInit, OnDestroy {
+
+  private readonly destroyed$ = new Subject<void>();
 
   DeliveryType = DeliveryType;
   deliveryTypeOptions = deliveryTypeOptions;
@@ -39,6 +41,10 @@ export class OrderComponent implements OnInit {
   loading = false;
 
   selectedStepIndex = 0;
+
+  citySubs$: Subscription;
+  novaPoshtaDepartmentSubs$: Subscription;
+  streetSubs$: Subscription;
 
   constructor(private formBuilder: FormBuilder,
               public bucketLocalService: BucketLocalService,
@@ -71,8 +77,21 @@ export class OrderComponent implements OnInit {
     this.bucketLocalService.updateBucketFlowerSizes();
   }
 
+  ngOnDestroy() {
+    this.destroyed$.next();
+    this.destroyed$.complete();
+    this.unsubscribeFromDropdownChanges();
+  }
+
+  unsubscribeFromDropdownChanges() {
+    if (this.citySubs$) this.citySubs$.unsubscribe();
+    if (this.novaPoshtaDepartmentSubs$) this.novaPoshtaDepartmentSubs$.unsubscribe();
+    if (this.streetSubs$) this.streetSubs$.unsubscribe();
+  }
+
   getCities(namePart: string = '') {
     this.novaPoshtaService.getCitiesByName(namePart)
+      .pipe(takeUntil(this.destroyed$))
       .subscribe(response => {
         if (response.data[0]) {
           this.cities = response.data[0].Addresses;
@@ -87,7 +106,7 @@ export class OrderComponent implements OnInit {
   getWarehouses(settlementRef: string = '') {
     this.loadingWarehouses = true;
     this.novaPoshtaService.getWarehousesByCityRef(settlementRef)
-      .pipe(finalize(() => this.loadingWarehouses = false))
+      .pipe(finalize(() => this.loadingWarehouses = false), takeUntil(this.destroyed$))
       .subscribe(response => {
         this.warehouses = this.filteredWarehouses = response.data
       }, error => {
@@ -98,7 +117,7 @@ export class OrderComponent implements OnInit {
   getStreets(settlementRef: string = '', streetNamePart: string = '') {
     this.loadingStreets = true;
     this.novaPoshtaService.getStreets(settlementRef, streetNamePart)
-      .pipe(finalize(() => this.loadingStreets = false))
+      .pipe(finalize(() => this.loadingStreets = false), takeUntil(this.destroyed$))
       .subscribe(response => {
         if (response.data[0]) {
           this.streets = response.data[0].Addresses;
@@ -151,6 +170,11 @@ export class OrderComponent implements OnInit {
   }
 
   submitOrder() {
+    if (this.contactInfoFormGroup.invalid || this.deliveryInfoFormGroup.invalid) {
+      this.snackBarService.showWarning("Заповніть, будь ласа, всі необхідні поля");
+      return;
+    }
+
     this.loading = true;
     let orderRequest = new OrderRequest();
     orderRequest.orderItems = this.bucketLocalService.bucket;
@@ -159,15 +183,15 @@ export class OrderComponent implements OnInit {
     if (orderRequest.deliveryInfo.city) {
       orderRequest.deliveryInfo.city = orderRequest.deliveryInfo.city.Present;
     }
-    if (orderRequest.deliveryInfo.street) {
-      orderRequest.deliveryInfo.street = orderRequest.deliveryInfo.street.Present;
+    if (orderRequest.deliveryInfo.street && typeof orderRequest.deliveryInfo.street === 'object') {
+        orderRequest.deliveryInfo.street = orderRequest.deliveryInfo.street.Present;
     }
     if (orderRequest.deliveryInfo.novaPoshtaDepartment) {
       orderRequest.deliveryInfo.novaPoshtaDepartment = orderRequest.deliveryInfo.novaPoshtaDepartment.Description;
     }
 
     this.orderService.create(orderRequest)
-      .pipe(finalize(() => this.loading = false))
+      .pipe(finalize(() => this.loading = false), takeUntil(this.destroyed$))
       .subscribe(orderId => {
       this.bucketLocalService.clearBucket();
       this.orderId = orderId;
@@ -176,13 +200,7 @@ export class OrderComponent implements OnInit {
 
   directAddressRequired() {
     return this.deliveryInfoFormGroup.get('deliveryType').value == DeliveryType.NOVA_POSHTA_COURIER
-      || this.deliveryInfoFormGroup.get('deliveryType').value == DeliveryType.UKR_POSHTA_DEPARTMENT
-  }
-
-  receiverInfoRequired() {
-    return this.deliveryInfoFormGroup.get('deliveryType').value == DeliveryType.NOVA_POSHTA_COURIER
-      || this.deliveryInfoFormGroup.get('deliveryType').value == DeliveryType.UKR_POSHTA_DEPARTMENT
-      || this.deliveryInfoFormGroup.get('deliveryType').value == DeliveryType.NOVA_POSHTA_DEPARTMENT
+      || this.deliveryInfoFormGroup.get('deliveryType').value == DeliveryType.UKR_POSHTA
   }
 
   onDeliveryTypeChange(event: MatRadioChange) {
@@ -195,34 +213,33 @@ export class OrderComponent implements OnInit {
       this.deliveryInfoFormGroup = new FormGroup({});
       this.deliveryInfoFormGroup.addControl('deliveryType', new FormControl(deliveryType));
       this.deliveryInfoFormGroup.addControl('comment', new FormControl());
+      this.deliveryInfoFormGroup.addControl('receiverFullName', new FormControl());
+      this.deliveryInfoFormGroup.addControl('receiverPhone', new FormControl());
+    } else {
+      this.unsubscribeFromDropdownChanges();
     }
 
     switch (deliveryType) {
-      case DeliveryType.NOVA_POSHTA_COURIER:
-      case DeliveryType.UKR_POSHTA_DEPARTMENT: {
+      case DeliveryType.UKR_POSHTA:
         this.deliveryInfoFormGroup.removeControl('novaPoshtaDepartment');
-        if (!this.deliveryInfoFormGroup.get('city'))
-          this.deliveryInfoFormGroup.addControl('city', new FormControl());
-        if (!this.deliveryInfoFormGroup.get('street'))
-          this.deliveryInfoFormGroup.addControl('street', new FormControl());
-        if (!this.deliveryInfoFormGroup.get('house'))
-          this.deliveryInfoFormGroup.addControl('house', new FormControl());
-        if (!this.deliveryInfoFormGroup.get('apartment'))
-          this.deliveryInfoFormGroup.addControl('apartment', new FormControl());
-        if (!this.deliveryInfoFormGroup.get('receiverFullName'))
-          this.deliveryInfoFormGroup.addControl('receiverFullName', new FormControl());
-        if (!this.deliveryInfoFormGroup.get('receiverPhone'))
-          this.deliveryInfoFormGroup.addControl('receiverPhone', new FormControl());
+        if (!this.deliveryInfoFormGroup.get('postalCode'))
+          this.deliveryInfoFormGroup.addControl('postalCode', new FormControl());
+        this.addDirectAddressControls();
+        break;
+      case DeliveryType.NOVA_POSHTA_COURIER: {
+        this.deliveryInfoFormGroup.removeControl('novaPoshtaDepartment');
+        this.deliveryInfoFormGroup.removeControl('postalCode');
+        this.addDirectAddressControls();
         break;
       }
       case DeliveryType.NOVA_POSHTA_DEPARTMENT: {
+        this.deliveryInfoFormGroup.removeControl('street');
+        this.deliveryInfoFormGroup.removeControl('house');
+        this.deliveryInfoFormGroup.removeControl('apartment');
+        this.deliveryInfoFormGroup.removeControl('postalCode');
         this.deliveryInfoFormGroup.addControl('novaPoshtaDepartment', new FormControl());
         if (!this.deliveryInfoFormGroup.get('city'))
           this.deliveryInfoFormGroup.addControl('city', new FormControl());
-        if (!this.deliveryInfoFormGroup.get('receiverFullName'))
-          this.deliveryInfoFormGroup.addControl('receiverFullName', new FormControl());
-        if (!this.deliveryInfoFormGroup.get('receiverPhone'))
-          this.deliveryInfoFormGroup.addControl('receiverPhone', new FormControl());
         break;
       }
       case DeliveryType.SELF_UZHGOROD: {
@@ -231,21 +248,20 @@ export class OrderComponent implements OnInit {
         this.deliveryInfoFormGroup.removeControl('street');
         this.deliveryInfoFormGroup.removeControl('house');
         this.deliveryInfoFormGroup.removeControl('apartment');
-        this.deliveryInfoFormGroup.removeControl('receiverFullName');
-        this.deliveryInfoFormGroup.removeControl('receiverPhone');
+        this.deliveryInfoFormGroup.removeControl('postalCode');
         break;
       }
 
     }
 
     if(this.deliveryInfoFormGroup.get('city')) {
-      this.deliveryInfoFormGroup.get('city').valueChanges.subscribe(value => {
+      this.citySubs$ = this.deliveryInfoFormGroup.get('city').valueChanges.subscribe(value => {
         this.getCities(value);
       });
     }
 
     if(this.deliveryInfoFormGroup.get('novaPoshtaDepartment')) {
-      this.deliveryInfoFormGroup.get('novaPoshtaDepartment').valueChanges.subscribe(value => {
+      this.novaPoshtaDepartmentSubs$ = this.deliveryInfoFormGroup.get('novaPoshtaDepartment').valueChanges.subscribe(value => {
         if (value) {
           this.filteredWarehouses = this.warehouses.filter(option => {
             return typeof value == 'string' ? option.Description.toLowerCase().includes(value.toLowerCase()) : true
@@ -255,8 +271,8 @@ export class OrderComponent implements OnInit {
     }
 
     if(this.deliveryInfoFormGroup.get('street')) {
-      this.deliveryInfoFormGroup.get('street').valueChanges.subscribe(value => {
-        if (value && typeof value == 'string') {
+      this.streetSubs$ = this.deliveryInfoFormGroup.get('street').valueChanges.subscribe(value => {
+        if (value && typeof value == 'string' && this.selectedCity) {
           this.getStreets(this.selectedCity.Ref, value);
         }
       });
@@ -266,6 +282,17 @@ export class OrderComponent implements OnInit {
 
   }
 
+  addDirectAddressControls() {
+    if (!this.deliveryInfoFormGroup.get('city'))
+      this.deliveryInfoFormGroup.addControl('city', new FormControl());
+    if (!this.deliveryInfoFormGroup.get('street'))
+      this.deliveryInfoFormGroup.addControl('street', new FormControl());
+    if (!this.deliveryInfoFormGroup.get('house'))
+      this.deliveryInfoFormGroup.addControl('house', new FormControl());
+    if (!this.deliveryInfoFormGroup.get('apartment'))
+      this.deliveryInfoFormGroup.addControl('apartment', new FormControl());
+  }
+
   isFormValid(): Observable<boolean> {
     return of(this.contactInfoFormGroup.invalid || this.deliveryInfoFormGroup.invalid).pipe(timeout(0))
   }
@@ -273,4 +300,5 @@ export class OrderComponent implements OnInit {
   stepperSelectionChanged(event: StepperSelectionEvent) {
     this.selectedStepIndex = event.selectedIndex;
   }
+
 }

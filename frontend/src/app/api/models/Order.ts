@@ -6,7 +6,7 @@ export class OrderAdmin {
   orderItems: OrderItemAdmin[] = [];
   closed: string;
   created: string;
-  paymentDate: string;
+  paid: string;
   status: Order.Status;
   user: UserShortForAdmin;
   comment: string;
@@ -58,7 +58,7 @@ export class Order {
   created: string;
   status: Order.Status;
   postDeclaration: string;
-  isPaid: boolean;
+  paid: string;
   totalPrice: number;
   discount: number;
 }

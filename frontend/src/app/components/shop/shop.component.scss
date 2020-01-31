@@ -18,6 +18,7 @@
 .sidebar {
   padding: 16px 16px;
   //border-right: solid 1px $grey-100;
+  //height: call(100vh - 80px);
   @include response-to(sm) {
     display: none;
   }
