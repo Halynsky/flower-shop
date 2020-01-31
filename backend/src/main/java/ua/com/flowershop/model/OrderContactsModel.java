@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.List;
 
@@ -16,10 +18,15 @@ import java.util.List;
 @AllArgsConstructor
 public class OrderContactsModel {
     private Long id;
-    private List<OrderItemModel> orderItems;
-    private Long userId;
+    @Email(message = "Email не валідний")
+    @NotEmpty(message = "Email повинен бути вказаний")
+    private String email;
+    @NotEmpty(message = "Ім'я повинно бути вказано")
     private String name;
     @Size(min = 10, max = 10)
+    @NotEmpty(message = "Телефон повинен бути вказаний")
     private String phone;
-    private String email;
+
+    private List<OrderItemModel> orderItems;
+
 }

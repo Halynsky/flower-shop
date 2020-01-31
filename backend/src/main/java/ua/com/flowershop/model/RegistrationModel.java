@@ -19,7 +19,10 @@ public class RegistrationModel {
     @Email(message = "Email не валідний")
     @NotEmpty(message = "Email повинен бути вказаний")
     private String email;
+    @NotEmpty(message = "Пароль повинен бути вказаний")
     private String password;
+    @NotEmpty(message = "Ім'я повинно бути вказано")
     private String name;
+    @NotEmpty(message = "Телефон повинен бути вказаний")
     private String phone;
 }

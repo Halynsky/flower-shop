@@ -24,6 +24,7 @@ import ua.com.flowershop.util.PoiExporter;
 import ua.com.flowershop.util.annotation.PageableSwagger;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -61,7 +62,7 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<Long> create(@RequestBody OrderModel orderModel) {
+    public ResponseEntity<Long> create(@Valid @RequestBody OrderModel orderModel) {
         return new ResponseEntity<>(orderService.create(orderModel), OK);
     }
 

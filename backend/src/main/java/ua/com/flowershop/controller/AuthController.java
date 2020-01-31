@@ -11,6 +11,8 @@ import ua.com.flowershop.model.RegistrationModel;
 import ua.com.flowershop.repository.UserRepository;
 import ua.com.flowershop.service.UserService;
 
+import javax.validation.Valid;
+
 import static org.springframework.http.HttpStatus.OK;
 import static ua.com.flowershop.util.Path.AUTH_PATH;
 
@@ -22,7 +24,7 @@ public class AuthController {
     @Autowired private UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<Void> register(@RequestBody RegistrationModel user){
+    public ResponseEntity<Void> register(@Valid @RequestBody RegistrationModel user){
         userService.register(user);
         return new ResponseEntity<>(OK);
     }
