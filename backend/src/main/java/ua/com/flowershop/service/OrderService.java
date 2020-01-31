@@ -28,6 +28,11 @@ import static java.util.Objects.nonNull;
 @Service
 public class OrderService {
 
+    private static final String COMA_SPACE = ", ";
+    private static final String COMA_APARTMENTS = ", кв.";
+    private static final String COMA_HOUSE = ", буд.";
+    private static final String COMA_PHONE = ", тел.";
+
     @Autowired private OrderRepository orderRepository;
     @Autowired private OrderItemRepository orderItemRepository;
     @Autowired private FlowerSizeRepository flowerSizeRepository;
@@ -160,14 +165,13 @@ public class OrderService {
                 if (Order.Status.getClosed().contains(order.getStatus())) {
                     throw new ConflictException("Вказано невалідний статус замовлення");
                 }
-                order.setClosed(now());
                 order.getOrderItems().forEach(oi -> {
                         FlowerSize flowerSize = oi.getFlowerSize();
                         flowerSize.setSold(flowerSize.getSold() + oi.getAmount());
                         flowerSizeRepository.save(flowerSize);
                     }
                 );
-
+                order.setClosed(now());
                 break;
 
             case RETURNED:
@@ -279,7 +283,6 @@ public class OrderService {
 
     private String retrieveAddress (OrderModel orderModel) {
         OrderDeliveryModel orderDeliveryModel = orderModel.getDeliveryInfo();
-        String deliveryAddress;
         String receiverFullName;
         String receiverPhone;
         if (nonNull(orderDeliveryModel.getReceiverFullName()) && !orderDeliveryModel.getReceiverFullName().equals("")) {
@@ -292,28 +295,59 @@ public class OrderService {
         } else {
             receiverPhone = orderModel.getContactInfo().getPhone();
         }
+
+        StringBuilder ds = new StringBuilder();
+
         switch(orderDeliveryModel.getDeliveryType()) {
             case NOVA_POSHTA_COURIER:
-                deliveryAddress = orderDeliveryModel.getCity() + ", Нова Пошта (Адресна доставка), " + orderDeliveryModel.getStreet() +
-                    ", буд." + orderDeliveryModel.getHouse() + ", кв. " + orderDeliveryModel.getApartment() +
-                    ", " + receiverFullName + ", тел." + receiverPhone;
+                ds.append("Нова Пошта (Адресна доставка), ");
+                ds.append(orderDeliveryModel.getCity());
+                ds.append(COMA_SPACE);
+                ds.append(orderDeliveryModel.getStreet());
+                ds.append(COMA_HOUSE);
+                ds.append(orderDeliveryModel.getHouse());
+                if (nonNull(orderDeliveryModel.getApartment()) && !orderDeliveryModel.getApartment().isBlank()) {
+                    ds.append(COMA_APARTMENTS);
+                    ds.append(orderDeliveryModel.getApartment());
+                }
+                ds.append(COMA_SPACE);
                 break;
-            case UKR_POSHTA_DEPARTMENT:
-                deliveryAddress = orderDeliveryModel.getCity() + ", Укр Пошта, " + orderDeliveryModel.getStreet() +
-                    ", буд." + orderDeliveryModel.getHouse() + ", кв. " + orderDeliveryModel.getApartment() +
-                    ", " + receiverFullName + ", тел." + receiverPhone;
+            case UKR_POSHTA:
+                ds.append("Укр Пошта, ");
+                ds.append(orderDeliveryModel.getCity());
+                ds.append(COMA_SPACE);
+                ds.append(orderDeliveryModel.getStreet());
+                ds.append(COMA_HOUSE);
+                ds.append(orderDeliveryModel.getHouse());
+                if (nonNull(orderDeliveryModel.getApartment()) && !orderDeliveryModel.getApartment().isBlank()) {
+                    ds.append(COMA_APARTMENTS);
+                    ds.append(orderDeliveryModel.getApartment());
+                }
+                ds.append(COMA_SPACE);
+                ds.append(orderDeliveryModel.getPostalCode());
+                ds.append(COMA_SPACE);
                 break;
             case NOVA_POSHTA_DEPARTMENT:
-                deliveryAddress = orderDeliveryModel.getCity() + ", Нова Пошта, " + orderDeliveryModel.getNovaPoshtaDepartment() +
-                    ", " + receiverFullName + ", тел." + receiverPhone;
+                ds.append("Нова Пошта, ");
+                ds.append(orderDeliveryModel.getCity());
+                ds.append(COMA_SPACE);
+                ds.append(orderDeliveryModel.getNovaPoshtaDepartment());
+                ds.append(COMA_SPACE);
                 break;
             case SELF_UZHGOROD:
-                deliveryAddress = "м.Ужгород, самовивіз, " + receiverFullName + ", тел." + receiverPhone;
+                ds.append("Самовивіз, ");
+                ds.append("м.Ужгород, ");
+
                 break;
             default:
                 throw new ValidationException("Данний спосіб доставки не дозволений");
         }
-        return deliveryAddress;
+
+        ds.append(receiverFullName);
+        ds.append(COMA_PHONE);
+        ds.append(receiverPhone);
+
+        return ds.toString();
     }
 
     @Transactional

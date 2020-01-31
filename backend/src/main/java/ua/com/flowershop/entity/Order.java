@@ -84,7 +84,7 @@ public class Order {
     public enum DeliveryType {
         NOVA_POSHTA_DEPARTMENT("NOVA_POSHTA_DEPARTMENT"),
         NOVA_POSHTA_COURIER("NOVA_POSHTA_COURIER"),
-        UKR_POSHTA_DEPARTMENT("UKR_POSHTA_DEPARTMENT"),
+        UKR_POSHTA("UKR_POSHTA"),
         SELF_UZHGOROD("SELF_UZHGOROD");
 
         private final String value;

@@ -83,7 +83,7 @@
           </mat-radio-button>
         </mat-radio-group>
 
-        <div class="input-group" *ngIf="deliveryInfoFormGroup.get('deliveryType').value != 'SELF_UZHGOROD'">
+        <div class="input-group" *ngIf="deliveryInfoFormGroup.get('deliveryType').value != DeliveryType.SELF_UZHGOROD">
           <label>Місто</label>
           <input type="text" placeholder="Місто" formControlName="city" [matAutocomplete]="cityAutocomplete" required isObjectValidator>
           <mat-autocomplete #cityAutocomplete="matAutocomplete" (optionSelected)="onCitySelect($event)" [displayWith]="displayCityFn">
@@ -103,14 +103,14 @@
             <mat-spinner *ngIf="loadingWarehouses" diameter="16" mode="indeterminate"></mat-spinner>
           </label>
 
-          <input type="text" placeholder="Вулиця" formControlName="street" [matAutocomplete]="streetAutocomplete" required isObjectValidator [disabled]="loadingStreets" >
-          <mat-autocomplete #streetAutocomplete="matAutocomplete" (optionSelected)="onStreetSelect($event)" [displayWith]="displayStreetFn">
+          <input type="text" placeholder="Вулиця" formControlName="street" [matAutocomplete]="streetAutocomplete" required [disabled]="loadingStreets">
+          <mat-autocomplete #streetAutocomplete="matAutocomplete" (optionSelected)="onStreetSelect($event)" [displayWith]="displayStreetFn" >
             <mat-option *ngFor="let street of streets" [value]="street" class="order-page-autocomplete-option">
               {{street.Present}}
             </mat-option>
           </mat-autocomplete>
           <div class="error-wrapper" *ngIf="deliveryInfoFormGroup.get('street').dirty || deliveryInfoFormGroup.get('street').touched">
-            <div class="error-message" *ngIf="deliveryInfoFormGroup.get('street').errors?.required || deliveryInfoFormGroup.get('street').errors?.isObject">Вкажіть вулицю</div>
+            <div class="error-message" *ngIf="deliveryInfoFormGroup.get('street').errors?.required">Вкажіть вулицю</div>
           </div>
 
         </div>
@@ -132,10 +132,22 @@
           <input
             name="apartment"
             formControlName="apartment"
-            placeholder="Квартира"
-            [required]="directAddressRequired()">
-          <div class="error-wrapper" *ngIf="deliveryInfoFormGroup.get('apartment').dirty || deliveryInfoFormGroup.get('apartment').touched">
-            <div class="error-message" *ngIf="deliveryInfoFormGroup.get('apartment').errors?.required">Повинно бути вказано</div>
+            placeholder="Квартира">
+        </div>
+
+        <div class="input-group" *ngIf="deliveryInfoFormGroup.get('deliveryType').value == DeliveryType.UKR_POSHTA">
+          <label>Поштовий індекс</label>
+          <input
+            name="postalCode"
+            formControlName="postalCode"
+            placeholder="Поштовий індекс"
+            maxlength="5"
+            pattern=".{5,5}"
+            digitOnly
+            required>
+          <div class="error-wrapper" *ngIf="deliveryInfoFormGroup.get('postalCode').dirty || deliveryInfoFormGroup.get('postalCode').touched">
+            <div class="error-message" *ngIf="deliveryInfoFormGroup.get('postalCode').errors?.required">Повинно бути вказано</div>
+            <div class="error-message" *ngIf="!deliveryInfoFormGroup.get('postalCode').errors?.required && deliveryInfoFormGroup.get('postalCode').errors?.pattern">Введіть валідний поштовий індекс</div>
           </div>
         </div>
 
@@ -157,7 +169,7 @@
         </div>
 
         <div class="input-group" *ngIf="receiverInfoRequired()">
-          <label>ПІП отримувача (додатково)</label>
+          <label>ПІП отримувача <span class="additional">(необов'язково)</span></label>
           <input
             name="receiverFullName"
             formControlName="receiverFullName"
@@ -168,7 +180,7 @@
         </div>
 
         <div class="input-group" *ngIf="receiverInfoRequired()">
-          <label>Телефон отримувача (додатково)</label>
+          <label>Телефон отримувача <span class="additional">(необов'язково)</span></label>
           <input
             name="receiverPhone"
             formControlName="receiverPhone"
@@ -183,7 +195,7 @@
         </div>
 
         <div class="input-group">
-          <label>Коментар до замовлення</label>
+          <label>Коментар до замовлення <span class="additional">(необов'язково)</span></label>
           <textarea
             name="comment"
             formControlName="comment"

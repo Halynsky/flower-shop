@@ -213,6 +213,14 @@
     margin-top: 3px;
     margin-left: 4px;
   }
+  label {
+    span {
+      &.additional {
+        color: $grey-400;
+        font-size: 12px;
+      }
+    }
+  }
 }
 
 .order-page-autocomplete-option {
