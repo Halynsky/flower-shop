@@ -18,7 +18,7 @@ export class ShopContentItemComponent implements OnInit {
   @Input() public inFavorites: boolean = false;
 
   addToBucketDialogRef: MatDialogRef<AddToBucketDialogComponent>;
-  placeholderPhoto = '../../../../assets/img/common/flower-placeholder-bg.jpg';
+  placeholderPhoto = '../../../../assets/img/common/flower-placeholder.png';
 
   constructor(private snackBar: SnackBarService,
               private favoritesService: FavoritesService,
