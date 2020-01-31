@@ -16,7 +16,14 @@ export class MinMaxDirective {
   }
 
   @HostListener('input',['$event']) onEvent($event){
-    let value = parseInt(this.el.nativeElement.value);
+    let strValue = this.el.nativeElement.value;
+
+    if (!strValue) {
+      this.ngControl.control.setValue(0);
+      return;
+    }
+
+    let value = parseInt(strValue);
 
     if (this.minValue == this.maxValue) {
       value = this.minValue;

@@ -170,6 +170,11 @@ export class OrderComponent implements OnInit, OnDestroy {
   }
 
   submitOrder() {
+    if (this.contactInfoFormGroup.invalid || this.deliveryInfoFormGroup.invalid) {
+      this.snackBarService.showWarning("Заповніть, будь ласа, всі необхідні поля");
+      return;
+    }
+
     this.loading = true;
     let orderRequest = new OrderRequest();
     orderRequest.orderItems = this.bucketLocalService.bucket;
@@ -198,12 +203,6 @@ export class OrderComponent implements OnInit, OnDestroy {
       || this.deliveryInfoFormGroup.get('deliveryType').value == DeliveryType.UKR_POSHTA
   }
 
-  receiverInfoRequired() {
-    return this.deliveryInfoFormGroup.get('deliveryType').value == DeliveryType.NOVA_POSHTA_COURIER
-      || this.deliveryInfoFormGroup.get('deliveryType').value == DeliveryType.UKR_POSHTA
-      || this.deliveryInfoFormGroup.get('deliveryType').value == DeliveryType.NOVA_POSHTA_DEPARTMENT
-  }
-
   onDeliveryTypeChange(event: MatRadioChange) {
     this.initFormGroups(event.value);
   }
@@ -214,6 +213,8 @@ export class OrderComponent implements OnInit, OnDestroy {
       this.deliveryInfoFormGroup = new FormGroup({});
       this.deliveryInfoFormGroup.addControl('deliveryType', new FormControl(deliveryType));
       this.deliveryInfoFormGroup.addControl('comment', new FormControl());
+      this.deliveryInfoFormGroup.addControl('receiverFullName', new FormControl());
+      this.deliveryInfoFormGroup.addControl('receiverPhone', new FormControl());
     } else {
       this.unsubscribeFromDropdownChanges();
     }
@@ -239,10 +240,6 @@ export class OrderComponent implements OnInit, OnDestroy {
         this.deliveryInfoFormGroup.addControl('novaPoshtaDepartment', new FormControl());
         if (!this.deliveryInfoFormGroup.get('city'))
           this.deliveryInfoFormGroup.addControl('city', new FormControl());
-        if (!this.deliveryInfoFormGroup.get('receiverFullName'))
-          this.deliveryInfoFormGroup.addControl('receiverFullName', new FormControl());
-        if (!this.deliveryInfoFormGroup.get('receiverPhone'))
-          this.deliveryInfoFormGroup.addControl('receiverPhone', new FormControl());
         break;
       }
       case DeliveryType.SELF_UZHGOROD: {
@@ -251,8 +248,6 @@ export class OrderComponent implements OnInit, OnDestroy {
         this.deliveryInfoFormGroup.removeControl('street');
         this.deliveryInfoFormGroup.removeControl('house');
         this.deliveryInfoFormGroup.removeControl('apartment');
-        this.deliveryInfoFormGroup.removeControl('receiverFullName');
-        this.deliveryInfoFormGroup.removeControl('receiverPhone');
         this.deliveryInfoFormGroup.removeControl('postalCode');
         break;
       }
@@ -296,10 +291,6 @@ export class OrderComponent implements OnInit, OnDestroy {
       this.deliveryInfoFormGroup.addControl('house', new FormControl());
     if (!this.deliveryInfoFormGroup.get('apartment'))
       this.deliveryInfoFormGroup.addControl('apartment', new FormControl());
-    if (!this.deliveryInfoFormGroup.get('receiverFullName'))
-      this.deliveryInfoFormGroup.addControl('receiverFullName', new FormControl());
-    if (!this.deliveryInfoFormGroup.get('receiverPhone'))
-      this.deliveryInfoFormGroup.addControl('receiverPhone', new FormControl());
   }
 
   isFormValid(): Observable<boolean> {
