@@ -119,6 +119,12 @@ UPDATE flowers__sizes SET reserved = reserved + 5 WHERE id = 15;
 INSERT INTO order_items (amount, flower_size_id, order_id, warehouse_operation_id, price) VALUES (5, 6, 3, null, 1300);
 UPDATE flowers__sizes SET reserved = reserved + 5 WHERE id = 6;
 
+INSERT INTO public.orders (closed, comment, created, delivery_address, discount, note, paid, phone, post_declaration, status, total_price, user_id) VALUES (null, null, '2020-01-30 22:22:40.949084', 'м. Івано-Франківськ, Івано-Франківська обл., Нова Пошта, Відділення №8 (до 30 кг): вул. Миколайчука, 30, User, тел.0503333333', 0, null, null, '0503333333', null, 'NEW', 5200, 3);
+INSERT INTO public.order_items (amount, price, flower_size_id, order_id, warehouse_operation_id) VALUES (2, 1500, 20, 4, null);
+UPDATE flowers__sizes SET reserved = reserved + 2 WHERE id = 20;
+INSERT INTO public.order_items (amount, price, flower_size_id, order_id, warehouse_operation_id) VALUES (2, 1100, 23, 4, null);
+UPDATE flowers__sizes SET reserved = reserved + 2 WHERE id = 23;
+
 INSERT INTO groups (name, name_single, name_original, name_original_single, flower_type_id, description) VALUES  ('ОТ-Гібриди', 'ОТ-Гібрид', 'OT-Hybrids', 'OT-Hybrid', (SELECT id FROM flower_types WHERE name = 'Лілії'), '<b>ОТ-Гібриди</b> або <b>Орієнтали</b>  – одна з сучасних груп сортів лілій складного гібридного походження. Лілії які входять в цю групу володіють міцними пагонами та дуже стійкі до несприятливих умов росту.
 
 Висота рослин в залежності від конкретного сорту може бути від 70 до 200 см.

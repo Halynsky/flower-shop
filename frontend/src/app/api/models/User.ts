@@ -16,7 +16,6 @@ export class UserForAdmin extends User {
   created: string;
   lastOrderDate: string;
   note: string;
-  facebookNickname: string;
 }
 
 export class UserShortForAdmin extends User {
@@ -24,7 +23,6 @@ export class UserShortForAdmin extends User {
   name: string;
   email: string;
   phone: string;
-  facebookNickname: string;
 }
 
 export class UserRegistration {

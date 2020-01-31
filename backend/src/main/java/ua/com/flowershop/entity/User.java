@@ -28,11 +28,9 @@ public class User {
     private Long id;
     @Column(nullable = false)
     private String name;
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String email;
     private String newEmail;
-    @Column(columnDefinition = "varchar(64)")
-    private String facebookNickname;
     @JsonIgnore
     private String password;
     private String phone;

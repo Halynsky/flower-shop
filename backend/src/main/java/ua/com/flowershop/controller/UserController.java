@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ua.com.flowershop.model.UserAdminModel;
-import ua.com.flowershop.model.UserModel;
 import ua.com.flowershop.projection.UserAdminProjection;
 import ua.com.flowershop.repository.UserRepository;
 import ua.com.flowershop.service.UserService;
@@ -71,12 +70,6 @@ public class UserController {
         return new ResponseEntity<>(OK);
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<Void> register(@RequestBody UserModel user){
-        userService.register(user);
-        return new ResponseEntity<>(OK);
-    }
-
     @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @PutMapping("/{id}/merge")
     public ResponseEntity<Void> merge(@PathVariable Long id, @RequestBody String otherId) {
@@ -88,6 +81,21 @@ public class UserController {
     @PutMapping("/{id}/changeNote")
     public ResponseEntity<Void> changeNote(@PathVariable Long id, @RequestBody(required=false) String note) {
         userService.changeNote(id, note);
+        return new ResponseEntity<>(OK);
+    }
+
+
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
+    @PostMapping("/{id}/activation/request")
+    public ResponseEntity<Void> resendActivationRequest(@PathVariable Long id){
+        userService.resendActivationRequest(id);
+        return new ResponseEntity<>(OK);
+    }
+
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
+    @PostMapping("/{id}/password/restore/request")
+    public ResponseEntity<Void> resendPasswordRestoredRequest(@PathVariable Long id){
+        userService.passwordRestoreRequest(id);
         return new ResponseEntity<>(OK);
     }
 

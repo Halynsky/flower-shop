@@ -94,6 +94,7 @@ public class OrderService {
         }
 
         order.setUser(user);
+        user.setLastOrderDate(now());
 
         if (isNull(user.getPhone())) {
             user.setPhone(order.getPhone());
@@ -160,11 +161,6 @@ public class OrderService {
                     throw new ConflictException("Вказано невалідний статус замовлення");
                 }
                 order.setClosed(now());
-                User user = order.getUser();
-                if (nonNull(user)) {
-                    user.setLastOrderDate(now());
-                }
-
                 order.getOrderItems().forEach(oi -> {
                         FlowerSize flowerSize = oi.getFlowerSize();
                         flowerSize.setSold(flowerSize.getSold() + oi.getAmount());
@@ -266,6 +262,7 @@ public class OrderService {
             if (isNull(sameOrderItem)) {
                 oi.setOrder(mainOrder);
                 orderItemRepository.save(oi);
+                mainOrder.getOrderItems().add(oi);
             } else {
                 sameOrderItem.setAmount(sameOrderItem.getAmount() + oi.getAmount());
                 orderItemRepository.save(sameOrderItem);

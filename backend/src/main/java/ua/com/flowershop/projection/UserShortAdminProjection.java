@@ -5,5 +5,4 @@ public interface UserShortAdminProjection {
     String getName();
     String getEmail();
     String getPhone();
-    String getFacebookNickname();
 }

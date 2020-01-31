@@ -15,19 +15,21 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findById(Long id);
-    Optional<User> findByEmail(String email);
+    Optional<User> findByEmailAndIsActivated(String email, Boolean isActivated);
     Optional<User> findByIdNotAndEmail(Long id, String email);
     Optional<User> findByEmailAndIsVirtual(String email, Boolean isVirtual);
     Optional<User> findByPhone(String phone);
     Optional<User> findByPhoneAndIsVirtual(String phone, Boolean isVirtual);
     Optional<User> findBySecretKey(String secretKey);
+    Optional<User> findByEmail(String email);
+    Optional<User> findByIdAndIsActivated(Long id, Boolean isActivated);
     Optional<User> findBySecretKeyAndIsActivated(String secretKey, Boolean isActivated);
 
     UserAdminProjection findProjectedById(Long id);
     ProfileProjection findProfileById(Long id);
 
     @Query("SELECT u.id as id, u.name as name, u.email as email, u.phone as phone, u.role as role, u.isEnabled as isEnabled, u.isVirtual as isVirtual, " +
-        "u.isActivated as isActivated, u.lastOrderDate as lastOrderDate, u.created as created, u.facebookNickname as  facebookNickname, u.note as note " +
+        "u.isActivated as isActivated, u.lastOrderDate as lastOrderDate, u.created as created, u.note as note " +
         "FROM User u " +
         "WHERE (:id IS NULL OR  u.id = :id) " +
         "AND (:namePart IS NULL OR :namePart = '' OR lower(u.name) LIKE '%' || lower(cast(:namePart as string)) || '%') " +

@@ -51,4 +51,12 @@ export class UserService {
     return this.http.put(`${this.URL}/${id}/changeNote`, userNote);
   }
 
+  resendActivationRequest(id: number) {
+    return this.http.post(`${this.URL}/${id}/activation/request`, null);
+  }
+
+  resendPasswordRestoredRequest(id: number) {
+    return this.http.post(`${this.URL}/${id}/password/restore/request`, null);
+  }
+
 }

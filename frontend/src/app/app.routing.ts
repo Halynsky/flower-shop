@@ -7,8 +7,8 @@ import { WishlistComponent } from "./components/user-cabinet/wishlist/wishlist.c
 import { PurchaseHistoryComponent } from "./components/user-cabinet/purchase-history/purchase-history.component";
 import { FavouriteArticlesComponent } from "./components/user-cabinet/favourite-articles/favourite-articles.component";
 import { AdminPanelGuard } from "./guards/admin-panel.guard";
-import { UserGuard } from "./guards/user.guard";
 import { TermsAndConditionsComponent } from "./components/shared/terms-and-conditions/terms-and-conditions.component";
+import { AuthenticatedGuard } from "./guards/authenticated.guard";
 
 const routes: Routes = [
   { path: '',
@@ -16,7 +16,7 @@ const routes: Routes = [
     children: [
       // { path: '', component: LandingComponent},
       { path: '', redirectTo:'shop', pathMatch: 'full'},
-      { path: 'my', component: UserCabinetComponent, canActivate: [UserGuard], canActivateChild: [UserGuard] , children: [
+      { path: 'my', component: UserCabinetComponent, canActivate: [AuthenticatedGuard], canActivateChild: [AuthenticatedGuard] , children: [
           { path: 'profile', component: ProfileComponent},
           { path: 'wishlist', component: WishlistComponent},
           { path: 'purchases', component: PurchaseHistoryComponent},

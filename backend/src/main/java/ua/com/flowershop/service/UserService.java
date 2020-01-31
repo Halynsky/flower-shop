@@ -10,8 +10,8 @@ import ua.com.flowershop.entity.User;
 import ua.com.flowershop.exception.ConflictException;
 import ua.com.flowershop.exception.NotFoundException;
 import ua.com.flowershop.model.PasswordRestoreConfirmModel;
+import ua.com.flowershop.model.RegistrationModel;
 import ua.com.flowershop.model.UserAdminModel;
-import ua.com.flowershop.model.UserModel;
 import ua.com.flowershop.model.socials.SocialUser;
 import ua.com.flowershop.repository.OrderRepository;
 import ua.com.flowershop.repository.SocialConnectionRepository;
@@ -40,8 +40,7 @@ public class UserService {
             .setEmail(userModel.getEmail())
             .setPhone(userModel.getPhone())
             .setIsEnabled(userModel.getIsEnabled())
-            .setNote(userModel.getNote())
-            .setFacebookNickname(userModel.getFacebookNickname());
+            .setNote(userModel.getNote());
 
         userRepository.save(user);
     }
@@ -54,14 +53,16 @@ public class UserService {
             throw new ConflictException("Користувач з вказаним емелом вже існує");
         }
 
-        userRepository.save(new User()
+        User user = new User()
             .setName(userModel.getName())
             .setEmail(userModel.getEmail())
             .setPhone(userModel.getPhone())
             .setIsVirtual(true)
-            .setIsEnabled(userModel.getIsEnabled())
-            .setIsActivated(true))
-            .setNote(userModel.getNote());
+            .setIsEnabled(true)
+            .setIsActivated(true);
+
+        userRepository.save(user);
+        mailService.sendPasswordRestore(user);
     }
 
     public void updateDisabled(Long id, Boolean disabled) {
@@ -71,13 +72,13 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void register(UserModel userModel) {
+    public void register(RegistrationModel registrationModel) {
         User user = userRepository.save(new User()
-            .setName(userModel.getName())
-            .setEmail(userModel.getEmail())
-            .setPhone(userModel.getPhone())
+            .setName(registrationModel.getName())
+            .setEmail(registrationModel.getEmail())
+            .setPhone(registrationModel.getPhone())
             .setRole(User.Role.USER)
-            .setPassword(passwordEncoder.encode(userModel.getPassword())));
+            .setPassword(passwordEncoder.encode(registrationModel.getPassword())));
         mailService.sendRegistrationConfirmEmail(user);
     }
 
@@ -98,18 +99,32 @@ public class UserService {
         return user;
     }
 
+    public void resendActivationRequest(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(NotFoundException::new);
+        if (user.getIsActivated()) {
+            throw new ConflictException("Користувач уже активований");
+        }
+        mailService.sendRegistrationConfirmEmail(user);
+    }
 
     public void activate(String secretKey) {
         User user = userRepository.findBySecretKeyAndIsActivated(secretKey, false)
             .orElseThrow(NotFoundException::new);
-
         userRepository.save(user.setSecretKey(null)
             .setIsActivated(true));
-
     }
 
     public void passwordRestoreRequest(String email) {
         User user = userRepository.findByEmail(email).orElse(null);
+        passwordRestoreRequest(user);
+    }
+
+    public void passwordRestoreRequest(Long userId) {
+        User user = userRepository.findById(userId).orElse(null);
+        passwordRestoreRequest(user);
+    }
+
+    public void passwordRestoreRequest(User user) {
         if(nonNull(user)) {
             user.setSecretKey(UUID.randomUUID().toString());
             userRepository.save(user);
@@ -122,10 +137,12 @@ public class UserService {
             .orElseThrow(NotFoundException::new);
         user.setPassword(passwordEncoder.encode(passwordRestoreConfirmModel.getPassword()))
             .setSecretKey(null)
+            .setIsActivated(true)
             .setIsVirtual(false);
         userRepository.save(user);
     }
 
+    @Transactional
     public void merge(Long id, long otherId) {
         User user = userRepository.findById(id)
             .orElseThrow(NotFoundException::new);
@@ -133,8 +150,17 @@ public class UserService {
         User otherUser = userRepository.findById(otherId)
             .orElseThrow(NotFoundException::new);
 
+        if (user.getRole().equals(User.Role.ADMIN) || user.getRole().equals(User.Role.SUPPORT)
+        || otherUser.getRole().equals(User.Role.ADMIN) || otherUser.getRole().equals(User.Role.SUPPORT)) {
+            throw new ConflictException("Обєднання системних користувачів заборонене");
+        }
+
         if (user.getIsVirtual() && !otherUser.getIsVirtual()) {
-            throw new ConflictException("Ви намагаетесь приеднати реального користувача до віртуального");
+            throw new ConflictException("Приєднання реального користувача до віртуального заборонено");
+        }
+
+        if (!user.getIsVirtual() && !otherUser.getIsVirtual()) {
+            throw new ConflictException("Обєднання двох реальних користувачів заборонено");
         }
 
         otherUser.getOrders().forEach(order -> {

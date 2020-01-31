@@ -61,10 +61,6 @@
           <th *ngSwitchCase="'note'">
             {{col.header}}
           </th>
-
-          <th *ngSwitchCase="'facebookNickname'">
-            {{col.header}}
-          </th>
         </ng-container>
 
       </tr>
@@ -91,7 +87,6 @@
           <div *ngSwitchCase="'created'"></div>
           <div *ngSwitchCase="'note'"></div>
           <div *ngSwitchCase="'lastOrderDate'"></div>
-          <div *ngSwitchCase="'facebookNickname'"></div>
         </th>
       </tr>
     </ng-template>
@@ -151,9 +146,6 @@
           </span>
           <span *ngSwitchCase="'lastOrderDate'">
             {{rowData[col.field] | date }}
-          </span>
-          <span *ngSwitchCase="'facebookNickname'">
-            {{rowData[col.field]}}
           </span>
         </td>
       </tr>

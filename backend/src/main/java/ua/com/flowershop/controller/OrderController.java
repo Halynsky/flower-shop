@@ -51,14 +51,13 @@ public class OrderController {
                                                                      @RequestParam(required = false) List<String> statusNames,
                                                                      @RequestParam(required = false) Long userId,
                                                                      @RequestParam(required = false) String userNamePart,
-                                                                     @RequestParam(required = false) String userFacebookNicknamePart,
                                                                      @RequestParam(required = false) String phonePart,
                                                                      @RequestParam(required = false) LocalDateTime createdFrom,
                                                                      @RequestParam(required = false) LocalDateTime createdTo,
                                                                      @RequestParam(required = false) LocalDateTime closedFrom,
                                                                      @RequestParam(required = false) LocalDateTime closedTo,
                                                                      @PageableDefault(sort = "id", page = 0, size = 10, direction = Sort.Direction.ASC) Pageable pageRequest) {
-        return new ResponseEntity<>(orderRepository.findForAdminProjectedByFilters(id, statusNames, userId, userNamePart, userFacebookNicknamePart, phonePart, createdFrom, createdTo, closedFrom, closedTo, pageRequest), OK);
+        return new ResponseEntity<>(orderRepository.findForAdminProjectedByFilters(id, statusNames, userId, userNamePart, phonePart, createdFrom, createdTo, closedFrom, closedTo, pageRequest), OK);
     }
 
     @PostMapping
@@ -147,7 +146,6 @@ public class OrderController {
                                                                      @RequestParam(required = false) List<String> statusNames,
                                                                      @RequestParam(required = false) Long userId,
                                                                      @RequestParam(required = false) String userNamePart,
-                                                                     @RequestParam(required = false) String userFacebookNicknamePart,
                                                                      @RequestParam(required = false) String phonePart,
                                                                      @RequestParam(required = false) LocalDateTime createdFrom,
                                                                      @RequestParam(required = false) LocalDateTime createdTo,
@@ -155,7 +153,7 @@ public class OrderController {
                                                                      @RequestParam(required = false) LocalDateTime closedTo,
                                                                      @PageableDefault(sort = "id", page = 0, size = 10, direction = Sort.Direction.ASC) Pageable pageRequest,
                                                                      HttpServletResponse response) throws IOException {
-        Page<Order> page = orderRepository.findForAdminByFilters(id, statusNames, userId, userNamePart, userFacebookNicknamePart, phonePart, createdFrom, createdTo, closedFrom, closedTo, pageRequest);
+        Page<Order> page = orderRepository.findForAdminByFilters(id, statusNames, userId, userNamePart, phonePart, createdFrom, createdTo, closedFrom, closedTo, pageRequest);
         Workbook workbook = poiExporter.exportOrdersToExcel(page);
         response.setHeader("Content-disposition", "attachment; filename=Orders.xlsx");
         workbook.write(response.getOutputStream() );

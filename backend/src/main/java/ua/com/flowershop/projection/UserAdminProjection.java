@@ -16,5 +16,4 @@ public interface UserAdminProjection {
     LocalDateTime getCreated();
     LocalDateTime getLastOrderDate();
     String getNote();
-    String getFacebookNickname();
 }
