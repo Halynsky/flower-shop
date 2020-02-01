@@ -97,7 +97,7 @@
     background-color: darkorange;
     .mat-simple-snackbar {
       span {
-        word-break: break-all;
+        word-break: break-word;
       }
     }
   }
@@ -106,7 +106,7 @@
     background-color: mat-color($primary, 500);
     .mat-simple-snackbar {
       span {
-        word-break: break-all;
+        word-break: break-word;
       }
     }
   }
