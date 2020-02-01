@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from "../../../api/services/auth.service";
 import { ActivatedRoute } from "@angular/router";
 import { PasswordRestoreConfirm } from "../../../api/models/PasswordRestoreConfirm";
+import { SecurityService } from "../../../services/security.service";
 
 @Component({
   selector: 'confirmation-password-restore',
@@ -16,7 +17,8 @@ export class ConfirmationPasswordRestoreComponent implements OnInit {
   loading = false;
 
   constructor(private route: ActivatedRoute,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private securityService: SecurityService) {
 
     this.route.queryParams.subscribe(params => {
       this.passwordRestoreConfirm.secretKey = params['secretKey'];
@@ -30,7 +32,10 @@ export class ConfirmationPasswordRestoreComponent implements OnInit {
 
   restorePassword() {
     this.authService.passwordRestoreConfirm(this.passwordRestoreConfirm).subscribe(
-      () => this.confirmed = true,
+      user => {
+        this.confirmed = true;
+        this.securityService.login(user);
+      },
       error => this.hasError = true
     )
   }

@@ -26,7 +26,7 @@ export class AuthService {
   }
 
   activate(secretKey: string): Observable<any> {
-    return this.http.post(`${this.URL}/activate`, secretKey);
+    return this.http.post<User>(`${this.URL}/activate`, secretKey);
   }
 
   passwordRestoreRequest(email: string) {
@@ -34,7 +34,7 @@ export class AuthService {
   }
 
   passwordRestoreConfirm(passwordRestoreConfirm: PasswordRestoreConfirm) {
-    return this.http.post(`${this.URL}/password/restore/confirm`, passwordRestoreConfirm);
+    return this.http.post<User>(`${this.URL}/password/restore/confirm`, passwordRestoreConfirm);
   }
 
 }

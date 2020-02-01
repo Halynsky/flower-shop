@@ -107,11 +107,12 @@ public class UserService {
         mailService.sendRegistrationConfirmEmail(user);
     }
 
-    public void activate(String secretKey) {
+    public User activate(String secretKey) {
         User user = userRepository.findBySecretKeyAndIsActivated(secretKey, false)
             .orElseThrow(NotFoundException::new);
         userRepository.save(user.setSecretKey(null)
             .setIsActivated(true));
+        return user;
     }
 
     public void passwordRestoreRequest(String email) {
@@ -132,7 +133,7 @@ public class UserService {
         }
     }
 
-    public void passwordRestoreConfirm(PasswordRestoreConfirmModel passwordRestoreConfirmModel) {
+    public User passwordRestoreConfirm(PasswordRestoreConfirmModel passwordRestoreConfirmModel) {
         User user = userRepository.findBySecretKey(passwordRestoreConfirmModel.getSecretKey())
             .orElseThrow(NotFoundException::new);
         user.setPassword(passwordEncoder.encode(passwordRestoreConfirmModel.getPassword()))
@@ -140,6 +141,7 @@ public class UserService {
             .setIsActivated(true)
             .setIsVirtual(false);
         userRepository.save(user);
+        return user;
     }
 
     @Transactional

@@ -6,9 +6,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ua.com.flowershop.entity.User;
 import ua.com.flowershop.model.PasswordRestoreConfirmModel;
 import ua.com.flowershop.model.RegistrationModel;
+import ua.com.flowershop.model.SecurityUserModel;
 import ua.com.flowershop.repository.UserRepository;
+import ua.com.flowershop.security.SecurityService;
 import ua.com.flowershop.service.UserService;
 
 import javax.validation.Valid;
@@ -22,6 +25,7 @@ public class AuthController {
 
     @Autowired private UserRepository userRepository;
     @Autowired private UserService userService;
+    @Autowired private SecurityService securityService;
 
     @PostMapping("/register")
     public ResponseEntity<Void> register(@Valid @RequestBody RegistrationModel user){
@@ -30,9 +34,10 @@ public class AuthController {
     }
 
     @PostMapping("/activate")
-    public ResponseEntity<Void> activate(@RequestBody String secretKey){
-        userService.activate(secretKey);
-        return new ResponseEntity<>(OK);
+    public ResponseEntity<SecurityUserModel> activate(@RequestBody String secretKey){
+        User user = userService.activate(secretKey);
+        SecurityUserModel securityUserModel = securityService.performUserLogin(user);
+        return new ResponseEntity<>(securityUserModel, OK);
     }
 
     @PostMapping("/password/restore/request")
@@ -42,9 +47,10 @@ public class AuthController {
     }
 
     @PostMapping("/password/restore/confirm")
-    public ResponseEntity<Void> passwordRestoreConfirm(@RequestBody PasswordRestoreConfirmModel passwordRestoreConfirmModel){
-        userService.passwordRestoreConfirm(passwordRestoreConfirmModel);
-        return new ResponseEntity<>(OK);
+    public ResponseEntity<SecurityUserModel> passwordRestoreConfirm(@RequestBody PasswordRestoreConfirmModel passwordRestoreConfirmModel){
+        User user = userService.passwordRestoreConfirm(passwordRestoreConfirmModel);
+        SecurityUserModel securityUserModel = securityService.performUserLogin(user);
+        return new ResponseEntity<>(securityUserModel, OK);
     }
 
 }
