@@ -104,19 +104,31 @@
                 align-items: initial;
               }
 
-              img {
+              a {
                 height: 80px;
                 width: 80px;
-                background-position: center;
-                background-size: contain;
-                background-color: mat-color($primary, 100);
 
                 @include response-to(xs) {
                   height: 150px;
                   width: 150px;
                 }
 
+                img {
+                  height: 80px;
+                  width: 80px;
+                  background-position: center;
+                  background-size: contain;
+                  background-color: mat-color($primary, 100);
+
+                  @include response-to(xs) {
+                    height: 150px;
+                    width: 150px;
+                  }
+
+                }
+
               }
+
             }
 
             .bucket-item-name {
@@ -129,15 +141,32 @@
               }
 
               .flower-type-name {
-                color: $grey-600
+
+                a {
+                  color: $grey-600;
+                  text-decoration: none;
+
+                  &:hover {
+                    text-decoration: underline;
+                  }
+                }
+
               }
 
               .flower-size-name {
-                color: $grey-600
+                color: $grey-600;
               }
 
               .flower-name {
-                color: mat-color($primary);
+                a {
+                  color: mat-color($primary);
+                  text-decoration: none;
+
+                  &:hover {
+                    text-decoration: underline;
+                  }
+                }
+
               }
 
             }

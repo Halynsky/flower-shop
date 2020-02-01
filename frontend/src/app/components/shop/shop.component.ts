@@ -20,6 +20,7 @@ import { DOCUMENT } from "@angular/common";
 export class ShopComponent implements OnInit {
 
   private DEFAULT_PAGE_SIZE = 9;
+  private DISTANCE_TO_BOTTOM_WHEN_SHOW_MORE = 200;
 
   flowersPage: RestPage<FlowerShort> = new RestPage<FlowerShort>();
   filters: ShopFilter = new ShopFilter();
@@ -71,6 +72,7 @@ export class ShopComponent implements OnInit {
   onFilterChange(event) {
     this.filters = event;
     this.getShopItems(this.searchTerm, this.filters);
+    this.window.scrollTo(0, 0);
     this.changeDetectorRef.detectChanges();
   }
 
@@ -107,7 +109,10 @@ export class ShopComponent implements OnInit {
     this.pageYOffset = this.window.pageYOffset;
     let scrollToBottom = this.document.scrollingElement.scrollHeight - this.window.innerHeight - this.window.pageYOffset;
 
-    if (scrollToBottom < 100 && !this.flowersPage.last) {
+    console.log(scrollToBottom);
+    this.changeDetectorRef.detectChanges();
+
+    if (scrollToBottom < this.DISTANCE_TO_BOTTOM_WHEN_SHOW_MORE && !this.flowersPage.last && ! this.loading) {
       this.showMore();
     }
   }

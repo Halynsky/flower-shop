@@ -23,9 +23,9 @@ import static java.time.LocalDateTime.now;
 @Table(name = "flowers")
 public class Flower {
 
-    public static final Double RATING_MIN = 0.0;
-    public static final Double RATING_MAX = 10.0;
-    public static final double RATING_UPRISER = 0.01;
+    public static final Double POPULARITY_MIN = 0.0;
+    public static final Double POPULARITY_MAX = 10.0;
+    public static final double POPULARITY_UPRISER = 0.01;
     public static final double POPULARITY_REDUCER = 0.1;
 
     @Id

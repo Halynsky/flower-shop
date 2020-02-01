@@ -30,7 +30,7 @@
 
   </div>
 
-  <div *ngIf="flowersPage.content.length == 0" class="empty-search-block">
+  <div *ngIf="flowersPage.content.length == 0 && !loading" class="empty-search-block">
     <div class="message">
       За вашим запитом нічого не знайдено
     </div>

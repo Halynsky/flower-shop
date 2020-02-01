@@ -30,7 +30,10 @@ export class BucketLocalService {
 
   getUserBucket() {
     this.bucketService.get().subscribe(
-      userBucket => this.addToBucket(userBucket)
+      userBucket =>  {
+        this.clearBucket();
+        this.addToBucket(userBucket)
+      }
     )
   }
 
@@ -81,6 +84,7 @@ export class BucketLocalService {
     });
 
     this.updateBucket(bucket);
+    this.updateBucketFlowerSizes();
 
   }
 

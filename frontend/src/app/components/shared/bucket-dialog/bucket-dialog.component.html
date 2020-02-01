@@ -23,11 +23,20 @@
         <ng-template ngFor let-bucketItem [ngForOf]="bucketLocalService.bucket" let-i="index">
           <div class="bucket-table-row">
             <div  class="bucket-item-image">
-              <img [src]="bucketItem.image">
+              <!--TODO: Remove condition after a while. Condition is inserted to avoid error for old model of bucket items-->
+              <a [routerLink]="bucketItem.flowerId ? ['shop/item', bucketItem.flowerId] : ['shop']" (click)="dialogRef.close()">
+                <img [src]="bucketItem.image">
+              </a>
             </div>
             <div class="bucket-item-name">
-              <div class="flower-type-name">{{bucketItem.flowerTypeName}}</div>
-              <div class="flower-name">{{bucketItem.name}}</div>
+              <div class="flower-type-name">
+                <!--TODO: Remove condition after a while. Condition is inserted to avoid error for old model of bucket items-->
+                <a [routerLink]="bucketItem.flowerTypeId ? ['shop'] : ['shop']" [queryParams]="{flowerTypes: bucketItem.flowerTypeId}" (click)="dialogRef.close()">{{bucketItem.flowerTypeName}}</a>
+              </div>
+              <div class="flower-name">
+                <!--TODO: Remove condition after a while. Condition is inserted to avoid error for old model of bucket items-->
+                <a [routerLink]="bucketItem.flowerId ? ['shop/item', bucketItem.flowerId] : ['shop']" (click)="dialogRef.close()">{{bucketItem.name}}</a>
+              </div>
               <div class="flower-size-name">{{bucketItem.sizeName}}</div>
             </div>
             <div class="bucket-item-price">{{bucketItem.price / 100}} грн <span class="label"> за шт</span></div>

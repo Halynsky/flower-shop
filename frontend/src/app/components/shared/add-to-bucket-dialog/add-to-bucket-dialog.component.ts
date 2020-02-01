@@ -40,6 +40,8 @@ export class AddToBucketDialogComponent implements OnInit {
       bucketItem.sizeName = flowerSize.size.name;
       bucketItem.flowerSizeId = flowerSize.id;
       bucketItem.flowerTypeName = flower.flowerType.nameSingle;
+      bucketItem.flowerTypeId = flower.flowerType.id;
+      bucketItem.flowerId = flower.id;
       bucketItem.available = flowerSize.available;
       this.bucketItems.push(bucketItem);
     }

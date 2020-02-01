@@ -85,7 +85,7 @@
   </div>
 
   <div class="profile-menu admin-menu" *ngIf="securityService.hasRole(Role.ADMIN) || securityService.hasRole(Role.SUPPORT)">
-    <button mat-stroked-button class="user-menu-button" routerLink="/admin" color="primary">
+    <button mat-stroked-button class="user-menu-button" routerLink="/admin/shop/orders" color="primary">
       <i class="material-icons">table_chart</i>
       <span>Адмін Панель</span>
     </button>
