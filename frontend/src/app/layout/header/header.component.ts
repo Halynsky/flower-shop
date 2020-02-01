@@ -8,6 +8,7 @@ import { Router } from "@angular/router";
 import { Role } from "../../models/Role";
 import { AuthDialogComponent } from "../../components/shared/auth-dialog/auth-dialog.component";
 import { getErrorMessage } from "../../utils/Functions";
+import { GlobalSearchService } from "../../services/global-search.service";
 
 @Component({
   selector: 'layout-header',
@@ -18,12 +19,14 @@ import { getErrorMessage } from "../../utils/Functions";
 export class HeaderComponent {
 
   Role = Role;
+  globalSearch;
 
   constructor(public securityService: SecurityService,
               public bucketLocalService: BucketLocalService,
               public dialog: MatDialog,
               private authService: AuthService,
               private snackBarService: SnackBarService,
+              public globalSearchService: GlobalSearchService,
               private router: Router) {
   }
 

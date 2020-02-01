@@ -127,6 +127,9 @@
   border-radius: 2px;
   mat-dialog-container {
     padding: 0px !important;
+    @include response(xs) {
+      border-radius: 0px;
+    }
   }
   @include response-from(sm) {
     max-width: initial;

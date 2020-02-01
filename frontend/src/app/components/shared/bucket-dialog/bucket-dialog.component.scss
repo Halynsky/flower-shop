@@ -31,6 +31,10 @@
     .dialog-content {
       padding: 24px;
 
+      @include response-to(xs) {
+        padding: 16px;
+      }
+
       .bucket-table {
         display: grid;
         text-align: right;

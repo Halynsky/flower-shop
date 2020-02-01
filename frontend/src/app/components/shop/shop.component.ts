@@ -10,6 +10,7 @@ import { ShopFilterDialogComponent } from "../shared/shop-filter-dialog/shop-fil
 import { finalize } from "rxjs/operators";
 import { getErrorMessage } from "../../utils/Functions";
 import { DOCUMENT } from "@angular/common";
+import { GlobalSearchService } from "../../services/global-search.service";
 
 @Component({
   selector: 'shop',
@@ -39,8 +40,13 @@ export class ShopComponent implements OnInit {
               private changeDetectorRef: ChangeDetectorRef,
               public dialog: MatDialog,
               @Inject('Window') private window: Window,
-              @Inject(DOCUMENT) private document: Document) {
+              @Inject(DOCUMENT) private document: Document,
+              private globalSearchService: GlobalSearchService) {
     //this.getShopItems(this.searchTerm);
+    this.globalSearchService.onSearchTermChange.subscribe(searchTerm => {
+      this.searchTerm = searchTerm;
+      this.searchTermChange(null)
+    })
   }
 
   ngOnInit() {
@@ -108,10 +114,6 @@ export class ShopComponent implements OnInit {
   trackScroll(event: any) {
     this.pageYOffset = this.window.pageYOffset;
     let scrollToBottom = this.document.scrollingElement.scrollHeight - this.window.innerHeight - this.window.pageYOffset;
-
-    console.log(scrollToBottom);
-    this.changeDetectorRef.detectChanges();
-
     if (scrollToBottom < this.DISTANCE_TO_BOTTOM_WHEN_SHOW_MORE && !this.flowersPage.last && ! this.loading) {
       this.showMore();
     }

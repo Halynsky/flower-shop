@@ -19,7 +19,7 @@ export class MinMaxDirective {
     let strValue = this.el.nativeElement.value;
 
     if (!strValue) {
-      this.ngControl.control.setValue(0);
+      this.ngControl.control.setValue(this.minValue);
       return;
     }
 

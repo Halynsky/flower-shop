@@ -1,6 +1,6 @@
 <div class="header-content">
 
-  <button mat-button [matMenuTriggerFor]="mainNavigationMenu" class="mobile-menu">
+  <button mat-button [matMenuTriggerFor]="mainNavigationMenu" class="mobile-menu icon-button">
     <i class="material-icons md-18">menu</i>
   </button>
 
@@ -14,10 +14,17 @@
     <a routerLink="/about-us" mat-button routerLinkActive="active-link">Про нас</a>
   </div>
 
-  <div class="login-button-wrapper" *ngIf="!securityService.isAuthenticated()">
+  <div class="middle-block">
+    <div class="mobile-search-wrapper">
+      <i class="material-icons">search</i>
+      <input type="text" placeholder="Пошук..." name="globalSearch" [(ngModel)]="globalSearch" (ngModelChange)="globalSearchService.onSearchTermChange.next($event)">
+    </div>
+  </div>
+
+  <div class="right-buttons-wrapper" *ngIf="!securityService.isAuthenticated()">
 
     <div class="login-with-bucket">
-      <button mat-button [matMenuTriggerFor]="bucket" class="bucket-button" (click)="bucketLocalService.updateBucketFlowerSizes()">
+      <button mat-button [matMenuTriggerFor]="bucket" class="bucket-button icon-button" (click)="bucketLocalService.updateBucketFlowerSizes()">
         <div class="bucket">
           <i class="fas fa-shopping-cart"></i>
             <div class="bucket-index" *ngIf="bucketLocalService.bucketInfo.totalItems > 0">
@@ -31,7 +38,7 @@
         <span>Увійти</span>
       </button>
 
-      <button mat-button class="mobile-login-button" (click)="openAuthDialog()">
+      <button mat-button class="mobile-login-button icon-button" (click)="openAuthDialog()">
         <mat-icon aria-label="Login">account_circle</mat-icon>
       </button>
     </div>
@@ -39,7 +46,7 @@
 
   </div>
 
-  <div class="login-button-wrapper" *ngIf="securityService.isAuthenticated()">
+  <div class="right-buttons-wrapper" *ngIf="securityService.isAuthenticated()">
 
     <div class="login-with-bucket">
       <button mat-button [matMenuTriggerFor]="bucket" class="bucket-button">

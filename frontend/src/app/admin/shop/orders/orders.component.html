@@ -233,7 +233,7 @@
                 <div class="cell table-row-image-wrapper">
                   <img [src]="orderItem.image" class="table-row-image zoomable" (click)="zoomImage(orderItem.image)">
                 </div>
-                <div class="cell">{{orderItem.name}}</div>
+                <div class="cell"><b>{{orderItem.name}}</b>, {{orderItem.flowerTypeName}}</div>
                 <div class="cell">{{orderItem.sizeName}}</div>
                 <div class="cell">{{orderItem.price / 100 + ' грн'}}</div>
                 <div class="cell">{{orderItem.amount}}</div>
