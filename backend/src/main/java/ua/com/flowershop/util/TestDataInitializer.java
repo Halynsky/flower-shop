@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.support.ResourcePatternUtils;
-import org.springframework.stereotype.Component;
 import ua.com.flowershop.entity.Flower;
 import ua.com.flowershop.entity.FlowerType;
 import ua.com.flowershop.entity.Image;
@@ -25,7 +24,7 @@ import java.util.UUID;
 import static ua.com.flowershop.util.Path.IMAGES_PATH;
 
 @Slf4j
-@Component
+//@Component
 @Profile({"dev"})
 public class TestDataInitializer {
 

@@ -82,6 +82,11 @@ export class AdminSidebarComponent implements OnInit {
       //   icon: 'far fa-newspaper',
       //   routerLink: 'blog'
       // }
+      {
+        label: 'Статистика',
+        icon: 'fas fa-chart-pie',
+        routerLink: 'statistic'
+      }
     ];
   }
 

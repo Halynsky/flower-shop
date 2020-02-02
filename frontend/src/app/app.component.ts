@@ -4,6 +4,9 @@ import { SwUpdate } from "@angular/service-worker";
 import { interval } from "rxjs";
 import { environment } from "../environments/environment";
 
+import * as moment from 'moment'
+import 'moment/locale/uk'
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -16,6 +19,7 @@ export class AppComponent implements OnInit {
   constructor(public matIconRegistry: MatIconRegistry,
               private swUpdate: SwUpdate) {
     matIconRegistry.registerFontClassAlias('fontawesome', 'fa');
+    moment.locale('uk');
   }
 
   ngOnInit() {
