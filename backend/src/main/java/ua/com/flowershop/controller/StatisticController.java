@@ -66,4 +66,20 @@ public class StatisticController {
         List<Record> statistic = statisticsService.getOrderByPaidAmountStatisticStructural(period);
         return new ResponseEntity<>(statistic, HttpStatus.OK);
     }
+
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
+    @GetMapping("/warehouse/count/structural")
+    public ResponseEntity<List<Record>> getWarehouseItemsAmountStatisticStructural(@RequestParam Record.Period period) {
+        List<Record> statistic = statisticsService.getWarehouseItemsAmountStatisticStructural(period);
+        return new ResponseEntity<>(statistic, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
+    @GetMapping("/warehouse/price/structural")
+    public ResponseEntity<List<Record>> getWarehouseItemsPriceStatisticStructural(@RequestParam Record.Period period) {
+        List<Record> statistic = statisticsService.getWarehouseItemsPriceStatisticStructural(period);
+        return new ResponseEntity<>(statistic, HttpStatus.OK);
+    }
+
+
 }

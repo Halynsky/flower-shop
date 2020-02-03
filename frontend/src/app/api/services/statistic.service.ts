@@ -11,7 +11,7 @@ export class StatisticService {
   constructor(private http: HttpClient) {}
 
   getUsersRegistrationStatisticStructural() {
-    return this.http.get<Array<Statistic>>(`${this.URL}/users/registration/structural`, );
+    return this.http.get<Array<Statistic>>(`${this.URL}/users/registration/structural`);
   }
 
   getUsersRegistrationStatisticDynamical(period: Statistic.Period = Statistic.Period.MONTH) {
@@ -37,6 +37,16 @@ export class StatisticService {
   getOrderByPaidAmountStatisticStructural(period: Statistic.Period = Statistic.Period.MONTH) {
     const params = new HttpParams().append('period', period);
     return this.http.get<Array<Statistic>>(`${this.URL}/orders/byPaid/amount/structural`, {params});
+  }
+
+  getWarehouseItemsAmountStatisticStructural(period: Statistic.Period = Statistic.Period.MONTH) {
+    const params = new HttpParams().append('period', period);
+    return this.http.get<Array<Statistic>>(`${this.URL}/warehouse/count/structural`, {params});
+  }
+
+  getWarehouseItemsPriceStatisticStructural(period: Statistic.Period = Statistic.Period.MONTH) {
+    const params = new HttpParams().append('period', period);
+    return this.http.get<Array<Statistic>>(`${this.URL}/warehouse/price/structural`, {params});
   }
 
 

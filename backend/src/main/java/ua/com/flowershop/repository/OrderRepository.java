@@ -64,4 +64,15 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
         "AND o.status in :statuses")
     Integer countAmountByCreatedAfterAndPaidIsNullAndStatusIn(LocalDateTime createdAfter, List<Order.Status> statuses);
 
+    @Query("SELECT sum(oi.amount) FROM Order o " +
+        "LEFT JOIN o.orderItems oi " +
+        "WHERE o.created > :createdAfter " +
+        "AND o.status in :statuses")
+    Integer countSoldAmountByCreatedAfterAndStatusIn(LocalDateTime createdAfter, List<Order.Status> statuses);
+
+    @Query("SELECT sum(o.totalPrice - o.discount) / 100 FROM Order o " +
+        "WHERE o.created > :createdAfter " +
+        "AND o.status in :statuses")
+    Integer countSoldPriceByCreatedAfterAndStatusIn(LocalDateTime createdAfter, List<Order.Status> statuses);
+
 }

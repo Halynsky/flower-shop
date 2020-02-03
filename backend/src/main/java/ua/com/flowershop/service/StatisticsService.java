@@ -1,10 +1,12 @@
 package ua.com.flowershop.service;
 
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.com.flowershop.entity.Order;
 import ua.com.flowershop.model.Record;
+import ua.com.flowershop.repository.FlowerSizeRepository;
 import ua.com.flowershop.repository.OrderRepository;
 import ua.com.flowershop.repository.UserRepository;
 
@@ -14,12 +16,13 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import static java.time.Period.between;
 
-
+@Slf4j
 @Service
 public class StatisticsService {
 
@@ -33,6 +36,7 @@ public class StatisticsService {
     @Autowired private EntityManager em;
     @Autowired private UserRepository userRepository;
     @Autowired private OrderRepository orderRepository;
+    @Autowired private FlowerSizeRepository flowerSizeRepository;
 
     public List<Record> getUsersRegistrationStatisticStructural() {
         Integer activeUsersCount = userRepository.countAllByIsActivatedAndIsVirtual(true, false);
@@ -98,7 +102,7 @@ public class StatisticsService {
         String notActiveQueryText =
             "WITH time_units AS (SELECT time_unit FROM generate_series(CURRENT_DATE - INTERVAL '%s', CURRENT_DATE, INTERVAL '%s') time_unit) " +
                 "SELECT (SELECT COUNT(o.id) FROM orders AS o " +
-                "WHERE date_trunc(?1, o.created) = date_trunc(?1, tu.time_unit) AND (o.status = 'DONE')) AS amount, " +
+                "WHERE date_trunc(?1, o.created) = date_trunc(?1, tu.time_unit) AND (o.status = 'DONE' OR o.status = 'DELIVERING')) AS amount, " +
                 "date_trunc(?1, tu.time_unit) AS date, 'ORDERS_DONE' AS type, 'Виконані' AS name " +
                 "FROM time_units tu " +
                 "GROUP BY tu.time_unit ORDER BY tu.time_unit";
@@ -144,6 +148,35 @@ public class StatisticsService {
         return statistic;
     }
 
+    public List<Record> getWarehouseItemsAmountStatisticStructural(Record.Period recordPeriod) {
+        Period period = new Period(recordPeriod);
+        LocalDateTime startDate = period.getStartDate();
+
+        Object[][] queryResult = flowerSizeRepository.countWarehouseItems();
+        Integer soldCount = orderRepository.countSoldAmountByCreatedAfterAndStatusIn(startDate, Arrays.asList(Order.Status.DONE, Order.Status.DELIVERING));
+
+        List<Record> statistic = new ArrayList<>();
+        statistic.add(new Record((Long) queryResult[0][0], "AVAILABLE", "Доступно"));
+        statistic.add(new Record((Long) queryResult[0][1], "RESERVED", "Зарезервовано"));
+        statistic.add(new Record(soldCount, "SOLD", "Продано"));
+
+        return statistic;
+    }
+
+    public List<Record> getWarehouseItemsPriceStatisticStructural(Record.Period recordPeriod) {
+        Period period = new Period(recordPeriod);
+        LocalDateTime startDate = period.getStartDate();
+
+        Object[][] queryResult = flowerSizeRepository.countWarehouseItemsPrice();
+        Integer soldCount = orderRepository.countSoldPriceByCreatedAfterAndStatusIn(startDate, Arrays.asList(Order.Status.DONE, Order.Status.DELIVERING));
+
+        List<Record> statistic = new ArrayList<>();
+        statistic.add(new Record((Long) queryResult[0][0], "AVAILABLE", "Доступно"));
+        statistic.add(new Record((Long) queryResult[0][1], "RESERVED", "Зарезервовано"));
+        statistic.add(new Record(soldCount, "SOLD", "Продано"));
+
+        return statistic;
+    }
 
     @Getter
     private class Period {

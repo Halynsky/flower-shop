@@ -85,7 +85,7 @@ export class StatisticComponent implements OnInit {
     {label: 'За весь час', value: 'ALL_TIME'},
   ];
 
-  statisticPeriod = Statistic.Period.MONTH;
+  statisticPeriod = Statistic.Period.QUARTER;
 
   usersRegistrationStructural = {labels: [], datasets: []};
   usersRegistrationDynamical = {labels: [], datasets: []};
@@ -93,6 +93,8 @@ export class StatisticComponent implements OnInit {
   ordersByStatusCountDynamical = {labels: [], datasets: []};
   ordersByPaidCountStructural = {labels: [], datasets: []};
   ordersByPaidAmountStructural = {labels: [], datasets: []};
+  warehouseItemsCountStructural = {labels: [], datasets: []};
+  warehouseItemsPriceStructural = {labels: [], datasets: []};
 
   constructor(private statisticService: StatisticService,
               private snackBarService: SnackBarService) {
@@ -106,6 +108,8 @@ export class StatisticComponent implements OnInit {
     this.getOrderByStatusCountStatisticDynamical();
     this.getOrderByPaidCountStatisticStructural();
     this.getOrderByPaidAmountStatisticStructural();
+    this.getWarehouseItemsAmountStatisticStructural();
+    this.getWarehouseItemsPriceStatisticStructural();
   }
 
   getUsersRegistrationStatisticStructural() {
@@ -118,13 +122,13 @@ export class StatisticComponent implements OnInit {
     }, error => this.snackBarService.showError(getErrorMessage(error)));
   }
 
-  getUsersRegistrationStatisticDynamical(period: Statistic.Period = Statistic.Period.MONTH) {
+  getUsersRegistrationStatisticDynamical(period: Statistic.Period = this.statisticPeriod) {
     this.statisticService.getUsersRegistrationStatisticDynamical(period).subscribe((statistic: Array<Statistic>) => {
       this.usersRegistrationDynamical = this.generateData(statistic, period);
     }, error => this.snackBarService.showError(getErrorMessage(error)));
   }
 
-  getOrderByStatusCountStatisticStructural(period: Statistic.Period = Statistic.Period.MONTH) {
+  getOrderByStatusCountStatisticStructural(period: Statistic.Period = this.statisticPeriod) {
     this.statisticService.getOrderByStatusCountStatisticStructural(period).subscribe((statistic: Array<Statistic>) => {
       this.ordersByStatusCountStructural.labels = statistic.map(item => capitalize(item.name));
       this.ordersByStatusCountStructural.datasets = [{
@@ -134,13 +138,13 @@ export class StatisticComponent implements OnInit {
     }, error => this.snackBarService.showError(getErrorMessage(error)));
   }
 
-  getOrderByStatusCountStatisticDynamical(period: Statistic.Period = Statistic.Period.MONTH) {
+  getOrderByStatusCountStatisticDynamical(period: Statistic.Period = this.statisticPeriod) {
     this.statisticService.getOrderByStatusCountStatisticDynamical(period).subscribe((statistic: Array<Statistic>) => {
       this.ordersByStatusCountDynamical = this.generateData(statistic, period);
     }, error => this.snackBarService.showError(getErrorMessage(error)));
   }
 
-  getOrderByPaidCountStatisticStructural(period: Statistic.Period = Statistic.Period.MONTH) {
+  getOrderByPaidCountStatisticStructural(period: Statistic.Period = this.statisticPeriod) {
     this.statisticService.getOrderByPaidCountStatisticStructural(period).subscribe((statistic: Array<Statistic>) => {
       this.ordersByPaidCountStructural.labels = statistic.map(item => capitalize(item.name));
       this.ordersByPaidCountStructural.datasets = [{
@@ -150,10 +154,30 @@ export class StatisticComponent implements OnInit {
     }, error => this.snackBarService.showError(getErrorMessage(error)));
   }
 
-  getOrderByPaidAmountStatisticStructural(period: Statistic.Period = Statistic.Period.MONTH) {
+  getOrderByPaidAmountStatisticStructural(period: Statistic.Period = this.statisticPeriod) {
     this.statisticService.getOrderByPaidAmountStatisticStructural(period).subscribe((statistic: Array<Statistic>) => {
       this.ordersByPaidAmountStructural.labels = statistic.map(item => capitalize(item.name));
       this.ordersByPaidAmountStructural.datasets = [{
+        data: statistic.map(item => item.amount),
+        backgroundColor: enumToArrayList(Colors)
+      }];
+    }, error => this.snackBarService.showError(getErrorMessage(error)));
+  }
+
+  getWarehouseItemsAmountStatisticStructural(period: Statistic.Period = this.statisticPeriod) {
+    this.statisticService.getWarehouseItemsAmountStatisticStructural(period).subscribe((statistic: Array<Statistic>) => {
+      this.warehouseItemsCountStructural.labels = statistic.map(item => capitalize(item.name));
+      this.warehouseItemsCountStructural.datasets = [{
+        data: statistic.map(item => item.amount),
+        backgroundColor: enumToArrayList(Colors)
+      }];
+    }, error => this.snackBarService.showError(getErrorMessage(error)));
+  }
+
+  getWarehouseItemsPriceStatisticStructural(period: Statistic.Period = this.statisticPeriod) {
+    this.statisticService.getWarehouseItemsPriceStatisticStructural(period).subscribe((statistic: Array<Statistic>) => {
+      this.warehouseItemsPriceStructural.labels = statistic.map(item => capitalize(item.name));
+      this.warehouseItemsPriceStructural.datasets = [{
         data: statistic.map(item => item.amount),
         backgroundColor: enumToArrayList(Colors)
       }];
@@ -210,25 +234,14 @@ export class StatisticComponent implements OnInit {
     };
   }
 
-  onUsersRegistrationDynamicalPeriodChange(event: any) {
+  onPeriodChange(event: any) {
     this.getUsersRegistrationStatisticDynamical(event);
-  }
-
-  onOrdersByStatusCountStructuralPeriodChange(event: any) {
-    this.getOrderByStatusCountStatisticDynamical(event)
-  }
-
-  onOrdersByStatusCountDynamicalPeriodChange(event: any) {
+    this.getOrderByStatusCountStatisticDynamical(event);
     this.getOrderByStatusCountStatisticStructural(event);
-  }
-
-
-  onOrderByPaidCountStatisticStructuralPeriodChange(event: any) {
     this.getOrderByPaidCountStatisticStructural(event);
-  }
-
-  onOrderByPaidAmountStatisticStructuralPeriodChange(event: any) {
-    this.getOrderByPaidAmountStatisticStructural(event)
+    this.getOrderByPaidAmountStatisticStructural(event);
+    this.getWarehouseItemsAmountStatisticStructural(event);
+    this.getWarehouseItemsPriceStatisticStructural(event);
   }
 
   moneyFormatter(value, context) {

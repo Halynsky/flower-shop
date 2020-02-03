@@ -2,9 +2,23 @@
   display: flex;
   flex-direction: column;
 
+  .panel-content {
+    margin-bottom: 8px;
+  }
+
   .panel-header {
+    margin-top: 8px;
+    margin-bottom: 4px;
+
     h1 {
       margin-left: 8px;
+      margin-right: 8px;
+      background-color: #eaeaea;
+      color: #606060;
+      width: 100%;
+      padding-left: 8px;
+      padding-top: 4px;
+      padding-bottom: 4px;
     }
   }
 
@@ -19,9 +33,9 @@
 
   ::ng-deep p-card  {
     .ui-card-title {
-      margin-top: 2px;
-      font-size: 18px;
-      color: #404040;
+      margin-top: 4px;
+      font-size: 16px;
+      color: #4a4a4a;
     }
   }
 
