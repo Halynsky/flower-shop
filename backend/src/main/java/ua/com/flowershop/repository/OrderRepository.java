@@ -46,4 +46,22 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     Page<OrderProjection> findProjectedByUserEmailOrderByCreatedDesc(String userEmail, Pageable pageRequest);
 
+    Integer countAllByCreatedAfterAndStatusIn(LocalDateTime createdAfter, List<Order.Status> statuses);
+
+    Integer countAllByCreatedAfterAndPaidIsNotNullAndStatusIn(LocalDateTime createdAfter, List<Order.Status> statuses);
+
+    Integer countAllByCreatedAfterAndPaidIsNullAndStatusIn(LocalDateTime createdAfter, List<Order.Status> statuses);
+
+    @Query("SELECT sum(o.totalPrice - o.discount) / 100 FROM Order o " +
+        "WHERE o.created > :createdAfter " +
+        "AND o.paid IS NOT null " +
+        "AND o.status in :statuses")
+    Integer countAmountByCreatedAfterAndPaidIsNotNullAndStatusIn(LocalDateTime createdAfter, List<Order.Status> statuses);
+
+    @Query("SELECT sum(o.totalPrice - o.discount) / 100 FROM Order o " +
+        "WHERE o.created > :createdAfter " +
+        "AND o.paid IS null " +
+        "AND o.status in :statuses")
+    Integer countAmountByCreatedAfterAndPaidIsNullAndStatusIn(LocalDateTime createdAfter, List<Order.Status> statuses);
+
 }

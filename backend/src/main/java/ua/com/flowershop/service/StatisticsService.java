@@ -3,7 +3,9 @@ package ua.com.flowershop.service;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ua.com.flowershop.entity.Order;
 import ua.com.flowershop.model.Record;
+import ua.com.flowershop.repository.OrderRepository;
 import ua.com.flowershop.repository.UserRepository;
 
 import javax.persistence.EntityManager;
@@ -12,6 +14,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static java.time.Period.between;
@@ -29,30 +32,31 @@ public class StatisticsService {
 
     @Autowired private EntityManager em;
     @Autowired private UserRepository userRepository;
+    @Autowired private OrderRepository orderRepository;
 
-    public List<Record> getUserRegistrationStatisticStructural() {
-        Integer activeUsersCount = this.userRepository.countAllByIsActivatedAndIsVirtual(true, false);
-        Integer notActiveUsersCount = this.userRepository.countAllByIsActivatedAndIsVirtual(false, false);
-        Integer virtualUsersCount = this.userRepository.countAllByIsActivatedAndIsVirtual(true, false);
+    public List<Record> getUsersRegistrationStatisticStructural() {
+        Integer activeUsersCount = userRepository.countAllByIsActivatedAndIsVirtual(true, false);
+        Integer notActiveUsersCount = userRepository.countAllByIsActivatedAndIsVirtual(false, false);
+        Integer virtualUsersCount = userRepository.countAllByIsActivatedAndIsVirtual(true, false);
 
         List<Record> statistic = new ArrayList<>();
         statistic.add(new Record(activeUsersCount, "ACTIVATED", "Активовані"));
-        statistic.add(new Record(notActiveUsersCount, "NOT_ACTIVATED", "Не активовані"));
+        statistic.add(new Record(notActiveUsersCount, "NOT_ACTIVATED", "Неактивовані"));
         statistic.add(new Record(virtualUsersCount, "VIRTUAL", "Віртуальні"));
 
         return statistic;
     }
 
-    public List<Record> getUsersRegistrationStatisticDynamical(Record.Period period) {
-        Period period1 = new Period(period);
-        int interval = period1.getInterval();
-        String periodName = period1.getPeriodName();
+    public List<Record> getUsersRegistrationStatisticDynamical(Record.Period recordPeriod) {
+        Period period = new Period(recordPeriod);
+        int interval = period.getInterval();
+        String periodName = period.getPeriodName();
 
         String activatedQueryText =
             "WITH time_units AS (SELECT time_unit FROM generate_series(CURRENT_DATE - INTERVAL '%s', CURRENT_DATE, INTERVAL '%s') time_unit) " +
                 "SELECT (SELECT COUNT(u.id) FROM users AS u " +
                 "WHERE date_trunc(?1, u.created) = date_trunc(?1, tu.time_unit) AND u.is_activated IS true AND u.is_virtual = false) AS amount, " +
-                "date_trunc(?1, tu.time_unit) AS date, 'ACTIVATED' AS type, 'Зареєстровані' AS name " +
+                "date_trunc(?1, tu.time_unit) AS date, 'USERS_ACTIVATED' AS type, 'Зареєстровані' AS name " +
                 "FROM time_units tu " +
                 "GROUP BY tu.time_unit ORDER BY tu.time_unit";
         activatedQueryText = String.format(activatedQueryText, interval + " " + periodName, "1 " + periodName);
@@ -62,6 +66,84 @@ public class StatisticsService {
 
         return activatedQuery.getResultList();
     }
+
+    public List<Record> getOrderByStatusCountStatisticStructural(Record.Period recordPeriod) {
+        Period period = new Period(recordPeriod);
+        LocalDateTime startDate = period.getStartDate();
+
+        Integer activeOrdersCount = orderRepository.countAllByCreatedAfterAndStatusIn(startDate, Order.Status.getActive());
+        Integer doneOrdersCount = orderRepository.countAllByCreatedAfterAndStatusIn(startDate, Collections.singletonList(Order.Status.DONE));
+
+        List<Record> statistic = new ArrayList<>();
+        statistic.add(new Record(activeOrdersCount, "ORDERS_ACTIVE", "Активні (Нові, В обробці)"));
+        statistic.add(new Record(doneOrdersCount, "ORDERS_DONE", "Виконані"));
+
+        return statistic;
+    }
+
+    public List<Record> getOrderByStatusCountStatisticDynamical(Record.Period recordPeriod) {
+        Period period = new Period(recordPeriod);
+        int interval = period.getInterval();
+        String periodName = period.getPeriodName();
+
+        String activeQueryText =
+            "WITH time_units AS (SELECT time_unit FROM generate_series(CURRENT_DATE - INTERVAL '%s', CURRENT_DATE, INTERVAL '%s') time_unit) " +
+                "SELECT (SELECT COUNT(o.id) FROM orders AS o " +
+                "WHERE date_trunc(?1, o.created) = date_trunc(?1, tu.time_unit)) AS amount, " +
+                "date_trunc(?1, tu.time_unit) AS date, 'ORDERS_CREATED' AS type, 'Створені' AS name " +
+                "FROM time_units tu " +
+                "GROUP BY tu.time_unit ORDER BY tu.time_unit";
+        activeQueryText = String.format(activeQueryText, interval + " " + periodName, "1 " + periodName);
+
+        String notActiveQueryText =
+            "WITH time_units AS (SELECT time_unit FROM generate_series(CURRENT_DATE - INTERVAL '%s', CURRENT_DATE, INTERVAL '%s') time_unit) " +
+                "SELECT (SELECT COUNT(o.id) FROM orders AS o " +
+                "WHERE date_trunc(?1, o.created) = date_trunc(?1, tu.time_unit) AND (o.status = 'DONE')) AS amount, " +
+                "date_trunc(?1, tu.time_unit) AS date, 'ORDERS_DONE' AS type, 'Виконані' AS name " +
+                "FROM time_units tu " +
+                "GROUP BY tu.time_unit ORDER BY tu.time_unit";
+        notActiveQueryText = String.format(notActiveQueryText, interval + " " + periodName, "1 " + periodName);
+
+        Query activeQuery = this.em.createNativeQuery(activeQueryText, "StatisticDate")
+            .setParameter(1, periodName);
+
+        Query notActiveQuery = this.em.createNativeQuery(notActiveQueryText, "StatisticDate")
+            .setParameter(1, periodName);
+
+        List<Record> statistic = activeQuery.getResultList();
+        statistic.addAll(notActiveQuery.getResultList());
+
+        return statistic;
+    }
+
+    public List<Record> getOrderByPaidCountStatisticStructural(Record.Period recordPeriod) {
+        Period period = new Period(recordPeriod);
+        LocalDateTime startDate = period.getStartDate();
+
+        Integer paidOrdersCount = orderRepository.countAllByCreatedAfterAndPaidIsNotNullAndStatusIn(startDate, Order.Status.getActive());
+        Integer notPaidOrdersCount = orderRepository.countAllByCreatedAfterAndPaidIsNullAndStatusIn(startDate, Order.Status.getActive());
+
+        List<Record> statistic = new ArrayList<>();
+        statistic.add(new Record(paidOrdersCount, "ORDERS_PAID", "Оплачені"));
+        statistic.add(new Record(notPaidOrdersCount, "ORDERS_NOT_PAID", "Не оплачені"));
+
+        return statistic;
+    }
+
+    public List<Record> getOrderByPaidAmountStatisticStructural(Record.Period recordPeriod) {
+        Period period = new Period(recordPeriod);
+        LocalDateTime startDate = period.getStartDate();
+
+        Integer paidOrdersCount = orderRepository.countAmountByCreatedAfterAndPaidIsNotNullAndStatusIn(startDate, Order.Status.getActive());
+        Integer notPaidOrdersCount = orderRepository.countAmountByCreatedAfterAndPaidIsNullAndStatusIn(startDate, Order.Status.getActive());
+
+        List<Record> statistic = new ArrayList<>();
+        statistic.add(new Record(paidOrdersCount, "ORDERS_PAID", "Оплачені"));
+        statistic.add(new Record(notPaidOrdersCount, "ORDERS_NOT_PAID", "Не оплачені"));
+
+        return statistic;
+    }
+
 
     @Getter
     private class Period {

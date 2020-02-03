@@ -21,7 +21,12 @@ enum Colors {
 }
 
 enum LineColors {
-  ACTIVATED = 'darkcyan',
+  USERS_ACTIVATED = 'darkcyan',
+  ORDERS_CREATED = 'green',
+  ORDERS_ACTIVE = 'green',
+  ORDERS_DONE = 'darkorange',
+  ORDERS_PAID = 'green',
+  ORDERS_NOT_PAID = 'red',
 }
 
 @Component({
@@ -33,13 +38,11 @@ export class StatisticComponent implements OnInit {
 
   plugin = ChartDataLabels;
 
-  defaultOptionsPie = {
+  defaultOptionsPie: any  = {
     plugins: {
       datalabels: {
         align: 'end',
-
         borderRadius: 2,
-
         color: 'white',
         font: {
           weight: 'bold'
@@ -48,7 +51,9 @@ export class StatisticComponent implements OnInit {
     }
   };
 
-  defaultOptionsLine = {
+  defaultOptionsPieMoney: any = clone(this.defaultOptionsPie);
+
+  defaultOptionsLine: any  = {
     plugins: {
       datalabels: {
         align: 'end',
@@ -70,7 +75,7 @@ export class StatisticComponent implements OnInit {
     }
   };
 
-  usersRegistrationStructuralOptions = clone(this.defaultOptionsPie);
+  // usersRegistrationStructuralOptions = clone(this.defaultOptionsPie);
 
 
   statisticPeriods: Array<SelectItem> = [
@@ -84,36 +89,76 @@ export class StatisticComponent implements OnInit {
 
   usersRegistrationStructural = {labels: [], datasets: []};
   usersRegistrationDynamical = {labels: [], datasets: []};
+  ordersByStatusCountStructural = {labels: [], datasets: []};
+  ordersByStatusCountDynamical = {labels: [], datasets: []};
+  ordersByPaidCountStructural = {labels: [], datasets: []};
+  ordersByPaidAmountStructural = {labels: [], datasets: []};
 
   constructor(private statisticService: StatisticService,
               private snackBarService: SnackBarService) {
-
+    this.defaultOptionsPieMoney.plugins.datalabels.formatter = this.moneyFormatter;
   }
 
   ngOnInit() {
-    this.getUserRegistrationStatisticStructural();
+    this.getUsersRegistrationStatisticStructural();
     this.getUsersRegistrationStatisticDynamical();
+    this.getOrderByStatusCountStatisticStructural();
+    this.getOrderByStatusCountStatisticDynamical();
+    this.getOrderByPaidCountStatisticStructural();
+    this.getOrderByPaidAmountStatisticStructural();
   }
 
-  getUserRegistrationStatisticStructural(period: Statistic.Period = Statistic.Period.MONTH) {
-    this.statisticService.getUserRegistrationStatisticStructural().subscribe((statistic: Array<Statistic>) => {
+  getUsersRegistrationStatisticStructural() {
+    this.statisticService.getUsersRegistrationStatisticStructural().subscribe((statistic: Array<Statistic>) => {
       this.usersRegistrationStructural.labels = statistic.map(item => capitalize(item.name));
       this.usersRegistrationStructural.datasets = [{
         data: statistic.map(item => item.amount),
         backgroundColor: enumToArrayList(Colors)
       }];
-      console.log(this.usersRegistrationStructural);
     }, error => this.snackBarService.showError(getErrorMessage(error)));
   }
 
   getUsersRegistrationStatisticDynamical(period: Statistic.Period = Statistic.Period.MONTH) {
     this.statisticService.getUsersRegistrationStatisticDynamical(period).subscribe((statistic: Array<Statistic>) => {
       this.usersRegistrationDynamical = this.generateData(statistic, period);
-      console.log(this.usersRegistrationDynamical);
     }, error => this.snackBarService.showError(getErrorMessage(error)));
   }
 
+  getOrderByStatusCountStatisticStructural(period: Statistic.Period = Statistic.Period.MONTH) {
+    this.statisticService.getOrderByStatusCountStatisticStructural(period).subscribe((statistic: Array<Statistic>) => {
+      this.ordersByStatusCountStructural.labels = statistic.map(item => capitalize(item.name));
+      this.ordersByStatusCountStructural.datasets = [{
+        data: statistic.map(item => item.amount),
+        backgroundColor: enumToArrayList(Colors)
+      }];
+    }, error => this.snackBarService.showError(getErrorMessage(error)));
+  }
 
+  getOrderByStatusCountStatisticDynamical(period: Statistic.Period = Statistic.Period.MONTH) {
+    this.statisticService.getOrderByStatusCountStatisticDynamical(period).subscribe((statistic: Array<Statistic>) => {
+      this.ordersByStatusCountDynamical = this.generateData(statistic, period);
+    }, error => this.snackBarService.showError(getErrorMessage(error)));
+  }
+
+  getOrderByPaidCountStatisticStructural(period: Statistic.Period = Statistic.Period.MONTH) {
+    this.statisticService.getOrderByPaidCountStatisticStructural(period).subscribe((statistic: Array<Statistic>) => {
+      this.ordersByPaidCountStructural.labels = statistic.map(item => capitalize(item.name));
+      this.ordersByPaidCountStructural.datasets = [{
+        data: statistic.map(item => item.amount),
+        backgroundColor: enumToArrayList(Colors)
+      }];
+    }, error => this.snackBarService.showError(getErrorMessage(error)));
+  }
+
+  getOrderByPaidAmountStatisticStructural(period: Statistic.Period = Statistic.Period.MONTH) {
+    this.statisticService.getOrderByPaidAmountStatisticStructural(period).subscribe((statistic: Array<Statistic>) => {
+      this.ordersByPaidAmountStructural.labels = statistic.map(item => capitalize(item.name));
+      this.ordersByPaidAmountStructural.datasets = [{
+        data: statistic.map(item => item.amount),
+        backgroundColor: enumToArrayList(Colors)
+      }];
+    }, error => this.snackBarService.showError(getErrorMessage(error)));
+  }
 
   private generateData(statistic: Array<Statistic>, period: Statistic.Period, modifyAmount: (val) => {} = undefined): { labels: Array<string>, datasets: Array<any> } {
     const chartStatisticMap = new Map();
@@ -167,6 +212,27 @@ export class StatisticComponent implements OnInit {
 
   onUsersRegistrationDynamicalPeriodChange(event: any) {
     this.getUsersRegistrationStatisticDynamical(event);
+  }
+
+  onOrdersByStatusCountStructuralPeriodChange(event: any) {
+    this.getOrderByStatusCountStatisticDynamical(event)
+  }
+
+  onOrdersByStatusCountDynamicalPeriodChange(event: any) {
+    this.getOrderByStatusCountStatisticStructural(event);
+  }
+
+
+  onOrderByPaidCountStatisticStructuralPeriodChange(event: any) {
+    this.getOrderByPaidCountStatisticStructural(event);
+  }
+
+  onOrderByPaidAmountStatisticStructuralPeriodChange(event: any) {
+    this.getOrderByPaidAmountStatisticStructural(event)
+  }
+
+  moneyFormatter(value, context) {
+    return value + " грн";
   }
 
 }

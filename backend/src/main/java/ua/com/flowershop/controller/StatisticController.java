@@ -27,16 +27,43 @@ public class StatisticController {
 
     @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @GetMapping("/users/registration/structural")
-    public ResponseEntity<List<Record>> getUserRegistrationStatisticStructural() {
-        List<Record> users = statisticsService.getUserRegistrationStatisticStructural();
-        return new ResponseEntity<>(users, HttpStatus.OK);
+    public ResponseEntity<List<Record>> getUsersRegistrationStatisticStructural() {
+        List<Record> statistic = statisticsService.getUsersRegistrationStatisticStructural();
+        return new ResponseEntity<>(statistic, HttpStatus.OK);
     }
 
     @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @GetMapping("/users/registration/dynamical")
     public ResponseEntity<List<Record>> getUsersRegistrationStatisticDynamical(@RequestParam Record.Period period) {
-        List<Record> users = statisticsService.getUsersRegistrationStatisticDynamical(period);
-        return new ResponseEntity<>(users, HttpStatus.OK);
+        List<Record> statistic = statisticsService.getUsersRegistrationStatisticDynamical(period);
+        return new ResponseEntity<>(statistic, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
+    @GetMapping("/orders/byStatus/count/structural")
+    public ResponseEntity<List<Record>> getOrderByStatusCountStatisticStructural(@RequestParam Record.Period period) {
+        List<Record> statistic = statisticsService.getOrderByStatusCountStatisticStructural(period);
+        return new ResponseEntity<>(statistic, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
+    @GetMapping("/orders/byStatus/count/dynamical")
+    public ResponseEntity<List<Record>> getOrderByStatusCountStatisticDynamical(@RequestParam Record.Period period) {
+        List<Record> statistic = statisticsService.getOrderByStatusCountStatisticDynamical(period);
+        return new ResponseEntity<>(statistic, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
+    @GetMapping("/orders/byPaid/count/structural")
+    public ResponseEntity<List<Record>> getOrderByPaidCountStatisticStructural(@RequestParam Record.Period period) {
+        List<Record> statistic = statisticsService.getOrderByPaidCountStatisticStructural(period);
+        return new ResponseEntity<>(statistic, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
+    @GetMapping("/orders/byPaid/amount/structural")
+    public ResponseEntity<List<Record>> getOrderByPaidAmountStatisticStructural(@RequestParam Record.Period period) {
+        List<Record> statistic = statisticsService.getOrderByPaidAmountStatisticStructural(period);
+        return new ResponseEntity<>(statistic, HttpStatus.OK);
+    }
 }

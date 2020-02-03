@@ -2,23 +2,27 @@
   display: flex;
   flex-direction: column;
 
-  .dashboard-wrapper {
-    .row-title {
-      font-size: 26px;
-      font-weight: 600;
+  .panel-header {
+    h1 {
+      margin-left: 8px;
     }
+  }
 
-    .row {
-      margin-bottom: 24px;
+  .row-title {
+    font-size: 26px;
+    font-weight: 600;
+  }
+
+  .row {
+    margin-bottom: 24px;
+  }
+
+  ::ng-deep p-card  {
+    .ui-card-title {
+      margin-top: 2px;
+      font-size: 18px;
+      color: #404040;
     }
-
-    p-card ::ng-deep {
-      .ui-card-title {
-        font-size: 20px;
-        font-weight: 500;
-      }
-    }
-
   }
 
   .statistic-chart {
