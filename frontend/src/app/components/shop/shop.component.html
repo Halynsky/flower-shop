@@ -40,6 +40,11 @@
       <ng-template ngFor let-flower [ngForOf]="flowersPage.content" [ngForTrackBy]="trackByFn">
         <shop-content-item [flower]="flower"></shop-content-item>
       </ng-template>
+
+    <button mat-mini-fab aria-label="Вгору" class="go-top-button" color="primary" (click)="window.scrollTo(0, 0)" *ngIf="this.pageYOffset > DISTANCE_FROM_TOP_WHEN_SHOW_GO_TOP_BUTTON">
+      <mat-icon>arrow_upward</mat-icon>
+    </button>
+
   </div>
 
   <div class="show-more-block">
