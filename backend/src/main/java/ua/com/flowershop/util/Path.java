@@ -38,7 +38,7 @@ public class Path {
 	public static final String SIZES_PATH			        = API + SLASH + SIZES;
     public static final String FLOWER_SIZES_PATH            = API + SLASH + FLOWER_SIZES;
 	public static final String WAREHOUSE_OPERATIONS_PATH 	= API + SLASH + WAREHOUSE_OPERATIONS;
-	public static final String ORDERS_PATH 		            = API + SLASH + ORDERS;
+    public static final String ORDERS_PATH 		            = API + SLASH + ORDERS;
     public static final String BUCKET_PATH 		            = API + SLASH + BUCKET;
     public static final String IMAGES_PATH                  = API + SLASH + IMAGES;
     public static final String STATISTIC_PATH               = API + SLASH + STATISTIC;
