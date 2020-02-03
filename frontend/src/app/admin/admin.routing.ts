@@ -18,6 +18,7 @@ import { UserItemComponent } from "./users/user-item/user-item.component";
 import { WarehouseComponent } from "./shop/warehouse/warehouse.component";
 import { GroupsComponent } from "./types/groups/groups.component";
 import { GroupItemComponent } from "./types/groups/group-item/group-item.component";
+import { StatisticComponent } from "./statistic/statistic.component";
 
 
 const routes: Routes = [
@@ -41,7 +42,8 @@ const routes: Routes = [
       {path: 'types/colors/item/:mode', component: ColorItemComponent},
       {path: 'types/groups', component: GroupsComponent},
       {path: 'types/groups/item/:mode', component: GroupItemComponent},
-      {path: 'blog', component: BlogComponent}
+      {path: 'blog', component: BlogComponent},
+      {path: 'statistic', component: StatisticComponent}
     ]
   },
 ];

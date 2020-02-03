@@ -1,0 +1,113 @@
+<div class="panel-header">
+  <h1>Статистика користувачів</h1>
+</div>
+
+<div class="panel-content">
+
+  <div class="row">
+
+    <div class="ui-g-12 ui-md-6">
+      <div class="ui-grid-row">
+        <p-card title="Зареєстровані користувачі" header="Зареєстровані користувачі">
+          <p-chart *ngIf="usersRegistrationStructural.datasets.length > 0" type="pie" [data]="usersRegistrationStructural" [options]="defaultOptionsPie" [plugins]="plugin"></p-chart>
+        </p-card>
+      </div>
+    </div>
+
+    <div class="ui-g-12 ui-md-6">
+      <div class="ui-grid-row">
+        <p-card class="statistic-chart" title="Динаміка реєстрації"  header="Динаміка реєстрації">
+          <p-dropdown [options]="statisticPeriods" placeholder="Оберіть період" [(ngModel)]="statisticPeriod"
+                      (ngModelChange)="onPeriodChange($event)"></p-dropdown>
+          <p-chart *ngIf="usersRegistrationDynamical.labels.length > 0" type="line" [data]="usersRegistrationDynamical" [options]="defaultOptionsLine" [plugins]="plugin"></p-chart>
+        </p-card>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="panel-header">
+  <h1>Статистика замовленнь</h1>
+</div>
+
+<div class="panel-content">
+
+  <div class="row">
+
+    <div class="ui-g-12 ui-md-6">
+      <div class="ui-grid-row">
+        <p-card class="statistic-chart" title="Кількість замовлень" header="Кількість замовлень">
+          <p-dropdown [options]="statisticPeriods" placeholder="Оберіть період" [(ngModel)]="statisticPeriod"
+                      (ngModelChange)="onPeriodChange($event)"></p-dropdown>
+          <p-chart *ngIf="ordersByStatusCountStructural.datasets.length > 0" type="pie" [data]="ordersByStatusCountStructural" [options]="defaultOptionsPie" [plugins]="plugin"></p-chart>
+        </p-card>
+      </div>
+    </div>
+
+    <div class="ui-g-12 ui-md-6">
+      <div class="ui-grid-row">
+        <p-card class="statistic-chart" title="Динаміка реєстрації"  header="Динаміка замовленнь">
+          <p-dropdown [options]="statisticPeriods" placeholder="Оберіть період" [(ngModel)]="statisticPeriod"
+                      (ngModelChange)="onPeriodChange($event)"></p-dropdown>
+          <p-chart *ngIf="ordersByStatusCountDynamical.labels.length > 0" type="line" [data]="ordersByStatusCountDynamical" [options]="defaultOptionsLine" [plugins]="plugin"></p-chart>
+        </p-card>
+      </div>
+    </div>
+
+    <div class="ui-g-12 ui-md-6">
+      <div class="ui-grid-row">
+        <p-card class="statistic-chart" title="Оплата замовлень (кількість)" header="Оплата замовлень (кількість)">
+          <p-dropdown [options]="statisticPeriods" placeholder="Оберіть період" [(ngModel)]="statisticPeriod"
+                      (ngModelChange)="onPeriodChange($event)"></p-dropdown>
+          <p-chart *ngIf="ordersByPaidCountStructural.datasets.length > 0" type="pie" [data]="ordersByPaidCountStructural" [options]="defaultOptionsPie" [plugins]="plugin"></p-chart>
+        </p-card>
+      </div>
+    </div>
+
+    <div class="ui-g-12 ui-md-6">
+      <div class="ui-grid-row">
+        <p-card class="statistic-chart" title="Оплата замовлень (сума в грн)" header="Оплата замовлень (сума в грн)">
+          <p-dropdown [options]="statisticPeriods" placeholder="Оберіть період" [(ngModel)]="statisticPeriod"
+                      (ngModelChange)="onPeriodChange($event)"></p-dropdown>
+          <p-chart *ngIf="ordersByPaidAmountStructural.datasets.length > 0" type="pie" [data]="ordersByPaidAmountStructural" [options]="defaultOptionsPieMoney" [plugins]="plugin"></p-chart>
+        </p-card>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="panel-header">
+  <h1>Статистика складу</h1>
+</div>
+
+<div class="panel-content">
+
+  <div class="row">
+
+    <div class="ui-g-12 ui-md-6">
+      <div class="ui-grid-row">
+        <p-card class="statistic-chart" title="Товарні запаси (кількість)" header="Товарні запаси (кількість)">
+          <p-dropdown [options]="statisticPeriods" placeholder="Оберіть період" [(ngModel)]="statisticPeriod"
+                      (ngModelChange)="onPeriodChange($event)"></p-dropdown>
+          <p-chart *ngIf="warehouseItemsCountStructural.datasets.length > 0" type="pie" [data]="warehouseItemsCountStructural" [options]="defaultOptionsPie" [plugins]="plugin"></p-chart>
+        </p-card>
+      </div>
+    </div>
+
+    <div class="ui-g-12 ui-md-6">
+      <div class="ui-grid-row">
+        <p-card class="statistic-chart" title="Товарні запаси (сума в грн)" header="Товарні запаси (сума в грн)">
+          <p-dropdown [options]="statisticPeriods" placeholder="Оберіть період" [(ngModel)]="statisticPeriod"
+                      (ngModelChange)="onPeriodChange($event)"></p-dropdown>
+          <p-chart *ngIf="warehouseItemsPriceStructural.datasets.length > 0" type="pie" [data]="warehouseItemsPriceStructural" [options]="defaultOptionsPieMoney" [plugins]="plugin"></p-chart>
+        </p-card>
+      </div>
+    </div>
+
+  </div>
+
+</div>

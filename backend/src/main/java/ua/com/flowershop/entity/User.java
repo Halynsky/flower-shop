@@ -6,13 +6,27 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import ua.com.flowershop.model.Record;
 import ua.com.flowershop.model.socials.SocialUser;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+@SqlResultSetMappings({
+    @SqlResultSetMapping(name = "StatisticDate", classes = {
+        @ConstructorResult(targetClass = Record.class,
+            columns = {
+                @ColumnResult(name = "amount", type = Long.class),
+                @ColumnResult(name = "date", type = ZonedDateTime.class),
+                @ColumnResult(name = "type", type = String.class),
+                @ColumnResult(name = "name", type = String.class),
+            })
+    })
+})
 
 @Getter
 @Setter

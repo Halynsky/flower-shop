@@ -21,7 +21,8 @@ import { GlobalSearchService } from "../../services/global-search.service";
 export class ShopComponent implements OnInit {
 
   private DEFAULT_PAGE_SIZE = 9;
-  private DISTANCE_TO_BOTTOM_WHEN_SHOW_MORE = 200;
+  private DISTANCE_TO_BOTTOM_WHEN_LOAD_MORE = 200;
+  private DISTANCE_FROM_TOP_WHEN_SHOW_GO_TOP_BUTTON = 300;
 
   flowersPage: RestPage<FlowerShort> = new RestPage<FlowerShort>();
   filters: ShopFilter = new ShopFilter();
@@ -114,7 +115,7 @@ export class ShopComponent implements OnInit {
   trackScroll(event: any) {
     this.pageYOffset = this.window.pageYOffset;
     let scrollToBottom = this.document.scrollingElement.scrollHeight - this.window.innerHeight - this.window.pageYOffset;
-    if (scrollToBottom < this.DISTANCE_TO_BOTTOM_WHEN_SHOW_MORE && !this.flowersPage.last && ! this.loading) {
+    if (scrollToBottom < this.DISTANCE_TO_BOTTOM_WHEN_LOAD_MORE && !this.flowersPage.last && ! this.loading) {
       this.showMore();
     }
   }

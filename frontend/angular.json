@@ -37,7 +37,10 @@
               "node_modules/@fortawesome/fontawesome-free/scss/solid.scss",
               "node_modules/@fortawesome/fontawesome-free/scss/v4-shims.scss"
             ],
-            "scripts": [],
+            "scripts": [
+                "node_modules/chart.js/dist/Chart.js",
+                "node_modules/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.js"
+            ],
             "stylePreprocessorOptions": {
               "includePaths": [
                 "src"
