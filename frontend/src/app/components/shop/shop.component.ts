@@ -22,7 +22,7 @@ export class ShopComponent implements OnInit {
 
   private DEFAULT_PAGE_SIZE = 9;
   private DISTANCE_TO_BOTTOM_WHEN_LOAD_MORE = 200;
-  private DISTANCE_FROM_TOP_WHEN_SHOW_GO_TOP_BUTTON = 300;
+  public DISTANCE_FROM_TOP_WHEN_SHOW_GO_TOP_BUTTON = 300;
 
   flowersPage: RestPage<FlowerShort> = new RestPage<FlowerShort>();
   filters: ShopFilter = new ShopFilter();
