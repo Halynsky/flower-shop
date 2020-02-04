@@ -21,7 +21,7 @@
             </div>
             <div th:utext="${body}" th:style="${'font-size: 18px; margin-bottom: 24px; white-space: pre-line; text-align: ' + contentAlign}"></div>
 
-            <table style="font-size: 14px; text-align: left; width: 600px; border-color: #7c7c7c" border="1" cellpadding="0" cellspacing="0">
+            <table style="font-size: 14px; text-align: left; width: 100%; border-color: #7c7c7c" border="1" cellpadding="0" cellspacing="0">
 
               <tr>
                 <th style="padding: 8px;">Назва</th>
@@ -33,7 +33,7 @@
               <tr style="font-size: 14px;"  th:each="orderItem: ${order.orderItems}">
                 <td style="padding: 8px;">
                   <div th:text="${orderItem.flowerSize.flower.flowerType.nameSingle}"></div>
-                  <div th:text="${orderItem.flowerSize.flower.name}" style="font-weight: 500; color: #4caf50"></div>
+                  <div th:text="${orderItem.flowerSize.flower.nameOriginal}" style="font-weight: 500; color: #4caf50"></div>
                   <div th:text="${orderItem.flowerSize.size.name}"></div>
                 </td>
                 <td th:text="${orderItem.price / 100  + ' грн'}" style="padding: 8px;"></td>
@@ -43,11 +43,11 @@
 
             </table>
 
-            <div style="text-align: right; margin-bottom: 36px; margin-top: 4px">
-              <span style="background-color: #eaf5ea; padding: 8px 16px; font-size: 24px">
-              <span style="margin-right: 8px; color: #7c7c7c">Разом:</span>
-              <span th:text="${(order.totalPrice - order.discount) / 100 + ' грн'}" style="font-weight: 500; color: #353535;"></span>
-              </span>
+            <div style="text-align: right; margin-bottom: 36px;">
+              <div style="background-color: #eaf5ea; padding: 8px 16px; font-size: 24px; display: inline-block;">
+                <span style="margin-right: 8px; color: #7c7c7c">Разом:</span>
+                <span th:text="${(order.totalPrice - order.discount) / 100 + ' грн'}" style="font-weight: 600; color: #353535;"></span>
+              </div>
             </div>
 
             <a th:if="${!order.user.isVirtual}"
@@ -56,6 +56,19 @@
             box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1); cursor: pointer;"
               th:href="${confirmUrl}"
               th:text="${confirmBtnText}"></a>
+
+            <div style="margin-top: 36px; border: 1px solid #e0e0e0; text-align: left;  padding: 24px;">
+              <div style="font-size: 16px; color: #4caf50; text-align: center;">Як провести оплату?</div>
+              <div style="font-size: 16px; color: #ff5722; margin-top: 12px; margin-bottom: 8px">Реквізити для оплати:</div>
+              <div>Номер картки: <b>5168 7573 6235 6984</b></div>
+              <div>Приват Банк, Галинська Марія Федорівна</div>
+              <div style="font-size: 16px; color: #ff5722; margin-top: 12px">Порядок здійснення оплати:</div>
+                <ul style="padding-left: 0px;">
+                  <li>Оплатіть, будь ласка, суму вказану в замовленні у графі <b>«Разом»</b> включно з комісією вашого банку чи платіжної системи. В коментарях до оплати вкажіть, будь ласка, <b>номер свого замовлення та ПІП замовника</b>.</li>
+                  <li>Повідомте нас, будь ласка, про оплату, відправивши нам <b>фотокопію чека</b> про оплату або <b>дату, час та зараховану нам суму</b> за допомогою <b>Viber</b> на номер <b>0507072637</b> або у приватні повідомлення <a href="https://www.facebook.com/profile.php?id=100015146929090" target="_blank">Марії Галинскій</a> на <b>Facebook</b>.</li>
+                </ul>
+            </div>
+
           </div>
         </div>
       </td>
