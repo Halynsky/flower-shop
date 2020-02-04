@@ -16,7 +16,7 @@
 
     <button mat-flat-button color="primary" class="filters-button" (click)="openFilterModal()">
       <i class="fas fa-filter"></i>
-      <span>Фільтри</span>
+      <span>Фільтр</span>
     </button>
 
     <mat-form-field class="ordering-selector-wrapper">
@@ -30,7 +30,7 @@
 
   </div>
 
-  <div *ngIf="flowersPage.content.length == 0" class="empty-search-block">
+  <div *ngIf="flowersPage.content.length == 0 && !loading" class="empty-search-block">
     <div class="message">
       За вашим запитом нічого не знайдено
     </div>
@@ -40,6 +40,11 @@
       <ng-template ngFor let-flower [ngForOf]="flowersPage.content" [ngForTrackBy]="trackByFn">
         <shop-content-item [flower]="flower"></shop-content-item>
       </ng-template>
+
+    <button mat-mini-fab aria-label="Вгору" class="go-top-button" color="primary" (click)="window.scrollTo(0, 0)" *ngIf="this.pageYOffset > DISTANCE_FROM_TOP_WHEN_SHOW_GO_TOP_BUTTON">
+      <mat-icon>arrow_upward</mat-icon>
+    </button>
+
   </div>
 
   <div class="show-more-block">

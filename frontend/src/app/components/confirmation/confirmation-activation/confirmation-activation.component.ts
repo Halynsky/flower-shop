@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from "../../../api/services/auth.service";
 import { ActivatedRoute } from "@angular/router";
+import { SecurityService } from "../../../services/security.service";
 
 @Component({
   selector: 'confirmation-activation',
@@ -13,7 +14,8 @@ export class ConfirmationActivationComponent implements OnInit {
   confirmed = false;
 
   constructor(private route: ActivatedRoute,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private securityService: SecurityService) {
 
     this.route.queryParams.subscribe(params => {
       let secretKey = params['secretKey'];
@@ -33,7 +35,10 @@ export class ConfirmationActivationComponent implements OnInit {
 
   activate(secretKey: string) {
     this.authService.activate(secretKey).subscribe(
-      () => this.confirmed = true,
+      user => {
+        this.confirmed = true;
+        this.securityService.login(user);
+      },
       error => this.hasError = true
     )
   }

@@ -11,8 +11,8 @@ import ua.com.flowershop.repository.FlowerRepository;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import static ua.com.flowershop.entity.Flower.RATING_MAX;
-import static ua.com.flowershop.entity.Flower.RATING_UPRISER;
+import static ua.com.flowershop.entity.Flower.POPULARITY_MAX;
+import static ua.com.flowershop.entity.Flower.POPULARITY_UPRISER;
 
 @Slf4j
 @Service
@@ -31,10 +31,10 @@ public class PopularityService {
 
     public double countFlowerRatingRising(double popularity, int amount) {
         while (amount > 0) {
-            popularity += (RATING_MAX - popularity) * RATING_UPRISER;
+            popularity += (POPULARITY_MAX - popularity) * POPULARITY_UPRISER;
             amount--;
         }
-        popularity = popularity > RATING_MAX ? RATING_MAX : popularity;
+        popularity = popularity > POPULARITY_MAX ? POPULARITY_MAX : popularity;
         return BigDecimal.valueOf(popularity).setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
 

@@ -7,6 +7,7 @@ public interface OrderItemAdminProjection {
     Integer getPrice();
     String getImage();
     String getSizeName();
+    String getFlowerTypeName();
     Long getFlowerSizeId();
     Long getOrderId();
     Integer getAvailable();

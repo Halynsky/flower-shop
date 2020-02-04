@@ -97,7 +97,7 @@
     background-color: darkorange;
     .mat-simple-snackbar {
       span {
-        word-break: break-all;
+        word-break: break-word;
       }
     }
   }
@@ -106,7 +106,7 @@
     background-color: mat-color($primary, 500);
     .mat-simple-snackbar {
       span {
-        word-break: break-all;
+        word-break: break-word;
       }
     }
   }
@@ -127,6 +127,9 @@
   border-radius: 2px;
   mat-dialog-container {
     padding: 0px !important;
+    @include response(xs) {
+      border-radius: 0px;
+    }
   }
   @include response-from(sm) {
     max-width: initial;

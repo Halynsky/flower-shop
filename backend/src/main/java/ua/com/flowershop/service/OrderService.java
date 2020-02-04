@@ -433,6 +433,10 @@ public class OrderService {
 
             }
 
+            if (addedAmount > flowerSize.getAvailable()) {
+                throw new ConflictException("Недостатньо товару - " + flowerSize.getFlower().getName() + ", " + flowerSize.getSize().getName());
+            }
+
             flowerSize.setReserved(flowerSize.getReserved() + addedAmount);
             flowerSizeRepository.save(flowerSize);
 

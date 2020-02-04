@@ -43,4 +43,10 @@ public interface FlowerSizeRepository extends JpaRepository<FlowerSize, Long> {
 
     List<FlowerSizeTinyProjection> findProjectedByIdIn(List<Long> ids);
 
+    @Query("SELECT sum(fs.amount - fs.reserved) as available, sum(fs.reserved) as reserved, sum(fs.sold) as sold FROM FlowerSize fs")
+    Object[][] countWarehouseItems();
+
+    @Query("SELECT sum((fs.amount - fs.reserved) * fs.price / 100) as available, sum(fs.reserved * fs.price / 100) as reserved, sum(fs.sold * fs.price / 100) as sold FROM FlowerSize fs")
+    Object[][] countWarehouseItemsPrice();
+
 }

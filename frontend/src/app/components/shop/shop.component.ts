@@ -10,6 +10,7 @@ import { ShopFilterDialogComponent } from "../shared/shop-filter-dialog/shop-fil
 import { finalize } from "rxjs/operators";
 import { getErrorMessage } from "../../utils/Functions";
 import { DOCUMENT } from "@angular/common";
+import { GlobalSearchService } from "../../services/global-search.service";
 
 @Component({
   selector: 'shop',
@@ -20,6 +21,8 @@ import { DOCUMENT } from "@angular/common";
 export class ShopComponent implements OnInit {
 
   private DEFAULT_PAGE_SIZE = 9;
+  private DISTANCE_TO_BOTTOM_WHEN_LOAD_MORE = 200;
+  public DISTANCE_FROM_TOP_WHEN_SHOW_GO_TOP_BUTTON = 300;
 
   flowersPage: RestPage<FlowerShort> = new RestPage<FlowerShort>();
   filters: ShopFilter = new ShopFilter();
@@ -38,8 +41,13 @@ export class ShopComponent implements OnInit {
               private changeDetectorRef: ChangeDetectorRef,
               public dialog: MatDialog,
               @Inject('Window') private window: Window,
-              @Inject(DOCUMENT) private document: Document) {
+              @Inject(DOCUMENT) private document: Document,
+              private globalSearchService: GlobalSearchService) {
     //this.getShopItems(this.searchTerm);
+    this.globalSearchService.onSearchTermChange.subscribe(searchTerm => {
+      this.searchTerm = searchTerm;
+      this.searchTermChange(null)
+    })
   }
 
   ngOnInit() {
@@ -71,6 +79,7 @@ export class ShopComponent implements OnInit {
   onFilterChange(event) {
     this.filters = event;
     this.getShopItems(this.searchTerm, this.filters);
+    this.window.scrollTo(0, 0);
     this.changeDetectorRef.detectChanges();
   }
 
@@ -106,8 +115,7 @@ export class ShopComponent implements OnInit {
   trackScroll(event: any) {
     this.pageYOffset = this.window.pageYOffset;
     let scrollToBottom = this.document.scrollingElement.scrollHeight - this.window.innerHeight - this.window.pageYOffset;
-
-    if (scrollToBottom < 100 && !this.flowersPage.last) {
+    if (scrollToBottom < this.DISTANCE_TO_BOTTOM_WHEN_LOAD_MORE && !this.flowersPage.last && ! this.loading) {
       this.showMore();
     }
   }

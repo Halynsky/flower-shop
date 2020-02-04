@@ -65,3 +65,14 @@ export function ngPrimeFiltersToParams(filters): any {
   return params;
 }
 
+export function capitalize(string: string): string {
+  if (!string) return "";
+  let [s, ...tring] = (string.toLowerCase() as any);
+  return [s.toUpperCase(), ...tring].join('');
+}
+
+export function enumToArrayList(enumeration): Array<string> {
+  return Object.values(enumeration)
+    .filter(item => typeof item != 'function')
+    .map(item => item.toString());
+}

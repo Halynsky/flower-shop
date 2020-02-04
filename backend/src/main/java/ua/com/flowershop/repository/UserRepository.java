@@ -39,7 +39,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Boolean existsByEmail(String name);
 
-    @Query("SELECT  u.icon FROM User u WHERE u.id = ?1")
+    @Query("SELECT u.icon FROM User u WHERE u.id = ?1")
     Optional<String> getIcon(long id);
+
+    Integer countAllByIsActivatedAndIsVirtual(Boolean isActivated, Boolean isVirtual);
 
 }

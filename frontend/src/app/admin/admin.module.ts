@@ -31,6 +31,7 @@ import {
   ButtonModule,
   CalendarModule,
   CardModule,
+  ChartModule,
   CheckboxModule,
   ColorPickerModule,
   ConfirmationService,
@@ -55,6 +56,7 @@ import { DirectivesModule } from "../directives/directives.module";
 import { IConfig, NgxMaskModule } from "ngx-mask";
 import { GroupItemComponent } from "./types/groups/group-item/group-item.component";
 import { GroupsComponent } from "./types/groups/groups.component";
+import { StatisticComponent } from "./statistic/statistic.component";
 
 export const ngxMaskOptions: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
@@ -83,7 +85,8 @@ export const ngxMaskOptions: Partial<IConfig> | (() => Partial<IConfig>) = {};
     GroupItemComponent,
     WarehouseOperationItemComponent,
     WarehouseComponent,
-    UserItemComponent
+    UserItemComponent,
+    StatisticComponent
   ],
   imports: [
     routing,
@@ -120,7 +123,8 @@ export const ngxMaskOptions: Partial<IConfig> | (() => Partial<IConfig>) = {};
     CheckboxModule,
     CardModule,
     NgxMaskModule.forRoot(ngxMaskOptions),
-    KeyFilterModule
+    KeyFilterModule,
+    ChartModule
   ],
   providers: [
     ConfirmationService

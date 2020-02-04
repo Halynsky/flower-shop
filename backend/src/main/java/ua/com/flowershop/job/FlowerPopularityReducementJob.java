@@ -11,8 +11,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
+import static ua.com.flowershop.entity.Flower.POPULARITY_MIN;
 import static ua.com.flowershop.entity.Flower.POPULARITY_REDUCER;
-import static ua.com.flowershop.entity.Flower.RATING_MIN;
 
 
 @Slf4j
@@ -31,7 +31,7 @@ public class FlowerPopularityReducementJob {
             Double popularity = f.getPopularity();
             Double reducement = popularity * POPULARITY_REDUCER;
             popularity -= reducement;
-            popularity = popularity > RATING_MIN ? popularity : RATING_MIN;
+            popularity = popularity > POPULARITY_MIN ? popularity : POPULARITY_MIN;
             f.setPopularity(new BigDecimal(popularity).setScale(2, RoundingMode.HALF_UP).doubleValue());
             flowerRepository.save(f);
         });

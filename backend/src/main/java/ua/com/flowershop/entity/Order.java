@@ -78,6 +78,10 @@ public class Order {
             return Arrays.asList(NEW, PROCESSING);
         }
 
+        public static List<Status> getActive() {
+            return Arrays.asList(NEW, PROCESSING);
+        }
+
     }
 
     @AllArgsConstructor

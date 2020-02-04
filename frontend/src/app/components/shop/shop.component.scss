@@ -58,26 +58,20 @@
     .filters-button {
       margin-right: 8px;
       margin-left: 8px;
+      margin-top: -6px;
 
       @include response-from(md) {
         display: none;
       }
 
       @include response(xs) {
+        margin-left: 0px;
         min-width: 40px;
-        padding: 0px;
       }
 
-      @include response(sm) {
-        i {
-          margin-right: 8px;
-        }
-      }
-
-      span {
-        @include response(xs) {
-          display: none;
-        }
+      i {
+        margin-right: 8px;
+        margin-left: -4px;
       }
 
     }
@@ -88,7 +82,7 @@
         color: $black-100;
 
         @include response(xs) {
-          width: 130px;
+          width: 160px;
         }
 
         .mat-form-field-suffix {
@@ -122,7 +116,17 @@
 
     }
 
-    .main-search-wrapper, .ordering-selector-wrapper {
+    .main-search-wrapper {
+      font-size: 20px;
+      @include response-to(sm) {
+        font-size: 18px;
+      }
+      @include response (xs) {
+        display: none;
+      }
+    }
+
+    .ordering-selector-wrapper {
       font-size: 20px;
       @include response-to(sm) {
         font-size: 18px;
@@ -131,7 +135,6 @@
   }
 
   .content {
-    //max-width: 1000px;
     display: grid;
     grid-gap: 24px;
     margin-bottom: 24px;
@@ -146,6 +149,14 @@
 
     @include response-from(md) {
       grid-template-columns: repeat(3, 1fr);
+    }
+
+    .go-top-button {
+      background-color: rgba(137, 138, 137, 0.65) !important;
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+      z-index: 1000;
     }
 
   }
