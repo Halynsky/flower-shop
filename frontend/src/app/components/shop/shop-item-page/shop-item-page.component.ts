@@ -8,6 +8,7 @@ import { getErrorMessage } from "../../../utils/Functions";
 import { BucketItem } from "../../../models/Bucket";
 import { BucketDialogComponent } from "../../shared/bucket-dialog/bucket-dialog.component";
 import { MatDialog } from "@angular/material";
+import { FLOWER_PLACEHOLDER } from "../../../utils/Costants";
 
 
 @Component({
@@ -20,7 +21,7 @@ export class ShopItemPageComponent implements OnInit {
   id: number;
   flower: FlowerFull;
   bucketItems: BucketItem[] = [];
-  placeholderPhoto = '../../../../assets/img/common/flower-placeholder.png';
+  placeholderPhoto = FLOWER_PLACEHOLDER;
 
   constructor(private route: ActivatedRoute,
               private flowerService: FlowerService,

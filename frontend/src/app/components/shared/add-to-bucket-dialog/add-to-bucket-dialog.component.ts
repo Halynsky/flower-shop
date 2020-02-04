@@ -7,6 +7,7 @@ import { BucketLocalService } from "../../../services/bucket-local.service";
 import { SnackBarService } from "../../../services/snak-bar.service";
 import { getErrorMessage } from "../../../utils/Functions";
 import { BucketDialogComponent } from "../bucket-dialog/bucket-dialog.component";
+import { FLOWER_PLACEHOLDER } from "../../../utils/Costants";
 
 @Component({
   selector: 'add-to-bucket-dialog',
@@ -18,7 +19,7 @@ export class AddToBucketDialogComponent implements OnInit {
   id: number;
   flower: FlowerFull;
   bucketItems: BucketItem[] = [];
-  placeholderPhoto = '../../../../assets/img/common/flower-placeholder.png';
+  placeholderPhoto = FLOWER_PLACEHOLDER;
 
   constructor(public dialogRef: MatDialogRef<AddToBucketDialogComponent>,
               public dialog: MatDialog,
