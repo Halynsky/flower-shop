@@ -85,7 +85,7 @@
 
         <div class="input-group" *ngIf="deliveryInfoFormGroup.get('deliveryType').value != DeliveryType.SELF_UZHGOROD">
           <label>Місто</label>
-          <input type="text" placeholder="Місто" formControlName="city" [matAutocomplete]="cityAutocomplete" required isObjectValidator>
+          <input type="text" placeholder="Місто" formControlName="city" [matAutocomplete]="cityAutocomplete" isObjectValidator autocomplete="off" required >
           <mat-autocomplete #cityAutocomplete="matAutocomplete" (optionSelected)="onCitySelect($event)" [displayWith]="displayCityFn">
             <mat-option *ngFor="let city of cities" [value]="city" class="order-page-autocomplete-option">
               {{city.Present}}
@@ -103,7 +103,7 @@
             <mat-spinner *ngIf="loadingWarehouses" diameter="16" mode="indeterminate"></mat-spinner>
           </label>
 
-          <input type="text" placeholder="Вулиця" formControlName="street" [matAutocomplete]="streetAutocomplete" required [disabled]="loadingStreets">
+          <input type="text" placeholder="Вулиця" formControlName="street" [matAutocomplete]="streetAutocomplete" [disabled]="loadingStreets" autocomplete="off" required>
           <mat-autocomplete #streetAutocomplete="matAutocomplete" (optionSelected)="onStreetSelect($event)" [displayWith]="displayStreetFn" >
             <mat-option *ngFor="let street of streets" [value]="street" class="order-page-autocomplete-option">
               {{street.Present}}
