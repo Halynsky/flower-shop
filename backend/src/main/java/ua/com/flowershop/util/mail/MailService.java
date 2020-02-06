@@ -82,7 +82,7 @@ public class MailService {
         context.setVariable(USER_NAME, user.getName());
         context.setVariable(TITLE, THANK_YOU_FOR_JOIN);
         context.setVariable(BODY, "Для завершення реєстрації, вам потрібно підтвердити свою поштову адресу щоб ми переконались що це саме ви.");
-        context.setVariable(CONFIRM_URL, siteUrl + SLASH + CONFIRM + SLASH + ACTIVATION + SECRET_KEY_PARAM + user.getSecretKey());
+        context.setVariable(CONFIRM_URL, siteUrlFull + SLASH + CONFIRM + SLASH + ACTIVATION + SECRET_KEY_PARAM + user.getSecretKey());
         context.setVariable(CONFIRM_BTN_TEXT, "Підтвердити");
         mailClient.sendMail("Підтвердіть реєстрацію", CONFIRMATION_TEMPLATE, context, MailHolder.MessageType.NOREPLY, user.getEmail());
     }
@@ -112,7 +112,7 @@ public class MailService {
         context.setVariable(USER_NAME, user.getName());
         context.setVariable(TITLE, "Тепер ви можете оновити свій пароль");
         context.setVariable(BODY, "Ви здійснили запит на оновлення паролю. Для наступного кроку перейдіть, будь ласка, за посиланням внизу");
-        context.setVariable(CONFIRM_URL, siteUrl + SLASH + CONFIRM + SLASH + PASSWORD_RESTORE + SECRET_KEY_PARAM + user.getSecretKey());
+        context.setVariable(CONFIRM_URL, siteUrlFull + SLASH + CONFIRM + SLASH + PASSWORD_RESTORE + SECRET_KEY_PARAM + user.getSecretKey());
         context.setVariable(CONFIRM_BTN_TEXT, "Відновити пароль");
         mailClient.sendMail("Відновлення паролю", CONFIRMATION_TEMPLATE, context, MailHolder.MessageType.NOREPLY, user.getEmail());
     }
@@ -128,7 +128,7 @@ public class MailService {
         context.setVariable(USER_NAME, user.getName());
         context.setVariable(TITLE, "Ви зробили запит на зміну своєї Email адреси");
         context.setVariable(BODY, "Підвердіть, будь ласка, свою нову поштову адресу");
-        context.setVariable(CONFIRM_URL, siteUrl + SLASH + CONFIRM + SLASH + EMAIL + SECRET_KEY_PARAM + user.getSecretKey());
+        context.setVariable(CONFIRM_URL, siteUrlFull + SLASH + CONFIRM + SLASH + EMAIL + SECRET_KEY_PARAM + user.getSecretKey());
         context.setVariable(CONFIRM_BTN_TEXT, "Підтвердити");
         mailClient.sendMail("Запит на зміну Email адреси", CONFIRMATION_TEMPLATE, context, MailHolder.MessageType.NOREPLY, user.getNewEmail());
     }
@@ -181,7 +181,7 @@ public class MailService {
         context.setVariable(USER_NAME, order.getUser().getName());
         context.setVariable(TITLE, "Ваше замовлення успішно прийняте. Дякуємо!");
         context.setVariable(BODY, "Замовлення №" + highlight(order.getId().toString()));
-        context.setVariable(CONFIRM_URL, siteUrl + SLASH + "my" + SLASH + "purchases");
+        context.setVariable(CONFIRM_URL, siteUrlFull + SLASH + "my" + SLASH + "purchases");
         context.setVariable(CONFIRM_BTN_TEXT, "Переглянути на сайті");
         context.setVariable("order", order);
         mailClient.sendMail("Нове замовлення", ORDER_TEMPLATE, context, MailHolder.MessageType.NOREPLY, user.getEmail());

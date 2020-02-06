@@ -148,6 +148,12 @@
               width: 70px;
             }
           }
+
+          .disabled-hint {
+            font-size: 12px;
+            color: $red-500;
+          }
+
         }
 
       }
@@ -183,6 +189,26 @@
         color: mat-color($primary);
         font-size: 24px;
       }
+    }
+
+    .delivery-hint {
+      margin-top: 24px;
+      margin-bottom: 24px;
+      max-width: 600px;
+
+      b {
+        font-weight: 500;
+      }
+
+      .delivery-hint-title {
+        color: mat-color($accent);
+        margin-bottom: 8px;
+      }
+
+      .delivery-hint-text {
+        color: #606060;
+      }
+
     }
 
   }

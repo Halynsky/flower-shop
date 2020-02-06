@@ -92,6 +92,7 @@ public class UserService {
 
         User user = User.of(socialUser);
         user.setIsVirtual(false);
+        user.setPassword(passwordEncoder.encode(UUID.randomUUID().toString()));
         userRepository.save(user);
         SocialConnection socialConnection = new SocialConnection(socialUser, user);
         user.addSocialConnection(socialConnection);

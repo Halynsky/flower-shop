@@ -1,6 +1,6 @@
 <div class="order-wrapper" *ngIf="!orderId && bucketLocalService.bucket.length > 0">
 
-  <mat-vertical-stepper [linear]="false" #stepper (selectionChange)="stepperSelectionChanged($event)">
+  <mat-vertical-stepper [linear]="true" #stepper (selectionChange)="stepperSelectionChanged($event)">
     <mat-step [stepControl]="contactInfoFormGroup">
 
       <form [formGroup]="contactInfoFormGroup">
@@ -16,6 +16,7 @@
         <div class="input-group">
           <label>Ім'я та прізвище</label>
           <input
+            [ngClass]="{'error': hasErrorContactInfo('name')}"
             name="name"
             formControlName="name"
             placeholder="Ім'я та прізвище"
@@ -30,6 +31,7 @@
         <div class="input-group">
           <label>Електронна адреса</label>
           <input
+            [ngClass]="{'error': hasErrorContactInfo('email')}"
             type="email"
             name="email"
             formControlName="email"
@@ -46,6 +48,7 @@
         <div class="input-group">
           <label>Телефон</label>
           <input
+            [ngClass]="{'error': hasErrorContactInfo('phone')}"
             name="phone"
             formControlName="phone"
             placeholder="Телефон"
@@ -62,7 +65,7 @@
         </div>
 
         <div class="buttons-wrapper">
-          <button mat-flat-button color="primary" matStepperNext>Далі</button>
+          <button mat-flat-button color="primary" matStepperNext (click)="contactInfoFormGroup.markAllAsTouched()">Далі</button>
         </div>
       </form>
     </mat-step>
@@ -85,7 +88,15 @@
 
         <div class="input-group" *ngIf="deliveryInfoFormGroup.get('deliveryType').value != DeliveryType.SELF_UZHGOROD">
           <label>Місто</label>
-          <input type="text" placeholder="Місто" formControlName="city" [matAutocomplete]="cityAutocomplete" isObjectValidator autocomplete="off" required >
+          <input
+            [ngClass]="{'error': hasErrorDelivery('city')}"
+            type="text"
+            placeholder="Місто"
+            formControlName="city"
+            [matAutocomplete]="cityAutocomplete"
+            isObjectValidator
+            autocomplete="off"
+            required >
           <mat-autocomplete #cityAutocomplete="matAutocomplete" (optionSelected)="onCitySelect($event)" [displayWith]="displayCityFn">
             <mat-option *ngFor="let city of cities" [value]="city" class="order-page-autocomplete-option">
               {{city.Present}}
@@ -103,7 +114,15 @@
             <mat-spinner *ngIf="loadingWarehouses" diameter="16" mode="indeterminate"></mat-spinner>
           </label>
 
-          <input type="text" placeholder="Вулиця" formControlName="street" [matAutocomplete]="streetAutocomplete" [disabled]="loadingStreets" autocomplete="off" required>
+          <input
+            [ngClass]="{'error': hasErrorDelivery('street')}"
+            type="text"
+            placeholder="Вулиця"
+            formControlName="street"
+            [matAutocomplete]="streetAutocomplete"
+            [disabled]="loadingStreets"
+            autocomplete="off"
+            required>
           <mat-autocomplete #streetAutocomplete="matAutocomplete" (optionSelected)="onStreetSelect($event)" [displayWith]="displayStreetFn" >
             <mat-option *ngFor="let street of streets" [value]="street" class="order-page-autocomplete-option">
               {{street.Present}}
@@ -118,6 +137,7 @@
         <div class="input-group" *ngIf="directAddressRequired()">
           <label>Будинок</label>
           <input
+            [ngClass]="{'error': hasErrorDelivery('house')}"
             name="house"
             formControlName="house"
             placeholder="Будинок"
@@ -138,6 +158,7 @@
         <div class="input-group" *ngIf="deliveryInfoFormGroup.get('deliveryType').value == DeliveryType.UKR_POSHTA">
           <label>Поштовий індекс</label>
           <input
+            [ngClass]="{'error': hasErrorDelivery('postalCode')}"
             name="postalCode"
             formControlName="postalCode"
             placeholder="Поштовий індекс"
@@ -157,7 +178,15 @@
             <mat-spinner *ngIf="loadingWarehouses" diameter="16" mode="indeterminate"></mat-spinner>
           </label>
 
-          <input type="text" placeholder="Відділення" formControlName="novaPoshtaDepartment" [matAutocomplete]="novaPoshtaDepartmentAutocomplete" required isObjectValidator [disabled]="loadingWarehouses">
+          <input
+            [ngClass]="{'error': hasErrorDelivery('novaPoshtaDepartment')}"
+            type="text"
+            placeholder="Відділення"
+            formControlName="novaPoshtaDepartment"
+            [matAutocomplete]="novaPoshtaDepartmentAutocomplete"
+            isObjectValidator
+            [disabled]="loadingWarehouses"
+            required>
           <mat-autocomplete #novaPoshtaDepartmentAutocomplete="matAutocomplete" (optionSelected)="onNovaPoshtaDepartmentSelect($event)" [displayWith]="displayWarehouseFn">
             <mat-option *ngFor="let warehouse of filteredWarehouses" [value]="warehouse" class="order-page-autocomplete-option">
               {{warehouse.Description}}
@@ -225,6 +254,8 @@
           <span>Підтвердити замовлення</span>
         </button>
 
+        <div class="disabled-hint" *ngIf="deliveryInfoFormGroup.invalid">Вкажіть всю необхідну інформацію</div>
+
       </div>
 
     </div>
@@ -247,5 +278,10 @@
   <div class="order-info">Номер вашого замовлення: <span class="order-id">{{orderId}}</span></div>
 
   <how-to-pay></how-to-pay>
+
+  <div class="delivery-hint">
+    <div class="delivery-hint-title">Період доставки</div>
+    <div class="delivery-hint-text">Відправка рослин здійснюється в два найбільш сприятливі періоди для посадки всіх квітів: <b>Весною</b> це березень-травень а <b>Восени</b> це вересень-листопад</div>
+  </div>
 
 </div>

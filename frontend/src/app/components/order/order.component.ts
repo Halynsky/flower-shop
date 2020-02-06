@@ -301,4 +301,12 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.selectedStepIndex = event.selectedIndex;
   }
 
+  hasErrorDelivery(formControlName: string) {
+    return this.deliveryInfoFormGroup.get(formControlName).invalid && (this.deliveryInfoFormGroup.get(formControlName).dirty || this.deliveryInfoFormGroup.get(formControlName).touched)
+  }
+
+  hasErrorContactInfo(formControlName: string) {
+    return this.contactInfoFormGroup.get(formControlName).invalid && (this.contactInfoFormGroup.get(formControlName).dirty || this.contactInfoFormGroup.get(formControlName).touched)
+  }
+
 }
