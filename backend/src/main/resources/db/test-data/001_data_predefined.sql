@@ -4,3 +4,4 @@ INSERT INTO warehouse_operation_types (direction, operation_type) VALUES ('OUT',
 INSERT INTO warehouse_operation_types (direction, operation_type) VALUES ('OUT', 'EXTERNAL_SALE');
 INSERT INTO warehouse_operation_types (direction, operation_type) VALUES ('OUT', 'GIFT');
 INSERT INTO warehouse_operation_types (direction, operation_type) VALUES ('OUT', 'DEFECT');
+INSERT INTO warehouse_operation_types (direction, operation_type) VALUES ('OUT', 'MISTAKE');

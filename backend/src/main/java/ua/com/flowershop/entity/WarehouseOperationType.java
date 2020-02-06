@@ -52,7 +52,8 @@ public class WarehouseOperationType {
         EXTERNAL_SALE("EXTERNAL_SALE"),
         RETURN("RETURN"),
         GIFT("GIFT"),
-        DEFECT("DEFECT");
+        DEFECT("DEFECT"),
+        MISTAKE("MISTAKE");
 
         private final String value;
 
