@@ -1,5 +1,5 @@
 <a class="wrapper" [ngClass]="{'not-available': !flower.hasAvailableFlowerSize}" [routerLink]="['item', flower.id]">
-  <div class="cover" [ngClass]="{'flower-image-null': flower.image == null}" [ngStyle]="flower.image && {'background-image':'url(' + flower.image + ')'} || {'background-image':'url(' + placeholderPhoto + ')'}">
+  <div class="cover" [ngClass]="{'flower-image-null': flower.image == null}" [ngStyle]="flower.image && {'background-image':'url(' + flower.image + ')'} || {'background-image':'url(' + flowerImagePlaceholder + ')'}">
 
     <div class="flags-wrapper">
       <div class="is-new" *ngIf="flower.isNew">НОВИНКА</div>

@@ -6,7 +6,7 @@ import { getErrorMessage } from "../../../utils/Functions";
 import { SecurityService } from "../../../services/security.service";
 import { MatDialog, MatDialogRef } from "@angular/material";
 import { AddToBucketDialogComponent } from "../add-to-bucket-dialog/add-to-bucket-dialog.component";
-import { FLOWER_PLACEHOLDER } from 'app/utils/Costants';
+import { FLOWER_IMAGE_PLACEHOLDER } from 'app/utils/Costants';
 
 
 @Component({
@@ -20,7 +20,7 @@ export class ShopContentItemComponent implements OnInit {
   @Input() public inFavorites: boolean = false;
 
   addToBucketDialogRef: MatDialogRef<AddToBucketDialogComponent>;
-  placeholderPhoto = FLOWER_PLACEHOLDER;
+  flowerImagePlaceholder = FLOWER_IMAGE_PLACEHOLDER;
 
   constructor(private snackBar: SnackBarService,
               private favoritesService: FavoritesService,

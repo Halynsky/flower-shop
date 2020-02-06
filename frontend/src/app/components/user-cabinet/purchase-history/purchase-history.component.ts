@@ -9,6 +9,7 @@ import { finalize } from "rxjs/operators";
 import { TranslationService } from "../../../utils/translation.service";
 import { MatDialog } from "@angular/material";
 import { HowToPayDialogComponent } from "../../shared/how-to-pay-dialog/how-to-pay-dialog.component";
+import { FLOWER_IMAGE_PLACEHOLDER } from "../../../utils/Costants";
 
 @Component({
   selector: 'purchase-history',
@@ -22,7 +23,7 @@ export class PurchaseHistoryComponent {
   orders: RestPage<Order> = new RestPage<Order>();
   loading = false;
   pagination: Pagination;
-  placeholderPhoto = '../../../../assets/img/common/flower-placeholder.png';
+  flowerImagePlaceholder = FLOWER_IMAGE_PLACEHOLDER;
 
   constructor (public orderService: OrderService,
                public snackBarService: SnackBarService,

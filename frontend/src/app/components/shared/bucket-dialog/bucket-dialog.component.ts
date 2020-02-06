@@ -4,7 +4,7 @@ import { MatDialogRef } from "@angular/material";
 import { SnackBarService } from "../../../services/snak-bar.service";
 import { BucketItem } from "../../../models/Bucket";
 import { FlowerSizeService } from "../../../api/services/flower-size.service";
-import { FLOWER_PLACEHOLDER } from "../../../utils/Costants";
+import { FLOWER_IMAGE_PLACEHOLDER } from "../../../utils/Costants";
 
 
 @Component({
@@ -14,7 +14,7 @@ import { FLOWER_PLACEHOLDER } from "../../../utils/Costants";
 })
 export class BucketDialogComponent implements OnInit {
 
-  placeholderPhoto = FLOWER_PLACEHOLDER;
+  flowerImagePlaceholder = FLOWER_IMAGE_PLACEHOLDER;
 
   constructor(public bucketLocalService: BucketLocalService,
               public dialogRef: MatDialogRef<BucketDialogComponent>,
