@@ -43,10 +43,11 @@ export class StatisticComponent implements OnInit {
       datalabels: {
         align: 'end',
         borderRadius: 2,
-        color: 'white',
+        color: '#353535',
         font: {
-          weight: 'bold'
-        }
+          weight: 'bold',
+        },
+        offset: -8
       }
     }
   };

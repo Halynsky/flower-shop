@@ -54,10 +54,23 @@ input.table-filter {
   }
 
   .zoomed-image {
+    position: relative;
     height: 500px;
     width: 500px;
     background-position: center;
     background-repeat: no-repeat;
+
+    i {
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      font-size: 26px;
+      background-color: #d6d6d6;
+      padding: 4px 6px;
+      border-radius: 2px;
+      cursor: pointer;
+    }
+
   }
 }
 

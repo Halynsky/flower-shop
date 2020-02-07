@@ -80,7 +80,8 @@ public class OrderService {
             user = userRepository.findByEmail(orderModel.getContactInfo().getEmail()).orElse(null);
 
             if (nonNull(user) && !user.getIsVirtual()) {
-                throw new ConflictException("Користувач з таким Email вже існує. Авторизуйтесь та створіть замовлення через свій аккаунт.");
+                log.warn("зареєстрований користувач " + user.getEmail() + " намагався зробити замовлення без авторизації");
+                throw new ConflictException("Користувач з таким Email вже існує. Авторизуйтесь та створіть замовлення через свій аккаунт. У разі потреба ви можете пройти процедуру відновлення паролю до вашого аккаунту.");
             }
 
         }

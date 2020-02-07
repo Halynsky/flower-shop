@@ -148,7 +148,7 @@
           </span>
 
           <span *ngSwitchCase="'image'" class="table-row-image-wrapper">
-            <div class="table-row-image zoomable" [ngStyle]="{'background-image': 'url(' + rowData.image + ''}" (click)="zoomImage(rowData.image)"></div>
+            <div class="table-row-image zoomable" [ngStyle]="{'background-image': 'url(' + rowData.image + ''}" (click)="zoomImage(rowData)"></div>
           </span>
           <span *ngSwitchCase="'flowerType'">
             {{rowData[col.field].nameSingle}}
@@ -227,8 +227,8 @@
 <p-contextMenu #cm [model]="menuItems"></p-contextMenu>
 
 <p-dialog [(visible)]="displayZoomDialog" class="zoom-image-dialog" [modal]="true" (onHide)="resetZoomedImage()">
-
-  <div class="zoomed-image" [ngStyle]="{'background-image': 'url(' + zoomedImage + ''}"></div>
-
+  <div class="zoomed-image" [ngStyle]="{'background-image': 'url(' + zoomedFlower?.image + ''}">
+    <i class="far fa-save" (click)="downloadImage()"></i>
+  </div>
 </p-dialog>
 

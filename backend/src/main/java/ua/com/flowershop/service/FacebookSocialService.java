@@ -104,6 +104,7 @@ public class FacebookSocialService {
             throw new AuthenticationRequiredException("Не вдалося підключитись до Facebook API", e);
         }
         if (userProfile.getEmail() == null) {
+            log.warn("Не вдалося зареєструвати користувача " + userProfile.getName() + " по причині відсутності email в Facebook профайлі");
             throw new ValidationException("Для реєстрації через Facebook у вашому аккаунті повинен бути вказаний email." +
                 " Внесіть email на Facebook аккаунт та спробуйте ще раз або зареєструйтесь через стандартну форму.");
         }

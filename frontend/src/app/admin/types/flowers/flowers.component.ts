@@ -12,6 +12,7 @@ import { Table } from "primeng/table";
 import { TranslationService } from "../../../utils/translation.service";
 import { RestPage } from "../../../api/models/RestPage";
 import { FlowerTypeService } from "../../../api/services/flower-type.service";
+import { saveAs } from 'file-saver';
 
 
 @Component({
@@ -52,7 +53,7 @@ export class FlowersComponent implements OnInit {
   flowerTypes = [];
 
   displayZoomDialog = false;
-  zoomedImage;
+  zoomedFlower;
 
   columns = [
     {field: 'id', header: 'Id', active: true},
@@ -208,15 +209,20 @@ export class FlowersComponent implements OnInit {
     )
   }
 
-  zoomImage(image) {
+  zoomImage(flower) {
     this.displayZoomDialog = true;
-    this.zoomedImage = image;
+    this.zoomedFlower = flower;
   }
 
   resetZoomedImage() {
-    this.zoomedImage = null;
+    this.zoomedFlower = null;
   }
 
+
+  downloadImage() {
+    saveAs(this.zoomedFlower.image, this.zoomedFlower.nameOriginal);
+    this.displayZoomDialog = false;
+  }
 
 }
 
