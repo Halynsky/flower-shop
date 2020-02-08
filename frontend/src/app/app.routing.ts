@@ -9,13 +9,14 @@ import { FavouriteArticlesComponent } from "./components/user-cabinet/favourite-
 import { AdminPanelGuard } from "./guards/admin-panel.guard";
 import { TermsAndConditionsComponent } from "./components/shared/terms-and-conditions/terms-and-conditions.component";
 import { AuthenticatedGuard } from "./guards/authenticated.guard";
+import { LandingComponent } from "./components/landing/landing.component";
 
 const routes: Routes = [
   { path: '',
     component: LayoutComponent,
     children: [
-      // { path: '', component: LandingComponent},
-      { path: '', redirectTo:'shop', pathMatch: 'full'},
+      { path: '', component: LandingComponent},
+      //{ path: '', redirectTo:'shop', pathMatch: 'full'},
       { path: 'my', component: UserCabinetComponent, canActivate: [AuthenticatedGuard], canActivateChild: [AuthenticatedGuard] , children: [
           { path: 'profile', component: ProfileComponent},
           { path: 'wishlist', component: WishlistComponent},
