@@ -20,9 +20,12 @@ export class AppComponent implements OnInit {
               private swUpdate: SwUpdate) {
     matIconRegistry.registerFontClassAlias('fontawesome', 'fa');
     moment.locale('uk');
+    console.log("APP CONSTRUCTED");
   }
 
   ngOnInit() {
+
+    console.log("APP INIT");
 
     console.log("environment.production", environment.production);
     console.log("this.swUpdate.isEnabled", this.swUpdate.isEnabled);

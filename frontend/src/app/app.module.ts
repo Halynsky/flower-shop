@@ -57,7 +57,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     HowToPayDialogComponent
   ],
   imports: [
-    ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production, scope: '/'}),
+    ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
     routing,
     RouterModule,
     BrowserModule,
