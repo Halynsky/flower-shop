@@ -23,6 +23,10 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    console.log("environment.production", environment.production);
+    console.log("this.swUpdate.isEnabled", this.swUpdate.isEnabled);
+
     this.checkSwUpdate();
 
     if (environment.production) {
