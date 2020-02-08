@@ -25,7 +25,7 @@
             <div  class="bucket-item-image">
               <!--TODO: Remove condition after a while. Condition is inserted to avoid error for old model of bucket items-->
               <a [routerLink]="bucketItem.flowerId ? ['shop/item', bucketItem.flowerId] : ['shop']" (click)="dialogRef.close()">
-                <img [src]="bucketItem.image">
+                <img [src]="bucketItem.image || flowerImagePlaceholder">
               </a>
             </div>
             <div class="bucket-item-name">

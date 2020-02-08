@@ -6,7 +6,7 @@
   </div>
   <div class="content">
 
-    <div class="image" [ngStyle]="{'background-image':'url(' + flower.image + ')'}"></div>
+    <div class="image" [ngStyle]="flower.image && {'background-image':'url(' + flower.image + ')'} || {'background-image':'url(' + flowerImagePlaceholder + ')'}"></div>
 
     <div class="add-to-card-block">
 

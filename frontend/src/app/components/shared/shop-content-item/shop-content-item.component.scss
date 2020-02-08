@@ -64,6 +64,12 @@
       border-top-right-radius: 2px;
       position: relative;
       overflow: hidden;
+      &.flower-image-null {
+        border-top: 4px solid #f3f3f3;
+        border-right: 4px solid #f3f3f3;
+        border-left: 4px solid #f3f3f3;
+      }
+
 
       @include response(xs) {
         height: 300px;

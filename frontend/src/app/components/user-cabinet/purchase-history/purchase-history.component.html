@@ -44,7 +44,7 @@
                 <ng-template ngFor let-orderItem [ngForOf]="order.orderItems" let-i="index">
                   <div class="order-table-row">
                     <div  class="order-item-image">
-                      <img [src]="orderItem.image">
+                      <img [src]="orderItem.image || flowerImagePlaceholder">
                     </div>
                     <div class="bucket-item-name">
                       <div class="flower-type-name">{{orderItem.flowerTypeName}}</div>
