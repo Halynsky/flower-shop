@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { SecurityService } from "../../services/security.service";
 import { BucketLocalService } from "../../services/bucket-local.service";
-import { MatDialog } from "@angular/material";
 import { AuthService } from "../../api/services/auth.service";
 import { SnackBarService } from "../../services/snak-bar.service";
 import { Router } from "@angular/router";
@@ -9,6 +8,7 @@ import { Role } from "../../models/Role";
 import { AuthDialogComponent } from "../../components/shared/auth-dialog/auth-dialog.component";
 import { getErrorMessage } from "../../utils/Functions";
 import { GlobalSearchService } from "../../services/global-search.service";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: 'layout-header',

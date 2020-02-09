@@ -20,7 +20,7 @@ import { dataTableFilter } from "../util";
 })
 export class UsersComponent implements OnInit {
 
-  @ViewChild('dt', { static: false }) private table: Table;
+  @ViewChild('dt') private table: Table;
 
   displayMergeDialog = false;
   displayNoteChangeDialog = false;

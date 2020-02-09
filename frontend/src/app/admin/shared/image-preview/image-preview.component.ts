@@ -24,7 +24,7 @@ export class ImagePreviewComponent {
   @Input() confirmTitle: string = 'Delete image';
   @Output() fileChange: EventEmitter<File> = new EventEmitter<File>();
   @Output() delete: EventEmitter<any> = new EventEmitter<any>();
-  @ViewChild('file', { static: false }) fileInput: ElementRef;
+  @ViewChild('file') fileInput: ElementRef;
 
   index = index++;
   hash: number;

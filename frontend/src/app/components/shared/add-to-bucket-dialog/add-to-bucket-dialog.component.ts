@@ -1,5 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { MatDialog, MatDialogRef } from "@angular/material";
 import { FlowerFull } from "../../../api/models/Flower";
 import { BucketItem } from "../../../models/Bucket";
 import { FlowerService } from "../../../api/services/flower.service";
@@ -8,6 +7,7 @@ import { SnackBarService } from "../../../services/snak-bar.service";
 import { getErrorMessage } from "../../../utils/Functions";
 import { BucketDialogComponent } from "../bucket-dialog/bucket-dialog.component";
 import { FLOWER_IMAGE_PLACEHOLDER } from "../../../utils/Costants";
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 
 @Component({
   selector: 'add-to-bucket-dialog',

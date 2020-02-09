@@ -7,9 +7,9 @@ import { Order } from "../../../api/models/Order";
 import { Pagination } from "../../../api/models/Pagination";
 import { finalize } from "rxjs/operators";
 import { TranslationService } from "../../../utils/translation.service";
-import { MatDialog } from "@angular/material";
 import { HowToPayDialogComponent } from "../../shared/how-to-pay-dialog/how-to-pay-dialog.component";
 import { FLOWER_IMAGE_PLACEHOLDER } from "../../../utils/Costants";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: 'purchase-history',

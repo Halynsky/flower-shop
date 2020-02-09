@@ -6,9 +6,12 @@ import { UserSidebarComponent } from "./user-cabinet-sidebar/user-sidebar.compon
 import { FavouriteArticlesComponent } from "./favourite-articles/favourite-articles.component";
 import { PurchaseHistoryComponent } from "./purchase-history/purchase-history.component";
 import { RouterModule } from "@angular/router";
-import { MatButtonModule, MatCardModule, MatExpansionModule, MatInputModule } from "@angular/material";
 import { SharedModule } from "../shared/shared.module";
 import { NgArrayPipesModule } from "angular-pipes";
+import { MatButtonModule } from "@angular/material/button";
+import { MatExpansionModule } from "@angular/material/expansion";
+import { MatCardModule } from "@angular/material/card";
+import { MatInputModule } from "@angular/material/input";
 
 
 @NgModule({

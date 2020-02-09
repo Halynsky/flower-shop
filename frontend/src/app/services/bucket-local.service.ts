@@ -5,7 +5,7 @@ import { BucketService } from "../api/services/bucket.service";
 import { FlowerSize } from "../api/models/FlowerSize";
 import { FlowerSizeService } from "../api/services/flower-size.service";
 import { BucketDialogComponent } from "../components/shared/bucket-dialog/bucket-dialog.component";
-import { MatDialog } from "@angular/material";
+import { MatDialog } from "@angular/material/dialog";
 
 
 @Injectable({providedIn: 'root'})

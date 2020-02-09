@@ -35,7 +35,7 @@ import { saveAs } from 'file-saver';
 })
 export class FlowersComponent implements OnInit {
 
-  @ViewChild('dt', { static: false }) private table: Table;
+  @ViewChild('dt') private table: Table;
 
   ItemSaveMode = ItemSaveMode;
 

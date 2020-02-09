@@ -5,12 +5,12 @@ import { SnackBarService } from "../../services/snak-bar.service";
 import { ShopFilter } from "../../api/models/ShopFilter";
 import { Pagination } from "../../api/models/Pagination";
 import { RestPage } from "../../api/models/RestPage";
-import { MatDialog, MatDialogRef } from "@angular/material";
 import { ShopFilterDialogComponent } from "../shared/shop-filter-dialog/shop-filter-dialog.component";
 import { finalize } from "rxjs/operators";
 import { getErrorMessage } from "../../utils/Functions";
 import { DOCUMENT } from "@angular/common";
 import { GlobalSearchService } from "../../services/global-search.service";
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 
 @Component({
   selector: 'shop',

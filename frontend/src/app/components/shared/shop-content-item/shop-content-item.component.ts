@@ -4,9 +4,9 @@ import { SnackBarService } from "../../../services/snak-bar.service";
 import { FavoritesService } from "../../../api/services/favorites.service";
 import { getErrorMessage } from "../../../utils/Functions";
 import { SecurityService } from "../../../services/security.service";
-import { MatDialog, MatDialogRef } from "@angular/material";
 import { AddToBucketDialogComponent } from "../add-to-bucket-dialog/add-to-bucket-dialog.component";
-import { FLOWER_IMAGE_PLACEHOLDER } from 'app/utils/Costants';
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
+import { FLOWER_IMAGE_PLACEHOLDER } from "../../../utils/Costants";
 
 
 @Component({
