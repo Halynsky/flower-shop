@@ -81,9 +81,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             .sessionManagement().maximumSessions(1);
 
-//        http.requiresChannel()
-//            .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
-//            .requiresSecure();
+        http.requiresChannel()
+            .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
+            .requiresSecure();
     }
 
     @Override
