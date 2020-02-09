@@ -66,12 +66,12 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
+                  "maximumWarning": "5mb",
                   "maximumError": "10mb"
                 }
               ],
               "serviceWorker": true,
-              "ngswConfigPath": "src/ngsw-config.json"
+              "ngswConfigPath": "ngsw-config.json"
             },
             "stg": {
                   "optimization": true,
@@ -84,7 +84,7 @@
                   "vendorChunk": false,
                   "buildOptimizer": true,
                   "serviceWorker": true,
-                  "ngswConfigPath": "src/ngsw-config.json",
+                  "ngswConfigPath": "ngsw-config.json",
                   "fileReplacements": [
                       {
                           "replace": "src/environments/environment.ts",
