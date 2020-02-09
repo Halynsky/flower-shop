@@ -31,8 +31,7 @@ export class ShopFiltersComponent implements OnInit {
               private colorService: ColorService,
               private snackBarService: SnackBarService,
               private route: ActivatedRoute,
-              private router: Router,
-              private location: Location) {
+              private router: Router) {
 
     flowerTypeService.getAll().subscribe(
       flowerTypes => this.flowerTypes = flowerTypes,

@@ -17,7 +17,7 @@ import { ShopFilterDialogComponent } from "./components/shared/shop-filter-dialo
 import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
 import { AddToBucketDialogComponent } from "./components/shared/add-to-bucket-dialog/add-to-bucket-dialog.component";
 import { HowToPayDialogComponent } from "./components/shared/how-to-pay-dialog/how-to-pay-dialog.component";
-import { PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface, PerfectScrollbarModule } from "ngx-perfect-scrollbar";
+import { PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface } from "ngx-perfect-scrollbar";
 import { DatePipe, registerLocaleData } from "@angular/common";
 import { LOCALE_ID, NgModule } from "@angular/core";
 import { ServiceWorkerModule } from "@angular/service-worker";
@@ -68,7 +68,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatIconModule,
     MatDialogModule,
     MatProgressSpinnerModule,
-    PerfectScrollbarModule,
+    // PerfectScrollbarModule,
     // Developed modules
     LayoutModule,
     LandingModule,

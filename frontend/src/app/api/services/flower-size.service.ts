@@ -13,7 +13,7 @@ export class FlowerSizeService {
   }
 
   getAllForAdmin(params, pagination) {
-    params = Object.assign(params, ...pagination);
+    params = Object.assign(params, pagination);
     return this.http.get<RestPage<FlowerSize>>(`${this.URL}/forAdmin`, {params: params});
   }
 
