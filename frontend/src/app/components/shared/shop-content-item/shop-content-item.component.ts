@@ -23,7 +23,7 @@ export class ShopContentItemComponent implements OnInit {
   flowerImagePlaceholder = FLOWER_IMAGE_PLACEHOLDER;
 
   constructor(private snackBar: SnackBarService,
-              private favoritesService: FavoritesService,
+              public favoritesService: FavoritesService,
               public dialog: MatDialog,
               public securityService: SecurityService) { }
 

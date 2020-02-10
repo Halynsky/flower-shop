@@ -43,7 +43,7 @@ export class WarehouseOperationItemComponent {
               private router: Router,
               public location: Location,
               private route: ActivatedRoute,
-              private translation: TranslationService,
+              public translation: TranslationService,
               private enumToObjectsPipe: EnumToObjectsPipe,
               private flowerService: FlowerService) {
     this.route.params.subscribe(

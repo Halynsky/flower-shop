@@ -24,7 +24,7 @@ export class AddToBucketDialogComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<AddToBucketDialogComponent>,
               public dialog: MatDialog,
               private flowerService: FlowerService,
-              private bucketLocalService: BucketLocalService,
+              public bucketLocalService: BucketLocalService,
               private snackBarService: SnackBarService) {
   }
 

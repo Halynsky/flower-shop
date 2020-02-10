@@ -98,7 +98,7 @@ export class FlowersComponent implements OnInit {
               private snackBarService: SnackBarService,
               private confirmationService: ConfirmationService,
               private router: Router,
-              private translation: TranslationService,
+              public translation: TranslationService,
               private route: ActivatedRoute) {
     this.getTypes();
   }

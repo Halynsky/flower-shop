@@ -25,7 +25,7 @@ export class ShopItemPageComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private flowerService: FlowerService,
-              private bucketLocalService: BucketLocalService,
+              public bucketLocalService: BucketLocalService,
               private snackBarService: SnackBarService,
               public dialog: MatDialog) {
     this.route.params.subscribe(params => {

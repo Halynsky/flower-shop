@@ -50,7 +50,7 @@ export class OrderComponent implements OnInit, OnDestroy {
 
   constructor(private formBuilder: FormBuilder,
               public bucketLocalService: BucketLocalService,
-              private securityService: SecurityService,
+              public securityService: SecurityService,
               private orderService: OrderService,
               public snackBarService: SnackBarService,
               public dialog: MatDialog,
