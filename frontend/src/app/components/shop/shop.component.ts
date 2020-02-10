@@ -40,7 +40,7 @@ export class ShopComponent implements OnInit {
               private snackBarService: SnackBarService,
               private changeDetectorRef: ChangeDetectorRef,
               public dialog: MatDialog,
-              @Inject('Window') private window: Window,
+              @Inject('Window') public window: Window,
               @Inject(DOCUMENT) private document: Document,
               private globalSearchService: GlobalSearchService) {
     //this.getShopItems(this.searchTerm);
