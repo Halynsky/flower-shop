@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpParams } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { API_URL } from "../../utils/Costants";
 import { RestPage } from "../models/RestPage";
 import { WarehouseOperation } from "../models/WarehouseOperation";
@@ -14,7 +14,7 @@ export class WarehouseOperationService {
   constructor(private  http: HttpClient) {}
 
   getAll(params, pagination) {
-    params = Object.assign(params, ...pagination);
+    params = Object.assign(params, pagination);
     return this.http.get<RestPage<WarehouseOperation>>(`${this.URL}`, {params: params});
   }
 

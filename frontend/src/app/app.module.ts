@@ -1,17 +1,10 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { LOCALE_ID, NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
-import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { routing } from "./app.routing";
 import { LayoutComponent } from "./layout/layout.component";
 import { LandingModule } from "./components/landing/landing.module";
-import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogConfig, MatDialogModule, MatIconModule, MatIconRegistry, MatProgressSpinnerModule } from '@angular/material';
 import { LayoutModule } from "./layout/layout.module";
-import { DatePipe, registerLocaleData } from '@angular/common';
 import localeRuUa from '@angular/common/locales/uk';
-import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { RouterModule } from "@angular/router";
 import { SharedModule } from "./components/shared/shared.module";
 import { MainInterceptor } from "./inteceptors/main.interceptor";
@@ -24,7 +17,16 @@ import { ShopFilterDialogComponent } from "./components/shared/shop-filter-dialo
 import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
 import { AddToBucketDialogComponent } from "./components/shared/add-to-bucket-dialog/add-to-bucket-dialog.component";
 import { HowToPayDialogComponent } from "./components/shared/how-to-pay-dialog/how-to-pay-dialog.component";
-import { PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface, PerfectScrollbarModule } from "ngx-perfect-scrollbar";
+import { PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface } from "ngx-perfect-scrollbar";
+import { DatePipe, registerLocaleData } from "@angular/common";
+import { LOCALE_ID, NgModule } from "@angular/core";
+import { ServiceWorkerModule } from "@angular/service-worker";
+import { BrowserModule } from "@angular/platform-browser";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
+import { MatIconModule, MatIconRegistry } from "@angular/material/icon";
+import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogConfig, MatDialogModule } from "@angular/material/dialog";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
 registerLocaleData(localeRuUa);
 
@@ -66,7 +68,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatIconModule,
     MatDialogModule,
     MatProgressSpinnerModule,
-    PerfectScrollbarModule,
+    // PerfectScrollbarModule,
     // Developed modules
     LayoutModule,
     LandingModule,
@@ -89,7 +91,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       provide: AuthServiceConfig,
       useFactory: getAuthServiceConfigs
     },
-    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {...new MatDialogConfig(), panelClass: 'modal-panel-class', maxWidth: '', disableClose: true, autoFocus: false, maxHeight: '100vh'} as MatDialogConfig},
+    {
+      provide: MAT_DIALOG_DEFAULT_OPTIONS,
+      useValue: {...new MatDialogConfig(), panelClass: 'modal-panel-class', maxWidth: '', disableClose: true, autoFocus: false, maxHeight: '100vh'} as MatDialogConfig},
     {
       provide: STEPPER_GLOBAL_OPTIONS,
       useValue: { displayDefaultIndicatorType: false }

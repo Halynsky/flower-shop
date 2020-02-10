@@ -13,7 +13,7 @@ export class OrderService {
   constructor(private http: HttpClient) {}
 
   getAllForAdmin(params, pagination) {
-    params = Object.assign(params, ...pagination);
+    params = Object.assign(params, pagination);
     return this.http.get<RestPage<OrderAdmin>>(`${this.URL}/forAdmin`, {params: params});
   }
 
@@ -62,7 +62,7 @@ export class OrderService {
   }
 
   exportPageToExcel(params, pagination) {
-    params = Object.assign(params, ...pagination);
+    params = Object.assign(params, pagination);
     return this.http.get(`${this.URL}/export/excel`, {responseType: 'blob', observe: 'response', params: params});
   }
 

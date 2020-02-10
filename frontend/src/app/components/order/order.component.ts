@@ -4,7 +4,6 @@ import { BucketLocalService } from "../../services/bucket-local.service";
 import { DeliveryType, deliveryTypeOptions } from 'app/models/DeliveryType';
 import { OrderService } from "../../api/services/order.service";
 import { SecurityService } from "../../services/security.service";
-import { MatAutocompleteSelectedEvent, MatDialog, MatRadioChange } from "@angular/material";
 import { Observable, of, Subject, Subscription } from "rxjs";
 import { finalize, takeUntil, timeout } from "rxjs/operators";
 import { OrderRequest } from "../../api/models/Order";
@@ -12,6 +11,9 @@ import { SnackBarService } from "../../services/snak-bar.service";
 import { getErrorMessage } from "../../utils/Functions";
 import { NovaPoshtaService } from "../../api/services/nova-poshta.service";
 import { StepperSelectionEvent } from "@angular/cdk/stepper";
+import { MatDialog } from "@angular/material/dialog";
+import { MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
+import { MatRadioChange } from "@angular/material/radio";
 
 @Component({
   selector: 'order',
@@ -48,7 +50,7 @@ export class OrderComponent implements OnInit, OnDestroy {
 
   constructor(private formBuilder: FormBuilder,
               public bucketLocalService: BucketLocalService,
-              private securityService: SecurityService,
+              public securityService: SecurityService,
               private orderService: OrderService,
               public snackBarService: SnackBarService,
               public dialog: MatDialog,

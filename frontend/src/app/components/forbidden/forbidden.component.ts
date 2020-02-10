@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
 import { SecurityService } from "../../services/security.service";
-import { MatDialog } from "@angular/material";
 import { AuthDialogComponent } from "../shared/auth-dialog/auth-dialog.component";
+import { Component, OnInit } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: 'forbidden',

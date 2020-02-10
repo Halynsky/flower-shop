@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { MatIconRegistry } from "@angular/material";
 import { SwUpdate } from "@angular/service-worker";
 import { interval } from "rxjs";
-
 import * as moment from 'moment'
 import 'moment/locale/uk'
+import { MatIconRegistry } from "@angular/material/icon";
 
 @Component({
   selector: 'app-root',

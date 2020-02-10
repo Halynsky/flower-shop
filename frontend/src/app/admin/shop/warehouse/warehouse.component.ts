@@ -17,7 +17,7 @@ import { Router } from "@angular/router";
 })
 export class WarehouseComponent implements OnInit {
 
-  @ViewChild('dt', { static: false }) private table: Table;
+  @ViewChild('dt') private table: Table;
 
   ItemSaveMode = ItemSaveMode;
 

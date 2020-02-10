@@ -25,7 +25,7 @@ import { dataTableFilter } from "../../util";
 })
 export class OrdersComponent implements OnInit {
 
-  @ViewChild('dt', { static: false }) private table: Table;
+  @ViewChild('dt') private table: Table;
   displayStatusChangeDialog = false;
   displayContactsChangeDialog = false;
   displayNoteChangeDialog = false;

@@ -14,7 +14,7 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   getForAdmin(params, pagination) {
-    params = Object.assign(params, ...pagination);
+    params = Object.assign(params, pagination);
     return this.http.get<RestPage<UserForAdmin>>(`${this.URL}/forAdmin`, {params: params});
   }
 

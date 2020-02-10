@@ -21,7 +21,7 @@ import { FlowerTypeService } from "../../../api/services/flower-type.service";
 })
 export class WarehouseOperationsComponent implements OnInit {
 
-  @ViewChild('dt', { static: false }) private table: Table;
+  @ViewChild('dt') private table: Table;
 
   ItemSaveMode = ItemSaveMode;
   WarehouseOperationType = WarehouseOperationType;

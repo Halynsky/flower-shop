@@ -1,15 +1,14 @@
-import { Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren } from '@angular/core';
 import { FlowerTypeService } from "../../../api/services/flower-type.service";
 import { SnackBarService } from "../../../services/snak-bar.service";
 import { SizeService } from "../../../api/services/size.service";
-import { MatCheckbox, MatCheckboxChange } from "@angular/material";
 import { ColorService } from "../../../api/services/color.service";
 import { FlowerType } from "../../../api/models/FlowerType";
 import { Color } from "../../../api/models/Color";
 import { ShopFilter } from "../../../api/models/ShopFilter";
-import { ActivatedRoute, Router } from "@angular/router";
-import { Location } from "@angular/common";
 import { getErrorMessage } from "../../../utils/Functions";
+import { Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren } from "@angular/core";
+import { MatCheckbox, MatCheckboxChange } from "@angular/material/checkbox";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: 'shop-filters',
@@ -32,8 +31,7 @@ export class ShopFiltersComponent implements OnInit {
               private colorService: ColorService,
               private snackBarService: SnackBarService,
               private route: ActivatedRoute,
-              private router: Router,
-              private location: Location) {
+              private router: Router) {
 
     flowerTypeService.getAll().subscribe(
       flowerTypes => this.flowerTypes = flowerTypes,

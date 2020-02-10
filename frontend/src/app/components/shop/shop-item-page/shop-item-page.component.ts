@@ -7,8 +7,8 @@ import { SnackBarService } from "../../../services/snak-bar.service";
 import { getErrorMessage } from "../../../utils/Functions";
 import { BucketItem } from "../../../models/Bucket";
 import { BucketDialogComponent } from "../../shared/bucket-dialog/bucket-dialog.component";
-import { MatDialog } from "@angular/material";
 import { FLOWER_IMAGE_PLACEHOLDER } from "../../../utils/Costants";
+import { MatDialog } from "@angular/material/dialog";
 
 
 @Component({
@@ -25,7 +25,7 @@ export class ShopItemPageComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private flowerService: FlowerService,
-              private bucketLocalService: BucketLocalService,
+              public bucketLocalService: BucketLocalService,
               private snackBarService: SnackBarService,
               public dialog: MatDialog) {
     this.route.params.subscribe(params => {

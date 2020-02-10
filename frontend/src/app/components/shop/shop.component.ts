@@ -5,12 +5,12 @@ import { SnackBarService } from "../../services/snak-bar.service";
 import { ShopFilter } from "../../api/models/ShopFilter";
 import { Pagination } from "../../api/models/Pagination";
 import { RestPage } from "../../api/models/RestPage";
-import { MatDialog, MatDialogRef } from "@angular/material";
 import { ShopFilterDialogComponent } from "../shared/shop-filter-dialog/shop-filter-dialog.component";
 import { finalize } from "rxjs/operators";
 import { getErrorMessage } from "../../utils/Functions";
 import { DOCUMENT } from "@angular/common";
 import { GlobalSearchService } from "../../services/global-search.service";
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 
 @Component({
   selector: 'shop',
@@ -40,7 +40,7 @@ export class ShopComponent implements OnInit {
               private snackBarService: SnackBarService,
               private changeDetectorRef: ChangeDetectorRef,
               public dialog: MatDialog,
-              @Inject('Window') private window: Window,
+              @Inject('Window') public window: Window,
               @Inject(DOCUMENT) private document: Document,
               private globalSearchService: GlobalSearchService) {
     //this.getShopItems(this.searchTerm);

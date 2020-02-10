@@ -35,7 +35,7 @@ import { saveAs } from 'file-saver';
 })
 export class FlowersComponent implements OnInit {
 
-  @ViewChild('dt', { static: false }) private table: Table;
+  @ViewChild('dt') private table: Table;
 
   ItemSaveMode = ItemSaveMode;
 
@@ -98,7 +98,7 @@ export class FlowersComponent implements OnInit {
               private snackBarService: SnackBarService,
               private confirmationService: ConfirmationService,
               private router: Router,
-              private translation: TranslationService,
+              public translation: TranslationService,
               private route: ActivatedRoute) {
     this.getTypes();
   }

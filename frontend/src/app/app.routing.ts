@@ -22,16 +22,16 @@ const routes: Routes = [
           { path: 'purchases', component: PurchaseHistoryComponent},
           { path: 'favourite-articles', component: FavouriteArticlesComponent}
         ] },
-      { path: 'order', loadChildren: './components/order/order.module#OrderModule'},
-      { path: 'confirm', loadChildren: './components/confirmation/confirmation.module#ConfirmationModule'},
-      { path: 'shop', loadChildren: './components/shop/shop.module#ShopModule'},
+      { path: 'order', loadChildren: () => import('./components/order/order.module').then(m => m.OrderModule)},
+      { path: 'confirm', loadChildren: () => import('./components/confirmation/confirmation.module').then(m => m.ConfirmationModule)},
+      { path: 'shop', loadChildren: () => import('./components/shop/shop.module').then(m => m.ShopModule)},
       // { path: 'forum', loadChildren: './components/forum/forum.module#ForumModule'},
-      { path: 'about-us', loadChildren: './components/about-us/about-us.module#AboutUsModule'},
-      { path: '403', loadChildren: './components/forbidden/forbidden.module#ForbiddenModule'},
+      { path: 'about-us', loadChildren: () => import('./components/about-us/about-us.module').then(m => m.AboutUsModule)},
+      { path: '403', loadChildren: () => import('./components/forbidden/forbidden.module').then(m => m.ForbiddenModule)},
       { path: 'terms-and-conditions', component: TermsAndConditionsComponent}
     ]
   },
-  { path: 'admin', loadChildren: './admin/admin.module#AdminModule', canLoad: [AdminPanelGuard]}
+  { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule), canLoad: [AdminPanelGuard]}
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload', useHash: false });
