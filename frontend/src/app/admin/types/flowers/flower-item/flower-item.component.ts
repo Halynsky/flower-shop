@@ -43,6 +43,7 @@ export class FlowerItemComponent implements OnInit {
 
   sizeToAdd: Size;
 
+  isLoaded = true;
   loading = false;
 
   sizeToCreate: Size = new Size();
@@ -62,6 +63,7 @@ export class FlowerItemComponent implements OnInit {
         this.mode = params['mode'];
 
         if (this.mode == ItemSaveMode.edit) {
+          this.isLoaded = false;
           this.route.queryParams.subscribe(queryParams => {
             if (queryParams['id']) {
               this.getItem(queryParams['id']);

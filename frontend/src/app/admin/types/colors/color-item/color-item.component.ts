@@ -21,6 +21,7 @@ export class ColorItemComponent implements OnInit {
   previousName;
   previousColor;
 
+  isLoaded = true;
   loading = false;
 
   constructor(public dataService: ColorService,
@@ -32,6 +33,7 @@ export class ColorItemComponent implements OnInit {
         this.mode = params['mode'];
 
         if (this.mode == ItemSaveMode.edit) {
+          this.isLoaded = false;
           this.route.queryParams.subscribe(queryParams  => {
             if (queryParams['id'])
               this.getItem(queryParams['id'])
@@ -49,7 +51,7 @@ export class ColorItemComponent implements OnInit {
 
   getItem(id) {
     this.dataService.getById(id)
-      .pipe(finalize(() => this.loading = false))
+      .pipe(finalize(() => this.isLoaded = true ))
       .subscribe(
       item => {
         this.item = item;
@@ -61,8 +63,8 @@ export class ColorItemComponent implements OnInit {
   }
 
   add() {
+    this.loading = true;
     this.dataService.add(this.item)
-      .pipe(finalize(() => this.loading = false))
       .subscribe(
       response => {
         this.snackBarService.showSuccess("Колір успішно створено");
@@ -73,8 +75,8 @@ export class ColorItemComponent implements OnInit {
   }
 
   update() {
+    this.loading = true;
     this.dataService.update(this.item.id, this.item)
-      .pipe(finalize(() => this.loading = false))
       .subscribe(
       response => {
         this.snackBarService.showSuccess("Колір успішно оновлено");

@@ -38,8 +38,7 @@
               "node_modules/@fortawesome/fontawesome-free/scss/solid.scss",
               "node_modules/@fortawesome/fontawesome-free/scss/v4-shims.scss"
             ],
-            "scripts": [
-            ],
+            "scripts": [],
             "stylePreprocessorOptions": {
               "includePaths": [
                 "src"
@@ -74,25 +73,24 @@
               "ngswConfigPath": "ngsw-config.json"
             },
             "stg": {
-                  "optimization": true,
-                  "outputHashing": "all",
-                  "sourceMap": false,
-                  "extractCss": true,
-                  "namedChunks": false,
-                  "extractLicenses": true,
-                  "vendorChunk": false,
-                  "buildOptimizer": true,
-                  "serviceWorker": true,
-                  "ngswConfigPath": "ngsw-config.json",
-                  "fileReplacements": [
-                      {
-                          "replace": "src/environments/environment.ts",
-                          "with": "src/environments/environment.stg.ts"
-                      }
-                  ]
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "serviceWorker": true,
+              "ngswConfigPath": "ngsw-config.json",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.stg.ts"
+                }
+              ]
+            }
           }
-          }
-
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -174,5 +172,8 @@
       }
     }
   },
-  "defaultProject": "frontend"
+  "defaultProject": "frontend",
+  "cli": {
+    "analytics": "cfbd99d8-213f-4bf3-97eb-185091b91707"
+  }
 }
