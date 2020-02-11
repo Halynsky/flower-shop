@@ -45,7 +45,7 @@ export class FlowerItemComponent implements OnInit {
 
   sizeToAdd: Size;
 
-  isLoaded = false;
+  initialized = false;
   loading = false;
 
   sizeToCreate: Size = new Size();
@@ -65,7 +65,6 @@ export class FlowerItemComponent implements OnInit {
         this.mode = params.mode;
 
         if (this.mode === ItemSaveMode.edit) {
-          this.isLoaded = false;
           this.route.queryParams.subscribe(queryParams => {
             if (queryParams.id) {
               this.propertyId = queryParams.id;
@@ -78,26 +77,23 @@ export class FlowerItemComponent implements OnInit {
 
     let requests: Observable<any>[] = [this.flowerTypeService.getAll(), this.colorService.getForAdmin(), this.sizeService.getAll()];
     if (this.mode === ItemSaveMode.edit)
-      requests.push(this.dataService.getById(this.propertyId))
+      requests.push(this.dataService.getById(this.propertyId));
     forkJoin(requests)
-      .pipe(finalize(() => this.isLoaded = true))
+      .pipe(finalize(() => this.initialized = true))
       .subscribe(
         (res) => {
           this.flowerTypes = res[0];
           this.colors = res[1];
           this.sizes = res[2];
-          if (res.length > 3) {
-            res[3].flowerSizes.forEach(fs => fs.price = fs.price / 100);
-            // this.item = res[3];
-            console.log(res[3]);
-            this.previousNameOriginal = res[3].nameOriginal;
-            this.previousName = res[3].name;
-
+          if (this.mode === ItemSaveMode.edit) {
+            this.item = res[3];
+            this.item .flowerSizes.forEach(fs => fs.price = fs.price / 100);
+            this.previousNameOriginal = this.item .nameOriginal;
+            this.previousName = this.item .name;
           }
         },
         error => this.snackBarService.showError(getErrorMessage(error))
       );
-      this.getItem(this.propertyId)
   }
 
   ngOnInit() {
@@ -111,7 +107,7 @@ export class FlowerItemComponent implements OnInit {
   }
 
   getAllColors() {
-    this.isLoaded = true;
+    this.initialized = true;
     this.colorService.getForAdmin().subscribe(
       colors => this.colors = colors,
       error => this.snackBarService.showError(getErrorMessage(error))

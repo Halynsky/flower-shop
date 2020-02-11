@@ -1,7 +1,7 @@
-<div class="loading-spinner" *ngIf="!isLoaded">
+<div class="loading-spinner" *ngIf="!initialized">
   <p-progressSpinner></p-progressSpinner>
 </div>
-<div class="wrapper" *ngIf="isLoaded">
+<div class="wrapper" *ngIf="initialized">
   <div class="panel-header item ui-grid-col-7">
     <button pButton icon="fa fa-arrow-left" class="button-back" label="Назад" routerLink="../../"></button>
     <h1>{{mode == ItemSaveMode.new ? 'Додати' : 'Оновити'}} <b>Квітку</b></h1>
