@@ -18,7 +18,9 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     Optional<Order> findById(Long id);
 
-    @Query("SELECT o FROM Order o " +
+    @Query("SELECT DISTINCT(o.id) as id, o.created as created, o.closed as closed, o.status as status, o.user as user, " +
+        "o.comment as comment, o.note as note, o.deliveryAddress as deliveryAddress, o.postDeclaration as postDeclaration, " +
+        "o.paid as paid, o.phone as phone, o.totalPrice as totalPrice, o.discount as discount, (o.totalPrice - o.discount) as priceToPay FROM Order o " +
         "LEFT JOIN o.user u " +
         "WHERE (:id IS null OR o.id = :id) " +
         "AND (:userId IS null OR u.id = :userId) " +
@@ -26,7 +28,8 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
         "AND (:phonePart IS null OR lower(o.phone) LIKE '%' || lower(cast(:phonePart as string)) || '%' ) " +
         "AND (COALESCE(:statusNames, NULL) IS NULL OR CAST(o.status as string) IN :statusNames) " +
         "AND ((CAST(:createdFrom AS date) IS null OR CAST(:createdTo AS date) IS null) OR o.created BETWEEN :createdFrom AND :createdTo) " +
-        "AND ((CAST(:closedFrom AS date) IS null OR CAST(:closedTo AS date) IS null) OR o.closed BETWEEN :closedFrom AND :closedTo) ")
+        "AND ((CAST(:closedFrom AS date) IS null OR CAST(:closedTo AS date) IS null) OR o.closed BETWEEN :closedFrom AND :closedTo) " +
+        "GROUP BY o.id, o.created, o.closed, o.status, o.user, o.comment, o.note, o.deliveryAddress, o.postDeclaration, o.paid, o.phone, o.totalPrice, o.discount, u")
     Page<OrderAdminProjection> findForAdminProjectedByFilters(Long id, List<String> statusNames, Long userId, String userNamePart, String phonePart,
                                                               LocalDateTime createdFrom, LocalDateTime createdTo, LocalDateTime closedFrom, LocalDateTime closedTo,
                                                               Pageable pageRequest);
