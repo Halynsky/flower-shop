@@ -18,7 +18,7 @@ import { NgForm } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
 import { Group } from '../../../../api/models/Group';
 import { GroupService } from '../../../../api/services/group.service';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Observable } from "rxjs";
 
 @Component({
   selector: 'flower-item',
@@ -76,9 +76,10 @@ export class FlowerItemComponent implements OnInit {
       }
     );
 
-    forkJoin(this.mode === ItemSaveMode.new ?
-      [this.flowerTypeService.getAll(), this.colorService.getForAdmin(), this.sizeService.getAll()]
-      : [this.flowerTypeService.getAll(), this.colorService.getForAdmin(), this.sizeService.getAll(), this.dataService.getById(this.propertyId)])
+    let requests: Observable<any>[] = [this.flowerTypeService.getAll(), this.colorService.getForAdmin(), this.sizeService.getAll()];
+    if (this.mode === ItemSaveMode.edit)
+      requests.push(this.dataService.getById(this.propertyId))
+    forkJoin(requests)
       .pipe(finalize(() => this.isLoaded = true))
       .subscribe(
         (res) => {
@@ -87,17 +88,34 @@ export class FlowerItemComponent implements OnInit {
           this.sizes = res[2];
           if (res.length > 3) {
             res[3].flowerSizes.forEach(fs => fs.price = fs.price / 100);
-            this.item = res[3];
+            // this.item = res[3];
+            console.log(res[3]);
             this.previousNameOriginal = res[3].nameOriginal;
             this.previousName = res[3].name;
+
           }
         },
         error => this.snackBarService.showError(getErrorMessage(error))
       );
-
+      this.getItem(this.propertyId)
   }
 
   ngOnInit() {
+  }
+
+  getAllFlowerTypes() {
+    this.flowerTypeService.getAll().subscribe(
+      flowerTypes => this.flowerTypes = flowerTypes,
+      error => this.snackBarService.showError(getErrorMessage(error))
+    );
+  }
+
+  getAllColors() {
+    this.isLoaded = true;
+    this.colorService.getForAdmin().subscribe(
+      colors => this.colors = colors,
+      error => this.snackBarService.showError(getErrorMessage(error))
+    );
   }
 
   getAllSizes() {
@@ -126,6 +144,7 @@ export class FlowerItemComponent implements OnInit {
           this.previousNameOriginal = item.nameOriginal;
           this.previousName = item.name;
           this.getAllGroupsForFlowerType(this.item.flowerType.id);
+          console.log(item)
         },
         error => this.snackBarService.showError(getErrorMessage(error))
       )
