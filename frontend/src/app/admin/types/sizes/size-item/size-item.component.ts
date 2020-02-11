@@ -4,8 +4,8 @@ import { SizeService } from "../../../../api/services/size.service";
 import { SnackBarService } from "../../../../services/snak-bar.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { getErrorMessage } from "../../../../utils/Functions";
-import { ItemSaveMode } from "../../../../models/ItemSaveMode";
-import { finalize } from "rxjs/operators";
+import { ItemSaveMode } from '../../../../models/ItemSaveMode';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'size-item',
@@ -20,6 +20,7 @@ export class SizeItemComponent implements OnInit {
   previousName;
 
   loading = false;
+  isLoaded = true;
 
   constructor(public dataService: SizeService,
               private snackBarService: SnackBarService,
@@ -30,6 +31,7 @@ export class SizeItemComponent implements OnInit {
         this.mode = params['mode'];
 
         if (this.mode == ItemSaveMode.edit) {
+          this.isLoaded = false;
           this.route.queryParams.subscribe(queryParams  => {
             if (queryParams['id'])
               this.getItem(queryParams['id'])
@@ -45,7 +47,7 @@ export class SizeItemComponent implements OnInit {
 
   getItem(id) {
     this.dataService.getById(id)
-      .pipe(finalize(() => this.loading = false))
+      .pipe(finalize(() => this.isLoaded = true ))
       .subscribe(
       item => {
         this.item = item;
@@ -56,6 +58,7 @@ export class SizeItemComponent implements OnInit {
   }
 
   add() {
+    this.loading = true;
     this.dataService.add(this.item)
       .pipe(finalize(() => this.loading = false))
       .subscribe(
@@ -68,6 +71,7 @@ export class SizeItemComponent implements OnInit {
   }
 
   update() {
+    this.loading = true;
     this.dataService.update(this.item.id, this.item)
       .pipe(finalize(() => this.loading = false))
       .subscribe(

@@ -12,6 +12,7 @@ import { TranslationService } from "../../../../utils/translation.service";
 import { FlowerFull } from "../../../../api/models/Flower";
 import { FlowerService } from "../../../../api/services/flower.service";
 import { Location } from '@angular/common';
+import { finalize } from "rxjs/operators";
 
 @Component({
   selector: 'warehouse-operation-item',
@@ -37,6 +38,9 @@ export class WarehouseOperationItemComponent {
 
   initialFlowerId;
   initialSizeId;
+
+  isLoaded = false;
+  loading = false;
 
   constructor(public dataService: WarehouseOperationService,
               private snackBarService: SnackBarService,
@@ -78,7 +82,9 @@ export class WarehouseOperationItemComponent {
   }
 
   getFlowersSizeById(id) {
-    this.flowerService.getFlowerSizesById(id).subscribe(items => {
+    this.flowerService.getFlowerSizesById(id)
+      .pipe(finalize(() => this.isLoaded = true ))
+      .subscribe(items => {
         this.sizeOptions = items;
         console.log("SIZE ID", this.initialSizeId);
         if (this.initialSizeId) {
@@ -96,13 +102,21 @@ export class WarehouseOperationItemComponent {
         if (this.initialFlowerId) {
           this.flowerChosen = this.flowersOptions.find(item => item.id == this.initialFlowerId);
           this.getFlowersSizeById(this.flowerChosen.id)
+        } else {
+          this.isLoaded = true;
         }
       },
-      error => this.snackBarService.showError(getErrorMessage(error)))
+      error => {
+        this.snackBarService.showError(getErrorMessage(error));
+        this.isLoaded = true;
+      })
   }
 
   add() {
-    this.dataService.add(this.item).subscribe(
+    this.loading = true;
+    this.dataService.add(this.item)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(
       response => {
         this.snackBarService.showSuccess("Товарну операцію успішно створено");
         this.location.back();

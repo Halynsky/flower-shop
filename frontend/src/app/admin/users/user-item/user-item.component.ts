@@ -51,10 +51,7 @@ export class UserItemComponent implements OnInit {
 
   getItem(id) {
     this.dataService.getById(id)
-      .pipe(finalize(() => {
-        this.loading = false;
-        this.isLoaded = true;
-      } ))
+      .pipe(finalize(() => this.isLoaded = true))
       .subscribe(
       item => {
         this.item = item;
@@ -65,6 +62,7 @@ export class UserItemComponent implements OnInit {
   }
 
   create() {
+    this.loading = true;
     this.dataService.create(this.item)
       .pipe(finalize(() => this.loading = false))
       .subscribe(
@@ -77,6 +75,7 @@ export class UserItemComponent implements OnInit {
   }
 
   update() {
+    this.loading = true;
     this.dataService.update(this.item.id, this.item)
       .pipe(finalize(() => this.loading = false))
       .subscribe(

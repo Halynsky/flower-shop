@@ -123,8 +123,7 @@
 
       <div class="ui-grid-row ui-grid-field">
         <div class="ui-grid-col-8 footer">
-          <button type="submit" pButton icon="pi pi-check" class="ui-button-success" label="{{mode == ItemSaveMode.new ? 'Зберегти' : 'Оновити'}}" [disabled]="loading"></button>
-        </div>
+          <button type="submit" pButton icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" class="ui-button-success" label="{{mode == ItemSaveMode.new ? 'Зберегти' : 'Оновити'}}" [disabled]="loading"></button>        </div>
       </div>
 
     </form>

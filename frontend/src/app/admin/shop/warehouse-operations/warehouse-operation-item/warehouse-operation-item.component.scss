@@ -5,6 +5,14 @@
   max-width: 1000px;
   display: flex;
   flex-direction: column;
+
+  .loading-spinner {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin-top: 250px;
+  }
+
 }
 
 

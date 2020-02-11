@@ -65,6 +65,7 @@ export class ColorItemComponent implements OnInit {
   add() {
     this.loading = true;
     this.dataService.add(this.item)
+      .pipe(finalize(() => this.loading = false))
       .subscribe(
       response => {
         this.snackBarService.showSuccess("Колір успішно створено");
@@ -77,6 +78,7 @@ export class ColorItemComponent implements OnInit {
   update() {
     this.loading = true;
     this.dataService.update(this.item.id, this.item)
+      .pipe(finalize(() => this.loading = false))
       .subscribe(
       response => {
         this.snackBarService.showSuccess("Колір успішно оновлено");

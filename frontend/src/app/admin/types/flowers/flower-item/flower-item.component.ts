@@ -1,23 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { SnackBarService } from "../../../../services/snak-bar.service";
-import { ActivatedRoute, Router } from "@angular/router";
-import { clone, getErrorMessage } from "../../../../utils/Functions";
-import { ItemSaveMode } from "../../../../models/ItemSaveMode";
-import { FlowerTypeService } from "../../../../api/services/flower-type.service";
-import { FlowerFull } from "../../../../api/models/Flower";
-import { FlowerService } from "../../../../api/services/flower.service";
-import { FlowerType } from "../../../../api/models/FlowerType";
-import { ColorService } from "../../../../api/services/color.service";
-import { Color } from "../../../../api/models/Color";
-import { DatePipe } from "@angular/common";
-import { SizeService } from "../../../../api/services/size.service";
-import { Size } from "../../../../api/models/Size";
-import { FlowerSize } from "../../../../api/models/FlowerSize";
-import { TranslationService } from "../../../../utils/translation.service";
-import { NgForm } from "@angular/forms";
-import { finalize } from "rxjs/operators";
-import { Group } from "../../../../api/models/Group";
-import { GroupService } from "../../../../api/services/group.service";
+import { SnackBarService } from '../../../../services/snak-bar.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { clone, getErrorMessage } from '../../../../utils/Functions';
+import { ItemSaveMode } from '../../../../models/ItemSaveMode';
+import { FlowerTypeService } from '../../../../api/services/flower-type.service';
+import { FlowerFull } from '../../../../api/models/Flower';
+import { FlowerService } from '../../../../api/services/flower.service';
+import { FlowerType } from '../../../../api/models/FlowerType';
+import { ColorService } from '../../../../api/services/color.service';
+import { Color } from '../../../../api/models/Color';
+import { DatePipe } from '@angular/common';
+import { SizeService } from '../../../../api/services/size.service';
+import { Size } from '../../../../api/models/Size';
+import { FlowerSize } from '../../../../api/models/FlowerSize';
+import { TranslationService } from '../../../../utils/translation.service';
+import { NgForm } from '@angular/forms';
+import { finalize } from 'rxjs/operators';
+import { Group } from '../../../../api/models/Group';
+import { GroupService } from '../../../../api/services/group.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'flower-item',
@@ -34,6 +35,7 @@ export class FlowerItemComponent implements OnInit {
   mode: ItemSaveMode = ItemSaveMode.new;
   private newImage: File;
 
+  propertyId;
   flowerTypes: FlowerType[] = [];
   groups: Group[] = [];
   item: FlowerFull = new FlowerFull();
@@ -43,7 +45,7 @@ export class FlowerItemComponent implements OnInit {
 
   sizeToAdd: Size;
 
-  isLoaded = true;
+  isLoaded = false;
   loading = false;
 
   sizeToCreate: Size = new Size();
@@ -60,13 +62,13 @@ export class FlowerItemComponent implements OnInit {
               public datepipe: DatePipe) {
     this.route.params.subscribe(
       params => {
-        this.mode = params['mode'];
+        this.mode = params.mode;
 
-        if (this.mode == ItemSaveMode.edit) {
+        if (this.mode === ItemSaveMode.edit) {
           this.isLoaded = false;
           this.route.queryParams.subscribe(queryParams => {
-            if (queryParams['id']) {
-              this.getItem(queryParams['id']);
+            if (queryParams.id) {
+              this.propertyId = queryParams.id;
             }
           })
         }
@@ -74,34 +76,36 @@ export class FlowerItemComponent implements OnInit {
       }
     );
 
-    this.getAllFlowerTypes();
-    this.getAllColors();
-    this.getAllSizes();
+    forkJoin(this.mode === ItemSaveMode.new ?
+      [this.flowerTypeService.getAll(), this.colorService.getForAdmin(), this.sizeService.getAll()]
+      : [this.flowerTypeService.getAll(), this.colorService.getForAdmin(), this.sizeService.getAll(), this.dataService.getById(this.propertyId)])
+      .pipe(finalize(() => this.isLoaded = true))
+      .subscribe(
+        (res) => {
+          this.flowerTypes = res[0];
+          this.colors = res[1];
+          this.sizes = res[2];
+          if (res.length > 3) {
+            res[3].flowerSizes.forEach(fs => fs.price = fs.price / 100);
+            this.item = res[3];
+            this.previousNameOriginal = res[3].nameOriginal;
+            this.previousName = res[3].name;
+          }
+        },
+        error => this.snackBarService.showError(getErrorMessage(error))
+      );
 
   }
 
   ngOnInit() {
   }
 
-  getAllFlowerTypes() {
-    this.flowerTypeService.getAll().subscribe(
-      flowerTypes => this.flowerTypes = flowerTypes,
-      error => this.snackBarService.showError(getErrorMessage(error))
-    );
-  }
-
-  getAllColors() {
-    this.colorService.getForAdmin().subscribe(
-      colors => this.colors = colors,
-      error => this.snackBarService.showError(getErrorMessage(error))
-    );
-  }
-
   getAllSizes() {
-    this.sizeService.getAll().subscribe(
-      sizes => this.sizes = sizes,
-      error => this.snackBarService.showError(getErrorMessage(error))
-    );
+    return this.sizeService.getAll()
+      .subscribe(
+        sizes => this.sizes = sizes,
+        error => this.snackBarService.showError(getErrorMessage(error))
+      );
   }
 
   getAllGroupsForFlowerType(flowerTypeId: number) {
@@ -116,20 +120,21 @@ export class FlowerItemComponent implements OnInit {
     this.dataService.getById(id)
       .pipe(finalize(() => this.loading = false))
       .subscribe(
-      item => {
-        item.flowerSizes.forEach(fs => fs.price = fs.price / 100);
-        this.item = item;
-        this.previousNameOriginal = item.nameOriginal;
-        this.previousName = item.name;
-        this.getAllGroupsForFlowerType(this.item.flowerType.id);
-      } ,
-      error => this.snackBarService.showError(getErrorMessage(error))
-    )
+        item => {
+          item.flowerSizes.forEach(fs => fs.price = fs.price / 100);
+          this.item = item;
+          this.previousNameOriginal = item.nameOriginal;
+          this.previousName = item.name;
+          this.getAllGroupsForFlowerType(this.item.flowerType.id);
+        },
+        error => this.snackBarService.showError(getErrorMessage(error))
+      )
   }
 
   create() {
+    this.loading = true;
     const formData: FormData = new FormData();
-    let item = clone(this.item);
+    const item = clone(this.item);
     item.flowerSizes.forEach(fs => fs.price = fs.price * 100);
     item.popularity = item.popularity ? item.popularity : 0;
     formData.append('data', JSON.stringify(item));
@@ -139,17 +144,18 @@ export class FlowerItemComponent implements OnInit {
     this.dataService.create(formData)
       .pipe(finalize(() => this.loading = false))
       .subscribe(
-      response => {
-        this.snackBarService.showSuccess("'Квітку' успішно створено");
-        this.router.navigate(['../../'], {relativeTo: this.route})
-      },
-      error => this.snackBarService.showError(getErrorMessage(error))
-    )
+        response => {
+          this.snackBarService.showSuccess('\'Квітку\' успішно створено');
+          this.router.navigate(['../../'], {relativeTo: this.route})
+        },
+        error => this.snackBarService.showError(getErrorMessage(error))
+      )
   }
 
   update() {
+    this.loading = true;
     const formData: FormData = new FormData();
-    let item = clone(this.item);
+    const item = clone(this.item);
     item.flowerSizes.forEach(fs => fs.price = fs.price * 100);
     item.popularity = item.popularity ? item.popularity : 0;
     formData.append('data', JSON.stringify(item));
@@ -159,18 +165,19 @@ export class FlowerItemComponent implements OnInit {
     this.dataService.update(this.item.id, formData)
       .pipe(finalize(() => this.loading = false))
       .subscribe(
-      response => {
-        this.snackBarService.showSuccess("'Квітку' успішно оновлено");
-        this.router.navigate(['../../'], {relativeTo: this.route})
-      },
-      error => {
-        this.snackBarService.showError(getErrorMessage(error));
-        this.getItem(item.id);
-      }
-    )
+        response => {
+          this.snackBarService.showSuccess('\'Квітку\' успішно оновлено');
+          this.router.navigate(['../../'], {relativeTo: this.route})
+        },
+        error => {
+          this.snackBarService.showError(getErrorMessage(error));
+          this.getItem(item.id);
+        }
+      )
   }
 
   onSubmit() {
+    console.log("Submitted")
     this.mode == ItemSaveMode.new ? this.create() : this.update()
   }
 
@@ -193,14 +200,14 @@ export class FlowerItemComponent implements OnInit {
       return;
     }
 
-    let found = this.item.flowerSizes.find(item => item.size.id == this.sizeToAdd.id);
+    const found = this.item.flowerSizes.find(item => item.size.id == this.sizeToAdd.id);
 
     if (found) {
       this.snackBarService.showWarning('Обраний Розмір вже додано');
       return;
     }
 
-    let flowerSize = new FlowerSize();
+    const flowerSize = new FlowerSize();
     flowerSize.size = this.sizeToAdd;
 
     this.item.flowerSizes.push(flowerSize);
@@ -212,13 +219,13 @@ export class FlowerItemComponent implements OnInit {
     this.sizeService.add(this.sizeToCreate)
       .pipe(finalize(() => this.loading = false))
       .subscribe(
-      response => {
-        this.displayAddSizeDialog = false;
-        this.snackBarService.showSuccess("Розмір успішно створено");
-        this.getAllSizes();
-      },
-      error => this.snackBarService.showError(getErrorMessage(error))
-    )
+        response => {
+          this.displayAddSizeDialog = false;
+          this.snackBarService.showSuccess('Розмір успішно створено');
+          this.getAllSizes();
+        },
+        error => this.snackBarService.showError(getErrorMessage(error))
+      )
   }
 
   resetAddSizeForm(form: NgForm) {
