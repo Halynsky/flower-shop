@@ -76,6 +76,8 @@ export class AddToBucketDialogComponent implements OnInit {
     return this.bucketItems.reduce(((accumulator, item) => accumulator + item.amount), 0)
   }
 
-
+  getTotalPrice() {
+    return this.bucketItems.map(item => item.amount * item.price).reduce((accumulator, currentValue) => accumulator + currentValue)
+  }
 
 }
