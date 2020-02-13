@@ -172,8 +172,5 @@
       }
     }
   },
-  "defaultProject": "frontend",
-  "cli": {
-    "analytics": "cfbd99d8-213f-4bf3-97eb-185091b91707"
-  }
+  "defaultProject": "frontend"
 }
