@@ -39,8 +39,7 @@ export class RangePairValidator implements AsyncValidator {
       if (min) {
         if (control.value > min) {
           return of(null)
-        }
-        {
+        } else {
           return of({[this.error]: true});
         }
       }

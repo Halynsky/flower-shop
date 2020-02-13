@@ -140,8 +140,7 @@ export class FlowerItemComponent implements OnInit {
           this.previousNameOriginal = item.nameOriginal;
           this.previousName = item.name;
           this.getAllGroupsForFlowerType(this.item.flowerType.id);
-          console.log(item)
-        },
+          },
         error => this.snackBarService.showError(getErrorMessage(error))
       )
   }
@@ -192,7 +191,6 @@ export class FlowerItemComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log("Submitted")
     this.mode == ItemSaveMode.new ? this.create() : this.update()
   }
 
@@ -208,7 +206,6 @@ export class FlowerItemComponent implements OnInit {
   }
 
   addFlowerSize() {
-    console.log(this.sizeToAdd);
 
     if (!this.sizeToAdd) {
       this.snackBarService.showWarning('Оберіть розмір квітки який ви хочете додати');
