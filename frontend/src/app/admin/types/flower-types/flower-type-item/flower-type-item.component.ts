@@ -21,6 +21,7 @@ export class FlowerTypeItemComponent implements OnInit {
 
   item: FlowerType = new FlowerType();
 
+  isLoaded = true;
   loading = false;
 
   plantingMaterialTypes = [
@@ -41,7 +42,8 @@ export class FlowerTypeItemComponent implements OnInit {
         this.mode = params['mode'];
 
         if (this.mode == ItemSaveMode.edit) {
-          this.route.queryParams.subscribe(queryParams  => {
+          this.isLoaded = false;
+          this.route.queryParams.subscribe(queryParams => {
             if (queryParams['id'])
               this.getItem(queryParams['id'])
           })
@@ -58,14 +60,17 @@ export class FlowerTypeItemComponent implements OnInit {
   getItem(id) {
     this.loading = true;
     this.dataService.getById(id)
-      .pipe(finalize(() => this.loading = false))
+      .pipe(finalize(() => {
+        this.loading = false;
+        this.isLoaded = true;
+      }))
       .subscribe(
-      item => {
-        this.item = item;
-        this.previousName = item.name;
-      },
-      error => this.snackBarService.showError(getErrorMessage(error))
-    )
+        item => {
+          this.item = item;
+          this.previousName = item.name;
+        },
+        error => this.snackBarService.showError(getErrorMessage(error))
+      )
   }
 
   create() {
@@ -78,12 +83,12 @@ export class FlowerTypeItemComponent implements OnInit {
     this.dataService.create(formData)
       .pipe(finalize(() => this.loading = false))
       .subscribe(
-      response => {
-        this.snackBarService.showSuccess("Тип квітів успішно створено");
-        this.router.navigate(['../../'], {relativeTo: this.route})
-      },
-      error => this.snackBarService.showError(getErrorMessage(error))
-    )
+        response => {
+          this.snackBarService.showSuccess("Тип квітів успішно створено");
+          this.router.navigate(['../../'], {relativeTo: this.route})
+        },
+        error => this.snackBarService.showError(getErrorMessage(error))
+      )
   }
 
   update() {
@@ -96,12 +101,12 @@ export class FlowerTypeItemComponent implements OnInit {
     this.dataService.update(this.item.id, formData)
       .pipe(finalize(() => this.loading = false))
       .subscribe(
-      response => {
-        this.snackBarService.showSuccess("Тип квітів успішно оновлено");
-        this.router.navigate(['../../'], {relativeTo: this.route})
-      },
-      error => this.snackBarService.showError(getErrorMessage(error))
-    )
+        response => {
+          this.snackBarService.showSuccess("Тип квітів успішно оновлено");
+          this.router.navigate(['../../'], {relativeTo: this.route})
+        },
+        error => this.snackBarService.showError(getErrorMessage(error))
+      )
   }
 
   onSubmit() {

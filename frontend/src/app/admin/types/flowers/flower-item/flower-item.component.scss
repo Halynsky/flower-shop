@@ -7,6 +7,13 @@
   flex-direction: column;
   max-width: 1000px;
 
+  .loading-spinner {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin-top: 250px;
+  }
+
   .sizes-block {
     display: flex;
     flex-direction: column;
@@ -27,7 +34,6 @@
       p-dropdown {
         width: 100%;
       }
-
 
 
     }
