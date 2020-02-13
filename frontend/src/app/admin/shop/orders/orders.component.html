@@ -71,8 +71,9 @@
             {{col.header}}
           </th>
 
-          <th *ngSwitchCase="'priceToPay'" >
+          <th *ngSwitchCase="'priceToPay'" [pSortableColumn]="'priceToPay'" >
             {{col.header}}
+            <p-sortIcon [field]="'priceToPay'"></p-sortIcon>
           </th>
 
         </ng-container>
@@ -183,7 +184,7 @@
           </span>
 
           <span *ngSwitchCase="'priceToPay'">
-            {{(rowData['totalPrice'] - rowData['discount']) / 100 + ' грн'}}
+            {{rowData[col.field] / 100 + ' грн'}}
           </span>
 
           <span *ngSwitchCase="'isPaid'">
@@ -734,6 +735,6 @@
 
 <p-dialog [(visible)]="displayZoomDialog" class="zoom-image-dialog" [modal]="false" (onHide)="resetZoomedImage()">
 
-  <div class="zoomed-image" [ngStyle]="{'background-image': 'url(' + zoomedImage + ''}"></div>
+  <div class="zoomed-image" [ngStyle]="{'background-image': 'url(' + zoomedImage + ')'}"></div>
 
 </p-dialog>

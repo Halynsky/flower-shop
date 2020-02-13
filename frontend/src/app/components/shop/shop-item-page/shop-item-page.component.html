@@ -32,6 +32,10 @@
 
         </table>
 
+        <div class="items-total-price-block-wrapper">
+          <div class="items-total-price-block" [ngClass]="{'accent': getTotalPrice() > 0}">Разом на суму: <span class="items-total-price">{{getTotalPrice() / 100}} грн</span></div>
+        </div>
+
         <button mat-flat-button color="accent" class="add-to-card-button" (click)="addToBucket()" [disabled]="!hasAvailableFlowerSize(flower)">
           <i class="material-icons">add_shopping_cart</i>
           <span>Купити</span>

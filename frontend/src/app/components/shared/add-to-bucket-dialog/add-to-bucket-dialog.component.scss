@@ -105,6 +105,29 @@
             }
           }
 
+          .items-total-price-block-wrapper {
+            font-size: 24px;
+            padding-top: 16px;
+            padding-bottom: 16px;
+            margin-top: 4px;
+            border-top: 1px solid $grey-100;
+            text-align: center;
+            color: $grey-600;
+
+            .items-total-price-block {
+              opacity: 0.5;
+              &.accent {
+                opacity: 1;
+              }
+
+              .items-total-price {
+                font-weight: 500;
+                color: $black-400;
+              }
+            }
+
+          }
+
           .add-to-card-button {
             justify-self: center;
             width: 220px;

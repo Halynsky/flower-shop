@@ -20,6 +20,7 @@ import ua.com.flowershop.projection.OrderProjection;
 import ua.com.flowershop.repository.OrderRepository;
 import ua.com.flowershop.security.SecurityService;
 import ua.com.flowershop.service.OrderService;
+import ua.com.flowershop.util.HibernateUtil;
 import ua.com.flowershop.util.PoiExporter;
 import ua.com.flowershop.util.annotation.PageableSwagger;
 
@@ -29,6 +30,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.List;
 
 import static java.util.Objects.nonNull;
@@ -38,6 +40,8 @@ import static ua.com.flowershop.util.Path.ORDERS_PATH;
 @RestController
 @RequestMapping(ORDERS_PATH)
 public class OrderController {
+
+    private static final List<String> unsafeSortingFields =  Arrays.asList("priceToPay");
 
     @Autowired private OrderService orderService;
     @Autowired private OrderRepository orderRepository;
@@ -58,7 +62,7 @@ public class OrderController {
                                                                      @RequestParam(required = false) LocalDateTime closedFrom,
                                                                      @RequestParam(required = false) LocalDateTime closedTo,
                                                                      @PageableDefault(sort = "id", page = 0, size = 10, direction = Sort.Direction.ASC) Pageable pageRequest) {
-        return new ResponseEntity<>(orderRepository.findForAdminProjectedByFilters(id, statusNames, userId, userNamePart, phonePart, createdFrom, createdTo, closedFrom, closedTo, pageRequest), OK);
+        return new ResponseEntity<>(orderRepository.findForAdminProjectedByFilters(id, statusNames, userId, userNamePart, phonePart, createdFrom, createdTo, closedFrom, closedTo, HibernateUtil.replaceUnsafeFields(pageRequest, unsafeSortingFields)), OK);
     }
 
     @PostMapping

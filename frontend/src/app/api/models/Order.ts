@@ -17,6 +17,7 @@ export class OrderAdmin {
   phone: string;
   totalPrice: number;
   discount: number;
+  priceToPay: number;
 }
 
 export class OrderItemAdmin {
