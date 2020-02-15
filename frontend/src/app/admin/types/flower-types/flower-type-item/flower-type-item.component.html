@@ -94,7 +94,7 @@
         <div class="ui-grid-col-3">
           <div class="dropdown-block">
             <p-dropdown [options]="plantingMaterialTypes" id="plantingMaterialType" name="plantingMaterialType" [(ngModel)]="item.plantingMaterialType" placeholder="Оберіть тип матеріалу"
-                         #plantingMaterialType="ngModel" required></p-dropdown>
+                         #plantingMaterialType="ngModel" [required]="true"></p-dropdown>
           </div>
         </div>
         <div class="ui-grid-col-3">

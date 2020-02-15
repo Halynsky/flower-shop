@@ -1,13 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { ProfileService } from "../../../api/services/profile.service";
+import { takeUntil } from "rxjs/operators";
+import { Subject } from "rxjs";
 
 @Component({
   selector: 'confirmation-email-change',
   templateUrl: './confirmation-email-change.component.html',
   styleUrls: ['./confirmation-email-change.component.scss']
 })
-export class ConfirmationEmailChangeComponent implements OnInit {
+export class ConfirmationEmailChangeComponent implements OnInit, OnDestroy {
+
+  private readonly destroyed$ = new Subject<void>();
 
   hasError = false;
   confirmed = false;
@@ -15,7 +19,9 @@ export class ConfirmationEmailChangeComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private profileService: ProfileService) {
 
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe(params => {
       let secretKey = params['secretKey'];
 
       if(secretKey) {
@@ -31,12 +37,18 @@ export class ConfirmationEmailChangeComponent implements OnInit {
   ngOnInit() {
   }
 
+  ngOnDestroy() {
+    this.destroyed$.next();
+    this.destroyed$.complete();
+  }
+
   emailChangeConfirm(secretKey: string) {
-    this.profileService.emailChangeConfirm(secretKey).subscribe(
+    this.profileService.emailChangeConfirm(secretKey)
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe(
       () => this.confirmed = true,
       error => this.hasError = true
     )
   }
-
 
 }

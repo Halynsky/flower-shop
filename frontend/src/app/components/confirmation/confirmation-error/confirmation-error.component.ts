@@ -15,6 +15,4 @@ export class ConfirmationErrorComponent implements OnInit {
   ngOnInit() {
   }
 
-  // TODO: Implement activation
-
 }

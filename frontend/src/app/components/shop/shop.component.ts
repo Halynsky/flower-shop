@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FlowerService } from "../../api/services/flower.service";
 import { FlowerShort } from "../../api/models/Flower";
 import { SnackBarService } from "../../services/snak-bar.service";
@@ -6,11 +6,12 @@ import { ShopFilter } from "../../api/models/ShopFilter";
 import { Pagination } from "../../api/models/Pagination";
 import { RestPage } from "../../api/models/RestPage";
 import { ShopFilterDialogComponent } from "../shared/shop-filter-dialog/shop-filter-dialog.component";
-import { finalize } from "rxjs/operators";
+import { finalize, takeUntil } from "rxjs/operators";
 import { getErrorMessage } from "../../utils/Functions";
 import { DOCUMENT } from "@angular/common";
 import { GlobalSearchService } from "../../services/global-search.service";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
+import { Subject } from "rxjs";
 
 @Component({
   selector: 'shop',
@@ -18,7 +19,9 @@ import { MatDialog, MatDialogRef } from "@angular/material/dialog";
   styleUrls: ['./shop.component.scss'],
   host: {'(window:scroll)': 'trackScroll($event)'}
 })
-export class ShopComponent implements OnInit {
+export class ShopComponent implements OnInit, OnDestroy {
+
+  private readonly destroyed$ = new Subject<void>();
 
   private DEFAULT_PAGE_SIZE = 9;
   private DISTANCE_TO_BOTTOM_WHEN_LOAD_MORE = 200;
@@ -43,8 +46,10 @@ export class ShopComponent implements OnInit {
               @Inject('Window') public window: Window,
               @Inject(DOCUMENT) private document: Document,
               private globalSearchService: GlobalSearchService) {
-    //this.getShopItems(this.searchTerm);
-    this.globalSearchService.onSearchTermChange.subscribe(searchTerm => {
+
+    this.globalSearchService.onSearchTermChange
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe(searchTerm => {
       this.searchTerm = searchTerm;
       this.searchTermChange(null)
     })
@@ -53,12 +58,20 @@ export class ShopComponent implements OnInit {
   ngOnInit() {
   }
 
+  ngOnDestroy() {
+    this.destroyed$.next();
+    this.destroyed$.complete();
+  }
+
+
   getShopItems(searchTerm: string, filters?: ShopFilter, showMore: boolean = false) {
     this.pagination = showMore ? this.pagination.nextPage() : new Pagination(0, this.DEFAULT_PAGE_SIZE, this.sort);
     this.loading = true;
     this.flowerService.getForShop(searchTerm, this.pagination, filters)
-      .pipe(finalize(() => this.loading = false))
-      .subscribe(
+      .pipe(
+        finalize(() => this.loading = false),
+        takeUntil(this.destroyed$)
+      ).subscribe(
       page => {
         if (!showMore) {
           this.flowersPage = page
@@ -119,5 +132,6 @@ export class ShopComponent implements OnInit {
       this.showMore();
     }
   }
+
 
 }

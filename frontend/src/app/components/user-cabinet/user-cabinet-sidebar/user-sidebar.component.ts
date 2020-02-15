@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 
 @Component({
@@ -7,13 +7,9 @@ import { Router } from "@angular/router";
   styleUrls: ['./user-sidebar.component.scss']
 })
 
-export class UserSidebarComponent implements OnInit {
-
+export class UserSidebarComponent {
 
   constructor(private router: Router) {
-  }
-
-  ngOnInit(): void {
   }
 
 }

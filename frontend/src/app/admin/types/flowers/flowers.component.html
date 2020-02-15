@@ -124,7 +124,7 @@
               dateFormat="dd.mm.yy"
               (onSelect)="dt.filter(dateFilters, col.field, 'dateRange')"
               (onClearClick)="dt.filter(dateFilters, col.field, 'dateRange')"
-              showButtonBar="true"
+              [showButtonBar]="true"
               [locale]="translation.calendar_ua">
             </p-calendar>
           </div>

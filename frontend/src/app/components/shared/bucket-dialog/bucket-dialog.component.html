@@ -41,7 +41,7 @@
             </div>
             <div class="bucket-item-price">{{bucketItem.price / 100}} грн <span class="label"> за шт</span></div>
             <div class="bucket-item-amount">
-              <amount-controlled-input name="amount" minAmount="1" [(ngModel)]="bucketItem.amount" (ngModelChange)="onBucketChange()" [availableAmount]="bucketItem.available"></amount-controlled-input>
+              <amount-controlled-input name="amount" [minAmount]="1" [(ngModel)]="bucketItem.amount" (ngModelChange)="onBucketChange()" [availableAmount]="bucketItem.available"></amount-controlled-input>
             </div>
             <div class="bucket-item-total-price"><span class="label">Сума: </span> {{bucketItem.price * bucketItem.amount / 100}} грн</div>
 

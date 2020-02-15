@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { FlowerService } from "../../../api/services/flower.service";
 import { FlowerFull } from "../../../api/models/Flower";
@@ -9,6 +9,8 @@ import { BucketItem } from "../../../models/Bucket";
 import { BucketDialogComponent } from "../../shared/bucket-dialog/bucket-dialog.component";
 import { FLOWER_IMAGE_PLACEHOLDER } from "../../../utils/Costants";
 import { MatDialog } from "@angular/material/dialog";
+import { Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 
 
 @Component({
@@ -16,7 +18,9 @@ import { MatDialog } from "@angular/material/dialog";
   templateUrl: './shop-item-page.component.html',
   styleUrls: ['./shop-item-page.component.scss']
 })
-export class ShopItemPageComponent implements OnInit {
+export class ShopItemPageComponent implements OnInit, OnDestroy {
+
+  private readonly destroyed$ = new Subject<void>();
 
   id: number;
   flower: FlowerFull;
@@ -37,6 +41,10 @@ export class ShopItemPageComponent implements OnInit {
   ngOnInit() {
   }
 
+  ngOnDestroy() {
+    this.destroyed$.next();
+    this.destroyed$.complete();
+  }
 
   fillBucketItems(flower: FlowerFull) {
     for (let flowerSize of flower.flowerSizes) {
@@ -56,7 +64,9 @@ export class ShopItemPageComponent implements OnInit {
   }
 
   getFlowerById() {
-    this.flowerService.getFlowerFullById(this.id).subscribe(
+    this.flowerService.getFlowerFullById(this.id)
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe(
       flower => {
         this.flower = flower;
         this.fillBucketItems(this.flower)

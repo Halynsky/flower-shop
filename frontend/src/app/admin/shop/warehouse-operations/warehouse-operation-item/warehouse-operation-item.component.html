@@ -16,7 +16,7 @@
         </div>
         <div class="ui-grid-col-4">
           <p-dropdown [options]="flowersOptions" name="flower" [(ngModel)]="flowerChosen"
-                      optionLabel="nameOriginal" dataKey="id" filter="true" #flower="ngModel" required
+                      optionLabel="nameOriginal" dataKey="id" [filter]="true" #flower="ngModel" [required]="true"
                       placeholder="Оберіть квітку" id="flower" (ngModelChange)="getFlowersSizeById(flowerChosen.id)">
             <ng-template let-selectedItem pTemplate="selectedItem">
               <div class="flower-selected" >
@@ -52,7 +52,7 @@
         <div class="ui-grid-col-4">
           <p-dropdown [options]="sizeOptions" name="size" [(ngModel)]="flowerSizeChosen"
                       optionLabel="size.name" dataKey="id" #flowerSize="ngModel"
-                      placeholder="Оберіть розмір" id="size" required></p-dropdown>
+                      placeholder="Оберіть розмір" id="size" [required]="true"></p-dropdown>
         </div>
         <div class="ui-grid-col-4">
           <div *ngIf="flowerSize.errors">
@@ -73,7 +73,7 @@
                       name="operationType" #operationType="ngModel"
                       [(ngModel)]="itemWarehouseOperationType.operationType"
                       (ngModelChange)="getWarehouseOperationType()"
-                      required>
+                      [required]="true">
           </p-dropdown>
         </div>
         <div class="ui-grid-col-4">

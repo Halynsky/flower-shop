@@ -68,7 +68,7 @@
             #phone="ngModel"
             id="phone"
             name="phone"
-            validation="false"
+            [validation]="false"
             prefix="+38 "
             mask='(000) 000-0000'
             maxlength="18"
@@ -92,7 +92,7 @@
           <label for="phone">Віртуальний</label>
         </div>
         <div class="ui-grid-col-4">
-          <p-checkbox name="isVirtual" binary="true" [(ngModel)]="item.isVirtual" disabled></p-checkbox>
+          <p-checkbox name="isVirtual" binary="true" [(ngModel)]="item.isVirtual" [disabled]="true"></p-checkbox>
         </div>
       </div>
 
@@ -110,7 +110,7 @@
           <label for="phone">Активований</label>
         </div>
         <div class="ui-grid-col-4">
-          <p-checkbox name="isActivated" binary="true" [(ngModel)]="item.isActivated" disabled></p-checkbox>
+          <p-checkbox name="isActivated" binary="true" [(ngModel)]="item.isActivated" [disabled]="true"></p-checkbox>
         </div>
       </div>
 
