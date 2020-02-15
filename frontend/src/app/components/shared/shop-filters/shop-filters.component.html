@@ -10,10 +10,10 @@
 
   <div class="filter-content">
     <ng-template ngFor let-flowerType [ngForOf]="flowerTypes" [ngForTrackBy]="trackByFn">
-      <div class="filter-item" [ngClass]="{'inactive': filters.flowerTypeFilters.length > 0 && !filters.flowerTypeFilters.includes(flowerType.id)}">
+      <div class="filter-item" [ngClass]="{'inactive': (filters.flowerTypeFilters.length > 0 && !filters.flowerTypeFilters.includes(flowerType.id)) || flowerType.flowersCount == 0}">
         <mat-checkbox (change)="onFlowerTypeFilterChange($event)" [value]="flowerType.id" #flowerTypeCheckbox [checked]="filters.flowerTypeFilters.includes(flowerType.id)">
           <span>{{flowerType.name}}</span>
-          <span>&nbsp;( {{flowerType.flowersCount}} ) </span>
+          <span *ngIf="flowerType.flowersCount > 0">&nbsp;( {{flowerType.flowersCount}} ) </span>
         </mat-checkbox>
       </div>
     </ng-template>

@@ -1,14 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from "../../../api/services/auth.service";
 import { ActivatedRoute } from "@angular/router";
 import { SecurityService } from "../../../services/security.service";
+import { Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 
 @Component({
   selector: 'confirmation-activation',
   templateUrl: './confirmation-activation.component.html',
   styleUrls: ['./confirmation-activation.component.scss']
 })
-export class ConfirmationActivationComponent implements OnInit {
+export class ConfirmationActivationComponent implements OnInit, OnDestroy {
+
+  private readonly destroyed$ = new Subject<void>();
 
   hasError = false;
   confirmed = false;
@@ -17,7 +21,9 @@ export class ConfirmationActivationComponent implements OnInit {
               private authService: AuthService,
               private securityService: SecurityService) {
 
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe(params => {
       let secretKey = params['secretKey'];
 
       if(secretKey) {
@@ -33,8 +39,15 @@ export class ConfirmationActivationComponent implements OnInit {
   ngOnInit() {
   }
 
+  ngOnDestroy() {
+    this.destroyed$.next();
+    this.destroyed$.complete();
+  }
+
   activate(secretKey: string) {
-    this.authService.activate(secretKey).subscribe(
+    this.authService.activate(secretKey)
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe(
       user => {
         this.confirmed = true;
         this.securityService.login(user);
@@ -42,8 +55,5 @@ export class ConfirmationActivationComponent implements OnInit {
       error => this.hasError = true
     )
   }
-
-
-  // TODO: Implement activation
 
 }

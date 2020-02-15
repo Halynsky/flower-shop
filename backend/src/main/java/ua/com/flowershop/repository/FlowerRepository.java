@@ -45,6 +45,10 @@ public interface FlowerRepository extends JpaRepository<Flower, Long> {
 
     Optional<FlowerFullProjection> findProjectedById(Long id);
 
+    @Query("SELECT COUNT(DISTINCT f.id) FROM Flower f " +
+        "LEFT JOIN f.flowerSizes fs " +
+        "WHERE f.flowerType.id = :flowerTypeId " +
+        "AND fs.amount - fs.reserved > 0 ")
     Integer countByFlowerTypeId(Long flowerTypeId);
 
     Integer countByColorIdOrColorSecondaryId(Long colorId, Long secondaryColorId);

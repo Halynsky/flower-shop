@@ -18,6 +18,10 @@
   </a>
   <div class="sub" [style.height]="maxHeight" (transitionend)="transitionEnd($event)"
        *ngIf="data && data.items && data.items.length > 0">
-    <admin-accordion *ngFor="let sub of data.items" [small]="small" [data]="sub"></admin-accordion>
+
+    <ng-template ngFor let-sub [ngForOf]="data.items" let-i="index">
+      <admin-accordion [small]="small" [data]="sub"></admin-accordion>
+    </ng-template>
+
   </div>
 </div>

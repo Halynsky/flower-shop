@@ -106,7 +106,7 @@
               dateFormat="dd.mm.yy"
               (onSelect)="dt.filter(createdFilters, col.field, 'dateRange')"
               (onClearClick)="dt.filter(createdFilters, col.field, 'dateRange')"
-              showButtonBar="true"
+              [showButtonBar]="true"
               [locale]="translation.calendar_ua">
             </p-calendar>
           </div>
@@ -120,7 +120,7 @@
               dateFormat="dd.mm.yy"
               (onSelect)="dt.filter(closedFilters, col.field, 'dateRange')"
               (onClearClick)="dt.filter(closedFilters, col.field, 'dateRange')"
-              showButtonBar="true"
+              [showButtonBar]="true"
               [locale]="translation.calendar_ua">
             </p-calendar>
           </div>
@@ -335,7 +335,7 @@
             #phone="ngModel"
             name="phone"
             [(ngModel)]="orderContactsChangeRequest.phone"
-            validation="false"
+            [validation]="false"
             prefix="+38 "
             mask='(000) 000-0000'
             maxlength="18"
@@ -538,7 +538,7 @@
 </p-dialog>
 
 
-<p-dialog [(visible)]="displayUpdateOrderItemsDialog" class="update-order-items-dialog" [modal]="true" (onHide)="resetUpdateOrderItemsForm(updateOrderItemsForm)" positionTop="120">
+<p-dialog [(visible)]="displayUpdateOrderItemsDialog" class="update-order-items-dialog" [modal]="true" (onHide)="resetUpdateOrderItemsForm(updateOrderItemsForm)" [positionTop]="120">
   <p-header>
     Оновлення замовлення №{{selected?.id}}
   </p-header>
@@ -569,7 +569,7 @@
               <div class="cell">
                 <div class="input-wrapper">
                   <i class="fas fa-angle-left" (click)="minusAmount(i)"></i>
-                  <input [name]="'orderItem_' + orderItem.flowerSizeId" (ngModelChange)="onAmountModelChange($event, orderItem)" [(ngModel)]="orderItem.amount" maxlength="5" required type="text" digitOnly minValue="1" [maxValue]="getMaxForFlowerSize(orderItem)" >
+                  <input [name]="'orderItem_' + orderItem.flowerSizeId" (ngModelChange)="onAmountModelChange($event, orderItem)" [(ngModel)]="orderItem.amount" maxlength="5" required type="text" digitOnly [minValue]="1" [maxValue]="getMaxForFlowerSize(orderItem)" >
                   <i class="fas fa-angle-right" (click)="plusAmount(i)"></i>
                 </div>
               </div>
@@ -585,7 +585,7 @@
 
       <div class="add-block">
 
-        <p-dropdown class="add-flower-size-dropdown" [options]="flowerSizes" [(ngModel)]="flowerSizeToAdd" name="flowerSizeToAdd" filter="true" placeholder="Оберіть товар" emptyFilterMessage="Не знайдено" optionLabel="flower.name" appendTo="body">
+        <p-dropdown class="add-flower-size-dropdown" [options]="flowerSizes" [(ngModel)]="flowerSizeToAdd" name="flowerSizeToAdd" [filter]="true" placeholder="Оберіть товар" emptyFilterMessage="Не знайдено" optionLabel="flower.name" appendTo="body">
           <ng-template let-selectedItem pTemplate="selectedItem">
             <div class="flower-size-selected">
               <img [src]="selectedItem.value.flower.image"/>
@@ -677,7 +677,7 @@
             appendTo="body"
             [readonlyInput]="false"
             dateFormat="dd.mm.yy"
-            showButtonBar="true"
+            [showButtonBar]="true"
             [locale]="translation.calendar_ua">
           </p-calendar>
         </div>
