@@ -130,7 +130,6 @@ export class FlowersComponent implements OnInit {
   };
 
   filter(value, filed) {
-    console.log(value, filed)
   }
 
   remove(event) {

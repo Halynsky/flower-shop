@@ -2,4 +2,10 @@
   margin-bottom: 24px;
   display: flex;
   flex-direction: column;
+  .loading-spinner {
+    display: flex;
+    width: 50%;
+    justify-content: center;
+    margin-top: 250px;
+  }
 }

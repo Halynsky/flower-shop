@@ -20,8 +20,11 @@ export class GroupItemComponent implements OnInit {
   ItemSaveMode = ItemSaveMode;
   mode: ItemSaveMode = ItemSaveMode.new;
 
+  queryParamId;
+
   item: GroupAdmin = new GroupAdmin();
   loading = false;
+  isLoaded = false;
 
   flowerTypes: FlowerType[] = [];
 
@@ -36,63 +39,67 @@ export class GroupItemComponent implements OnInit {
         this.mode = params['mode'];
 
         if (this.mode == ItemSaveMode.edit) {
-          this.route.queryParams.subscribe(queryParams  => {
+          this.route.queryParams.subscribe(queryParams => {
             if (queryParams['id'])
-              this.getItem(queryParams['id'])
+              this.queryParamId = queryParams['id'];
           })
         }
 
       }
     );
 
-    this.getAllFlowerTypes()
-
+    this.getAllFlowerTypes();
   }
 
   ngOnInit() {
   }
 
   getItem(id) {
-    this.loading = true;
     this.dataService.getById(id)
-      .pipe(finalize(() => this.loading = false))
+      .pipe(finalize(() => this.isLoaded = true))
       .subscribe(
-      item => {
-        this.item = item;
-      },
-      error => this.snackBarService.showError(getErrorMessage(error))
-    )
+        item => {
+          this.item = item;
+        },
+        error => this.snackBarService.showError(getErrorMessage(error))
+      )
   }
 
   getAllFlowerTypes() {
     this.flowerTypeService.getAll().subscribe(
-      flowerTypes => this.flowerTypes = flowerTypes,
+      flowerTypes => {
+        this.flowerTypes = flowerTypes;
+        if (this.mode === ItemSaveMode.edit)
+          this.getItem(this.queryParamId)
+      },
       error => this.snackBarService.showError(getErrorMessage(error))
     );
   }
 
   add() {
+    this.loading = true;
     this.dataService.add(this.item)
       .pipe(finalize(() => this.loading = false))
       .subscribe(
-      response => {
-        this.snackBarService.showSuccess("Групу успішно створено");
-        this.location.back();
-      },
-      error => this.snackBarService.showError(getErrorMessage(error))
-    )
+        response => {
+          this.snackBarService.showSuccess("Групу успішно створено");
+          this.location.back();
+        },
+        error => this.snackBarService.showError(getErrorMessage(error))
+      )
   }
 
   update() {
+    this.loading = true;
     this.dataService.update(this.item.id, this.item)
       .pipe(finalize(() => this.loading = false))
       .subscribe(
-      response => {
-        this.snackBarService.showSuccess("Колір успішно оновлено");
-        this.location.back();
-      },
-      error => this.snackBarService.showError(getErrorMessage(error))
-    )
+        response => {
+          this.snackBarService.showSuccess("Колір успішно оновлено");
+          this.location.back();
+        },
+        error => this.snackBarService.showError(getErrorMessage(error))
+      )
   }
 
   onSubmit() {

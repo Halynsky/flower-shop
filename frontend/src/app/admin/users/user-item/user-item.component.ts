@@ -6,6 +6,7 @@ import { UserService } from "../../../api/services/user.service";
 import { SnackBarService } from "../../../services/snak-bar.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { finalize } from "rxjs/operators";
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
 
 @Component({
   selector: 'user-item',
@@ -20,6 +21,8 @@ export class UserItemComponent implements OnInit {
 
   previousEmail: string;
 
+  isLoaded = true;
+
   loading = false;
 
   constructor(public dataService: UserService,
@@ -31,6 +34,7 @@ export class UserItemComponent implements OnInit {
         this.mode = params['mode'];
 
         if (this.mode == ItemSaveMode.edit) {
+          this.isLoaded = false;
           this.route.queryParams.subscribe(queryParams => {
             if (queryParams['id']) {
               this.getItem(queryParams['id']);
@@ -47,7 +51,7 @@ export class UserItemComponent implements OnInit {
 
   getItem(id) {
     this.dataService.getById(id)
-      .pipe(finalize(() => this.loading = false))
+      .pipe(finalize(() => this.isLoaded = true))
       .subscribe(
       item => {
         this.item = item;
@@ -58,6 +62,7 @@ export class UserItemComponent implements OnInit {
   }
 
   create() {
+    this.loading = true;
     this.dataService.create(this.item)
       .pipe(finalize(() => this.loading = false))
       .subscribe(
@@ -70,6 +75,7 @@ export class UserItemComponent implements OnInit {
   }
 
   update() {
+    this.loading = true;
     this.dataService.update(this.item.id, this.item)
       .pipe(finalize(() => this.loading = false))
       .subscribe(
