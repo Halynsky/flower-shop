@@ -15,9 +15,9 @@
         <table>
 
           <tr class="header">
-            <th>Розмір</th>
-            <th>Ціна</th>
-            <th>Кількість</th>
+            <th class="header-size"></th>
+            <th class="header-price"></th>
+            <th class="header-amount"></th>
           </tr>
 
           <ng-template ngFor let-flowerSize [ngForOf]="flower.flowerSizes" let-i="index">
@@ -37,7 +37,7 @@
         </div>
 
         <button mat-flat-button color="accent" class="add-to-card-button" (click)="addToBucket()" [disabled]="!hasAvailableFlowerSize(flower)">
-          <i class="material-icons">add_shopping_cart</i>
+          <i class="material-icons add_shopping_cart"></i>
           <span>Купити</span>
         </button>
 

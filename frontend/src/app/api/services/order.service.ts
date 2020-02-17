@@ -70,4 +70,8 @@ export class OrderService {
     return this.http.post(`${this.URL}/createAsAdmin/${userIdToCreateOrder}`, {responseType: 'text'});
   }
 
+  sendToEmail(id: number) {
+    return this.http.post(`${this.URL}/sendToEmail/${id}`, null);
+  }
+
 }

@@ -84,6 +84,12 @@ public class UserController {
         return new ResponseEntity<>(OK);
     }
 
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
+    @PostMapping("/{id}/activation")
+    public ResponseEntity<Void> activate(@PathVariable Long id){
+        userService.activate(id);
+        return new ResponseEntity<>(OK);
+    }
 
     @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @PostMapping("/{id}/activation/request")

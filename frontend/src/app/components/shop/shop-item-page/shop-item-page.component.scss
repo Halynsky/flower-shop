@@ -148,6 +148,19 @@
                 color: $grey-800;
                 font-weight: 500;
                 padding-bottom: 16px;
+
+                &.header-size:before {
+                  content: 'Розмір';
+                }
+
+                &.header-price:before {
+                  content: 'Ціна';
+                }
+
+                &.header-amount:before {
+                  content: 'Кількість';
+                }
+
               }
             }
 

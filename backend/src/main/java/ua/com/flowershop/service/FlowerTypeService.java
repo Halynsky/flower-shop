@@ -57,6 +57,7 @@ public class FlowerTypeService {
         FlowerType flowerType = flowerTypeRepository.findById(id).orElseThrow(NotFoundException::new);
         flowerType.setName(flowerTypeModel.getName());
         flowerType.setNameSingle(flowerTypeModel.getNameSingle());
+        flowerType.setNameOriginal(flowerTypeModel.getNameOriginal());
         flowerType.setPlantingMaterialType(flowerTypeModel.getPlantingMaterialType());
         flowerType.setDescription(flowerTypeModel.getDescription());
         if(nonNull(image)) {

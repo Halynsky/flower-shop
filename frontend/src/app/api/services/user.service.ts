@@ -51,6 +51,10 @@ export class UserService {
     return this.http.put(`${this.URL}/${id}/changeNote`, userNote);
   }
 
+  activate(id: number) {
+    return this.http.post(`${this.URL}/${id}/activation`, null);
+  }
+
   resendActivationRequest(id: number) {
     return this.http.post(`${this.URL}/${id}/activation/request`, null);
   }

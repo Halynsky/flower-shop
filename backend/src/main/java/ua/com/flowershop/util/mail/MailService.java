@@ -187,6 +187,23 @@ public class MailService {
         mailClient.sendMail("Нове замовлення", ORDER_TEMPLATE, context, MailHolder.MessageType.NOREPLY, user.getEmail());
     }
 
+    /**
+     * Send email to User that created new Order
+     *
+     * @param order order that was created by user
+     */
+    public void sendOrderAdmin(Order order) {
+        User user = order.getUser();
+        Context context = contextTemplate();
+        context.setVariable(USER_NAME, order.getUser().getName());
+        context.setVariable(TITLE, "Ваше замовлення сформоване або відредаговане адміністратором.");
+        context.setVariable(BODY, "Замовлення №" + highlight(order.getId().toString()));
+        context.setVariable(CONFIRM_URL, siteUrlFull + SLASH + "my" + SLASH + "purchases");
+        context.setVariable(CONFIRM_BTN_TEXT, "Переглянути на сайті");
+        context.setVariable("order", order);
+        mailClient.sendMail("Нове замовлення", ORDER_TEMPLATE, context, MailHolder.MessageType.NOREPLY, user.getEmail());
+    }
+
 
     private String highlight(String phrase) {
         return "<b>" + phrase + "</b>";

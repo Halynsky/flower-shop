@@ -277,6 +277,11 @@ export class OrdersComponent implements OnInit {
         separator: true
       },
       {
+        label: "Відправити на email користувача",
+        icon: 'far fa-envelope',
+        command: (event) => this.sendOrderInEmail(this.selected.id)
+      },
+      {
         label: "Перейти до користувача",
         icon: 'fas fa-user-tag',
         command: (event) => this.router.navigate(['admin/users'], {queryParams: {id: this.selected.user.id}}),
@@ -539,10 +544,18 @@ export class OrdersComponent implements OnInit {
       }, error => this.snackBarService.showError(getErrorMessage(error)))
   }
 
-
   resetCreateOrderForm(form: NgForm) {
     this.userIdToCreateOrder = null;
     form.resetForm();
+  }
+
+  sendOrderInEmail(orderId) {
+    this.loading = true;
+    this.dataService.sendToEmail(orderId)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(() => {
+        this.snackBarService.showSuccess(`Замовлення №${orderId} успішно відправлено на електронну пошту замовника`);
+      }, error => this.snackBarService.showError(getErrorMessage(error)))
   }
 
   zoomImage(image) {

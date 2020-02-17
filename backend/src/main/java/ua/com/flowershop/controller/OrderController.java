@@ -171,5 +171,12 @@ public class OrderController {
         return new ResponseEntity<>(orderService.createAsAdmin(userIdToCreateFor), OK);
     }
 
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
+    @PostMapping("/sendToEmail/{id}")
+    public ResponseEntity<Void> SendToEmail(@PathVariable Long id) {
+        orderService.sendToEmail(id);
+        return new ResponseEntity<>(OK);
+    }
+
 
 }

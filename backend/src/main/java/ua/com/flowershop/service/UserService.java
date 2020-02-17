@@ -109,8 +109,16 @@ public class UserService {
     }
 
     public User activate(String secretKey) {
-        User user = userRepository.findBySecretKeyAndIsActivated(secretKey, false)
-            .orElseThrow(NotFoundException::new);
+        User user = userRepository.findBySecretKeyAndIsActivated(secretKey, false).orElseThrow(NotFoundException::new);
+        return activate(user);
+    }
+
+    public User activate(Long id) {
+        User user = userRepository.findByIdAndIsActivated(id, false).orElseThrow(NotFoundException::new);
+        return activate(user);
+    }
+
+    public User activate(User user) {
         userRepository.save(user.setSecretKey(null)
             .setIsActivated(true));
         return user;

@@ -96,8 +96,14 @@ export class UsersComponent implements OnInit {
         styleClass: 'cm-danger',
       },
       {
-        label: 'Відправити запит на активацію',
+        label: 'Активувати',
         icon: 'fas fa-user-check',
+        command: (event) => this.confirmActivation(event),
+        visible: this.selected && !this.selected.isActivated,
+      },
+      {
+        label: 'Відправити запит на активацію',
+        icon: 'far fa-envelope',
         command: (event) => this.sendActivationRequest(event),
         visible: this.selected && !this.selected.isActivated,
       },
@@ -245,15 +251,32 @@ export class UsersComponent implements OnInit {
     this.confirmationService.confirm({
       message: `Ви впевнені що хочете відправити запит на відновлення паролю Користувачу з Id - ${this.selected.id}?`,
       accept: () => {
-        this.sendPasswordRestoreRequest()
+        this.sendPasswordRestoreRequest(this.selected.id)
       }
     });
   }
 
-  private sendPasswordRestoreRequest() {
-    this.dataService.resendPasswordRestoredRequest(this.selected.id)
+  private sendPasswordRestoreRequest(id) {
+    this.dataService.resendPasswordRestoredRequest(id)
       .subscribe(() => {
-        this.snackBarService.showSuccess(`Лист для відновлення паролю користувача з Id - ${this.selected.id} відправлено успішно`);
+        this.snackBarService.showSuccess(`Лист для відновлення паролю користувача з Id - ${id} відправлено успішно`);
+        this.refresh();
+      }, error => this.snackBarService.showError(getErrorMessage(error)))
+  }
+
+  private confirmActivation(event: any) {
+    this.confirmationService.confirm({
+      message: `Ви впевнені що хочете активувати Користувачу з Id - ${this.selected.id}?`,
+      accept: () => {
+        this.activate(this.selected.id)
+      }
+    });
+  }
+
+  private activate(id: number) {
+    this.dataService.activate(id)
+      .subscribe(() => {
+        this.snackBarService.showSuccess(`Користувача з Id - ${id} активовано`);
         this.refresh();
       }, error => this.snackBarService.showError(getErrorMessage(error)))
   }

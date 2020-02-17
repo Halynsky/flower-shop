@@ -483,4 +483,8 @@ public class OrderService {
         return order.getId();
     }
 
+    public void sendToEmail(Long orderId) {
+        Order order = orderRepository.findById(orderId).orElseThrow(NotFoundException::new);
+        mailService.sendOrderAdmin(order);
+    }
 }
