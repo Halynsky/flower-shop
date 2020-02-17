@@ -14,6 +14,7 @@ import { StepperSelectionEvent } from "@angular/cdk/stepper";
 import { MatDialog } from "@angular/material/dialog";
 import { MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
 import { MatRadioChange } from "@angular/material/radio";
+import { ProfileService } from "../../api/services/profile.service";
 
 @Component({
   selector: 'order',
@@ -55,7 +56,8 @@ export class OrderComponent implements OnInit, OnDestroy {
               public snackBarService: SnackBarService,
               public dialog: MatDialog,
               public novaPoshtaService: NovaPoshtaService,
-              private changeDetectorRef: ChangeDetectorRef) {
+              private changeDetectorRef: ChangeDetectorRef,
+              private profileService: ProfileService) {
 
     this.getCities();
     this.getWarehouses();
@@ -186,7 +188,7 @@ export class OrderComponent implements OnInit, OnDestroy {
       orderRequest.deliveryInfo.city = orderRequest.deliveryInfo.city.Present;
     }
     if (orderRequest.deliveryInfo.street && typeof orderRequest.deliveryInfo.street === 'object') {
-        orderRequest.deliveryInfo.street = orderRequest.deliveryInfo.street.Present;
+      orderRequest.deliveryInfo.street = orderRequest.deliveryInfo.street.Present;
     }
     if (orderRequest.deliveryInfo.novaPoshtaDepartment) {
       orderRequest.deliveryInfo.novaPoshtaDepartment = orderRequest.deliveryInfo.novaPoshtaDepartment.Description;
@@ -195,9 +197,25 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.orderService.create(orderRequest)
       .pipe(finalize(() => this.loading = false), takeUntil(this.destroyed$))
       .subscribe(orderId => {
-      this.bucketLocalService.clearBucket();
-      this.orderId = orderId;
-    }, error => this.snackBarService.showError(getErrorMessage(error)))
+        this.bucketLocalService.clearBucket();
+        this.orderId = orderId;
+        this.updateProfile();
+      }, error => this.snackBarService.showError(getErrorMessage(error)))
+  }
+
+  updateProfile() {
+    let user = this.securityService.getUser();
+    if (!user.phone) {
+      this.profileService.get()
+        .subscribe(
+          profile => {
+            user.email = profile.email;
+            user.name = profile.name;
+            user.phone = profile.phone;
+            this.securityService.updateUser(user);
+          }, error => this.snackBarService.showError(getErrorMessage(error))
+        )
+    }
   }
 
   directAddressRequired() {
@@ -256,13 +274,13 @@ export class OrderComponent implements OnInit, OnDestroy {
 
     }
 
-    if(this.deliveryInfoFormGroup.get('city')) {
+    if (this.deliveryInfoFormGroup.get('city')) {
       this.citySubs$ = this.deliveryInfoFormGroup.get('city').valueChanges.subscribe(value => {
         this.getCities(value);
       });
     }
 
-    if(this.deliveryInfoFormGroup.get('novaPoshtaDepartment')) {
+    if (this.deliveryInfoFormGroup.get('novaPoshtaDepartment')) {
       this.novaPoshtaDepartmentSubs$ = this.deliveryInfoFormGroup.get('novaPoshtaDepartment').valueChanges.subscribe(value => {
         if (value) {
           this.filteredWarehouses = this.warehouses.filter(option => {
@@ -272,7 +290,7 @@ export class OrderComponent implements OnInit, OnDestroy {
       });
     }
 
-    if(this.deliveryInfoFormGroup.get('street')) {
+    if (this.deliveryInfoFormGroup.get('street')) {
       this.streetSubs$ = this.deliveryInfoFormGroup.get('street').valueChanges.subscribe(value => {
         if (value && typeof value == 'string' && this.selectedCity) {
           this.getStreets(this.selectedCity.Ref, value);
