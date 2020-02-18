@@ -23,7 +23,8 @@ export class FlowerTypesComponent implements OnInit {
     {field: 'nameSingle', header: 'Назва(однина)'},
     {field: 'nameOriginal', header: 'Назва(Англ)'},
     {field: 'plantingMaterialType', header: 'Посадковий матеріал'},
-    {field: 'flowersCount', header: 'Кількість Квітів'},
+    {field: 'flowersCount', header: 'Загальна кількість Квітів'},
+    {field: 'availableFlowersCount', header: 'Доступна кількість Квітів'}
   ];
 
   items: FlowerType[] = [];
