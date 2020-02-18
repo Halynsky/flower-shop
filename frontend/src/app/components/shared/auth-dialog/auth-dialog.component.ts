@@ -96,7 +96,7 @@ export class AuthDialogComponent {
           )
       })
       .catch(error => {
-        this.snackBarService.showError(getErrorMessage(error));
+        this.snackBarService.showError(error);
         this.loading = false;
       });
   }
