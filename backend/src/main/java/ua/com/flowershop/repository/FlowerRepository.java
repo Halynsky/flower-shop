@@ -51,6 +51,10 @@ public interface FlowerRepository extends JpaRepository<Flower, Long> {
         "AND fs.amount - fs.reserved > 0 ")
     Integer countByFlowerTypeId(Long flowerTypeId);
 
+    @Query("SELECT COUNT(DISTINCT f.id) FROM Flower f " +
+        "WHERE f.flowerType.id = :flowerTypeId ")
+    Integer countAllByFlowerTypeId(Long flowerTypeId);
+
     Integer countByColorIdOrColorSecondaryId(Long colorId, Long secondaryColorId);
 
     Integer countByFlowerSizesSizeId(Long flowerSizeId);

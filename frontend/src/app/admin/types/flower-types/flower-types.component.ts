@@ -19,11 +19,12 @@ export class FlowerTypesComponent implements OnInit {
   cols = [
     {field: 'id', header: 'Id'},
     {field: 'image', header: 'Фото'},
-    {field: 'name', header: 'Назва'},
+    {field: 'name', header: 'Назва(множина)'},
     {field: 'nameSingle', header: 'Назва(однина)'},
     {field: 'nameOriginal', header: 'Назва(Англ)'},
     {field: 'plantingMaterialType', header: 'Посадковий матеріал'},
-    {field: 'flowersCount', header: 'Кількість Квітів'},
+    {field: 'flowersCount', header: 'Кількість сортів'},
+    {field: 'availableFlowersCount', header: 'Сортів на складі'}
   ];
 
   items: FlowerType[] = [];
