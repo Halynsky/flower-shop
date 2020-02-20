@@ -228,7 +228,7 @@ export class OrdersComponent implements OnInit {
         command: (event) => {
           this.displayUpdateOrderItemsDialog = true;
           this.updatingOrder = clone(this.selected);
-          this.updatingOrder.orderItems = this.selected.orderItems.slice().reverse();
+          this.updatingOrder.orderItems = this.updatingOrder.orderItems.reverse();
           this.getAllFlowerSizes();
         },
         visible: this.orderIsEditable(this.selected.status),
