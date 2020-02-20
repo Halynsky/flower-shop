@@ -20,6 +20,11 @@ p-dialog {
       display: grid;
       grid-template-columns: 1fr 1fr;
 
+      .split-panel-content {
+        max-height: 80vh;
+        overflow: auto;
+      }
+
       .split-left {
         border-right: solid #c8c8c8 1px;
         padding-top: 8px;
