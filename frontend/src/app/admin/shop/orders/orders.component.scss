@@ -66,8 +66,9 @@ p-dialog {
 
   &.update-order-items-dialog {
 
-    .update-order-items-block-wrapper{
-      max-height: 700px;
+    .update-order-items-block-wrapper {
+
+      max-height: 80vh;
       overflow: auto;
 
       .update-order-items-table {
@@ -96,7 +97,7 @@ p-dialog {
       .add-block {
         padding: 24px;
         background-color: #fafafa;
-        margin-top: 8px;
+        //margin-top: 8px;
 
         ::ng-deep .ui-dropdown-item-empty, ::ng-deep .ui-dropdown-label-empty {
           text-indent: initial !important;

@@ -228,6 +228,7 @@ export class OrdersComponent implements OnInit {
         command: (event) => {
           this.displayUpdateOrderItemsDialog = true;
           this.updatingOrder = clone(this.selected);
+          this.updatingOrder.orderItems = this.selected.orderItems.slice().reverse();
           this.getAllFlowerSizes();
         },
         visible: this.orderIsEditable(this.selected.status),
@@ -456,7 +457,7 @@ export class OrdersComponent implements OnInit {
         orderItemAdmin.name = this.flowerSizeToAdd.flower.name;
         orderItemAdmin.sizeName = this.flowerSizeToAdd.size.name;
         orderItemAdmin.price = this.flowerSizeToAdd.price;
-        this.updatingOrder.orderItems.push(orderItemAdmin)
+        this.updatingOrder.orderItems.unshift(orderItemAdmin);
       }
 
       this.flowerSizeToAdd.reserved++;
