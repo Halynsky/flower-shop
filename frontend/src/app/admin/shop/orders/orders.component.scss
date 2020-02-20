@@ -66,45 +66,48 @@ p-dialog {
 
   &.update-order-items-dialog {
 
-    .update-order-items-table {
+    .update-order-items-block-wrapper{
+      max-height: 700px;
+      overflow: auto;
 
-      .input-wrapper {
-        display: flex;
-        justify-content: center;
-        align-self: center;
-        text-align: center;
+      .update-order-items-table {
 
-        i {
-          cursor: pointer;
-          padding: 4px;
-          font-size: 20px;
-          color: #007ad9;
+        .input-wrapper {
+          display: flex;
+          justify-content: center;
+          align-self: center;
+          text-align: center;
+
+          i {
+            cursor: pointer;
+            padding: 4px;
+            font-size: 20px;
+            color: #007ad9;
+          }
+
+        }
+
+        input {
+          width: 60px;
+          text-align: center;
+        }
+      }
+
+      .add-block {
+        padding: 24px;
+        background-color: #fafafa;
+        margin-top: 8px;
+
+        ::ng-deep .ui-dropdown-item-empty, ::ng-deep .ui-dropdown-label-empty {
+          text-indent: initial !important;
+        }
+
+        button {
+          margin-left: 24px;
         }
 
       }
-
-      input {
-        width: 60px;
-        text-align: center;
-      }
     }
-
-    .add-block {
-      padding: 24px;
-      background-color: #fafafa;
-      margin-top: 8px;
-
-      ::ng-deep .ui-dropdown-item-empty, ::ng-deep .ui-dropdown-label-empty {
-        text-indent: initial !important;
-      }
-
-      button {
-        margin-left: 24px;
-      }
-
-
-    }
-
   }
 
   .head {
