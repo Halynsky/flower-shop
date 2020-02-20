@@ -187,7 +187,7 @@
   </form>
 
   <p-footer>
-    <button pButton form="merge_form" icon="pi pi-check" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
+    <button pButton form="merge_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
   </p-footer>
 </p-dialog>
 
@@ -221,7 +221,7 @@
   </form>
 
   <p-footer>
-    <button pButton form="note_change_form" icon="pi pi-check" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
+    <button pButton form="note_change_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
   </p-footer>
 </p-dialog>
 

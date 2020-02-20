@@ -312,7 +312,7 @@
   </form>
 
   <p-footer>
-    <button pButton form="status_change_form" icon="pi pi-check" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
+    <button pButton form="status_change_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
   </p-footer>
 </p-dialog>
 
@@ -375,7 +375,7 @@
   </form>
 
   <p-footer>
-    <button pButton form="contacts_change_form" icon="pi pi-check" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
+    <button pButton form="contacts_change_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
   </p-footer>
 </p-dialog>
 
@@ -409,7 +409,7 @@
   </form>
 
   <p-footer>
-    <button pButton form="note_change_form" icon="pi pi-check" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
+    <button pButton form="note_change_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
   </p-footer>
 </p-dialog>
 
@@ -445,7 +445,7 @@
   </form>
 
   <p-footer>
-    <button pButton form="merge_form" icon="pi pi-check" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
+    <button pButton form="merge_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
   </p-footer>
 </p-dialog>
 
@@ -533,7 +533,7 @@
   </form>
 
   <p-footer>
-    <button pButton form="split_form" icon="pi pi-check" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading || splittingOtherOrderItems.length == 0 || this.splittingOrder.orderItems.length == 0"></button>
+    <button pButton form="split_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading || splittingOtherOrderItems.length == 0 || this.splittingOrder.orderItems.length == 0"></button>
   </p-footer>
 </p-dialog>
 
@@ -614,7 +614,7 @@
   </form>
 
   <p-footer>
-    <button pButton form="update_order_items" icon="pi pi-check" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading || updateOrderItemsForm.invalid"></button>
+    <button pButton form="update_order_items" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading || updateOrderItemsForm.invalid"></button>
   </p-footer>
 </p-dialog>
 
@@ -652,7 +652,7 @@
   </form>
 
   <p-footer>
-    <button pButton form="discount_change_form" icon="pi pi-check" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
+    <button pButton form="discount_change_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
   </p-footer>
 </p-dialog>
 
@@ -693,7 +693,7 @@
   </form>
 
   <p-footer>
-    <button pButton form="payment_confirm_form" icon="pi pi-check" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
+    <button pButton form="payment_confirm_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
   </p-footer>
 </p-dialog>
 
@@ -729,7 +729,7 @@
   </form>
 
   <p-footer>
-    <button pButton form="create_order_form" icon="pi pi-check" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
+    <button pButton form="create_order_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
   </p-footer>
 </p-dialog>
 
