@@ -20,6 +20,11 @@ p-dialog {
       display: grid;
       grid-template-columns: 1fr 1fr;
 
+      .split-panel-content {
+        max-height: 80vh;
+        overflow: auto;
+      }
+
       .split-left {
         border-right: solid #c8c8c8 1px;
         padding-top: 8px;
@@ -66,45 +71,49 @@ p-dialog {
 
   &.update-order-items-dialog {
 
-    .update-order-items-table {
+    .update-order-items-block-wrapper {
 
-      .input-wrapper {
-        display: flex;
-        justify-content: center;
-        align-self: center;
-        text-align: center;
+      max-height: 80vh;
+      overflow: auto;
 
-        i {
-          cursor: pointer;
-          padding: 4px;
-          font-size: 20px;
-          color: #007ad9;
+      .update-order-items-table {
+
+        .input-wrapper {
+          display: flex;
+          justify-content: center;
+          align-self: center;
+          text-align: center;
+
+          i {
+            cursor: pointer;
+            padding: 4px;
+            font-size: 20px;
+            color: #007ad9;
+          }
+
+        }
+
+        input {
+          width: 60px;
+          text-align: center;
+        }
+      }
+
+      .add-block {
+        padding: 24px;
+        background-color: #fafafa;
+        //margin-top: 8px;
+
+        ::ng-deep .ui-dropdown-item-empty, ::ng-deep .ui-dropdown-label-empty {
+          text-indent: initial !important;
+        }
+
+        button {
+          margin-left: 24px;
         }
 
       }
-
-      input {
-        width: 60px;
-        text-align: center;
-      }
     }
-
-    .add-block {
-      padding: 24px;
-      background-color: #fafafa;
-      margin-top: 8px;
-
-      ::ng-deep .ui-dropdown-item-empty, ::ng-deep .ui-dropdown-label-empty {
-        text-indent: initial !important;
-      }
-
-      button {
-        margin-left: 24px;
-      }
-
-
-    }
-
   }
 
   .head {
