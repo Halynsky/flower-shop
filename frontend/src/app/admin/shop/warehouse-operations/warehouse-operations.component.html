@@ -75,10 +75,10 @@
 
           <div *ngSwitchCase="'amount'">
             <span>({{amountFilter[0]}} - {{amountFilter[1]}} )</span>
-            <i class="fa fa-close" (click)="this.amountFilter=[amountMin,amountMax]; dt.filter(null, col.field, 'range')" title="Очистити"
+            <i class="fa fa-close" (click)="this.amountFilter=[amountMinMax[0], amountMinMax[1]]; dt.filter(null, col.field, 'range')" title="Очистити"
                [ngStyle]="{'margin-left':'8px', 'margin-bottom': '10px', 'cursor':'pointer'}"></i>
             <p-slider [(ngModel)]="amountFilter" [ngStyle]="{'width':'100%'}" [range]="true"
-                      (onSlideEnd)="dt.filter(amountFilter, col.field, 'range')" [min]="amountMin" [max]="amountMax"></p-slider>
+                      (onSlideEnd)="dt.filter(amountFilter, col.field, 'range')" [min]="amountMinMax[0]" [max]="amountMinMax[1]"></p-slider>
           </div>
 
           <div *ngSwitchCase="'date'">

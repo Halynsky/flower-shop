@@ -9,7 +9,7 @@ import { TranslationService } from "../../../utils/translation.service";
 import { WarehouseOperationType } from "../../../api/models/WarehouseOperationType";
 import { Table } from "primeng/table";
 import { EnumToObjectsPipe } from "../../../pipes/enum-to-objects";
-import { getErrorMessage, ngPrimeFiltersToParams } from "../../../utils/Functions";
+import { clone, getErrorMessage, ngPrimeFiltersToParams } from "../../../utils/Functions";
 import { Pagination } from "../../../api/models/Pagination";
 import { RestPage } from "../../../api/models/RestPage";
 import { FlowerTypeService } from "../../../api/services/flower-type.service";
@@ -29,9 +29,8 @@ export class WarehouseOperationsComponent implements OnInit {
   operationTypes = [];
 
   dateFilters;
-  amountMin = 1;
-  amountMax = 10000;
-  amountFilter = [this.amountMin, this.amountMax];
+  amountMinMax = [1, 1000];
+  amountFilter = clone(this.amountMinMax);
 
   flowerTypes = [];
 

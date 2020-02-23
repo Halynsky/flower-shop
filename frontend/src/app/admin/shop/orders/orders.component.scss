@@ -183,4 +183,13 @@ p-dialog {
   font-weight: 600;
 }
 
+.create-mode-selector {
+  flex-direction: column;
 
+  button {
+    &:not(:last-of-type) {
+      margin-bottom: 8px;
+    }
+  }
+
+}

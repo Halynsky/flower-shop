@@ -29,9 +29,11 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
         "AND (COALESCE(:statusNames, NULL) IS NULL OR CAST(o.status as string) IN :statusNames) " +
         "AND ((CAST(:createdFrom AS date) IS null OR CAST(:createdTo AS date) IS null) OR o.created BETWEEN :createdFrom AND :createdTo) " +
         "AND ((CAST(:closedFrom AS date) IS null OR CAST(:closedTo AS date) IS null) OR o.closed BETWEEN :closedFrom AND :closedTo) " +
+        "AND (:priceToPayFrom IS null OR  (o.totalPrice - o.discount) BETWEEN :priceToPayFrom AND :priceToPayTo) " +
         "GROUP BY o.id, o.created, o.closed, o.status, o.user, o.comment, o.note, o.deliveryAddress, o.postDeclaration, o.paid, o.phone, o.totalPrice, o.discount, u")
     Page<OrderAdminProjection> findForAdminProjectedByFilters(Long id, List<String> statusNames, Long userId, String userNamePart, String phonePart,
                                                               LocalDateTime createdFrom, LocalDateTime createdTo, LocalDateTime closedFrom, LocalDateTime closedTo,
+                                                              Integer priceToPayFrom, Integer priceToPayTo,
                                                               Pageable pageRequest);
 
     @Query("SELECT o FROM Order o " +
@@ -42,9 +44,11 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
         "AND (:phonePart IS null OR lower(o.phone) LIKE '%' || lower(cast(:phonePart as string)) || '%' ) " +
         "AND (COALESCE(:statusNames, NULL) IS NULL OR CAST(o.status as string) IN :statusNames) " +
         "AND ((CAST(:createdFrom AS date) IS null OR CAST(:createdTo AS date) IS null) OR o.created BETWEEN :createdFrom AND :createdTo) " +
-        "AND ((CAST(:closedFrom AS date) IS null OR CAST(:closedTo AS date) IS null) OR o.closed BETWEEN :closedFrom AND :closedTo) ")
+        "AND ((CAST(:closedFrom AS date) IS null OR CAST(:closedTo AS date) IS null) OR o.closed BETWEEN :closedFrom AND :closedTo) " +
+        "AND (:priceToPayFrom IS null OR (o.totalPrice - o.discount) BETWEEN :priceToPayFrom AND :priceToPayTo) ")
     Page<Order> findForAdminByFilters(Long id, List<String> statusNames, Long userId, String userNamePart, String phonePart,
                                                               LocalDateTime createdFrom, LocalDateTime createdTo, LocalDateTime closedFrom, LocalDateTime closedTo,
+                                                              Integer priceToPayFrom, Integer priceToPayTo,
                                                               Pageable pageRequest);
 
     Page<OrderProjection> findProjectedByUserEmailOrderByCreatedDesc(String userEmail, Pageable pageRequest);

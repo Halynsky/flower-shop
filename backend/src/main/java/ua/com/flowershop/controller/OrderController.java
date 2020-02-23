@@ -11,10 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ua.com.flowershop.entity.Order;
 import ua.com.flowershop.exception.NotFoundException;
-import ua.com.flowershop.model.IdAmountTuple;
-import ua.com.flowershop.model.OrderContactsChangeRequestModel;
-import ua.com.flowershop.model.OrderModel;
-import ua.com.flowershop.model.OrderStatusChangeRequestModel;
+import ua.com.flowershop.model.*;
 import ua.com.flowershop.projection.OrderAdminProjection;
 import ua.com.flowershop.projection.OrderProjection;
 import ua.com.flowershop.repository.OrderRepository;
@@ -61,8 +58,10 @@ public class OrderController {
                                                                      @RequestParam(required = false) LocalDateTime createdTo,
                                                                      @RequestParam(required = false) LocalDateTime closedFrom,
                                                                      @RequestParam(required = false) LocalDateTime closedTo,
+                                                                     @RequestParam(required = false) Integer priceToPayFrom,
+                                                                     @RequestParam(required = false) Integer priceToPayTo,
                                                                      @PageableDefault(sort = "id", page = 0, size = 10, direction = Sort.Direction.ASC) Pageable pageRequest) {
-        return new ResponseEntity<>(orderRepository.findForAdminProjectedByFilters(id, statusNames, userId, userNamePart, phonePart, createdFrom, createdTo, closedFrom, closedTo, HibernateUtil.replaceUnsafeFields(pageRequest, unsafeSortingFields)), OK);
+        return new ResponseEntity<>(orderRepository.findForAdminProjectedByFilters(id, statusNames, userId, userNamePart, phonePart, createdFrom, createdTo, closedFrom, closedTo, priceToPayFrom, priceToPayTo, HibernateUtil.replaceUnsafeFields(pageRequest, unsafeSortingFields)), OK);
     }
 
     @PostMapping
@@ -156,9 +155,11 @@ public class OrderController {
                                                                      @RequestParam(required = false) LocalDateTime createdTo,
                                                                      @RequestParam(required = false) LocalDateTime closedFrom,
                                                                      @RequestParam(required = false) LocalDateTime closedTo,
+                                                                     @RequestParam(required = false) Integer priceToPayFrom,
+                                                                     @RequestParam(required = false) Integer priceToPayTo,
                                                                      @PageableDefault(sort = "id", page = 0, size = 10, direction = Sort.Direction.ASC) Pageable pageRequest,
                                                                      HttpServletResponse response) throws IOException {
-        Page<Order> page = orderRepository.findForAdminByFilters(id, statusNames, userId, userNamePart, phonePart, createdFrom, createdTo, closedFrom, closedTo, pageRequest);
+        Page<Order> page = orderRepository.findForAdminByFilters(id, statusNames, userId, userNamePart, phonePart, createdFrom, createdTo, closedFrom, closedTo, priceToPayFrom, priceToPayTo, pageRequest);
         Workbook workbook = poiExporter.exportOrdersToExcel(page);
         response.setHeader("Content-disposition", "attachment; filename=Orders.xlsx");
         workbook.write(response.getOutputStream() );
@@ -169,6 +170,12 @@ public class OrderController {
     @PostMapping("/createAsAdmin/{userIdToCreateFor}")
     public ResponseEntity<Long> createAsAdmin(@PathVariable Long userIdToCreateFor) {
         return new ResponseEntity<>(orderService.createAsAdmin(userIdToCreateFor), OK);
+    }
+
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
+    @PostMapping("/createAsAdmin")
+    public ResponseEntity<Long> createAsAdmin(@RequestBody OrderCreateRequestAdmin orderCreateRequestAdmin) {
+        return new ResponseEntity<>(orderService.createAsAdmin(orderCreateRequestAdmin), OK);
     }
 
     @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
