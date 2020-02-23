@@ -104,7 +104,7 @@ export class OrdersComponent implements OnInit {
 
 
   constructor(private dataService: OrderService,
-              private userService: UserService,
+              public userService: UserService,
               private flowerSizeService: FlowerSizeService,
               private snackBarService: SnackBarService,
               public translation: TranslationService,
