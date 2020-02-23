@@ -551,7 +551,7 @@
 
       <div class="add-block">
 
-        <p-dropdown class="add-flower-size-dropdown" [options]="flowerSizes" [(ngModel)]="flowerSizeToAdd" name="flowerSizeToAdd" [filter]="true" placeholder="Оберіть товар" emptyFilterMessage="Не знайдено" optionLabel="flower.name" appendTo="body">
+        <p-dropdown class="add-flower-size-dropdown" [options]="flowerSizes" [(ngModel)]="flowerSizeToAdd" name="flowerSizeToAdd" [filter]="true" filterBy="value.flower.name,value.flower.nameOriginal,value.flower.flowerType.name,value.flower.flowerType.nameOriginal" placeholder="Оберіть товар" emptyFilterMessage="Не знайдено" optionLabel="flower.nameOriginal" appendTo="body">
           <ng-template let-selectedItem pTemplate="selectedItem">
             <div class="flower-size-selected">
               <img [src]="selectedItem.value.flower.image"/>
@@ -699,7 +699,7 @@
 
 <p-dialog [(visible)]="displayCreateOrderDialog" class="create-order-dialog" [modal]="true" (onHide)="resetCreateOrderForm(createOrderForm)">
   <p-header>
-    Створення пустого замовлення
+    Створення порожнього замовлення
   </p-header>
 
   <form id="create_order_form" #createOrderForm="ngForm" class="create-order-dialog-content" (ngSubmit)="createOrderForm.valid && createOrder()">
