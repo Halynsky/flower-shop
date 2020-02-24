@@ -71,6 +71,14 @@ p-dialog {
 
   &.update-order-items-dialog {
 
+    .loading-spinner {
+      width: 100%;
+      height: 50vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
     .update-order-items-block-wrapper {
 
       max-height: 80vh;
