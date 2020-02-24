@@ -37,6 +37,7 @@ export class OrdersComponent implements OnInit {
   displayCreateOrderDialog = false;
 
   loading = false;
+  initialized = false;
 
   ItemSaveMode = ItemSaveMode;
 
@@ -129,9 +130,8 @@ export class OrdersComponent implements OnInit {
   }
 
   getAllFlowerSizes() {
-    this.loading = true;
     this.flowerSizeService.getAllForAdminAsList()
-      .pipe(finalize(() => this.loading = false))
+      .pipe(finalize(() => this.initialized = true))
       .subscribe(
       flowerSizes => this.flowerSizes = flowerSizes,
       error => this.snackBarService.showError(getErrorMessage(error))

@@ -9,7 +9,8 @@
 </div>
 
 <div class="panel-content">
-  <p-table #dt [columns]="selectedColumns" [value]="items.content" sortField="created" [sortOrder]="-1" [paginator]="true" [rows]="10" [totalRecords]="items.totalElements"
+  <p-table #dt [columns]="selectedColumns" [value]="items.content" sortField="created" [sortOrder]="-1" [paginator]="true" [rows]="10"
+           [totalRecords]="items.totalElements"
            [tableStyle]="{'table-layout':'auto'}" dataKey="id" rowExpandMode="single"
            (onLazyLoad)="onLazyLoad($event)" [lazy]="true" [filters]="filters"
            [contextMenu]="cm" selectionMode="single" (onContextMenuSelect)="onContextMenuSelect($event)" contextMenuSelectionMode="joint">
@@ -35,43 +36,43 @@
 
         <ng-container *ngFor="let col of columns" [ngSwitch]="col.field">
 
-          <th *ngSwitchDefault [pSortableColumn]="col.field" >
+          <th *ngSwitchDefault [pSortableColumn]="col.field">
             {{col.header}}
             <p-sortIcon [field]="col.field"></p-sortIcon>
           </th>
 
-          <th *ngSwitchCase="'userId'" [pSortableColumn]="'user.id'" >
+          <th *ngSwitchCase="'userId'" [pSortableColumn]="'user.id'">
             {{col.header}}
             <p-sortIcon [field]="'user.id'"></p-sortIcon>
           </th>
 
-          <th *ngSwitchCase="'user'" [pSortableColumn]="'user.name'" >
+          <th *ngSwitchCase="'user'" [pSortableColumn]="'user.name'">
             {{col.header}}
             <p-sortIcon [field]="'user.name'"></p-sortIcon>
           </th>
 
-          <th *ngSwitchCase="'userFacebookNickname'" [pSortableColumn]="'user.facebookNickname'" >
+          <th *ngSwitchCase="'userFacebookNickname'" [pSortableColumn]="'user.facebookNickname'">
             {{col.header}}
             <p-sortIcon [field]="'user.facebookNickname'"></p-sortIcon>
           </th>
 
-          <th *ngSwitchCase="'phone'" >
+          <th *ngSwitchCase="'phone'">
             {{col.header}}
           </th>
 
-          <th *ngSwitchCase="'deliveryAddress'" >
+          <th *ngSwitchCase="'deliveryAddress'">
             {{col.header}}
           </th>
 
-          <th *ngSwitchCase="'note'" >
+          <th *ngSwitchCase="'note'">
             {{col.header}}
           </th>
 
-          <th *ngSwitchCase="'comment'" >
+          <th *ngSwitchCase="'comment'">
             {{col.header}}
           </th>
 
-          <th *ngSwitchCase="'priceToPay'" [pSortableColumn]="'priceToPay'" >
+          <th *ngSwitchCase="'priceToPay'" [pSortableColumn]="'priceToPay'">
             {{col.header}}
             <p-sortIcon [field]="'priceToPay'"></p-sortIcon>
           </th>
@@ -87,9 +88,11 @@
         <th *ngFor="let col of columns" [ngSwitch]="col.field">
           <input *ngSwitchCase="'id'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'equals')" class="table-filter">
           <input *ngSwitchCase="'user'" pInputText type="text" (input)="dt.filter($event.target.value, 'userNamePart', 'contains')" class="table-filter">
-          <input *ngSwitchCase="'userFacebookNickname'" pInputText type="text" (input)="dt.filter($event.target.value, 'userFacebookNicknamePart', 'startsWith')" class="table-filter">
+          <input *ngSwitchCase="'userFacebookNickname'" pInputText type="text"
+                 (input)="dt.filter($event.target.value, 'userFacebookNicknamePart', 'startsWith')" class="table-filter">
           <input *ngSwitchCase="'phone'" pInputText type="text" (input)="dt.filter($event.target.value, 'phonePart', 'contains')" class="table-filter">
-          <input *ngSwitchCase="'userId'" pInputText pKeyFilter="pint" type="text" (input)="dt.filter($event.target.value, col.field, 'equals')" class="table-filter" [ngModel]="filters?.userId?.value">
+          <input *ngSwitchCase="'userId'" pInputText pKeyFilter="pint" type="text" (input)="dt.filter($event.target.value, col.field, 'equals')"
+                 class="table-filter" [ngModel]="filters?.userId?.value">
 
           <div *ngSwitchCase="'status'">
             <p-multiSelect [options]="statusesOptions" defaultLabel="Всі"
@@ -131,8 +134,9 @@
 
     <!--Rows-->
 
-    <ng-template pTemplate="body" let-rowData let-columns="columns" let-expanded="expanded" >
-      <tr [pContextMenuRow]="rowData" [ngClass]="{'selected' : isContextMenuOpened && selected?.id == rowData?.id, 'expanded' : expanded && !(isContextMenuOpened && selected?.id == rowData?.id)}">
+    <ng-template pTemplate="body" let-rowData let-columns="columns" let-expanded="expanded">
+      <tr [pContextMenuRow]="rowData"
+          [ngClass]="{'selected' : isContextMenuOpened && selected?.id == rowData?.id, 'expanded' : expanded && !(isContextMenuOpened && selected?.id == rowData?.id)}">
 
         <td>
           <a [pRowToggler]="rowData" class="row-expander">
@@ -312,7 +316,8 @@
   </form>
 
   <p-footer>
-    <button pButton form="status_change_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
+    <button pButton form="status_change_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="&nbsp;&nbsp;Підтвердити" type="submit"
+            [disabled]="loading"></button>
   </p-footer>
 </p-dialog>
 
@@ -356,11 +361,11 @@
         </div>
         <div class="ui-grid-col-4">
           <textarea pInputTextarea
-            #deliveryAddress="ngModel"
-            name="deliveryAddress"
-            [(ngModel)]="orderContactsChangeRequest.deliveryAddress"
-            cols="23" rows="6" maxlength="500"
-            required>
+                    #deliveryAddress="ngModel"
+                    name="deliveryAddress"
+                    [(ngModel)]="orderContactsChangeRequest.deliveryAddress"
+                    cols="23" rows="6" maxlength="500"
+                    required>
           </textarea>
         </div>
         <div class="ui-grid-col-4">
@@ -375,7 +380,8 @@
   </form>
 
   <p-footer>
-    <button pButton form="contacts_change_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
+    <button pButton form="contacts_change_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="&nbsp;&nbsp;Підтвердити" type="submit"
+            [disabled]="loading"></button>
   </p-footer>
 </p-dialog>
 
@@ -409,7 +415,8 @@
   </form>
 
   <p-footer>
-    <button pButton form="note_change_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
+    <button pButton form="note_change_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="&nbsp;&nbsp;Підтвердити" type="submit"
+            [disabled]="loading"></button>
   </p-footer>
 </p-dialog>
 
@@ -428,10 +435,10 @@
         </div>
         <div class="ui-grid-col-4">
           <input pInputText
-                    #mergingOrder="ngModel"
-                    name="mergingOrder"
-                    [(ngModel)]="mergingOrderId"
-                    required>
+                 #mergingOrder="ngModel"
+                 name="mergingOrder"
+                 [(ngModel)]="mergingOrderId"
+                 required>
         </div>
         <div class="ui-grid-col-4">
           <ng-container *ngIf="mergingOrder.dirty || mergingOrder.touched || mergeForm.submitted">
@@ -445,7 +452,8 @@
   </form>
 
   <p-footer>
-    <button pButton form="merge_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
+    <button pButton form="merge_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="&nbsp;&nbsp;Підтвердити" type="submit"
+            [disabled]="loading"></button>
   </p-footer>
 </p-dialog>
 
@@ -456,102 +464,110 @@
 
   <form id="split_form" #splitForm="ngForm" class="split-dialog-content" (ngSubmit)="splitForm.valid && split()">
 
-      <div class="orders-splitting-block-wrapper" *ngIf="splittingOrder">
-        <div class="split-left">
-          <div class="title">Замовлення №<b>{{splittingOrder?.id}}</b></div>
-          <div class="split-panel-content">
+    <div class="orders-splitting-block-wrapper" *ngIf="splittingOrder">
+      <div class="split-left">
+        <div class="title">Замовлення №<b>{{splittingOrder?.id}}</b></div>
+        <div class="split-panel-content">
 
-            <div class="expanded-row-table split-table" *ngIf="splittingOrder.orderItems.length > 0">
-              <div class="body">
-                <div class="row">
-                  <div class="head">Фото</div>
-                  <div class="head">Назва</div>
-                  <div class="head">Розмір</div>
-                  <div class="head">Кількість</div>
-                  <div class="head empty"></div>
-                </div>
-                <ng-template ngFor let-orderItem [ngForOf]="splittingOrder.orderItems" let-i="index">
-                  <div class="row">
-                    <div class="cell image-wrapper">
-                      <img [src]="orderItem.image" class="order-item-logo">
-                    </div>
-                    <div class="cell">{{orderItem.name}}</div>
-                    <div class="cell">{{orderItem.sizeName}}</div>
-                    <div class="cell">{{orderItem.amount}}</div>
-                    <div class="cell control-wrapper" (click)="moveToOtherOrder(i)">
-                      <i class="fas fa-caret-right"></i>
-                    </div>
-                  </div>
-                </ng-template>
+          <div class="expanded-row-table split-table" *ngIf="splittingOrder.orderItems.length > 0">
+            <div class="body">
+              <div class="row">
+                <div class="head">Фото</div>
+                <div class="head">Назва</div>
+                <div class="head">Розмір</div>
+                <div class="head">Кількість</div>
+                <div class="head empty"></div>
               </div>
-            </div>
-
-            <div class="order-empty" *ngIf="splittingOrder.orderItems.length == 0">
-              В основному замовленні повинна залишитись хоча б одна позиція
-            </div>
-
-          </div>
-        </div>
-        <div class="split-right">
-          <div class="title">Нове замовлення</div>
-          <div class="split-panel-content">
-
-            <div class="expanded-row-table split-table" *ngIf="splittingOtherOrderItems.length > 0">
-              <div class="body">
+              <ng-template ngFor let-orderItem [ngForOf]="splittingOrder.orderItems" let-i="index">
                 <div class="row">
-                  <div class="head empty"></div>
-                  <div class="head">Фото</div>
-                  <div class="head">Назва</div>
-                  <div class="head">Розмір</div>
-                  <div class="head">Кількість</div>
-                </div>
-                <ng-template ngFor let-orderItem [ngForOf]="splittingOtherOrderItems" let-i="index">
-                  <div class="row">
-                    <div class="cell control-wrapper" (click)="moveToMainOrder(i)">
-                      <i class="fas fa-caret-left"></i>
-                    </div>
-                    <div class="cell image-wrapper">
-                      <img [src]="orderItem.image" class="order-item-logo">
-                    </div>
-                    <div class="cell">{{orderItem.name}}</div>
-                    <div class="cell">{{orderItem.sizeName}}</div>
-                    <div class="cell">{{orderItem.amount}}</div>
+                  <div class="cell image-wrapper">
+                    <img [src]="orderItem.image" class="order-item-logo">
                   </div>
-                </ng-template>
-
-              </div>
+                  <div class="cell">{{orderItem.name}}</div>
+                  <div class="cell">{{orderItem.sizeName}}</div>
+                  <div class="cell">{{orderItem.amount}}</div>
+                  <div class="cell control-wrapper" (click)="moveToOtherOrder(i)">
+                    <i class="fas fa-caret-right"></i>
+                  </div>
+                </div>
+              </ng-template>
             </div>
-
-            <div class="order-empty" *ngIf="splittingOtherOrderItems.length == 0">
-              Перемістіть сюди позиції з основного замовлення
-            </div>
-
           </div>
+
+          <div class="order-empty" *ngIf="splittingOrder.orderItems.length == 0">
+            В основному замовленні повинна залишитись хоча б одна позиція
+          </div>
+
         </div>
       </div>
+      <div class="split-right">
+        <div class="title">Нове замовлення</div>
+        <div class="split-panel-content">
+
+          <div class="expanded-row-table split-table" *ngIf="splittingOtherOrderItems.length > 0">
+            <div class="body">
+              <div class="row">
+                <div class="head empty"></div>
+                <div class="head">Фото</div>
+                <div class="head">Назва</div>
+                <div class="head">Розмір</div>
+                <div class="head">Кількість</div>
+              </div>
+              <ng-template ngFor let-orderItem [ngForOf]="splittingOtherOrderItems" let-i="index">
+                <div class="row">
+                  <div class="cell control-wrapper" (click)="moveToMainOrder(i)">
+                    <i class="fas fa-caret-left"></i>
+                  </div>
+                  <div class="cell image-wrapper">
+                    <img [src]="orderItem.image" class="order-item-logo">
+                  </div>
+                  <div class="cell">{{orderItem.name}}</div>
+                  <div class="cell">{{orderItem.sizeName}}</div>
+                  <div class="cell">{{orderItem.amount}}</div>
+                </div>
+              </ng-template>
+
+            </div>
+          </div>
+
+          <div class="order-empty" *ngIf="splittingOtherOrderItems.length == 0">
+            Перемістіть сюди позиції з основного замовлення
+          </div>
+
+        </div>
+      </div>
+    </div>
 
   </form>
 
   <p-footer>
-    <button pButton form="split_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading || splittingOtherOrderItems.length == 0 || this.splittingOrder.orderItems.length == 0"></button>
+    <button pButton form="split_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="&nbsp;&nbsp;Підтвердити" type="submit"
+            [disabled]="loading || splittingOtherOrderItems.length == 0 || this.splittingOrder.orderItems.length == 0"></button>
   </p-footer>
 </p-dialog>
 
 
-<p-dialog [(visible)]="displayUpdateOrderItemsDialog" class="update-order-items-dialog" [modal]="true" (onHide)="resetUpdateOrderItemsForm(updateOrderItemsForm)" [positionTop]="120">
+<p-dialog [(visible)]="displayUpdateOrderItemsDialog" class="update-order-items-dialog" [modal]="true"
+          (onHide)="resetUpdateOrderItemsForm(updateOrderItemsForm)" [positionTop]="120">
   <p-header>
     Оновлення замовлення №{{selected?.id}}
   </p-header>
 
-  <form id="update_order_items" #updateOrderItemsForm="ngForm" class="update-order-items-dialog-content" (ngSubmit)="updateOrderItemsForm.valid && updateOrderItems()">
+  <form id="update_order_items" #updateOrderItemsForm="ngForm" class="update-order-items-dialog-content"
+        (ngSubmit)="updateOrderItemsForm.valid && updateOrderItems()">
 
-    <!--TODO: Add loading spinner-->
 
-    <div class="update-order-items-block-wrapper" *ngIf="updatingOrder && flowerSizes">
+    <div class="loading-spinner" *ngIf="!initialized">
+      <p-progressSpinner [style]="{width: '50px', height: '50px'}"></p-progressSpinner>
+    </div>
+
+    <div class="update-order-items-block-wrapper" *ngIf="updatingOrder && flowerSizes && initialized">
 
       <div class="add-block">
 
-        <p-dropdown class="add-flower-size-dropdown" [options]="flowerSizes" [(ngModel)]="flowerSizeToAdd" name="flowerSizeToAdd" [filter]="true" filterBy="value.flower.name,value.flower.nameOriginal,value.flower.flowerType.name,value.flower.flowerType.nameOriginal" placeholder="Оберіть товар" emptyFilterMessage="Не знайдено" optionLabel="flower.nameOriginal" appendTo="body">
+        <p-dropdown class="add-flower-size-dropdown" [options]="flowerSizes" [(ngModel)]="flowerSizeToAdd" name="flowerSizeToAdd" [filter]="true"
+                    filterBy="value.flower.name,value.flower.nameOriginal,value.flower.flowerType.name,value.flower.flowerType.nameOriginal"
+                    placeholder="Оберіть товар" emptyFilterMessage="Не знайдено" optionLabel="flower.nameOriginal" appendTo="body">
           <ng-template let-selectedItem pTemplate="selectedItem">
             <div class="flower-size-selected">
               <img [src]="selectedItem.value.flower.image"/>
@@ -563,7 +579,8 @@
               <div class="flower-size-option">
                 <img [src]="item.value.flower.image"/>
                 <div class="flower-size-option-info">
-                  <div class="flower-size-option-info-main"><b>{{item.value.flower.nameOriginal}}</b> {{item.value.size.name}}, {{item.value.flower.flowerType.nameSingle}}</div>
+                  <div class="flower-size-option-info-main"><b>{{item.value.flower.nameOriginal}}</b> {{item.value.size.name}}
+                    , {{item.value.flower.flowerType.nameSingle}}</div>
                   <div class="flower-size-option-info-additional">Ціна: {{item.value.price / 100}} грн, Доступно: {{item.value.available}} шт</div>
                 </div>
               </div>
@@ -571,7 +588,8 @@
           </ng-template>
         </p-dropdown>
 
-        <button pButton icon="pi pi-plus" label="&nbsp;&nbsp;Додати" type="button" class="ui-button-success" [disabled]="loading" (click)="addOrderItem()"></button>
+        <button pButton icon="pi pi-plus" label="&nbsp;&nbsp;Додати" type="button" class="ui-button-success" [disabled]="loading"
+                (click)="addOrderItem()"></button>
 
       </div>
 
@@ -595,7 +613,8 @@
               <div class="cell">
                 <div class="input-wrapper">
                   <i class="fas fa-angle-left" (click)="minusAmount(i)"></i>
-                  <input [name]="'orderItem_' + orderItem.flowerSizeId" (ngModelChange)="onAmountModelChange($event, orderItem)" [(ngModel)]="orderItem.amount" maxlength="5" required type="text" digitOnly [minValue]="1" [maxValue]="getMaxForFlowerSize(orderItem)" >
+                  <input [name]="'orderItem_' + orderItem.flowerSizeId" (ngModelChange)="onAmountModelChange($event, orderItem)" [(ngModel)]="orderItem.amount"
+                         maxlength="5" required type="text" digitOnly [minValue]="1" [maxValue]="getMaxForFlowerSize(orderItem)">
                   <i class="fas fa-angle-right" (click)="plusAmount(i)"></i>
                 </div>
               </div>
@@ -614,7 +633,8 @@
   </form>
 
   <p-footer>
-    <button pButton form="update_order_items" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading || updateOrderItemsForm.invalid"></button>
+    <button pButton form="update_order_items" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="&nbsp;&nbsp;Підтвердити" type="submit"
+            [disabled]="loading || updateOrderItemsForm.invalid"></button>
   </p-footer>
 </p-dialog>
 
@@ -633,12 +653,12 @@
         </div>
         <div class="ui-grid-col-4">
           <input pInputText
-                    #discount="ngModel"
-                    name="discount"
-                    [(ngModel)]="orderDiscount"
-                    maxlength="4"
-                    digitOnly
-                    required>
+                 #discount="ngModel"
+                 name="discount"
+                 [(ngModel)]="orderDiscount"
+                 maxlength="4"
+                 digitOnly
+                 required>
         </div>
         <div class="ui-grid-col-4">
           <ng-container *ngIf="discountChangeForm.dirty || discountChangeForm.touched || discountChangeForm.submitted">
@@ -652,7 +672,8 @@
   </form>
 
   <p-footer>
-    <button pButton form="discount_change_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
+    <button pButton form="discount_change_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="&nbsp;&nbsp;Підтвердити" type="submit"
+            [disabled]="loading"></button>
   </p-footer>
 </p-dialog>
 
@@ -693,7 +714,8 @@
   </form>
 
   <p-footer>
-    <button pButton form="payment_confirm_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
+    <button pButton form="payment_confirm_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="&nbsp;&nbsp;Підтвердити" type="submit"
+            [disabled]="loading"></button>
   </p-footer>
 </p-dialog>
 
@@ -729,7 +751,8 @@
   </form>
 
   <p-footer>
-    <button pButton form="create_order_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
+    <button pButton form="create_order_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="&nbsp;&nbsp;Підтвердити" type="submit"
+            [disabled]="loading"></button>
   </p-footer>
 </p-dialog>
 
