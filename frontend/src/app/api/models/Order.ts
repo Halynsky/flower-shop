@@ -2,7 +2,7 @@ import { BucketItem } from "../../models/Bucket";
 import { UserShortForAdmin } from "./User";
 
 export class OrderAdmin {
-  id: number;
+  id: any;
   orderItems: OrderItemAdmin[] = [];
   closed: string;
   created: string;
@@ -21,7 +21,7 @@ export class OrderAdmin {
 }
 
 export class OrderItemAdmin {
-  id: number;
+  id: any;
   name: string;
   amount: number;
   price: number;
@@ -39,21 +39,21 @@ export class OrderRequest {
 }
 
 export class OrderStatusChangeRequest {
-  id: number;
+  id: any;
   status: Order.Status;
   comment: string;
   postDeclaration: string
 }
 
 export class OrderContactsChangeRequest {
-  id: number;
+  id: any;
   phone: string;
   deliveryAddress: string
 }
 
 
 export class Order {
-  id: number;
+  id: any;
   orderItems: OrderItem[];
   closed: string;
   created: string;
@@ -65,7 +65,7 @@ export class Order {
 }
 
 export class OrderItem{
-  id: number;
+  id: any;
   name: string;
   amount: number;
   price: number;

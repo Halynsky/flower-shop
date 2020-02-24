@@ -18,6 +18,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static java.time.LocalDateTime.now;
@@ -478,6 +479,53 @@ public class OrderService {
 
         Order order = new Order()
             .setUser(user);
+        orderRepository.save(order);
+
+        return order.getId();
+    }
+
+    @Transactional
+    public Long createAsAdmin(OrderCreateRequestAdmin orderCreateRequestAdmin) {
+        User user = null;
+
+        if (nonNull(orderCreateRequestAdmin.getUserId())) {
+            user = userRepository.findById(orderCreateRequestAdmin.getUserId()).orElse(null);
+        }
+
+        if (isNull(user) && nonNull(orderCreateRequestAdmin.getEmail())) {
+            user = userRepository.findByEmail(orderCreateRequestAdmin.getEmail()).orElse(null);
+            if (nonNull(user)) {
+                throw new ConflictException("Користувач з email => " + orderCreateRequestAdmin.getEmail() + " вже існує " + user.getEmail());
+            }
+        }
+
+        if (isNull(user) && nonNull(orderCreateRequestAdmin.getPhone())) {
+            user = userRepository.findByPhone(orderCreateRequestAdmin.getPhone()).orElse(null);
+            if (nonNull(user)) {
+                throw new ConflictException("Користувач з телефоном => " + orderCreateRequestAdmin.getPhone() + " вже існує. " + user.getEmail());
+            }
+        }
+
+        if (isNull(orderCreateRequestAdmin.getEmail())) {
+            orderCreateRequestAdmin.setEmail(UUID.randomUUID().toString() + "@fakemail.com");
+        }
+
+        if (isNull(user)) {
+            user = new User()
+                .setName(orderCreateRequestAdmin.getName())
+                .setEmail(orderCreateRequestAdmin.getEmail())
+                .setPhone(orderCreateRequestAdmin.getPhone())
+                .setIsActivated(true)
+                .setIsVirtual(true)
+                .setLastOrderDate(now());
+        }
+
+        userRepository.save(user);
+
+        Order order = new Order()
+            .setUser(user)
+            .setDeliveryAddress(orderCreateRequestAdmin.getDeliveryAddress())
+            .setPhone(orderCreateRequestAdmin.getPhone());
         orderRepository.save(order);
 
         return order.getId();

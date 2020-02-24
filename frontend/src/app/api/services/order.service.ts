@@ -4,6 +4,7 @@ import { API_URL } from "../../utils/Costants";
 import { RestPage } from "../models/RestPage";
 import { Order, OrderAdmin, OrderContactsChangeRequest, OrderRequest, OrderStatusChangeRequest } from "../models/Order";
 import { IdAmountTuple } from "../models/IdAmountTuple";
+import { OrderCreateRequestAdmin } from "../models/OrderCreateRequestAdmin";
 
 @Injectable({providedIn: 'root'})
 export class OrderService {
@@ -66,8 +67,12 @@ export class OrderService {
     return this.http.get(`${this.URL}/export/excel`, {responseType: 'blob', observe: 'response', params: params});
   }
 
-  createAsAdmin(userIdToCreateOrder: number) {
+  createAsAdminByUserId(userIdToCreateOrder: number) {
     return this.http.post(`${this.URL}/createAsAdmin/${userIdToCreateOrder}`, {responseType: 'text'});
+  }
+
+  createAsAdmin(orderCreateRequestAdmin: OrderCreateRequestAdmin) {
+    return this.http.post(`${this.URL}/createAsAdmin`, orderCreateRequestAdmin, {responseType: 'text'});
   }
 
   sendToEmail(id: number) {

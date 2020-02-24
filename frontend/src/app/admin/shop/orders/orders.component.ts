@@ -17,6 +17,8 @@ import { FlowerSize } from "../../../api/models/FlowerSize";
 import { FlowerSizeService } from "../../../api/services/flower-size.service";
 import * as fileSaver from 'file-saver';
 import { dataTableFilter } from "../../util";
+import { OrderCreateRequestAdmin } from "../../../api/models/OrderCreateRequestAdmin";
+import { UserService } from "../../../api/services/user.service";
 
 @Component({
   selector: 'app-orders',
@@ -95,7 +97,15 @@ export class OrdersComponent implements OnInit {
 
   filters: { [s: string]: FilterMetadata } = {};
 
+  createOrderMode;
+  orderCreateRequestAdmin: OrderCreateRequestAdmin = new OrderCreateRequestAdmin();
+
+  priceToPayMinMax = [0, 9999];
+  priceToPayFilter = clone(this.priceToPayMinMax);
+
+
   constructor(private dataService: OrderService,
+              public userService: UserService,
               private flowerSizeService: FlowerSizeService,
               private snackBarService: SnackBarService,
               public translation: TranslationService,
@@ -113,7 +123,12 @@ export class OrdersComponent implements OnInit {
     });
   }
 
-  loadDataLazy(filters = {}, pagination: Pagination = new Pagination()) {
+  loadDataLazy(filters: any = {} , pagination: Pagination = new Pagination()) {
+    if (filters.priceToPayFrom)
+      filters.priceToPayFrom = parseInt(filters.priceToPayFrom) * 100;
+    if (filters.priceToPayTo)
+      filters.priceToPayTo = parseInt(filters.priceToPayTo) * 100;
+
     this.dataService.getAllForAdmin(filters, pagination).subscribe(
       items => this.items = items,
       error => this.snackBarService.showError(getErrorMessage(error))
@@ -454,7 +469,7 @@ export class OrdersComponent implements OnInit {
         orderItemAdmin.flowerSizeId = this.flowerSizeToAdd.id;
         orderItemAdmin.image = this.flowerSizeToAdd.flower.image;
         orderItemAdmin.available =  this.flowerSizeToAdd.available;
-        orderItemAdmin.name = this.flowerSizeToAdd.flower.name;
+        orderItemAdmin.name = this.flowerSizeToAdd.flower.nameOriginal;
         orderItemAdmin.sizeName = this.flowerSizeToAdd.size.name;
         orderItemAdmin.price = this.flowerSizeToAdd.price;
         this.updatingOrder.orderItems.unshift(orderItemAdmin);
@@ -536,17 +551,26 @@ export class OrdersComponent implements OnInit {
 
   createOrder() {
     this.loading = true;
-    this.dataService.createAsAdmin(this.userIdToCreateOrder)
+    this.dataService.createAsAdmin(this.orderCreateRequestAdmin)
       .pipe(finalize(() => this.loading = false))
-      .subscribe(() => {
-        this.snackBarService.showSuccess(`Замовлення для користувача з Id ${this.userIdToCreateOrder} успішно створено`);
+      .subscribe(orderId => {
+        this.snackBarService.showSuccess(`Замовлення ${orderId} успішно створено`);
         this.refresh();
         this.displayCreateOrderDialog = false;
+        this.displayUpdateOrderItemsDialog = true;
+        this.updatingOrder = new OrderAdmin();
+        this.updatingOrder.id = orderId;
+        this.updatingOrder.orderItems = [];
+        this.updatingOrder.orderItems = this.updatingOrder.orderItems.reverse();
+        this.getAllFlowerSizes();
+
       }, error => this.snackBarService.showError(getErrorMessage(error)))
   }
 
   resetCreateOrderForm(form: NgForm) {
     this.userIdToCreateOrder = null;
+    this.createOrderMode = null;
+    this.orderCreateRequestAdmin = new OrderCreateRequestAdmin();
     form.resetForm();
   }
 
@@ -568,6 +592,9 @@ export class OrdersComponent implements OnInit {
     this.zoomedImage = null;
   }
 
+  onFlowerSizeFilter(event) {
+    console.log(event)
+  }
 }
 
 
