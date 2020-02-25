@@ -41,8 +41,10 @@ public class FlowerService {
                                                    Integer popularityFrom, Integer popularityTo, String colorNamePart,
                                                    LocalDateTime createdFrom, LocalDateTime createdTo,
                                                    Pageable pageRequest) {
+        Double popularityFromDouble = Double.valueOf(popularityFrom);
+        Double popularityToDouble = Double.valueOf(popularityTo);
         return flowerRepository.findForAdminProjectedByFilters(id, flowerNamePart, flowerOriginalNamePart, flowerTypeNames, groupNamePart, sizeFrom, sizeTo, heightFrom,
-            heightTo, popularityFrom, popularityTo, colorNamePart, createdFrom, createdTo, pageRequest);
+            heightTo, popularityFromDouble, popularityToDouble, colorNamePart, createdFrom, createdTo, pageRequest);
     }
 
     public FlowerFullProjection getFlowerById(Long id) {
