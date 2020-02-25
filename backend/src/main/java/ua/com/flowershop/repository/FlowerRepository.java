@@ -39,7 +39,7 @@ public interface FlowerRepository extends JpaRepository<Flower, Long> {
         "AND ((CAST(:createdFrom AS date) IS null OR CAST(:createdTo AS date) IS null) OR f.created BETWEEN :createdFrom AND :createdTo) ")
     Page<FlowerFullProjection> findForAdminProjectedByFilters(Long id, String flowerNamePart, String flowerOriginalNamePart, List<String> flowerTypeNames, String groupNamePart,
                                                               Integer sizeFrom, Integer sizeTo, Integer heightFrom, Integer heightTo,
-                                                              Integer popularityFrom, Integer popularityTo, String colorNamePart,
+                                                              Double popularityFrom, Double popularityTo, String colorNamePart,
                                                               LocalDateTime createdFrom, LocalDateTime createdTo,
                                                               Pageable pageRequest);
 
