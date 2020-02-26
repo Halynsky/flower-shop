@@ -207,13 +207,15 @@
             <div class="body">
               <div class="row">
                 <div class="head">Розмір</div>
-                <div class="head">Ціна(грн)</div>
+                <div class="head">Ціна</div>
                 <div class="head">Кількість</div>
+                <div class="head">Доступно</div>
               </div>
               <div class="row" *ngFor="let flowerSize of rowData['flowerSizes']">
                 <div class="cell">{{flowerSize.size.name}}</div>
-                <div class="cell">{{flowerSize.price/100}}</div>
-                <div class="cell">{{flowerSize.amount}}</div>
+                <div class="cell">{{flowerSize.price/100}} грн</div>
+                <div class="cell">{{flowerSize.amount}} шт</div>
+                <div class="cell">{{flowerSize.available}} шт</div>
               </div>
             </div>
           </div>
