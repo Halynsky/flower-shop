@@ -108,10 +108,7 @@ export class AuthDialogComponent {
       .subscribe(
         () => {
           this.restored = true;
-        } ,
-        error => {
-          this.snackBarService.showError(getErrorMessage(error));
-        }
+        }, error => this.snackBarService.showError(getErrorMessage(error))
       )
   }
 

@@ -44,11 +44,6 @@ export class SecurityService {
   logout() {
     this.router.navigate(['']);
     localStorage.removeItem(USER_KEY);
-    this.socialAuthService.authState.subscribe(state => {
-      if(state) {
-        this.socialAuthService.signOut();
-      }
-    });
     this.onLogout.emit();
   }
 
