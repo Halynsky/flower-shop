@@ -8,15 +8,10 @@ import localeRuUa from '@angular/common/locales/uk';
 import { RouterModule } from "@angular/router";
 import { SharedModule } from "./components/shared/shared.module";
 import { MainInterceptor } from "./inteceptors/main.interceptor";
-import { AuthDialogComponent } from "./components/shared/auth-dialog/auth-dialog.component";
-import { BucketDialogComponent } from "./components/shared/bucket-dialog/bucket-dialog.component";
 import { AuthServiceConfig, FacebookLoginProvider, SocialLoginModule } from "angularx-social-login";
 import { ValidatorsModule } from "./validators/validators.module";
 import { UserCabinetModule } from "./components/user-cabinet/user-cabinet.module";
-import { ShopFilterDialogComponent } from "./components/shared/shop-filter-dialog/shop-filter-dialog.component";
 import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
-import { AddToBucketDialogComponent } from "./components/shared/add-to-bucket-dialog/add-to-bucket-dialog.component";
-import { HowToPayDialogComponent } from "./components/shared/how-to-pay-dialog/how-to-pay-dialog.component";
 import { PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface } from "ngx-perfect-scrollbar";
 import { DatePipe, registerLocaleData } from "@angular/common";
 import { LOCALE_ID, NgModule } from "@angular/core";
@@ -52,11 +47,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     LayoutComponent
   ],
   entryComponents: [
-    AuthDialogComponent,
-    BucketDialogComponent,
-    ShopFilterDialogComponent,
-    AddToBucketDialogComponent,
-    HowToPayDialogComponent
   ],
   imports: [
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production, registrationStrategy: 'registerImmediately'}),

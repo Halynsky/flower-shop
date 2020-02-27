@@ -17,7 +17,7 @@ public interface BucketItemRepository extends JpaRepository<BucketItem, Long> {
     @Modifying
     void deleteByUserEmail(String email);
 
-    @Query("SELECT bi.id as id, f.name as name, bi.amount as amount, s.name as sizeName, fs.id as flowerSizeId, ft.name as flowerTypeName, f.image as image, bi.amount as amount FROM BucketItem bi " +
+    @Query("SELECT bi.id as id, f.name as name, bi.amount as amount, s.name as sizeName, fs.id as flowerSizeId, ft.name as flowerTypeName, f.image as image, bi.amount as amount, fs.price as price FROM BucketItem bi " +
         "INNER JOIN bi.user u " +
         "INNER JOIN bi.flowerSize fs " +
         "INNER JOIN fs.flower f " +

@@ -82,7 +82,7 @@ public class OrderService {
 
             if (nonNull(user) && !user.getIsVirtual()) {
                 log.warn("зареєстрований користувач " + user.getEmail() + " намагався зробити замовлення без авторизації");
-                throw new ConflictException("Користувач з таким Email вже існує. Авторизуйтесь та створіть замовлення через свій аккаунт. У разі потреба ви можете пройти процедуру відновлення паролю до вашого аккаунту.");
+                throw new ConflictException("USER_EXISTS");
             }
 
         }

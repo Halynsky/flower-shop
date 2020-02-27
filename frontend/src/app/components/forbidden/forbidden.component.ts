@@ -1,5 +1,4 @@
 import { SecurityService } from "../../services/security.service";
-import { AuthDialogComponent } from "../shared/auth-dialog/auth-dialog.component";
 import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 
@@ -14,10 +13,6 @@ export class ForbiddenComponent implements OnInit {
               public dialog: MatDialog) { }
 
   ngOnInit() {
-  }
-
-  openAuthDialog() {
-    this.dialog.open(AuthDialogComponent);
   }
 
 }

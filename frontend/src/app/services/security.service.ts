@@ -7,6 +7,8 @@ import { SecurityUserModel } from "../api/models/User";
 import { USER_KEY } from "../utils/Costants";
 import { AuthService as SocialAuthService } from "angularx-social-login";
 import { ReplaySubject } from "rxjs";
+import { AuthDialogComponent } from "../components/shared/auth-dialog/auth-dialog.component";
+import { MatDialog } from "@angular/material/dialog";
 
 
 @Injectable({providedIn: 'root'})
@@ -16,7 +18,8 @@ export class SecurityService {
   public onLogout: EventEmitter<any> = new EventEmitter();
 
   constructor(public router: Router,
-              public socialAuthService: SocialAuthService) {
+              public socialAuthService: SocialAuthService,
+              public dialog: MatDialog) {
     this.onLogin.subscribe(() => {
       if (this.hasAnyRole([Role.ADMIN, Role.SUPPORT])) {
         this.router.navigate(['admin', 'shop', 'orders']);
@@ -59,6 +62,13 @@ export class SecurityService {
 
   getUser(): SecurityUserModel {
     return JSON.parse(localStorage.getItem(USER_KEY));
+  }
+
+  openAuthDialog(email?: string) {
+    let authDialogRef = this.dialog.open(AuthDialogComponent);
+    if (email) {
+      authDialogRef.componentInstance.credentials.email = email;
+    }
   }
 
 

@@ -558,7 +558,7 @@
 <p-dialog [(visible)]="displayUpdateOrderItemsDialog" class="update-order-items-dialog" [modal]="true"
           (onHide)="resetUpdateOrderItemsForm(updateOrderItemsForm)" [positionTop]="120">
   <p-header>
-    Оновлення замовлення №{{updatingOrder?.id}}
+    Оновлення позицій замовлення №{{updatingOrder?.id}}
   </p-header>
 
   <form id="update_order_items" #updateOrderItemsForm="ngForm" class="update-order-items-dialog-content"
@@ -574,7 +574,7 @@
       <div class="add-block">
 
         <p-dropdown class="add-flower-size-dropdown" [options]="flowerSizes" [(ngModel)]="flowerSizeToAdd" name="flowerSizeToAdd" [filter]="true"
-                    filterBy="value.flower.name,value.flower.nameOriginal,value.flower.flowerType.name,value.flower.flowerType.nameOriginal"
+                    filterBy="value.flower.name,value.flower.nameOriginal,value.flower.flowerType.name,value.flower.flowerType.nameSingle,value.flower.flowerType.nameOriginal"
                     placeholder="Оберіть товар" emptyFilterMessage="Не знайдено" optionLabel="flower.nameOriginal" appendTo="body">
           <ng-template let-selectedItem pTemplate="selectedItem">
             <div class="flower-size-selected">

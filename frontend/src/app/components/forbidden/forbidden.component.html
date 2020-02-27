@@ -2,7 +2,7 @@
 <div class="error-code">Помилка 403</div>
 
 <div class="try-authorize-block" *ngIf="!securityService.isAuthenticated()">
-  Ви не авторизовані. Спробуйте <a (click)="openAuthDialog()">увійти</a> та повторити свою дію ще раз
+  Ви не авторизовані. Спробуйте <a (click)="securityService.openAuthDialog()">увійти</a> та повторити свою дію ще раз
 </div>
 
 <button mat-raised-button color="primary" class="back-to-home-button" routerLink="/">Повернутись на головну</button>

@@ -5,7 +5,6 @@ import { AuthService } from "../../api/services/auth.service";
 import { SnackBarService } from "../../services/snak-bar.service";
 import { Router } from "@angular/router";
 import { Role } from "../../models/Role";
-import { AuthDialogComponent } from "../../components/shared/auth-dialog/auth-dialog.component";
 import { getErrorMessage } from "../../utils/Functions";
 import { GlobalSearchService } from "../../services/global-search.service";
 import { MatDialog } from "@angular/material/dialog";
@@ -28,10 +27,6 @@ export class HeaderComponent {
               private snackBarService: SnackBarService,
               public globalSearchService: GlobalSearchService,
               private router: Router) {
-  }
-
-  openAuthDialog() {
-    this.dialog.open(AuthDialogComponent);
   }
 
   logout() {

@@ -46,16 +46,22 @@ public class GenericExceptionHandler {
         return new ResponseEntity<>(new RestError(UNAUTHORIZED.value(), exception.getMessage()), UNAUTHORIZED);
     }
 
-    @ExceptionHandler({InternalServerException.class})
-    public ResponseEntity<Object> handleInternalError(InternalServerException exception, WebRequest request) {
-        log.error(exception.getMessage());
-        return new ResponseEntity<>(new RestError(INTERNAL_SERVER_ERROR.value(), exception.getMessage()), INTERNAL_SERVER_ERROR);
-    }
-
     @ExceptionHandler(ValidationException.class)
     public ResponseEntity<Object> handleValidationException(ValidationException exception, WebRequest request) {
         log.debug(exception.getMessage());
         return new ResponseEntity<>(new RestError(BAD_REQUEST.value(), exception.getMessage()), BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ConflictException.class)
+    public ResponseEntity<Object> handleConflictException(ConflictException exception, WebRequest request) {
+        log.debug(exception.getMessage());
+        return new ResponseEntity<>(new RestError(CONFLICT.value(), exception.getMessage()), CONFLICT);
+    }
+
+    @ExceptionHandler({InternalServerException.class})
+    public ResponseEntity<Object> handleInternalError(InternalServerException exception, WebRequest request) {
+        log.error(exception.getMessage());
+        return new ResponseEntity<>(new RestError(INTERNAL_SERVER_ERROR.value(), exception.getMessage()), INTERNAL_SERVER_ERROR);
     }
 
 }

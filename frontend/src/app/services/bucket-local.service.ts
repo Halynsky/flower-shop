@@ -23,18 +23,19 @@ export class BucketLocalService {
     this.securityService.onLogin.subscribe(() => {
       this.getUserBucket();
     });
-    // this.securityService.onLogout.subscribe(() => {
-    //   this.updateBucketInfo();
-    // });
   }
 
   getUserBucket() {
-    this.bucketService.get().subscribe(
-      userBucket =>  {
-        this.clearBucket();
-        this.addToBucket(userBucket)
-      }
-    )
+    if(this.bucket.length == 0) {
+      this.bucketService.get().subscribe(
+        userBucket =>  {
+          this.replaceLocalBucket(userBucket)
+        }
+      )
+    } else {
+      this.updateBucketBackend(this.bucket);
+    }
+
   }
 
   updateBucketInfo(bucket: BucketItem[] = this.getBucket()) {
@@ -65,7 +66,7 @@ export class BucketLocalService {
       this.bucket = bucket;
       this.updateBucketInfo(this.bucket);
       if(this.securityService.isAuthenticated()) {
-        this.bucketService.post(this.bucket).subscribe(() => {})
+        this.updateBucketBackend(this.bucket);
       }
     }
   }
@@ -88,6 +89,18 @@ export class BucketLocalService {
 
   }
 
+  replaceLocalBucket(bucket: BucketItem[]) {
+
+    if (JSON.stringify(bucket) != JSON.stringify(this.getBucket())) {
+      localStorage.setItem(this.BUCKET_STORAGE_KEY, JSON.stringify(bucket));
+      this.bucket = bucket;
+      this.updateBucketInfo(this.bucket);
+    }
+
+    this.updateBucketFlowerSizes();
+
+  }
+
   removeItemFromBucket(bucketItem: BucketItem): BucketItem[] {
     let bucket = this.getBucket();
     bucket = bucket.filter(item => !(item.name == bucketItem.name && item.sizeName == bucketItem.sizeName));
@@ -95,7 +108,7 @@ export class BucketLocalService {
     return bucket;
   }
 
-  clearBucket() {
+  clearLocalBucket() {
     localStorage.removeItem(this.BUCKET_STORAGE_KEY);
     this.bucket = [];
     this.updateBucketInfo();
@@ -125,6 +138,10 @@ export class BucketLocalService {
 
   openBucketDialog() {
     this.dialog.open(BucketDialogComponent, {width: "80%", panelClass: "modal-panel-no-padding", maxWidth: 800});
+  }
+
+  updateBucketBackend(bucket: BucketItem[] = this.bucket) {
+      this.bucketService.post(bucket).subscribe(() => {})
   }
 
 }

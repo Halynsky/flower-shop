@@ -38,6 +38,7 @@ import { MatRadioModule } from "@angular/material/radio";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatTooltipModule } from "@angular/material/tooltip";
+import { UserExistDialogComponent } from "./user-exist-dialog/user-exist-dialog.component";
 
 
 const PROVIDERS = [
@@ -51,6 +52,7 @@ export const ngxMaskOptions: Partial<IConfig> | (() => Partial<IConfig>) = {};
   declarations: [
     ArticleCardComponent,
     AuthDialogComponent,
+    UserExistDialogComponent,
     BucketDialogComponent,
     AddToBucketDialogComponent,
     HowToPayDialogComponent,

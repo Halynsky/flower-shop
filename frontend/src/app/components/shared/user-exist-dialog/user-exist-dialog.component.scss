@@ -1,0 +1,82 @@
+@import "theme";
+@import "mixins";
+
+:host {
+
+  min-width: 320px;
+
+  form {
+    min-width: 280px;
+  }
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 120%;
+    padding: 8px 12px;
+    font-weight: 400;
+  }
+
+  .dialog-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    @include response-from(sm) {
+      width: 500px;
+    }
+
+    & > i.close {
+      cursor: pointer;
+      position: absolute;
+      top: -16px;
+      right: -16px;
+      color: $grey-400;
+      font-size: 24px;
+    }
+
+    .dialog-header {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 16px;
+      color: $black-100;
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      font-size: 16px;
+      justify-content: center;
+
+      .message {
+        line-height: 160%;
+        a {
+          color: mat-color($primary);
+          cursor: pointer;
+        }
+      }
+
+      .dialog-actions {
+        margin-top: 16px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        button {
+          width: 160px;
+          font-size: 20px;
+        }
+      }
+
+    }
+
+    h1 {
+      font-size: 2em;
+    }
+
+  }
+
+
+}

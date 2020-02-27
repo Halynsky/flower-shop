@@ -1,0 +1,25 @@
+<div class="dialog-container">
+
+  <i class="material-icons close" (click)="dialogRef.close()"></i>
+
+  <div class="form-wrapper">
+
+    <div class="dialog-header">
+      <h1>Користувач вже існує</h1>
+    </div>
+
+    <div class="content">
+
+      <div class="message">
+        Користувач з електронною адресою <b>{{email}}</b> вже зареєстрований. Якщо це ви то <a (click)="securityService.openAuthDialog(email); dialogRef.close()">увійдіть</a>, будь ласка, в систему. Після цього ви зможете закінчити оформлення замовлення.
+      </div>
+
+      <div class="dialog-actions">
+        <button mat-flat-button color="primary" (click)="securityService.openAuthDialog(email); dialogRef.close()">Увійти</button>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

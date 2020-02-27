@@ -15,6 +15,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
 import { MatRadioChange } from "@angular/material/radio";
 import { ProfileService } from "../../api/services/profile.service";
+import { UserExistDialogComponent } from "../shared/user-exist-dialog/user-exist-dialog.component";
 
 @Component({
   selector: 'order',
@@ -197,10 +198,18 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.orderService.create(orderRequest)
       .pipe(finalize(() => this.loading = false), takeUntil(this.destroyed$))
       .subscribe(orderId => {
-        this.bucketLocalService.clearBucket();
+        this.bucketLocalService.clearLocalBucket();
         this.orderId = orderId;
         this.updateProfile();
-      }, error => this.snackBarService.showError(getErrorMessage(error)))
+      }, error => {
+        if (error.status = 409 && JSON.parse(error.error).message == 'USER_EXISTS') {
+          let userExistDialog = this.securityService.dialog.open(UserExistDialogComponent);
+          userExistDialog.componentInstance.email = orderRequest.contactInfo.email;
+        } else {
+          this.snackBarService.showError(getErrorMessage(error))
+        }
+
+      })
   }
 
   updateProfile() {
