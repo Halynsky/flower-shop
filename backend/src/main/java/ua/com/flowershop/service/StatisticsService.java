@@ -93,7 +93,7 @@ public class StatisticsService {
         String activeQueryText =
             "WITH time_units AS (SELECT time_unit FROM generate_series(CURRENT_DATE - INTERVAL '%s', CURRENT_DATE, INTERVAL '%s') time_unit) " +
                 "SELECT (SELECT COUNT(o.id) FROM orders AS o " +
-                "WHERE date_trunc(?1, o.created) = date_trunc(?1, tu.time_unit)) AS amount, " +
+                "WHERE o.status <> 'CANCELED' AND date_trunc(?1, o.created) = date_trunc(?1, tu.time_unit)) AS amount, " +
                 "date_trunc(?1, tu.time_unit) AS date, 'ORDERS_CREATED' AS type, 'Створені' AS name " +
                 "FROM time_units tu " +
                 "GROUP BY tu.time_unit ORDER BY tu.time_unit";
