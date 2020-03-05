@@ -352,7 +352,7 @@
             prefix="+38 "
             mask='(000) 000-0000'
             maxlength="18"
-            pattern=".{10,10}"
+            pattern="^[0].{9,9}"
             required/>
         </div>
         <div class="ui-grid-col-4">
@@ -825,7 +825,7 @@
               prefix="+38 "
               mask='(000) 000-0000'
               maxlength="18"
-              pattern=".{10,10}"
+              pattern="^[0].{9,9}"
               [(ngModel)]="orderCreateRequestAdmin.phone"
             />
           </div>
