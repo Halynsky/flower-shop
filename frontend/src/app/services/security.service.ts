@@ -9,6 +9,7 @@ import { AuthService as SocialAuthService } from "angularx-social-login";
 import { ReplaySubject } from "rxjs";
 import { AuthDialogComponent } from "../components/shared/auth-dialog/auth-dialog.component";
 import { MatDialog } from "@angular/material/dialog";
+import { AddPhoneEmailDialogComponent } from "../components/shared/add-phone-email-dialog/add-phone-email-dialog.component";
 
 
 @Injectable({providedIn: 'root'})
@@ -66,6 +67,9 @@ export class SecurityService {
     }
   }
 
-
+  openEmailPhoneDialog(user) {
+    let addPhoneEmailDialogRef = this.dialog.open(AddPhoneEmailDialogComponent);
+    addPhoneEmailDialogRef.componentInstance.user = user;
+  }
 
 }

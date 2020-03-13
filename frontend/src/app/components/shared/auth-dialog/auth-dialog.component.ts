@@ -86,14 +86,18 @@ export class AuthDialogComponent {
     this.loading = true;
     this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID)
       .then(user => {
-        this.socialService.loginOrRegisterWithFacebook(user.authToken)
-          .pipe(finalize(() => this.loading = false))
-          .subscribe(
-            user => {
-              this.securityService.login(user);
-              this.dialogRef.close();
-            }, error => this.snackBarService.showError(getErrorMessage(error))
-          )
+        if (!user.hasOwnProperty('email') || !user.hasOwnProperty('phone')) {
+          this.securityService.openEmailPhoneDialog(user)
+        } else {
+          this.socialService.loginOrRegisterWithFacebook(user)
+            .pipe(finalize(() => this.loading = false))
+            .subscribe(
+              user => {
+                this.securityService.login(user);
+              }, error => this.snackBarService.showError(getErrorMessage(error))
+            )
+        }
+        this.dialogRef.close();
       })
       .catch(error => {
         this.snackBarService.showError(error);
