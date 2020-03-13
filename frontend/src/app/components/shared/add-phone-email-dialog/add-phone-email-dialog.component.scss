@@ -23,7 +23,7 @@
     input {
       min-width: 230px;
       @include response-from(sm) {
-        width: 330px;
+        width: 340px;
       }
     }
 
@@ -43,10 +43,8 @@
       align-items: center;
       justify-content: space-around;
       height: 100%;
+      width: 100%;
 
-      @include response-from(sm) {
-        width: 400px;
-      }
 
       .action {
         margin-top: 8px;
