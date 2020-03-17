@@ -86,7 +86,9 @@ export class AuthDialogComponent {
     this.loading = true;
     this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID)
       .then(user => {
-        if (!user.hasOwnProperty('email') || !user.hasOwnProperty('phone')) {
+        console.log(user)
+        //SHOULD CHECK IS USER REGISTERED
+        if (user.email == null) {
           this.securityService.openEmailPhoneDialog(user)
         } else {
           this.socialService.loginOrRegisterWithFacebook(user)

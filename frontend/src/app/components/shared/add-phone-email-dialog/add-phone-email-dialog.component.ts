@@ -14,7 +14,6 @@ import { SocialService } from "../../../api/services/social.service";
 export class AddPhoneEmailDialogComponent {
 
   user;
-  userPhone: string;
   userEmail: string;
 
   constructor(public dialogRef: MatDialogRef<AddPhoneEmailDialogComponent>,
@@ -24,7 +23,6 @@ export class AddPhoneEmailDialogComponent {
   }
 
   submit() {
-    this.user.phone = this.userPhone;
     this.user.email = this.userEmail;
     this.socialService.loginOrRegisterWithFacebook(this.user)
       .pipe(finalize(() => this.dialogRef.close()))

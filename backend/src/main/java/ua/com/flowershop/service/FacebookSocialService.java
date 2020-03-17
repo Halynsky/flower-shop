@@ -16,6 +16,7 @@ import ua.com.flowershop.exception.AuthenticationRequiredException;
 import ua.com.flowershop.exception.ThirdPartyException;
 import ua.com.flowershop.model.socials.FacebookUserProfile;
 import ua.com.flowershop.model.socials.SocialUser;
+import ua.com.flowershop.model.socials.UserPhoneEmailTuple;
 
 import javax.annotation.PostConstruct;
 import javax.validation.ValidationException;
@@ -40,8 +41,8 @@ public class FacebookSocialService {
             .build();
     }
 
-    public User loginOrRegister(String accessToken) {
-        SocialUser socialUser = getSocialUser(accessToken);
+    public User loginOrRegister(UserPhoneEmailTuple userPhoneEmailTuple) {
+        SocialUser socialUser = getSocialUser(userPhoneEmailTuple);
         return socialConnectionService.findExistingOrRegister(socialUser);
     }
 
@@ -99,6 +100,25 @@ public class FacebookSocialService {
         FacebookUserProfile userProfile;
         try {
             userProfile = getFacebookUserProfile(accessToken);
+        } catch (ThirdPartyException e) {
+            log.error("Не вдалося підключитись до Facebook API", e);
+            throw new AuthenticationRequiredException("Не вдалося підключитись до Facebook API", e);
+        }
+        if (userProfile.getEmail() == null) {
+            log.warn("Не вдалося зареєструвати користувача " + userProfile.getName() + " по причині відсутності email в Facebook профайлі");
+            throw new ValidationException("Для реєстрації через Facebook у вашому аккаунті повинен бути вказаний email." +
+                " Внесіть email на Facebook аккаунт та спробуйте ще раз або зареєструйтесь через стандартну форму.");
+        }
+
+        return new SocialUser(userProfile);
+    }
+
+    private SocialUser getSocialUser(UserPhoneEmailTuple userPhoneEmailTuple) throws AuthenticationRequiredException {
+        FacebookUserProfile userProfile;
+        try {
+            userProfile = getFacebookUserProfile(userPhoneEmailTuple.getAccessToken());
+            if (userPhoneEmailTuple.getEmail() != null)
+                userProfile.setEmail(userPhoneEmailTuple.getEmail());
         } catch (ThirdPartyException e) {
             log.error("Не вдалося підключитись до Facebook API", e);
             throw new AuthenticationRequiredException("Не вдалося підключитись до Facebook API", e);

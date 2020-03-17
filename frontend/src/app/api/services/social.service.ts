@@ -13,8 +13,7 @@ export class SocialService {
   loginOrRegisterWithFacebook(user) {
     let userPhoneEmail = {
       accessToken: user.authToken,
-      email: user.email,
-      phone: user.phone
+      email: user.email
     }
     return this.http.post<User>(`${this.URL}/auth/facebook`, userPhoneEmail);
   }

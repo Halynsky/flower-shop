@@ -12,7 +12,7 @@
 
     <div class="inputs">
       <div>
-        <div class="input-group" *ngIf="!user.hasOwnProperty('email')">
+        <div class="input-group" *ngIf="!user.email">
 
           <input
             #email="ngModel"
@@ -28,27 +28,7 @@
 
         </div>
 
-        <div class="input-group" *ngIf="!user.hasOwnProperty('phone')">
-
-          <input
-            #phone="ngModel"
-            name="phone"
-            [(ngModel)]="userPhone"
-            validation="false"
-            prefix="+38 "
-            mask='(000) 000-0000'
-            maxlength="18"
-            pattern="^[0].{9,9}"
-            required/>
-
-          <div class="error-wrapper" *ngIf="phone.dirty || phone.touched || addPhoneEmailForm.submitted">
-            <div class="error-message" *ngIf="phone.errors?.required">Повинно бути вказано</div>
-            <div class="error-message" *ngIf="!phone.errors?.required && phone.errors?.pattern">Введіть валідний номер телефону</div>
-          </div>
-
-        </div>
       </div>
-
 
       <div class="action">
         <button type="submit" mat-flat-button color="accent">Підтвердити</button>

@@ -1,8 +1,10 @@
 package ua.com.flowershop.model.socials;
 
 import lombok.Data;
+import lombok.Setter;
 
 @Data
+@Setter
 public class FacebookUserProfile {
     private String id;
     private String email;

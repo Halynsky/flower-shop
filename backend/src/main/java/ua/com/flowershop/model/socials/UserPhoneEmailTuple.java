@@ -14,7 +14,6 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 public class UserPhoneEmailTuple {
 
-    private String phone;
     private String email;
     private String accessToken;
 
