@@ -1,7 +1,7 @@
 <div class="panel-header">
   <h1>Замовлення</h1>
   <div class="navigation-buttons">
-    <button pButton (click)="exportPageToExcel()" icon="fas fa-file-excel" class="ui-button-success" label="&nbsp;Експортувати в Excel"></button>
+    <button pButton (click)="toProgressMenu.toggle($event)" icon="pi pi-bars" class="ui-button-success" label="&nbsp;&nbsp;Обробка"></button>
     <button pButton (click)="displayCreateOrderDialog = true" icon="pi pi-plus" class="ui-button-success" label="&nbsp;&nbsp;Додати"></button>
     <button pButton (click)="refresh()" icon="pi pi-refresh" label="&nbsp;&nbsp;Оновити"></button>
   </div>
@@ -98,6 +98,13 @@
             <p-multiSelect [options]="statusesOptions" defaultLabel="Всі"
                            class="table-filter"
                            (onChange)="dt.filter($event.value, 'statusNames', 'in')"></p-multiSelect>
+          </div>
+
+
+          <div *ngSwitchCase="'paid'">
+            <p-multiSelect [options]="isPaidOptions" defaultLabel="Всі"
+                           class="table-filter"
+                           (onChange)="dt.filter($event.value, 'paid', 'equals')"></p-multiSelect>
           </div>
 
           <div *ngSwitchCase="'created'">
@@ -867,3 +874,5 @@
   <div class="zoomed-image" [ngStyle]="{'background-image': 'url(' + zoomedImage + ')'}"></div>
 
 </p-dialog>
+
+<p-menu #toProgressMenu [popup]="true" [model]="toProgressMenuItems"></p-menu>

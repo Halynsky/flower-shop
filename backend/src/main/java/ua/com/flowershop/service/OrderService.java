@@ -535,4 +535,16 @@ public class OrderService {
         Order order = orderRepository.findById(orderId).orElseThrow(NotFoundException::new);
         mailService.sendOrderAdmin(order);
     }
+
+
+    public void changeStatusToProcessingForAll(List<Order> orders) {
+        orders.forEach(o -> {
+            if (!o.getStatus().equals(Order.Status.NEW)) {
+                throw new ValidationException("Щонайменше одне замовлення не може бути переведено в обробку");
+            }
+            o.setStatus(Order.Status.PROCESSING);
+        });
+        orderRepository.saveAll(orders);
+    }
+
 }

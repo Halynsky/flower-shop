@@ -62,8 +62,7 @@ export class OrderService {
     return this.http.get(`${this.URL}/${id}/export/excel`,  {responseType: 'blob', observe: 'response'});
   }
 
-  exportPageToExcel(params, pagination) {
-    params = Object.assign(params, pagination);
+  exportAllToExcel(params) {
     return this.http.get(`${this.URL}/export/excel`, {responseType: 'blob', observe: 'response', params: params});
   }
 
@@ -77,6 +76,14 @@ export class OrderService {
 
   sendToEmail(id: number) {
     return this.http.post(`${this.URL}/sendToEmail/${id}`, null);
+  }
+
+  changeStatusToProcessingForAll(params) {
+    return this.http.post(`${this.URL}/status/processing`, null, {responseType: 'text', observe: 'response', params: params});
+  }
+
+  prepareProcessingBlank(params) {
+    return this.http.get(`${this.URL}/prepareProcessingBlank`, {responseType: 'blob', observe: 'response', params: params});
   }
 
 }
