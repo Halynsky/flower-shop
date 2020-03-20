@@ -91,7 +91,7 @@ export class OrdersComponent implements OnInit {
   statusesOptions = [];
   isPaidOptions = [
     {value: true, label: 'Оплачені'},
-    {value: false, label: 'Не оплачені'}
+    {value: false, label: 'Неоплачені'}
   ];
   Status = Order.Status;
 
