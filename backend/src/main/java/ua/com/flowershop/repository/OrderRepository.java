@@ -2,6 +2,7 @@ package ua.com.flowershop.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -66,7 +67,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
         "AND (:paid IS null OR :paid = true AND o.paid IS NOT NULL OR :paid = false AND o.paid IS NULL) ")
     List<Order> findAllForAdminByFilters(Long id, List<String> statusNames, Long userId, String userNamePart, String phonePart,
                                       LocalDateTime createdFrom, LocalDateTime createdTo, LocalDateTime closedFrom, LocalDateTime closedTo,
-                                      Integer priceToPayFrom, Integer priceToPayTo, Boolean paid);
+                                      Integer priceToPayFrom, Integer priceToPayTo, Boolean paid, Sort sort);
 
     Page<OrderProjection> findProjectedByUserEmailOrderByCreatedDesc(String userEmail, Pageable pageRequest);
 

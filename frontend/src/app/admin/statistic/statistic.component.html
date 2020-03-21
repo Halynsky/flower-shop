@@ -48,7 +48,7 @@
 
     <div class="ui-g-12 ui-md-6">
       <div class="ui-grid-row">
-        <p-card class="statistic-chart" title="Динаміка реєстрації"  header="Динаміка замовленнь">
+        <p-card class="statistic-chart" title="Динаміка замовленнь"  header="Динаміка замовленнь">
           <p-dropdown [options]="statisticPeriods" placeholder="Оберіть період" [(ngModel)]="statisticPeriod"
                       (ngModelChange)="onPeriodChange($event)"></p-dropdown>
           <p-chart *ngIf="ordersByStatusCountDynamical.labels.length > 0" type="line" [data]="ordersByStatusCountDynamical" [options]="defaultOptionsLine" [plugins]="plugin"></p-chart>

@@ -159,8 +159,9 @@ public class OrderController {
                                                  @RequestParam(required = false) Integer priceToPayFrom,
                                                  @RequestParam(required = false) Integer priceToPayTo,
                                                  @RequestParam(required = false) Boolean paid,
+                                                 @PageableDefault(sort = "id", page = 0, size = 10, direction = Sort.Direction.ASC) Pageable pageRequest,
                                                  HttpServletResponse response) throws IOException {
-        List<Order> orders = orderRepository.findAllForAdminByFilters(id, statusNames, userId, userNamePart, phonePart, createdFrom, createdTo, closedFrom, closedTo, priceToPayFrom, priceToPayTo, paid);
+        List<Order> orders = orderRepository.findAllForAdminByFilters(id, statusNames, userId, userNamePart, phonePart, createdFrom, createdTo, closedFrom, closedTo, priceToPayFrom, priceToPayTo, paid, pageRequest.getSort());
         Workbook workbook = poiExporter.exportOrdersToExcel(orders);
         response.setHeader("Content-disposition", "attachment; filename=Orders.xlsx");
         workbook.write(response.getOutputStream());
@@ -189,18 +190,19 @@ public class OrderController {
     @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @PostMapping("/status/processing")
     public ResponseEntity<Integer> changeStatusToProcessingForAll(@RequestParam(required = false) Long id,
-                                                               @RequestParam(required = false) List<String> statusNames,
-                                                               @RequestParam(required = false) Long userId,
-                                                               @RequestParam(required = false) String userNamePart,
-                                                               @RequestParam(required = false) String phonePart,
-                                                               @RequestParam(required = false) LocalDateTime createdFrom,
-                                                               @RequestParam(required = false) LocalDateTime createdTo,
-                                                               @RequestParam(required = false) LocalDateTime closedFrom,
-                                                               @RequestParam(required = false) LocalDateTime closedTo,
-                                                               @RequestParam(required = false) Integer priceToPayFrom,
-                                                               @RequestParam(required = false) Integer priceToPayTo,
-                                                               @RequestParam(required = false) Boolean paid) {
-        List<Order> orders = orderRepository.findAllForAdminByFilters(id, statusNames, userId, userNamePart, phonePart, createdFrom, createdTo, closedFrom, closedTo, priceToPayFrom, priceToPayTo, paid);
+                                                                  @RequestParam(required = false) List<String> statusNames,
+                                                                  @RequestParam(required = false) Long userId,
+                                                                  @RequestParam(required = false) String userNamePart,
+                                                                  @RequestParam(required = false) String phonePart,
+                                                                  @RequestParam(required = false) LocalDateTime createdFrom,
+                                                                  @RequestParam(required = false) LocalDateTime createdTo,
+                                                                  @RequestParam(required = false) LocalDateTime closedFrom,
+                                                                  @RequestParam(required = false) LocalDateTime closedTo,
+                                                                  @RequestParam(required = false) Integer priceToPayFrom,
+                                                                  @RequestParam(required = false) Integer priceToPayTo,
+                                                                  @RequestParam(required = false) Boolean paid,
+                                                                  @PageableDefault(sort = "id", page = 0, size = 10, direction = Sort.Direction.ASC) Pageable pageRequest) {
+        List<Order> orders = orderRepository.findAllForAdminByFilters(id, statusNames, userId, userNamePart, phonePart, createdFrom, createdTo, closedFrom, closedTo, priceToPayFrom, priceToPayTo, paid, null);
         orderService.changeStatusToProcessingForAll(orders);
         return new ResponseEntity<>(orders.size(), OK);
     }
@@ -220,8 +222,9 @@ public class OrderController {
                                                  @RequestParam(required = false) Integer priceToPayFrom,
                                                  @RequestParam(required = false) Integer priceToPayTo,
                                                  @RequestParam(required = false) Boolean paid,
+                                                 @PageableDefault(sort = "id", page = 0, size = 10, direction = Sort.Direction.ASC) Pageable pageRequest,
                                                  HttpServletResponse response) throws IOException {
-        List<Order> orders = orderRepository.findAllForAdminByFilters(id, statusNames, userId, userNamePart, phonePart, createdFrom, createdTo, closedFrom, closedTo, priceToPayFrom, priceToPayTo, paid);
+        List<Order> orders = orderRepository.findAllForAdminByFilters(id, statusNames, userId, userNamePart, phonePart, createdFrom, createdTo, closedFrom, closedTo, priceToPayFrom, priceToPayTo, paid, pageRequest.getSort());
         Workbook workbook = poiExporter.prepareProcessingBlank(orders);
         response.setHeader("Content-disposition", "attachment; filename=Orders.xlsx");
         workbook.write(response.getOutputStream());

@@ -148,11 +148,6 @@ export class OrdersComponent implements OnInit {
   }
 
   loadDataLazy(filters: any = {} , pagination: Pagination = new Pagination()) {
-    if (filters.priceToPayFrom)
-      filters.priceToPayFrom = parseInt(filters.priceToPayFrom) * 100;
-    if (filters.priceToPayTo)
-      filters.priceToPayTo = parseInt(filters.priceToPayTo) * 100;
-
     this.dataService.getAllForAdmin(filters, pagination).subscribe(
       items => this.items = items,
       error => this.snackBarService.showError(getErrorMessage(error))
@@ -566,7 +561,7 @@ export class OrdersComponent implements OnInit {
 
   exportAllToExcel() {
     this.loading = true;
-    this.dataService.exportAllToExcel(ngPrimeFiltersToParams(this.lastLazyLoadEvent.filters))
+    this.dataService.exportAllToExcel(ngPrimeFiltersToParams(this.lastLazyLoadEvent.filters), new Pagination().fromPrimeNg(this.lastLazyLoadEvent))
       .pipe(finalize(() => this.loading = false))
       .subscribe(response => {
         fileSaver.saveAs(response.body, `СписокЗамовлень.xlsx`);
@@ -575,7 +570,7 @@ export class OrdersComponent implements OnInit {
 
   changeStatusToProcessingForAll() {
     this.loading = true;
-    this.dataService.changeStatusToProcessingForAll(ngPrimeFiltersToParams(this.lastLazyLoadEvent.filters))
+    this.dataService.changeStatusToProcessingForAll(ngPrimeFiltersToParams(this.lastLazyLoadEvent.filters), new Pagination().fromPrimeNg(this.lastLazyLoadEvent))
       .pipe(finalize(() => this.loading = false))
       .subscribe(response => {
         this.snackBarService.showSuccess(`${response.body} замовленнь переведено в обробку`);
@@ -585,7 +580,7 @@ export class OrdersComponent implements OnInit {
 
   prepareProcessingBlank() {
     this.loading = true;
-    this.dataService.prepareProcessingBlank(ngPrimeFiltersToParams(this.lastLazyLoadEvent.filters))
+    this.dataService.prepareProcessingBlank(ngPrimeFiltersToParams(this.lastLazyLoadEvent.filters), new Pagination().fromPrimeNg(this.lastLazyLoadEvent))
       .pipe(finalize(() => this.loading = false))
       .subscribe(response => {
         fileSaver.saveAs(response.body, `БланкОбробкиЗамовлень.xlsx`);
