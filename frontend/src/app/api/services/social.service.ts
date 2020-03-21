@@ -11,11 +11,11 @@ export class SocialService {
   constructor(private  http: HttpClient) {}
 
   loginOrRegisterWithFacebook(user) {
-    let userPhoneEmail = {
+    let userTokenEmail = {
       accessToken: user.authToken,
       email: user.email
     }
-    return this.http.post<User>(`${this.URL}/auth/facebook`, userPhoneEmail);
+    return this.http.post<User>(`${this.URL}/auth/facebook`, userTokenEmail);
   }
 
   getConnections() {
@@ -30,5 +30,8 @@ export class SocialService {
     return this.http.delete(`${this.URL}/facebook/disconnect`, );
   }
 
+  existsByProviderId(providerId: string) {
+    return this.http.get<string>(`${this.URL}/${providerId}/existsByProviderId`);
+  }
 
 }

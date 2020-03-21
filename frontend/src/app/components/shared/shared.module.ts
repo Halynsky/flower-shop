@@ -39,7 +39,7 @@ import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { UserExistDialogComponent } from "./user-exist-dialog/user-exist-dialog.component";
-import { AddPhoneEmailDialogComponent } from "./add-phone-email-dialog/add-phone-email-dialog.component";
+import { AddEmailDialogComponent } from "./add-email-dialog/add-email-dialog.component";
 import { DialogModule } from "primeng";
 
 
@@ -65,7 +65,7 @@ export const ngxMaskOptions: Partial<IConfig> | (() => Partial<IConfig>) = {};
     TermsAndConditionsComponent,
     AmountControlledInputComponent,
     HowToPayComponent,
-    AddPhoneEmailDialogComponent
+    AddEmailDialogComponent
   ],
   imports: [
     RouterModule,

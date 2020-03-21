@@ -2,6 +2,7 @@ package ua.com.flowershop.model.socials;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import ua.com.flowershop.entity.SocialConnection;
 
 import javax.validation.constraints.Email;

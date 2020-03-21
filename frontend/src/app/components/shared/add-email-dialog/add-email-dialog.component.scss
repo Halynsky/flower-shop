@@ -68,4 +68,48 @@
     }
 
   }
+
+  .reg-response-wrapper, .restore-password-response-wrapper {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    flex-direction: column;
+
+    .support-request {
+      color: mat-color($primary);
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .title {
+      text-align: center;
+      font-weight: 500;
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+
+    .message-primary {
+      margin-bottom: 16px;
+      font-size: 14px;
+
+      .highlight {
+        color: mat-color($accent);
+      }
+
+    }
+
+    .message-secondary {
+      font-size: 13px;
+      color: $grey-400;
+      margin-bottom: 16px;
+    }
+
+    button {
+      width: 64px;
+      display: flex;
+      align-self: center;
+    }
+
+  }
 }

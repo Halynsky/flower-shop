@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserPhoneEmailTuple {
+public class UserTokenEmailTuple {
 
     private String email;
     private String accessToken;

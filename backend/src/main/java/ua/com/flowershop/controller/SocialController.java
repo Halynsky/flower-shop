@@ -8,11 +8,15 @@ import org.springframework.web.bind.annotation.*;
 import ua.com.flowershop.entity.SocialConnection;
 import ua.com.flowershop.entity.User;
 import ua.com.flowershop.model.SecurityUserModel;
-import ua.com.flowershop.model.socials.UserPhoneEmailTuple;
+import ua.com.flowershop.model.socials.UserTokenEmailTuple;
+import ua.com.flowershop.repository.SocialConnectionRepository;
 import ua.com.flowershop.security.SecurityService;
 import ua.com.flowershop.service.FacebookSocialService;
 import ua.com.flowershop.service.SocialConnectionService;
+import ua.com.flowershop.util.mail.MailService;
+
 import java.util.List;
+import java.util.Optional;
 
 import static ua.com.flowershop.util.Path.SOCIAL_PATH;
 
@@ -24,10 +28,14 @@ public class SocialController {
     @Autowired private FacebookSocialService facebookSocialService;
     @Autowired private SecurityService securityService;
     @Autowired private SocialConnectionService socialConnectionService;
+    @Autowired private SocialConnectionRepository socialConnectionRepository;
+    @Autowired private MailService mailService;
 
     @PostMapping("/auth/facebook")
-    public ResponseEntity<SecurityUserModel> loginOrRegisterWithFacebook(@RequestBody UserPhoneEmailTuple userPhoneEmailTuple) {
-        User user = facebookSocialService.loginOrRegister(userPhoneEmailTuple);
+    public ResponseEntity<SecurityUserModel> loginOrRegisterWithFacebook(@RequestBody UserTokenEmailTuple userTokenEmailTuple) {
+        User user = facebookSocialService.loginOrRegister(userTokenEmailTuple);
+        if (userTokenEmailTuple.getEmail() != null)
+            mailService.sendRegistrationConfirmEmail(user);
         SecurityUserModel securityUserModel = securityService.performUserLogin(user);
         return new ResponseEntity<>(securityUserModel, HttpStatus.OK);
     }
@@ -56,6 +64,11 @@ public class SocialController {
         return new ResponseEntity<>(socialConnections, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping("/{providerId}/existsByProviderId")
+    public ResponseEntity<Optional<String>> existsConnectionByProviderId(@PathVariable String providerId) {
+        return new ResponseEntity<>(socialConnectionRepository.getUserIdProviderId(providerId), HttpStatus.OK);
+    }
 
 }
 
