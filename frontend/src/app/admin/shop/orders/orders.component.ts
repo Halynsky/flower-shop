@@ -60,8 +60,28 @@ export class OrdersComponent implements OnInit {
     {field: 'note', header: 'Примітки', active: false},
     {field: 'totalPrice', header: 'Вартість', active: false},
     {field: 'discount', header: 'Знижка', active: false},
-
   ];
+
+  toProgressMenuItems = [
+    {
+      label: 'Відправити в обробку',
+      icon: 'fas fa-bolt',
+      command: (event) => this.changeStatusToProcessingForAll(),
+    },
+    {
+      label: 'Експортувати в Excel',
+      icon: 'fas fa-file-excel',
+      command: (event) => this.exportAllToExcel(),
+      styleClass: 'excel-export-button'
+    },
+    {
+      label: 'Підготувати бланк обробки',
+      icon: 'fas fa-table',
+      command: (event) => this.prepareProcessingBlank(),
+      styleClass: 'excel-export-button'
+    }
+  ];
+
 
   selectedColumns = this.columns.filter(column => column.active);
 
@@ -69,6 +89,10 @@ export class OrdersComponent implements OnInit {
   flowerSizes: FlowerSize[];
 
   statusesOptions = [];
+  isPaidOptions = [
+    {value: true, label: 'Оплачені'},
+    {value: false, label: 'Неоплачені'}
+  ];
   Status = Order.Status;
 
   createdFilters;
@@ -124,11 +148,6 @@ export class OrdersComponent implements OnInit {
   }
 
   loadDataLazy(filters: any = {} , pagination: Pagination = new Pagination()) {
-    if (filters.priceToPayFrom)
-      filters.priceToPayFrom = parseInt(filters.priceToPayFrom) * 100;
-    if (filters.priceToPayTo)
-      filters.priceToPayTo = parseInt(filters.priceToPayTo) * 100;
-
     this.dataService.getAllForAdmin(filters, pagination).subscribe(
       items => this.items = items,
       error => this.snackBarService.showError(getErrorMessage(error))
@@ -540,12 +559,31 @@ export class OrdersComponent implements OnInit {
       }, error => this.snackBarService.showError(getErrorMessage(error)))
   }
 
-  exportPageToExcel() {
+  exportAllToExcel() {
     this.loading = true;
-    this.dataService.exportPageToExcel(ngPrimeFiltersToParams(this.lastLazyLoadEvent.filters), new Pagination().fromPrimeNg(this.lastLazyLoadEvent))
+    this.dataService.exportAllToExcel(ngPrimeFiltersToParams(this.lastLazyLoadEvent.filters), new Pagination().fromPrimeNg(this.lastLazyLoadEvent))
       .pipe(finalize(() => this.loading = false))
       .subscribe(response => {
         fileSaver.saveAs(response.body, `СписокЗамовлень.xlsx`);
+      }, error => this.snackBarService.showError(getErrorMessage(error)))
+  }
+
+  changeStatusToProcessingForAll() {
+    this.loading = true;
+    this.dataService.changeStatusToProcessingForAll(ngPrimeFiltersToParams(this.lastLazyLoadEvent.filters), new Pagination().fromPrimeNg(this.lastLazyLoadEvent))
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(response => {
+        this.snackBarService.showSuccess(`${response.body} замовленнь переведено в обробку`);
+        this.refresh();
+      }, error => this.snackBarService.showError(getErrorMessage(error)))
+  }
+
+  prepareProcessingBlank() {
+    this.loading = true;
+    this.dataService.prepareProcessingBlank(ngPrimeFiltersToParams(this.lastLazyLoadEvent.filters), new Pagination().fromPrimeNg(this.lastLazyLoadEvent))
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(response => {
+        fileSaver.saveAs(response.body, `БланкОбробкиЗамовлень.xlsx`);
       }, error => this.snackBarService.showError(getErrorMessage(error)))
   }
 

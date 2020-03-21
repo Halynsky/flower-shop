@@ -51,6 +51,18 @@ p-multiselect.table-filter > div {
   width: auto;
 }
 
+p-menu {
+  white-space: nowrap;
+  width: auto;
+  .ui-menu-dynamic {
+    width: auto;
+  }
+  .ui-menuitem-icon {
+    min-width: 18px;
+    font-size: 18px;
+  }
+}
+
 .cm-primary {
   span {
     color: #007ad9 !important;
@@ -102,3 +114,6 @@ p-contextmenu {
   white-space: nowrap;
 }
 
+body .ui-menu .ui-menuitem-link .ui-menuitem-icon, body .ui-menubar .ui-menuitem-link .ui-menuitem-icon, body .ui-tieredmenu .ui-menuitem-link .ui-menuitem-icon, body .ui-contextmenu .ui-menuitem-link .ui-menuitem-icon, body .ui-megamenu .ui-menuitem-link .ui-menuitem-icon, body .ui-slidemenu .ui-menuitem-link .ui-menuitem-icon {
+  margin-right: 0.3em;
+}

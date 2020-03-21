@@ -53,6 +53,9 @@ export function ngPrimeFiltersToParams(filters): any {
     if (filterObject.matchMode == 'range') {
       params[key + 'From'] = value[0];
       params[key + 'To'] = value[1];
+    } else if (filterObject.matchMode == 'rangeMoney') {
+      params[key + 'From'] = value[0] * 100;
+      params[key + 'To'] = value[1] * 100;
     } else if (filterObject.matchMode == 'dateRange') {
       if (value[0] && value[1]) {
         params[key + 'From'] = moment(value[0]).format("YYYY-MM-DD") + "T00:00:00";

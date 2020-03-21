@@ -60,8 +60,9 @@ public class OrderController {
                                                                      @RequestParam(required = false) LocalDateTime closedTo,
                                                                      @RequestParam(required = false) Integer priceToPayFrom,
                                                                      @RequestParam(required = false) Integer priceToPayTo,
+                                                                     @RequestParam(required = false) Boolean paid,
                                                                      @PageableDefault(sort = "id", page = 0, size = 10, direction = Sort.Direction.ASC) Pageable pageRequest) {
-        return new ResponseEntity<>(orderRepository.findForAdminProjectedByFilters(id, statusNames, userId, userNamePart, phonePart, createdFrom, createdTo, closedFrom, closedTo, priceToPayFrom, priceToPayTo, HibernateUtil.replaceUnsafeFields(pageRequest, unsafeSortingFields)), OK);
+        return new ResponseEntity<>(orderRepository.findForAdminProjectedByFilters(id, statusNames, userId, userNamePart, phonePart, createdFrom, createdTo, closedFrom, closedTo, priceToPayFrom, priceToPayTo, paid, HibernateUtil.replaceUnsafeFields(pageRequest, unsafeSortingFields)), OK);
     }
 
     @PostMapping
@@ -146,23 +147,24 @@ public class OrderController {
     @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @GetMapping("/export/excel")
     @PageableSwagger
-    public ResponseEntity<Page<OrderAdminProjection>> exportPageToExcel(@RequestParam(required = false) Long id,
-                                                                     @RequestParam(required = false) List<String> statusNames,
-                                                                     @RequestParam(required = false) Long userId,
-                                                                     @RequestParam(required = false) String userNamePart,
-                                                                     @RequestParam(required = false) String phonePart,
-                                                                     @RequestParam(required = false) LocalDateTime createdFrom,
-                                                                     @RequestParam(required = false) LocalDateTime createdTo,
-                                                                     @RequestParam(required = false) LocalDateTime closedFrom,
-                                                                     @RequestParam(required = false) LocalDateTime closedTo,
-                                                                     @RequestParam(required = false) Integer priceToPayFrom,
-                                                                     @RequestParam(required = false) Integer priceToPayTo,
-                                                                     @PageableDefault(sort = "id", page = 0, size = 10, direction = Sort.Direction.ASC) Pageable pageRequest,
-                                                                     HttpServletResponse response) throws IOException {
-        Page<Order> page = orderRepository.findForAdminByFilters(id, statusNames, userId, userNamePart, phonePart, createdFrom, createdTo, closedFrom, closedTo, priceToPayFrom, priceToPayTo, pageRequest);
-        Workbook workbook = poiExporter.exportOrdersToExcel(page);
+    public ResponseEntity<Void> exportAllToExcel(@RequestParam(required = false) Long id,
+                                                 @RequestParam(required = false) List<String> statusNames,
+                                                 @RequestParam(required = false) Long userId,
+                                                 @RequestParam(required = false) String userNamePart,
+                                                 @RequestParam(required = false) String phonePart,
+                                                 @RequestParam(required = false) LocalDateTime createdFrom,
+                                                 @RequestParam(required = false) LocalDateTime createdTo,
+                                                 @RequestParam(required = false) LocalDateTime closedFrom,
+                                                 @RequestParam(required = false) LocalDateTime closedTo,
+                                                 @RequestParam(required = false) Integer priceToPayFrom,
+                                                 @RequestParam(required = false) Integer priceToPayTo,
+                                                 @RequestParam(required = false) Boolean paid,
+                                                 @PageableDefault(sort = "id", page = 0, size = 10, direction = Sort.Direction.ASC) Pageable pageRequest,
+                                                 HttpServletResponse response) throws IOException {
+        List<Order> orders = orderRepository.findAllForAdminByFilters(id, statusNames, userId, userNamePart, phonePart, createdFrom, createdTo, closedFrom, closedTo, priceToPayFrom, priceToPayTo, paid, pageRequest.getSort());
+        Workbook workbook = poiExporter.exportOrdersToExcel(orders);
         response.setHeader("Content-disposition", "attachment; filename=Orders.xlsx");
-        workbook.write(response.getOutputStream() );
+        workbook.write(response.getOutputStream());
         return new ResponseEntity<>(OK);
     }
 
@@ -185,5 +187,48 @@ public class OrderController {
         return new ResponseEntity<>(OK);
     }
 
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
+    @PostMapping("/status/processing")
+    public ResponseEntity<Integer> changeStatusToProcessingForAll(@RequestParam(required = false) Long id,
+                                                                  @RequestParam(required = false) List<String> statusNames,
+                                                                  @RequestParam(required = false) Long userId,
+                                                                  @RequestParam(required = false) String userNamePart,
+                                                                  @RequestParam(required = false) String phonePart,
+                                                                  @RequestParam(required = false) LocalDateTime createdFrom,
+                                                                  @RequestParam(required = false) LocalDateTime createdTo,
+                                                                  @RequestParam(required = false) LocalDateTime closedFrom,
+                                                                  @RequestParam(required = false) LocalDateTime closedTo,
+                                                                  @RequestParam(required = false) Integer priceToPayFrom,
+                                                                  @RequestParam(required = false) Integer priceToPayTo,
+                                                                  @RequestParam(required = false) Boolean paid,
+                                                                  @PageableDefault(sort = "id", page = 0, size = 10, direction = Sort.Direction.ASC) Pageable pageRequest) {
+        List<Order> orders = orderRepository.findAllForAdminByFilters(id, statusNames, userId, userNamePart, phonePart, createdFrom, createdTo, closedFrom, closedTo, priceToPayFrom, priceToPayTo, paid, null);
+        orderService.changeStatusToProcessingForAll(orders);
+        return new ResponseEntity<>(orders.size(), OK);
+    }
+
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
+    @GetMapping("/prepareProcessingBlank")
+    @PageableSwagger
+    public ResponseEntity<Void> prepareProcessingBlank(@RequestParam(required = false) Long id,
+                                                 @RequestParam(required = false) List<String> statusNames,
+                                                 @RequestParam(required = false) Long userId,
+                                                 @RequestParam(required = false) String userNamePart,
+                                                 @RequestParam(required = false) String phonePart,
+                                                 @RequestParam(required = false) LocalDateTime createdFrom,
+                                                 @RequestParam(required = false) LocalDateTime createdTo,
+                                                 @RequestParam(required = false) LocalDateTime closedFrom,
+                                                 @RequestParam(required = false) LocalDateTime closedTo,
+                                                 @RequestParam(required = false) Integer priceToPayFrom,
+                                                 @RequestParam(required = false) Integer priceToPayTo,
+                                                 @RequestParam(required = false) Boolean paid,
+                                                 @PageableDefault(sort = "id", page = 0, size = 10, direction = Sort.Direction.ASC) Pageable pageRequest,
+                                                 HttpServletResponse response) throws IOException {
+        List<Order> orders = orderRepository.findAllForAdminByFilters(id, statusNames, userId, userNamePart, phonePart, createdFrom, createdTo, closedFrom, closedTo, priceToPayFrom, priceToPayTo, paid, pageRequest.getSort());
+        Workbook workbook = poiExporter.prepareProcessingBlank(orders);
+        response.setHeader("Content-disposition", "attachment; filename=Orders.xlsx");
+        workbook.write(response.getOutputStream());
+        return new ResponseEntity<>(OK);
+    }
 
 }

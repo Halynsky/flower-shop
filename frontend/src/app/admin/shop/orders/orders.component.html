@@ -1,7 +1,7 @@
 <div class="panel-header">
   <h1>Замовлення</h1>
   <div class="navigation-buttons">
-    <button pButton (click)="exportPageToExcel()" icon="fas fa-file-excel" class="ui-button-success" label="&nbsp;Експортувати в Excel"></button>
+    <button pButton (click)="toProgressMenu.toggle($event)" icon="pi pi-bars" class="ui-button-success" label="&nbsp;&nbsp;Обробка"></button>
     <button pButton (click)="displayCreateOrderDialog = true" icon="pi pi-plus" class="ui-button-success" label="&nbsp;&nbsp;Додати"></button>
     <button pButton (click)="refresh()" icon="pi pi-refresh" label="&nbsp;&nbsp;Оновити"></button>
   </div>
@@ -100,6 +100,13 @@
                            (onChange)="dt.filter($event.value, 'statusNames', 'in')"></p-multiSelect>
           </div>
 
+
+          <div *ngSwitchCase="'paid'">
+            <p-multiSelect [options]="isPaidOptions" defaultLabel="Всі"
+                           class="table-filter"
+                           (onChange)="dt.filter($event.value, 'paid', 'equals')"></p-multiSelect>
+          </div>
+
           <div *ngSwitchCase="'created'">
             <p-calendar
               [(ngModel)]="createdFilters"
@@ -130,10 +137,10 @@
 
           <div *ngSwitchCase="'priceToPay'">
             <span class="range-filter-values">({{priceToPayFilter[0]}} - {{priceToPayFilter[1]}} )</span>
-            <i class="fa fa-close" (click)="this.priceToPayFilter=[priceToPayMinMax[0], priceToPayMinMax[1]]; dt.filter(null, col.field, 'range')" title="Очистити"
+            <i class="fa fa-close" (click)="this.priceToPayFilter=[priceToPayMinMax[0], priceToPayMinMax[1]]; dt.filter(null, col.field, 'rangeMoney')" title="Очистити"
                [ngStyle]="{'margin-left':'8px', 'margin-bottom': '10px', 'cursor':'pointer'}"></i>
             <p-slider [(ngModel)]="priceToPayFilter" [ngStyle]="{'width':'100%'}" [range]="true"
-                      (onSlideEnd)="dt.filter(priceToPayFilter, col.field, 'range')" [min]="priceToPayMinMax[0]" [max]="priceToPayMinMax[1]"></p-slider>
+                      (onSlideEnd)="dt.filter(priceToPayFilter, col.field, 'rangeMoney')" [min]="priceToPayMinMax[0]" [max]="priceToPayMinMax[1]"></p-slider>
           </div>
 
         </th>
@@ -867,3 +874,5 @@
   <div class="zoomed-image" [ngStyle]="{'background-image': 'url(' + zoomedImage + ')'}"></div>
 
 </p-dialog>
+
+<p-menu #toProgressMenu [popup]="true" [model]="toProgressMenuItems"></p-menu>

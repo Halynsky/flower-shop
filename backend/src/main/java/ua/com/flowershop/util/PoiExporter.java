@@ -4,9 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.flowershop.entity.*;
@@ -40,33 +40,37 @@ public class PoiExporter {
 
         sheet.setDefaultColumnWidth(15);
         sheet.setColumnWidth(0, 1200);
+        sheet.setColumnWidth(1, 5600);
+        sheet.setColumnWidth(2, 3800);
+        sheet.setColumnWidth(3, 3800);
+        sheet.setColumnWidth(4, 3800);
+        sheet.setColumnWidth(5, 3800);
 
-        XSSFFont defaultFont = workbook.createFont();
-        defaultFont.setFontName(FONT_NAME);
-        defaultFont.setFontHeightInPoints(FONT_SIZE);
-        defaultFont.setColor(IndexedColors.BLACK.getIndex());
-        defaultFont.setBold(false);
+        XSSFFont fontDefault = workbook.createFont();
+        fontDefault.setFontName(FONT_NAME);
+        fontDefault.setFontHeightInPoints(FONT_SIZE);
+        fontDefault.setColor(IndexedColors.BLACK.getIndex());
+        fontDefault.setBold(false);
 
-        XSSFFont boldFont = workbook.createFont();
-        boldFont.setFontName(FONT_NAME);
-        boldFont.setFontHeightInPoints(FONT_SIZE);
-        boldFont.setColor(IndexedColors.BLACK.getIndex());
-        boldFont.setBold(true);
+        XSSFFont fontBold = workbook.createFont();
+        fontBold.setFontName(FONT_NAME);
+        fontBold.setFontHeightInPoints(FONT_SIZE);
+        fontBold.setColor(IndexedColors.BLACK.getIndex());
+        fontBold.setBold(true);
 
-        XSSFFont headerFont = workbook.createFont();
-        headerFont.setFontName(FONT_NAME);
-        headerFont.setFontHeightInPoints(HEADER_FONT_SIZE);
-        headerFont.setColor(IndexedColors.BLACK.getIndex());
-        headerFont.setBold(true);
+        XSSFFont fontHeader = workbook.createFont();
+        fontHeader.setFontName(FONT_NAME);
+        fontHeader.setFontHeightInPoints(HEADER_FONT_SIZE);
+        fontHeader.setColor(IndexedColors.BLACK.getIndex());
+        fontHeader.setBold(true);
 
-        XSSFFont titleFont = workbook.createFont();
-        titleFont.setFontName(FONT_NAME);
-        titleFont.setFontHeightInPoints(TITLE_FONT_SIZE);
-        titleFont.setColor(IndexedColors.BLACK.getIndex());
-        titleFont.setBold(true);
+        XSSFFont fontTitle = workbook.createFont();
+        fontTitle.setFontName(FONT_NAME);
+        fontTitle.setFontHeightInPoints(TITLE_FONT_SIZE);
+        fontTitle.setColor(IndexedColors.BLACK.getIndex());
+        fontTitle.setBold(true);
 
-        Integer rowNum = 0;
-        int colNum = 0;
+        int rowNum = 0;
 
         sheet.addMergedRegion(new CellRangeAddress(3,3,0,5));
         sheet.addMergedRegion(new CellRangeAddress(6,6,0,5));
@@ -76,7 +80,7 @@ public class PoiExporter {
         Row row = sheet.createRow(rowNum++);
         Cell cell = row.createCell(0);
         CellStyle cellStyle = workbook.createCellStyle();
-        cellStyle.setFont(titleFont);
+        cellStyle.setFont(fontTitle);
         cell.setCellValue("ЗАМОВЛЕННЯ №" + order.getId());
         cell.setCellStyle(cellStyle);
         rowNum++;
@@ -86,7 +90,7 @@ public class PoiExporter {
         row = sheet.createRow(rowNum++);
         cell = row.createCell(0);
         cellStyle = workbook.createCellStyle();
-        cellStyle.setFont(boldFont);
+        cellStyle.setFont(fontBold);
         cell.setCellValue("ЗАМОВНИК:");
         cell.setCellStyle(cellStyle);
 
@@ -97,7 +101,7 @@ public class PoiExporter {
         cell.setCellValue(user.getName() + ", " + user.getPhone());
         cellStyle = workbook.createCellStyle();
         cellStyle.setWrapText(true);
-        cellStyle.setFont(defaultFont);
+        cellStyle.setFont(fontDefault);
         cell.setCellStyle(cellStyle);
         rowNum++;
 
@@ -106,7 +110,7 @@ public class PoiExporter {
         row = sheet.createRow(rowNum++);
         cell = row.createCell(0);
         cellStyle = workbook.createCellStyle();
-        cellStyle.setFont(boldFont);
+        cellStyle.setFont(fontBold);
         cell.setCellValue("ДОСТАВКА:");
         cell.setCellStyle(cellStyle);
 
@@ -118,7 +122,7 @@ public class PoiExporter {
         cell.setCellValue(order.getDeliveryAddress());
         cellStyle = workbook.createCellStyle();
         cellStyle.setWrapText(true);
-        cellStyle.setFont(defaultFont);
+        cellStyle.setFont(fontDefault);
         cellStyle.setVerticalAlignment(VerticalAlignment.TOP);
         cell.setCellStyle(cellStyle);
 
@@ -127,7 +131,7 @@ public class PoiExporter {
         // ORDER ITEMS HEADER
 
         CellStyle tableHeaderStyle = workbook.createCellStyle();
-        tableHeaderStyle.setFont(boldFont);
+        tableHeaderStyle.setFont(fontBold);
         tableHeaderStyle.setBorderBottom(BorderStyle.THIN);
         tableHeaderStyle.setBorderTop(BorderStyle.THIN);
         tableHeaderStyle.setBorderRight(BorderStyle.THIN);
@@ -164,7 +168,7 @@ public class PoiExporter {
 
         // ORDER ITEMS TABLE
 
-        fillOrderItems(workbook, sheet, defaultFont, rowNum, new ArrayList<>(order.getOrderItems()));
+        fillOrderItems(workbook, sheet, fontDefault, fontBold, rowNum, new ArrayList<>(order.getOrderItems()));
 
         rowNum += order.getOrderItems().size() + 1;
 
@@ -175,14 +179,14 @@ public class PoiExporter {
         if (order.getDiscount() > 0) {
             cell = row.createCell(4);
             cellStyle = workbook.createCellStyle();
-            cellStyle.setFont(defaultFont);
+            cellStyle.setFont(fontDefault);
             cell.setCellValue("ЗНИЖКА:");
             cell.setCellStyle(cellStyle);
         }
 
         cell = row.createCell(5);
         cellStyle = workbook.createCellStyle();
-        cellStyle.setFont(defaultFont);
+        cellStyle.setFont(fontDefault);
         cell.setCellValue("РАЗОМ:");
         cell.setCellStyle(cellStyle);
 
@@ -193,7 +197,7 @@ public class PoiExporter {
         if (order.getDiscount() > 0) {
             cell = row.createCell(4);
             cellStyle = workbook.createCellStyle();
-            cellStyle.setFont(boldFont);
+            cellStyle.setFont(fontBold);
             cell.setCellValue(order.getDiscount() / 100 + " грн");
             cell.setCellStyle(cellStyle);
         }
@@ -201,7 +205,7 @@ public class PoiExporter {
 
         cell = row.createCell(5);
         cellStyle = workbook.createCellStyle();
-        cellStyle.setFont(boldFont);
+        cellStyle.setFont(fontBold);
         cell.setCellValue((order.getTotalPrice() - order.getDiscount())/ 100 + " грн");
         cell.setCellStyle(cellStyle);
 
@@ -212,7 +216,7 @@ public class PoiExporter {
         row = sheet.createRow(rowNum++);
         cell = row.createCell(0);
         cellStyle = workbook.createCellStyle();
-        cellStyle.setFont(boldFont);
+        cellStyle.setFont(fontBold);
         cell.setCellValue("НАШІ КОНТАКТИ:");
         cell.setCellStyle(cellStyle);
 
@@ -224,7 +228,7 @@ public class PoiExporter {
         cell.setCellValue("Тел: 0507072637, 0970559095");
         cellStyle = workbook.createCellStyle();
         cellStyle.setWrapText(true);
-        cellStyle.setFont(defaultFont);
+        cellStyle.setFont(fontDefault);
         cell.setCellStyle(cellStyle);
 
         sheet.addMergedRegion(new CellRangeAddress(rowNum,rowNum,0,4));
@@ -233,7 +237,7 @@ public class PoiExporter {
         cell.setCellValue("Email: merryflowersua@gmail.com");
         cellStyle = workbook.createCellStyle();
         cellStyle.setWrapText(true);
-        cellStyle.setFont(defaultFont);
+        cellStyle.setFont(fontDefault);
         cell.setCellStyle(cellStyle);
 
         sheet.addMergedRegion(new CellRangeAddress(rowNum,rowNum,0,4));
@@ -242,7 +246,7 @@ public class PoiExporter {
         cell.setCellValue("Сайт: www.merryflowers.com.ua");
         cellStyle = workbook.createCellStyle();
         cellStyle.setWrapText(true);
-        cellStyle.setFont(defaultFont);
+        cellStyle.setFont(fontDefault);
         cell.setCellStyle(cellStyle);
 
         sheet.addMergedRegion(new CellRangeAddress(rowNum,rowNum,0,4));
@@ -251,13 +255,13 @@ public class PoiExporter {
         cell.setCellValue("Група в Facebook: facebook.com/groups/merryflowers");
         cellStyle = workbook.createCellStyle();
         cellStyle.setWrapText(true);
-        cellStyle.setFont(defaultFont);
+        cellStyle.setFont(fontDefault);
         cell.setCellStyle(cellStyle);
 
         return workbook;
     }
 
-    private void fillOrderItems(XSSFWorkbook workbook, XSSFSheet sheet, XSSFFont font, Integer rowNum, List<OrderItem> orderItems) {
+    private void fillOrderItems(XSSFWorkbook workbook, XSSFSheet sheet, XSSFFont font, XSSFFont fontBold, Integer rowNum, List<OrderItem> orderItems) {
 
         orderItems = orderItems.stream().sorted(Comparator.comparing(o -> o.getFlowerSize().getFlower().getName())).collect(Collectors.toList());
 
@@ -285,11 +289,16 @@ public class PoiExporter {
 
             cell = row.createCell(1);
             cell.setCellStyle(tableCellStyle);
+
             String name = flower.getNameOriginal();
             if (isNull(name)) {
                 name = flower.getName();
             }
-            cell.setCellValue(name);
+
+            XSSFRichTextString fullName = new XSSFRichTextString();
+            fullName.append(flower.getFlowerType().getNameSingle() + "\n", font);
+            fullName.append(name, fontBold);
+            cell.setCellValue(fullName);
 
             cell = row.createCell(2);
             cell.setCellStyle(tableCellStyle);
@@ -309,17 +318,103 @@ public class PoiExporter {
 
         }
 
-
     }
 
+
+
     @Transactional
-    public Workbook exportOrdersToExcel(Page<Order> ordersPage) {
+    public Workbook exportOrdersToExcel(List<Order> orders) {
 
         XSSFWorkbook workbook = new XSSFWorkbook();
 
-        for (int i = 0; i < ordersPage.getContent().size(); i++) {
-            Order order = ordersPage.getContent().get(i);
+        for (int i = 0; i < orders.size(); i++) {
+            Order order = orders.get(i);
             exportOrderToExcel(order, workbook);
+        }
+
+        return workbook;
+    }
+
+    @Transactional
+    public Workbook prepareProcessingBlank(List<Order> orders) {
+
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        XSSFSheet sheet = workbook.createSheet("Бланк обробки замовлень");
+
+        sheet.setColumnWidth(0, 4800);
+        sheet.setColumnWidth(1, 4400);
+        sheet.setColumnWidth(2, 4400);
+        sheet.setColumnWidth(3, 4400);
+        sheet.setColumnWidth(4, 4400);
+
+        XSSFFont fontDefault = workbook.createFont();
+        fontDefault.setFontName(FONT_NAME);
+        fontDefault.setFontHeightInPoints(FONT_SIZE);
+        fontDefault.setColor(IndexedColors.BLACK.getIndex());
+        fontDefault.setBold(false);
+
+        XSSFFont fontBold = workbook.createFont();
+        fontBold.setFontName(FONT_NAME);
+        fontBold.setFontHeightInPoints(FONT_SIZE);
+        fontBold.setColor(IndexedColors.BLACK.getIndex());
+        fontBold.setBold(true);
+
+        int rowNum = 0;
+        Row row;
+        Cell cell;
+
+        // HEADERS
+
+        CellStyle tableHeaderStyle = workbook.createCellStyle();
+        tableHeaderStyle.setFont(fontBold);
+        tableHeaderStyle.setBorderBottom(BorderStyle.THIN);
+        tableHeaderStyle.setBorderTop(BorderStyle.THIN);
+        tableHeaderStyle.setBorderRight(BorderStyle.THIN);
+        tableHeaderStyle.setBorderLeft(BorderStyle.THIN);
+        tableHeaderStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+        tableHeaderStyle.setAlignment(HorizontalAlignment.CENTER);
+        tableHeaderStyle.setWrapText(true);
+
+        row = sheet.createRow(rowNum++);
+        row.setHeight((short) (row.getHeight() * 2));
+
+        cell = row.createCell(0);
+        cell.setCellStyle(tableHeaderStyle);
+        cell.setCellValue("Замовлення №");
+
+        cell = row.createCell(1);
+        cell.setCellStyle(tableHeaderStyle);
+        cell.setCellValue("Відправлено");
+
+        cell = row.createCell(2);
+        cell.setCellStyle(tableHeaderStyle);
+        cell.setCellValue("Накладна №");
+
+        cell = row.createCell(3);
+        cell.setCellStyle(tableHeaderStyle);
+        cell.setCellValue("Накладна відправлена");
+
+        cell = row.createCell(4);
+        cell.setCellStyle(tableHeaderStyle);
+        cell.setCellValue("Відмічено в магазині");
+
+        for (Order order: orders) {
+            row = sheet.createRow(rowNum++);
+            cell = row.createCell(0);
+            cell.setCellStyle(tableHeaderStyle);
+            cell.setCellValue(order.getId());
+
+            cell = row.createCell(1);
+            cell.setCellStyle(tableHeaderStyle);
+
+            cell = row.createCell(2);
+            cell.setCellStyle(tableHeaderStyle);
+
+            cell = row.createCell(3);
+            cell.setCellStyle(tableHeaderStyle);
+
+            cell = row.createCell(4);
+            cell.setCellStyle(tableHeaderStyle);
         }
 
         return workbook;
