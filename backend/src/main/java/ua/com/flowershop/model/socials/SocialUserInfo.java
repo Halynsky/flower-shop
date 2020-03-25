@@ -12,9 +12,10 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserTokenEmailTuple {
+public class SocialUserInfo {
 
     private String email;
     private String accessToken;
+    private Boolean isLogin;
 
 }

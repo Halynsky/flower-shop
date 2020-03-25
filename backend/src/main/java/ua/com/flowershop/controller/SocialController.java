@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import ua.com.flowershop.entity.SocialConnection;
 import ua.com.flowershop.entity.User;
 import ua.com.flowershop.model.SecurityUserModel;
-import ua.com.flowershop.model.socials.UserTokenEmailTuple;
+import ua.com.flowershop.model.socials.SocialUserInfo;
 import ua.com.flowershop.repository.SocialConnectionRepository;
 import ua.com.flowershop.security.SecurityService;
 import ua.com.flowershop.service.FacebookSocialService;
@@ -32,9 +32,9 @@ public class SocialController {
     @Autowired private MailService mailService;
 
     @PostMapping("/auth/facebook")
-    public ResponseEntity<SecurityUserModel> loginOrRegisterWithFacebook(@RequestBody UserTokenEmailTuple userTokenEmailTuple) {
-        User user = facebookSocialService.loginOrRegister(userTokenEmailTuple);
-        if (userTokenEmailTuple.getEmail() != null)
+    public ResponseEntity<SecurityUserModel> loginOrRegisterWithFacebook(@RequestBody SocialUserInfo socialUserInfo) {
+        User user = facebookSocialService.loginOrRegister(socialUserInfo);
+        if (!socialUserInfo.getIsLogin())
             mailService.sendRegistrationConfirmEmail(user);
         SecurityUserModel securityUserModel = securityService.performUserLogin(user);
         return new ResponseEntity<>(securityUserModel, HttpStatus.OK);

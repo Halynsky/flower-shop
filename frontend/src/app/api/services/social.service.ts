@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { API_URL } from "../../utils/Costants";
 import { User } from "../models/User";
+import { SocialUserInfo } from "../models/SocialUserInfo";
 
 @Injectable({providedIn: 'root'})
 export class SocialService {
@@ -10,12 +11,8 @@ export class SocialService {
 
   constructor(private  http: HttpClient) {}
 
-  loginOrRegisterWithFacebook(user) {
-    let userTokenEmail = {
-      accessToken: user.authToken,
-      email: user.email
-    }
-    return this.http.post<User>(`${this.URL}/auth/facebook`, userTokenEmail);
+  loginOrRegisterWithFacebook(socialUserInfo: SocialUserInfo) {
+    return this.http.post<User>(`${this.URL}/auth/facebook`, socialUserInfo);
   }
 
   getConnections() {

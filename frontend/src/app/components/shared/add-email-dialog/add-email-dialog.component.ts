@@ -4,6 +4,7 @@ import { getErrorMessage } from "../../../utils/Functions";
 import { SnackBarService } from "../../../services/snak-bar.service";
 import { SocialService } from "../../../api/services/social.service";
 import { UserService } from "../../../api/services/user.service";
+import { SocialUserInfo } from "../../../api/models/SocialUserInfo";
 
 @Component({
   selector: 'add-email-dialog',
@@ -23,7 +24,11 @@ export class AddEmailDialogComponent {
   }
 
   submit() {
-    this.socialService.loginOrRegisterWithFacebook(this.user)
+    let socialUserInfo = new SocialUserInfo()
+    socialUserInfo.accessToken = this.user.authToken;
+    socialUserInfo.email = this.user.email;
+    socialUserInfo.isLogin = false;
+    this.socialService.loginOrRegisterWithFacebook(socialUserInfo)
       .subscribe(
         user => {
           this.registered = true;

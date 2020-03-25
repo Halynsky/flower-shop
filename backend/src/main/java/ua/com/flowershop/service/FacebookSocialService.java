@@ -16,8 +16,7 @@ import ua.com.flowershop.exception.AuthenticationRequiredException;
 import ua.com.flowershop.exception.ThirdPartyException;
 import ua.com.flowershop.model.socials.FacebookUserProfile;
 import ua.com.flowershop.model.socials.SocialUser;
-import ua.com.flowershop.model.socials.UserTokenEmailTuple;
-import ua.com.flowershop.repository.UserRepository;
+import ua.com.flowershop.model.socials.SocialUserInfo;
 
 import javax.annotation.PostConstruct;
 import javax.validation.ValidationException;
@@ -42,8 +41,8 @@ public class FacebookSocialService {
             .build();
     }
 
-    public User loginOrRegister(UserTokenEmailTuple userTokenEmailTuple) {
-        SocialUser socialUser = getSocialUser(userTokenEmailTuple);
+    public User loginOrRegister(SocialUserInfo socialUserInfo) {
+        SocialUser socialUser = getSocialUser(socialUserInfo);
         return socialConnectionService.findExistingOrRegister(socialUser);
     }
 
@@ -114,12 +113,12 @@ public class FacebookSocialService {
         return new SocialUser(userProfile);
     }
 
-    private SocialUser getSocialUser(UserTokenEmailTuple userTokenEmailTuple) throws AuthenticationRequiredException {
+    private SocialUser getSocialUser(SocialUserInfo socialUserInfo) throws AuthenticationRequiredException {
         FacebookUserProfile userProfile;
         try {
-            userProfile = getFacebookUserProfile(userTokenEmailTuple.getAccessToken());
-            if (userTokenEmailTuple.getEmail() != null)
-                userProfile.setEmail(userTokenEmailTuple.getEmail());
+            userProfile = getFacebookUserProfile(socialUserInfo.getAccessToken());
+            if (socialUserInfo.getEmail() != null)
+                userProfile.setEmail(socialUserInfo.getEmail());
         } catch (ThirdPartyException e) {
             log.error("Не вдалося підключитись до Facebook API", e);
             throw new AuthenticationRequiredException("Не вдалося підключитись до Facebook API", e);

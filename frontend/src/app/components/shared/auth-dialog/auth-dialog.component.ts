@@ -10,6 +10,7 @@ import { finalize } from "rxjs/operators";
 import { AuthService as SocialAuthService, FacebookLoginProvider } from "angularx-social-login";
 import { SocialService } from "../../../api/services/social.service";
 import { MatDialogRef } from "@angular/material/dialog";
+import { SocialUserInfo } from "../../../api/models/SocialUserInfo";
 
 @Component({
   selector: 'auth-dialog',
@@ -92,8 +93,11 @@ export class AuthDialogComponent {
               if (user.email == null && !email) {
                 this.securityService.openEmailPhoneDialog(user)
               } else {
-                user.email = email;
-                this.socialService.loginOrRegisterWithFacebook(user)
+                let socialUserInfo = new SocialUserInfo()
+                socialUserInfo.accessToken = user.authToken;
+                socialUserInfo.email = email;
+                socialUserInfo.isLogin = true;
+                this.socialService.loginOrRegisterWithFacebook(socialUserInfo)
                   .pipe(finalize(() => this.loading = false))
                   .subscribe(
                     user => {
