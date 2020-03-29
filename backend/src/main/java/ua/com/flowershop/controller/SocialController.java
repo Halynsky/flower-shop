@@ -34,9 +34,12 @@ public class SocialController {
     @PostMapping("/auth/facebook")
     public ResponseEntity<SecurityUserModel> loginOrRegisterWithFacebook(@RequestBody SocialUserInfo socialUserInfo) {
         User user = facebookSocialService.loginOrRegister(socialUserInfo);
-        if (!socialUserInfo.getIsLogin())
+        SecurityUserModel securityUserModel = null;
+        if (!socialUserInfo.getIsLogin()) {
             mailService.sendRegistrationConfirmEmail(user);
-        SecurityUserModel securityUserModel = securityService.performUserLogin(user);
+        } else {
+            securityUserModel = securityService.performUserLogin(user);
+        }
         return new ResponseEntity<>(securityUserModel, HttpStatus.OK);
     }
 
