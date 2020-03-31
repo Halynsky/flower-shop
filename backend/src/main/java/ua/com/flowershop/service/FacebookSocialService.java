@@ -41,9 +41,12 @@ public class FacebookSocialService {
             .build();
     }
 
-    public User loginOrRegister(SocialUserInfo socialUserInfo) {
-        SocialUser socialUser = getSocialUser(socialUserInfo);
-        return socialConnectionService.findExistingOrRegister(socialUser);
+    public User findUser(SocialUserInfo socialUserInfo) {
+        return socialConnectionService.findExistingUser(getSocialUser(socialUserInfo));
+    }
+
+    public User registerUser(SocialUserInfo socialUserInfo, Boolean emailVerificationRequired) {
+        return socialConnectionService.registerUser(getSocialUser(socialUserInfo), emailVerificationRequired);
     }
 
     public void connect(User user, String accessToken) {
@@ -123,12 +126,6 @@ public class FacebookSocialService {
             log.error("Не вдалося підключитись до Facebook API", e);
             throw new AuthenticationRequiredException("Не вдалося підключитись до Facebook API", e);
         }
-        if (userProfile.getEmail() == null) {
-            log.warn("Не вдалося зареєструвати користувача " + userProfile.getName() + " по причині відсутності email в Facebook профайлі");
-            throw new ValidationException("Для реєстрації через Facebook у вашому аккаунті повинен бути вказаний email." +
-                " Внесіть email на Facebook аккаунт та спробуйте ще раз або зареєструйтесь через стандартну форму.");
-        }
-
         return new SocialUser(userProfile);
     }
 }

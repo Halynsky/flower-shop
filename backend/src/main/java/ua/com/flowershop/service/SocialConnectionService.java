@@ -6,9 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import ua.com.flowershop.entity.SocialConnection;
 import ua.com.flowershop.entity.User;
-import ua.com.flowershop.exception.AuthenticationRequiredException;
-import ua.com.flowershop.exception.ConflictException;
-import ua.com.flowershop.exception.NotFoundException;
+import ua.com.flowershop.exception.*;
 import ua.com.flowershop.model.socials.SocialUser;
 import ua.com.flowershop.repository.SocialConnectionRepository;
 import ua.com.flowershop.repository.UserRepository;
@@ -24,20 +22,27 @@ public class SocialConnectionService {
     @Autowired private SocialConnectionRepository socialConnectionRepository;
     @Autowired private UserService userService;
 
-    public User findExistingOrRegister(@Valid SocialUser socialUser) throws AuthenticationRequiredException {
+    public User findExistingUser(@Valid SocialUser socialUser) throws AuthenticationRequiredException {
         SocialConnection connection = socialConnectionRepository.findByProviderId(socialUser.getId());
         if (connection != null) {
             if (!connection.getUser().getIsEnabled()) {
                 throw new AuthenticationRequiredException("Аккаунт заблокований");
             }
+            if (!connection.getUser().getIsActivated()) {
+                throw new AccountIsNotActivatedException();
+            }
             return connection.getUser();
+        } else {
+            throw new ValidationException("Користувача не знайдено");
         }
+    }
 
+    public User registerUser(@Valid SocialUser socialUser, Boolean emailVerificationRequired) {
         User user = userRepository.findByEmail(socialUser.getEmail()).orElse(null);
         if (user != null) {
             return addSocialConnection(user, socialUser);
         } else {
-            return userService.registerBySocial(socialUser);
+            return userService.registerBySocial(socialUser, emailVerificationRequired);
         }
     }
 

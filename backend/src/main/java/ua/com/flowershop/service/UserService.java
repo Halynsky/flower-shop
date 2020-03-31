@@ -83,7 +83,7 @@ public class UserService {
     }
 
     @Transactional
-    public User registerBySocial(SocialUser socialUser) {
+    public User registerBySocial(SocialUser socialUser, Boolean emailVerificationRequired) {
         User existed = userRepository.findByEmail(socialUser.getEmail()).orElse(null);
 
         if (nonNull(existed)) {
@@ -92,6 +92,9 @@ public class UserService {
 
         User user = User.of(socialUser);
         user.setIsVirtual(false);
+        if (emailVerificationRequired) {
+            user.setIsActivated(false);
+        }
         user.setPassword(passwordEncoder.encode(UUID.randomUUID().toString()));
         userRepository.save(user);
         SocialConnection socialConnection = new SocialConnection(socialUser, user);

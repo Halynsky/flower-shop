@@ -92,12 +92,21 @@ export class AuthDialogComponent {
             email => {
               if (user.email == null && !email) {
                 this.securityService.openEmailPhoneDialog(user)
+              } else if(user.email !== null && !email) {
+                let socialUserInfo = new SocialUserInfo()
+                socialUserInfo.accessToken = user.authToken;
+                socialUserInfo.email = user.email;
+                this.socialService.registerWithFacebook(socialUserInfo, false)
+                  .subscribe(
+                  user => {
+                    this.securityService.login(user);
+                  }, error => this.snackBarService.showError(getErrorMessage(error))
+                )
               } else {
                 let socialUserInfo = new SocialUserInfo()
                 socialUserInfo.accessToken = user.authToken;
                 socialUserInfo.email = email;
-                socialUserInfo.isLogin = true;
-                this.socialService.loginOrRegisterWithFacebook(socialUserInfo)
+                this.socialService.loginWithFacebook(socialUserInfo)
                   .pipe(finalize(() => this.loading = false))
                   .subscribe(
                     user => {

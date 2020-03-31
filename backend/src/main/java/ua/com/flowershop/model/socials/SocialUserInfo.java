@@ -16,6 +16,5 @@ public class SocialUserInfo {
 
     private String email;
     private String accessToken;
-    private Boolean isLogin;
 
 }

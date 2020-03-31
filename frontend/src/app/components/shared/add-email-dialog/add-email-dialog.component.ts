@@ -27,8 +27,7 @@ export class AddEmailDialogComponent {
     let socialUserInfo = new SocialUserInfo()
     socialUserInfo.accessToken = this.user.authToken;
     socialUserInfo.email = this.user.email;
-    socialUserInfo.isLogin = false;
-    this.socialService.loginOrRegisterWithFacebook(socialUserInfo)
+    this.socialService.registerWithFacebook(socialUserInfo, true)
       .subscribe(
         user => {
           this.registered = true;

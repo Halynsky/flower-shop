@@ -7,6 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ua.com.flowershop.entity.SocialConnection;
 import ua.com.flowershop.entity.User;
+import ua.com.flowershop.exception.ValidationException;
 import ua.com.flowershop.model.SecurityUserModel;
 import ua.com.flowershop.model.socials.SocialUserInfo;
 import ua.com.flowershop.repository.SocialConnectionRepository;
@@ -32,15 +33,22 @@ public class SocialController {
     @Autowired private MailService mailService;
 
     @PostMapping("/auth/facebook")
-    public ResponseEntity<SecurityUserModel> loginOrRegisterWithFacebook(@RequestBody SocialUserInfo socialUserInfo) {
-        User user = facebookSocialService.loginOrRegister(socialUserInfo);
+    public ResponseEntity<SecurityUserModel> loginWithFacebook(@RequestBody SocialUserInfo socialUserInfo) {
+        User user = facebookSocialService.findUser(socialUserInfo);
+        SecurityUserModel securityUserModel = securityService.performUserLogin(user);
+        return new ResponseEntity<>(securityUserModel, HttpStatus.OK);
+    }
+
+    @PostMapping("/register/{emailVerificationRequired}/facebook")
+    public ResponseEntity<SecurityUserModel> registerWithFacebook(@RequestBody SocialUserInfo socialUserInfo, @PathVariable Boolean emailVerificationRequired) {
+        User user = facebookSocialService.registerUser(socialUserInfo, emailVerificationRequired);
         SecurityUserModel securityUserModel = null;
-        if (!socialUserInfo.getIsLogin()) {
+        if (emailVerificationRequired) {
             mailService.sendRegistrationConfirmEmail(user);
         } else {
             securityUserModel = securityService.performUserLogin(user);
         }
-        return new ResponseEntity<>(securityUserModel, HttpStatus.OK);
+        return new ResponseEntity<>(securityUserModel ,HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('USER')")

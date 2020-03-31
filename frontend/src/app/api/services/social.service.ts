@@ -11,8 +11,12 @@ export class SocialService {
 
   constructor(private  http: HttpClient) {}
 
-  loginOrRegisterWithFacebook(socialUserInfo: SocialUserInfo) {
+  loginWithFacebook(socialUserInfo: SocialUserInfo) {
     return this.http.post<User>(`${this.URL}/auth/facebook`, socialUserInfo);
+  }
+
+  registerWithFacebook(socialUserInfo: SocialUserInfo, emailVerificationRequired: boolean) {
+    return this.http.post<User>(`${this.URL}/register/${emailVerificationRequired}/facebook`, socialUserInfo);
   }
 
   getConnections() {
