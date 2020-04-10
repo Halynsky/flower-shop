@@ -15,8 +15,8 @@ export class SocialService {
     return this.http.post<User>(`${this.URL}/auth/facebook`, socialUserInfo);
   }
 
-  registerWithFacebook(socialUserInfo: SocialUserInfo, emailVerificationRequired: boolean) {
-    return this.http.post<User>(`${this.URL}/register/${emailVerificationRequired}/facebook`, socialUserInfo);
+  registerWithFacebook(socialUserInfo: SocialUserInfo) {
+    return this.http.post<User>(`${this.URL}/register/facebook`, socialUserInfo);
   }
 
   getConnections() {
@@ -29,10 +29,6 @@ export class SocialService {
 
   disconnectFacebook() {
     return this.http.delete(`${this.URL}/facebook/disconnect`, );
-  }
-
-  existsByProviderId(providerId: string) {
-    return this.http.get<string>(`${this.URL}/${providerId}/existsByProviderId`);
   }
 
 }

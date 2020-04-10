@@ -42,11 +42,20 @@ public class FacebookSocialService {
     }
 
     public User findUser(SocialUserInfo socialUserInfo) {
-        return socialConnectionService.findExistingUser(getSocialUser(socialUserInfo));
+        SocialUser socialUser = getSocialUser(socialUserInfo.getAccessToken());
+        if (socialUserInfo.getEmail() != null)
+            socialUser.setEmail(socialUserInfo.getEmail());
+        return socialConnectionService.findExistingUser(socialUser);
     }
 
-    public User registerUser(SocialUserInfo socialUserInfo, Boolean emailVerificationRequired) {
-        return socialConnectionService.registerUser(getSocialUser(socialUserInfo), emailVerificationRequired);
+    public User registerUser(SocialUserInfo socialUserInfo) {
+        Boolean emailVerificationRequired = false;
+        SocialUser socialUser = getSocialUser(socialUserInfo.getAccessToken());
+        if (socialUserInfo.getEmail() != null) {
+            emailVerificationRequired = true;
+            socialUser.setEmail(socialUserInfo.getEmail());
+        }
+        return socialConnectionService.registerUser(socialUser, emailVerificationRequired);
     }
 
     public void connect(User user, String accessToken) {
@@ -107,25 +116,8 @@ public class FacebookSocialService {
             log.error("Не вдалося підключитись до Facebook API", e);
             throw new AuthenticationRequiredException("Не вдалося підключитись до Facebook API", e);
         }
-        if (userProfile.getEmail() == null) {
-            log.warn("Не вдалося зареєструвати користувача " + userProfile.getName() + " по причині відсутності email в Facebook профайлі");
-            throw new ValidationException("Для реєстрації через Facebook у вашому аккаунті повинен бути вказаний email." +
-                " Внесіть email на Facebook аккаунт та спробуйте ще раз або зареєструйтесь через стандартну форму.");
-        }
 
         return new SocialUser(userProfile);
     }
 
-    private SocialUser getSocialUser(SocialUserInfo socialUserInfo) throws AuthenticationRequiredException {
-        FacebookUserProfile userProfile;
-        try {
-            userProfile = getFacebookUserProfile(socialUserInfo.getAccessToken());
-            if (socialUserInfo.getEmail() != null)
-                userProfile.setEmail(socialUserInfo.getEmail());
-        } catch (ThirdPartyException e) {
-            log.error("Не вдалося підключитись до Facebook API", e);
-            throw new AuthenticationRequiredException("Не вдалося підключитись до Facebook API", e);
-        }
-        return new SocialUser(userProfile);
-    }
 }

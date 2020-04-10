@@ -13,12 +13,10 @@ import static ua.com.flowershop.util.ErrorMessages.EMAIL_VALIDATION_ERROR_MESSAG
 
 @RequiredArgsConstructor
 @Getter
+@Setter
 public class SocialUser {
     private final String id;
-
-    @Email(message = EMAIL_VALIDATION_ERROR_MESSAGE)
-    @NotNull(message = EMAIL_REQUIRED_VALIDATION_ERROR_MESSAGE)
-    private final String email;
+    private String email;
     private final String firstName;
     private final String lastName;
     private final String picture;

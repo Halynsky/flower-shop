@@ -33,7 +33,7 @@ public class SocialConnectionService {
             }
             return connection.getUser();
         } else {
-            throw new ValidationException("Користувача не знайдено");
+            return null;
         }
     }
 

@@ -87,36 +87,42 @@ export class AuthDialogComponent {
     this.loading = true;
     this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID)
       .then(user => {
-        this.socialService.existsByProviderId(user.id)
-          .subscribe(
-            email => {
-              if (user.email == null && !email) {
-                this.securityService.openEmailPhoneDialog(user)
-              } else if(user.email !== null && !email) {
-                let socialUserInfo = new SocialUserInfo()
+
+              // if (user.email == null ) {
+              //   this.securityService.openEmailPhoneDialog(user)
+              // } else {
+                let socialUserInfo = new SocialUserInfo();
                 socialUserInfo.accessToken = user.authToken;
-                socialUserInfo.email = user.email;
-                this.socialService.registerWithFacebook(socialUserInfo, false)
-                  .subscribe(
-                  user => {
-                    this.securityService.login(user);
-                  }, error => this.snackBarService.showError(getErrorMessage(error))
-                )
-              } else {
-                let socialUserInfo = new SocialUserInfo()
-                socialUserInfo.accessToken = user.authToken;
-                socialUserInfo.email = email;
                 this.socialService.loginWithFacebook(socialUserInfo)
                   .pipe(finalize(() => this.loading = false))
                   .subscribe(
                     user => {
                       this.securityService.login(user);
-                    }, error => this.snackBarService.showError(getErrorMessage(error))
-                  )
-              }
+                    }, error => {
+                      if (error.status == 401) {
+                        //register
+                        if (user.email == null) {
+                          this.securityService.openEmailPhoneDialog(user);
+                        } else {
+                          let socialUserInfo = new SocialUserInfo();
+                          socialUserInfo.accessToken = user.authToken;
+                          this.socialService.registerWithFacebook(socialUserInfo)
+                            .subscribe(user => {
+                                this.securityService.login(user);
+                            },
+                              error => this.snackBarService.showError(getErrorMessage(error))
+                            );
+                        }
+
+                      } else {
+                        this.snackBarService.showError(getErrorMessage(error))
+                      }
+
+                    }
+                  );
+              // }
               this.dialogRef.close();
-            }
-          );
+
       })
       .catch(error => {
         this.snackBarService.showError(error);
