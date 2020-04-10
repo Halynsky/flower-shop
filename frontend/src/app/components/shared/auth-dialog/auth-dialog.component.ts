@@ -88,9 +88,6 @@ export class AuthDialogComponent {
     this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID)
       .then(user => {
 
-              // if (user.email == null ) {
-              //   this.securityService.openEmailPhoneDialog(user)
-              // } else {
                 let socialUserInfo = new SocialUserInfo();
                 socialUserInfo.accessToken = user.authToken;
                 this.socialService.loginWithFacebook(socialUserInfo)
@@ -120,7 +117,6 @@ export class AuthDialogComponent {
 
                     }
                   );
-              // }
               this.dialogRef.close();
 
       })
