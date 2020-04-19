@@ -263,7 +263,12 @@ public class PoiExporter {
 
     private void fillOrderItems(XSSFWorkbook workbook, XSSFSheet sheet, XSSFFont font, XSSFFont fontBold, Integer rowNum, List<OrderItem> orderItems) {
 
-        orderItems = orderItems.stream().sorted(Comparator.comparing(o -> o.getFlowerSize().getFlower().getName())).collect(Collectors.toList());
+        Comparator<OrderItem> comparator = Comparator.comparing(o -> o.getFlowerSize().getFlower().getFlowerType().getName());
+        comparator = comparator.thenComparing(o -> o.getFlowerSize().getFlower().getNameOriginal());
+
+        orderItems = orderItems.stream()
+            .sorted(comparator)
+            .collect(Collectors.toList());
 
         CellStyle tableCellStyle = workbook.createCellStyle();
         tableCellStyle.setFont(font);
