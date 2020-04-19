@@ -10,6 +10,7 @@ import { finalize } from "rxjs/operators";
 import { AuthService as SocialAuthService, FacebookLoginProvider } from "angularx-social-login";
 import { SocialService } from "../../../api/services/social.service";
 import { MatDialogRef } from "@angular/material/dialog";
+import { SocialUserInfo } from "../../../api/models/SocialUserInfo";
 
 @Component({
   selector: 'auth-dialog',
@@ -86,14 +87,38 @@ export class AuthDialogComponent {
     this.loading = true;
     this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID)
       .then(user => {
-        this.socialService.loginOrRegisterWithFacebook(user.authToken)
-          .pipe(finalize(() => this.loading = false))
-          .subscribe(
-            user => {
-              this.securityService.login(user);
+
+                let socialUserInfo = new SocialUserInfo();
+                socialUserInfo.accessToken = user.authToken;
+                this.socialService.loginWithFacebook(socialUserInfo)
+                  .pipe(finalize(() => this.loading = false))
+                  .subscribe(
+                    user => {
+                      this.securityService.login(user);
+                    }, error => {
+                      if (error.status == 401) {
+                        //register
+                        if (user.email == null) {
+                          this.securityService.openEmailPhoneDialog(user);
+                        } else {
+                          let socialUserInfo = new SocialUserInfo();
+                          socialUserInfo.accessToken = user.authToken;
+                          this.socialService.registerWithFacebook(socialUserInfo)
+                            .subscribe(user => {
+                                this.securityService.login(user);
+                            },
+                              error => this.snackBarService.showError(getErrorMessage(error))
+                            );
+                        }
+
+                      } else {
+                        this.snackBarService.showError(getErrorMessage(error))
+                      }
+
+                    }
+                  );
               this.dialogRef.close();
-            }, error => this.snackBarService.showError(getErrorMessage(error))
-          )
+
       })
       .catch(error => {
         this.snackBarService.showError(error);

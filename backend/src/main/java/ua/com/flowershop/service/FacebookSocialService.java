@@ -16,6 +16,7 @@ import ua.com.flowershop.exception.AuthenticationRequiredException;
 import ua.com.flowershop.exception.ThirdPartyException;
 import ua.com.flowershop.model.socials.FacebookUserProfile;
 import ua.com.flowershop.model.socials.SocialUser;
+import ua.com.flowershop.model.socials.SocialUserInfo;
 
 import javax.annotation.PostConstruct;
 import javax.validation.ValidationException;
@@ -40,9 +41,21 @@ public class FacebookSocialService {
             .build();
     }
 
-    public User loginOrRegister(String accessToken) {
-        SocialUser socialUser = getSocialUser(accessToken);
-        return socialConnectionService.findExistingOrRegister(socialUser);
+    public User findUser(SocialUserInfo socialUserInfo) {
+        SocialUser socialUser = getSocialUser(socialUserInfo.getAccessToken());
+        if (socialUserInfo.getEmail() != null)
+            socialUser.setEmail(socialUserInfo.getEmail());
+        return socialConnectionService.findExistingUser(socialUser);
+    }
+
+    public User registerUser(SocialUserInfo socialUserInfo) {
+        Boolean emailVerificationRequired = false;
+        SocialUser socialUser = getSocialUser(socialUserInfo.getAccessToken());
+        if (socialUserInfo.getEmail() != null) {
+            emailVerificationRequired = true;
+            socialUser.setEmail(socialUserInfo.getEmail());
+        }
+        return socialConnectionService.registerUser(socialUser, emailVerificationRequired);
     }
 
     public void connect(User user, String accessToken) {
@@ -103,12 +116,8 @@ public class FacebookSocialService {
             log.error("Не вдалося підключитись до Facebook API", e);
             throw new AuthenticationRequiredException("Не вдалося підключитись до Facebook API", e);
         }
-        if (userProfile.getEmail() == null) {
-            log.warn("Не вдалося зареєструвати користувача " + userProfile.getName() + " по причині відсутності email в Facebook профайлі");
-            throw new ValidationException("Для реєстрації через Facebook у вашому аккаунті повинен бути вказаний email." +
-                " Внесіть email на Facebook аккаунт та спробуйте ще раз або зареєструйтесь через стандартну форму.");
-        }
 
         return new SocialUser(userProfile);
     }
+
 }

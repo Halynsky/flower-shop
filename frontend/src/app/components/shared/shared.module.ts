@@ -39,6 +39,8 @@ import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { UserExistDialogComponent } from "./user-exist-dialog/user-exist-dialog.component";
+import { AddEmailDialogComponent } from "./add-email-dialog/add-email-dialog.component";
+import { DialogModule } from "primeng";
 
 
 const PROVIDERS = [
@@ -62,7 +64,8 @@ export const ngxMaskOptions: Partial<IConfig> | (() => Partial<IConfig>) = {};
     AmountControlledInputComponent,
     TermsAndConditionsComponent,
     AmountControlledInputComponent,
-    HowToPayComponent
+    HowToPayComponent,
+    AddEmailDialogComponent
   ],
   imports: [
     RouterModule,
@@ -92,7 +95,8 @@ export const ngxMaskOptions: Partial<IConfig> | (() => Partial<IConfig>) = {};
     MessageModule,
     ValidatorsModule.forRoot(),
     NgxMaskModule.forRoot(ngxMaskOptions),
-    PerfectScrollbarModule
+    PerfectScrollbarModule,
+    DialogModule
   ],
   exports: [
     RouterModule,
