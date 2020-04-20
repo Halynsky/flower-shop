@@ -68,7 +68,7 @@ export class SecurityService {
   }
 
   openEmailPhoneDialog(user) {
-    let addPhoneEmailDialogRef = this.dialog.open(AddEmailDialogComponent);
+    let addPhoneEmailDialogRef = this.dialog.open(AddEmailDialogComponent, {panelClass: 'modal-no-padding-dialog'});
     addPhoneEmailDialogRef.componentInstance.user = user;
   }
 

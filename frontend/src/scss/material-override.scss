@@ -123,6 +123,10 @@
   }
 }
 
+.modal-no-padding-dialog .mat-dialog-container {
+  padding: 0;
+}
+
 .modal-panel-no-padding {
   border-radius: 2px;
   mat-dialog-container {
