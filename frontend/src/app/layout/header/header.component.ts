@@ -27,6 +27,7 @@ export class HeaderComponent {
               private snackBarService: SnackBarService,
               public globalSearchService: GlobalSearchService,
               private router: Router) {
+    this.bucketLocalService.updateBucketFlowerSizes();
   }
 
   logout() {

@@ -125,6 +125,9 @@ export class BucketLocalService {
             bucketItem.image = foundFlowerSize.flower.image;
             bucketItem.price = foundFlowerSize.price;
             bucketItem.amount = bucketItem.amount <= foundFlowerSize.available ? bucketItem.amount: foundFlowerSize.available;
+            if (bucketItem.available < 1) {
+              this.removeItemFromBucket(bucketItem);
+            }
           });
           this.updateBucket();
         })
