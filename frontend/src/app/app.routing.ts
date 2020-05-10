@@ -9,6 +9,7 @@ import { FavouriteArticlesComponent } from "./components/user-cabinet/favourite-
 import { AdminPanelGuard } from "./guards/admin-panel.guard";
 import { TermsAndConditionsComponent } from "./components/shared/terms-and-conditions/terms-and-conditions.component";
 import { AuthenticatedGuard } from "./guards/authenticated.guard";
+import { PrivacyPolicyComponent } from "./components/shared/privacy-policy/privacy-policy.component";
 
 const routes: Routes = [
   { path: '',
@@ -28,7 +29,8 @@ const routes: Routes = [
       // { path: 'forum', loadChildren: './components/forum/forum.module#ForumModule'},
       { path: 'about-us', loadChildren: () => import('./components/about-us/about-us.module').then(m => m.AboutUsModule)},
       { path: '403', loadChildren: () => import('./components/forbidden/forbidden.module').then(m => m.ForbiddenModule)},
-      { path: 'terms-and-conditions', component: TermsAndConditionsComponent}
+      { path: 'terms-and-conditions', component: TermsAndConditionsComponent},
+      { path: 'privacy-policy', component: PrivacyPolicyComponent}
     ]
   },
   { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule), canLoad: [AdminPanelGuard]}

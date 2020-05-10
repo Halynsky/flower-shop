@@ -41,6 +41,7 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 import { UserExistDialogComponent } from "./user-exist-dialog/user-exist-dialog.component";
 import { AddEmailDialogComponent } from "./add-email-dialog/add-email-dialog.component";
 import { DialogModule } from "primeng";
+import { PrivacyPolicyComponent } from "./privacy-policy/privacy-policy.component";
 
 
 const PROVIDERS = [
@@ -63,6 +64,7 @@ export const ngxMaskOptions: Partial<IConfig> | (() => Partial<IConfig>) = {};
     ShopFilterDialogComponent,
     AmountControlledInputComponent,
     TermsAndConditionsComponent,
+    PrivacyPolicyComponent,
     AmountControlledInputComponent,
     HowToPayComponent,
     AddEmailDialogComponent
