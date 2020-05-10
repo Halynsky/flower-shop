@@ -86,7 +86,6 @@ export class WarehouseOperationItemComponent {
       .pipe(finalize(() => this.isLoaded = true ))
       .subscribe(items => {
         this.sizeOptions = items;
-        console.log("SIZE ID", this.initialSizeId);
         if (this.initialSizeId) {
           this.flowerSizeChosen = this.sizeOptions.find(item => item.size.id == this.initialSizeId);
           this.initialSizeId = null;
