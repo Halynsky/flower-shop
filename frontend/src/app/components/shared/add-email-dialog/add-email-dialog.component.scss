@@ -7,7 +7,9 @@
     flex-direction: column;
     min-width: 250px;
     height: 100%;
-    width: 100%;
+    width: 362px;
+    justify-content: center;
+    padding: 18px 20px 18px 20px;
 
     i.close {
       cursor: pointer;
@@ -21,9 +23,9 @@
     }
 
     input {
-      min-width: 230px;
+      min-width: 200px;
       @include response-from(sm) {
-        width: 340px;
+        width: 210px;
       }
     }
 
@@ -35,7 +37,8 @@
       margin-bottom: 24px;
       color: $grey-600;
       font-size: 20px;
-      padding: 0px 8px 0px 8px;
+      text-align: center;
+      //padding: 0px 8px 0px 8px;
     }
 
     .inputs {
@@ -57,9 +60,9 @@
           line-height: 120%;
           padding: 8px 12px;
           font-weight: 400;
-          min-width: 150px;
+          min-width: 100px;
           @include response-from(sm) {
-            width: 200px;
+            width: 110px;
           }
         }
 
@@ -69,11 +72,13 @@
 
   }
 
-  .reg-response-wrapper, .restore-password-response-wrapper {
+  .reg-response-wrapper {
     display: flex;
     justify-content: center;
     align-self: center;
     flex-direction: column;
+    width: 448px;
+    padding: 24px;
 
     .support-request {
       color: mat-color($primary);
@@ -106,9 +111,13 @@
     }
 
     button {
-      width: 64px;
       display: flex;
+      align-items: center;
+      justify-content: center;
       align-self: center;
+      span {
+        text-align: center;
+      }
     }
 
   }

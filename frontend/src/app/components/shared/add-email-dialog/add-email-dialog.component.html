@@ -39,7 +39,6 @@
 
   </form>
 
-
 </div>
 <div class="reg-response-wrapper" *ngIf="registered">
 
@@ -48,10 +47,9 @@
     Ми відправили вам на <span class="highlight">{{user.email}}</span> лист для підвердження вашої поштової адреси.
   </div>
   <div class="message-secondary">
-    Якщо ви не отримали лист з підтвердженням на протязі 10 хвили - зверніться в службу підтримки сайту за адресою <a class="support-request"
-                                                                                                                      href="mailto:merryflowerua@gmal.com">merryflowerua@gmal.com</a>
+    Якщо ви не отримали лист з підтвердженням на протязі 10 хвили - зверніться в службу підтримки сайту за адресою <a class="support-request" href="mailto:merryflowerua@gmal.com">merryflowerua@gmal.com</a>
   </div>
 
-  <button mat-flat-button type="submit" (click)="dialogRef.close()" color="primary">ОК</button>
+  <button type="submit" mat-flat-button color="accent" (click)="dialogRef.close()">OK</button>
 
 </div>
