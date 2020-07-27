@@ -7,6 +7,8 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 import ua.com.flowershop.entity.Order;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @Accessors(chain = true)
@@ -16,4 +18,5 @@ public class OrderStatusChangeRequestModel {
     private Order.Status status;
     private String comment;
     private String postDeclaration;
+    private LocalDate date;
 }

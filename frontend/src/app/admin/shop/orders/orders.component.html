@@ -114,8 +114,8 @@
               selectionMode="range"
               [readonlyInput]="false"
               dateFormat="dd.mm.yy"
-              (onSelect)="dt.filter(createdFilters, col.field, 'dateRange')"
-              (onClearClick)="dt.filter(createdFilters, col.field, 'dateRange')"
+              (onSelect)="dt.filter(createdFilters, col.field, 'dateTimeRange')"
+              (onClearClick)="dt.filter(createdFilters, col.field, 'dateTimeRange')"
               [showButtonBar]="true"
               [locale]="translation.calendar_ua">
             </p-calendar>
@@ -128,8 +128,22 @@
               selectionMode="range"
               [readonlyInput]="false"
               dateFormat="dd.mm.yy"
-              (onSelect)="dt.filter(closedFilters, col.field, 'dateRange')"
-              (onClearClick)="dt.filter(closedFilters, col.field, 'dateRange')"
+              (onSelect)="dt.filter(closedFilters, col.field, 'dateTimeRange')"
+              (onClearClick)="dt.filter(closedFilters, col.field, 'dateTimeRange')"
+              [showButtonBar]="true"
+              [locale]="translation.calendar_ua">
+            </p-calendar>
+          </div>
+
+          <div *ngSwitchCase="'sent'">
+            <p-calendar
+              [(ngModel)]="sentFilters"
+              appendTo="body"
+              selectionMode="range"
+              [readonlyInput]="false"
+              dateFormat="dd.mm.yy"
+              (onSelect)="dt.filter(sentFilters, col.field, 'dateRange')"
+              (onClearClick)="dt.filter(sentFilters, col.field, 'dateRange')"
               [showButtonBar]="true"
               [locale]="translation.calendar_ua">
             </p-calendar>
@@ -183,6 +197,10 @@
 
           <span *ngSwitchCase="'closed'">
             {{rowData[col.field] | date:'dd.MM.yy HH:mm' }}
+          </span>
+
+          <span *ngSwitchCase="'sent'">
+             {{rowData[col.field] | date: 'dd.MM.yy' }}
           </span>
 
           <span *ngSwitchCase="'status'"
@@ -308,6 +326,32 @@
         <div class="ui-grid-col-4">
           <ng-container *ngIf="postDeclaration.dirty || postDeclaration.touched || statusChangeForm.submitted">
             <p-message *ngIf="postDeclaration.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="prime-form-group" *ngIf="orderStatusChangeRequest.status == Status.DELIVERING">
+        <div class="ui-grid-col-4">
+          <label>Дата відправки</label>
+        </div>
+
+        <div class="ui-grid-col-4">
+          <p-calendar
+            #sent="ngModel"
+            name="sent"
+            [(ngModel)]="orderStatusChangeRequest.date"
+            appendTo="body"
+            [readonlyInput]="false"
+            dateFormat="dd.mm.yy"
+            [showButtonBar]="true"
+            [locale]="translation.calendar_ua"
+            required>
+          </p-calendar>
+        </div>
+
+        <div class="ui-grid-col-4">
+          <ng-container *ngIf="sent.dirty || sent.touched || statusChangeForm.submitted">
+            <p-message *ngIf="sent.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
           </ng-container>
         </div>
       </div>
@@ -488,7 +532,7 @@
             <div class="body">
               <div class="row">
                 <div class="head">Фото</div>
-                <div class="head">Назва</div>
+                <div class="head">Товар</div>
                 <div class="head">Розмір</div>
                 <div class="head">Кількість</div>
                 <div class="head empty"></div>
@@ -498,7 +542,11 @@
                   <div class="cell image-wrapper">
                     <img [src]="orderItem.image" class="order-item-logo">
                   </div>
-                  <div class="cell">{{orderItem.name}}</div>
+                  <div class="cell">
+                    <div>{{orderItem.flowerTypeName}}</div>
+                    <div><b>{{orderItem.name}}</b></div>
+                    <div>{{orderItem.code}}</div>
+                  </div>
                   <div class="cell">{{orderItem.sizeName}}</div>
                   <div class="cell">{{orderItem.amount}}</div>
                   <div class="cell control-wrapper" (click)="moveToOtherOrder(i)">
@@ -524,7 +572,7 @@
               <div class="row">
                 <div class="head empty"></div>
                 <div class="head">Фото</div>
-                <div class="head">Назва</div>
+                <div class="head">Товар</div>
                 <div class="head">Розмір</div>
                 <div class="head">Кількість</div>
               </div>
@@ -536,7 +584,11 @@
                   <div class="cell image-wrapper">
                     <img [src]="orderItem.image" class="order-item-logo">
                   </div>
-                  <div class="cell">{{orderItem.name}}</div>
+                  <div class="cell">
+                    <div>{{orderItem.flowerTypeName}}</div>
+                    <div><b>{{orderItem.name}}</b></div>
+                    <div>{{orderItem.code}}</div>
+                  </div>
                   <div class="cell">{{orderItem.sizeName}}</div>
                   <div class="cell">{{orderItem.amount}}</div>
                 </div>
@@ -612,7 +664,7 @@
         <div class="body">
           <div class="row">
             <div class="head">Фото</div>
-            <div class="head">Назва</div>
+            <div class="head">Товар</div>
             <div class="head">Розмір</div>
             <div class="head">Кількість</div>
             <div class="head">Сума</div>
@@ -623,7 +675,11 @@
               <div class="cell image-wrapper">
                 <img [src]="orderItem.image" class="order-item-logo">
               </div>
-              <div class="cell">{{orderItem.name}}</div>
+              <div class="cell">
+                <div>{{orderItem.flowerTypeName}}</div>
+                <div><b>{{orderItem.name}}</b></div>
+                <div>{{orderItem.code}}</div>
+              </div>
               <div class="cell">{{orderItem.sizeName}}</div>
               <div class="cell">
                 <div class="input-wrapper">
@@ -744,8 +800,8 @@
     <div class="ui-grid ui-grid-responsive ui-fluid">
 
       <div class="prime-form-group create-mode-selector" *ngIf="!createOrderMode">
-        <button pButton (click)="createOrderMode = 'byId'" icon="pi pi-user" label="&nbsp;&nbsp;Для існуючого користувача"></button>
-        <button pButton (click)="createOrderMode = 'new'" icon="pi pi-plus" label="&nbsp;&nbsp;Нове замовлення"></button>
+        <button pButton (click)="createOrderMode = 'byId'" icon="pi pi-user" label="&nbsp;&nbsp;Для зареєстрованого користувача"></button>
+        <button pButton (click)="createOrderMode = 'new'" icon="pi pi-plus" label="&nbsp;&nbsp;Для не зареєстрованого користувача"></button>
       </div>
 
       <div *ngIf="createOrderMode == 'byId'" class="for-existed-user">

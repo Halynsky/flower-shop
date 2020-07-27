@@ -1,12 +1,19 @@
-<div class="wrapper" *ngIf="flower">
+<div class="wrapper" *ngIf="flowerSize">
 
-  <div class="title">
-    <a class="flower-type-name" [routerLink]="['/shop']" [queryParams]="{flowerTypes: flower.flowerType.id}">{{flower.flowerType.nameSingle}}</a>
-    <span class="flower-name"> {{flower.nameOriginal}}</span>
+  <div class="top-line-wrapper">
+    <div class="title">
+      <a class="flower-type-name" [routerLink]="['/shop']" [queryParams]="{flowerTypes: flowerSize.flower.flowerType.id}">{{flowerSize.flower.flowerType.nameSingle}}</a>
+      <span class="flower-name"> {{flowerSize.flower.nameOriginal}}</span>
+    </div>
+    <div class="item-code">
+      <div class="label">Артикул: </div>
+      <div class="value">{{flowerSize.code}}</div>
+    </div>
   </div>
+
   <div class="content">
 
-    <div class="image" [ngStyle]="flower.image && {'background-image':'url(' + flower.image + ')'} || {'background-image':'url(' + flowerImagePlaceholder + ')'}"></div>
+    <div class="image" [ngStyle]="flowerSize.flower.image && {'background-image':'url(' + flowerSize.flower.image + ')'} || {'background-image':'url(' + flowerImagePlaceholder + ')'}"></div>
 
     <div class="add-to-card-block">
 
@@ -20,23 +27,21 @@
             <th class="header-amount"></th>
           </tr>
 
-          <ng-template ngFor let-flowerSize [ngForOf]="flower.flowerSizes" let-i="index">
-            <tr [ngClass]="{'flower-size-empty': flower.flowerSizes[i].available == 0}">
+            <tr [ngClass]="{'flower-size-empty': flowerSize.available == 0}">
               <td>{{flowerSize.size.name}}</td>
               <td>{{flowerSize.price / 100 + ' грн'}}</td>
               <td>
-                <amount-controlled-input name="amount" [(ngModel)]="bucketItems[i].amount" [availableAmount]="bucketLocalService.getMaxAmountForFlowerSize(flower.flowerSizes[i].id, flower.flowerSizes[i].available)" [disabled]="flower.flowerSizes[i].available == 0"></amount-controlled-input>
+                <amount-controlled-input name="amount" [(ngModel)]="bucketItem.amount" [availableAmount]="bucketLocalService.getMaxAmountForFlowerSize(flowerSize.id, flowerSize.available)" [disabled]="!flowerSize.isAvailable"></amount-controlled-input>
               </td>
             </tr>
-          </ng-template>
 
         </table>
 
         <div class="items-total-price-block-wrapper">
-          <div class="items-total-price-block" [ngClass]="{'accent': getTotalPrice() > 0}">Разом на суму: <span class="items-total-price">{{getTotalPrice() / 100}} грн</span></div>
+          <div class="items-total-price-block" [ngClass]="{'accent': bucketItem.amount * bucketItem.price > 0}">Разом на суму: <span class="items-total-price">{{bucketItem.amount * bucketItem.price / 100}} грн</span></div>
         </div>
 
-        <button mat-flat-button color="accent" class="add-to-card-button" (click)="addToBucket()" [disabled]="!hasAvailableFlowerSize(flower)">
+        <button mat-flat-button color="accent" class="add-to-card-button" (click)="addToBucket()" [disabled]="!flowerSize.isAvailable">
           <i class="material-icons add_shopping_cart"></i>
           <span>Купити</span>
         </button>
@@ -51,42 +56,41 @@
 
       <div class="specification">
         <div class="specification-label">Назва</div>
-        <div class="specification-value">{{flower.nameOriginal}}</div>
+        <div class="specification-value">{{flowerSize.flower.nameOriginal}}</div>
       </div>
-      <div class="specification" *ngIf="flower?.group?.name">
+      <div class="specification" *ngIf="flowerSize?.flower?.group?.name">
         <div class="specification-label">Група</div>
-        <div class="specification-value">{{flower.group.name}}</div>
+        <div class="specification-value">{{flowerSize.flower.group.name}}</div>
       </div>
-      <div class="specification" *ngIf="flower.flowerType.plantingMaterialType">
+      <div class="specification" *ngIf="flowerSize.flower.flowerType.plantingMaterialType">
         <div class="specification-label">Посадковий матеріал</div>
-        <div class="specification-value">{{flower.flowerType.plantingMaterialType}}</div>
+        <div class="specification-value">{{flowerSize.flower.flowerType.plantingMaterialType}}</div>
       </div>
-      <div class="specification" *ngIf="flower.flowerHeightMin && flower.flowerHeightMax">
+      <div class="specification" *ngIf="flowerSize.flower.flowerHeightMin && flowerSize.flower.flowerHeightMax">
         <div class="specification-label" >Висота стебла</div>
-        <div class="specification-value">{{flower.flowerHeightMin}} см - {{flower.flowerHeightMax}} см</div>
+        <div class="specification-value">{{flowerSize.flower.flowerHeightMin}} см - {{flowerSize.flower.flowerHeightMax}} см</div>
       </div>
-      <div class="specification" *ngIf="flower.flowerSizeMin && flower.flowerSizeMax">
+      <div class="specification" *ngIf="flowerSize.flower.flowerSizeMin && flowerSize.flower.flowerSizeMax">
         <div class="specification-label" >Розмір квітки</div>
-        <div class="specification-value">{{flower.flowerSizeMin}} см - {{flower.flowerSizeMax}} см</div>
+        <div class="specification-value">{{flowerSize.flower.flowerSizeMin}} см - {{flowerSize.flower.flowerSizeMax}} см</div>
       </div>
     </div>
 
     <div class="description">
-      <div class="description-block" *ngIf="flower.description">
+      <div class="description-block" *ngIf="flowerSize.flower.description">
         <div class="title">Опис</div>
-        <div class="value" [innerHTML]="flower.description | replaceLineBreaks"></div>
+        <div class="value" [innerHTML]="flowerSize.flower.description | replaceLineBreaks"></div>
       </div>
-      <div class="description-block" *ngIf="flower.group?.description">
-        <div class="sub-title">{{flower.group.name}}</div>
-        <div class="value" [innerHTML]="flower.group?.description | replaceLineBreaks"></div>
+      <div class="description-block" *ngIf="flowerSize.flower.group?.description">
+        <div class="sub-title">{{flowerSize.flower.group.name}}</div>
+        <div class="value" [innerHTML]="flowerSize.flower.group?.description | replaceLineBreaks"></div>
       </div>
-      <div class="description-block" *ngIf="flower.flowerType.description">
-        <div class="sub-title">{{flower.flowerType.name}}</div>
-        <div class="value" [innerHTML]="flower.flowerType.description | replaceLineBreaks"></div>
+      <div class="description-block" *ngIf="flowerSize.flower.flowerType.description">
+        <div class="sub-title">{{flowerSize.flower.flowerType.name}}</div>
+        <div class="value" [innerHTML]="flowerSize.flower.flowerType.description | replaceLineBreaks"></div>
       </div>
     </div>
 
   </div>
 
 </div>
-

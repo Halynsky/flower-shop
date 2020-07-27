@@ -11,6 +11,7 @@ public interface OrderAdminProjection {
     Long getId();
     LocalDateTime getCreated();
     LocalDateTime getClosed();
+    LocalDate getSent();
     Order.Status getStatus();
     UserShortAdminProjection getUser();
     String getComment();

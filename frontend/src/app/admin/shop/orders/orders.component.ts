@@ -47,6 +47,7 @@ export class OrdersComponent implements OnInit {
     {field: 'id', header: 'Id', active: true},
     {field: 'created', header: 'Дата створення', active: true},
     {field: 'closed', header: 'Дата закриття', active: false},
+    {field: 'sent', header: 'Дата відправки', active: false},
     {field: 'status', header: 'Статус', active: true},
     {field: 'userId', header: 'Корист.Id', active: true},
     {field: 'user', header: 'Корист.', active: true},
@@ -97,6 +98,7 @@ export class OrdersComponent implements OnInit {
 
   createdFilters;
   closedFilters;
+  sentFilters;
 
   selected: OrderAdmin;
   isContextMenuOpened = false;

@@ -12,4 +12,5 @@ public interface FlowerSizeTinyProjection {
     FlowerTinyProjection getFlower();
     @Value("#{target.amount - target.reserved}")
     Integer getAvailable();
+    String getCode();
 }

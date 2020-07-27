@@ -9,7 +9,7 @@
     <div class="ui-g-12 ui-md-6">
       <div class="ui-grid-row">
         <p-card title="Зареєстровані користувачі" header="Зареєстровані користувачі">
-          <p-chart *ngIf="usersRegistrationStructural.datasets.length > 0" type="pie" [data]="usersRegistrationStructural" [options]="defaultOptionsPie" [plugins]="plugin"></p-chart>
+          <p-chart #usersRegistrationStructuralPie *ngIf="usersRegistrationStructural.datasets.length > 0" type="pie" [data]="usersRegistrationStructural" [options]="defaultOptionsPie" [plugins]="plugin"></p-chart>
         </p-card>
       </div>
     </div>
@@ -41,7 +41,7 @@
         <p-card class="statistic-chart" title="Кількість замовлень" header="Кількість замовлень">
           <p-dropdown [options]="statisticPeriods" placeholder="Оберіть період" [(ngModel)]="statisticPeriod"
                       (ngModelChange)="onPeriodChange($event)"></p-dropdown>
-          <p-chart *ngIf="ordersByStatusCountStructural.datasets.length > 0" type="pie" [data]="ordersByStatusCountStructural" [options]="defaultOptionsPie" [plugins]="plugin"></p-chart>
+          <p-chart #ordersByStatusCountStatisticStructuralPie *ngIf="ordersByStatusCountStructural.datasets.length > 0" type="pie" [data]="ordersByStatusCountStructural" [options]="defaultOptionsPie" [plugins]="plugin"></p-chart>
         </p-card>
       </div>
     </div>
@@ -61,7 +61,7 @@
         <p-card class="statistic-chart" title="Оплата замовлень (кількість)" header="Оплата замовлень (кількість)">
           <p-dropdown [options]="statisticPeriods" placeholder="Оберіть період" [(ngModel)]="statisticPeriod"
                       (ngModelChange)="onPeriodChange($event)"></p-dropdown>
-          <p-chart *ngIf="ordersByPaidCountStructural.datasets.length > 0" type="pie" [data]="ordersByPaidCountStructural" [options]="defaultOptionsPie" [plugins]="plugin"></p-chart>
+          <p-chart #ordersByPaidCountStructuralPie *ngIf="ordersByPaidCountStructural.datasets.length > 0" type="pie" [data]="ordersByPaidCountStructural" [options]="defaultOptionsPie" [plugins]="plugin"></p-chart>
         </p-card>
       </div>
     </div>
@@ -71,7 +71,7 @@
         <p-card class="statistic-chart" title="Оплата замовлень (сума в грн)" header="Оплата замовлень (сума в грн)">
           <p-dropdown [options]="statisticPeriods" placeholder="Оберіть період" [(ngModel)]="statisticPeriod"
                       (ngModelChange)="onPeriodChange($event)"></p-dropdown>
-          <p-chart *ngIf="ordersByPaidAmountStructural.datasets.length > 0" type="pie" [data]="ordersByPaidAmountStructural" [options]="defaultOptionsPieMoney" [plugins]="plugin"></p-chart>
+          <p-chart #ordersByPaidAmountStructuralPie *ngIf="ordersByPaidAmountStructural.datasets.length > 0" type="pie" [data]="ordersByPaidAmountStructural" [options]="defaultOptionsPieMoney" [plugins]="plugin"></p-chart>
         </p-card>
       </div>
     </div>
@@ -93,7 +93,7 @@
         <p-card class="statistic-chart" title="Товарні запаси (кількість)" header="Товарні запаси (кількість)">
           <p-dropdown [options]="statisticPeriods" placeholder="Оберіть період" [(ngModel)]="statisticPeriod"
                       (ngModelChange)="onPeriodChange($event)"></p-dropdown>
-          <p-chart *ngIf="warehouseItemsCountStructural.datasets.length > 0" type="pie" [data]="warehouseItemsCountStructural" [options]="defaultOptionsPie" [plugins]="plugin"></p-chart>
+          <p-chart #warehouseItemsCountStructuralPie *ngIf="warehouseItemsCountStructural.datasets.length > 0" type="pie" [data]="warehouseItemsCountStructural" [options]="defaultOptionsPie" [plugins]="plugin"></p-chart>
         </p-card>
       </div>
     </div>
@@ -103,7 +103,7 @@
         <p-card class="statistic-chart" title="Товарні запаси (сума в грн)" header="Товарні запаси (сума в грн)">
           <p-dropdown [options]="statisticPeriods" placeholder="Оберіть період" [(ngModel)]="statisticPeriod"
                       (ngModelChange)="onPeriodChange($event)"></p-dropdown>
-          <p-chart *ngIf="warehouseItemsPriceStructural.datasets.length > 0" type="pie" [data]="warehouseItemsPriceStructural" [options]="defaultOptionsPieMoney" [plugins]="plugin"></p-chart>
+          <p-chart #warehouseItemsPriceStatisticStructuralPie *ngIf="warehouseItemsPriceStructural.datasets.length > 0" type="pie" [data]="warehouseItemsPriceStructural" [options]="defaultOptionsPieMoney" [plugins]="plugin"></p-chart>
         </p-card>
       </div>
     </div>

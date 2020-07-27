@@ -58,11 +58,13 @@ public class OrderController {
                                                                      @RequestParam(required = false) LocalDateTime createdTo,
                                                                      @RequestParam(required = false) LocalDateTime closedFrom,
                                                                      @RequestParam(required = false) LocalDateTime closedTo,
+                                                                     @RequestParam(required = false) LocalDate sentFrom,
+                                                                     @RequestParam(required = false) LocalDate sentTo,
                                                                      @RequestParam(required = false) Integer priceToPayFrom,
                                                                      @RequestParam(required = false) Integer priceToPayTo,
                                                                      @RequestParam(required = false) Boolean paid,
                                                                      @PageableDefault(sort = "id", page = 0, size = 10, direction = Sort.Direction.ASC) Pageable pageRequest) {
-        return new ResponseEntity<>(orderRepository.findForAdminProjectedByFilters(id, statusNames, userId, userNamePart, phonePart, createdFrom, createdTo, closedFrom, closedTo, priceToPayFrom, priceToPayTo, paid, HibernateUtil.replaceUnsafeFields(pageRequest, unsafeSortingFields)), OK);
+        return new ResponseEntity<>(orderRepository.findForAdminProjectedByFilters(id, statusNames, userId, userNamePart, phonePart, createdFrom, createdTo, closedFrom, closedTo, sentFrom, sentTo, priceToPayFrom, priceToPayTo, paid, HibernateUtil.replaceUnsafeFields(pageRequest, unsafeSortingFields)), OK);
     }
 
     @PostMapping

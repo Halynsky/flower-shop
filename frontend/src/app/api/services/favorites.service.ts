@@ -2,52 +2,52 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { API_URL } from "../../utils/Costants";
 import { SecurityService } from "../../services/security.service";
-import { FlowerShort } from "../models/Flower";
+import { FlowerSize } from "../models/FlowerSize";
 
 @Injectable({providedIn: 'root'})
 export class FavoritesService {
 
   private readonly URL = `${API_URL}/favorites`;
 
-  public favoriteFlowerIds = [];
+  public favoriteItemsIds = [];
 
   constructor(private http: HttpClient,
               private securityService: SecurityService) {
     if(securityService.isAuthenticated()) {
-      this.loadFavoriteFlowersIds();
+      this.loadFavoriteItemsIds();
     }
 
     this.securityService.onLogin
       .subscribe(() => {
-        this.loadFavoriteFlowersIds();
+        this.loadFavoriteItemsIds();
       });
 
     this.securityService.onLogout
       .subscribe(() => {
-        this.favoriteFlowerIds = [];
+        this.favoriteItemsIds = [];
       });
   }
 
-  getFavoriteFlowersIds() {
-    return this.http.get<number[]>(`${this.URL}/flowers/ids`);
+  getFavoriteItemsIds() {
+    return this.http.get<number[]>(`${this.URL}/items/ids`);
   }
 
-  getFavoriteFlowers() {
-    return this.http.get<FlowerShort[]>(`${this.URL}/flowers`);
+  getFavoriteItems() {
+    return this.http.get<FlowerSize[]>(`${this.URL}/items`);
   }
 
-  addFavoriteFlower(flowerId) {
-    return this.http.post<number[]>(`${this.URL}/flowers/${flowerId}`, null);
+  addFavoriteItem(itemId) {
+    return this.http.post<number[]>(`${this.URL}/items/${itemId}`, null);
   }
 
-  removeFavoriteFlower(flowerId) {
-    return this.http.delete<number[]>(`${this.URL}/flowers/${flowerId}`);
+  removeFavoriteItem(itemId) {
+    return this.http.delete<number[]>(`${this.URL}/items/${itemId}`);
   }
 
-  loadFavoriteFlowersIds() {
-    this.getFavoriteFlowersIds().subscribe(
-      favoriteFlowerIds => {
-        this.favoriteFlowerIds = favoriteFlowerIds;
+  loadFavoriteItemsIds() {
+    this.getFavoriteItemsIds().subscribe(
+      favoriteItemsIds => {
+        this.favoriteItemsIds = favoriteItemsIds;
       },
       error => {})
   }

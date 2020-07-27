@@ -23,6 +23,7 @@ export class WarehouseComponent implements OnInit {
 
   columns = [
     {field: 'id', header: 'Id', active: true},
+    {field: 'code', header: 'Артикул', active: true},
     {field: 'image', header: 'Фото', active: true},
     {field: 'flower', header: 'Назва', active: true},
     {field: 'flowerType', header: 'Тип', active: true},

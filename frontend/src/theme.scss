@@ -41,6 +41,8 @@ $warn:    mat-palette($mat-red);
 $google-brand: mat-palette($mat-red);
 $telegram-brand: mat-palette($mat-light-blue);
 $facebook-brand: mat-palette($mat-indigo);
+$viber-brand: mat-palette($mat-purple);
+$facebook-messenger-brand: #0078FF;
 
 $main-theme: mat-light-theme($primary, $accent, $warn);
 
@@ -68,4 +70,3 @@ $custom-typography: mat-typography-config(
 
 // Override typography for all Angular Material, including mat-base-typography and all components.
 @include angular-material-typography($custom-typography);
-

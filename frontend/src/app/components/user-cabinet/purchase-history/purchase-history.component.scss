@@ -60,8 +60,12 @@
       color: #009ede;
     }
 
-    &.done {
+    &.delivering {
       color: mat-color($primary);
+    }
+
+    &.done {
+      color: $grey-200;
     }
 
     &.returned {
@@ -69,7 +73,7 @@
     }
 
     &.canceled {
-      color: $grey-200;
+      color: mat-color($warn);
     }
 
   }

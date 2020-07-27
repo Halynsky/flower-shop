@@ -46,6 +46,22 @@ public class OrderService {
 
     @Transactional
     public Long create(OrderModel orderModel) {
+        User user = securityService.getUserOrNull();
+
+        if (isNull(user)) {
+            user = userRepository.findByEmail(orderModel.getContactInfo().getEmail()).orElse(null);
+
+            if (nonNull(user) && !user.getIsVirtual()) {
+                log.warn("Зареєстрований користувач " + user.getEmail() + " намагався зробити замовлення без авторизації");
+                throw new ConflictException("USER_EXISTS");
+            }
+
+        }
+
+        if (isNull(user)) {
+            user = userRepository.findByPhoneAndIsVirtual(orderModel.getContactInfo().getPhone(), true).orElse(null);
+        }
+
         Order order = new Order();
         Set<OrderItem> orderItems = orderModel.getOrderItems().stream()
             .map(om -> {
@@ -74,22 +90,6 @@ public class OrderService {
             flowerSize.setReserved(flowerSize.getReserved() + oi.getAmount());
             flowerSizeRepository.save(flowerSize);
         });
-
-        User user = securityService.getUserOrNull();
-
-        if (isNull(user)) {
-            user = userRepository.findByEmail(orderModel.getContactInfo().getEmail()).orElse(null);
-
-            if (nonNull(user) && !user.getIsVirtual()) {
-                log.warn("зареєстрований користувач " + user.getEmail() + " намагався зробити замовлення без авторизації");
-                throw new ConflictException("USER_EXISTS");
-            }
-
-        }
-
-        if (isNull(user)) {
-            user = userRepository.findByPhoneAndIsVirtual(orderModel.getContactInfo().getPhone(), true).orElse(null);
-        }
 
         if (isNull(user)) {
             user = new User();
@@ -140,6 +140,7 @@ public class OrderService {
                     throw new ConflictException("Вказано невалідний статус замовлення");
                 }
                 order.setPostDeclaration(orderStatusChangeRequest.getPostDeclaration());
+                order.setSent(orderStatusChangeRequest.getDate());
 
                 order.getOrderItems().forEach(oi -> {
 

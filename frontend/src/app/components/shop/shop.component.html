@@ -21,10 +21,10 @@
 
     <mat-form-field class="ordering-selector-wrapper">
       <mat-select placeholder="Сортування" [(ngModel)]="sort" value="created,DESC,isPopular,DESC,popularity,DESC" (selectionChange)="sortSelectionChange($event)">
-        <mat-option value="hasAvailableFlowerSize,DESC,isPopular,DESC,popularity,DESC">За популярністю</mat-option>
-        <mat-option value="hasAvailableFlowerSize,DESC,priceMin,ASC">Від дешевших до дорожчих</mat-option>
-        <mat-option value="hasAvailableFlowerSize,DESC,priceMin,DESC">Від дорожчих до дешевших</mat-option>
-        <mat-option value="hasAvailableFlowerSize,DESC,isNew,DESC,created,ASC">За новизною</mat-option>
+        <mat-option value="isAvailable,DESC,f.isPopular,DESC,f.popularity,DESC">За популярністю</mat-option>
+        <mat-option value="isAvailable,DESC,price,ASC">Від дешевших до дорожчих</mat-option>
+        <mat-option value="isAvailable,DESC,price,DESC">Від дорожчих до дешевших</mat-option>
+        <mat-option value="isAvailable,DESC,f.isNew,DESC,f.created,ASC">За новизною</mat-option>
       </mat-select>
     </mat-form-field>
 
@@ -38,7 +38,7 @@
 
   <div class="content">
       <ng-template ngFor let-flower [ngForOf]="flowersPage.content" [ngForTrackBy]="trackByFn">
-        <shop-content-item [flower]="flower"></shop-content-item>
+        <shop-content-item [flowerSize]="flower"></shop-content-item>
       </ng-template>
 
     <button mat-mini-fab aria-label="Вгору" class="go-top-button" color="primary" (click)="window.scrollTo(0, 0)" *ngIf="this.pageYOffset > DISTANCE_FROM_TOP_WHEN_SHOW_GO_TOP_BUTTON">

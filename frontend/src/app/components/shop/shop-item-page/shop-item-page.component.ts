@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { FlowerService } from "../../../api/services/flower.service";
-import { FlowerFull } from "../../../api/models/Flower";
 import { BucketLocalService } from "../../../services/bucket-local.service";
 import { SnackBarService } from "../../../services/snak-bar.service";
 import { getErrorMessage } from "../../../utils/Functions";
@@ -11,6 +10,8 @@ import { FLOWER_IMAGE_PLACEHOLDER } from "../../../utils/Costants";
 import { MatDialog } from "@angular/material/dialog";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
+import { FlowerSize } from "../../../api/models/FlowerSize";
+import { FlowerSizeService } from "../../../api/services/flower-size.service";
 
 
 @Component({
@@ -23,18 +24,19 @@ export class ShopItemPageComponent implements OnInit, OnDestroy {
   private readonly destroyed$ = new Subject<void>();
 
   id: number;
-  flower: FlowerFull;
-  bucketItems: BucketItem[] = [];
+  flowerSize: FlowerSize;
+  bucketItem: BucketItem;
   flowerImagePlaceholder = FLOWER_IMAGE_PLACEHOLDER;
 
   constructor(private route: ActivatedRoute,
               private flowerService: FlowerService,
+              private flowerSizeService: FlowerSizeService,
               public bucketLocalService: BucketLocalService,
               private snackBarService: SnackBarService,
               public dialog: MatDialog) {
     this.route.params.subscribe(params => {
       this.id = params['id'];
-      this.getFlowerById();
+      this.getShopItem();
     });
   }
 
@@ -46,40 +48,36 @@ export class ShopItemPageComponent implements OnInit, OnDestroy {
     this.destroyed$.complete();
   }
 
-  fillBucketItems(flower: FlowerFull) {
-    for (let flowerSize of flower.flowerSizes) {
-      let bucketItem = new BucketItem();
-      bucketItem.amount = 0;
-      bucketItem.price = flowerSize.price;
-      bucketItem.image = flower.image;
-      bucketItem.name = flower.nameOriginal;
-      bucketItem.sizeName = flowerSize.size.name;
-      bucketItem.flowerSizeId = flowerSize.id;
-      bucketItem.flowerTypeName = flower.flowerType.nameSingle;
-      bucketItem.flowerTypeId = flower.flowerType.id;
-      bucketItem.flowerId = flower.id;
-      bucketItem.available = flowerSize.available;
-      this.bucketItems.push(bucketItem);
-    }
+  fillBucketItem(flowerSize: FlowerSize) {
+      this.bucketItem = new BucketItem();
+      this.bucketItem.amount = 1;
+      this.bucketItem.price = flowerSize.price;
+      this.bucketItem.image = flowerSize.flower.image;
+      this.bucketItem.name = flowerSize.flower.nameOriginal;
+      this.bucketItem.sizeName = flowerSize.size.name;
+      this.bucketItem.flowerSizeId = flowerSize.id;
+      this.bucketItem.flowerTypeName = flowerSize.flower.flowerType.nameSingle;
+      this.bucketItem.flowerTypeId = flowerSize.flower.flowerType.id;
+      this.bucketItem.flowerId = flowerSize.flower.id;
+      this.bucketItem.available = flowerSize.available;
   }
 
-  getFlowerById() {
-    this.flowerService.getFlowerFullById(this.id)
+  getShopItem() {
+    this.flowerSizeService.getForShop(this.id)
       .pipe(takeUntil(this.destroyed$))
       .subscribe(
       flower => {
-        this.flower = flower;
-        this.fillBucketItems(this.flower)
+        this.flowerSize = flower;
+        this.fillBucketItem(this.flowerSize)
       },
       error => this.snackBarService.showError(getErrorMessage(error))
     );
   }
 
   addToBucket() {
-    if (this.countSelectedAmount() > 0) {
-      this.bucketLocalService.addToBucket(this.bucketItems.filter(item => item.amount > 0));
-      this.bucketItems = [];
-      this.fillBucketItems(this.flower);
+    if (this.bucketItem.amount > 0) {
+      this.bucketLocalService.addToBucket([this.bucketItem]);
+      this.fillBucketItem(this.flowerSize);
 
       this.dialog.open(BucketDialogComponent, {width: "80%", panelClass: "modal-panel-no-padding", maxWidth: 800});
 
@@ -87,18 +85,6 @@ export class ShopItemPageComponent implements OnInit, OnDestroy {
       this.snackBarService.showWarning("Вкажіть, будь ласка, кількість товару яку ви хочете придбати");
     }
 
-  }
-
-  countSelectedAmount() {
-    return this.bucketItems.reduce(((accumulator, item) => accumulator + item.amount), 0)
-  }
-
-  hasAvailableFlowerSize(flower: FlowerFull) {
-    return flower.flowerSizes.some(item => item.available > 0)
-  }
-
-  getTotalPrice() {
-    return this.bucketItems.map(item => item.amount * item.price).reduce((accumulator, currentValue) => accumulator + currentValue)
   }
 
 }

@@ -51,7 +51,6 @@ public class Flower {
     private LocalDateTime lastSupply;
     private LocalDateTime nextSupply;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "flower_type_id", foreignKey = @ForeignKey(name = "flower_flower_type_fkey"), nullable = false)
     private FlowerType flowerType;
@@ -70,8 +69,5 @@ public class Flower {
 
     @OneToMany(mappedBy = "flower")
     private Set<FlowerSize> flowerSizes;
-
-    @ManyToMany(mappedBy = "flowers")
-    private Set<FavoriteFlowersList> favoriteFlowersLists;
 
 }

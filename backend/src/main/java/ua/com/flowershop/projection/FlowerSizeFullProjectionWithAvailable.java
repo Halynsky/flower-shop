@@ -10,4 +10,6 @@ public interface FlowerSizeFullProjectionWithAvailable {
     SizeProjection getSize();
     FlowerProjection getFlower();
     Integer getAvailable();
+    Boolean getIsAvailable();
+    String getCode();
 }

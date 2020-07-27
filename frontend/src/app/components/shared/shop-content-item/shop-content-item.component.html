@@ -1,15 +1,15 @@
-<a class="wrapper" [ngClass]="{'not-available': !flower.hasAvailableFlowerSize}" [routerLink]="['item', flower.id]">
-  <div class="cover" [ngClass]="{'flower-image-null': flower.image == null}" [ngStyle]="flower.image && {'background-image':'url(' + flower.image + ')'} || {'background-image':'url(' + flowerImagePlaceholder + ')'}">
+<a class="wrapper" [ngClass]="{'not-available': !flowerSize.isAvailable}" [routerLink]="['item', flowerSize.id]">
+  <div class="cover" [ngClass]="{'flower-image-null': flowerSize.flower.image == null}" [ngStyle]="flowerSize.flower.image && {'background-image':'url(' + flowerSize.flower.image + ')'} || {'background-image':'url(' + flowerImagePlaceholder + ')'}">
 
     <div class="flags-wrapper">
-      <div class="is-new" *ngIf="flower.isNew">НОВИНКА</div>
-      <div class="is-popular" *ngIf="flower.isPopular">ХІТ</div>
+      <div class="is-new" *ngIf="flowerSize.flower.isNew">НОВИНКА</div>
+      <div class="is-popular" *ngIf="flowerSize.flower.isPopular">ХІТ</div>
     </div>
 
     <div class="favorites-button-wrapper" *ngIf="securityService.isAuthenticated()">
 
       <button mat-icon-button class="in-favorites" (click)="removeFromFavorites($event)"
-              *ngIf="favoritesService.favoriteFlowerIds.includes(flower.id); else addToFavoritesBlock">
+              *ngIf="favoritesService.favoriteItemsIds.includes(flowerSize.id); else addToFavoritesBlock">
         <mat-icon aria-label="Remove from favorites">favorite</mat-icon>
       </button>
 
@@ -21,7 +21,7 @@
 
     </div>
 
-    <div class="add-to-card" (click)="openAddToCardModal($event)" *ngIf="flower.hasAvailableFlowerSize">
+    <div class="add-to-card" (click)="openAddToCardModal($event)" *ngIf="flowerSize.isAvailable">
       <mat-icon aria-label="Add to card">add_shopping_cart</mat-icon>
       <span>Купити</span>
     </div>
@@ -34,12 +34,12 @@
     <div class="angle-right"></div>
 
     <div class="flower-type-name">
-      <span>{{flower.flowerType.nameSingle}}</span>
-      <span *ngIf="flower.group">{{', ' + flower.group.nameSingle}}</span>
+      <span>{{flowerSize.flower.flowerType.nameSingle}}</span>
+      <span *ngIf="flowerSize.flower.group">{{', ' + flowerSize.flower.group.nameSingle}}</span>
     </div>
-    <div class="name">{{flower.nameOriginal}}</div>
+    <div class="name">{{flowerSize.flower.nameOriginal}}</div>
     <div class="price">
-      <div>{{flower.priceMin / 100}} грн</div>
+      <div>{{flowerSize.price / 100}} грн</div>
       <div class="not-available-mark">(немає в наявності)</div>
     </div>
 

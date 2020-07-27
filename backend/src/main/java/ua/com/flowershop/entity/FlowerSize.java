@@ -31,6 +31,8 @@ public class FlowerSize {
     private Integer priceOld;
     @Column(columnDefinition = "integer default 0")
     private Integer sold = 0;
+    @Column(unique = true, nullable = false)
+    private String code;
 
     @ManyToOne
     @JoinColumn(name = "flower_id")
@@ -46,6 +48,9 @@ public class FlowerSize {
 
     @OneToMany(mappedBy = "flowerSize")
     private Set<WarehouseOperation> warehouseOperations;
+
+    @ManyToMany(mappedBy = "flowerSizes")
+    private Set<FavoriteItemsList> favoriteItemsLists;
 
     public Integer getAvailable() {
         return amount - reserved;

@@ -5,6 +5,7 @@ export class OrderAdmin {
   id: any;
   orderItems: OrderItemAdmin[] = [];
   closed: string;
+  sent: string;
   created: string;
   paid: string;
   status: Order.Status;
@@ -29,6 +30,7 @@ export class OrderItemAdmin {
   sizeName: string;
   flowerSizeId: number;
   available: number;
+  flowerTypeName: number;
   orderId: number;
 }
 
@@ -42,7 +44,8 @@ export class OrderStatusChangeRequest {
   id: any;
   status: Order.Status;
   comment: string;
-  postDeclaration: string
+  postDeclaration: string;
+  date = new Date();
 }
 
 export class OrderContactsChangeRequest {
@@ -64,7 +67,7 @@ export class Order {
   discount: number;
 }
 
-export class OrderItem{
+export class OrderItem {
   id: any;
   name: string;
   amount: number;

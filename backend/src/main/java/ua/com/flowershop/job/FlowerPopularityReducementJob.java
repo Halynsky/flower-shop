@@ -14,7 +14,6 @@ import java.util.List;
 import static ua.com.flowershop.entity.Flower.POPULARITY_MIN;
 import static ua.com.flowershop.entity.Flower.POPULARITY_REDUCER;
 
-
 @Slf4j
 @Component
 public class FlowerPopularityReducementJob {

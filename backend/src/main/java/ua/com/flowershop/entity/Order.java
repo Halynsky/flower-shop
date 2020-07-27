@@ -29,6 +29,7 @@ public class Order {
     private Long id;
     @Column(columnDefinition = "timestamp default timezone('utc'::text, now())")
     private LocalDateTime created = LocalDateTime.now();
+    private LocalDate sent;
     private LocalDateTime closed;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, columnDefinition = "varchar(32) default 'NEW'")

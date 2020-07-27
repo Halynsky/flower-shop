@@ -18,7 +18,7 @@ public class Path {
     public static final String FLOWERS				= "flowers";
     public static final String FLOWER_TYPES			= "flower-types";
     public static final String SIZES				= "sizes";
-    public static final String FLOWER_SIZES = "flower-sizes";
+    public static final String FLOWER_SIZES         = "flower-sizes";
     public static final String WAREHOUSE_OPERATIONS	= "warehouse-operations";
     public static final String ORDERS	            = "orders";
     public static final String BUCKET	            = "buckets";

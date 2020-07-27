@@ -1,12 +1,12 @@
 <div class="user-cabinet-title">Список Бажаннь</div>
 
-<div class="empty-wishlist-block" *ngIf="favoriteFlowers && favoriteFlowers.length == 0">
+<div class="empty-wishlist-block" *ngIf="favoriteItems && favoriteItems.length == 0">
   <div class="message">У вас ще немає жодного товару в списку бажаннь</div>
   <button mat-flat-button color="primary" routerLink="/shop">Перейти в магазин</button>
 </div>
 
 <div class="content">
-      <ng-template ngFor let-flower [ngForOf]="favoriteFlowers">
-        <shop-content-item [flower]="flower" [routerLink]="['/', 'shop','item', flower.id]" [inFavorites]="true"></shop-content-item>
+      <ng-template ngFor let-flowerSize [ngForOf]="favoriteItems">
+        <shop-content-item [flowerSize]="flowerSize" [routerLink]="['/', 'shop','item', flowerSize.id]" [inFavorites]="true"></shop-content-item>
       </ng-template>
 </div>

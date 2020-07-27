@@ -1,16 +1,11 @@
 package ua.com.flowershop.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.vladmihalcea.hibernate.type.array.IntArrayType;
-import com.vladmihalcea.hibernate.type.array.StringArrayType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
-import org.hibernate.annotations.TypeDefs;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -22,8 +17,8 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity()
-@Table(name = "favorite_flowers_list")
-public class FavoriteFlowersList {
+@Table(name = "favorite_items_list")
+public class FavoriteItemsList {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,11 +31,18 @@ public class FavoriteFlowersList {
     @JoinColumn(name="user_id",  foreignKey = @ForeignKey(name = "favorite_flowers_list_user_fkey"))
     private User user;
 
+//    @ManyToMany
+//    @JoinTable(
+//        name = "flowers__favorite_flowers_lists",
+//        joinColumns = @JoinColumn(name = "favorite_flowers_list_id"),
+//        inverseJoinColumns = @JoinColumn(name = "flower_id"))
+//    Set<Flower> flowers = new HashSet<>();
+
     @ManyToMany
     @JoinTable(
-        name = "flowers__favorite_flowers_lists",
-        joinColumns = @JoinColumn(name = "favorite_flowers_list_id"),
-        inverseJoinColumns = @JoinColumn(name = "flower_id"))
-    Set<Flower> flowers = new HashSet<>();
+        name = "flower_sizes__favorite_items_lists",
+        joinColumns = @JoinColumn(name = "favorite_items_list_id"),
+        inverseJoinColumns = @JoinColumn(name = "flower_size_id"))
+    Set<FlowerSize> flowerSizes = new HashSet<>();
 
 }

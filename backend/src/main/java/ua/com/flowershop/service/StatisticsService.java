@@ -41,7 +41,7 @@ public class StatisticsService {
     public List<Record> getUsersRegistrationStatisticStructural() {
         Integer activeUsersCount = userRepository.countAllByIsActivatedAndIsVirtual(true, false);
         Integer notActiveUsersCount = userRepository.countAllByIsActivatedAndIsVirtual(false, false);
-        Integer virtualUsersCount = userRepository.countAllByIsActivatedAndIsVirtual(true, false);
+        Integer virtualUsersCount = userRepository.countAllByIsActivatedAndIsVirtual(true, true);
 
         List<Record> statistic = new ArrayList<>();
         statistic.add(new Record(activeUsersCount, "ACTIVATED", "Активовані"));

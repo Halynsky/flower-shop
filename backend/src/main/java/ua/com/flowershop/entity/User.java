@@ -71,7 +71,7 @@ public class User {
     protected List<SocialConnection> socialConnections;
     @JsonIgnore
     @OneToMany(mappedBy = "user")
-    protected List<FavoriteFlowersList> favoriteFlowersLists;
+    protected List<FavoriteItemsList> favoriteItemsLists;
 
     public enum Role {
         USER("USER"),

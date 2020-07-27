@@ -1,4 +1,5 @@
 @import "util";
+@import "theme";
 
 .content-thin {
   width: 100%;
@@ -13,4 +14,25 @@
     padding-left: 0px;
     padding-right: 0px;
   }
+}
+
+
+.facebook-color {
+  color: mat-color($facebook-brand) !important;
+}
+
+.telegram-color {
+  color: mat-color($telegram-brand) !important;;
+}
+
+.messenger-color {
+  color: $facebook-messenger-brand !important;;
+}
+
+.viber-color {
+  color: mat-color($viber-brand) !important;;
+}
+
+.youtube-color {
+  color: mat-color($warn) !important;;
 }

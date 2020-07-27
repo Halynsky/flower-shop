@@ -10,7 +10,10 @@ public interface FlowerSizeFullProjection {
     Integer getReserved();
     Integer getSold();
     SizeProjection getSize();
-    FlowerProjection getFlower();
+    FlowerFullProjection getFlower();
     @Value("#{target.amount - target.reserved}")
     Integer getAvailable();
+    @Value("#{(target.amount - target.reserved) > 0}")
+    Boolean getIsAvailable();
+    String getCode();
 }

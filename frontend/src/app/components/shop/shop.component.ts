@@ -1,6 +1,5 @@
 import { ChangeDetectorRef, Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FlowerService } from "../../api/services/flower.service";
-import { FlowerShort } from "../../api/models/Flower";
 import { SnackBarService } from "../../services/snak-bar.service";
 import { ShopFilter } from "../../api/models/ShopFilter";
 import { Pagination } from "../../api/models/Pagination";
@@ -12,6 +11,8 @@ import { DOCUMENT } from "@angular/common";
 import { GlobalSearchService } from "../../services/global-search.service";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { Subject } from "rxjs";
+import { FlowerSizeService } from "../../api/services/flower-size.service";
+import { FlowerSize } from "../../api/models/FlowerSize";
 
 @Component({
   selector: 'shop',
@@ -27,9 +28,9 @@ export class ShopComponent implements OnInit, OnDestroy {
   private DISTANCE_TO_BOTTOM_WHEN_LOAD_MORE = 200;
   public DISTANCE_FROM_TOP_WHEN_SHOW_GO_TOP_BUTTON = 300;
 
-  flowersPage: RestPage<FlowerShort> = new RestPage<FlowerShort>();
+  flowersPage: RestPage<FlowerSize> = new RestPage<FlowerSize>();
   filters: ShopFilter = new ShopFilter();
-  sort = 'hasAvailableFlowerSize,DESC,isPopular,DESC,popularity,DESC';
+  sort = 'isAvailable,DESC,f.isPopular,DESC,f.popularity,DESC';
   searchTerm = '';
 
   pagination: Pagination;
@@ -40,6 +41,7 @@ export class ShopComponent implements OnInit, OnDestroy {
   pageYOffset = 0;
 
   constructor(private flowerService: FlowerService,
+              private flowerSizeService: FlowerSizeService,
               private snackBarService: SnackBarService,
               private changeDetectorRef: ChangeDetectorRef,
               public dialog: MatDialog,
@@ -67,7 +69,7 @@ export class ShopComponent implements OnInit, OnDestroy {
   getShopItems(searchTerm: string, filters?: ShopFilter, showMore: boolean = false) {
     this.pagination = showMore ? this.pagination.nextPage() : new Pagination(0, this.DEFAULT_PAGE_SIZE, this.sort);
     this.loading = true;
-    this.flowerService.getForShop(searchTerm, this.pagination, filters)
+    this.flowerSizeService.getAllForShop(searchTerm, this.pagination, filters)
       .pipe(
         finalize(() => this.loading = false),
         takeUntil(this.destroyed$)

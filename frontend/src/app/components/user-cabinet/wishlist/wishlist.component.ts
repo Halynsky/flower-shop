@@ -2,9 +2,9 @@ import { Component, OnDestroy } from "@angular/core";
 import { FavoritesService } from "../../../api/services/favorites.service";
 import { SnackBarService } from "../../../services/snak-bar.service";
 import { getErrorMessage } from "../../../utils/Functions";
-import { FlowerShort } from "../../../api/models/Flower";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
+import { FlowerSize } from "../../../api/models/FlowerSize";
 
 @Component({
   selector: 'wishlist',
@@ -16,7 +16,7 @@ export class WishlistComponent implements OnDestroy {
 
   private readonly destroyed$ = new Subject<void>();
 
-  favoriteFlowers: FlowerShort[];
+  favoriteItems: FlowerSize[];
 
   constructor(public favoritesService: FavoritesService,
               private snackBarService: SnackBarService){
@@ -29,10 +29,10 @@ export class WishlistComponent implements OnDestroy {
   }
 
   getFavoriteFlowers() {
-    this.favoritesService.getFavoriteFlowers()
+    this.favoritesService.getFavoriteItems()
       .pipe(takeUntil(this.destroyed$))
       .subscribe(
-      favoriteFlowers => this.favoriteFlowers = favoriteFlowers,
+        favoriteItems => this.favoriteItems = favoriteItems,
         error => this.snackBarService.showError(getErrorMessage(error)))
   }
 

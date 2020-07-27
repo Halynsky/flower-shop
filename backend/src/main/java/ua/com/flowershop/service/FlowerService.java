@@ -17,6 +17,7 @@ import ua.com.flowershop.projection.FlowerWithAvailableFlagProjection;
 import ua.com.flowershop.repository.FlowerRepository;
 import ua.com.flowershop.repository.FlowerSizeRepository;
 import ua.com.flowershop.util.HibernateUtil;
+import ua.com.flowershop.util.ItemCodeGenerator;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -35,6 +36,7 @@ public class FlowerService {
     @Autowired private FlowerRepository flowerRepository;
     @Autowired private ImageService imageService;
     @Autowired private FlowerSizeRepository flowerSizeRepository;
+    @Autowired private ItemCodeGenerator itemCodeGenerator;
 
     public Page<FlowerFullProjection> findForAdmin(Long id, String flowerNamePart, String flowerOriginalNamePart, List<String> flowerTypeNames, String groupNamePart,
                                                    Integer sizeFrom, Integer sizeTo, Integer heightFrom, Integer heightTo,
@@ -95,7 +97,15 @@ public class FlowerService {
             .setPopularity(flower.getPopularity())
             .setFlowerType(flower.getFlowerType()).setColor(flower.getColor())
             .setFlowerSizes(flower.getFlowerSizes());
+
         flowerRepository.save(flowerToCreate);
+
+        flower.getFlowerSizes().forEach(flowerSize -> {
+            flowerSize.setCode(itemCodeGenerator.generateCode(flower.getFlowerType().getId(), flowerSize.getId()));
+            flowerSizeRepository.save(flowerSize);
+        });
+
+
     }
 
     @Transactional
@@ -149,10 +159,10 @@ public class FlowerService {
             .setIsPopular(flower.getIsPopular())
             .setPopularity(flower.getPopularity())
             .setCreated(flower.getCreated())
-            .setFlowerType(flower.getFlowerType()).setColor(flower.getColor());
+            .setFlowerType(flower.getFlowerType());
+
         flowerRepository.save(flowerToUpdate);
 
     }
-
 
 }

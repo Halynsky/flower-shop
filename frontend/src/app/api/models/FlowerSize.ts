@@ -8,6 +8,8 @@ export class FlowerSize {
   amount: number;
   reserved: number;
   available: number;
+  isAvailable: boolean;
   size: Size;
   flower: Flower;
+  code: string;
 }

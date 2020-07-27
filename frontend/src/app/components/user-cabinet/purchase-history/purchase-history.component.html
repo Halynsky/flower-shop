@@ -21,7 +21,10 @@
                 <div class="description-right">
                   <span class="order-status" [ngClass]="order.status | toclassname">{{translationService.text.orderStatuses[order.status]}}</span>
                   <span class="order-price">
-                    <span class="desktop">На суму: <span class="highlighted-price">{{(order.totalPrice - order.discount) / 100}} грн</span></span>
+                    <span class="desktop">
+                      <span class="label">На суму: </span>
+                      <span class="highlighted-price">{{(order.totalPrice - order.discount) / 100}} грн</span>
+                    </span>
                     <span class="mobile"><span class="highlighted-price">{{(order.totalPrice - order.discount) / 100}} грн</span></span>
                   </span>
                 </div>

@@ -122,8 +122,8 @@
               selectionMode="range"
               [readonlyInput]="false"
               dateFormat="dd.mm.yy"
-              (onSelect)="dt.filter(dateFilters, col.field, 'dateRange')"
-              (onClearClick)="dt.filter(dateFilters, col.field, 'dateRange')"
+              (onSelect)="dt.filter(dateFilters, col.field, 'dateTimeRange')"
+              (onClearClick)="dt.filter(dateFilters, col.field, 'dateTimeRange')"
               [showButtonBar]="true"
               [locale]="translation.calendar_ua">
             </p-calendar>

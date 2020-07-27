@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SelectItem } from "primeng";
 import { Statistic } from "../../api/models/Statistic";
 import { StatisticService } from "../../api/services/statistic.service";
@@ -35,6 +35,13 @@ enum LineColors {
   styleUrls: ['./statistic.component.scss']
 })
 export class StatisticComponent implements OnInit {
+
+  @ViewChild("ordersByStatusCountStatisticStructuralPie") ordersByStatusCountStatisticStructuralPie;
+  @ViewChild("usersRegistrationStructuralPie") usersRegistrationStructuralPie;
+  @ViewChild("ordersByPaidCountStructuralPie") ordersByPaidCountStructuralPie;
+  @ViewChild("ordersByPaidAmountStructuralPie") ordersByPaidAmountStructuralPie;
+  @ViewChild("warehouseItemsCountStructuralPie") warehouseItemsCountStructuralPie;
+  @ViewChild("warehouseItemsPriceStatisticStructuralPie") warehouseItemsPriceStatisticStructuralPie;
 
   plugin = ChartDataLabels;
 
@@ -120,6 +127,7 @@ export class StatisticComponent implements OnInit {
         data: statistic.map(item => item.amount),
         backgroundColor: enumToArrayList(Colors)
       }];
+      if (this.usersRegistrationStructuralPie) this.usersRegistrationStructuralPie.refresh();
     }, error => this.snackBarService.showError(getErrorMessage(error)));
   }
 
@@ -136,6 +144,7 @@ export class StatisticComponent implements OnInit {
         data: statistic.map(item => item.amount),
         backgroundColor: enumToArrayList(Colors)
       }];
+      if (this.ordersByStatusCountStatisticStructuralPie) this.ordersByStatusCountStatisticStructuralPie.refresh();
     }, error => this.snackBarService.showError(getErrorMessage(error)));
   }
 
@@ -152,6 +161,7 @@ export class StatisticComponent implements OnInit {
         data: statistic.map(item => item.amount),
         backgroundColor: enumToArrayList(Colors)
       }];
+      if (this.ordersByPaidCountStructuralPie) this.ordersByPaidCountStructuralPie.refresh();
     }, error => this.snackBarService.showError(getErrorMessage(error)));
   }
 
@@ -162,6 +172,7 @@ export class StatisticComponent implements OnInit {
         data: statistic.map(item => item.amount),
         backgroundColor: enumToArrayList(Colors)
       }];
+      if (this.ordersByPaidAmountStructuralPie) this.ordersByPaidAmountStructuralPie.refresh();
     }, error => this.snackBarService.showError(getErrorMessage(error)));
   }
 
@@ -172,6 +183,7 @@ export class StatisticComponent implements OnInit {
         data: statistic.map(item => item.amount),
         backgroundColor: enumToArrayList(Colors)
       }];
+      if (this.warehouseItemsCountStructuralPie) this.warehouseItemsCountStructuralPie.refresh();
     }, error => this.snackBarService.showError(getErrorMessage(error)));
   }
 
@@ -182,6 +194,7 @@ export class StatisticComponent implements OnInit {
         data: statistic.map(item => item.amount),
         backgroundColor: enumToArrayList(Colors)
       }];
+      if (this.warehouseItemsPriceStatisticStructuralPie) this.warehouseItemsPriceStatisticStructuralPie.refresh();
     }, error => this.snackBarService.showError(getErrorMessage(error)));
   }
 

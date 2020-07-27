@@ -61,6 +61,7 @@
       display: flex;
       padding: 8px 16px;
       @include response-to(xs) {
+        max-width: 320px;
         font-size: 20px;
       }
     }
@@ -101,7 +102,7 @@
 
         @include response-to(xs) {
           height: 65px;
-          width: 375px;
+          width: 320px;
           border-radius: 2px;
           display: flex;
           flex-direction: row;
@@ -126,28 +127,17 @@
           }
         }
 
-        #phone {
+        .phone-color {
           color: mat-color($primary);
         }
 
-        #email {
+        .email-color {
           color: mat-color($google-brand);
           @include response-to(xs) {
             font-size: 38px;
           }
         }
 
-        #facebook {
-          color: mat-color($facebook-brand);
-        }
-
-        #telegram {
-          color: mat-color($telegram-brand);
-        }
-
-        #youtube {
-          color: mat-color($warn);
-        }
 
         .card-info {
           font-size: 26px;
@@ -159,10 +149,15 @@
           @include response-to(xs) {
             height: 100%;
             width: 240px;
-            font-size: 16px;
+            font-size: 14px;
             flex-direction: column;
             justify-content: center;
             align-items: flex-start;
+          }
+
+          a {
+            display: flex;
+            align-items: center;
           }
 
           .phone {

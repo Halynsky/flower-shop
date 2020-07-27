@@ -18,21 +18,22 @@ export function arrayToHttpParam(array: Array<any>) {
  Works only for new angular httpClient
  */
 export function getErrorMessage(err: HttpErrorResponse | any): string {
+  let message
   try {
     let jsonResponse = JSON.parse(err.error);
-    let message = jsonResponse.message;
+    message = jsonResponse.message;
 
     if (jsonResponse.errors) {
       message += jsonResponse.errors.reduce((accumulator, currentValue) => accumulator + " " + currentValue.defaultMessage + ".", ". ");
     }
-
     return message
   } catch (e) {
     if (err.error != null && typeof err.error == 'object') {
-      return err.error.message ? err.error.message : httpStatusCodeResponses[err.status];
+      message = err.error.message ? err.error.message : httpStatusCodeResponses[err.status];
     } else {
-      return err.error ? err.error : httpStatusCodeResponses[err.status];
+      message = err.error ? err.error : httpStatusCodeResponses[err.status];
     }
+    return message ? message : 'Ой, шось пішло не так. Спробуйте, будь ласка, ще раз пізніше.'
   }
 }
 
@@ -56,10 +57,15 @@ export function ngPrimeFiltersToParams(filters): any {
     } else if (filterObject.matchMode == 'rangeMoney') {
       params[key + 'From'] = value[0] * 100;
       params[key + 'To'] = value[1] * 100;
-    } else if (filterObject.matchMode == 'dateRange') {
+    } else if (filterObject.matchMode == 'dateTimeRange') {
       if (value[0] && value[1]) {
         params[key + 'From'] = moment(value[0]).format("YYYY-MM-DD") + "T00:00:00";
         params[key + 'To'] = moment(value[1]).format("YYYY-MM-DD") + "T23:59:59";
+      }
+    } else if (filterObject.matchMode == 'dateRange') {
+      if (value[0] && value[1]) {
+        params[key + 'From'] = moment(value[0]).format("YYYY-MM-DD");
+        params[key + 'To'] = moment(value[1]).format("YYYY-MM-DD");
       }
     } else {
       params[key] = value;

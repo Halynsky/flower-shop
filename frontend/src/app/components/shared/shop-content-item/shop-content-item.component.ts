@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FlowerShort } from "../../../api/models/Flower";
 import { SnackBarService } from "../../../services/snak-bar.service";
 import { FavoritesService } from "../../../api/services/favorites.service";
 import { getErrorMessage } from "../../../utils/Functions";
@@ -7,6 +6,7 @@ import { SecurityService } from "../../../services/security.service";
 import { AddToBucketDialogComponent } from "../add-to-bucket-dialog/add-to-bucket-dialog.component";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { FLOWER_IMAGE_PLACEHOLDER } from "../../../utils/Costants";
+import { FlowerSize } from "../../../api/models/FlowerSize";
 
 
 @Component({
@@ -16,7 +16,7 @@ import { FLOWER_IMAGE_PLACEHOLDER } from "../../../utils/Costants";
 })
 export class ShopContentItemComponent implements OnInit {
 
-  @Input() public flower: FlowerShort;
+  @Input() public flowerSize: FlowerSize;
   @Input() public inFavorites: boolean = false;
 
   addToBucketDialogRef: MatDialogRef<AddToBucketDialogComponent>;
@@ -33,10 +33,10 @@ export class ShopContentItemComponent implements OnInit {
   addToFavorites(event) {
     event.stopPropagation();
     event.preventDefault();
-    this.favoritesService.favoriteFlowerIds.push(this.flower.id);
-    this.favoritesService.addFavoriteFlower(this.flower.id).subscribe(
+    this.favoritesService.favoriteItemsIds.push(this.flowerSize.id);
+    this.favoritesService.addFavoriteItem(this.flowerSize.id).subscribe(
       favoriteFlowersIds => {
-        this.favoritesService.favoriteFlowerIds = favoriteFlowersIds;
+        this.favoritesService.favoriteItemsIds = favoriteFlowersIds;
       },
       error => this.snackBar.showError(getErrorMessage(error)))
   }
@@ -44,10 +44,10 @@ export class ShopContentItemComponent implements OnInit {
   removeFromFavorites(event) {
     event.stopPropagation();
     event.preventDefault();
-    this.favoritesService.favoriteFlowerIds.splice(this.favoritesService.favoriteFlowerIds.indexOf(this.flower.id), 1);
-    this.favoritesService.removeFavoriteFlower(this.flower.id).subscribe(
+    this.favoritesService.favoriteItemsIds.splice(this.favoritesService.favoriteItemsIds.indexOf(this.flowerSize.id), 1);
+    this.favoritesService.removeFavoriteItem(this.flowerSize.id).subscribe(
       favoriteFlowersIds => {
-        this.favoritesService.favoriteFlowerIds = favoriteFlowersIds;
+        this.favoritesService.favoriteItemsIds = favoriteFlowersIds;
       },
       error => this.snackBar.showError(getErrorMessage(error)))
   }
@@ -56,7 +56,7 @@ export class ShopContentItemComponent implements OnInit {
     event.stopPropagation();
     event.preventDefault();
     this.addToBucketDialogRef = this.dialog.open(AddToBucketDialogComponent, {maxWidth: 800, minWidth: 320, minHeight: 320});
-    this.addToBucketDialogRef.componentInstance.id = this.flower.id;
+    this.addToBucketDialogRef.componentInstance.id = this.flowerSize.id;
   }
 
 }

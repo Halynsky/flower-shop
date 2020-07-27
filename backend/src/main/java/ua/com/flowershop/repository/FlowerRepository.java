@@ -86,12 +86,12 @@ public interface FlowerRepository extends JpaRepository<Flower, Long> {
         "INNER JOIN f.flowerType ft " +
         "INNER JOIN f.color c " +
         "INNER JOIN f.flowerSizes fs " +
-        "INNER JOIN f.favoriteFlowersLists ffl " +
+        "INNER JOIN fs.favoriteItemsLists ffsl " +
         "LEFT JOIN f.group g " +
-        "WHERE ffl.user.id = :userId " +
+        "WHERE ffsl.user.id = :userId " +
         "GROUP BY f.id, f.name, f.nameOriginal, f.image, f.popularity, f.created, f.isNew, f.isPopular, ft.id, ft.name, ft.nameSingle, g " +
         "ORDER BY isPopular DESC, popularity ASC")
-    List<FlowerWithAvailableFlagProjection> findFavoriteFlowers(Long userId);
+    List<FlowerWithAvailableFlagProjection> findFavorites(Long userId);
 
 
     Optional<FlowerFullProjection> findFullProjectedById(Long id);
