@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { AuthService } from "../../../api/services/auth.service";
 import { SecurityService } from "../../../services/security.service";
 import { UserRegistration } from "../../../api/models/User";
@@ -6,18 +6,21 @@ import { SnackBarService } from "../../../services/snak-bar.service";
 import { getErrorMessage } from "../../../utils/Functions";
 import { Credentials } from "../../../api/models/Credentials";
 import { UserService } from "../../../api/services/user.service";
-import { finalize } from "rxjs/operators";
+import { finalize, takeUntil } from "rxjs/operators";
 import { AuthService as SocialAuthService, FacebookLoginProvider } from "angularx-social-login";
 import { SocialService } from "../../../api/services/social.service";
 import { MatDialogRef } from "@angular/material/dialog";
 import { SocialUserInfo } from "../../../api/models/SocialUserInfo";
+import { Subject } from "rxjs";
 
 @Component({
   selector: 'auth-dialog',
   templateUrl: './auth-dialog.component.html',
   styleUrls: ['./auth-dialog.component.scss']
 })
-export class AuthDialogComponent {
+export class AuthDialogComponent implements OnInit, OnDestroy  {
+
+  private readonly destroyed$ = new Subject<void>();
 
   mode: 'login' | 'registration' | 'restore-password' = 'login';
   registered = false;
@@ -37,10 +40,21 @@ export class AuthDialogComponent {
               public dialogRef: MatDialogRef<AuthDialogComponent>) {
   }
 
+  ngOnInit() {
+  }
+
+  ngOnDestroy() {
+    this.destroyed$.next();
+    this.destroyed$.complete();
+  }
+
   login() {
     this.loading = true;
     this.authService.login(this.credentials)
-      .pipe(finalize(() => this.loading = false))
+      .pipe(
+        takeUntil(this.destroyed$),
+        finalize(() => this.loading = false)
+      )
       .subscribe(
       user => {
         this.securityService.login(user);
@@ -72,7 +86,10 @@ export class AuthDialogComponent {
   register() {
     this.loading = true;
     this.authService.register(this.userRegistration)
-      .pipe(finalize(() => this.loading = false))
+      .pipe(
+        takeUntil(this.destroyed$),
+        finalize(() => this.loading = false)
+      )
       .subscribe(
       user => {
         this.registered = true;
@@ -87,7 +104,6 @@ export class AuthDialogComponent {
     this.loading = true;
     this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID)
       .then(user => {
-
                 let socialUserInfo = new SocialUserInfo();
                 socialUserInfo.accessToken = user.authToken;
                 this.socialService.loginWithFacebook(socialUserInfo)
@@ -129,7 +145,10 @@ export class AuthDialogComponent {
   restorePassword() {
     this.loading = true;
     this.authService.passwordRestoreRequest(this.passwordRestoreEmail)
-      .pipe(finalize(() => this.loading = false))
+      .pipe(
+        takeUntil(this.destroyed$),
+        finalize(() => this.loading = false)
+      )
       .subscribe(
         () => {
           this.restored = true;
