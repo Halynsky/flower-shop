@@ -22,7 +22,7 @@ import { IsObjectValidator } from "./is-object-validator.directive";
   providers: []
 })
 export class ValidatorsModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders<ValidatorsModule> {
     return {
       ngModule: ValidatorsModule,
     };

@@ -41,19 +41,14 @@
             "scripts": [],
             "stylePreprocessorOptions": {
               "includePaths": [
-                "src"
+                "src",
+                "src/scss"
               ]
-            },
-            "es5BrowserSupport": true
+            }
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ],
+
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -62,15 +57,22 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
+              "aot": true,
+              "serviceWorker": true,
+              "ngswConfigPath": "ngsw-config.json",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
               "budgets": [
                 {
                   "type": "initial",
                   "maximumWarning": "5mb",
                   "maximumError": "10mb"
                 }
-              ],
-              "serviceWorker": true,
-              "ngswConfigPath": "ngsw-config.json"
+              ]
             },
             "stg": {
               "optimization": true,
@@ -81,6 +83,7 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
+              "aot": true,
               "serviceWorker": true,
               "ngswConfigPath": "ngsw-config.json",
               "fileReplacements": [

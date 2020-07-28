@@ -19,7 +19,7 @@ import { ReplaceLineBreaks } from "./replace-line-breaks";
 })
 
 export class PipesModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders<PipesModule> {
     return {
       ngModule: PipesModule,
       providers: [ EnumToObjectsPipe ]

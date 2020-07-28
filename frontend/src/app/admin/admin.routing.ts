@@ -1,4 +1,3 @@
-import { ModuleWithProviders } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminLayoutComponent } from "./admin-layout/admin-layout.component";
 import { UsersComponent } from "./users/users.component";
@@ -48,6 +47,6 @@ const routes: Routes = [
   },
 ];
 
-export const routing: ModuleWithProviders = RouterModule.forChild(routes);
+export const routing = RouterModule.forChild(routes);
 
 

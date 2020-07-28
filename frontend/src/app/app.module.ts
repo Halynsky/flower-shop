@@ -8,7 +8,7 @@ import localeRuUa from '@angular/common/locales/uk';
 import { RouterModule } from "@angular/router";
 import { SharedModule } from "./components/shared/shared.module";
 import { MainInterceptor } from "./inteceptors/main.interceptor";
-import { AuthServiceConfig, FacebookLoginProvider, SocialLoginModule } from "angularx-social-login";
+import { FacebookLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from "angularx-social-login";
 import { ValidatorsModule } from "./validators/validators.module";
 import { UserCabinetModule } from "./components/user-cabinet/user-cabinet.module";
 import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
@@ -24,18 +24,6 @@ import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogConfig, MatDialogModule } from "@a
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
 registerLocaleData(localeRuUa);
-
-export function getAuthServiceConfigs() {
-  let config = new AuthServiceConfig(
-    [
-      {
-        id: FacebookLoginProvider.PROVIDER_ID,
-        provider: new FacebookLoginProvider(environment.facebookClientId)
-      }
-    ]
-  );
-  return config;
-}
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -78,21 +66,37 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       multi: true
     },
     {
-      provide: AuthServiceConfig,
-      useFactory: getAuthServiceConfigs
+      provide: MAT_DIALOG_DEFAULT_OPTIONS,
+      useValue: {
+        ...new MatDialogConfig(),
+        panelClass: 'modal-panel-class',
+        maxWidth: '',
+        disableClose: true,
+        autoFocus: false,
+        maxHeight: '100vh'
+      } as MatDialogConfig
     },
     {
-      provide: MAT_DIALOG_DEFAULT_OPTIONS,
-      useValue: {...new MatDialogConfig(), panelClass: 'modal-panel-class', maxWidth: '', disableClose: true, autoFocus: false, maxHeight: '100vh'} as MatDialogConfig},
-    {
       provide: STEPPER_GLOBAL_OPTIONS,
-      useValue: { displayDefaultIndicatorType: false }
+      useValue: {displayDefaultIndicatorType: false}
     },
     {
       provide: PERFECT_SCROLLBAR_CONFIG,
       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
+    },
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: FacebookLoginProvider.PROVIDER_ID,
+            provider: new FacebookLoginProvider(environment.facebookClientId),
+          },
+        ],
+      } as SocialAuthServiceConfig
     }
-    ],
+  ],
   exports: [
   ],
   bootstrap: [AppComponent]
