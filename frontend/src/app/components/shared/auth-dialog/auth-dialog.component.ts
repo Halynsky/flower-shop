@@ -7,7 +7,7 @@ import { getErrorMessage } from "../../../utils/Functions";
 import { Credentials } from "../../../api/models/Credentials";
 import { UserService } from "../../../api/services/user.service";
 import { finalize, takeUntil } from "rxjs/operators";
-import { AuthService as SocialAuthService, FacebookLoginProvider } from "angularx-social-login";
+import { FacebookLoginProvider, SocialAuthService } from "angularx-social-login";
 import { SocialService } from "../../../api/services/social.service";
 import { MatDialogRef } from "@angular/material/dialog";
 import { SocialUserInfo } from "../../../api/models/SocialUserInfo";

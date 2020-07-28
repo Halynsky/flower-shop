@@ -5,7 +5,6 @@ import { Router } from "@angular/router";
 
 import { SecurityUserModel } from "../api/models/User";
 import { USER_KEY } from "../utils/Costants";
-import { AuthService as SocialAuthService } from "angularx-social-login";
 import { ReplaySubject } from "rxjs";
 import { AuthDialogComponent } from "../components/shared/auth-dialog/auth-dialog.component";
 import { MatDialog } from "@angular/material/dialog";
@@ -19,7 +18,6 @@ export class SecurityService {
   public onLogout: EventEmitter<any> = new EventEmitter();
 
   constructor(public router: Router,
-              public socialAuthService: SocialAuthService,
               public dialog: MatDialog) {
     this.onLogin.subscribe(() => {
       if (this.hasAnyRole([Role.ADMIN, Role.SUPPORT])) {

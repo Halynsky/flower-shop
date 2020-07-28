@@ -15,7 +15,7 @@ import { MinMaxDirective } from "./minmax.directive";
 })
 
 export class DirectivesModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders<DirectivesModule> {
     return {
       ngModule: DirectivesModule
     };

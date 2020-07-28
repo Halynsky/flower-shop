@@ -7,7 +7,7 @@ import { finalize, takeUntil } from "rxjs/operators";
 import { SnackBarService } from "../../../services/snak-bar.service";
 import { getErrorMessage } from "../../../utils/Functions";
 import { SocialService } from "../../../api/services/social.service";
-import { AuthService as SocialAuthService, FacebookLoginProvider } from 'angularx-social-login'
+import { FacebookLoginProvider, SocialAuthService } from 'angularx-social-login'
 import { SecurityUserModel } from "../../../api/models/User";
 import { Subject } from "rxjs";
 
