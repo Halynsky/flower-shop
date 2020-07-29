@@ -72,19 +72,19 @@
   .content {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-areas: "image add-to-card-block" "specifications ." "description description";
+    grid-template-areas: "image add-to-card-block" "image delivery" "specifications delivery" "specifications payment" "specifications warranty" "description description";
     height: fit-content;
-    grid-row-gap: 36px;
+    grid-row-gap: 24px;
 
     @include response-to(sm) {
       grid-template-columns: 1fr;
-      grid-template-areas: "image" "add-to-card-block" "specifications" "description";
+      grid-template-areas: "image" "add-to-card-block" "specifications" "description" "delivery" "payment" "warranty";
       grid-row-gap: 24px;
     }
 
     @include response-to(xs) {
       grid-template-columns: 1fr;
-      grid-template-areas: "image" "add-to-card-block" "specifications" "description" ;
+      grid-template-areas: "image" "add-to-card-block" "specifications" "description" "delivery" "payment" "warranty";
     }
 
     .image {
@@ -250,6 +250,99 @@
 
     }
 
+    .delivery {
+      grid-area: delivery;
+      padding: 24px;
+      background-color: $grey-30;
+      height: fit-content;
+      display: grid;
+      margin: 0px 24px;
+
+      @include response-to(sm) {
+        margin: 0px 12px;
+      }
+
+      .title {
+        font-weight: 500;
+        padding-bottom: 16px;
+        color: $black-300;
+        border-bottom: 1px solid $grey-100;
+      }
+
+      .delivery-block-inner {
+        color: $black-200;
+        font-size: 14px;
+
+        .delivery-hint {
+          color: $grey-600;
+        }
+      }
+
+    }
+
+    .payment {
+      grid-area: payment;
+      padding: 24px;
+      background-color: $grey-30;
+      height: fit-content;
+      display: grid;
+      margin: 0px 24px;
+
+      @include response-to(sm) {
+        margin: 0px 12px;
+      }
+
+      .title {
+        font-weight: 500;
+        padding-bottom: 16px;
+        color: $black-300;
+        border-bottom: 1px solid $grey-100;
+      }
+
+      .payment-block-inner {
+        color: $black-200;
+        font-size: 14px;
+
+        p {
+          margin-bottom: 0px;
+        }
+      }
+
+    }
+
+    .warranty {
+      grid-area: warranty;
+      padding: 24px;
+      background-color: $grey-30;
+      height: fit-content;
+      display: grid;
+      margin: 0px 24px;
+
+      @include response-to(sm) {
+        margin: 0px 12px;
+        margin-bottom: 24px;
+      }
+
+      .title {
+        font-weight: 500;
+        padding-bottom: 16px;
+        color: $black-300;
+        border-bottom: 1px solid $grey-100;
+      }
+
+      .warranty-block-inner {
+        color: $black-200;
+        font-size: 14px;
+
+        .warranty-hint {
+          margin-top: 16px;
+          color: $grey-600;
+        }
+
+      }
+
+    }
+
     .description {
       grid-area: description;
       margin-bottom: 24px;
@@ -261,11 +354,12 @@
 
       @include response-to(sm) {
         padding: 0px 16px;
+        margin-bottom: 0px;
       }
 
-      .description-block {
-        margin-bottom: 24px;
-      }
+      //.description-block {
+      //  margin-bottom: 24px;
+      //}
 
       .title {
         font-size: 24px;
@@ -290,5 +384,4 @@
   }
 
 }
-
 
