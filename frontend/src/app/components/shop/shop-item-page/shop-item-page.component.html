@@ -13,19 +13,27 @@
 
   <div class="content">
 
-    <div class="image" [ngStyle]="flowerSize.flower.image && {'background-image':'url(' + flowerSize.flower.image + ')'} || {'background-image':'url(' + flowerImagePlaceholder + ')'}"></div>
+    <div class="main-info">
 
-    <div class="add-to-card-block">
+      <div class="image" [ngStyle]="flowerSize.flower.image && {'background-image':'url(' + flowerSize.flower.image + ')'} || {'background-image':'url(' + flowerImagePlaceholder + ')'}"></div>
 
-      <div class="add-to-card-inner">
+      <specifications [flowerSize]="flowerSize"></specifications>
 
-        <table>
+    </div>
 
-          <tr class="header">
-            <th class="header-size"></th>
-            <th class="header-price"></th>
-            <th class="header-amount"></th>
-          </tr>
+    <div class="purchase-info-wrapper">
+
+      <div class="add-to-card-block">
+
+        <div class="add-to-card-inner">
+
+          <table>
+
+            <tr class="header">
+              <th class="header-size"></th>
+              <th class="header-price"></th>
+              <th class="header-amount"></th>
+            </tr>
 
             <tr [ngClass]="{'flower-size-empty': flowerSize.available == 0}">
               <td>{{flowerSize.size.name}}</td>
@@ -35,75 +43,28 @@
               </td>
             </tr>
 
-        </table>
+          </table>
 
-        <div class="items-total-price-block-wrapper">
-          <div class="items-total-price-block" [ngClass]="{'accent': bucketItem.amount * bucketItem.price > 0}">Разом на суму: <span class="items-total-price">{{bucketItem.amount * bucketItem.price / 100}} грн</span></div>
+          <div class="items-total-price-block-wrapper">
+            <div class="items-total-price-block" [ngClass]="{'accent': bucketItem.amount * bucketItem.price > 0}">Разом на суму: <span class="items-total-price">{{bucketItem.amount * bucketItem.price / 100}} грн</span></div>
+          </div>
+
+          <button mat-flat-button color="accent" class="add-to-card-button" (click)="addToBucket()" [disabled]="!flowerSize.isAvailable">
+            <i class="material-icons add_shopping_cart"></i>
+            <span>Купити</span>
+          </button>
+
         </div>
 
-        <button mat-flat-button color="accent" class="add-to-card-button" (click)="addToBucket()" [disabled]="!flowerSize.isAvailable">
-          <i class="material-icons add_shopping_cart"></i>
-          <span>Купити</span>
-        </button>
-
       </div>
+
+      <specifications [flowerSize]="flowerSize"></specifications>
+
+      <purchase-additional-info></purchase-additional-info>
 
     </div>
 
-    <div class="specifications">
-
-      <div class="title">Характеристики</div>
-
-      <div class="specification">
-        <div class="specification-label">Назва</div>
-        <div class="specification-value">{{flowerSize.flower.nameOriginal}}</div>
-      </div>
-      <div class="specification" *ngIf="flowerSize?.flower?.group?.name">
-        <div class="specification-label">Група</div>
-        <div class="specification-value">{{flowerSize.flower.group.name}}</div>
-      </div>
-      <div class="specification" *ngIf="flowerSize.flower.flowerType.plantingMaterialType">
-        <div class="specification-label">Посадковий матеріал</div>
-        <div class="specification-value">{{flowerSize.flower.flowerType.plantingMaterialType}}</div>
-      </div>
-      <div class="specification" *ngIf="flowerSize.flower.flowerHeightMin && flowerSize.flower.flowerHeightMax">
-        <div class="specification-label" >Висота стебла</div>
-        <div class="specification-value">{{flowerSize.flower.flowerHeightMin}} см - {{flowerSize.flower.flowerHeightMax}} см</div>
-      </div>
-      <div class="specification" *ngIf="flowerSize.flower.flowerSizeMin && flowerSize.flower.flowerSizeMax">
-        <div class="specification-label" >Розмір квітки</div>
-        <div class="specification-value">{{flowerSize.flower.flowerSizeMin}} см - {{flowerSize.flower.flowerSizeMax}} см</div>
-      </div>
-    </div>
-
-    <div class="delivery">
-      <div class="title">Доставка</div>
-      <div class="delivery-block-inner">
-          <ul>
-            <li>Самовивіз з Нової Пошти</li>
-            <li>Кур'єр Нова Пошта</li>
-            <li>Самовивіз з Укрпошти</li>
-            <li>Самовивіз з м.Ужгород</li>
-          </ul>
-        <div class="delivery-hint">* Доставка здійснюється згідно з тарифами перевізника</div>
-      </div>
-    </div>
-
-    <div class="payment">
-      <div class="title">Оплата</div>
-      <div class="payment-block-inner">
-        <p>Після оформлення замовлення ви отримаєте реквізити для оплати</p>
-      </div>
-    </div>
-
-    <div class="warranty">
-      <div class="title">Гарантія</div>
-      <div class="warranty-block-inner">
-        <p>Перед відправкою посадкового матеріалу ми ретельно перевіряємо його на відповідність стандартам та відправляємо своїм клієнтам тільки якісний товар.</p>
-        <p>При наявності зауваженнь до стану посадкового матеріалу <a routerLink="/about-us">звяжітья з нами</a> відразу після отримання пакунку і ми зясуємо та вирішимо вашу ситуацію.</p>
-        <div class="warranty-hint">* Магазин не несе відповідальності за пошкодження товару під час доставки</div>
-      </div>
-    </div>
+    <purchase-additional-info></purchase-additional-info>
 
     <div class="description">
       <div class="description-block" *ngIf="flowerSize.flower.description">

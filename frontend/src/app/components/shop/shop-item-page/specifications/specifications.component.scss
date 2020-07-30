@@ -1,0 +1,51 @@
+@import '~@angular/material/theming';
+@import "theme";
+@import 'mixins';
+
+:host {
+  grid-area: specifications;
+  width: 100%;
+
+  .title {
+    font-size: 24px;
+    color: mat-color($primary, 900);
+    margin-bottom: 8px;
+  }
+
+  @include response(xs) {
+    padding: 0px 16px;
+  }
+
+  @include response(sm) {
+    max-width: 600px;
+    min-width: 400px;
+    width: 60%;
+    justify-self: center;
+  }
+
+  .specification {
+    font-size: 16px;
+    display: grid;
+    grid-template-columns: minmax(100px, 1fr) fit-content(100%);
+    padding: 8px 0px;
+
+    &:not(:last-of-type) {
+      border-bottom: 1px solid $grey-100;
+    }
+
+    @include response-to(sm) {
+      padding: 8px 0px;
+    }
+
+    .specification-label {
+      color: $grey-800;
+      margin-right: 24px;
+    }
+    .specification-value {
+      color: mat-color($primary, 500);
+      text-align: right;
+      font-weight: 500;
+    }
+  }
+
+}
