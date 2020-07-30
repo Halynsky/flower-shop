@@ -1,0 +1,104 @@
+@import '~@angular/material/theming';
+@import "theme";
+@import 'mixins';
+
+:host {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas: "delivery" "payment" "warranty";
+  height: fit-content;
+  grid-row-gap: 24px;
+
+  .delivery {
+    grid-area: delivery;
+    padding: 24px;
+    background-color: $grey-30;
+    height: fit-content;
+    display: grid;
+    margin: 0px 24px;
+
+    @include response-to(sm) {
+      margin: 0px;
+    }
+
+    .title {
+      font-weight: 500;
+      padding-bottom: 16px;
+      color: $black-300;
+      border-bottom: 1px solid $grey-100;
+    }
+
+    .delivery-block-inner {
+      color: $black-200;
+      font-size: 14px;
+
+      .delivery-hint {
+        color: $grey-600;
+      }
+    }
+
+  }
+
+  .payment {
+    grid-area: payment;
+    padding: 24px;
+    background-color: $grey-30;
+    height: fit-content;
+    display: grid;
+    margin: 0px 24px;
+
+    @include response-to(sm) {
+      margin: 0px;
+    }
+
+    .title {
+      font-weight: 500;
+      padding-bottom: 16px;
+      color: $black-300;
+      border-bottom: 1px solid $grey-100;
+    }
+
+    .payment-block-inner {
+      color: $black-200;
+      font-size: 14px;
+
+      p {
+        margin-bottom: 0px;
+      }
+    }
+
+  }
+
+  .warranty {
+    grid-area: warranty;
+    padding: 24px;
+    background-color: $grey-30;
+    height: fit-content;
+    display: grid;
+    margin: 0px 24px;
+
+    @include response-to(sm) {
+      margin: 0px;
+    }
+
+    .title {
+      font-weight: 500;
+      padding-bottom: 16px;
+      color: $black-300;
+      border-bottom: 1px solid $grey-100;
+    }
+
+    .warranty-block-inner {
+      color: $black-200;
+      font-size: 14px;
+
+      .warranty-hint {
+        margin-top: 16px;
+        color: $grey-600;
+      }
+
+    }
+
+  }
+}
+

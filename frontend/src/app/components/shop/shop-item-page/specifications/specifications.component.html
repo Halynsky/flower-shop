@@ -1,0 +1,26 @@
+<div class="specifications">
+
+  <div class="title">Характеристики</div>
+
+  <div class="specification">
+    <div class="specification-label">Назва</div>
+    <div class="specification-value">{{flowerSize.flower.nameOriginal}}</div>
+  </div>
+  <div class="specification" *ngIf="flowerSize?.flower?.group?.name">
+    <div class="specification-label">Група</div>
+    <div class="specification-value">{{flowerSize.flower.group.name}}</div>
+  </div>
+  <div class="specification" *ngIf="flowerSize.flower.flowerType.plantingMaterialType">
+    <div class="specification-label">Посадковий матеріал</div>
+    <div class="specification-value">{{flowerSize.flower.flowerType.plantingMaterialType}}</div>
+  </div>
+  <div class="specification" *ngIf="flowerSize.flower.flowerHeightMin && flowerSize.flower.flowerHeightMax">
+    <div class="specification-label" >Висота стебла</div>
+    <div class="specification-value">{{flowerSize.flower.flowerHeightMin}} см - {{flowerSize.flower.flowerHeightMax}} см</div>
+  </div>
+  <div class="specification" *ngIf="flowerSize.flower.flowerSizeMin && flowerSize.flower.flowerSizeMax">
+    <div class="specification-label" >Розмір квітки</div>
+    <div class="specification-value">{{flowerSize.flower.flowerSizeMin}} см - {{flowerSize.flower.flowerSizeMax}} см</div>
+  </div>
+
+</div>

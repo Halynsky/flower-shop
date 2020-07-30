@@ -58,10 +58,12 @@
         margin-bottom: 20px;
         margin-right: 24px;
       }
+
       .label {
         margin-right: 8px;
         color: $grey-400;
       }
+
       .value {
         color: $black-500;
       }
@@ -72,180 +74,178 @@
   .content {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-areas: "image add-to-card-block" "specifications ." "description description";
+    grid-template-areas: "main-info purchase-info-wrapper" "description description";
     height: fit-content;
-    grid-row-gap: 36px;
+    grid-row-gap: 24px;
 
     @include response-to(sm) {
       grid-template-columns: 1fr;
-      grid-template-areas: "image" "add-to-card-block" "specifications" "description";
+      grid-template-areas: "main-info" "purchase-info-wrapper" "purchase-additional-info" "description";
       grid-row-gap: 24px;
     }
 
-    @include response-to(xs) {
+    .main-info {
+      display: grid;
       grid-template-columns: 1fr;
-      grid-template-areas: "image" "add-to-card-block" "specifications" "description" ;
-    }
+      grid-template-areas: "image" "specifications";
+      grid-area: main-info;
+      height: fit-content;
+      grid-row-gap: 24px;
 
-    .image {
-      grid-area: image;
-      height: 400px;
-      background-repeat: no-repeat;
-      background-size: contain;
-      background-color: mat-color($primary, 50);
-      background-position: center;
+      @include response-to(sm) {
+        grid-row-gap: 0px;
+      }
 
-      @include response(xs) {
-        height: 200px;
+      .image {
+        grid-area: image;
+        height: 400px;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-color: mat-color($primary, 50);
+        background-position: center;
+
+        @include response(xs) {
+          height: 200px;
+        }
+
+      }
+
+      ::ng-deep specifications {
+        @include response-to(sm) {
+          display: none;
+        }
       }
 
     }
 
-    .specifications {
-      grid-area: specifications;
-      width: 100%;
+    .purchase-info-wrapper {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-areas: "add-to-card-block" "purchase-additional-info";
+      grid-area: purchase-info-wrapper;
+      height: fit-content;
 
-      .title {
-        font-size: 24px;
-        color: mat-color($primary, 900);
-        margin-bottom: 8px;
+      @include response-to(sm) {
+        grid-row-gap: 24px;
+        grid-template-areas: "add-to-card-block" "specifications";
       }
 
-      @include response(xs) {
-        padding: 0px 16px;
-      }
-
-      @include response(sm) {
-        max-width: 600px;
-        min-width: 400px;
-        width: 60%;
-        justify-self: center;
-      }
-
-      .specification {
-        font-size: 16px;
+      .add-to-card-block {
+        grid-area: add-to-card-block;
+        padding: 24px 16px;
+        background-color: $grey-30;
+        height: fit-content;
         display: grid;
-        grid-template-columns: minmax(100px, 1fr) fit-content(100%);
-        padding: 8px 0px;
+        justify-content: center;
+        white-space: nowrap;
+        margin: 0px 24px 24px;
 
-        &:not(:last-of-type) {
-          border-bottom: 1px solid $grey-100;
+        @include response(xs) {
+          padding: 24px 0px;
         }
 
         @include response-to(sm) {
-          padding: 8px 0px;
+          margin: 0px;
+          grid-row-gap: 0px;
         }
 
-        .specification-label {
-          color: $grey-800;
-          margin-right: 24px;
-        }
-        .specification-value {
-          color: mat-color($primary, 500);
-          text-align: right;
-          font-weight: 500;
-        }
-      }
+        .add-to-card-inner {
+          display: grid;
+          max-width: 375px;
+          justify-content: center;
 
-    }
+          table {
+            border-collapse: separate;
+            border-spacing: 20px 0px;
 
-    .add-to-card-block {
-      grid-area: add-to-card-block;
-      padding: 24px 16px;
-      background-color: $grey-30;
-      height: fit-content;
-      display: grid;
-      margin: 0px 24px;
-      justify-content: center;
-      white-space: nowrap;
+            tr {
 
-      @include response(xs) {
-        padding: 24px 0px;
-      }
-
-      @include response-to(sm) {
-        margin: 0px;
-      }
-
-      .add-to-card-inner {
-        display: grid;
-        max-width: 375px;
-        justify-content: center;
-
-        table {
-          border-collapse: separate;
-          border-spacing: 20px 0px;
-
-          tr {
-
-            &.flower-size-empty {
-              opacity: 0.4;
-            }
+              &.flower-size-empty {
+                opacity: 0.4;
+              }
 
 
-            &.header {
-              th {
-                color: $grey-800;
-                font-weight: 500;
+              &.header {
+                th {
+                  color: $grey-800;
+                  font-weight: 500;
+                  padding-bottom: 16px;
+
+                  &.header-size:before {
+                    content: 'Розмір';
+                  }
+
+                  &.header-price:before {
+                    content: 'Ціна';
+                  }
+
+                  &.header-amount:before {
+                    content: 'Кількість';
+                  }
+
+                }
+              }
+
+              td {
+                text-align: right;
+                font-size: 20px;
                 padding-bottom: 16px;
+              }
+            }
+          }
 
-                &.header-size:before {
-                  content: 'Розмір';
-                }
+          .items-total-price-block-wrapper {
+            font-size: 24px;
+            padding-top: 16px;
+            padding-bottom: 16px;
+            margin-top: 4px;
+            border-top: 1px solid $grey-100;
+            text-align: center;
+            color: $grey-600;
 
-                &.header-price:before {
-                  content: 'Ціна';
-                }
+            .items-total-price-block {
+              opacity: 0.5;
 
-                &.header-amount:before {
-                  content: 'Кількість';
-                }
+              &.accent {
+                opacity: 1;
+              }
 
+              .items-total-price {
+                font-weight: 500;
+                color: $black-400;
               }
             }
 
-            td {
-              text-align: right;
-              font-size: 20px;
-              padding-bottom: 16px;
-            }
           }
-        }
 
-        .items-total-price-block-wrapper {
-          font-size: 24px;
-          padding-top: 16px;
-          padding-bottom: 16px;
-          margin-top: 4px;
-          border-top: 1px solid $grey-100;
-          text-align: center;
-          color: $grey-600;
+          .add-to-card-button {
+            justify-self: center;
+            width: 220px;
+            font-size: 24px;
+            height: 44px;
+            text-transform: uppercase;
 
-          .items-total-price-block {
-            opacity: 0.5;
-            &.accent {
-              opacity: 1;
-            }
-
-            .items-total-price {
-              font-weight: 500;
-              color: $black-400;
+            i {
+              margin-right: 8px;
             }
           }
 
         }
 
-        .add-to-card-button {
-          justify-self: center;
-          width: 220px;
-          font-size: 24px;
-          height: 44px;
-          text-transform: uppercase;
-          i {
-            margin-right: 8px;
-          }
-        }
+      }
 
+      specifications {
+        grid-area: specifications;
+        @include response-from(md) {
+          display: none;
+        }
+      }
+
+      purchase-additional-info {
+        grid-area: purchase-additional-info;
+        @include response-to(sm) {
+          display: none;
+        }
       }
 
     }
@@ -261,10 +261,6 @@
 
       @include response-to(sm) {
         padding: 0px 16px;
-      }
-
-      .description-block {
-        margin-bottom: 24px;
       }
 
       .title {
@@ -287,8 +283,14 @@
 
     }
 
+    & > purchase-additional-info {
+      grid-area: purchase-additional-info;
+      @include response-from(md) {
+        display: none;
+      }
+    }
+
   }
 
 }
-
 

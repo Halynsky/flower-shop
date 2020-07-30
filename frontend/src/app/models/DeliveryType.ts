@@ -8,6 +8,6 @@ export enum DeliveryType {
 export const deliveryTypeOptions = [
   {key: "NOVA_POSHTA_DEPARTMENT", label: "Самовивіз з Нової Пошти"},
   {key: "NOVA_POSHTA_COURIER", label: "Кур'єр Нова Пошта"},
-  {key: "UKR_POSHTA", label: "Укр Пошта"},
+  {key: "UKR_POSHTA", label: "Самовивіз з Укрпошти"},
   {key: "SELF_UZHGOROD", label: "Самовивіз з м.Ужгород"}
 ];
