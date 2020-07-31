@@ -92,6 +92,10 @@
       color: $black-200;
       font-size: 14px;
 
+      a {
+        color: mat-color($primary, 700);
+      }
+
       .warranty-hint {
         margin-top: 16px;
         color: $grey-600;

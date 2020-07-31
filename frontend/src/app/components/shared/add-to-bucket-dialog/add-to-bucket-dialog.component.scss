@@ -126,6 +126,10 @@
               }
             }
 
+            .item-unavailable {
+              color: mat-color($warn, 300);
+            }
+
           }
 
           .add-to-card-button {

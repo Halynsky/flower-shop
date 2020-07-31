@@ -11,6 +11,7 @@ import ua.com.flowershop.entity.Order;
 import ua.com.flowershop.projection.OrderAdminProjection;
 import ua.com.flowershop.projection.OrderProjection;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -104,14 +105,16 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     Integer countSoldPriceByCreatedAfterAndStatusIn(LocalDateTime createdAfter, List<Order.Status> statuses);
 
     @Modifying
+    @Transactional
     @Query("UPDATE Order o SET o.status = :newStatus " +
         "WHERE o.sent < :sentBefore " +
         "AND o.status in :statuses")
-    void updateStatusForSentBeforeAndStatusIn(LocalDateTime sentBefore, List<Order.Status> statuses, Order.Status newStatus);
+    void updateStatusForSentBeforeAndStatusIn(LocalDate sentBefore, List<Order.Status> statuses, Order.Status newStatus);
 
     @Modifying
+    @Transactional
     @Query("UPDATE Order o SET o.status = :newStatus " +
-        "WHERE o.sent < :createdBefore " +
+        "WHERE o.created < :createdBefore " +
         "AND o.status in :statuses")
     void updateStatusForCreatedBeforeAndStatusIn(LocalDateTime createdBefore, List<Order.Status> statuses, Order.Status newStatus);
 

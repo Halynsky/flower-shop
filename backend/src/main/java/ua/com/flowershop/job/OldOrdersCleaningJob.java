@@ -4,11 +4,18 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import ua.com.flowershop.entity.Order;
 import ua.com.flowershop.repository.OrderRepository;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Collections;
 
 @Slf4j
 @Component
 public class OldOrdersCleaningJob {
+
+    private final static int MAX_DELIVERY_STATE_SAYS = 14;
 
     @Autowired private OrderRepository orderRepository;
 
@@ -16,6 +23,8 @@ public class OldOrdersCleaningJob {
     public void reduceFlowerPopularity(){
         log.info("Job | Old orders cleaning job started");
 
+        orderRepository.updateStatusForCreatedBeforeAndStatusIn(LocalDateTime.now().minusDays(30), Collections.singletonList(Order.Status.DELIVERING), Order.Status.DONE);
+        orderRepository.updateStatusForSentBeforeAndStatusIn(LocalDate.now().minusDays(MAX_DELIVERY_STATE_SAYS), Collections.singletonList(Order.Status.DELIVERING), Order.Status.DONE);
 
         log.info("Job | Old orders cleaning job finished");
     }
