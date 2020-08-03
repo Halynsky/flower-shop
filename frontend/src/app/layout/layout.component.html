@@ -1,0 +1,29 @@
+<layout-header></layout-header>
+<router-outlet></router-outlet>
+<message-button [matMenuTriggerFor]="messageMenu"></message-button>
+
+<mat-menu #messageMenu="matMenu" class="message-menu" backdropClass="message-menu-backdrop">
+  <a mat-menu-item href="viber://chat?number=380507072637">
+    <i class="fab fa-viber viber-color"></i>
+    <span>Viber</span>
+  </a>
+  <a mat-menu-item href="https://t.me/MarijaHalynska" target="_blank">
+    <i class="fab fa-telegram telegram-color"></i>
+    <span>Telegram</span>
+  </a>
+  <a mat-menu-item href="http://m.me/MarijaHalynska" target="_blank">
+    <i class="fab fa-facebook-messenger messenger-color"></i>
+    <span>Messenger</span>
+  </a>
+  <a mat-menu-item href="mailto:merryflowersua@gmail.com">
+    <i class="far fa-envelope youtube-color"></i>
+    <span>Email</span>
+  </a>
+  <a mat-menu-item href="tel:+380507072637">
+    <i class="fas fa-mobile-alt primary-color"></i>
+    <span>Дзвінок</span>
+  </a>
+</mat-menu>
+
+
+

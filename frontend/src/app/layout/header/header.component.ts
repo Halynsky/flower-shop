@@ -7,7 +7,8 @@ import { Router } from "@angular/router";
 import { Role } from "../../models/Role";
 import { getErrorMessage } from "../../utils/Functions";
 import { GlobalSearchService } from "../../services/global-search.service";
-import { MatDialog } from "@angular/material/dialog";
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
+import { MessageOptionsDialogComponent } from "../../components/shared/message-options-dialog/message-options-dialog.component";
 
 @Component({
   selector: 'layout-header',
@@ -19,6 +20,7 @@ export class HeaderComponent {
 
   Role = Role;
   globalSearch;
+  messageOptionsDialogRef: MatDialogRef<any>;
 
   constructor(public securityService: SecurityService,
               public bucketLocalService: BucketLocalService,
@@ -35,6 +37,10 @@ export class HeaderComponent {
       res => this.securityService.logout(),
       error => this.snackBarService.showError(getErrorMessage(error))
     )
+  }
+
+  openMessageOptionsDialog() {
+    this.messageOptionsDialogRef = this.dialog.open(MessageOptionsDialogComponent);
   }
 
 }

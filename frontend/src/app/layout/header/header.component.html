@@ -113,7 +113,7 @@
       <div>На сумму <span class="bucket-items-price">{{bucketLocalService.bucketInfo.totalPrice / 100}}</span> грн</div>
     </div>
     <button mat-flat-button color="accent" routerLink="/order">
-      <i class="material-icons">shopping_basket</i>
+      <i class="material-icons shopping_basket"></i>
       <span>Оформити замовлення</span>
     </button>
     <button mat-button color="primary" class="check-bucket-button icon-button" (click)="bucketLocalService.openBucketDialog()">Переглянути товари</button>
@@ -124,7 +124,17 @@
 <mat-menu #mainNavigationMenu="matMenu" class="main-navigation-menu">
 <!--    <a routerLink="/" mat-button routerLinkActive="active-link">Головна</a>-->
 <!--    <a routerLink="/forum" mat-button routerLinkActive="active-link">Блог</a>-->
-    <a routerLink="/shop" mat-button routerLinkActive="active-link">Магазин</a>
-    <a routerLink="/about-us" mat-button routerLinkActive="active-link">Про нас</a>
-</mat-menu>
+    <a mat-menu-item routerLink="/shop" routerLinkActive="active-link">
+      <i class="material-icons shopping_cart"></i>
+      <span>Магазин</span>
+    </a>
+    <a mat-menu-item routerLink="/about-us" routerLinkActive="active-link">
+      <i class="material-icons description"></i>
+      <span>Про нас</span>
+    </a>
+    <a mat-menu-item (click)="openMessageOptionsDialog()">
+      <i class="material-icons question_answer"></i>
+      <span>Звяжіться з нами</span>
+    </a>
 
+</mat-menu>

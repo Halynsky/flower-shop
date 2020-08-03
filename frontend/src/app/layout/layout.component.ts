@@ -2,10 +2,7 @@ import { Component } from "@angular/core";
 
 @Component({
   selector: 'layout',
-  template: `
-    <layout-header></layout-header>
-    <router-outlet></router-outlet>
-  `,
+  templateUrl: 'layout.component.html',
   styleUrls: ['layout.component.scss']
 })
 export class LayoutComponent {

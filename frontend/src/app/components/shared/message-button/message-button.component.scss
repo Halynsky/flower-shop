@@ -1,0 +1,155 @@
+@import "theme";
+@import "mixins";
+
+:host {
+  position: fixed;
+  z-index: 10;
+  width: 70px;
+  height: 70px;
+  right: 80px;
+  bottom: 16px;
+  background-color: mat-color($primary);
+  border-radius: 50px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: mat-color($primary);
+  overflow: hidden;
+
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+
+  box-shadow: 0 0 0 0 mat-color($primary);
+
+  animation: pulse 1.25s infinite cubic-bezier(0.66, 0, 0, 1);
+
+
+  @include response-to(xs) {
+    display: none;
+  }
+
+  &:focus {
+    outline: none !important;
+  }
+
+  .static {
+    position: absolute;
+    animation: show-stat 5s infinite;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: mat-color($primary);;
+    z-index: 1;
+    border-radius: 500%;
+
+    i {
+      color: white;
+    }
+
+    p {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: #fff;
+      font-weight: 500;
+      font-size: 11px;
+      line-height: 11px;
+      margin: 0;
+    }
+
+  }
+
+}
+
+:host .icons, {
+  background-color: #fff;
+  width: 44px;
+  height: 44px;
+  border-radius: 50px;
+  position: absolute;
+  overflow: hidden;
+  animation: show-icons 5s infinite;
+}
+
+.icons-line {
+  top: 10px;
+  left: 26px;
+  height: 24px;
+  display: flex;
+  position: absolute;
+  animation: icon-change 5s infinite;
+  //transition: cubic-bezier(.13,1.49,.14,-.4);
+  animation-delay: 0s;
+  transform: translateX(30px);
+  color: mat-color($primary);
+
+  img {
+    margin-right: 50px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  i {
+    font-size: 26px;
+    margin-right: 26px;
+  }
+
+}
+
+@keyframes pulse {to {box-shadow: 0 0 0 10px rgba(mat-color($primary), 0);}}
+
+@keyframes icon-change {
+  0%, 5% {
+    transform: translateX(30px)
+  }
+  15%, 20% {
+    transform: translateX(-12px)
+  }
+  30%, 35% {
+    transform: translateX(-59px)
+  }
+  45%, 50% {
+    transform: translateX(-111px)
+  }
+  60%, 65% {
+    transform: translateX(-162px)
+  }
+  75%, 80% {
+    transform: translateX(-214px)
+  }
+}
+
+@keyframes show-stat {
+  0%, 15% {
+    transform: scale(1)
+  }
+  16%, 79% {
+    transform: scale(0)
+  }
+  80%, to {
+    transform: scale(1)
+  }
+}
+
+@keyframes show-icons {
+  0%, 15% {
+    transform: scale(0)
+  }
+  16%, 79% {
+    transform: scale(1)
+  }
+  80%, to {
+    transform: scale(0)
+  }
+}

@@ -42,6 +42,8 @@ import { UserExistDialogComponent } from "./user-exist-dialog/user-exist-dialog.
 import { AddEmailDialogComponent } from "./add-email-dialog/add-email-dialog.component";
 import { DialogModule } from "primeng";
 import { PrivacyPolicyComponent } from "./privacy-policy/privacy-policy.component";
+import { MessageButtonComponent } from './message-button/message-button.component';
+import { MessageOptionsDialogComponent } from "./message-options-dialog/message-options-dialog.component";
 
 
 const PROVIDERS = [
@@ -67,7 +69,9 @@ export const ngxMaskOptions: Partial<IConfig> | (() => Partial<IConfig>) = {};
     PrivacyPolicyComponent,
     AmountControlledInputComponent,
     HowToPayComponent,
-    AddEmailDialogComponent
+    AddEmailDialogComponent,
+    MessageOptionsDialogComponent,
+    MessageButtonComponent
   ],
   imports: [
     RouterModule,
@@ -131,7 +135,8 @@ export const ngxMaskOptions: Partial<IConfig> | (() => Partial<IConfig>) = {};
     ShopContentItemComponent,
     ShopFiltersComponent,
     AmountControlledInputComponent,
-    HowToPayComponent
+    HowToPayComponent,
+    MessageButtonComponent
   ],
   providers: [
     ...PROVIDERS

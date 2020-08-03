@@ -1,6 +1,6 @@
 @import '../../../../../node_modules/@angular/material/theming';
-@import "theme";
-@import "../../../../scss/colors";
+@import "theme.scss";
+@import "colors.scss";
 
 :host {
   flex-direction: column;

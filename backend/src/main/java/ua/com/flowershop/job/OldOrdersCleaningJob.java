@@ -8,7 +8,6 @@ import ua.com.flowershop.entity.Order;
 import ua.com.flowershop.repository.OrderRepository;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Collections;
 
 @Slf4j
@@ -22,10 +21,7 @@ public class OldOrdersCleaningJob {
     @Scheduled(cron = "${job.old.orders.cleaning}")
     public void reduceFlowerPopularity(){
         log.info("Job | Old orders cleaning job started");
-
-        orderRepository.updateStatusForCreatedBeforeAndStatusIn(LocalDateTime.now().minusDays(30), Collections.singletonList(Order.Status.DELIVERING), Order.Status.DONE);
         orderRepository.updateStatusForSentBeforeAndStatusIn(LocalDate.now().minusDays(MAX_DELIVERY_STATE_SAYS), Collections.singletonList(Order.Status.DELIVERING), Order.Status.DONE);
-
         log.info("Job | Old orders cleaning job finished");
     }
 

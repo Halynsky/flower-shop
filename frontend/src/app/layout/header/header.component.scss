@@ -324,11 +324,22 @@
   margin-top: -8px;
   margin-left: 8px;
   color: $black-100;
-  width: 135px;
+  width: 200px;
 
   .mat-menu-content {
     display: flex;
     flex-direction: column;
+
+    .mat-menu-item {
+      color: $black-100;
+      display: flex;
+      align-items: center;
+
+      i {
+        margin-right: 8px;
+      }
+    }
+
   }
 
   button, a {

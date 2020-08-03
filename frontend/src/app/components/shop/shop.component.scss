@@ -154,9 +154,14 @@
     .go-top-button {
       background-color: rgba(137, 138, 137, 0.65) !important;
       position: fixed;
-      bottom: 16px;
-      right: 16px;
+      bottom: 32px;
+      right: 32px;
       z-index: 1000;
+
+      @include response-to(xs) {
+        bottom: 16px;
+        right: 16px;
+      }
     }
 
   }
