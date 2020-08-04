@@ -2,6 +2,12 @@
   margin-bottom: 24px;
   display: flex;
   flex-direction: column;
+
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
   .loading-spinner {
     display: flex;
     width: 50%;

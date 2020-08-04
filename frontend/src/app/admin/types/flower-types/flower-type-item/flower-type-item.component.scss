@@ -4,6 +4,11 @@
   flex-direction: column;
   max-width: 1000px;
 
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
   .loading-spinner {
     display: flex;
     width: 100%;
