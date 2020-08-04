@@ -3,7 +3,7 @@ import { SnackBarService } from "../../../../services/snak-bar.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { getErrorMessage } from "../../../../utils/Functions";
 import { ItemSaveMode } from "../../../../models/ItemSaveMode";
-import { finalize } from "rxjs/operators";
+import { finalize, first } from "rxjs/operators";
 import { GroupAdmin } from "../../../../api/models/Group";
 import { GroupService } from "../../../../api/services/group.service";
 import { Location } from "@angular/common";
@@ -56,7 +56,7 @@ export class GroupItemComponent implements OnInit {
 
   getItem(id) {
     this.dataService.getById(id)
-      .pipe(finalize(() => this.isLoaded = true))
+      .pipe(first(), finalize(() => this.isLoaded = true))
       .subscribe(
         item => {
           this.item = item;
@@ -66,11 +66,19 @@ export class GroupItemComponent implements OnInit {
   }
 
   getAllFlowerTypes() {
-    this.flowerTypeService.getAll().subscribe(
+    this.flowerTypeService.getAll()
+      .pipe(first())
+      .subscribe(
       flowerTypes => {
+
         this.flowerTypes = flowerTypes;
-        if (this.mode === ItemSaveMode.edit)
+
+        if (this.mode === ItemSaveMode.edit) {
           this.getItem(this.queryParamId)
+        } else {
+          this.isLoaded = true
+        }
+
       },
       error => this.snackBarService.showError(getErrorMessage(error))
     );
@@ -79,7 +87,7 @@ export class GroupItemComponent implements OnInit {
   add() {
     this.loading = true;
     this.dataService.add(this.item)
-      .pipe(finalize(() => this.loading = false))
+      .pipe(first(), finalize(() => this.loading = false))
       .subscribe(
         response => {
           this.snackBarService.showSuccess("Групу успішно створено");
@@ -92,7 +100,7 @@ export class GroupItemComponent implements OnInit {
   update() {
     this.loading = true;
     this.dataService.update(this.item.id, this.item)
-      .pipe(finalize(() => this.loading = false))
+      .pipe(first(), finalize(() => this.loading = false))
       .subscribe(
         response => {
           this.snackBarService.showSuccess("Колір успішно оновлено");
@@ -107,3 +115,4 @@ export class GroupItemComponent implements OnInit {
   }
 
 }
+
