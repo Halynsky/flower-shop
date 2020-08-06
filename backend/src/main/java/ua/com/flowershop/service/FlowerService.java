@@ -32,6 +32,7 @@ public class FlowerService {
 
     private static final int MAX_FLOWER_TYPE_IMG_SIZE = 600;
     private static final List<String> unsafeSortingFields =  Arrays.asList("hasAvailableFlowerSize");
+    private static final String DUMMY_CODE = "xxxx";
 
     @Autowired private FlowerRepository flowerRepository;
     @Autowired private ImageService imageService;
@@ -75,11 +76,6 @@ public class FlowerService {
             flower.setImage(imageUrl);
         }
 
-        flower.getFlowerSizes().forEach(flowerSize -> {
-            flowerSize.setFlower(flowerToCreate);
-            flowerSizeRepository.save(flowerSize);
-        });
-
         flowerToCreate
             .setName(flower.getName())
             .setNameOriginal(flower.getNameOriginal())
@@ -95,16 +91,21 @@ public class FlowerService {
             .setIsNew(flower.getIsNew())
             .setIsPopular(flower.getIsPopular())
             .setPopularity(flower.getPopularity())
-            .setFlowerType(flower.getFlowerType()).setColor(flower.getColor())
-            .setFlowerSizes(flower.getFlowerSizes());
+            .setFlowerType(flower.getFlowerType())
+            .setColor(flower.getColor());
 
         flowerRepository.save(flowerToCreate);
 
         flower.getFlowerSizes().forEach(flowerSize -> {
+            flowerSize.setCode(DUMMY_CODE);
+            flowerSizeRepository.save(flowerSize);
+            flowerSize.setFlower(flowerToCreate);
             flowerSize.setCode(itemCodeGenerator.generateCode(flower.getFlowerType().getId(), flowerSize.getId()));
             flowerSizeRepository.save(flowerSize);
         });
 
+        flowerToCreate.setFlowerSizes(flower.getFlowerSizes());
+        flowerRepository.save(flowerToCreate);
 
     }
 
