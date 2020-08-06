@@ -139,7 +139,10 @@ public class FlowerService {
                 found.setPrice(flowerSize.getPrice());
                 flowerSizeRepository.save(found);
             } else {
+                flowerSize.setCode(DUMMY_CODE);
                 flowerSize.setFlower(flowerToUpdate);
+                flowerSizeRepository.save(flowerSize);
+                flowerSize.setCode(itemCodeGenerator.generateCode(flower.getFlowerType().getId(), flowerSize.getId()));
                 flowerSizeRepository.save(flowerSize);
             }
         });
