@@ -47,8 +47,8 @@ input.table-filter {
   }
 }
 .zoom-image-dialog {
-  .ui-dialog {
-    .ui-dialog-titlebar {
+  .p-dialog {
+    .p-dialog-titlebar {
       padding: 4px 8px;
     }
   }
@@ -137,6 +137,11 @@ tr {
     a.row-expander {
       cursor: pointer;
     }
+  }
+
+  &.p-highlight-contextmenu {
+    background-color: #e67700 !important;
+    color: white !important;
   }
 
 }

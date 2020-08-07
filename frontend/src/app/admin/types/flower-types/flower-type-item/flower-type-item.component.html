@@ -3,7 +3,7 @@
 </div>
 <div class="wrapper" *ngIf="isLoaded">
 
-  <div class="panel-header item ui-grid-col-6">
+  <div class="panel-header item p-col-6">
     <button pButton icon="fa fa-arrow-left" class="button-back" label="Назад" routerLink="../../"></button>
     <h1>{{mode == ItemSaveMode.new ? 'Додати' : 'Оновити'}} <b>Тип Квітів</b></h1>
   </div>
@@ -12,13 +12,13 @@
 
     <form #form="ngForm" class="item-form" (ngSubmit)="form.valid && onSubmit()">
 
-      <div class="ui-grid ui-grid-responsive ui-fluid">
+      <div class="p-grid p-grid-responsive ui-fluid">
 
         <div class="prime-form-group">
-          <div class="ui-grid-col-3">
+          <div class="p-col-3">
             <label for="nameOriginal">Назва (англ)</label>
           </div>
-          <div class="ui-grid-col-3">
+          <div class="p-col-3">
             <input
               pInputText
               #nameOriginal="ngModel"
@@ -27,7 +27,7 @@
               [(ngModel)]="item.nameOriginal"
               required/>
           </div>
-          <div class="ui-grid-col-32" *ngIf="name.errors">
+          <div class="p-col-3" *ngIf="name.errors">
             <ng-container>
               <p-message severity="error" text="Повинно бути вказано" *ngIf="name.errors?.required"></p-message>
             </ng-container>
@@ -35,10 +35,10 @@
         </div>
 
         <div class="prime-form-group">
-          <div class="ui-grid-col-3">
+          <div class="p-col-3">
             <label for="nameSingle">Назва (одн)</label>
           </div>
-          <div class="ui-grid-col-3">
+          <div class="p-col-3">
             <input
               pInputText
               #nameSingle="ngModel"
@@ -47,7 +47,7 @@
               [(ngModel)]="item.nameSingle"
               required/>
           </div>
-          <div class="ui-grid-col-3" *ngIf="name.errors">
+          <div class="p-col-3" *ngIf="name.errors">
             <ng-container>
               <p-message severity="error" text="Повинно бути вказано" *ngIf="name.errors?.required"></p-message>
             </ng-container>
@@ -55,10 +55,10 @@
         </div>
 
         <div class="prime-form-group">
-          <div class="ui-grid-col-3">
+          <div class="p-col-3">
             <label for="name">Назва (множ)</label>
           </div>
-          <div class="ui-grid-col-3">
+          <div class="p-col-3">
             <input
               pInputText
               #name="ngModel"
@@ -70,7 +70,7 @@
               required
             />
           </div>
-          <div class="ui-grid-col-3" *ngIf="name.errors">
+          <div class="p-col-3" *ngIf="name.errors">
             <ng-container>
               <p-message severity="error" text="Повинно бути вказано" *ngIf="name.errors?.required"></p-message>
               <p-message severity="error" text="Данний тип вже існує" *ngIf="name.errors?.unique && !name.errors?.required"></p-message>
@@ -81,28 +81,28 @@
 
 
         <div class="prime-form-group">
-          <div class="ui-grid-col-3">
+          <div class="p-col-3">
             <label for="image">Картинка</label>
           </div>
-          <div class="ui-grid-col-3">
+          <div class="p-col-3">
             <image-preview [previewSize]="80" (fileChange)="addImage($event)" class="image" id="image"
                            [image]="item.image"></image-preview>
           </div>
-          <div class="ui-grid-col-3">
+          <div class="p-col-3">
           </div>
         </div>
 
         <div class="prime-form-group">
-          <div class="ui-grid-col-3">
+          <div class="p-col-3">
             <label for="plantingMaterialType">Посадковий матеріал</label>
           </div>
-          <div class="ui-grid-col-3">
+          <div class="p-col-3">
             <div class="dropdown-block">
               <p-dropdown [options]="plantingMaterialTypes" id="plantingMaterialType" name="plantingMaterialType" [(ngModel)]="item.plantingMaterialType" placeholder="Оберіть тип матеріалу"
                           #plantingMaterialType="ngModel" required></p-dropdown>
             </div>
           </div>
-          <div class="ui-grid-col-3">
+          <div class="p-col-3">
             <div *ngIf="plantingMaterialType.errors">
               <ng-container *ngIf="plantingMaterialType.dirty || plantingMaterialType.touched || form.submitted">
                 <p-message *ngIf="plantingMaterialType.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
@@ -112,10 +112,10 @@
         </div>
 
         <div class="prime-form-group">
-          <div class="ui-grid-col-3">
+          <div class="p-col-3">
             <label>Опис</label>
           </div>
-          <div class="ui-grid-col-3">
+          <div class="p-col-3">
           <textarea pInputTextarea
                     #description="ngModel"
                     name="description"
@@ -127,9 +127,9 @@
 
       </div>
 
-      <div class="ui-grid-row ui-grid-field">
-        <div class="ui-grid-col-6 footer">
-          <button type="submit" pButton icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" class="ui-button-success" label="{{mode == ItemSaveMode.new ? 'Зберегти' : 'Оновити'}}" [disabled]="loading"></button>
+      <div class="p-grid-row p-grid-field">
+        <div class="p-col-6 footer">
+          <button type="submit" pButton icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" class="p-button-success" label="{{mode == ItemSaveMode.new ? 'Зберегти' : 'Оновити'}}" [disabled]="loading"></button>
         </div>
       </div>
 

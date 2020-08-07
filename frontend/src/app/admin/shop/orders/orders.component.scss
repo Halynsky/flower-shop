@@ -11,7 +11,7 @@ p-dialog {
 
   &.split-dialog {
 
-    ::ng-deep .ui-dialog-content {
+    ::ng-deep .p-dialog-content {
       padding-top: 0px;
       padding-bottom: 0px;
     }
@@ -112,7 +112,7 @@ p-dialog {
         background-color: #fafafa;
         //margin-top: 8px;
 
-        ::ng-deep .ui-dropdown-item-empty, ::ng-deep .ui-dropdown-label-empty {
+        ::ng-deep .p-dropdown-item-empty, ::ng-deep .p-dropdown-label-empty {
           text-indent: initial !important;
         }
 
@@ -175,7 +175,7 @@ p-dialog {
 }
 
 ::ng-deep p-dropdown.add-flower-size-dropdown {
-  ::ng-deep .ui-dropdown {
+  ::ng-deep .p-dropdown {
     width: 300px;
   }
 }
@@ -195,6 +195,7 @@ p-dialog {
   flex-direction: column;
 
   button {
+    width: 100%;
     &:not(:last-of-type) {
       margin-bottom: 8px;
     }

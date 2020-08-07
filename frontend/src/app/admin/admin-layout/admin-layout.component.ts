@@ -9,8 +9,9 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
     '../../../../node_modules/@fortawesome/fontawesome-free/css/all.min.css',
     '../../../../node_modules/@fortawesome/fontawesome-free/css/v4-shims.min.css',
     '../../../../node_modules/primeicons/primeicons.css',
+    '../../../../node_modules/primeflex/primeflex.css',
     '../../../../node_modules/primeng/resources/primeng.min.css',
-    '../../../../node_modules/primeng/resources/themes/nova-light/theme.css',
+    '../../../../node_modules/primeng/resources/themes/nova/theme.css',
     '../primeng.scss',
     '../admin.scss'
   ],

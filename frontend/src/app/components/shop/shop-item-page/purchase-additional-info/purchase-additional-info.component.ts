@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ContactUsService } from "../../../../services/contact-us.service";
 
 @Component({
   selector: 'purchase-additional-info',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PurchaseAdditionalInfoComponent implements OnInit {
 
-  constructor() { }
+  constructor(public contactUsService: ContactUsService) { }
 
   ngOnInit(): void {
   }

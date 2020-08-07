@@ -3,22 +3,22 @@
 </div>
 
 <div class="wrapper" *ngIf="isLoaded">
-  <div class="panel-header item ui-grid-col-6">
+  <div class="panel-header item p-col-6">
     <button pButton icon="fa fa-arrow-left" class="button-back" label="Назад" routerLink="../../"></button>
-    <h1>{{mode == ItemSaveMode.new ? 'Додати' : 'Оновити'}} <b>Розмір</b> цибулини</h1>
+    <h1>{{mode == ItemSaveMode.new ? 'Додати' : 'Оновити'}} <b>Розмір</b> ПМ</h1>
   </div>
 
   <div class="panel-content">
 
     <form #form="ngForm" class="item-form" (ngSubmit)="form.valid && onSubmit()">
 
-      <div class="ui-grid ui-grid-responsive ui-fluid">
+      <div class="p-grid p-grid-responsive ui-fluid">
 
         <div class="prime-form-group">
-          <div class="ui-grid-col-3">
+          <div class="p-col-3">
             <label for="name">Назва</label>
           </div>
-          <div class="ui-grid-col-3">
+          <div class="p-col-3">
             <input
               pInputText
               #name="ngModel"
@@ -29,7 +29,7 @@
               [previousValue]="previousName"
             />
           </div>
-          <div class="ui-grid-col-3" *ngIf="name.errors?.unique">
+          <div class="p-col-3" *ngIf="name.errors?.unique">
             <ng-container>
               <p-message severity="error" text="Данний розмір вже існує"></p-message>
             </ng-container>
@@ -38,9 +38,9 @@
 
       </div>
 
-      <div class="ui-grid-row ui-grid-field">
-        <div class="ui-grid-col-6 footer">
-          <button type="submit" pButton icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" class="ui-button-success" label="{{mode == ItemSaveMode.new ? 'Зберегти' : 'Оновити'}}" [disabled]="loading"></button>
+      <div class="p-grid-row p-grid-field">
+        <div class="p-col-6 footer">
+          <button type="submit" pButton icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" class="p-button-success" label="{{mode == ItemSaveMode.new ? 'Зберегти' : 'Оновити'}}" [disabled]="loading"></button>
         </div>
       </div>
 

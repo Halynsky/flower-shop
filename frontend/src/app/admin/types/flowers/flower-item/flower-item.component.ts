@@ -76,6 +76,10 @@ export class FlowerItemComponent implements OnInit {
     );
 
     let requests: Observable<any>[] = [this.flowerTypeService.getAll(), this.colorService.getForAdmin(), this.sizeService.getAll()];
+
+
+
+
     if (this.mode === ItemSaveMode.edit)
       requests.push(this.dataService.getById(this.propertyId));
     forkJoin(requests)
@@ -87,9 +91,10 @@ export class FlowerItemComponent implements OnInit {
           this.sizes = res[2];
           if (this.mode === ItemSaveMode.edit) {
             this.item = res[3];
-            this.item .flowerSizes.forEach(fs => fs.price = fs.price / 100);
-            this.previousNameOriginal = this.item .nameOriginal;
-            this.previousName = this.item .name;
+            this.item.flowerSizes.forEach(fs => fs.price = fs.price / 100);
+            this.previousNameOriginal = this.item.nameOriginal;
+            this.previousName = this.item.name;
+            this.getAllGroupsForFlowerType(this.item.flowerType.id)
           }
         },
         error => this.snackBarService.showError(getErrorMessage(error))

@@ -1,8 +1,8 @@
 <div class="panel-header">
   <h1>Групи</h1>
   <div class="navigation-buttons">
-    <button pButton [routerLink]="['item', ItemSaveMode.new]" icon="pi pi-plus" class="ui-button-success" label="&nbsp;&nbsp;Додати"></button>
-    <button pButton (click)="loadData()" icon="pi pi-refresh" label="&nbsp;&nbsp;Оновити"></button>
+    <button pButton [routerLink]="['item', ItemSaveMode.new]" icon="pi pi-plus" class="p-button-success" label="Додати"></button>
+    <button pButton (click)="loadData()" icon="pi pi-refresh" label="Оновити"></button>
   </div>
 </div>
 
@@ -44,8 +44,8 @@
           <input *ngSwitchCase="'nameOriginalSingle'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" class="table-filter">
           <div *ngSwitchCase="'flowerType'">
             <p-multiSelect [options]="flowerTypes" defaultLabel="Всі"
-                           class="table-filter"
-                           (onChange)="dt.filter($event.value, 'flowerType.name', 'in')"></p-multiSelect>
+                           class="table-filter" filterMatchMode="startsWith"
+                           (onChange)="dt.filter($event.value, 'flowerType.name', 'in')" ></p-multiSelect>
           </div>
         </th>
       </tr>

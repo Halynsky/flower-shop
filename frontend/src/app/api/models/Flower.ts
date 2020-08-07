@@ -18,6 +18,8 @@ export class Flower {
   isNew: boolean = false;
   isPopular: boolean = false;
   popularity: number;
+  color: Color;
+  colorSecondary: Color;
 }
 
 export class FlowerShort {
@@ -34,8 +36,6 @@ export class FlowerShort {
 }
 
 export class FlowerFull extends Flower{
-  color: Color;
-  colorSecondary: Color;
   flowerSizes: Array<FlowerSize> = [];
   created?: string;
   lastSupply?: string;

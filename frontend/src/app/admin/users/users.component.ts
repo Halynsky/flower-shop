@@ -26,6 +26,7 @@ export class UsersComponent implements OnInit {
   displayNoteChangeDialog = false;
   ItemSaveMode = ItemSaveMode;
   loading = false;
+  isContextMenuOpened = false;
 
   cols = [
     {field: 'id', header: 'Id', active: true},
@@ -203,8 +204,13 @@ export class UsersComponent implements OnInit {
     this.selectedColumns = this.cols.filter(column => column.active);
   }
 
-  onRowSelect(event) {
+  onContextMenuSelect(event) {
+    this.isContextMenuOpened = true;
     this.initContextMenu();
+  }
+
+  onContextMenuHide(event) {
+    this.isContextMenuOpened = false;
   }
 
   merge() {

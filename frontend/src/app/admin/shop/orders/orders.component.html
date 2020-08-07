@@ -1,9 +1,9 @@
 <div class="panel-header">
   <h1>Замовлення</h1>
   <div class="navigation-buttons">
-    <button pButton (click)="toProgressMenu.toggle($event)" icon="pi pi-bars" class="ui-button-success" label="&nbsp;&nbsp;Обробка"></button>
-    <button pButton (click)="displayCreateOrderDialog = true" icon="pi pi-plus" class="ui-button-success" label="&nbsp;&nbsp;Додати"></button>
-    <button pButton (click)="refresh()" icon="pi pi-refresh" label="&nbsp;&nbsp;Оновити"></button>
+    <button pButton (click)="toProgressMenu.toggle($event)" icon="pi pi-bars" class="p-button-success" label="Обробка"></button>
+    <button pButton (click)="displayCreateOrderDialog = true" icon="pi pi-plus" class="p-button-success" label="Додати"></button>
+    <button pButton (click)="refresh()" icon="pi pi-refresh" label="Оновити"></button>
   </div>
 
 </div>
@@ -95,14 +95,14 @@
                  class="table-filter" [ngModel]="filters?.userId?.value">
 
           <div *ngSwitchCase="'status'">
-            <p-multiSelect [options]="statusesOptions" defaultLabel="Всі"
+            <p-multiSelect [options]="statusesOptions" defaultLabel="Всі" autofocusFilter="true" filterMatchMode="startsWith"
                            class="table-filter"
                            (onChange)="dt.filter($event.value, 'statusNames', 'in')"></p-multiSelect>
           </div>
 
 
           <div *ngSwitchCase="'paid'">
-            <p-multiSelect [options]="isPaidOptions" defaultLabel="Всі"
+            <p-multiSelect [options]="isPaidOptions" defaultLabel="Всі" [filter]="false"
                            class="table-filter"
                            (onChange)="dt.filter($event.value, 'paid', 'equals')"></p-multiSelect>
           </div>
@@ -295,13 +295,13 @@
 
   <form id="status_change_form" #statusChangeForm="ngForm" class="status-change-dialog-content" (ngSubmit)="statusChangeForm.valid && changeStatus()">
 
-    <div class="ui-grid ui-grid-responsive ui-fluid">
+    <div class="p-grid p-grid-responsive ui-fluid">
 
       <div class="prime-form-group">
-        <div class="ui-grid-col-4">
+        <div class="p-col-4">
           <label>Статус буде змінено на:</label>
         </div>
-        <div class="ui-grid-col-4">
+        <div class="p-col-4">
           <label class="new-status-name"
                  [ngClass]="{'pg-primary': orderStatusChangeRequest.status == Status.PROCESSING || orderStatusChangeRequest.status == Status.DELIVERING,
                  'pg-accent': orderStatusChangeRequest.status == Status.DONE,
@@ -313,17 +313,17 @@
       </div>
 
       <div class="prime-form-group" *ngIf="orderStatusChangeRequest.status == Status.DELIVERING">
-        <div class="ui-grid-col-4">
+        <div class="p-col-4">
           <label>Номер декларації</label>
         </div>
-        <div class="ui-grid-col-4">
+        <div class="p-col-4">
           <input
             pInputText
             #postDeclaration="ngModel"
             name="postDeclaration"
             [(ngModel)]="orderStatusChangeRequest.postDeclaration"/>
         </div>
-        <div class="ui-grid-col-4">
+        <div class="p-col-4">
           <ng-container *ngIf="postDeclaration.dirty || postDeclaration.touched || statusChangeForm.submitted">
             <p-message *ngIf="postDeclaration.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
           </ng-container>
@@ -331,11 +331,11 @@
       </div>
 
       <div class="prime-form-group" *ngIf="orderStatusChangeRequest.status == Status.DELIVERING">
-        <div class="ui-grid-col-4">
+        <div class="p-col-4">
           <label>Дата відправки</label>
         </div>
 
-        <div class="ui-grid-col-4">
+        <div class="p-col-4">
           <p-calendar
             #sent="ngModel"
             name="sent"
@@ -349,7 +349,7 @@
           </p-calendar>
         </div>
 
-        <div class="ui-grid-col-4">
+        <div class="p-col-4">
           <ng-container *ngIf="sent.dirty || sent.touched || statusChangeForm.submitted">
             <p-message *ngIf="sent.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
           </ng-container>
@@ -357,10 +357,10 @@
       </div>
 
       <div class="prime-form-group">
-        <div class="ui-grid-col-4">
+        <div class="p-col-4">
           <label>Коментар</label>
         </div>
-        <div class="ui-grid-col-4">
+        <div class="p-col-4">
           <textarea pInputTextarea
                     #comment="ngModel"
                     name="comment"
@@ -375,7 +375,7 @@
   </form>
 
   <p-footer>
-    <button pButton form="status_change_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="&nbsp;&nbsp;Підтвердити" type="submit"
+    <button pButton form="status_change_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="Підтвердити" type="submit"
             [disabled]="loading"></button>
   </p-footer>
 </p-dialog>
@@ -387,13 +387,13 @@
 
   <form id="contacts_change_form" #contactsChangeForm="ngForm" class="contacts-change-dialog-content" (ngSubmit)="contactsChangeForm.valid && changeContacts()">
 
-    <div class="ui-grid ui-grid-responsive ui-fluid">
+    <div class="p-grid p-grid-responsive ui-fluid">
 
       <div class="prime-form-group">
-        <div class="ui-grid-col-4">
+        <div class="p-col-4">
           <label>Телефон</label>
         </div>
-        <div class="ui-grid-col-4">
+        <div class="p-col-4">
           <input
             pInputText
             #phone="ngModel"
@@ -406,7 +406,7 @@
             pattern="^[0].{9,9}"
             required/>
         </div>
-        <div class="ui-grid-col-4">
+        <div class="p-col-4">
           <ng-container *ngIf="phone.dirty || phone.touched || contactsChangeForm.submitted">
             <p-message *ngIf="phone.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
             <p-message *ngIf="!phone.errors?.required && phone.errors?.pattern" severity="error" text="Введіть валідний номер телефону"></p-message>
@@ -415,10 +415,10 @@
       </div>
 
       <div class="prime-form-group">
-        <div class="ui-grid-col-4">
+        <div class="p-col-4">
           <label>Адреса доставки</label>
         </div>
-        <div class="ui-grid-col-4">
+        <div class="p-col-4">
           <textarea pInputTextarea
                     #deliveryAddress="ngModel"
                     name="deliveryAddress"
@@ -427,7 +427,7 @@
                     required>
           </textarea>
         </div>
-        <div class="ui-grid-col-4">
+        <div class="p-col-4">
           <ng-container *ngIf="deliveryAddress.dirty || deliveryAddress.touched || contactsChangeForm.submitted">
             <p-message *ngIf="deliveryAddress.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
           </ng-container>
@@ -439,7 +439,7 @@
   </form>
 
   <p-footer>
-    <button pButton form="contacts_change_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="&nbsp;&nbsp;Підтвердити" type="submit"
+    <button pButton form="contacts_change_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="Підтвердити" type="submit"
             [disabled]="loading"></button>
   </p-footer>
 </p-dialog>
@@ -451,13 +451,13 @@
 
   <form id="note_change_form" #noteChangeForm="ngForm" class="note-change-dialog-content" (ngSubmit)="noteChangeForm.valid && changeNote()">
 
-    <div class="ui-grid ui-grid-responsive ui-fluid">
+    <div class="p-grid p-grid-responsive ui-fluid">
 
       <div class="prime-form-group">
-        <div class="ui-grid-col-4">
+        <div class="p-col-4">
           <label>Примітка</label>
         </div>
-        <div class="ui-grid-col-4">
+        <div class="p-col-4">
           <textarea pInputTextarea
                     #note="ngModel"
                     name="note"
@@ -465,7 +465,7 @@
                     cols="23" rows="6" maxlength="500">
           </textarea>
         </div>
-        <div class="ui-grid-col-4">
+        <div class="p-col-4">
         </div>
       </div>
 
@@ -474,7 +474,7 @@
   </form>
 
   <p-footer>
-    <button pButton form="note_change_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="&nbsp;&nbsp;Підтвердити" type="submit"
+    <button pButton form="note_change_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="Підтвердити" type="submit"
             [disabled]="loading"></button>
   </p-footer>
 </p-dialog>
@@ -486,20 +486,20 @@
 
   <form id="merge_form" #mergeForm="ngForm" class="merge-dialog-content" (ngSubmit)="mergeForm.valid && merge()">
 
-    <div class="ui-grid ui-grid-responsive ui-fluid">
+    <div class="p-grid p-grid-responsive ui-fluid">
 
       <div class="prime-form-group">
-        <div class="ui-grid-col-4">
+        <div class="p-col-4">
           <label>Номер іншого замовлення</label>
         </div>
-        <div class="ui-grid-col-4">
+        <div class="p-col-4">
           <input pInputText
                  #mergingOrder="ngModel"
                  name="mergingOrder"
                  [(ngModel)]="mergingOrderId"
                  required>
         </div>
-        <div class="ui-grid-col-4">
+        <div class="p-col-4">
           <ng-container *ngIf="mergingOrder.dirty || mergingOrder.touched || mergeForm.submitted">
             <p-message *ngIf="mergingOrder.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
           </ng-container>
@@ -511,7 +511,7 @@
   </form>
 
   <p-footer>
-    <button pButton form="merge_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="&nbsp;&nbsp;Підтвердити" type="submit"
+    <button pButton form="merge_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="Підтвердити" type="submit"
             [disabled]="loading"></button>
   </p-footer>
 </p-dialog>
@@ -608,7 +608,7 @@
   </form>
 
   <p-footer>
-    <button pButton form="split_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="&nbsp;&nbsp;Підтвердити" type="submit"
+    <button pButton form="split_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="Підтвердити" type="submit"
             [disabled]="loading || splittingOtherOrderItems.length == 0 || this.splittingOrder.orderItems.length == 0"></button>
   </p-footer>
 </p-dialog>
@@ -655,7 +655,7 @@
           </ng-template>
         </p-dropdown>
 
-        <button pButton icon="pi pi-plus" label="&nbsp;&nbsp;Додати" type="button" class="ui-button-success" [disabled]="loading"
+        <button pButton icon="pi pi-plus" label="Додати" type="button" class="p-button-success" [disabled]="loading"
                 (click)="addOrderItem()"></button>
 
       </div>
@@ -704,7 +704,7 @@
   </form>
 
   <p-footer>
-    <button pButton form="update_order_items" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="&nbsp;&nbsp;Підтвердити" type="submit"
+    <button pButton form="update_order_items" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="Підтвердити" type="submit"
             [disabled]="loading || updateOrderItemsForm.invalid"></button>
   </p-footer>
 </p-dialog>
@@ -716,13 +716,13 @@
 
   <form id="discount_change_form" #discountChangeForm="ngForm" class="discount-change-dialog" (ngSubmit)="discountChangeForm.valid && changeDiscount()">
 
-    <div class="ui-grid ui-grid-responsive ui-fluid">
+    <div class="p-grid p-grid-responsive ui-fluid">
 
       <div class="prime-form-group">
-        <div class="ui-grid-col-4">
+        <div class="p-col-4">
           <label>Знижка (грн)</label>
         </div>
-        <div class="ui-grid-col-4">
+        <div class="p-col-4">
           <input pInputText
                  #discount="ngModel"
                  name="discount"
@@ -731,7 +731,7 @@
                  digitOnly
                  required>
         </div>
-        <div class="ui-grid-col-4">
+        <div class="p-col-4">
           <ng-container *ngIf="discountChangeForm.dirty || discountChangeForm.touched || discountChangeForm.submitted">
             <p-message *ngIf="discount.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
           </ng-container>
@@ -743,7 +743,7 @@
   </form>
 
   <p-footer>
-    <button pButton form="discount_change_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="&nbsp;&nbsp;Підтвердити" type="submit"
+    <button pButton form="discount_change_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="Підтвердити" type="submit"
             [disabled]="loading"></button>
   </p-footer>
 </p-dialog>
@@ -755,13 +755,13 @@
 
   <form id="payment_confirm_form" #paymentConfirmForm="ngForm" class="payment-confirm-dialog-content" (ngSubmit)="paymentConfirmForm.valid && confirmPayment()">
 
-    <div class="ui-grid ui-grid-responsive ui-fluid">
+    <div class="p-grid p-grid-responsive ui-fluid">
 
       <div class="prime-form-group">
-        <div class="ui-grid-col-4">
+        <div class="p-col-4">
           <label>Дата оплати</label>
         </div>
-        <div class="ui-grid-col-4">
+        <div class="p-col-4">
           <p-calendar
             #paymentDateCalendar="ngModel"
             name="paymentDate"
@@ -773,7 +773,7 @@
             [locale]="translation.calendar_ua">
           </p-calendar>
         </div>
-        <div class="ui-grid-col-4">
+        <div class="p-col-4">
           <ng-container *ngIf="paymentConfirmForm.dirty || paymentConfirmForm.touched || paymentConfirmForm.submitted">
             <p-message *ngIf="paymentDateCalendar.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
           </ng-container>
@@ -785,7 +785,7 @@
   </form>
 
   <p-footer>
-    <button pButton form="payment_confirm_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="&nbsp;&nbsp;Підтвердити" type="submit"
+    <button pButton form="payment_confirm_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="Підтвердити" type="submit"
             [disabled]="loading"></button>
   </p-footer>
 </p-dialog>
@@ -797,27 +797,27 @@
 
   <form id="create_order_form" #createOrderForm="ngForm" class="create-order-dialog-content" (ngSubmit)="createOrderForm.valid && createOrder()">
 
-    <div class="ui-grid ui-grid-responsive ui-fluid">
+    <div class="p-grid p-grid-responsive ui-fluid">
 
       <div class="prime-form-group create-mode-selector" *ngIf="!createOrderMode">
-        <button pButton (click)="createOrderMode = 'byId'" icon="pi pi-user" label="&nbsp;&nbsp;Для зареєстрованого користувача"></button>
-        <button pButton (click)="createOrderMode = 'new'" icon="pi pi-plus" label="&nbsp;&nbsp;Для не зареєстрованого користувача"></button>
+        <button pButton (click)="createOrderMode = 'byId'" icon="pi pi-user" label="Для зареєстрованого користувача"></button>
+        <button pButton (click)="createOrderMode = 'new'" icon="pi pi-plus" label="Для не зареєстрованого користувача"></button>
       </div>
 
       <div *ngIf="createOrderMode == 'byId'" class="for-existed-user">
 
         <div class="prime-form-group" >
-          <div class="ui-grid-col-4">
+          <div class="p-col-4">
             <label>Id користувача</label>
           </div>
-          <div class="ui-grid-col-4">
+          <div class="p-col-4">
             <input pInputText
                    #userIdToCreateOrderInput="ngModel"
                    name="userIdToCreateOrder"
                    [(ngModel)]="orderCreateRequestAdmin.userId"
                    required>
           </div>
-          <div class="ui-grid-col-4">
+          <div class="p-col-4">
             <ng-container *ngIf="userIdToCreateOrderInput.dirty || userIdToCreateOrderInput.touched || createOrderForm.submitted">
               <p-message *ngIf="createOrderForm.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
             </ng-container>
@@ -829,10 +829,10 @@
       <div *ngIf="createOrderMode == 'new'" class="for-new-user">
 
         <div class="prime-form-group">
-          <div class="ui-grid-col-4">
+          <div class="p-col-4">
             <label for="name">Імя</label>
           </div>
-          <div class="ui-grid-col-4">
+          <div class="p-col-4">
             <input
               pInputText
               #nameInput="ngModel"
@@ -841,7 +841,7 @@
               [(ngModel)]="orderCreateRequestAdmin.name"
               required/>
           </div>
-          <div class="ui-grid-col-4">
+          <div class="p-col-4">
             <ng-container *ngIf="(nameInput.dirty || nameInput.touched) && createOrderForm.submitted">
               <p-message *ngIf="nameInput.errors?.required" severity="error" text="Імя повинно бути вказано"></p-message>
             </ng-container>
@@ -849,10 +849,10 @@
         </div>
 
         <div class="prime-form-group">
-          <div class="ui-grid-col-4">
+          <div class="p-col-4">
             <label for="email">Email</label>
           </div>
-          <div class="ui-grid-col-4">
+          <div class="p-col-4">
             <input
               pInputText
               #emailInput="ngModel"
@@ -864,7 +864,7 @@
             />
           </div>
 
-          <div class="ui-grid-col-4">
+          <div class="p-col-4">
             <ng-container *ngIf="(emailInput.dirty || emailInput.touched) && createOrderForm.submitted">
               <p-message *ngIf="emailInput.errors?.unique" severity="error" text="Користувач з данним Email вже існує"></p-message>
               <p-message *ngIf="emailInput.errors?.email" severity="error" text="Email повинен бути валідним"></p-message>
@@ -874,10 +874,10 @@
         </div>
 
         <div class="prime-form-group">
-          <div class="ui-grid-col-4">
+          <div class="p-col-4">
             <label for="phone">Телефон</label>
           </div>
-          <div class="ui-grid-col-4">
+          <div class="p-col-4">
             <input
               pInputText
               #phone="ngModel"
@@ -892,7 +892,7 @@
               [(ngModel)]="orderCreateRequestAdmin.phone"
             />
           </div>
-          <div class="ui-grid-col-4">
+          <div class="p-col-4">
             <ng-container *ngIf="(phone.dirty || phone.touched) && createOrderForm.submitted">
               <p-message *ngIf="phone.errors?.required" severity="error" text="Телефон повинен бути вказаний"></p-message>
             </ng-container>
@@ -900,10 +900,10 @@
         </div>
 
         <div class="prime-form-group">
-          <div class="ui-grid-col-4">
+          <div class="p-col-4">
             <label for="phone">Адреса доставки</label>
           </div>
-          <div class="ui-grid-col-4">
+          <div class="p-col-4">
             <textarea pInputTextarea
                       #deliveryAddress="ngModel"
                       name="deliveryAddress"
@@ -921,7 +921,7 @@
   </form>
 
   <p-footer>
-    <button *ngIf="createOrderMode" pButton form="create_order_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
+    <button *ngIf="createOrderMode" pButton form="create_order_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="Підтвердити" type="submit" [disabled]="loading"></button>
   </p-footer>
 </p-dialog>
 

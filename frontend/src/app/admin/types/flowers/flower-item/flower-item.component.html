@@ -2,7 +2,7 @@
   <p-progressSpinner></p-progressSpinner>
 </div>
 <div class="wrapper" *ngIf="initialized">
-  <div class="panel-header item ui-grid-col-7">
+  <div class="panel-header item p-col-7">
     <button pButton icon="fa fa-arrow-left" class="button-back" label="Назад" routerLink="../../"></button>
     <h1>{{mode == ItemSaveMode.new ? 'Додати' : 'Оновити'}} <b>Квітку</b></h1>
   </div>
@@ -11,23 +11,22 @@
 
     <form #form="ngForm" id="flower_inputs" class="item-form" (ngSubmit)="form.valid && onSubmit()">
 
-      <div class="ui-grid ui-grid-responsive ui-fluid">
+      <div class="p-grid">
 
         <div class="prime-form-group">
-          <div class="ui-grid-col-3">
+          <div class="p-col-3">
             <label for="nameOriginal">Назва (англ)</label>
           </div>
-          <div class="ui-grid-col-4">
+          <div class="p-col-4">
             <input
               pInputText
               #nameOriginal="ngModel"
               id="nameOriginal"
               name="nameOriginal"
               [(ngModel)]="item.nameOriginal"
-              required
-            />
+              required/>
           </div>
-          <div class="ui-grid-col-3">
+          <div class="p-col-3">
             <div *ngIf="nameOriginal.errors">
               <ng-container *ngIf="nameOriginal.dirty || nameOriginal.touched || form.submitted">
                 <p-message *ngIf="nameOriginal.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
@@ -38,20 +37,19 @@
         </div>
 
         <div class="prime-form-group">
-          <div class="ui-grid-col-3">
+          <div class="p-col-3">
             <label for="name">Назва (укр)</label>
           </div>
-          <div class="ui-grid-col-4">
+          <div class="p-col-4">
             <input
               pInputText
               #name="ngModel"
               id="name"
               name="name"
               [(ngModel)]="item.name"
-              required
-            />
+              required/>
           </div>
-          <div class="ui-grid-col-3">
+          <div class="p-col-3">
             <div *ngIf="name.errors">
               <ng-container *ngIf="name.dirty || name.touched || form.submitted">
                 <p-message *ngIf="name.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
@@ -62,31 +60,31 @@
         </div>
 
         <div class="prime-form-group">
-          <div class="ui-grid-col-3">
+          <div class="p-col-3">
             <label for="image">Картинка</label>
           </div>
-          <div class="ui-grid-col-4">
-            <image-preview [previewSize]="80" (fileChange)="addImage($event)" class="image" id="image"
+          <div class="p-col-4">
+            <image-preview [previewSize]="160" (fileChange)="addImage($event)" class="image" id="image"
                            [image]="item.image"></image-preview>
           </div>
-          <div class="ui-grid-col-3">
+          <div class="p-col-3">
           </div>
         </div>
 
         <div class="prime-form-group">
-          <div class="ui-grid-col-3">
+          <div class="p-col-3">
             <label for="flowerType">Тип квітки</label>
           </div>
-          <div class="ui-grid-col-4">
+          <div class="p-col-4">
             <div class="dropdown-block">
               <p-dropdown [options]="flowerTypes" name="flowerType" optionLabel="name"
                           [filter]="true"
                           #flowerType="ngModel" dataKey="id" [(ngModel)]="item.flowerType"
                           placeholder="Оберіть тип квітки" id="flowerType" required
-                          (ngModelChange)="getAllGroupsForFlowerType(item.flowerType.id)"></p-dropdown>
+                          (ngModelChange)="getAllGroupsForFlowerType(item.flowerType.id)" filterMatchMode="startsWith"></p-dropdown>
             </div>
           </div>
-          <div class="ui-grid-col-3">
+          <div class="p-col-3">
             <div *ngIf="flowerType.errors">
               <ng-container *ngIf="flowerType.dirty || flowerType.touched || form.submitted">
                 <p-message *ngIf="flowerType.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
@@ -96,24 +94,24 @@
         </div>
 
         <div class="prime-form-group">
-          <div class="ui-grid-col-3">
+          <div class="p-col-3">
             <label for="group">Група</label>
           </div>
-          <div class="ui-grid-col-4">
+          <div class="p-col-4">
             <div class="dropdown-block">
               <p-dropdown [options]="groups" name="group" optionLabel="name" #group="ngModel" dataKey="id" [(ngModel)]="item.group"
                           placeholder="Оберіть групу" id="group" showClear="true"></p-dropdown>
             </div>
           </div>
-          <div class="ui-grid-col-3">
+          <div class="p-col-3">
           </div>
         </div>
 
         <div class="prime-form-group">
-          <div class="ui-grid-col-3">
+          <div class="p-col-3">
             <label>Опис</label>
           </div>
-          <div class="ui-grid-col-4">
+          <div class="p-col-4">
           <textarea pInputTextarea
                     #description="ngModel"
                     name="description"
@@ -124,10 +122,10 @@
         </div>
 
         <div class="prime-form-group">
-          <div class="ui-grid-col-3">
+          <div class="p-col-3">
             <label for="color">Колір</label>
           </div>
-          <div class="ui-grid-col-4">
+          <div class="p-col-4">
             <div class="dropdown-block color-dropdown-block">
               <p-dropdown [options]="colors" id="color" name="color" [(ngModel)]="item.color" placeholder="Оберіть колір"
                           optionLabel="name" dataKey="id" #color="ngModel" showClear="true" filter="true" emptyFilterMessage="Не знайдено" required>
@@ -148,7 +146,7 @@
               </p-dropdown>
             </div>
           </div>
-          <div class="ui-grid-col-3">
+          <div class="p-col-3">
             <div *ngIf="color.errors">
               <ng-container *ngIf="color.dirty || color.touched || form.submitted">
                 <p-message *ngIf="color.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
@@ -158,10 +156,10 @@
         </div>
 
         <div class="prime-form-group">
-          <div class="ui-grid-col-3">
+          <div class="p-col-3">
             <label for="color">Другорядний колір</label>
           </div>
-          <div class="ui-grid-col-4">
+          <div class="p-col-4">
             <div class="dropdown-block color-dropdown-block">
               <p-dropdown [options]="colors" id="colorSecondary" name="colorSecondary" [(ngModel)]="item.colorSecondary" placeholder="Оберіть колір"
                           optionLabel="name" dataKey="id" #colorSecondary="ngModel" showClear="true" filter="true" emptyFilterMessage="Не знайдено">
@@ -182,7 +180,7 @@
               </p-dropdown>
             </div>
           </div>
-          <div class="ui-grid-col-3">
+          <div class="p-col-3">
             <div *ngIf="colorSecondary.errors">
               <ng-container *ngIf="colorSecondary.dirty || colorSecondary.touched || form.submitted">
                 <p-message *ngIf="colorSecondary.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
@@ -192,10 +190,10 @@
         </div>
 
         <div class="prime-form-group">
-          <div class="ui-grid-col-3">
+          <div class="p-col-3">
             <label for="flowerSizeMin">Розмір квітки (від-до), см</label>
           </div>
-          <div class="ui-grid-col-4">
+          <div class="p-col-4">
             <input
               pInputText
               #flowerSizeMin="ngModel"
@@ -215,7 +213,7 @@
             [rangePairMin]="item.flowerSizeMin"
           />
           </div>
-          <div class="ui-grid-col-3">
+          <div class="p-col-3">
             <div *ngIf="flowerSizeMax.errors?.required">
               <ng-container *ngIf="flowerSizeMax.dirty || flowerSizeMax.touched || form.submitted">
                 <p-message *ngIf="flowerSizeMax.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
@@ -228,10 +226,10 @@
         </div>
 
         <div class="prime-form-group">
-          <div class="ui-grid-col-3">
+          <div class="p-col-3">
             <label for="flowerHeightMin">Висота стебла (від-до), см</label>
           </div>
-          <div class="ui-grid-col-4">
+          <div class="p-col-4">
             <input
               pInputText
               #flowerHeightMin="ngModel"
@@ -251,7 +249,7 @@
             [rangePairMin]="item.flowerHeightMin"
           />
           </div>
-          <div class="ui-grid-col-3">
+          <div class="p-col-3">
             <div *ngIf="flowerHeightMax.errors?.required">
               <ng-container *ngIf="flowerHeightMax.dirty || flowerHeightMax.touched || form.submitted">
                 <p-message *ngIf="flowerHeightMax.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
@@ -264,22 +262,24 @@
         </div>
 
         <div class="prime-form-group">
-          <div class="ui-grid-col-3">
+          <div class="p-col-3">
             <label for="popularity">Рейтинг</label>
           </div>
-          <p-rating
-            #popularity="ngModel"
-            id="popularity"
-            name="popularity"
-            [(ngModel)]="item.popularity" stars="10"></p-rating>
+
+          <div class="p-col-4">
+            <p-rating
+              #popularity="ngModel"
+              id="popularity"
+              name="popularity"
+              [(ngModel)]="item.popularity" stars="10"></p-rating>
+          </div>
         </div>
 
-
         <div class="prime-form-group">
-          <div class="ui-grid-col-3">
+          <div class="p-col-3">
             <label for="isNew">Новинка</label>
           </div>
-          <div class="ui-grid-col-4">
+          <div class="p-col-4">
             <p-inputSwitch
               #isNew="ngModel"
               id="isNew"
@@ -289,10 +289,10 @@
         </div>
 
         <div class="prime-form-group">
-          <div class="ui-grid-col-3">
+          <div class="p-col-3">
             <label for="isPopular">Популярна</label>
           </div>
-          <div class="ui-grid-col-4">
+          <div class="p-col-4">
             <p-inputSwitch
               #isPopular="ngModel"
               id="isPopular"
@@ -301,71 +301,73 @@
           </div>
         </div>
 
-        <div class="prime-form-group" style="align-items: flex-start;">
+        <div class="prime-form-group">
 
-          <fieldset class="ui-grid-col-7">
-            <legend>Доступні розміри</legend>
+          <div class="p-col-7">
+            <fieldset>
+              <legend>Доступні розміри</legend>
 
-            <div style="margin: 8px 0px;">
-              <label for="size">Додати розмір</label>
-            </div>
+              <div style="margin: 8px 0px;">
+                <label for="size">Додати розмір</label>
+              </div>
 
-            <div>
+              <div>
 
-              <div class="sizes-block">
+                <div class="sizes-block">
 
-                <div class="size-selector-wrapper">
-                  <p-dropdown id="size" [options]="sizes" [(ngModel)]="sizeToAdd" name="flowerSizesToAdd" optionLabel="name"
-                              placeholder="Оберіть розмір" [filter]="true" emptyFilterMessage="не знайдено"></p-dropdown>
+                  <div class="size-selector-wrapper">
+                    <p-dropdown id="size" [options]="sizes" [(ngModel)]="sizeToAdd" name="flowerSizesToAdd" optionLabel="name"
+                                placeholder="Оберіть розмір" [filter]="true" emptyFilterMessage="не знайдено"></p-dropdown>
 
-                  <button type="button" pButton icon="pi pi-check" class="ui-button-success" (click)="addFlowerSize()"></button>
-                  <button type="button" pButton icon="pi pi-plus" class="ui-button-secondary" (click)="displayAddSizeDialog = true"></button>
+                    <button type="button" pButton icon="pi pi-check" class="p-button-success" (click)="addFlowerSize()"></button>
+                    <button type="button" pButton icon="pi pi-plus" class="p-button-secondary" (click)="displayAddSizeDialog = true"></button>
+
+                  </div>
+
+                  <div class="sizes-list">
+
+                    <ng-template ngFor let-flowerSize [ngForOf]="item.flowerSizes" let-i="index">
+
+                      <div class="size-wrapper">
+
+                        <div class="size-label-wrapper">
+                          <label for="color">{{flowerSize.size.name}}</label>
+                        </div>
+                        <div class="size-input-wrapper">
+                          <input
+                            pInputText
+                            #flowerSizeInput="ngModel"
+                            [name]="'flower_size_' + i"
+                            [(ngModel)]="flowerSize.price"
+                            maxlength="5"/>
+                        </div>
+
+                        <div class="units">грн</div>
+
+                        <button pButton type="button" icon="fa fa-trash" class="p-button-danger" (click)="removeFlowerSize(i)"></button>
+
+                      </div>
+
+                    </ng-template>
+
+                  </div>
 
                 </div>
 
-                <div class="sizes-list">
-
-                  <ng-template ngFor let-flowerSize [ngForOf]="item.flowerSizes" let-i="index">
-
-                    <div class="size-wrapper">
-
-                      <div class="size-label-wrapper">
-                        <label for="color">{{flowerSize.size.name}}</label>
-                      </div>
-                      <div class="size-input-wrapper">
-                        <input
-                          pInputText
-                          #flowerSizeInput="ngModel"
-                          [name]="'flower_size_' + i"
-                          [(ngModel)]="flowerSize.price"
-                          maxlength="5"/>
-                      </div>
-
-                      <div class="units">грн</div>
-
-                      <button pButton type="button" icon="fa fa-trash" class="ui-button-danger" (click)="removeFlowerSize(i)"></button>
-
-                    </div>
-
-                  </ng-template>
-
-                </div>
 
               </div>
 
 
-            </div>
-
-
-          </fieldset>
+            </fieldset>
+          </div>
 
         </div>
 
       </div>
 
-    <div class="ui-grid-row ui-grid-field">
-      <div class="ui-grid-col-7 footer">
-        <button type="submit" pButton icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" class="ui-button-success" label="{{mode == ItemSaveMode.new ? 'Зберегти' : 'Оновити'}}"></button>
+    <div class="p-grid-row p-grid-field">
+      <div class="p-col-7 footer">
+        <button type="submit" pButton icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" class="p-button-success" label="{{mode == ItemSaveMode.new ? 'Зберегти' : 'Оновити'}}"></button>
       </div>
     </div>
 
@@ -381,13 +383,13 @@
 
     <form id="add_size_form" #addSizeForm="ngForm" class="add-size-dialog-content" (ngSubmit)="addSizeForm.valid && createSize()">
 
-      <div class="ui-grid ui-grid-responsive ui-fluid">
+      <div class="p-grid">
 
         <div class="prime-form-group">
-          <div class="ui-grid-col-4">
+          <div class="p-col-4">
             <label for="name">Назва розміру</label>
           </div>
-          <div class="ui-grid-col-4">
+          <div class="p-col-4">
             <input
               pInputText
               #sizeName="ngModel"
@@ -396,7 +398,7 @@
               [uniqueValidator]="sizeService.isNameFree.bind(sizeService)"
             />
           </div>
-          <div class="ui-grid-col-4" *ngIf="name.errors?.unique">
+          <div class="p-col-4" *ngIf="name.errors?.unique">
             <ng-container>
               <p-message severity="error" text="Данний розмір вже існує"></p-message>
             </ng-container>
@@ -408,7 +410,7 @@
     </form>
 
     <p-footer>
-      <button pButton form="add_size_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
+      <button pButton form="add_size_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="Підтвердити" type="submit" [disabled]="loading"></button>
     </p-footer>
   </p-dialog>
 

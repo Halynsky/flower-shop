@@ -20,7 +20,7 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
         "LEFT JOIN g.flowers f " +
         "INNER JOIN g.flowerType ft " +
         "WHERE (ft.id IS null OR ft.id IS NOT null) " +
-        "GROUP BY g.id, g.name, g.nameSingle, g.nameOriginal, g.nameOriginalSingle, ft")
+        "GROUP BY g.id, g.name, g.nameSingle, g.nameOriginal, g.nameOriginalSingle, ft ORDER BY g.name")
     List<GroupAdminProjection> findForAdminProjectedOrderByName();
 
     List<GroupProjectionFull> findProjectedBy();
@@ -29,6 +29,6 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
 
     Optional<GroupProjectionFull> findProjectedById(Long id);
 
-    List<GroupShortProjection> findProjectedByFlowerTypeId(Long id);
+    List<GroupShortProjection> findProjectedByFlowerTypeIdOrderByName(Long id);
 
 }

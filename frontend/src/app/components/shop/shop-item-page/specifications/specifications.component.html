@@ -10,6 +10,14 @@
     <div class="specification-label">Група</div>
     <div class="specification-value">{{flowerSize.flower.group.name}}</div>
   </div>
+
+  <div class="specification" *ngIf="flowerSize?.flower?.color">
+    <div class="specification-label">Колір</div>
+    <div class="specification-value">
+      <span>{{flowerSize?.flower?.color.name}}</span>
+      <span *ngIf="flowerSize?.flower?.colorSecondary">{{', ' + flowerSize?.flower?.colorSecondary.name}}</span>
+    </div>
+  </div>
   <div class="specification" *ngIf="flowerSize.flower.flowerType.plantingMaterialType">
     <div class="specification-label">Посадковий матеріал</div>
     <div class="specification-value">{{flowerSize.flower.flowerType.plantingMaterialType}}</div>
