@@ -9,6 +9,10 @@
   height: fit-content;
   grid-row-gap: 24px;
 
+  .highlight {
+    font-weight: 500;
+  }
+
   .delivery {
     grid-area: delivery;
     padding: 24px;
@@ -76,6 +80,10 @@
     height: fit-content;
     display: grid;
     margin: 0px 24px;
+
+    .contact-us {
+      cursor: pointer;
+    }
 
     @include response-to(sm) {
       margin: 0px;

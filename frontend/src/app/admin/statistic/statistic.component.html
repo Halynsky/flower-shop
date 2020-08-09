@@ -1,12 +1,13 @@
-<div class="panel-header">
+<div class="panel-header p-grid">
   <h1>Статистика користувачів</h1>
 </div>
 
 <div class="panel-content">
 
-  <div class="row">
+  <div class="row p-grid">
 
-    <div class="ui-g-12 ui-md-6">
+
+    <div class="p-col-12 p-md-6">
       <div class="ui-grid-row">
         <p-card title="Зареєстровані користувачі" header="Зареєстровані користувачі">
           <p-chart #usersRegistrationStructuralPie *ngIf="usersRegistrationStructural.datasets.length > 0" type="pie" [data]="usersRegistrationStructural" [options]="defaultOptionsPie" [plugins]="plugin"></p-chart>
@@ -14,7 +15,7 @@
       </div>
     </div>
 
-    <div class="ui-g-12 ui-md-6">
+    <div class="p-col-12 p-md-6">
       <div class="ui-grid-row">
         <p-card class="statistic-chart" title="Динаміка реєстрації"  header="Динаміка реєстрації">
           <p-dropdown [options]="statisticPeriods" placeholder="Оберіть період" [(ngModel)]="statisticPeriod"
@@ -28,15 +29,15 @@
 
 </div>
 
-<div class="panel-header">
+<div class="panel-header p-grid">
   <h1>Статистика замовленнь</h1>
 </div>
 
 <div class="panel-content">
 
-  <div class="row">
+  <div class="row p-grid">
 
-    <div class="ui-g-12 ui-md-6">
+    <div class="p-col-12 p-md-6">
       <div class="ui-grid-row">
         <p-card class="statistic-chart" title="Кількість замовлень" header="Кількість замовлень">
           <p-dropdown [options]="statisticPeriods" placeholder="Оберіть період" [(ngModel)]="statisticPeriod"
@@ -46,7 +47,7 @@
       </div>
     </div>
 
-    <div class="ui-g-12 ui-md-6">
+    <div class="p-col-12 p-md-6">
       <div class="ui-grid-row">
         <p-card class="statistic-chart" title="Динаміка замовленнь"  header="Динаміка замовленнь">
           <p-dropdown [options]="statisticPeriods" placeholder="Оберіть період" [(ngModel)]="statisticPeriod"
@@ -56,7 +57,7 @@
       </div>
     </div>
 
-    <div class="ui-g-12 ui-md-6">
+    <div class="p-col-12 p-md-6">
       <div class="ui-grid-row">
         <p-card class="statistic-chart" title="Оплата замовлень (кількість)" header="Оплата замовлень (кількість)">
           <p-dropdown [options]="statisticPeriods" placeholder="Оберіть період" [(ngModel)]="statisticPeriod"
@@ -66,7 +67,7 @@
       </div>
     </div>
 
-    <div class="ui-g-12 ui-md-6">
+    <div class="p-col-12 p-md-6">
       <div class="ui-grid-row">
         <p-card class="statistic-chart" title="Оплата замовлень (сума в грн)" header="Оплата замовлень (сума в грн)">
           <p-dropdown [options]="statisticPeriods" placeholder="Оберіть період" [(ngModel)]="statisticPeriod"
@@ -80,15 +81,15 @@
 
 </div>
 
-<div class="panel-header">
+<div class="panel-header p-grid">
   <h1>Статистика складу</h1>
 </div>
 
 <div class="panel-content">
 
-  <div class="row">
+  <div class="row p-grid">
 
-    <div class="ui-g-12 ui-md-6">
+    <div class="p-col-12 p-md-6">
       <div class="ui-grid-row">
         <p-card class="statistic-chart" title="Товарні запаси (кількість)" header="Товарні запаси (кількість)">
           <p-dropdown [options]="statisticPeriods" placeholder="Оберіть період" [(ngModel)]="statisticPeriod"
@@ -98,7 +99,7 @@
       </div>
     </div>
 
-    <div class="ui-g-12 ui-md-6">
+    <div class="p-col-12 p-md-6">
       <div class="ui-grid-row">
         <p-card class="statistic-chart" title="Товарні запаси (сума в грн)" header="Товарні запаси (сума в грн)">
           <p-dropdown [options]="statisticPeriods" placeholder="Оберіть період" [(ngModel)]="statisticPeriod"

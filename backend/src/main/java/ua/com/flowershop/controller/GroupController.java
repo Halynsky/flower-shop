@@ -36,7 +36,7 @@ public class GroupController {
 
     @GetMapping("byFlowerType/{flowerTypeId}")
     public ResponseEntity<List<GroupShortProjection>> getByFlowerTypeId(@PathVariable Long flowerTypeId) {
-        return new ResponseEntity<>(groupRepository.findProjectedByFlowerTypeId(flowerTypeId), OK);
+        return new ResponseEntity<>(groupRepository.findProjectedByFlowerTypeIdOrderByName(flowerTypeId), OK);
     }
 
     @GetMapping("/{id}")

@@ -6,7 +6,6 @@ import { UserService } from "../../../api/services/user.service";
 import { SnackBarService } from "../../../services/snak-bar.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { finalize } from "rxjs/operators";
-import {ProgressSpinnerModule} from 'primeng/progressspinner';
 
 @Component({
   selector: 'user-item',

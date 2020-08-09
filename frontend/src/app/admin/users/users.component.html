@@ -1,15 +1,14 @@
 <div class="panel-header">
   <h1>Користувачі</h1>
   <div class="navigation-buttons">
-    <button pButton [routerLink]="['item', ItemSaveMode.new]" icon="pi pi-plus" class="ui-button-success"
-            label="&nbsp;&nbsp;Додати"></button>
-    <button pButton (click)="refresh()" icon="pi pi-refresh" label="&nbsp;&nbsp;Оновити"></button>
+    <button pButton [routerLink]="['item', ItemSaveMode.new]" icon="pi pi-plus" class="p-button-success" label="Додати"></button>
+    <button pButton (click)="refresh()" icon="pi pi-refresh" label="Оновити"></button>
   </div>
 </div>
 
 <div class="panel-content">
   <p-table #dt [value]="items.content" sortField="id" [sortOrder]="-1" [paginator]="true" [rows]="10"
-           [tableStyle]="{'table-layout':'auto'}" [contextMenu]="cm" [(contextMenuSelection)]="selected" (onContextMenuSelect)="onRowSelect($event)"
+           [tableStyle]="{'table-layout':'auto'}" [contextMenu]="cm" [(contextMenuSelection)]="selected" (onContextMenuSelect)="onContextMenuSelect($event)"
            [customSort]="true" (sortFunction)="sortData($event)"  dataKey="id" rowExpandMode="single" [columns]="selectedColumns"
            (onLazyLoad)="onLazyLoad($event)" [lazy]="true" [totalRecords]="items.totalElements" [filters]="filters">
     <ng-template pTemplate="caption">
@@ -91,7 +90,7 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-rowData let-columns="columns">
-      <tr [pContextMenuRow]="rowData">
+      <tr [pContextMenuRow]="rowData" [ngClass]="{'selected' : isContextMenuOpened && selected?.id == rowData?.id}">
         <td *ngFor="let col of selectedColumns" [ngSwitch]="col.field">
           <span *ngSwitchCase="'id'">
             {{rowData[col.field]}}
@@ -153,7 +152,7 @@
   </p-table>
 </div>
 
-<p-contextMenu #cm [model]="menuItems"></p-contextMenu>
+<p-contextMenu #cm [model]="menuItems" (onHide)="onContextMenuHide($event)"></p-contextMenu>
 
 <p-dialog [(visible)]="displayMergeDialog" class="merge-dialog" [modal]="true" (onHide)="resetMergeForm(mergeForm)">
   <p-header>
@@ -162,20 +161,20 @@
 
   <form id="merge_form" #mergeForm="ngForm" class="merge-dialog-content" (ngSubmit)="mergeForm.valid && merge()">
 
-    <div class="ui-grid ui-grid-responsive ui-fluid">
+    <div class="p-grid p-grid-responsive ui-fluid">
 
       <div class="prime-form-group">
-        <div class="ui-grid-col-4">
+        <div class="p-col-4">
           <label>Id іншого користувача</label>
         </div>
-        <div class="ui-grid-col-4">
+        <div class="p-col-4">
           <input pInputText
                  #mergingUser="ngModel"
                  name="mergingUser"
                  [(ngModel)]="mergingUserId"
                  required>
         </div>
-        <div class="ui-grid-col-4">
+        <div class="p-col-4">
           <ng-container *ngIf="mergingUser.dirty || mergingUser.touched || mergeForm.submitted">
             <p-message *ngIf="mergingUser.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
           </ng-container>
@@ -187,7 +186,7 @@
   </form>
 
   <p-footer>
-    <button pButton form="merge_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
+    <button pButton form="merge_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="Підтвердити" type="submit" [disabled]="loading"></button>
   </p-footer>
 </p-dialog>
 
@@ -198,13 +197,13 @@
 
   <form id="note_change_form" #noteChangeForm="ngForm" class="note-change-dialog-content" (ngSubmit)="noteChangeForm.valid && changeNote()">
 
-    <div class="ui-grid ui-grid-responsive ui-fluid">
+    <div class="p-grid p-grid-responsive ui-fluid">
 
       <div class="prime-form-group">
-        <div class="ui-grid-col-4">
+        <div class="p-col-4">
           <label>Примітка</label>
         </div>
-        <div class="ui-grid-col-4">
+        <div class="p-col-4">
           <textarea pInputTextarea
                     #note="ngModel"
                     name="note"
@@ -212,7 +211,7 @@
                     cols="23" rows="6" maxlength="500">
           </textarea>
         </div>
-        <div class="ui-grid-col-4">
+        <div class="p-col-4">
         </div>
       </div>
 
@@ -221,7 +220,7 @@
   </form>
 
   <p-footer>
-    <button pButton form="note_change_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="&nbsp;&nbsp;Підтвердити" type="submit" [disabled]="loading"></button>
+    <button pButton form="note_change_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="Підтвердити" type="submit" [disabled]="loading"></button>
   </p-footer>
 </p-dialog>
 
