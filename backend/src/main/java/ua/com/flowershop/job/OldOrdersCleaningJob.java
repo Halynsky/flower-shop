@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 import ua.com.flowershop.entity.Order;
 import ua.com.flowershop.repository.OrderRepository;
 
-import java.time.LocalDate;
-import java.util.Collections;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Slf4j
 @Component
@@ -19,9 +19,16 @@ public class OldOrdersCleaningJob {
     @Autowired private OrderRepository orderRepository;
 
     @Scheduled(cron = "${job.old.orders.cleaning}")
-    public void reduceFlowerPopularity(){
+    public void cancelOverdueOrders(){
         log.info("Job | Old orders cleaning job started");
-        orderRepository.updateStatusForSentBeforeAndStatusIn(LocalDate.now().minusDays(MAX_DELIVERY_STATE_SAYS), Collections.singletonList(Order.Status.DELIVERING), Order.Status.DONE);
+        List<Order> overdueOrders = orderRepository.findNotPaidByCreatedAndStatus(LocalDateTime.now().minusDays(MAX_DELIVERY_STATE_SAYS));
+        if (overdueOrders.size() > 0) {
+            overdueOrders.forEach( order -> {
+                order.setStatus(Order.Status.CANCELED);
+                order.setClosed(LocalDateTime.now());
+                orderRepository.save(order);
+            });
+        }
         log.info("Job | Old orders cleaning job finished");
     }
 

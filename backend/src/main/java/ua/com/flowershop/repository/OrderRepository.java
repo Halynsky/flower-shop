@@ -73,6 +73,12 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
                                       LocalDateTime createdFrom, LocalDateTime createdTo, LocalDateTime closedFrom, LocalDateTime closedTo,
                                       Integer priceToPayFrom, Integer priceToPayTo, Boolean paid, Sort sort);
 
+    @Query("SELECT o FROM Order o " +
+        "WHERE o.created <= :overdueTime " +
+        "AND CAST(o.status AS string) = 'NEW' " +
+        "AND o.paid = null ")
+    List<Order> findNotPaidByCreatedAndStatus(LocalDateTime overdueTime);
+
     Page<OrderProjection> findProjectedByUserEmailOrderByCreatedDesc(String userEmail, Pageable pageRequest);
 
     Integer countAllByCreatedAfterAndStatusIn(LocalDateTime createdAfter, List<Order.Status> statuses);
