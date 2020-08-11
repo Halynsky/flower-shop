@@ -170,7 +170,7 @@ public class OrderService {
                     throw new ConflictException("Вказано невалідний статус замовлення");
                 }
                 if (Order.Status.getActive().contains(order.getStatus())) {
-                    orderService.changeStatus(order.getId(), new OrderStatusChangeRequestModel().setStatus(Order.Status.DELIVERING).setPostDeclaration("0").setDate(LocalDate.now()));
+                    orderService.changeStatus(order.getId(), new OrderStatusChangeRequestModel().setStatus(Order.Status.DELIVERING).setDate(LocalDate.now()));
                     order = orderRepository.findById(orderId).orElseThrow(NotFoundException::new);
                 }
                 order.getOrderItems().forEach(oi -> {

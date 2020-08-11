@@ -35,6 +35,13 @@
           color: mat-color($accent);
           margin-bottom: 8px;
         }
+        .sub-title-without-color {
+          font-weight: 500;
+          font-size: 16px;
+        }
+        .warning-wrapper {
+          color: #ff0000;
+        }
 
         a {
           display: inline-block;

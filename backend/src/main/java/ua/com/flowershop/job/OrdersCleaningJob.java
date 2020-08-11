@@ -15,31 +15,32 @@ import java.util.List;
 
 @Slf4j
 @Component
-public class OldOrdersCleaningJob {
+public class OrdersCleaningJob {
 
-    private final static int MAX_DELIVERY_STATE_SAYS = 14;
+    private final static int MAX_DELIVERY_STATE_DAYS = 14;
+    private final static int MAX_UNPAID_DAYS = 14;
 
     @Autowired private OrderRepository orderRepository;
     @Autowired private OrderService orderService;
 
-    @Scheduled(cron = "${job.old.orders.cleaning}")
-    public void cancelOverdueOrders() {
-        log.info("Job | Old orders cleaning job started | Clean unpaid orders");
-        List<Order> overdueOrders = orderRepository.findByNotPaidAndStatusIsNewAndCreatedBefore(LocalDateTime.now().minusDays(MAX_DELIVERY_STATE_SAYS));
-        overdueOrders.forEach(order -> {
+    @Scheduled(cron = "${job.orders.cleaning}")
+    public void cancelUnpaidOrders() {
+        log.info("Job | Clean unpaid orders job started");
+        List<Order> longTermUnpaidOrders = orderRepository.findByNotPaidAndStatusIsNewAndCreatedBefore(LocalDateTime.now().minusDays(MAX_UNPAID_DAYS));
+        longTermUnpaidOrders.forEach(order -> {
             orderService.changeStatus(order.getId(), new OrderStatusChangeRequestModel().setStatus(Order.Status.CANCELED));
         });
-        log.info("Job | Old orders cleaning job finished | Clean unpaid orders");
+        log.info("Job | Clean unpaid orders job finished");
     }
 
     @Scheduled(cron = "${job.old.orders.cleaning}")
-    public void cleanAllOrders() {
-        log.info("Job | Old orders cleaning job started | Clean delivering orders");
-        List<Order> overdueOrders = orderRepository.findByDeliveringAndSentBefore(LocalDate.now().minusDays(MAX_DELIVERY_STATE_SAYS));
-        overdueOrders.forEach(order -> {
+    public void closeDeliveredOrders() {
+        log.info("Job | Clean delivering orders job started");
+        List<Order> longTermDeliveringOrders = orderRepository.findByStatusIsDeliveringAndSentBefore(LocalDate.now().minusDays(MAX_DELIVERY_STATE_DAYS));
+        longTermDeliveringOrders.forEach(order -> {
             orderService.changeStatus(order.getId(), new OrderStatusChangeRequestModel().setStatus(Order.Status.DONE));
         });
-        log.info("Job | Old orders cleaning job finished | Clean delivering orders");
+        log.info("Job | Clean delivering orders job finished");
     }
 
 }

@@ -74,15 +74,15 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
                                       Integer priceToPayFrom, Integer priceToPayTo, Boolean paid, Sort sort);
 
     @Query("SELECT o FROM Order o " +
-        "WHERE o.created <= :overdueTime " +
+        "WHERE o.created <= :createdBefore " +
         "AND CAST(o.status AS string) = 'NEW' " +
         "AND o.paid = null ")
-    List<Order> findByNotPaidAndStatusIsNewAndCreatedBefore(LocalDateTime overdueTime);
+    List<Order> findByNotPaidAndStatusIsNewAndCreatedBefore(LocalDateTime createdBefore);
 
     @Query("SELECT o FROM Order o " +
         "WHERE o.sent <= :sentBefore " +
         "AND CAST(o.status AS string) = 'DELIVERING' ")
-    List<Order> findByDeliveringAndSentBefore(LocalDate sentBefore);
+    List<Order> findByStatusIsDeliveringAndSentBefore(LocalDate sentBefore);
 
     Page<OrderProjection> findProjectedByUserEmailOrderByCreatedDesc(String userEmail, Pageable pageRequest);
 
