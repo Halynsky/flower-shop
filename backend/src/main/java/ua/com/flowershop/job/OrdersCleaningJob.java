@@ -33,7 +33,7 @@ public class OrdersCleaningJob {
         log.info("Job | Clean unpaid orders job finished");
     }
 
-    @Scheduled(cron = "${job.old.orders.cleaning}")
+    @Scheduled(cron = "${job.orders.cleaning}")
     public void closeDeliveredOrders() {
         log.info("Job | Clean delivering orders job started");
         List<Order> longTermDeliveringOrders = orderRepository.findByStatusIsDeliveringAndSentBefore(LocalDate.now().minusDays(MAX_DELIVERY_STATE_DAYS));
