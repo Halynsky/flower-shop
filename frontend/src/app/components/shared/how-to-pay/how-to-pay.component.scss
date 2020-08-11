@@ -35,12 +35,17 @@
           color: mat-color($accent);
           margin-bottom: 8px;
         }
-        .sub-title-without-color {
-          font-weight: 500;
+        .warning-block {
+          color: $grey-900;
           font-size: 16px;
         }
-        .warning-wrapper {
+        .warning-color-wrapper {
           color: #ff0000;
+          font-weight: 500;
+        }
+        .light-bold {
+          font-weight: 500;
+          color: $black-100;
         }
 
         a {
