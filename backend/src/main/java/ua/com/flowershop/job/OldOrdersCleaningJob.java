@@ -11,7 +11,6 @@ import ua.com.flowershop.service.OrderService;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -24,26 +23,22 @@ public class OldOrdersCleaningJob {
     @Autowired private OrderService orderService;
 
     @Scheduled(cron = "${job.old.orders.cleaning}")
-    public void cancelOverdueOrders(){
+    public void cancelOverdueOrders() {
         log.info("Job | Old orders cleaning job started | Clean unpaid orders");
         List<Order> overdueOrders = orderRepository.findByNotPaidAndStatusIsNewAndCreatedBefore(LocalDateTime.now().minusDays(MAX_DELIVERY_STATE_SAYS));
-        if (overdueOrders.size() > 0) {
-            overdueOrders.forEach( order -> {
-                orderService.changeStatus(order.getId(), new OrderStatusChangeRequestModel().setStatus(Order.Status.CANCELED));
-            });
-        }
+        overdueOrders.forEach(order -> {
+            orderService.changeStatus(order.getId(), new OrderStatusChangeRequestModel().setStatus(Order.Status.CANCELED));
+        });
         log.info("Job | Old orders cleaning job finished | Clean unpaid orders");
     }
 
     @Scheduled(cron = "${job.old.orders.cleaning}")
-    public void cleanAllOrders(){
+    public void cleanAllOrders() {
         log.info("Job | Old orders cleaning job started | Clean delivering orders");
         List<Order> overdueOrders = orderRepository.findByDeliveringAndSentBefore(LocalDate.now().minusDays(MAX_DELIVERY_STATE_SAYS));
-        if (overdueOrders.size() > 0) {
-            overdueOrders.forEach( order -> {
-                orderService.changeStatus(order.getId(), new OrderStatusChangeRequestModel().setStatus(Order.Status.DONE));
-            });
-        }
+        overdueOrders.forEach(order -> {
+            orderService.changeStatus(order.getId(), new OrderStatusChangeRequestModel().setStatus(Order.Status.DONE));
+        });
         log.info("Job | Old orders cleaning job finished | Clean delivering orders");
     }
 
