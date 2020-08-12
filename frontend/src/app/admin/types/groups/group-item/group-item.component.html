@@ -103,7 +103,7 @@
           <div class="p-col-4">
             <div class="dropdown-block">
               <p-dropdown [options]="flowerTypes" name="flowerType" optionLabel="name"  #flowerType="ngModel" dataKey="id" [(ngModel)]="item.flowerType"
-                          placeholder="Оберіть тип квітки" id="flowerType" filter="true" required> </p-dropdown>
+                          placeholder="Оберіть тип квітки" id="flowerType" filter="true" filterMatchMode="startsWith" required> </p-dropdown>
             </div>
           </div>
           <div class="p-col-3">

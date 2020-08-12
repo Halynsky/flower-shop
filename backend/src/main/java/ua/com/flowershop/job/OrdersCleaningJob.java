@@ -23,7 +23,7 @@ public class OrdersCleaningJob {
     @Autowired private OrderRepository orderRepository;
     @Autowired private OrderService orderService;
 
-    @Scheduled(cron = "${job.orders.cleaning}")
+    @Scheduled(cron = "${job.unpaid.orders.cleaning}")
     public void cancelUnpaidOrders() {
         log.info("Job | Clean unpaid orders job started");
         List<Order> longTermUnpaidOrders = orderRepository.findByNotPaidAndStatusIsNewAndCreatedBefore(LocalDateTime.now().minusDays(MAX_UNPAID_DAYS));
@@ -33,7 +33,7 @@ public class OrdersCleaningJob {
         log.info("Job | Clean unpaid orders job finished");
     }
 
-    @Scheduled(cron = "${job.orders.cleaning}")
+    @Scheduled(cron = "${job.delivering.orders.cleaning}")
     public void closeDeliveredOrders() {
         log.info("Job | Clean delivering orders job started");
         List<Order> longTermDeliveringOrders = orderRepository.findByStatusIsDeliveringAndSentBefore(LocalDate.now().minusDays(MAX_DELIVERY_STATE_DAYS));
