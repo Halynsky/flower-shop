@@ -10,3 +10,9 @@ export class FlowerType {
   plantingMaterialType: string;
   description: string;
 }
+
+export class FlowerTypeImageNameTuple {
+  id?: number;
+  name: string;
+  image: string;
+}

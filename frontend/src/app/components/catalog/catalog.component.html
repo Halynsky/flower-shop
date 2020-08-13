@@ -1,0 +1,33 @@
+<!-- BLOCK FOR MAIN PAGE !-->
+<div class="wrapper-for-main-page" *ngIf="isMain">
+
+  <div class="content-wrapper">
+
+    <div class="content" *ngIf="!showFirstEight">
+      <ng-template ngFor let-flowerType [ngForOf]="flowerTypes">
+        <catalog-card [flowerType]="flowerType"></catalog-card>
+      </ng-template>
+    </div>
+
+    <div class="content" *ngIf="showFirstEight">
+      <ng-template ngFor let-flowerType [ngForOf]="firstFlowerTypes">
+        <catalog-card [flowerType]="flowerType"></catalog-card>
+      </ng-template>
+    </div>
+
+    <div class="show-hide-block">
+      <span class="show-hide-text" (click)="hide()" *ngIf="!showFirstEight">Приховати</span>
+      <span class="show-hide-text" (click)="show()" *ngIf="showFirstEight">Переглянути всі</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- BLOCK FOR HEADER !-->
+<div class="wrapper-for-header" *ngIf="!isMain">
+    <div class="content">
+      <ng-template ngFor let-flowerType [ngForOf]="flowerTypes">
+        <catalog-card [flowerType]="flowerType"></catalog-card>
+      </ng-template>
+    </div>
+</div>

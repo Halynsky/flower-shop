@@ -1,0 +1,20 @@
+<a class="wrapper">
+  <div class="cover" [ngStyle]="flowerType.image && {'background-image':'url(' + flowerType.image + ')'} || {'background-image':'url(' + flowerImagePlaceholder + ')'}">
+    <div class="flags-wrapper">
+
+    </div>
+  </div>
+
+  <div class="info">
+
+    <div class="angle-left"></div>
+    <div class="angle-right"></div>
+
+    <div class="name">
+      {{ flowerType.name }}
+    </div>
+  </div>
+
+</a>
+
+

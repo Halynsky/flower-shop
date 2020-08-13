@@ -23,6 +23,7 @@ import { MatIconModule, MatIconRegistry } from "@angular/material/icon";
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogConfig, MatDialogModule } from "@angular/material/dialog";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { QuillModule } from "ngx-quill";
+import { CatalogModule } from "./components/catalog/catalog.module";
 
 registerLocaleData(localeRuUa);
 
@@ -54,6 +55,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     SharedModule,
     UserCabinetModule,
     SocialLoginModule,
+    CatalogModule,
     ValidatorsModule.forRoot(),
     QuillModule.forRoot()
   ],

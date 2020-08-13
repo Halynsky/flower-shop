@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import ua.com.flowershop.entity.FlowerType;
 import ua.com.flowershop.projection.FlowerTypeProjection;
+import ua.com.flowershop.projection.FlowerTypeImageNameTuple;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +21,8 @@ public interface FlowerTypeRepository extends JpaRepository<FlowerType, Long> {
     List<FlowerTypeProjection> findProjectedByNameStartingWith(String name);
 
     List<FlowerTypeProjection> findProjectedByOrderByName();
+
+    List<FlowerTypeImageNameTuple> findAllProjectedByOrderByName();
 
     Optional<FlowerTypeProjection> findProjectedById(Long id);
 

@@ -1,0 +1,33 @@
+@import "theme";
+@import "mixins";
+
+.content {
+  display: grid;
+  grid-gap: 24px;
+  margin-bottom: 24px;
+
+  @include response-to(xs) {
+    grid-template-columns: auto;
+  }
+
+  @include response-from(sm) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include response-from(md) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+}
+
+.show-hide-block {
+  padding: 18px;
+  text-align: end;
+  .show-hide-text {
+    color: cornflowerblue;
+    text-decoration: underline;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

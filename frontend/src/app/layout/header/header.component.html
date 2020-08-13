@@ -9,6 +9,7 @@
   </a>
 
   <div class="main-navigation">
+    <a  mat-button routerLinkActive="active-link" [mat-menu-trigger-for]="catalogMenu">Каталог</a>
     <a routerLink="/shop" mat-button routerLinkActive="active-link">Магазин</a>
 <!--    <a routerLink="/forum" mat-button routerLinkActive="active-link">Блог</a>-->
     <a routerLink="/about-us" mat-button routerLinkActive="active-link">Про нас</a>
@@ -137,4 +138,8 @@
       <span>Звяжіться з нами</span>
     </a>
 
+</mat-menu>
+
+<mat-menu #catalogMenu class="catalog-menu" backdropClass="catalog-menu-backdrop">
+  <catalog></catalog>
 </mat-menu>
