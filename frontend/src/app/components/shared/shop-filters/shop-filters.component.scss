@@ -60,9 +60,26 @@
       }
 
       &.inactive {
-        opacity: 0.6;
+        opacity: 0.7;
+
+        &.checked {
+          opacity: 1;
+        }
+
       }
 
+    }
+
+  }
+
+  .show-more-block {
+    display: flex;
+    margin-top: 16px;
+    margin-left: 32px;
+
+    a {
+      color: mat-color($primary, 800);
+      cursor: pointer;
     }
 
   }

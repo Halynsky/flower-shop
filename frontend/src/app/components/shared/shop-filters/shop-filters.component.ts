@@ -17,14 +17,16 @@ import { ActivatedRoute, Router } from "@angular/router";
 })
 export class ShopFiltersComponent implements OnInit {
 
+  @ViewChildren('flowerTypeCheckbox') flowerTypeCheckboxes: QueryList<MatCheckbox>;
+  @ViewChildren('colorCheckbox') colorCheckboxes: QueryList<MatCheckbox>;
+
   @Input() filters = new ShopFilter();
   @Output() onFilterChange: EventEmitter<any> = new EventEmitter();
 
-  flowerTypes: FlowerType[] = [];
-  colors: Color[] = [];
+  flowerTypes: FlowerType[];
+  colors: Color[];
 
-  @ViewChildren('flowerTypeCheckbox') flowerTypeCheckboxes: QueryList<MatCheckbox>;
-  @ViewChildren('colorCheckbox') colorCheckboxes: QueryList<MatCheckbox>;
+  showAll = false;
 
   constructor(private flowerTypeService: FlowerTypeService,
               private sizeService: SizeService,
