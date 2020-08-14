@@ -5,7 +5,9 @@ import { getErrorMessage } from "../../../../utils/Functions";
 import { ItemSaveMode } from "../../../../models/ItemSaveMode";
 import { FlowerTypeService } from "../../../../api/services/flower-type.service";
 import { FlowerType } from "../../../../api/models/FlowerType";
-import { finalize } from "rxjs/operators";
+import { finalize, first } from "rxjs/operators";
+import { DialogService } from "primeng";
+import { EditorDialogComponent } from "../../../shared/editor-dialog/editor-dialog.component";
 
 @Component({
   selector: 'flower-type-item',
@@ -33,10 +35,14 @@ export class FlowerTypeItemComponent implements OnInit {
     {label: 'Цибулина', value: 'Цибулина'},
   ];
 
+  dialogRef
+
   constructor(public dataService: FlowerTypeService,
               private snackBarService: SnackBarService,
               private router: Router,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              public dialogService: DialogService) {
+
     this.route.params.subscribe(
       params => {
         this.mode = params['mode'];
@@ -118,6 +124,27 @@ export class FlowerTypeItemComponent implements OnInit {
       this.item.image = null;
     }
     this.newImage = event;
+  }
+
+  showDescriptionEditDialog() {
+    this.dialogRef = this.dialogService.open(EditorDialogComponent, {
+      data: {
+        text: this.item.description,
+        onTextSubmit: this.onTextSubmit,
+      },
+      header: `Edit description`,
+      width: '70%'
+    });
+  }
+
+  onTextSubmit = text => {
+    this.dataService.updateDescription(this.item.id, text)
+      .pipe(first())
+      .subscribe(() => {
+        this.snackBarService.showSuccess("Опис квітки оновлено");
+        this.dialogRef.close();
+        this.item.description = text
+      }, error => this.snackBarService.showError(getErrorMessage(error)))
   }
 
 }

@@ -28,35 +28,42 @@ import { ValidatorsModule } from "../validators/validators.module";
 import { ImagePreviewComponent } from "./shared/image-preview/image-preview.component";
 import { WarehouseComponent } from "./shop/warehouse/warehouse.component";
 import {
-    ButtonModule,
-    CalendarModule,
-    CardModule,
-    ChartModule,
-    CheckboxModule,
-    ColorPickerModule,
-    ConfirmationService,
-    ConfirmDialogModule,
-    ContextMenuModule,
-    DropdownModule,
-    InputSwitchModule,
-    InputTextareaModule,
-    InputTextModule,
-    KeyFilterModule,
-    ListboxModule,
-    MenuModule,
-    MessageModule,
-    MultiSelectModule,
-    PanelMenuModule, ProgressSpinnerModule,
-    RatingModule,
-    SliderModule,
-    TieredMenuModule,
-    ToggleButtonModule
+  ButtonModule,
+  CalendarModule,
+  CardModule,
+  ChartModule,
+  CheckboxModule,
+  ColorPickerModule,
+  ConfirmationService,
+  ConfirmDialogModule,
+  ContextMenuModule,
+  DialogService,
+  DropdownModule,
+  DynamicDialogConfig,
+  DynamicDialogModule,
+  DynamicDialogRef,
+  EditorModule,
+  InputSwitchModule,
+  InputTextareaModule,
+  InputTextModule,
+  KeyFilterModule,
+  ListboxModule,
+  MenuModule,
+  MessageModule,
+  MultiSelectModule,
+  PanelMenuModule,
+  ProgressSpinnerModule,
+  RatingModule,
+  SliderModule,
+  TieredMenuModule,
+  ToggleButtonModule
 } from "primeng";
 import { DirectivesModule } from "../directives/directives.module";
 import { IConfig, NgxMaskModule } from "ngx-mask";
 import { GroupItemComponent } from "./types/groups/group-item/group-item.component";
 import { GroupsComponent } from "./types/groups/groups.component";
 import { StatisticComponent } from "./statistic/statistic.component";
+import { EditorDialogComponent } from './shared/editor-dialog/editor-dialog.component';
 
 export const ngxMaskOptions: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
@@ -86,49 +93,60 @@ export const ngxMaskOptions: Partial<IConfig> | (() => Partial<IConfig>) = {};
     WarehouseOperationItemComponent,
     WarehouseComponent,
     UserItemComponent,
-    StatisticComponent
+    StatisticComponent,
+    EditorDialogComponent
   ],
-    imports: [
-        routing,
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        NgArrayPipesModule,
-        DialogModule,
-        ConfirmDialogModule,
-        MenuModule,
-        PanelMenuModule,
-        ButtonModule,
-        TieredMenuModule,
-        TableModule,
-        MultiSelectModule,
-        InputTextModule,
-        InputTextareaModule,
-        ContextMenuModule,
-        MessageModule,
-        CalendarModule,
-        SliderModule,
-        NgArrayPipesModule,
-        SliderModule,
-        PipesModule.forRoot(),
-        DirectivesModule.forRoot(),
-        ValidatorsModule.forRoot(),
-        ColorPickerModule,
-        SliderModule,
-        DropdownModule,
-        ToggleButtonModule,
-        InputSwitchModule,
-        RatingModule,
-        ListboxModule,
-        CheckboxModule,
-        CardModule,
-        NgxMaskModule.forRoot(ngxMaskOptions),
-        KeyFilterModule,
-        ChartModule,
-        ProgressSpinnerModule
-    ],
+  imports: [
+    routing,
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgArrayPipesModule,
+    DialogModule,
+    ConfirmDialogModule,
+    MenuModule,
+    PanelMenuModule,
+    ButtonModule,
+    TieredMenuModule,
+    TableModule,
+    MultiSelectModule,
+    InputTextModule,
+    InputTextareaModule,
+    ContextMenuModule,
+    MessageModule,
+    CalendarModule,
+    SliderModule,
+    NgArrayPipesModule,
+    SliderModule,
+    EditorModule,
+    DynamicDialogModule,
+    PipesModule.forRoot(),
+    DirectivesModule.forRoot(),
+    ValidatorsModule.forRoot(),
+    ColorPickerModule,
+    SliderModule,
+    DropdownModule,
+    ToggleButtonModule,
+    InputSwitchModule,
+    RatingModule,
+    ListboxModule,
+    CheckboxModule,
+    CardModule,
+    NgxMaskModule.forRoot(ngxMaskOptions),
+    KeyFilterModule,
+    ChartModule,
+    ProgressSpinnerModule
+  ],
   providers: [
-    ConfirmationService
+    ConfirmationService,
+    DialogService,
+    DynamicDialogRef,
+    DynamicDialogConfig
+  ],
+  entryComponents: [
+    EditorDialogComponent,
+
   ]
 })
-export class AdminModule { }
+export class AdminModule {
+}

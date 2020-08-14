@@ -10,4 +10,5 @@ public interface OrderItemProjection {
     Long getFlowerSizeId();
     String getFlowerTypeName();
     Long getOrderId();
+    String getCode();
 }

@@ -59,7 +59,7 @@ public class FlowerTypeService {
         flowerType.setNameSingle(flowerTypeModel.getNameSingle());
         flowerType.setNameOriginal(flowerTypeModel.getNameOriginal());
         flowerType.setPlantingMaterialType(flowerTypeModel.getPlantingMaterialType());
-        flowerType.setDescription(flowerTypeModel.getDescription());
+//        flowerType.setDescription(flowerTypeModel.getDescription());
         if(nonNull(image)) {
             if (nonNull(flowerType.getImage())) {
                 imageService.silentDelete(flowerType.getImage());
@@ -68,6 +68,12 @@ public class FlowerTypeService {
             flowerType.setImage(imageUrl);
         }
         return flowerTypeRepository.save(flowerType);
+    }
+
+    public void updateDescription(Long id, String description) {
+        FlowerType flowerType = this.flowerTypeRepository.findById(id).orElseThrow(NotFoundException::new);
+        flowerType.setDescription(description);
+        flowerTypeRepository.save(flowerType);
     }
 
     @Transactional
