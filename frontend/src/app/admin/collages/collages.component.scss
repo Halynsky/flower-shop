@@ -16,10 +16,30 @@
 }
 
 
-.add-block {
+.add-block-wrapper {
 
-  & > button {
-    margin-left: 12px;
+  .add-block {
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+
+    label {
+      display: inline-block;
+      width: 80px;
+    }
+
+    & > button {
+      margin-left: 12px;
+    }
+
+    p-dropdown {
+      min-width: 300px;
+      ::ng-deep .p-dropdown {
+        min-width: 300px;
+      }
+
+    }
+
   }
 
 }

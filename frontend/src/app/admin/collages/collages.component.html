@@ -6,33 +6,66 @@
 
   <div class="row">
 
-    <div class="add-block">
+    <div class="add-block-wrapper">
 
-      <p-dropdown class="add-flower-size-dropdown" [options]="flowerSizes" [(ngModel)]="flowerSizeToAdd" name="flowerSizeToAdd" [filter]="true"
-                  filterBy="value.flower.name,value.flower.nameOriginal,value.flower.flowerType.name,value.flower.flowerType.nameSingle,value.flower.flowerType.nameOriginal,value.code"
-                  placeholder="Оберіть товар" emptyFilterMessage="Не знайдено" optionLabel="flower.nameOriginal" appendTo="body">
-        <ng-template let-selectedItem pTemplate="selectedItem">
-          <div class="flower-size-selected">
-            <img [src]="selectedItem.value.flower.image"/>
-            <div><b>{{selectedItem.value.flower.nameOriginal}}</b> {{selectedItem.value.size.name}}, {{selectedItem.value.flower.flowerType.nameSingle}}</div>
-          </div>
-        </ng-template>
-        <ng-template let-item pTemplate="item">
-          <div class="ui-helper-clearfix">
-            <div class="flower-size-option">
-              <img [src]="item.value.flower.image"/>
-              <div class="flower-size-option-info">
-                <div class="flower-size-option-info-main"><b>{{item.value.flower.nameOriginal}}</b> {{item.value.size.name}}
-                  , {{item.value.flower.flowerType.nameSingle}}</div>
-                <div class="flower-size-option-info-additional">{{item.value.code}}, Ціна: {{item.value.price / 100}} грн, Доступно: {{item.value.available}} шт</div>
+      <div class="add-block">
+
+        <label>Типи</label>
+
+        <p-dropdown [options]="flowerTypes" name="flowerType" optionLabel="name"
+                    [filter]="true"
+                    #flowerType="ngModel" dataKey="id" [(ngModel)]="flowerTypeToAdd"
+                    placeholder="Оберіть тип квітки" id="flowerType" showClear="true"
+                    (ngModelChange)="getAllGroupsForFlowerType(flowerTypeToAdd.id)" filterMatchMode="startsWith"></p-dropdown>
+
+        <button pButton icon="pi pi-plus" label="Додати" type="button" class="p-button-success" [disabled]="loading"
+                (click)="addFlowerTypeToCollage()"></button>
+
+      </div>
+
+      <div class="add-block">
+
+        <label>Групи</label>
+
+        <p-dropdown [options]="groups" name="group" optionLabel="name" #group="ngModel" dataKey="id" [(ngModel)]="groupToAdd"
+                    placeholder="Оберіть групу" id="group" showClear="true"></p-dropdown>
+
+        <button pButton icon="pi pi-plus" label="Додати" type="button" class="p-button-success" [disabled]="loading"
+                (click)="addGroupToCollage()"></button>
+
+      </div>
+
+      <div class="add-block">
+
+        <label>Квіти</label>
+
+        <p-dropdown class="add-flower-size-dropdown" [options]="flowerSizes" [(ngModel)]="flowerSizeToAdd" name="flowerSizeToAdd" [filter]="true"
+                    filterBy="value.flower.name,value.flower.nameOriginal,value.flower.flowerType.name,value.flower.flowerType.nameSingle,value.flower.flowerType.nameOriginal,value.code"
+                    placeholder="Оберіть квітку" emptyFilterMessage="Не знайдено" optionLabel="flower.nameOriginal" appendTo="body">
+          <ng-template let-selectedItem pTemplate="selectedItem">
+            <div class="flower-size-selected">
+              <img [src]="selectedItem.value.flower.image"/>
+              <div><b>{{selectedItem.value.flower.nameOriginal}}</b> {{selectedItem.value.size.name}}, {{selectedItem.value.flower.flowerType.nameSingle}}</div>
+            </div>
+          </ng-template>
+          <ng-template let-item pTemplate="item">
+            <div class="ui-helper-clearfix">
+              <div class="flower-size-option">
+                <img [src]="item.value.flower.image"/>
+                <div class="flower-size-option-info">
+                  <div class="flower-size-option-info-main"><b>{{item.value.flower.nameOriginal}}</b> {{item.value.size.name}}
+                    , {{item.value.flower.flowerType.nameSingle}}</div>
+                  <div class="flower-size-option-info-additional">{{item.value.code}}, Ціна: {{item.value.price / 100}} грн, Доступно: {{item.value.available}} шт</div>
+                </div>
               </div>
             </div>
-          </div>
-        </ng-template>
-      </p-dropdown>
+          </ng-template>
+        </p-dropdown>
 
-      <button pButton icon="pi pi-plus" label="Додати" type="button" class="p-button-success" [disabled]="loading"
-              (click)="addOrderItem()"></button>
+        <button pButton icon="pi pi-plus" label="Додати" type="button" class="p-button-success" [disabled]="loading"
+                (click)="addItemToCollage()"></button>
+
+      </div>
 
     </div>
 
@@ -87,6 +120,7 @@
 
 <div class="panel-header">
   <h3>Список товарів в колажі</h3>
+  <button pButton icon="fas fa-trash" label="Очистити" type="button" class="p-button-danger" (click)="collage = []" *ngIf="collage.length > 0"></button>
 </div>
 
 <div class="panel-content">
@@ -112,7 +146,7 @@
 
 <div class="panel-header">
   <h3>Попередній перегляд колажу</h3>
-  <button pButton icon="fas fa-file-download" label="Завантажити" type="button" class="p-button-success" (click)="download()"></button>
+  <button pButton icon="fas fa-file-download" label="Завантажити" type="button" class="p-button-success" (click)="download()"  *ngIf="collage.length > 0"></button>
 </div>
 
 <div class="panel-content">

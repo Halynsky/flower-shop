@@ -1,11 +1,14 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FlowerSize } from "../../api/models/FlowerSize";
-import { finalize } from "rxjs/operators";
 import { getErrorMessage } from "../../utils/Functions";
 import { FlowerSizeService } from "../../api/services/flower-size.service";
 import { SnackBarService } from "../../services/snak-bar.service";
 import htmlToImage from 'html-to-image';
 import { DOCUMENT } from "@angular/common";
+import { FlowerType } from "../../api/models/FlowerType";
+import { GroupService } from "../../api/services/group.service";
+import { FlowerTypeService } from "../../api/services/flower-type.service";
+import { Group } from "../../api/models/Group";
 
 @Component({
   selector: 'collages',
@@ -16,8 +19,14 @@ export class CollagesComponent implements OnInit {
 
   initialized = false;
   loading = false;
+
+  flowerTypeToAdd: FlowerType;
   flowerSizeToAdd: FlowerSize;
+  groupToAdd: Group;
+
+  flowerTypes: FlowerType[];
   flowerSizes: FlowerSize[];
+  groups: Group[];
 
   collageSize = {
     baseWidth: 1000,
@@ -27,10 +36,13 @@ export class CollagesComponent implements OnInit {
   collage: FlowerSize[] = [];
 
   constructor(private flowerSizeService: FlowerSizeService,
+              private flowerTypeService: FlowerTypeService,
+              private groupService: GroupService,
               private snackBarService: SnackBarService,
               @Inject(DOCUMENT) private document: Document) {
 
     this.getAllFlowerSizes();
+    this.getAllFlowerTypes();
   }
 
   ngOnInit(): void {
@@ -38,29 +50,61 @@ export class CollagesComponent implements OnInit {
 
   getAllFlowerSizes() {
     this.flowerSizeService.getAllForAdminAsList()
-      .pipe(finalize(() => this.initialized = true))
       .subscribe(
         flowerSizes => this.flowerSizes = flowerSizes,
         error => this.snackBarService.showError(getErrorMessage(error))
       )
   }
 
-  addOrderItem() {
-    if (!this.flowerSizeToAdd) {
+  getAllFlowerTypes() {
+    this.flowerTypeService.getAll().subscribe(
+      flowerTypes => this.flowerTypes = flowerTypes,
+      error => this.snackBarService.showError(getErrorMessage(error))
+    );
+  }
+
+  getAllGroupsForFlowerType(flowerTypeId: number) {
+    this.groupService.getByFlowerTypeId(flowerTypeId).subscribe(
+      groups => this.groups = groups,
+      error => this.snackBarService.showError(getErrorMessage(error))
+    );
+  }
+
+  addFlowerTypeToCollage() {
+    if (!this.flowerTypeToAdd) {
       return;
     }
 
-    let found = this.collage.find(item => item.id == this.flowerSizeToAdd.id)
+    this.flowerSizes
+      .filter(item => item.flower.flowerType.id == this.flowerTypeToAdd.id)
+      .forEach(item => this.addItemToCollage(item))
+
+  }
+
+  addGroupToCollage() {
+    if (!this.groupToAdd) {
+      return;
+    }
+
+    this.flowerSizes
+      .filter(item => item.flower.group?.id == this.groupToAdd.id)
+      .forEach(item => this.addItemToCollage(item))
+
+  }
+
+  addItemToCollage(item = this.flowerSizeToAdd) {
+    if (!item) {
+      return;
+    }
+
+    let found = this.collage.find(el => el.id == item.id)
 
     if (found) {
-      this.snackBarService.showWarning(`'${this.flowerSizeToAdd.flower.nameOriginal}' вже в колажі`)
+      this.snackBarService.showWarning(`'${item.flower.nameOriginal}' вже в колажі`)
       return
     }
 
-    this.collage.push(this.flowerSizeToAdd)
-
-    console.log(this.collage)
-
+    this.collage.push(item)
   }
 
   moveCollageItemUp(index) {
