@@ -64,6 +64,7 @@ import { GroupItemComponent } from "./types/groups/group-item/group-item.compone
 import { GroupsComponent } from "./types/groups/groups.component";
 import { StatisticComponent } from "./statistic/statistic.component";
 import { EditorDialogComponent } from './shared/editor-dialog/editor-dialog.component';
+import { CollagesComponent } from './collages/collages.component';
 
 export const ngxMaskOptions: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
@@ -94,7 +95,8 @@ export const ngxMaskOptions: Partial<IConfig> | (() => Partial<IConfig>) = {};
     WarehouseComponent,
     UserItemComponent,
     StatisticComponent,
-    EditorDialogComponent
+    EditorDialogComponent,
+    CollagesComponent
   ],
   imports: [
     routing,

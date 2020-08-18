@@ -1,0 +1,151 @@
+<div class="panel-header">
+  <h1>Генератор Колажів</h1>
+</div>
+
+<div class="panel-content">
+
+  <div class="row">
+
+    <div class="add-block">
+
+      <p-dropdown class="add-flower-size-dropdown" [options]="flowerSizes" [(ngModel)]="flowerSizeToAdd" name="flowerSizeToAdd" [filter]="true"
+                  filterBy="value.flower.name,value.flower.nameOriginal,value.flower.flowerType.name,value.flower.flowerType.nameSingle,value.flower.flowerType.nameOriginal,value.code"
+                  placeholder="Оберіть товар" emptyFilterMessage="Не знайдено" optionLabel="flower.nameOriginal" appendTo="body">
+        <ng-template let-selectedItem pTemplate="selectedItem">
+          <div class="flower-size-selected">
+            <img [src]="selectedItem.value.flower.image"/>
+            <div><b>{{selectedItem.value.flower.nameOriginal}}</b> {{selectedItem.value.size.name}}, {{selectedItem.value.flower.flowerType.nameSingle}}</div>
+          </div>
+        </ng-template>
+        <ng-template let-item pTemplate="item">
+          <div class="ui-helper-clearfix">
+            <div class="flower-size-option">
+              <img [src]="item.value.flower.image"/>
+              <div class="flower-size-option-info">
+                <div class="flower-size-option-info-main"><b>{{item.value.flower.nameOriginal}}</b> {{item.value.size.name}}
+                  , {{item.value.flower.flowerType.nameSingle}}</div>
+                <div class="flower-size-option-info-additional">{{item.value.code}}, Ціна: {{item.value.price / 100}} грн, Доступно: {{item.value.available}} шт</div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+
+      <button pButton icon="pi pi-plus" label="Додати" type="button" class="p-button-success" [disabled]="loading"
+              (click)="addOrderItem()"></button>
+
+    </div>
+
+
+  </div>
+
+</div>
+
+
+<div class="panel-header">
+  <h3>Налаштування колажу</h3>
+</div>
+
+<div class="panel-content">
+
+  <div class="row">
+
+    <div class="prime-form-group p-grid">
+      <div class="p-col-3">
+        <label for="collageWidth">Ширина колажу</label>
+      </div>
+      <div class="p-col-3">
+        <input
+          pInputText
+          #collageWidth="ngModel"
+          id="collageWidth"
+          name="collageWidth"
+          digitOnly
+          [(ngModel)]="collageSize.baseWidth"/>
+      </div>
+    </div>
+
+    <div class="prime-form-group p-grid">
+      <div class="p-col-3">
+        <label for="collageWidth">Проміжок</label>
+      </div>
+      <div class="p-col-3">
+        <input
+          pInputText
+          #collageGap="ngModel"
+          id="collageGap"
+          name="collageGap"
+          digitOnly
+          [(ngModel)]="collageSize.gap"/>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+
+<div class="panel-header">
+  <h3>Список товарів в колажі</h3>
+</div>
+
+<div class="panel-content">
+
+  <div class="row p-col-12">
+
+    <ng-template ngFor let-item [ngForOf]="collage" let-i="index">
+      <div class="flower-size-in-collage">
+        <div class="controls">
+          <p-button icon="fas fa-caret-up" styleClass="p-button-sm" (click)="moveCollageItemUp(i)"></p-button>
+          <p-button icon="fas fa-caret-down" styleClass="p-button-sm" (click)="moveCollageItemDown(i)"></p-button>
+          <p-button icon="fas fa-trash" styleClass="p-button-sm p-button-danger" (click)="removeCollageItem(i)"></p-button>
+        </div>
+        <img [src]="item.flower.image"/>
+        <div class="info"><b>{{item.flower.nameOriginal}}</b> {{item.size.name}}, {{item.flower.flowerType.nameSingle}}</div>
+      </div>
+    </ng-template>
+
+  </div>
+
+</div>
+
+
+<div class="panel-header">
+  <h3>Попередній перегляд колажу</h3>
+  <button pButton icon="fas fa-file-download" label="Завантажити" type="button" class="p-button-success" (click)="download()"></button>
+</div>
+
+<div class="panel-content">
+
+  <div class="row">
+
+    <div id="collage-preview" class="collage-preview" [ngStyle]="{'grid-gap.px': collageSize.gap, 'width.px': collageSize.baseWidth}">
+
+      <ng-template ngFor let-item [ngForOf]="collage" let-i="index">
+
+        <div class="collage-preview-item" [ngStyle]="{'background-image':'url(' + item.flower.image + ')', 'height.px': (collageSize.baseWidth / 3 - collageSize.gap * 2)}">
+          <div class="left-info">
+            <div class="name">
+              <span class="main">{{item.flower.nameOriginal}}</span>
+              <span>&nbsp;</span>
+              <span class="size">{{item.size.name}}</span>
+            </div>
+            <div class="code">{{item.code}}</div>
+          </div>
+          <div class="right-info">
+            <div class="price">{{item.price / 100 + ' грн'}}</div>
+          </div>
+
+        </div>
+
+      </ng-template>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+

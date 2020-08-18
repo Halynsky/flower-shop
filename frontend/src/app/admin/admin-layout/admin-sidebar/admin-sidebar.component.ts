@@ -83,6 +83,11 @@ export class AdminSidebarComponent implements OnInit {
       //   routerLink: 'blog'
       // }
       {
+        label: 'Генератор Колажів',
+        icon: 'fas fa-th',
+        routerLink: 'collages'
+      },
+      {
         label: 'Статистика',
         icon: 'fas fa-chart-pie',
         routerLink: 'statistic'
