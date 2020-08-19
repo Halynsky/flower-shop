@@ -79,7 +79,7 @@
   <h3>Налаштування колажу</h3>
 </div>
 
-<div class="panel-content">
+<div class="panel-content config-panel">
 
   <div class="row">
 
@@ -93,8 +93,14 @@
           #collageWidth="ngModel"
           id="collageWidth"
           name="collageWidth"
+          [(ngModel)]="collageConfig.baseWidth"
           digitOnly
-          [(ngModel)]="collageConfig.baseWidth"/>
+          required/>
+      </div>
+      <div class="p-col-4">
+        <ng-container *ngIf="collageWidth.touched">
+          <p-message *ngIf="collageWidth.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
+        </ng-container>
       </div>
     </div>
 
@@ -108,8 +114,35 @@
           #collageGap="ngModel"
           id="collageGap"
           name="collageGap"
+          [(ngModel)]="collageConfig.gap"
           digitOnly
-          [(ngModel)]="collageConfig.gap"/>
+          required/>
+      </div>
+      <div class="p-col-4">
+        <ng-container *ngIf="collageGap.touched">
+          <p-message *ngIf="collageGap.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="prime-form-group p-grid">
+      <div class="p-col-3">
+        <label for="collageWidth">Кількість стовпців</label>
+      </div>
+      <div class="p-col-3">
+        <input
+          pInputText
+          #columnsCount="ngModel"
+          id="columnsCount"
+          name="columnsCount"
+          [(ngModel)]="collageConfig.columnsCount"
+          digitOnly
+          required/>
+      </div>
+      <div class="p-col-4">
+        <ng-container *ngIf="columnsCount.touched">
+          <p-message *ngIf="columnsCount.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
+        </ng-container>
       </div>
     </div>
 
@@ -123,8 +156,14 @@
           #fontSize="ngModel"
           id="fontSize"
           name="fontSize"
+          [(ngModel)]="collageConfig.fontSize"
           digitOnly
-          [(ngModel)]="collageConfig.fontSize"/>
+          required/>
+      </div>
+      <div class="p-col-4">
+        <ng-container *ngIf="fontSize.touched">
+          <p-message *ngIf="fontSize.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
+        </ng-container>
       </div>
     </div>
 
@@ -164,15 +203,15 @@
   <button pButton icon="fas fa-file-download" label="Завантажити" type="button" class="p-button-success" (click)="download()"  *ngIf="collage.length > 0"></button>
 </div>
 
-<div class="panel-content">
+<div class="panel-content" *ngIf="collageConfig.baseWidth && collageConfig.gap && collageConfig.columnsCount && collageConfig.fontSize">
 
   <div class="row">
 
-    <div id="collage-preview" class="collage-preview" [ngStyle]="{'grid-gap.px': collageConfig.gap, 'width.px': collageConfig.baseWidth}">
+    <div id="collage-preview" class="collage-preview" [ngStyle]="{'grid-gap.px': collageConfig.gap, 'width.px': collageConfig.baseWidth, 'grid-template-columns': 'repeat(' + collageConfig.columnsCount + ', 1fr)'}">
 
       <ng-template ngFor let-item [ngForOf]="collage" let-i="index">
 
-        <div class="collage-preview-item" [ngStyle]="{'background-image':'url(' + item.flower.image + ')', 'height.px': (collageConfig.baseWidth / 3 - collageConfig.gap * 2), 'font-size.px': collageConfig.fontSize}">
+        <div class="collage-preview-item" [ngStyle]="{'background-image':'url(' + item.flower.image + ')', 'height.px': (collageConfig.baseWidth / collageConfig.columnsCount - collageConfig.gap * (collageConfig.columnsCount - 1)), 'font-size.px': collageConfig.fontSize}">
           <div class="left-info">
             <div class="name">
               <span class="main">{{item.flower.nameOriginal}}</span>

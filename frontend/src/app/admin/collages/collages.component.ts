@@ -32,6 +32,7 @@ export class CollagesComponent implements OnInit {
   collageConfig = {
     baseWidth: 1000,
     gap: 5,
+    columnsCount: 3,
     fontSize: 18
   }
 
@@ -84,9 +85,7 @@ export class CollagesComponent implements OnInit {
   }
 
   addGroupToCollage() {
-    if (!this.groupToAdd) {
-      return;
-    }
+    if (!this.groupToAdd) return;
 
     this.allFlowerSizes
       .filter(item => item.flower.group?.id == this.groupToAdd.id)
@@ -95,9 +94,7 @@ export class CollagesComponent implements OnInit {
   }
 
   addItemToCollage(item = this.flowerSizeToAdd) {
-    if (!item) {
-      return;
-    }
+    if (!item) return;
 
     let found = this.collage.find(el => el.id == item.id)
 
@@ -107,6 +104,8 @@ export class CollagesComponent implements OnInit {
     }
 
     this.collage.push(item)
+
+    if (this.flowerSizeToAdd) this.flowerSizeToAdd = null
   }
 
   moveCollageItemUp(index) {

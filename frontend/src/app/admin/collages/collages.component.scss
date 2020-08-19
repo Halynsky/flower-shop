@@ -129,7 +129,7 @@
 
 .collage-preview {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  //grid-template-columns: repeat(3, 1fr);
 
   .collage-preview-item {
     background-size: cover;
@@ -185,5 +185,11 @@
 
     }
 
+  }
+}
+
+.config-panel {
+  input {
+    width: 100%;
   }
 }
