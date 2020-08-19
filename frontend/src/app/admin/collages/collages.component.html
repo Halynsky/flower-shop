@@ -16,7 +16,7 @@
                     [filter]="true"
                     #flowerType="ngModel" dataKey="id" [(ngModel)]="flowerTypeToAdd"
                     placeholder="Оберіть тип квітки" id="flowerType" showClear="true"
-                    (ngModelChange)="getAllGroupsForFlowerType(flowerTypeToAdd.id)" filterMatchMode="startsWith"></p-dropdown>
+                    (ngModelChange)="getAllGroupsForFlowerType(flowerTypeToAdd.id); filterFlowerSizes()" filterMatchMode="startsWith"></p-dropdown>
 
         <button pButton icon="pi pi-plus" label="Додати" type="button" class="p-button-success" [disabled]="loading"
                 (click)="addFlowerTypeToCollage()"></button>
@@ -28,7 +28,7 @@
         <label>Групи</label>
 
         <p-dropdown [options]="groups" name="group" optionLabel="name" #group="ngModel" dataKey="id" [(ngModel)]="groupToAdd"
-                    placeholder="Оберіть групу" id="group" showClear="true"></p-dropdown>
+                    placeholder="Оберіть групу" id="group" showClear="true" (ngModelChange)="filterFlowerSizes()"></p-dropdown>
 
         <button pButton icon="pi pi-plus" label="Додати" type="button" class="p-button-success" [disabled]="loading"
                 (click)="addGroupToCollage()"></button>
@@ -94,7 +94,7 @@
           id="collageWidth"
           name="collageWidth"
           digitOnly
-          [(ngModel)]="collageSize.baseWidth"/>
+          [(ngModel)]="collageConfig.baseWidth"/>
       </div>
     </div>
 
@@ -109,7 +109,22 @@
           id="collageGap"
           name="collageGap"
           digitOnly
-          [(ngModel)]="collageSize.gap"/>
+          [(ngModel)]="collageConfig.gap"/>
+      </div>
+    </div>
+
+    <div class="prime-form-group p-grid">
+      <div class="p-col-3">
+        <label for="collageWidth">Розмір шрифта</label>
+      </div>
+      <div class="p-col-3">
+        <input
+          pInputText
+          #fontSize="ngModel"
+          id="fontSize"
+          name="fontSize"
+          digitOnly
+          [(ngModel)]="collageConfig.fontSize"/>
       </div>
     </div>
 
@@ -119,7 +134,7 @@
 
 
 <div class="panel-header">
-  <h3>Список товарів в колажі</h3>
+  <h3>Список товарів в колажі ({{collage.length}})</h3>
   <button pButton icon="fas fa-trash" label="Очистити" type="button" class="p-button-danger" (click)="collage = []" *ngIf="collage.length > 0"></button>
 </div>
 
@@ -153,11 +168,11 @@
 
   <div class="row">
 
-    <div id="collage-preview" class="collage-preview" [ngStyle]="{'grid-gap.px': collageSize.gap, 'width.px': collageSize.baseWidth}">
+    <div id="collage-preview" class="collage-preview" [ngStyle]="{'grid-gap.px': collageConfig.gap, 'width.px': collageConfig.baseWidth}">
 
       <ng-template ngFor let-item [ngForOf]="collage" let-i="index">
 
-        <div class="collage-preview-item" [ngStyle]="{'background-image':'url(' + item.flower.image + ')', 'height.px': (collageSize.baseWidth / 3 - collageSize.gap * 2)}">
+        <div class="collage-preview-item" [ngStyle]="{'background-image':'url(' + item.flower.image + ')', 'height.px': (collageConfig.baseWidth / 3 - collageConfig.gap * 2), 'font-size.px': collageConfig.fontSize}">
           <div class="left-info">
             <div class="name">
               <span class="main">{{item.flower.nameOriginal}}</span>

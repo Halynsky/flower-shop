@@ -25,12 +25,14 @@ export class CollagesComponent implements OnInit {
   groupToAdd: Group;
 
   flowerTypes: FlowerType[];
+  allFlowerSizes: FlowerSize[];
   flowerSizes: FlowerSize[];
   groups: Group[];
 
-  collageSize = {
+  collageConfig = {
     baseWidth: 1000,
-    gap: 5
+    gap: 5,
+    fontSize: 18
   }
 
   collage: FlowerSize[] = [];
@@ -51,7 +53,7 @@ export class CollagesComponent implements OnInit {
   getAllFlowerSizes() {
     this.flowerSizeService.getAllForAdminAsList()
       .subscribe(
-        flowerSizes => this.flowerSizes = flowerSizes,
+        flowerSizes => this.allFlowerSizes = this.flowerSizes = flowerSizes,
         error => this.snackBarService.showError(getErrorMessage(error))
       )
   }
@@ -75,7 +77,7 @@ export class CollagesComponent implements OnInit {
       return;
     }
 
-    this.flowerSizes
+    this.allFlowerSizes
       .filter(item => item.flower.flowerType.id == this.flowerTypeToAdd.id)
       .forEach(item => this.addItemToCollage(item))
 
@@ -86,7 +88,7 @@ export class CollagesComponent implements OnInit {
       return;
     }
 
-    this.flowerSizes
+    this.allFlowerSizes
       .filter(item => item.flower.group?.id == this.groupToAdd.id)
       .forEach(item => this.addItemToCollage(item))
 
@@ -134,6 +136,12 @@ export class CollagesComponent implements OnInit {
       .then(function (blob) {
         window.saveAs(blob, 'collage.png');
       });
+  }
+
+  filterFlowerSizes() {
+    this.flowerSizes = this.allFlowerSizes.filter(fs => {
+      return (!this.flowerTypeToAdd || fs.flower.flowerType.id == this.flowerTypeToAdd.id) && (!this.groupToAdd || fs.flower.group.id == this.groupToAdd.id)
+    })
   }
 
 }
