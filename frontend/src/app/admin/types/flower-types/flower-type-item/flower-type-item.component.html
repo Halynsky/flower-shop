@@ -85,7 +85,7 @@
             <label for="image">Картинка</label>
           </div>
           <div class="p-col-3">
-            <image-preview [previewSize]="80" (fileChange)="addImage($event)" class="image" id="image"
+            <image-preview [previewSize]="160" (fileChange)="addImage($event)" class="image" id="image"
                            [image]="item.image"></image-preview>
           </div>
           <div class="p-col-3">
@@ -111,17 +111,18 @@
           </div>
         </div>
 
-        <div class="prime-form-group">
+        <div class="prime-form-group" *ngIf="mode == ItemSaveMode.edit">
           <div class="p-col-3">
             <label>Опис</label>
           </div>
           <div class="p-col-3">
-          <textarea pInputTextarea
-                    #description="ngModel"
-                    name="description"
-                    [(ngModel)]="item.description"
-                    cols="23" rows="6">
-          </textarea>
+<!--          <textarea pInputTextarea-->
+<!--                    #description="ngModel"-->
+<!--                    name="description"-->
+<!--                    [(ngModel)]="item.description"-->
+<!--                    cols="23" rows="6">-->
+<!--          </textarea>-->
+            <button pButton icon="fas fa-edit" class="button-back" label="Відкрити редактор" type="button" (click)="showDescriptionEditDialog()"></button>
           </div>
         </div>
 
@@ -137,5 +138,3 @@
 
   </div>
 </div>
-
-

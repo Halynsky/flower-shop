@@ -5,5 +5,6 @@ public interface FlowerSelectorProjection {
     String getName();
     String getImage();
     String getNameOriginal();
-    FlowerTypeShortProjection getFlowerType();
+    FlowerTypeTinyProjection getFlowerType();
+    GroupShortProjection getGroup();
 }

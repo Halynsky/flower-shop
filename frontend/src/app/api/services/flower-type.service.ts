@@ -35,6 +35,10 @@ export class FlowerTypeService {
     return this.http.put(`${this.URL}/${id}`, flowerType);
   }
 
+  updateDescription(id, description: string) {
+    return this.http.put(`${this.URL}/${id}/description`, description);
+  }
+
   delete(id: number) {
     return this.http.delete(`${this.URL}/${id}`);
   }

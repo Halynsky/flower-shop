@@ -10,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ua.com.flowershop.projection.FlowerSizeFullProjection;
 import ua.com.flowershop.projection.FlowerSizeFullProjectionWithAvailable;
+import ua.com.flowershop.projection.FlowerSizeSelectorProjection;
 import ua.com.flowershop.projection.FlowerSizeTinyProjection;
 import ua.com.flowershop.repository.FlowerSizeRepository;
 import ua.com.flowershop.service.FlowerSizeService;
@@ -44,7 +45,7 @@ public class FlowerSizeController {
 
     @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @GetMapping("/forAdmin/asList")
-    public ResponseEntity<List<FlowerSizeTinyProjection>> getAllForAdmin() {
+    public ResponseEntity<List<FlowerSizeSelectorProjection>> getAllForAdmin() {
         return new ResponseEntity<>(flowerSizeRepository.findAllForAdminProjectedByOrderByFlowerNameAscSizeNameAsc(), OK);
     }
 

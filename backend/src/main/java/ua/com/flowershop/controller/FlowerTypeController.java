@@ -79,6 +79,14 @@ public class FlowerTypeController {
     }
 
     @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
+    @PutMapping("/{id}/description")
+    public ResponseEntity<Void> updateDescription(@PathVariable Long id,
+                                                  @RequestBody String description) {
+        flowerTypeService.updateDescription(id, description);
+        return new ResponseEntity<>(OK);
+    }
+
+    @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         flowerTypeService.delete(id);

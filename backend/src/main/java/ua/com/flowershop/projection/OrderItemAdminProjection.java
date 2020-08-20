@@ -11,4 +11,5 @@ public interface OrderItemAdminProjection {
     Long getFlowerSizeId();
     Long getOrderId();
     Integer getAvailable();
+    String getCode();
 }

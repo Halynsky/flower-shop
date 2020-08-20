@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import ua.com.flowershop.entity.FlowerSize;
 import ua.com.flowershop.projection.FlowerSizeFullProjection;
 import ua.com.flowershop.projection.FlowerSizeFullProjectionWithAvailable;
+import ua.com.flowershop.projection.FlowerSizeSelectorProjection;
 import ua.com.flowershop.projection.FlowerSizeTinyProjection;
 
 import java.util.List;
@@ -46,7 +47,7 @@ public interface FlowerSizeRepository extends JpaRepository<FlowerSize, Long> {
         "AND (COALESCE(:sizeFilters, NULL) IS NULL OR s.id IN :sizeFilters)")
     Page<FlowerSizeFullProjectionWithAvailable> findProjectedByFilters(String searchTerm, List<Long> flowerTypeFilters, List<Long> colorFilters, List<Long> sizeFilters, Pageable pageRequest);
 
-    List<FlowerSizeTinyProjection> findAllForAdminProjectedByOrderByFlowerNameAscSizeNameAsc();
+    List<FlowerSizeSelectorProjection> findAllForAdminProjectedByOrderByFlowerNameAscSizeNameAsc();
 
     @Query("SELECT min(fs.price) FROM FlowerSize fs " +
         "WHERE fs.flower.id = :id")
