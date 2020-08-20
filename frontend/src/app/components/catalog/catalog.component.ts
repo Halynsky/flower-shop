@@ -1,6 +1,8 @@
 import { Component, Input } from "@angular/core";
 import { FlowerTypeService } from "../../api/services/flower-type.service";
-import { FlowerTypeImageNameTuple } from "../../api/models/FlowerType";
+import { FlowerTypeImageNameTupleWithAvailable } from "../../api/models/FlowerType";
+import { CatalogService } from "../../services/catalog.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'catalog',
@@ -9,36 +11,39 @@ import { FlowerTypeImageNameTuple } from "../../api/models/FlowerType";
 })
 export class CatalogComponent {
 
-  @Input() isMain: Boolean = false;
+  @Input() isHeader = false;
 
-  showFirstEight: Boolean;
+  flowerTypes: FlowerTypeImageNameTupleWithAvailable[] = [];
 
-  flowerTypes: FlowerTypeImageNameTuple[] = [];
+  firstFlowerTypes: FlowerTypeImageNameTupleWithAvailable[] = [];
 
-  firstFlowerTypes: FlowerTypeImageNameTuple[] = [];
-
-  constructor(private dataService: FlowerTypeService) {
+  constructor(private dataService: FlowerTypeService, public catalogService: CatalogService, private router: Router) {
     this.dataService.getAllWithImage().subscribe(flowerTypes => {
       this.flowerTypes = flowerTypes;
-      if (this.isMain) {
-        this.initFirstFlowerTypes();
-      }
+      this.initFirstFlowerTypes();
     })
   }
 
   initFirstFlowerTypes() {
-    this.showFirstEight = true;
-    for (let i = 0; i < 8; i++) {
-      this.firstFlowerTypes.push(this.flowerTypes[i]);
+    for (let i = 0; i < this.flowerTypes.length; i++) {
+      if (this.flowerTypes[i].availableFlowersCount > 0) {
+        this.firstFlowerTypes.push(this.flowerTypes[i]);
+      }
+      if (this.firstFlowerTypes.length === 8) break;
     }
   }
 
   hide() {
-    this.showFirstEight = true;
+    this.catalogService.setShowCatalog(false);
   }
 
   show() {
-    this.showFirstEight = false;
+    this.catalogService.setShowCatalog(true);
   }
 
+  goToCatalog() {
+    this.router.navigateByUrl('/').then(res => {
+      this.catalogService.setShowCatalog(true);
+    });
+  }
 }

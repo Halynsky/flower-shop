@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { FlowerType, FlowerTypeImageNameTuple } from "../models/FlowerType";
+import { FlowerType, FlowerTypeImageNameTupleWithAvailable } from "../models/FlowerType";
 import { API_URL } from "../../utils/Costants";
 import { Observable } from "rxjs";
 
@@ -16,7 +16,7 @@ export class FlowerTypeService {
   }
 
   getAllWithImage() {
-    return this.http.get<FlowerTypeImageNameTuple[]>(`${this.URL}/imageNameTuple`)
+    return this.http.get<FlowerTypeImageNameTupleWithAvailable[]>(`${this.URL}/imageNameTuple`)
   }
 
   isNameFree(name: string): Observable<any> {

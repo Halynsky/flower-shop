@@ -352,8 +352,12 @@
 
 ::ng-deep .catalog-menu {
   padding: 24px 24px 0 24px;
-  width: 1060px;
-  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @include response(sm) {
+    padding: 36px 36px 0 36px;
+  }
 }
 
 ::ng-deep .catalog-menu-backdrop {

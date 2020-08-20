@@ -20,11 +20,30 @@
 
 }
 
+.content-for-header {
+  display: grid;
+  grid-gap: 24px;
+  margin-bottom: 24px;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.show-button {
+  padding: 0px 0 18px 18px;
+  text-align: end;
+  button {
+    background: mat-color($primary, 800);
+    color: white;
+  }
+}
+
 .show-hide-block {
   padding: 18px;
   text-align: end;
+  @include response(sm) {
+    text-align: start;
+  }
   .show-hide-text {
-    color: cornflowerblue;
+    color: mat-color($primary, 800);
     text-decoration: underline;
     &:hover {
       cursor: pointer;

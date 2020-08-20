@@ -156,7 +156,9 @@ mat-card {
 
 .mat-menu-panel.catalog-menu {
   max-width: 1200px !important;
-  max-height: 500px !important;
+  min-width: 500px !important;
+  max-height: 1000px !important;
+  min-height: 400px !important;
 }
 
 //mat-card {

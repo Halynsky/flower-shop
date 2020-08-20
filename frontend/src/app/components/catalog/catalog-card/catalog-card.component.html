@@ -1,4 +1,4 @@
-<a class="wrapper">
+<a class="wrapper" routerLink="/shop" [queryParams]="{'flowerTypes': flowerType.id}" [ngClass]="{'not-available': flowerType.availableFlowersCount < 1}" >
   <div class="cover" [ngStyle]="flowerType.image && {'background-image':'url(' + flowerType.image + ')'} || {'background-image':'url(' + flowerImagePlaceholder + ')'}">
     <div class="flags-wrapper">
 

@@ -11,8 +11,9 @@ export class FlowerType {
   description: string;
 }
 
-export class FlowerTypeImageNameTuple {
+export class FlowerTypeImageNameTupleWithAvailable {
   id?: number;
   name: string;
   image: string;
+  availableFlowersCount: number;
 }

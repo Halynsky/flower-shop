@@ -1,7 +1,7 @@
 import { Component, Input } from "@angular/core";
 import { FLOWER_IMAGE_PLACEHOLDER } from "../../../utils/Costants";
 import { FlowerSize } from "../../../api/models/FlowerSize";
-import { FlowerTypeImageNameTuple } from "../../../api/models/FlowerType";
+import { FlowerTypeImageNameTupleWithAvailable } from "../../../api/models/FlowerType";
 
 @Component({
   selector: 'catalog-card',
@@ -10,7 +10,7 @@ import { FlowerTypeImageNameTuple } from "../../../api/models/FlowerType";
 })
 export class CatalogCardComponent {
 
-  @Input() flowerType: FlowerTypeImageNameTuple;
+  @Input() flowerType: FlowerTypeImageNameTupleWithAvailable;
 
   flowerImagePlaceholder = FLOWER_IMAGE_PLACEHOLDER;
 
