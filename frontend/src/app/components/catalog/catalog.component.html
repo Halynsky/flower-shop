@@ -28,8 +28,8 @@
       <span class="show-hide-text" (click)="hide()" *ngIf="catalogService.getShowCatalog()">Приховати</span>
       <span class="show-hide-text" (click)="show()" *ngIf="!catalogService.getShowCatalog()">Переглянути всі</span>
     </div>
-    <div class="show-button" *ngIf="isHeader">
-      <button mat-button (click)="goToCatalog()">Переглянути всі</button>
+    <div class="show-hide-block" *ngIf="isHeader">
+      <span class="show-hide-text" (click)="goToCatalog()">Переглянути всі</span>
     </div>
   </div>
 

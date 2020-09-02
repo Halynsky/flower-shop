@@ -21,7 +21,7 @@
       .info {
 
         .name {
-          opacity: 0.6;
+          opacity: 0.5;
         }
 
       }
@@ -109,7 +109,7 @@
       }
 
       .name {
-        color: $grey-800;
+        color: mat-color($primary, 800);
         font-weight: 500;
         font-size: 20px;
         line-height: 120%;

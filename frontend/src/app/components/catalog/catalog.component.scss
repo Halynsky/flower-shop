@@ -24,26 +24,20 @@
   display: grid;
   grid-gap: 24px;
   margin-bottom: 24px;
-  grid-template-columns: repeat(4, 1fr);
-}
-
-.show-button {
-  padding: 0px 0 18px 18px;
-  text-align: end;
-  button {
-    background: mat-color($primary, 800);
-    color: white;
+  @include response-from(md) {
+    width: 800px;
   }
+  @include response-from(sm) {
+    margin-bottom: 12px;
+  }
+  grid-template-columns: repeat(4, 1fr);
 }
 
 .show-hide-block {
   padding: 18px;
   text-align: end;
-  @include response(sm) {
-    text-align: start;
-  }
   .show-hide-text {
-    color: mat-color($primary, 800);
+    color: mat-color($accent);
     text-decoration: underline;
     &:hover {
       cursor: pointer;
