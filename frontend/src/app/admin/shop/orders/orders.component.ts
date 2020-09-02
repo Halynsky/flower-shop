@@ -316,7 +316,8 @@ export class OrdersComponent implements OnInit {
       {
         label: "Відправити на email користувача",
         icon: 'far fa-envelope',
-        command: (event) => this.sendOrderInEmail(this.selected.id)
+        command: (event) => this.sendOrderInEmail(this.selected.id),
+        visible: this.orderIsEditable(this.selected.status),
       },
       {
         label: "Перейти до користувача",
@@ -338,7 +339,7 @@ export class OrdersComponent implements OnInit {
   }
 
   orderIsClosed(status) {
-    return [this.Status.CANCELED, this.Status.DONE, this.Status.RETURNED].includes(status)
+    return [this.Status.CANCELED, this.Status.CANCELED_AUTO, this.Status.DONE, this.Status.RETURNED].includes(status)
   }
 
   orderIsEditable(status) {

@@ -208,7 +208,7 @@
                 'pg-primary': rowData.status == Status.NEW || rowData.status == Status.PROCESSING || rowData.status == Status.DELIVERING,
                  'pg-accent': rowData.status == Status.DONE,
                  'pg-warn': rowData.status == Status.RETURNED,
-                 'pg-danger': rowData.status == Status.CANCELED}">
+                 'pg-danger': rowData.status == Status.CANCELED || rowData.status == Status.CANCELED_AUTO}">
             {{translation.text.orderStatuses[rowData.status]}}
           </span>
 
@@ -306,7 +306,7 @@
                  [ngClass]="{'pg-primary': orderStatusChangeRequest.status == Status.PROCESSING || orderStatusChangeRequest.status == Status.DELIVERING,
                  'pg-accent': orderStatusChangeRequest.status == Status.DONE,
                  'pg-warn': orderStatusChangeRequest.status == Status.RETURNED,
-                 'pg-danger': orderStatusChangeRequest.status == Status.CANCELED}">
+                 'pg-danger': orderStatusChangeRequest.status == Status.CANCELED || orderStatusChangeRequest.status == Status.CANCELED_AUTO}">
             {{translation.text.orderStatuses[orderStatusChangeRequest.status]}}
           </label>
         </div>

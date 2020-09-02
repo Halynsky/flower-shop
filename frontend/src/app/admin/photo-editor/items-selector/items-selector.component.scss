@@ -1,0 +1,72 @@
+:host {
+  .panel-content {
+    margin-bottom: 24px;
+  }
+}
+
+
+.add-block-wrapper {
+
+  .add-block {
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+
+    label {
+      display: inline-block;
+      width: 100px;
+    }
+
+    & > button {
+      margin-left: 12px;
+    }
+
+    p-dropdown {
+      min-width: 300px;
+      ::ng-deep .p-dropdown {
+        min-width: 300px;
+      }
+
+    }
+
+  }
+
+}
+
+.flower-size-option {
+  display: flex;
+  flex-direction: row;
+
+  img {
+    height: 32px;
+    width: 32px;
+    margin-right: 8px;
+  }
+
+  .flower-size-option-info {
+    line-height: 130%;
+
+    .flower-size-option-info-additional {
+      color: #a8a8a8;
+    }
+
+  }
+
+}
+
+.flower-size-selected {
+  display: flex;
+  flex-direction: row;
+
+  img {
+    height: 24px;
+    width: 24px;
+    margin-right: 4px;
+  }
+}
+
+::ng-deep p-dropdown.add-flower-size-dropdown {
+  ::ng-deep .p-dropdown {
+    width: 300px;
+  }
+}

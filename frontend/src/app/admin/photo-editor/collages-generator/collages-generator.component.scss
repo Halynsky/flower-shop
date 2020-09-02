@@ -1,0 +1,126 @@
+:host {
+
+  .panel-header {
+    justify-content: flex-start;
+
+    button {
+      margin-left: 24px;
+    }
+  }
+
+  .panel-content {
+    margin-bottom: 36px;
+  }
+
+}
+
+.flower-size-in-list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 8px;
+
+  img {
+    height: 32px;
+    width: 32px;
+    margin-right: 8px;
+  }
+
+  .info {
+    line-height: 130%;
+
+    .flower-size-option-info-additional {
+      color: #a8a8a8;
+    }
+
+  }
+
+  .controls {
+    display: flex;
+    flex-direction: row;
+    margin-left: 12px;
+
+    ::ng-deep p-button {
+      margin-right: 8px;
+
+      button {
+        padding: 0px;
+        width: 30px;
+
+        .p-button-icon {
+          font-size: 20px;
+        }
+
+      }
+
+    }
+
+  }
+
+}
+
+.result-preview {
+  display: grid;
+
+  .result-preview-item {
+    background-size: cover;
+    position: relative;
+    background-position: center;
+
+    .left-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      color: white;
+
+      .name {
+        background-color: #4caf50;
+        padding: 2px 4px;
+        white-space: nowrap;
+
+        .main {
+          font-weight: 500;
+          white-space: nowrap;
+        }
+
+        .size {
+          white-space: nowrap;
+        }
+
+      }
+
+      .code {
+        background-color: #339637;
+        padding: 2px 4px;
+        white-space: nowrap;
+      }
+
+    }
+
+    .right-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      color: white;
+
+      .price {
+        background-color: #ff5722;
+        padding: 2px 4px;
+      }
+
+    }
+
+  }
+}
+
+.config-panel {
+  input {
+    width: 100%;
+  }
+}

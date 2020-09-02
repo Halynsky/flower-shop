@@ -1,23 +1,24 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { FlowerSize } from "../../api/models/FlowerSize";
-import { getErrorMessage } from "../../utils/Functions";
-import { FlowerSizeService } from "../../api/services/flower-size.service";
-import { SnackBarService } from "../../services/snak-bar.service";
-import htmlToImage from 'html-to-image';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import { FlowerType } from "../../../api/models/FlowerType";
+import { FlowerSize } from "../../../api/models/FlowerSize";
+import { Group } from "../../../api/models/Group";
+import { FlowerSizeService } from "../../../api/services/flower-size.service";
+import { FlowerTypeService } from "../../../api/services/flower-type.service";
+import { GroupService } from "../../../api/services/group.service";
+import { SnackBarService } from "../../../services/snak-bar.service";
 import { DOCUMENT } from "@angular/common";
-import { FlowerType } from "../../api/models/FlowerType";
-import { GroupService } from "../../api/services/group.service";
-import { FlowerTypeService } from "../../api/services/flower-type.service";
-import { Group } from "../../api/models/Group";
+import { getErrorMessage } from "../../../utils/Functions";
 
 @Component({
-  selector: 'collages',
-  templateUrl: './collages.component.html',
-  styleUrls: ['./collages.component.scss']
+  selector: 'items-selector',
+  templateUrl: './items-selector.component.html',
+  styleUrls: ['./items-selector.component.scss']
 })
-export class CollagesComponent implements OnInit {
+export class ItemsSelectorComponent implements OnInit {
 
-  initialized = false;
+  @Input() items: FlowerSize[] = [];
+  @Output() itemsChange = new EventEmitter<FlowerSize[]>();
+
   loading = false;
 
   flowerTypeToAdd: FlowerType;
@@ -28,15 +29,7 @@ export class CollagesComponent implements OnInit {
   allFlowerSizes: FlowerSize[];
   flowerSizes: FlowerSize[];
   groups: Group[];
-
-  collageConfig = {
-    baseWidth: 1000,
-    gap: 5,
-    columnsCount: 3,
-    fontSize: 18
-  }
-
-  collage: FlowerSize[] = [];
+  availableOnly = true;
 
   constructor(private flowerSizeService: FlowerSizeService,
               private flowerTypeService: FlowerTypeService,
@@ -67,6 +60,8 @@ export class CollagesComponent implements OnInit {
   }
 
   getAllGroupsForFlowerType(flowerTypeId: number) {
+    if (!flowerTypeId) return;
+
     this.groupService.getByFlowerTypeId(flowerTypeId).subscribe(
       groups => this.groups = groups,
       error => this.snackBarService.showError(getErrorMessage(error))
@@ -74,9 +69,7 @@ export class CollagesComponent implements OnInit {
   }
 
   addFlowerTypeToCollage() {
-    if (!this.flowerTypeToAdd) {
-      return;
-    }
+    if (!this.flowerTypeToAdd) return
 
     this.allFlowerSizes
       .filter(item => item.flower.flowerType.id == this.flowerTypeToAdd.id)
@@ -96,45 +89,20 @@ export class CollagesComponent implements OnInit {
   addItemToCollage(item = this.flowerSizeToAdd) {
     if (!item) return;
 
-    let found = this.collage.find(el => el.id == item.id)
+    let found = this.items.find(el => el.id == item.id)
 
     if (found) {
       this.snackBarService.showWarning(`'${item.flower.nameOriginal}' вже в колажі`)
       return
     }
 
-    this.collage.push(item)
-
-    if (this.flowerSizeToAdd) this.flowerSizeToAdd = null
-  }
-
-  moveCollageItemUp(index) {
-    if (index > 0) {
-      let moved = this.collage.splice(index, 1)[0];
-      this.collage.splice(index - 1, 0, moved)
-    }
-  }
-
-  moveCollageItemDown(index) {
-    if (index < this.collage.length) {
-      let moved = this.collage.splice(index, 1)[0];
-      this.collage.splice(index + 1, 0, moved)
-    }
-  }
-
-  removeCollageItem(index) {
-    this.collage.splice(index,1)
-  }
-
-  download() {
-    if(this.collage.length == 0) {
+    if(this.availableOnly && item.available == 0) {
       return
     }
 
-    htmlToImage.toBlob(document.getElementById('collage-preview'))
-      .then(function (blob) {
-        window.saveAs(blob, 'collage.png');
-      });
+    this.items.push(item)
+
+    if (this.flowerSizeToAdd) this.flowerSizeToAdd = null
   }
 
   filterFlowerSizes() {

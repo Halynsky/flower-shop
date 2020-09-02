@@ -86,6 +86,7 @@ export namespace Order {
     DELIVERING = 'DELIVERING',
     RETURNED = 'RETURNED',
     CANCELED = 'CANCELED',
+    CANCELED_AUTO = 'CANCELED_AUTO',
     DONE = 'DONE',
   }
 }

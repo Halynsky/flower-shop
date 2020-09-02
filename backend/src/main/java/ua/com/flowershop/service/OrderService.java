@@ -128,6 +128,10 @@ public class OrderService {
     public void changeStatus(Long orderId, OrderStatusChangeRequestModel orderStatusChangeRequest) {
         Order order = orderRepository.findById(orderId).orElseThrow(NotFoundException::new);
 
+        if(orderStatusChangeRequest.getStatus() == Order.Status.CANCELED_AUTO) {
+            throw new ConflictException("Вказано невалідний статус замовлення");
+        }
+
         switch (orderStatusChangeRequest.getStatus()) {
 
             case PROCESSING:
@@ -201,6 +205,7 @@ public class OrderService {
                 break;
 
             case CANCELED:
+            case CANCELED_AUTO:
                 if (!Order.Status.getEditable().contains(order.getStatus())) {
                     throw new ConflictException("Вказано невалідний статус замовлення");
                 }

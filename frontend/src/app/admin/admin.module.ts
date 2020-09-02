@@ -14,7 +14,7 @@ import { FlowerTypesComponent } from './types/flower-types/flower-types.componen
 import { TableModule } from "primeng/table";
 import { SizesComponent } from './types/sizes/sizes.component';
 import { ColorsComponent } from './types/colors/colors.component';
-import { NgArrayPipesModule } from "angular-pipes";
+import { NgArrayPipesModule, NgReplacePipeModule } from "angular-pipes";
 import { FlowersComponent } from "./types/flowers/flowers.component";
 import { SizeItemComponent } from './types/sizes/size-item/size-item.component';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -64,7 +64,9 @@ import { GroupItemComponent } from "./types/groups/group-item/group-item.compone
 import { GroupsComponent } from "./types/groups/groups.component";
 import { StatisticComponent } from "./statistic/statistic.component";
 import { EditorDialogComponent } from './shared/editor-dialog/editor-dialog.component';
-import { CollagesComponent } from './collages/collages.component';
+import { ItemsSelectorComponent } from './photo-editor/items-selector/items-selector.component';
+import { CollagesGeneratorComponent } from "./photo-editor/collages-generator/collages-generator.component";
+import { PhotoGeneratorComponent } from "./photo-editor/photo-generator/photo-generator.component";
 
 export const ngxMaskOptions: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
@@ -96,7 +98,9 @@ export const ngxMaskOptions: Partial<IConfig> | (() => Partial<IConfig>) = {};
     UserItemComponent,
     StatisticComponent,
     EditorDialogComponent,
-    CollagesComponent
+    CollagesGeneratorComponent,
+    PhotoGeneratorComponent,
+    ItemsSelectorComponent
   ],
   imports: [
     routing,
@@ -137,7 +141,8 @@ export const ngxMaskOptions: Partial<IConfig> | (() => Partial<IConfig>) = {};
     NgxMaskModule.forRoot(ngxMaskOptions),
     KeyFilterModule,
     ChartModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    NgReplacePipeModule
   ],
   providers: [
     ConfirmationService,

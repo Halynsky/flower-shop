@@ -1,0 +1,124 @@
+<div class="panel-header">
+  <h1>Генератор Фото</h1>
+</div>
+
+<items-selector [(items)]="items"></items-selector>
+
+<div class="panel-header">
+  <h3>Налаштування Фото</h3>
+</div>
+
+<div class="panel-content config-panel">
+
+  <div class="row">
+
+    <div class="prime-form-group p-grid">
+      <div class="p-col-3">
+        <label for="collageWidth">Ширина фото</label>
+      </div>
+      <div class="p-col-3">
+        <input
+          pInputText
+          #collageWidth="ngModel"
+          id="collageWidth"
+          name="collageWidth"
+          [(ngModel)]="photoConfig.baseWidth"
+          digitOnly
+          required/>
+      </div>
+      <div class="p-col-4">
+        <ng-container *ngIf="collageWidth.touched">
+          <p-message *ngIf="collageWidth.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="prime-form-group p-grid">
+      <div class="p-col-3">
+        <label for="collageWidth">Розмір шрифта</label>
+      </div>
+      <div class="p-col-3">
+        <input
+          pInputText
+          #fontSize="ngModel"
+          id="fontSize"
+          name="fontSize"
+          [(ngModel)]="photoConfig.fontSize"
+          digitOnly
+          required/>
+      </div>
+      <div class="p-col-4">
+        <ng-container *ngIf="fontSize.touched">
+          <p-message *ngIf="fontSize.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
+        </ng-container>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+
+<div class="panel-header">
+  <h3>Список товарів ({{items.length}})</h3>
+  <button pButton icon="fas fa-trash" label="Очистити" type="button" class="p-button-danger" (click)="items = []" *ngIf="items.length > 0"></button>
+</div>
+
+<div class="panel-content">
+
+  <div class="row p-col-12">
+
+    <ng-template ngFor let-item [ngForOf]="items" let-i="index">
+      <div class="flower-size-in-list">
+        <div class="controls">
+          <p-button icon="fas fa-trash" styleClass="p-button-sm p-button-danger" (click)="removeCollageItem(i)"></p-button>
+        </div>
+        <img [src]="item.flower.image"/>
+        <div class="info"><b>{{item.flower.nameOriginal}}</b> {{item.size.name}}, {{item.flower.flowerType.nameSingle}}</div>
+      </div>
+    </ng-template>
+
+  </div>
+
+</div>
+
+
+<div class="panel-header">
+  <h3>Попередній перегляд</h3>
+  <button pButton icon="fas fa-file-download" label="Завантажити" type="button" class="p-button-success" (click)="download()"  *ngIf="items.length > 0"></button>
+</div>
+
+<div class="panel-content" *ngIf="photoConfig.baseWidth && photoConfig.fontSize">
+
+  <div class="row">
+
+    <div id="result-preview" class="result-preview" [ngStyle]="{'width.px': photoConfig.baseWidth}">
+
+      <ng-template ngFor let-item [ngForOf]="items" let-i="index">
+
+        <div id="{{item.flower.nameOriginal | replace: ALL_SPACES_PATTERN: '_' | replace: ALL_APOSTROPHE_PATTERN: ''}}" class="result-preview-item" [ngStyle]="{'background-image':'url(' + item.flower.image + ')', 'height.px': photoConfig.baseWidth, 'font-size.px': photoConfig.fontSize}">
+          <div class="left-info">
+            <div class="code">{{item.code}}</div>
+            <div class="name">
+              <span class="main">{{item.flower.nameOriginal}}</span>
+              <span>&nbsp;</span>
+              <span class="size">{{item.size.name}}</span>
+            </div>
+          </div>
+          <div class="right-info">
+            <div class="price">{{item.price / 100 + ' грн'}}</div>
+          </div>
+
+        </div>
+
+      </ng-template>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
