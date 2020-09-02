@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ua.com.flowershop.model.FlowerTypeModel;
 import ua.com.flowershop.projection.FlowerTypeProjection;
+import ua.com.flowershop.projection.FlowerTypeImageNameTupleWithAvailable;
 import ua.com.flowershop.repository.FlowerTypeRepository;
 import ua.com.flowershop.service.FlowerTypeService;
 
@@ -29,6 +30,12 @@ public class FlowerTypeController {
     @GetMapping
     public ResponseEntity<List<FlowerTypeProjection>> getAll() {
         List<FlowerTypeProjection> flowerTypes = flowerTypeRepository.findProjectedByOrderByName();
+        return new ResponseEntity<>(flowerTypes, OK);
+    }
+
+    @GetMapping("/imageNameTuple")
+    public ResponseEntity<List<FlowerTypeImageNameTupleWithAvailable>> getAllWithImage() {
+        List<FlowerTypeImageNameTupleWithAvailable> flowerTypes = flowerTypeRepository.findAllProjectedByOrderByName();
         return new ResponseEntity<>(flowerTypes, OK);
     }
 

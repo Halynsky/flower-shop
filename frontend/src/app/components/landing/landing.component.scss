@@ -5,32 +5,25 @@
   @extend .content-thin;
   justify-self: center;
   align-self: center;
-}
+  padding: 2em 18px 18px;
 
-.page-title {
-  color: mat-color($accent);
-  margin: 1.1em 0 1em;
-  font-size: 2em;
-  font-weight: 600;
-  @include response-to(xs) {
-    text-align: center;
+  .wrapper {
+
+    .page-title {
+      text-align: center;
+      color: mat-color($accent);
+      font-size: 28px;
+      font-weight: 500;
+      margin: 0px 0px 26px;
+      align-items: center;
+      display: flex;
+      padding: 8px 0px;
+      @include response-to(xs) {
+        font-size: 24px;
+      }
+
+    }
   }
 }
 
-.container {
-  //flex-wrap: wrap;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 2em;
-  margin-bottom: 2em;
-
-  @include response-to(sm) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @include response-to(xs) {
-    grid-template-columns: 1fr;
-  }
-
-}
 

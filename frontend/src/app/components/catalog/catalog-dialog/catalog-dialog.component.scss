@@ -1,0 +1,29 @@
+@import "theme";
+@import "mixins";
+
+.dialog-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  & > i.close {
+    cursor: pointer;
+    position: fixed;
+    top: 8px;
+    right: 8px;
+    color: $grey-400;
+    font-size: 24px;
+  }
+
+  .content {
+    padding: 12px;
+    display: grid;
+    grid-gap: 24px;
+    margin-bottom: 24px;
+    min-width: 400px;
+    grid-template-columns: repeat(3, 1fr);
+    @include response-to(xs) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+}

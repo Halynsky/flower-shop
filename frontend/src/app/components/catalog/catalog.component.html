@@ -1,0 +1,37 @@
+<!-- BLOCK FOR MAIN PAGE !-->
+<div class="wrapper">
+
+  <div class="content-wrapper">
+
+    <div *ngIf="!isHeader">
+      <div class="content" *ngIf="catalogService.getShowCatalog() && !isHeader">
+        <ng-template ngFor let-flowerType [ngForOf]="flowerTypes">
+          <catalog-card [flowerType]="flowerType"></catalog-card>
+        </ng-template>
+      </div>
+
+      <div class="content" *ngIf="!catalogService.getShowCatalog()">
+        <ng-template ngFor let-flowerType [ngForOf]="firstFlowerTypes">
+          <catalog-card [flowerType]="flowerType"></catalog-card>
+        </ng-template>
+      </div>
+    </div>
+    <div *ngIf="isHeader">
+      <div class="content-for-header">
+        <ng-template ngFor let-flowerType [ngForOf]="firstFlowerTypes">
+          <catalog-card [flowerType]="flowerType"></catalog-card>
+        </ng-template>
+      </div>
+    </div>
+
+    <div class="show-hide-block" *ngIf="!isHeader">
+      <span class="show-hide-text" (click)="hide()" *ngIf="catalogService.getShowCatalog()">Приховати</span>
+      <span class="show-hide-text" (click)="show()" *ngIf="!catalogService.getShowCatalog()">Переглянути всі</span>
+    </div>
+    <div class="show-hide-block" *ngIf="isHeader">
+      <span class="show-hide-text" (click)="goToCatalog()">Переглянути всі</span>
+    </div>
+  </div>
+
+</div>
+

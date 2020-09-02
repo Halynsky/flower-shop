@@ -1,0 +1,46 @@
+@import "theme";
+@import "mixins";
+
+.content {
+  display: grid;
+  grid-gap: 24px;
+  margin-bottom: 24px;
+
+  @include response-to(xs) {
+    grid-template-columns: auto;
+  }
+
+  @include response-from(sm) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include response-from(md) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+}
+
+.content-for-header {
+  display: grid;
+  grid-gap: 24px;
+  margin-bottom: 24px;
+  @include response-from(md) {
+    width: 800px;
+  }
+  @include response-from(sm) {
+    margin-bottom: 12px;
+  }
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.show-hide-block {
+  padding: 18px;
+  text-align: end;
+  .show-hide-text {
+    color: mat-color($accent);
+    text-decoration: underline;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

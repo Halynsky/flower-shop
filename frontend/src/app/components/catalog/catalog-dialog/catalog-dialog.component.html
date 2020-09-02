@@ -1,0 +1,11 @@
+<div class="dialog-container">
+
+  <i class="material-icons close" (click)="dialogRef.close()"></i>
+
+  <div class="content">
+    <ng-template ngFor let-flowerType [ngForOf]="flowerTypes">
+      <catalog-card [flowerType]="flowerType"></catalog-card>
+    </ng-template>
+  </div>
+
+</div>

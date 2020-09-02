@@ -1,10 +1,7 @@
-<div class="news" *ngIf="articles">
+<div class="wrapper">
 
-  <h1 class="page-title">БЛОГ</h1>
+  <h1 class="page-title">КАТАЛОГ</h1>
 
-  <div class="container">
-      <article-card *ngFor="let article of articles.content" [article]="article"></article-card>
-  </div>
-
+  <catalog></catalog>
 
 </div>

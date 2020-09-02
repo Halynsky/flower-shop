@@ -154,6 +154,13 @@ mat-card {
   border-radius: 2px !important;
 }
 
+.mat-menu-panel.catalog-menu {
+  max-width: 1200px !important;
+  min-width: 710px !important;
+  max-height: 1000px !important;
+  min-height: 550px !important;
+}
+
 //mat-card {
 //  border-radius: 0px !important;
 //  box-shadow: none !important;

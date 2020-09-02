@@ -9,6 +9,7 @@
   </a>
 
   <div class="main-navigation">
+    <a  mat-button routerLinkActive="active-link" [mat-menu-trigger-for]="catalogMenu">Каталог</a>
     <a routerLink="/shop" mat-button routerLinkActive="active-link">Магазин</a>
 <!--    <a routerLink="/forum" mat-button routerLinkActive="active-link">Блог</a>-->
     <a routerLink="/about-us" mat-button routerLinkActive="active-link">Про нас</a>
@@ -124,6 +125,10 @@
 <mat-menu #mainNavigationMenu="matMenu" class="main-navigation-menu">
 <!--    <a routerLink="/" mat-button routerLinkActive="active-link">Головна</a>-->
 <!--    <a routerLink="/forum" mat-button routerLinkActive="active-link">Блог</a>-->
+    <a mat-menu-item routerLinkActive="active-link" (click)="openCatalogModal()">
+      <i class="fas fa-list"></i>
+      <span>Каталог</span>
+    </a>
     <a mat-menu-item routerLink="/shop" routerLinkActive="active-link">
       <i class="material-icons shopping_cart"></i>
       <span>Магазин</span>
@@ -137,4 +142,8 @@
       <span>Звяжіться з нами</span>
     </a>
 
+</mat-menu>
+
+<mat-menu #catalogMenu class="catalog-menu" backdropClass="catalog-menu-backdrop">
+  <catalog [isHeader]="true"></catalog>
 </mat-menu>
