@@ -62,6 +62,7 @@ public class Order {
         DELIVERING("DELIVERING"),
         RETURNED("RETURNED"),
         CANCELED("CANCELED"),
+        CANCELED_AUTO("CANCELED_AUTO"),
         DONE("DONE");
 
         private final String value;
@@ -72,7 +73,7 @@ public class Order {
         }
 
         public static List<Status> getClosed() {
-            return Arrays.asList(RETURNED, CANCELED, DONE);
+            return Arrays.asList(RETURNED, CANCELED, CANCELED_AUTO, DONE);
         }
 
         public static List<Status> getEditable() {

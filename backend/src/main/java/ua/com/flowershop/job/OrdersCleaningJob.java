@@ -28,7 +28,7 @@ public class OrdersCleaningJob {
         log.info("Job | Clean unpaid orders job started");
         List<Order> longTermUnpaidOrders = orderRepository.findByNotPaidAndStatusIsNewAndCreatedBefore(LocalDateTime.now().minusDays(MAX_UNPAID_DAYS));
         longTermUnpaidOrders.forEach(order -> {
-            orderService.changeStatus(order.getId(), new OrderStatusChangeRequestModel().setStatus(Order.Status.CANCELED));
+            orderService.changeStatus(order.getId(), new OrderStatusChangeRequestModel().setStatus(Order.Status.CANCELED_AUTO));
         });
         log.info("Job | Clean unpaid orders job finished");
     }

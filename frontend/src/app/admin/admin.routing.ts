@@ -18,7 +18,8 @@ import { WarehouseComponent } from "./shop/warehouse/warehouse.component";
 import { GroupsComponent } from "./types/groups/groups.component";
 import { GroupItemComponent } from "./types/groups/group-item/group-item.component";
 import { StatisticComponent } from "./statistic/statistic.component";
-import { CollagesComponent } from "./collages/collages.component";
+import { CollagesGeneratorComponent } from "./photo-editor/collages-generator/collages-generator.component";
+import { PhotoGeneratorComponent } from "./photo-editor/photo-generator/photo-generator.component";
 
 
 const routes: Routes = [
@@ -43,12 +44,11 @@ const routes: Routes = [
       {path: 'types/groups', component: GroupsComponent},
       {path: 'types/groups/item/:mode', component: GroupItemComponent},
       {path: 'blog', component: BlogComponent},
-      {path: 'collages', component: CollagesComponent},
+      {path: 'photo-editor/collages-generator', component: CollagesGeneratorComponent},
+      {path: 'photo-editor/photo-generator', component: PhotoGeneratorComponent},
       {path: 'statistic', component: StatisticComponent}
     ]
   },
 ];
 
 export const routing = RouterModule.forChild(routes);
-
-

@@ -14,8 +14,8 @@ export class TranslationService {
       SALE: 'Продаж',
       EXTERNAL_SALE: 'Продаж (поза системою)',
       GIFT: 'Подарунок',
-      DEFECT: 'Списання (Брак)',
-      MISTAKE: 'Списання (Помилкове внесення)'
+      DEFECT: 'Списання (брак)',
+      MISTAKE: 'Списання (помилкове внесення)'
     },
     orderStatuses: {
       NEW: "Нове",
@@ -23,6 +23,7 @@ export class TranslationService {
       DELIVERING: "Відправлено",
       RETURNED: "Повернено",
       CANCELED: "Відмінено",
+      CANCELED_AUTO: "Відмінено (автоматично)",
       DONE: "Виконано"
     }
   };

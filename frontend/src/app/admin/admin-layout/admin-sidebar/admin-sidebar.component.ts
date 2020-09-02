@@ -82,11 +82,24 @@ export class AdminSidebarComponent implements OnInit {
       //   icon: 'far fa-newspaper',
       //   routerLink: 'blog'
       // }
+
       {
-        label: 'Генератор Колажів',
-        icon: 'fas fa-th',
-        routerLink: 'collages'
+        label: 'Фото редактор',
+        icon: 'far fa-image',
+        items: [
+          {
+            label: 'Генератор Колажів',
+            icon: 'fas fa-th',
+            routerLink: 'photo-editor/collages-generator'
+          },
+          {
+            label: 'Генератор Фото',
+            icon: 'fas fa-file-image',
+            routerLink: 'photo-editor/photo-generator'
+          },
+        ]
       },
+
       {
         label: 'Статистика',
         icon: 'fas fa-chart-pie',
