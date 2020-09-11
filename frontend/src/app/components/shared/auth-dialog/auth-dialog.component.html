@@ -60,7 +60,7 @@
             <span>або увійти з Facebook</span>
           </div>
 
-          <button type="button" mat-button class="auth-facebook" (click)="facebookAuth()" [disabled]="loading">
+          <button type="button" mat-button class="auth-facebook" (click)="facebookAuth()" [disabled]="loading || !socialAuthServiceInitialized">
             <i class="fab fa-facebook-square"></i>
             <span>Увійти з Facebook</span>
           </button>

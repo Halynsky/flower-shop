@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ua.com.flowershop.entity.Order;
+import ua.com.flowershop.exception.ConflictException;
 import ua.com.flowershop.exception.NotFoundException;
 import ua.com.flowershop.model.*;
 import ua.com.flowershop.projection.OrderAdminProjection;
@@ -83,6 +84,9 @@ public class OrderController {
     @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @PutMapping("/{id}/changeStatus")
     public ResponseEntity<Void> changeStatus(@PathVariable Long id, @RequestBody OrderStatusChangeRequestModel orderStatusChangeRequest) {
+        if(orderStatusChangeRequest.getStatus() == Order.Status.CANCELED_AUTO) {
+            throw new ConflictException("Вказано невалідний статус замовлення");
+        }
         orderService.changeStatus(id, orderStatusChangeRequest);
         return new ResponseEntity<>(OK);
     }

@@ -18,7 +18,7 @@ import java.util.List;
 public class OrdersCleaningJob {
 
     private final static int MAX_DELIVERY_STATE_DAYS = 14;
-    private final static int MAX_UNPAID_DAYS = 14;
+    private final static int MAX_UNPAID_DAYS = 30;
 
     @Autowired private OrderRepository orderRepository;
     @Autowired private OrderService orderService;

@@ -30,6 +30,7 @@ export class AuthDialogComponent implements OnInit, OnDestroy  {
   credentials: Credentials = new Credentials();
   userRegistration: UserRegistration = new UserRegistration();
   passwordRestoreEmail: string;
+  socialAuthServiceInitialized = false;
 
   constructor(public authService: AuthService,
               public userService: UserService,
@@ -38,6 +39,11 @@ export class AuthDialogComponent implements OnInit, OnDestroy  {
               private securityService: SecurityService,
               private snackBarService: SnackBarService,
               public dialogRef: MatDialogRef<AuthDialogComponent>) {
+
+    this.socialAuthService.initState
+      .pipe(finalize(() => this.socialAuthServiceInitialized = true))
+      .subscribe();
+
   }
 
   ngOnInit() {
