@@ -62,7 +62,7 @@
               "vendorChunk": false,
               "buildOptimizer": true,
               "aot": true,
-              "serviceWorker": true,
+              "serviceWorker": false,
               "ngswConfigPath": "ngsw-config.json",
               "fileReplacements": [
                 {
@@ -88,7 +88,7 @@
               "vendorChunk": false,
               "buildOptimizer": true,
               "aot": true,
-              "serviceWorker": true,
+              "serviceWorker": false,
               "ngswConfigPath": "ngsw-config.json",
               "fileReplacements": [
                 {
