@@ -23,19 +23,16 @@
         <ng-template ngFor let-bucketItem [ngForOf]="bucketLocalService.bucket" let-i="index">
           <div class="bucket-table-row">
             <div  class="bucket-item-image">
-              <!--TODO: Remove condition after a while. Condition is inserted to avoid error for old model of bucket items-->
-              <a [routerLink]="bucketItem.flowerId ? ['shop/item', bucketItem.flowerId] : ['shop']" (click)="dialogRef.close()">
+              <a [routerLink]="['shop/item', bucketItem.flowerSizeId]" (click)="dialogRef.close()">
                 <img [src]="bucketItem.image || flowerImagePlaceholder">
               </a>
             </div>
             <div class="bucket-item-name">
               <div class="flower-type-name">
-                <!--TODO: Remove condition after a while. Condition is inserted to avoid error for old model of bucket items-->
-                <a [routerLink]="bucketItem.flowerTypeId ? ['shop'] : ['shop']" [queryParams]="{flowerTypes: bucketItem.flowerTypeId}" (click)="dialogRef.close()">{{bucketItem.flowerTypeName}}</a>
+                <a [routerLink]="['shop']" [queryParams]="{flowerTypes: bucketItem.flowerTypeId}" (click)="dialogRef.close()">{{bucketItem.flowerTypeName}}</a>
               </div>
               <div class="flower-name">
-                <!--TODO: Remove condition after a while. Condition is inserted to avoid error for old model of bucket items-->
-                <a [routerLink]="bucketItem.flowerId ? ['shop/item', bucketItem.flowerId] : ['shop']" (click)="dialogRef.close()">{{bucketItem.name}}</a>
+                <a [routerLink]="['shop/item', bucketItem.flowerSizeId]" (click)="dialogRef.close()">{{bucketItem.name}}</a>
               </div>
               <div class="flower-size-name">{{bucketItem.sizeName}}</div>
             </div>
