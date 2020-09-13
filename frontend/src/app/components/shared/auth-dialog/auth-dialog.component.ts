@@ -13,6 +13,8 @@ import { MatDialogRef } from "@angular/material/dialog";
 import { SocialUserInfo } from "../../../api/models/SocialUserInfo";
 import { Subject } from "rxjs";
 
+declare let FB: any;
+
 @Component({
   selector: 'auth-dialog',
   templateUrl: './auth-dialog.component.html',
@@ -40,9 +42,18 @@ export class AuthDialogComponent implements OnInit, OnDestroy  {
               private snackBarService: SnackBarService,
               public dialogRef: MatDialogRef<AuthDialogComponent>) {
 
-    this.socialAuthService.initState
-      .pipe(finalize(() => this.socialAuthServiceInitialized = true))
-      .subscribe();
+    this.socialAuthService.initState.subscribe(state => {
+
+      FB.getLoginStatus((response: any) => {
+        console.log(response)
+      })
+
+      console.log("state", state)
+        this.socialAuthServiceInitialized = true
+        this.socialAuthService.authState.subscribe(authState => {
+          console.log("authState", authState)
+        })
+      });
 
   }
 
