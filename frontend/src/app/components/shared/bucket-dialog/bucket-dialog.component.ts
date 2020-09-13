@@ -35,7 +35,6 @@ export class BucketDialogComponent implements OnInit {
 
   ngOnInit() {
     this.bucketLocalService.updateBucketFlowerSizes()
-    console.log(this.bucketLocalService.bucket)
   }
 
 

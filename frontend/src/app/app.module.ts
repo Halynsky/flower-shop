@@ -15,7 +15,6 @@ import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
 import { PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface } from "ngx-perfect-scrollbar";
 import { DatePipe, registerLocaleData } from "@angular/common";
 import { LOCALE_ID, NgModule } from "@angular/core";
-import { ServiceWorkerModule } from "@angular/service-worker";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
@@ -37,7 +36,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   entryComponents: [
   ],
   imports: [
-    ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production, registrationStrategy: 'registerImmediately'}),
     routing,
     RouterModule,
     BrowserModule,
