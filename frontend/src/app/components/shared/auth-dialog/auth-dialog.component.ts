@@ -21,7 +21,7 @@ declare let FB: any;
   templateUrl: './auth-dialog.component.html',
   styleUrls: ['./auth-dialog.component.scss']
 })
-export class AuthDialogComponent implements OnInit, OnDestroy  {
+export class AuthDialogComponent implements OnInit, OnDestroy {
 
   private readonly destroyed$ = new Subject<void>();
 
@@ -46,11 +46,11 @@ export class AuthDialogComponent implements OnInit, OnDestroy  {
     this.socialAuthService.initState.subscribe(state => {
 
       console.log("state", state)
-        this.socialAuthServiceInitialized = true
-        this.socialAuthService.authState.subscribe(authState => {
-          console.log("authState", authState)
-        })
-      });
+      // this.socialAuthServiceInitialized = true
+      // this.socialAuthService.authState.subscribe(authState => {
+      //   console.log("authState", authState)
+      // })
+    });
 
   }
 
@@ -70,31 +70,31 @@ export class AuthDialogComponent implements OnInit, OnDestroy  {
         finalize(() => this.loading = false)
       )
       .subscribe(
-      user => {
-        this.securityService.login(user);
-        this.dialogRef.close();
-      } ,
-      error => {
-        switch (getErrorMessage(error)) {
-          case 'Bad credentials': {
-            this.snackBarService.showError('Невірний логін чи пароль');
-            break;
-          }
-          case 'Account is not activated': {
-            this.snackBarService.showError('Обліковий запис не активовано');
-            break;
-          }
-          case 'User is disabled': {
-            this.snackBarService.showError('Обліковий запис заблоковано');
-            break;
-          }
-          default: {
-            this.snackBarService.showError(getErrorMessage(error));
-            break;
+        user => {
+          this.securityService.login(user);
+          this.dialogRef.close();
+        },
+        error => {
+          switch (getErrorMessage(error)) {
+            case 'Bad credentials': {
+              this.snackBarService.showError('Невірний логін чи пароль');
+              break;
+            }
+            case 'Account is not activated': {
+              this.snackBarService.showError('Обліковий запис не активовано');
+              break;
+            }
+            case 'User is disabled': {
+              this.snackBarService.showError('Обліковий запис заблоковано');
+              break;
+            }
+            default: {
+              this.snackBarService.showError(getErrorMessage(error));
+              break;
+            }
           }
         }
-      }
-    )
+      )
   }
 
   register() {
@@ -105,13 +105,14 @@ export class AuthDialogComponent implements OnInit, OnDestroy  {
         finalize(() => this.loading = false)
       )
       .subscribe(
-      user => {
-        this.registered = true;
-      } ,
-      error => {
-        this.snackBarService.showError(getErrorMessage(error));
-      }
-    )
+        user => {
+          this.registered = true;
+        },
+        error => {
+          console.error(error)
+          this.snackBarService.showError(getErrorMessage(error));
+        }
+      )
   }
 
   facebookAuth() {
@@ -131,12 +132,13 @@ export class AuthDialogComponent implements OnInit, OnDestroy  {
           this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID)
             .then(this.handleSocialUser)
             .catch(error => {
+              console.error(error)
               this.snackBarService.showError(error);
               this.loading = false;
             });
         }
 
-    })
+      })
 
   }
 
@@ -157,14 +159,16 @@ export class AuthDialogComponent implements OnInit, OnDestroy  {
               let socialUserInfo = new SocialUserInfo();
               socialUserInfo.accessToken = user.authToken;
               this.socialService.registerWithFacebook(socialUserInfo)
-                .subscribe(user => {
-                    this.securityService.login(user);
-                  },
-                  error => this.snackBarService.showError(getErrorMessage(error))
+                .subscribe(user => this.securityService.login(user),
+                  error => {
+                    console.error(error)
+                    this.snackBarService.showError(getErrorMessage(error))
+                  }
                 );
             }
 
           } else {
+            console.error(error)
             this.snackBarService.showError(getErrorMessage(error))
           }
 
@@ -182,7 +186,10 @@ export class AuthDialogComponent implements OnInit, OnDestroy  {
       .subscribe(
         () => {
           this.restored = true;
-        }, error => this.snackBarService.showError(getErrorMessage(error))
+        }, error => {
+          console.error(error)
+          this.snackBarService.showError(getErrorMessage(error))
+        }
       )
   }
 
