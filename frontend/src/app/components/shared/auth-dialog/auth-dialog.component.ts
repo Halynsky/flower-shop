@@ -44,9 +44,8 @@ export class AuthDialogComponent implements OnInit, OnDestroy {
               public dialogRef: MatDialogRef<AuthDialogComponent>) {
 
     this.socialAuthService.initState.subscribe(state => {
-
       console.log("state", state)
-      // this.socialAuthServiceInitialized = true
+      this.socialAuthServiceInitialized = true
       // this.socialAuthService.authState.subscribe(authState => {
       //   console.log("authState", authState)
       // })
