@@ -129,7 +129,7 @@ export class AuthDialogComponent implements OnInit, OnDestroy {
           this.handleSocialUser(socialUser)
         } else {
           this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID)
-            .then(this.handleSocialUser)
+            .then(user => this.handleSocialUser(user))
             .catch(error => {
               console.error(error)
               this.snackBarService.showError(error);

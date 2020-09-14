@@ -85,7 +85,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {
-        autoLogin: true,
+        autoLogin: false,
         providers: [
           {
             id: FacebookLoginProvider.PROVIDER_ID,
