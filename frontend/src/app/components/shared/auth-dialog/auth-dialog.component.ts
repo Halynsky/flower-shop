@@ -116,11 +116,6 @@ export class AuthDialogComponent implements OnInit, OnDestroy {
 
   facebookAuth() {
     this.loading = true;
-
-    FB.getLoginStatus((response: any) => {
-      console.log("getLoginStatus response", response)
-    })
-
     this.socialAuthService.authState
       .pipe(first())
       .subscribe(socialUser => {
@@ -158,7 +153,10 @@ export class AuthDialogComponent implements OnInit, OnDestroy {
               let socialUserInfo = new SocialUserInfo();
               socialUserInfo.accessToken = user.authToken;
               this.socialService.registerWithFacebook(socialUserInfo)
-                .subscribe(user => this.securityService.login(user),
+                .subscribe(user => {
+                    this.securityService.login(user)
+                    this.dialogRef.close();
+                  },
                   error => {
                     console.error(error)
                     this.snackBarService.showError(getErrorMessage(error))
