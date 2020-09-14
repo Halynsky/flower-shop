@@ -6,12 +6,13 @@ import { SnackBarService } from "../../../services/snak-bar.service";
 import { getErrorMessage } from "../../../utils/Functions";
 import { Credentials } from "../../../api/models/Credentials";
 import { UserService } from "../../../api/services/user.service";
-import { finalize, takeUntil } from "rxjs/operators";
+import { finalize, first, takeUntil } from "rxjs/operators";
 import { FacebookLoginProvider, SocialAuthService } from "angularx-social-login";
 import { SocialService } from "../../../api/services/social.service";
 import { MatDialogRef } from "@angular/material/dialog";
 import { SocialUserInfo } from "../../../api/models/SocialUserInfo";
 import { Subject } from "rxjs";
+import { SocialUser } from "angularx-social-login/entities/social-user";
 
 declare let FB: any;
 
@@ -43,10 +44,6 @@ export class AuthDialogComponent implements OnInit, OnDestroy  {
               public dialogRef: MatDialogRef<AuthDialogComponent>) {
 
     this.socialAuthService.initState.subscribe(state => {
-
-      FB.getLoginStatus((response: any) => {
-        console.log(response)
-      })
 
       console.log("state", state)
         this.socialAuthServiceInitialized = true
@@ -119,44 +116,60 @@ export class AuthDialogComponent implements OnInit, OnDestroy  {
 
   facebookAuth() {
     this.loading = true;
-    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID)
-      .then(user => {
-                let socialUserInfo = new SocialUserInfo();
-                socialUserInfo.accessToken = user.authToken;
-                this.socialService.loginWithFacebook(socialUserInfo)
-                  .pipe(finalize(() => this.loading = false))
-                  .subscribe(
-                    user => {
-                      this.securityService.login(user);
-                    }, error => {
-                      if (error.status == 401) {
-                        //register
-                        if (user.email == null) {
-                          this.securityService.openEmailPhoneDialog(user);
-                        } else {
-                          let socialUserInfo = new SocialUserInfo();
-                          socialUserInfo.accessToken = user.authToken;
-                          this.socialService.registerWithFacebook(socialUserInfo)
-                            .subscribe(user => {
-                                this.securityService.login(user);
-                            },
-                              error => this.snackBarService.showError(getErrorMessage(error))
-                            );
-                        }
 
-                      } else {
-                        this.snackBarService.showError(getErrorMessage(error))
-                      }
+    FB.getLoginStatus((response: any) => {
+      console.log("getLoginStatus response", response)
+    })
 
-                    }
-                  );
-              this.dialogRef.close();
+    this.socialAuthService.authState
+      .pipe(first())
+      .subscribe(socialUser => {
+        console.log("socialUser", socialUser)
+        if (socialUser) {
+          this.handleSocialUser(socialUser)
+        } else {
+          this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID)
+            .then(this.handleSocialUser)
+            .catch(error => {
+              this.snackBarService.showError(error);
+              this.loading = false;
+            });
+        }
 
-      })
-      .catch(error => {
-        this.snackBarService.showError(error);
-        this.loading = false;
-      });
+    })
+
+  }
+
+  handleSocialUser(user: SocialUser) {
+    let socialUserInfo = new SocialUserInfo();
+    socialUserInfo.accessToken = user.authToken;
+    this.socialService.loginWithFacebook(socialUserInfo)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(
+        user => {
+          this.securityService.login(user);
+        }, error => {
+          if (error.status == 401) {
+            //register
+            if (user.email == null) {
+              this.securityService.openEmailPhoneDialog(user);
+            } else {
+              let socialUserInfo = new SocialUserInfo();
+              socialUserInfo.accessToken = user.authToken;
+              this.socialService.registerWithFacebook(socialUserInfo)
+                .subscribe(user => {
+                    this.securityService.login(user);
+                  },
+                  error => this.snackBarService.showError(getErrorMessage(error))
+                );
+            }
+
+          } else {
+            this.snackBarService.showError(getErrorMessage(error))
+          }
+
+        }
+      );
   }
 
   restorePassword() {
@@ -172,6 +185,5 @@ export class AuthDialogComponent implements OnInit, OnDestroy  {
         }, error => this.snackBarService.showError(getErrorMessage(error))
       )
   }
-
 
 }
