@@ -59,7 +59,6 @@ export class SecurityService {
   }
 
   openAuthDialog(email?: string) {
-    console.log("openAuthDialog")
     let authDialogRef = this.dialog.open(AuthDialogComponent);
     if (email) {
       authDialogRef.componentInstance.credentials.email = email;

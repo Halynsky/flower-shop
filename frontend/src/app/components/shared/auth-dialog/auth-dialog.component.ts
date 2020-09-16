@@ -6,11 +6,11 @@ import { SnackBarService } from "../../../services/snak-bar.service";
 import { getErrorMessage } from "../../../utils/Functions";
 import { Credentials } from "../../../api/models/Credentials";
 import { UserService } from "../../../api/services/user.service";
-import { finalize, takeUntil } from "rxjs/operators";
+import { finalize, first } from "rxjs/operators";
 import { SocialService } from "../../../api/services/social.service";
 import { MatDialogRef } from "@angular/material/dialog";
 import { SocialUserInfo } from "../../../api/models/SocialUserInfo";
-import { Subject } from "rxjs";
+import { from } from "rxjs";
 import { SocialAuthService, SocialUser } from "../../../utils/social-login/public-api";
 
 declare let FB: any;
@@ -22,7 +22,6 @@ declare let FB: any;
 })
 export class AuthDialogComponent implements OnInit, OnDestroy {
 
-  private readonly destroyed$ = new Subject<void>();
   private readonly FACEBOOK = 'FACEBOOK';
 
   mode: 'login' | 'registration' | 'restore-password' = 'login';
@@ -53,15 +52,13 @@ export class AuthDialogComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.destroyed$.next();
-    this.destroyed$.complete();
   }
 
   login() {
     this.loading = true;
     this.authService.login(this.credentials)
       .pipe(
-        takeUntil(this.destroyed$),
+        first(),
         finalize(() => this.loading = false)
       )
       .subscribe(
@@ -96,7 +93,7 @@ export class AuthDialogComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.authService.register(this.userRegistration)
       .pipe(
-        takeUntil(this.destroyed$),
+        first(),
         finalize(() => this.loading = false)
       )
       .subscribe(
@@ -114,13 +111,14 @@ export class AuthDialogComponent implements OnInit, OnDestroy {
     this.loading = true;
     let socialProvider = this.socialAuthService.getProvider(this.FACEBOOK)
 
-    socialProvider.getProfile()
-      .then((socialUser: SocialUser) => this.handleSocialUser(socialUser))
-      .catch(err => {
-        console.error(err)
-        this.snackBarService.showError(err);
-        this.loading = false;
-      });
+    from(socialProvider.getProfile())
+      .pipe(first())
+      .subscribe((socialUser: SocialUser) => this.handleSocialUser(socialUser),
+        err => {
+          console.error(err)
+          this.snackBarService.showError(err);
+          this.loading = false;
+        })
 
   }
 
@@ -128,7 +126,10 @@ export class AuthDialogComponent implements OnInit, OnDestroy {
     let socialUserInfo = new SocialUserInfo();
     socialUserInfo.accessToken = user.authToken;
     this.socialService.loginWithFacebook(socialUserInfo)
-      .pipe(finalize(() => this.loading = false))
+      .pipe(
+        first(),
+        finalize(() => this.loading = false)
+      )
       .subscribe(
         user => {
           this.securityService.login(user);
@@ -142,6 +143,7 @@ export class AuthDialogComponent implements OnInit, OnDestroy {
               let socialUserInfo = new SocialUserInfo();
               socialUserInfo.accessToken = user.authToken;
               this.socialService.registerWithFacebook(socialUserInfo)
+                .pipe(first())
                 .subscribe(user => {
                     this.securityService.login(user)
                     this.dialogRef.close();
@@ -166,7 +168,7 @@ export class AuthDialogComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.authService.passwordRestoreRequest(this.passwordRestoreEmail)
       .pipe(
-        takeUntil(this.destroyed$),
+        first(),
         finalize(() => this.loading = false)
       )
       .subscribe(
