@@ -33,6 +33,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   deliveryInfoFormGroup: FormGroup;
 
   orderId;
+  orderPrice;
 
   selectedCity;
   cities = [];
@@ -198,6 +199,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.orderService.create(orderRequest)
       .pipe(finalize(() => this.loading = false), takeUntil(this.destroyed$))
       .subscribe(orderId => {
+        this.orderPrice = this.bucketLocalService.bucketInfo.totalPrice;
         this.bucketLocalService.clearLocalBucket();
         this.orderId = orderId;
         this.updateProfile();

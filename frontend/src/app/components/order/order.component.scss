@@ -189,6 +189,10 @@
         color: mat-color($primary);
         font-size: 24px;
       }
+      .order-price {
+        color: mat-color($accent);
+        font-size: 24px;
+      }
     }
 
     .delivery-hint {

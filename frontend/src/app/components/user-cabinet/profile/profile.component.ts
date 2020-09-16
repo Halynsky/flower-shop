@@ -7,9 +7,9 @@ import { finalize, takeUntil } from "rxjs/operators";
 import { SnackBarService } from "../../../services/snak-bar.service";
 import { getErrorMessage } from "../../../utils/Functions";
 import { SocialService } from "../../../api/services/social.service";
-import { FacebookLoginProvider, SocialAuthService } from 'angularx-social-login'
 import { SecurityUserModel } from "../../../api/models/User";
 import { Subject } from "rxjs";
+import { SocialAuthService, SocialUser } from "../../../utils/social-login/public-api";
 
 @Component({
   selector: 'profile',
@@ -20,6 +20,7 @@ import { Subject } from "rxjs";
 export class ProfileComponent implements OnDestroy {
 
   private readonly destroyed$ = new Subject<void>();
+  private readonly FACEBOOK = 'FACEBOOK';
 
   profile: Profile;
   passwordUpdate: PasswordUpdate = new PasswordUpdate();
@@ -99,22 +100,27 @@ export class ProfileComponent implements OnDestroy {
 
   connectFacebook() {
     this.loadingConnectFacebook = true;
-    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID)
-      .then(user => {
+
+    let socialProvider = this.socialAuthService.getProvider(this.FACEBOOK)
+
+    socialProvider.getProfile()
+      .then((user: SocialUser) => {
         this.socialService.connectFacebook(user.authToken)
           .pipe(
             finalize(() => this.loadingConnectFacebook = false),
             takeUntil(this.destroyed$)
           ).subscribe(() => {
-              this.socialConnections.push({provider: "FACEBOOK"});
-              this.snackBarService.showSuccess("Facebook аккаунт успішно приєднано до вашого профілю")
-            }, error => this.snackBarService.showError(getErrorMessage(error))
-          )
+            this.socialConnections.push({provider: this.FACEBOOK});
+            this.snackBarService.showSuccess("Facebook аккаунт успішно приєднано до вашого профілю")
+          }, error => this.snackBarService.showError(getErrorMessage(error))
+        )
       })
-      .catch(error => {
-        this.snackBarService.showError(getErrorMessage(error));
+      .catch(err => {
+        console.error(err)
+        this.snackBarService.showError(err);
         this.loadingConnectFacebook = false;
       });
+
   }
 
   disconnectFacebook() {
@@ -123,7 +129,7 @@ export class ProfileComponent implements OnDestroy {
         finalize(() => this.loadingConnectFacebook = false),
         takeUntil(this.destroyed$)
       ).subscribe(() => {
-          this.socialConnections.splice(this.socialConnections.findIndex(element => element.provider == "FACEBOOK"), 1);
+          this.socialConnections.splice(this.socialConnections.findIndex(element => element.provider == this.FACEBOOK), 1);
           this.snackBarService.showSuccess("Facebook аккаунт успішно відєднано від вашого профілю")
         }, error => this.snackBarService.showError(getErrorMessage(error))
       )
