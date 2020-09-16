@@ -6,21 +6,23 @@ import { SnackBarService } from "../../../services/snak-bar.service";
 import { getErrorMessage } from "../../../utils/Functions";
 import { Credentials } from "../../../api/models/Credentials";
 import { UserService } from "../../../api/services/user.service";
-import { finalize, takeUntil } from "rxjs/operators";
-import { FacebookLoginProvider, SocialAuthService } from "angularx-social-login";
+import { finalize, first } from "rxjs/operators";
 import { SocialService } from "../../../api/services/social.service";
 import { MatDialogRef } from "@angular/material/dialog";
 import { SocialUserInfo } from "../../../api/models/SocialUserInfo";
-import { Subject } from "rxjs";
+import { from } from "rxjs";
+import { SocialAuthService, SocialUser } from "../../../utils/social-login/public-api";
+
+declare let FB: any;
 
 @Component({
   selector: 'auth-dialog',
   templateUrl: './auth-dialog.component.html',
   styleUrls: ['./auth-dialog.component.scss']
 })
-export class AuthDialogComponent implements OnInit, OnDestroy  {
+export class AuthDialogComponent implements OnInit, OnDestroy {
 
-  private readonly destroyed$ = new Subject<void>();
+  private readonly FACEBOOK = 'FACEBOOK';
 
   mode: 'login' | 'registration' | 'restore-password' = 'login';
   registered = false;
@@ -40,9 +42,9 @@ export class AuthDialogComponent implements OnInit, OnDestroy  {
               private snackBarService: SnackBarService,
               public dialogRef: MatDialogRef<AuthDialogComponent>) {
 
-    this.socialAuthService.initState
-      .pipe(finalize(() => this.socialAuthServiceInitialized = true))
-      .subscribe();
+    this.socialAuthService.initState.subscribe(state => {
+      this.socialAuthServiceInitialized = true
+    });
 
   }
 
@@ -50,117 +52,133 @@ export class AuthDialogComponent implements OnInit, OnDestroy  {
   }
 
   ngOnDestroy() {
-    this.destroyed$.next();
-    this.destroyed$.complete();
   }
 
   login() {
     this.loading = true;
     this.authService.login(this.credentials)
       .pipe(
-        takeUntil(this.destroyed$),
+        first(),
         finalize(() => this.loading = false)
       )
       .subscribe(
-      user => {
-        this.securityService.login(user);
-        this.dialogRef.close();
-      } ,
-      error => {
-        switch (getErrorMessage(error)) {
-          case 'Bad credentials': {
-            this.snackBarService.showError('Невірний логін чи пароль');
-            break;
-          }
-          case 'Account is not activated': {
-            this.snackBarService.showError('Обліковий запис не активовано');
-            break;
-          }
-          case 'User is disabled': {
-            this.snackBarService.showError('Обліковий запис заблоковано');
-            break;
-          }
-          default: {
-            this.snackBarService.showError(getErrorMessage(error));
-            break;
+        user => {
+          this.securityService.login(user);
+          this.dialogRef.close();
+        },
+        error => {
+          switch (getErrorMessage(error)) {
+            case 'Bad credentials': {
+              this.snackBarService.showError('Невірний логін чи пароль');
+              break;
+            }
+            case 'Account is not activated': {
+              this.snackBarService.showError('Обліковий запис не активовано');
+              break;
+            }
+            case 'User is disabled': {
+              this.snackBarService.showError('Обліковий запис заблоковано');
+              break;
+            }
+            default: {
+              this.snackBarService.showError(getErrorMessage(error));
+              break;
+            }
           }
         }
-      }
-    )
+      )
   }
 
   register() {
     this.loading = true;
     this.authService.register(this.userRegistration)
       .pipe(
-        takeUntil(this.destroyed$),
+        first(),
         finalize(() => this.loading = false)
       )
       .subscribe(
-      user => {
-        this.registered = true;
-      } ,
-      error => {
-        this.snackBarService.showError(getErrorMessage(error));
-      }
-    )
+        user => {
+          this.registered = true;
+        },
+        error => {
+          console.error(error)
+          this.snackBarService.showError(getErrorMessage(error));
+        }
+      )
   }
 
   facebookAuth() {
     this.loading = true;
-    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID)
-      .then(user => {
-                let socialUserInfo = new SocialUserInfo();
-                socialUserInfo.accessToken = user.authToken;
-                this.socialService.loginWithFacebook(socialUserInfo)
-                  .pipe(finalize(() => this.loading = false))
-                  .subscribe(
-                    user => {
-                      this.securityService.login(user);
-                    }, error => {
-                      if (error.status == 401) {
-                        //register
-                        if (user.email == null) {
-                          this.securityService.openEmailPhoneDialog(user);
-                        } else {
-                          let socialUserInfo = new SocialUserInfo();
-                          socialUserInfo.accessToken = user.authToken;
-                          this.socialService.registerWithFacebook(socialUserInfo)
-                            .subscribe(user => {
-                                this.securityService.login(user);
-                            },
-                              error => this.snackBarService.showError(getErrorMessage(error))
-                            );
-                        }
+    let socialProvider = this.socialAuthService.getProvider(this.FACEBOOK)
 
-                      } else {
-                        this.snackBarService.showError(getErrorMessage(error))
-                      }
+    from(socialProvider.getProfile())
+      .pipe(first())
+      .subscribe((socialUser: SocialUser) => this.handleSocialUser(socialUser),
+        err => {
+          console.error(err)
+          this.snackBarService.showError(err);
+          this.loading = false;
+        })
 
-                    }
-                  );
-              this.dialogRef.close();
+  }
 
-      })
-      .catch(error => {
-        this.snackBarService.showError(error);
-        this.loading = false;
-      });
+  handleSocialUser(user: SocialUser) {
+    let socialUserInfo = new SocialUserInfo();
+    socialUserInfo.accessToken = user.authToken;
+    this.socialService.loginWithFacebook(socialUserInfo)
+      .pipe(
+        first(),
+        finalize(() => this.loading = false)
+      )
+      .subscribe(
+        user => {
+          this.securityService.login(user);
+          this.dialogRef.close();
+        }, error => {
+          if (error.status == 401) {
+            //register
+            if (user.email == null) {
+              this.securityService.openEmailPhoneDialog(user);
+            } else {
+              let socialUserInfo = new SocialUserInfo();
+              socialUserInfo.accessToken = user.authToken;
+              this.socialService.registerWithFacebook(socialUserInfo)
+                .pipe(first())
+                .subscribe(user => {
+                    this.securityService.login(user)
+                    this.dialogRef.close();
+                  },
+                  error => {
+                    console.error(error)
+                    this.snackBarService.showError(getErrorMessage(error))
+                  }
+                );
+            }
+
+          } else {
+            console.error(error)
+            this.snackBarService.showError(getErrorMessage(error))
+          }
+
+        }
+      );
   }
 
   restorePassword() {
     this.loading = true;
     this.authService.passwordRestoreRequest(this.passwordRestoreEmail)
       .pipe(
-        takeUntil(this.destroyed$),
+        first(),
         finalize(() => this.loading = false)
       )
       .subscribe(
         () => {
           this.restored = true;
-        }, error => this.snackBarService.showError(getErrorMessage(error))
+        }, error => {
+          console.error(error)
+          this.snackBarService.showError(getErrorMessage(error))
+        }
       )
   }
-
 
 }

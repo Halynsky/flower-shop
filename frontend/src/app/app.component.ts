@@ -10,8 +10,6 @@ import { MatIconRegistry } from "@angular/material/icon";
 })
 export class AppComponent implements OnInit {
 
-  EACH_MINUTE_INTERVAL = 60 * 1000;
-
   constructor(public matIconRegistry: MatIconRegistry) {
     matIconRegistry.registerFontClassAlias('fontawesome', 'fa');
     moment.locale('uk');

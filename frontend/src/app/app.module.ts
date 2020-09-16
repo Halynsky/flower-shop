@@ -8,7 +8,6 @@ import localeRuUa from '@angular/common/locales/uk';
 import { RouterModule } from "@angular/router";
 import { SharedModule } from "./components/shared/shared.module";
 import { MainInterceptor } from "./inteceptors/main.interceptor";
-import { FacebookLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from "angularx-social-login";
 import { ValidatorsModule } from "./validators/validators.module";
 import { UserCabinetModule } from "./components/user-cabinet/user-cabinet.module";
 import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
@@ -21,6 +20,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { MatIconModule, MatIconRegistry } from "@angular/material/icon";
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogConfig, MatDialogModule } from "@angular/material/dialog";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { FacebookLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from "./utils/social-login/public-api";
 
 registerLocaleData(localeRuUa);
 
