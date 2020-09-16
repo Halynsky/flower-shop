@@ -10,7 +10,7 @@ export class GoogleLoginProvider extends BaseLoginProvider {
 
   constructor(
     private clientId: string,
-    private initOptions: any = { scope: 'email' }
+    private initOptions: any = {scope: 'email'}
   ) {
     super();
   }
@@ -50,7 +50,7 @@ export class GoogleLoginProvider extends BaseLoginProvider {
     });
   }
 
-  getProfile(signInOptions?: any): Promise<SocialUser> {
+  getProfile(signInOptions?: any, autoSignIn: boolean = true): Promise<SocialUser> {
     return new Promise((resolve, reject) => {
       this.getLoginStatus().then(response => {
 
@@ -77,9 +77,13 @@ export class GoogleLoginProvider extends BaseLoginProvider {
 
           resolve(user);
         } else {
-          this.signIn(signInOptions)
-            .then(resolve)
-            .catch(reject)
+          if (autoSignIn) {
+            this.signIn(signInOptions)
+              .then(resolve)
+              .catch(reject)
+          } else {
+            reject(`No user is currently logged in with ${GoogleLoginProvider.PROVIDER_ID}`);
+          }
         }
 
       })
@@ -88,7 +92,7 @@ export class GoogleLoginProvider extends BaseLoginProvider {
   }
 
   signIn(signInOptions?: any): Promise<SocialUser> {
-    const options = { ...this.initOptions, ...signInOptions };
+    const options = {...this.initOptions, ...signInOptions};
 
     return new Promise((resolve, reject) => {
       const offlineAccess: boolean = options && options.offline_access;

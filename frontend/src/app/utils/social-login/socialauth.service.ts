@@ -75,7 +75,7 @@ export class SocialAuthService {
           let loggedIn = false;
 
           this._providers.forEach((provider: LoginProvider, key: string) => {
-            let promise = provider.getProfile();
+            let promise = provider.getProfile(undefined, false);
             loginStatusPromises.push(promise);
             promise
               .then((user: SocialUser) => {

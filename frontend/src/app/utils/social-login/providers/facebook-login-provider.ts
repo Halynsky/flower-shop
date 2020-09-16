@@ -50,7 +50,7 @@ export class FacebookLoginProvider extends BaseLoginProvider {
     });
   }
 
-  getProfile(signInOptions?: any): Promise<SocialUser> {
+  getProfile(signInOptions?: any, autoSignIn: boolean = true): Promise<SocialUser> {
     return new Promise((resolve, reject) => {
       this.getLoginStatus().then(loginStatusResponse => {
 
@@ -58,38 +58,46 @@ export class FacebookLoginProvider extends BaseLoginProvider {
 
           FB.api(`/me?fields=${this.initOptions.fields}`, (profileResponse: any) => {
 
-            if(profileResponse.error) {
-              if(profileResponse.error.code == 190) {
-                this.signIn(signInOptions)
-                  .then(resolve)
-                  .catch(reject)
+            if (profileResponse.error) {
+              if (profileResponse.error.code == 190) {
+                if (autoSignIn) {
+                  this.signIn(signInOptions)
+                    .then(resolve)
+                    .catch(reject)
+                } else {
+                  reject(`No user is currently logged in with ${FacebookLoginProvider.PROVIDER_ID}`);
+                }
               } else {
                 reject(profileResponse.error.message)
               }
+            } else {
+              let user: SocialUser = new SocialUser();
+
+              user.id = profileResponse.id;
+              user.name = profileResponse.name;
+              user.email = profileResponse.email;
+              user.photoUrl =
+                'https://graph.facebook.com/' +
+                profileResponse.id +
+                '/picture?type=normal';
+              user.firstName = profileResponse.first_name;
+              user.lastName = profileResponse.last_name;
+              user.authToken = loginStatusResponse.authResponse.accessToken;
+              user.provider = FacebookLoginProvider.PROVIDER_ID;
+
+              user.response = profileResponse;
+
+              resolve(user);
             }
-
-            let user: SocialUser = new SocialUser();
-
-            user.id = profileResponse.id;
-            user.name = profileResponse.name;
-            user.email = profileResponse.email;
-            user.photoUrl =
-              'https://graph.facebook.com/' +
-              profileResponse.id +
-              '/picture?type=normal';
-            user.firstName = profileResponse.first_name;
-            user.lastName = profileResponse.last_name;
-            user.authToken = loginStatusResponse.authResponse.accessToken;
-            user.provider = FacebookLoginProvider.PROVIDER_ID;
-
-            user.response = profileResponse;
-
-            resolve(user);
           });
         } else {
-          this.signIn(signInOptions)
-            .then(resolve)
-            .catch(reject)
+          if (autoSignIn) {
+            this.signIn(signInOptions)
+              .then(resolve)
+              .catch(reject)
+          } else {
+            reject(`No user is currently logged in with ${FacebookLoginProvider.PROVIDER_ID}`);
+          }
         }
       })
 
@@ -97,7 +105,7 @@ export class FacebookLoginProvider extends BaseLoginProvider {
   }
 
   signIn(signInOptions?: any): Promise<SocialUser> {
-    const options = { ...this.initOptions, ...signInOptions };
+    const options = {...this.initOptions, ...signInOptions};
     return new Promise((resolve, reject) => {
       FB.login((response: any) => {
         if (response.authResponse) {

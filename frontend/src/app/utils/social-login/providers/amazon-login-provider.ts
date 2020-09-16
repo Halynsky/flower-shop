@@ -11,7 +11,7 @@ export class AmazonLoginProvider extends BaseLoginProvider {
     private initOptions: any = {
       scope: 'profile',
       scope_data: {
-        profile: { essential: false },
+        profile: {essential: false},
       },
       redirect_uri: location.origin,
     }
@@ -54,9 +54,8 @@ export class AmazonLoginProvider extends BaseLoginProvider {
     });
   }
 
-  getProfile(signInOptions?: any): Promise<SocialUser> {
+  getProfile(signInOptions?: any, autoSignIn: boolean = true): Promise<SocialUser> {
     return new Promise((resolve, reject) => {
-
 
       this.getLoginStatus().then(response => {
         let token = response;
@@ -80,9 +79,13 @@ export class AmazonLoginProvider extends BaseLoginProvider {
             }
           });
         } else {
-          this.signIn(signInOptions)
-            .then(resolve)
-            .catch(reject)
+          if (autoSignIn) {
+            this.signIn(signInOptions)
+              .then(resolve)
+              .catch(reject)
+          } else {
+            reject(`No user is currently logged in with ${AmazonLoginProvider.PROVIDER_ID}`);
+          }
         }
 
       })
@@ -91,7 +94,7 @@ export class AmazonLoginProvider extends BaseLoginProvider {
   }
 
   signIn(signInOptions?: any): Promise<SocialUser> {
-    const options = { ...this.initOptions, ...signInOptions };
+    const options = {...this.initOptions, ...signInOptions};
     return new Promise((resolve, reject) => {
       amazon.Login.authorize(options, (authResponse) => {
         if (authResponse.error) {
