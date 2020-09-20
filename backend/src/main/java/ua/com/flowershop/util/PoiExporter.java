@@ -276,10 +276,22 @@ public class PoiExporter {
                 return flowerTypeCompare;
             }
 
-            int flowerGroupCompare = uaCollator1.compare(oi1.getFlowerSize().getFlower().getGroup().getNameSingle(), oi2.getFlowerSize().getFlower().getGroup().getNameSingle());
+            Group group1 = oi1.getFlowerSize().getFlower().getGroup();
+            Group group2 = oi2.getFlowerSize().getFlower().getGroup();
 
-            if (flowerGroupCompare != 0) {
-                return flowerGroupCompare;
+            if (group1 == null && group2 != null) {
+                return 1;
+            }
+
+            if (group1 != null && group2 == null) {
+                return -1;
+            }
+
+            if (group1 != null && group2 != null) {
+                int flowerGroupCompare = uaCollator1.compare(group1.getNameSingle(), group2.getNameSingle());
+                if (flowerGroupCompare != 0) {
+                    return flowerGroupCompare;
+                }
             }
 
             return oi1.getFlowerSize().getFlower().getNameOriginal().compareTo(oi2.getFlowerSize().getFlower().getNameOriginal());
