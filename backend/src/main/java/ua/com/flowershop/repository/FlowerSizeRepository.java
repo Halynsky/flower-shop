@@ -2,6 +2,7 @@ package ua.com.flowershop.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -27,6 +28,18 @@ public interface FlowerSizeRepository extends JpaRepository<FlowerSize, Long> {
         "AND (:colorNamePart IS null OR lower(fs.flower.color.name) LIKE '%' || lower(cast(:colorNamePart as string)) || '%' ) ")
     Page<FlowerSizeFullProjectionWithAvailable> findForAdminProjectedByFilters(Long id, String codePart, String flowerNamePart, List<String> flowerTypeNames, Integer priceFrom, Integer priceTo,
                                                                                String colorNamePart, Pageable pageRequest);
+
+    @Query("SELECT fs FROM FlowerSize fs WHERE " +
+        "(:id IS null OR fs.id = :id) " +
+        "AND (:codePart IS null OR lower(fs.code) LIKE '%' || lower(cast(:codePart as string)) || '%' ) " +
+        "AND (:flowerNamePart IS null OR lower(fs.flower.nameOriginal) LIKE '%' || lower(cast(:flowerNamePart as string)) || '%' ) " +
+        "AND (COALESCE(:flowerTypeNames, NULL) IS NULL OR fs.flower.flowerType.name IN :flowerTypeNames) " +
+        "AND (:priceFrom IS null OR fs.price >= :priceFrom) AND (:priceTo IS null OR fs.price <= :priceTo) " +
+        "AND (:colorNamePart IS null OR lower(fs.flower.color.name) LIKE '%' || lower(cast(:colorNamePart as string)) || '%' ) " +
+        "AND (fs.amount - fs.reserved) > 0")
+    List<FlowerSize> getAllLeftovers(Long id, String codePart, String flowerNamePart, List<String> flowerTypeNames, Integer priceFrom, Integer priceTo,
+                                   String colorNamePart, Sort sort);
+
     @Query("SELECT DISTINCT(fs.id) as id, fs.flower as flower, fs.size as size, f.flowerType as flowerType, " +
         "fs.price as price, fs.priceOld as priceOld, fs.amount as amount, fs.reserved as reserved, fs.code as code, (fs.amount - fs.reserved) as available, (fs.amount - fs.reserved > 0) as isAvailable " +
         "FROM FlowerSize fs " +

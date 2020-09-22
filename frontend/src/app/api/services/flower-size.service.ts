@@ -60,4 +60,9 @@ export class FlowerSizeService {
     return this.http.get<FlowerSize>(`${this.URL}/shop/${id}`);
   }
 
+  exportAllToExcel(params, pagination) {
+    params = Object.assign(params, pagination);
+    return this.http.get(`${this.URL}/export/excel`, {responseType: 'blob', observe: 'response', params: params});
+  }
+
 }

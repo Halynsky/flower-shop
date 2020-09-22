@@ -11,10 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.com.flowershop.entity.*;
 
 import java.text.Collator;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
+import static java.time.LocalDate.now;
 import static java.util.Objects.isNull;
 
 @Slf4j
@@ -393,6 +395,165 @@ public class PoiExporter {
 
     }
 
+    @Transactional
+    public Workbook exportLeftoversToExcel(List<FlowerSize> leftovers, XSSFWorkbook workbook) {
+
+        if (isNull(workbook)) {
+            workbook = new XSSFWorkbook();
+        }
+
+        XSSFSheet sheet = workbook.createSheet("Залишки на складі");
+
+        sheet.setDefaultColumnWidth(15);
+        sheet.setColumnWidth(0, 2200);
+        sheet.setColumnWidth(1, 6600);
+        sheet.setColumnWidth(2, 6600);
+        sheet.setColumnWidth(3, 2200);
+        sheet.setColumnWidth(4, 2200);
+        sheet.setColumnWidth(5, 2400);
+
+        XSSFFont fontDefault = workbook.createFont();
+        fontDefault.setFontName(FONT_NAME);
+        fontDefault.setFontHeightInPoints((short) 10);
+        fontDefault.setColor(IndexedColors.BLACK.getIndex());
+        fontDefault.setBold(false);
+
+        XSSFFont fontBold = workbook.createFont();
+        fontBold.setFontName(FONT_NAME);
+        fontBold.setFontHeightInPoints((short) 10);
+        fontBold.setColor(IndexedColors.BLACK.getIndex());
+        fontBold.setBold(true);
+
+        XSSFFont fontHeader = workbook.createFont();
+        fontHeader.setFontName(FONT_NAME);
+        fontHeader.setFontHeightInPoints((short) 12);
+        fontHeader.setColor(IndexedColors.BLACK.getIndex());
+        fontHeader.setBold(true);
+
+        XSSFFont fontTitle = workbook.createFont();
+        fontTitle.setFontName(FONT_NAME);
+        fontTitle.setFontHeightInPoints(TITLE_FONT_SIZE);
+        fontTitle.setColor(IndexedColors.BLACK.getIndex());
+        fontTitle.setBold(true);
+
+        int rowNum = 0;
+
+//        sheet.addMergedRegion(new CellRangeAddress(3,3,0,6));
+//        sheet.addMergedRegion(new CellRangeAddress(6,6,0,6));
+
+        //  HEADER AND FOOTER
+
+        sheet.getHeader().setRight("Залишки на складі станом на " + now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+        sheet.getFooter().setRight("Сторінка &P з &N");
+
+        // ITEMS TABLE HEADER
+
+        CellStyle tableHeaderStyle = workbook.createCellStyle();
+        tableHeaderStyle.setFont(fontBold);
+        tableHeaderStyle.setBorderBottom(BorderStyle.THIN);
+        tableHeaderStyle.setBorderTop(BorderStyle.THIN);
+        tableHeaderStyle.setBorderRight(BorderStyle.THIN);
+        tableHeaderStyle.setBorderLeft(BorderStyle.THIN);
+        tableHeaderStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+        tableHeaderStyle.setAlignment(HorizontalAlignment.CENTER);
+
+        Row row = sheet.createRow(rowNum++);
+        row.setHeight((short) (row.getHeight() * 2));
+
+        Cell cell = row.createCell(0);
+        cell.setCellStyle(tableHeaderStyle);
+        cell.setCellValue("Артикул");
+
+        cell = row.createCell(1);
+        cell.setCellStyle(tableHeaderStyle);
+        cell.setCellValue("Назва");
+
+        cell = row.createCell(2);
+        cell.setCellStyle(tableHeaderStyle);
+        cell.setCellValue("Вид");
+
+        cell = row.createCell(3);
+        cell.setCellStyle(tableHeaderStyle);
+        cell.setCellValue("Розмір");
+
+        cell = row.createCell(4);
+        cell.setCellStyle(tableHeaderStyle);
+        cell.setCellValue("Ціна");
+
+        cell = row.createCell(5);
+        cell.setCellStyle(tableHeaderStyle);
+        cell.setCellValue("Кількість");
+
+        // ITEMS TABLE
+
+        fillLeftoverItems(workbook, sheet, fontDefault, fontBold, rowNum, leftovers);
+
+        // TOTAL PRICE TITLE
+
+        return workbook;
+    }
+
+    private void fillLeftoverItems(XSSFWorkbook workbook, XSSFSheet sheet, XSSFFont font, XSSFFont fontBold, Integer rowNum, List<FlowerSize> leftovers) {
+
+        XSSFCellStyle tableCellStyle = workbook.createCellStyle();
+        tableCellStyle.setFont(font);
+        tableCellStyle.setBorderBottom(BorderStyle.THIN);
+        tableCellStyle.setBorderTop(BorderStyle.THIN);
+        tableCellStyle.setBorderRight(BorderStyle.THIN);
+        tableCellStyle.setBorderLeft(BorderStyle.THIN);
+        tableCellStyle.setWrapText(true);
+        tableCellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+        tableCellStyle.setAlignment(HorizontalAlignment.RIGHT);
+        tableCellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        tableCellStyle.setFillForegroundColor(IndexedColors.WHITE.getIndex());
+
+        for (int i = 0; i < leftovers.size(); i++) {
+            FlowerSize flowerSize = leftovers.get(i);
+            Flower flower = flowerSize.getFlower();
+            FlowerType flowerType = flower.getFlowerType();
+            Group group = flower.getGroup();
+
+            Row row = sheet.createRow(rowNum++);
+
+            Cell cell = row.createCell(0);
+            cell.setCellStyle(tableCellStyle);
+            cell.setCellValue(flowerSize.getCode());
+
+            cell = row.createCell(1);
+            cell.setCellStyle(tableCellStyle);
+            String name = flower.getNameOriginal();
+            if (isNull(name)) {
+                name = flower.getName();
+            }
+            cell.setCellValue(name);
+
+            cell = row.createCell(2);
+            cell.setCellStyle(tableCellStyle);
+
+            String groupNamePart = "";
+            if (group != null) {
+                groupNamePart = ", " + group.getNameSingle();
+            }
+            XSSFRichTextString fullName = new XSSFRichTextString();
+            fullName.append(flowerType.getNameSingle() + groupNamePart, font);
+//            fullName.append(flowerType.getNameSingle(), font);
+            cell.setCellValue(fullName);
+
+            cell = row.createCell(3);
+            cell.setCellStyle(tableCellStyle);
+            cell.setCellValue(flowerSize.getSize().getName());
+
+            cell = row.createCell(4);
+            cell.setCellStyle(tableCellStyle);
+            cell.setCellValue(flowerSize.getPrice() / 100 + " грн");
+
+            cell = row.createCell(5);
+            cell.setCellStyle(tableCellStyle);
+            cell.setCellValue(flowerSize.getAmount() - flowerSize.getAvailable() + " шт");
+
+        }
+
+    }
 
 
     @Transactional
@@ -492,5 +653,6 @@ public class PoiExporter {
 
         return workbook;
     }
+
 
 }

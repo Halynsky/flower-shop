@@ -9,6 +9,7 @@ import { FlowerSizeService } from "../../../api/services/flower-size.service";
 import { FlowerSize } from "../../../api/models/FlowerSize";
 import { FlowerTypeService } from "../../../api/services/flower-type.service";
 import { Router } from "@angular/router";
+import * as fileSaver from "file-saver";
 
 @Component({
   selector: 'warehouse',
@@ -50,6 +51,8 @@ export class WarehouseComponent implements OnInit {
   isContextMenuOpened = false;
   selected :FlowerSize;
 
+  lastLazyLoadEvent;
+
   constructor(private dataService: FlowerSizeService,
               private flowerTypeService: FlowerTypeService,
               private snackBarService: SnackBarService,
@@ -81,6 +84,7 @@ export class WarehouseComponent implements OnInit {
   }
 
   onLazyLoad(event: any) {
+    this.lastLazyLoadEvent = event;
     this.loadDataLazy(ngPrimeFiltersToParams(event.filters), new Pagination().fromPrimeNg(event));
   }
 
@@ -123,6 +127,14 @@ export class WarehouseComponent implements OnInit {
 
   onContextMenuHide(event) {
     this.isContextMenuOpened = false;
+  }
+
+  exportAllToExcel() {
+    this.dataService.exportAllToExcel(ngPrimeFiltersToParams(this.lastLazyLoadEvent.filters), new Pagination().fromPrimeNg(this.lastLazyLoadEvent))
+      .pipe(first())
+      .subscribe(response => {
+        fileSaver.saveAs(response.body, `Залишки.xlsx`);
+      }, error => this.snackBarService.showError(getErrorMessage(error)))
   }
 
 }

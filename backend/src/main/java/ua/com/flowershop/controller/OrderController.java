@@ -46,7 +46,6 @@ public class OrderController {
     @Autowired private SecurityService securityService;
     @Autowired private PoiExporter poiExporter;
 
-
     @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @GetMapping("/forAdmin")
     @PageableSwagger
