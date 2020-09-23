@@ -21,8 +21,10 @@ import ua.com.flowershop.util.annotation.PageableSwagger;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import static java.time.LocalDate.now;
 import static org.springframework.http.HttpStatus.OK;
 import static ua.com.flowershop.util.Path.FLOWER_SIZES_PATH;
 
@@ -91,7 +93,7 @@ public class FlowerSizeController {
                                                  HttpServletResponse response) throws IOException {
         List<FlowerSize> leftovers = flowerSizeRepository.getAllLeftovers(id, codePart, flowerNamePart, flowerTypeNames, priceFrom, priceTo, colorNamePart, pageRequest.getSort());
         Workbook workbook = poiExporter.exportLeftoversToExcel(leftovers, null);
-        response.setHeader("Content-disposition", "attachment; filename=Orders.xlsx");
+        response.setHeader("Content-disposition", "attachment; filename=Sklad " + now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))  + ".xlsx");
         workbook.write(response.getOutputStream());
         return new ResponseEntity<>(OK);
     }

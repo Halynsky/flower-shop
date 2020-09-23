@@ -10,6 +10,7 @@ import { FlowerSize } from "../../../api/models/FlowerSize";
 import { FlowerTypeService } from "../../../api/services/flower-type.service";
 import { Router } from "@angular/router";
 import * as fileSaver from "file-saver";
+import { first } from "rxjs/operators";
 
 @Component({
   selector: 'warehouse',
@@ -133,7 +134,8 @@ export class WarehouseComponent implements OnInit {
     this.dataService.exportAllToExcel(ngPrimeFiltersToParams(this.lastLazyLoadEvent.filters), new Pagination().fromPrimeNg(this.lastLazyLoadEvent))
       .pipe(first())
       .subscribe(response => {
-        fileSaver.saveAs(response.body, `Залишки.xlsx`);
+        let fileName = response.headers.get('content-disposition').replace("attachment; filename=", "");
+        fileSaver.saveAs(response.body, fileName);
       }, error => this.snackBarService.showError(getErrorMessage(error)))
   }
 

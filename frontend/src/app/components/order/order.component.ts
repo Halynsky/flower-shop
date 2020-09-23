@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { BucketLocalService } from "../../services/bucket-local.service";
-import { DeliveryType, deliveryTypeOptions } from 'app/models/DeliveryType';
+import { DeliveryType, deliveryTypeOptions } from '../../models/DeliveryType';
 import { OrderService } from "../../api/services/order.service";
 import { SecurityService } from "../../services/security.service";
 import { Observable, of, Subject, Subscription } from "rxjs";
