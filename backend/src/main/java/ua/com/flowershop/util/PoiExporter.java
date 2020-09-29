@@ -482,7 +482,7 @@ public class PoiExporter {
 
         cell = row.createCell(5);
         cell.setCellStyle(tableHeaderStyle);
-        cell.setCellValue("Кількість");
+        cell.setCellValue("Залишок");
 
         // ITEMS TABLE
 
@@ -549,7 +549,7 @@ public class PoiExporter {
 
             cell = row.createCell(5);
             cell.setCellStyle(tableCellStyle);
-            cell.setCellValue(flowerSize.getAmount() - flowerSize.getAvailable() + " шт");
+            cell.setCellValue(flowerSize.getAvailable() + " шт");
 
         }
 
