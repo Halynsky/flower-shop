@@ -438,9 +438,6 @@ public class PoiExporter {
 
         int rowNum = 0;
 
-//        sheet.addMergedRegion(new CellRangeAddress(3,3,0,6));
-//        sheet.addMergedRegion(new CellRangeAddress(6,6,0,6));
-
         //  HEADER AND FOOTER
 
         sheet.getHeader().setRight("Залишки на складі станом на " + now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
@@ -532,11 +529,15 @@ public class PoiExporter {
 
             String groupNamePart = "";
             if (group != null) {
-                groupNamePart = ", " + group.getNameSingle();
+                groupNamePart = group.getNameSingle();
+                if (group.getNameSingle().length() > 15) {
+                    groupNamePart = groupNamePart.substring(0, 14);
+                    groupNamePart += ".";
+                }
+                groupNamePart += ", ";
             }
             XSSFRichTextString fullName = new XSSFRichTextString();
-            fullName.append(flowerType.getNameSingle() + groupNamePart, font);
-//            fullName.append(flowerType.getNameSingle(), font);
+            fullName.append(groupNamePart + flowerType.getNameSingle(), font);
             cell.setCellValue(fullName);
 
             cell = row.createCell(3);

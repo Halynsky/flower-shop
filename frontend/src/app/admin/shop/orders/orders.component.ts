@@ -1,5 +1,4 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { FilterMetadata, Table } from "primeng";
 import { RestPage } from "../../../api/models/RestPage";
 import { ItemSaveMode } from "../../../models/ItemSaveMode";
 import { Pagination } from "../../../api/models/Pagination";
@@ -19,6 +18,8 @@ import * as fileSaver from 'file-saver';
 import { dataTableFilter } from "../../util";
 import { OrderCreateRequestAdmin } from "../../../api/models/OrderCreateRequestAdmin";
 import { UserService } from "../../../api/services/user.service";
+import { FilterMetadata } from "primeng/api";
+import { Table } from "primeng/table";
 
 @Component({
   selector: 'app-orders',

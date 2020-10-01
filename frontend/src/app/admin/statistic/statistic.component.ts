@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { SelectItem } from "primeng";
 import { Statistic } from "../../api/models/Statistic";
 import { StatisticService } from "../../api/services/statistic.service";
 import { capitalize, clone, enumToArrayList, getErrorMessage } from "../../utils/Functions";
 import { SnackBarService } from "../../services/snak-bar.service";
 import * as moment from 'moment'
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { SelectItem } from "primeng/api";
 
 enum Colors {
   GREEN = 'green',

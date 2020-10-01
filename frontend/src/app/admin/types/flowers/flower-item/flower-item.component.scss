@@ -27,17 +27,16 @@
     .size-selector-wrapper {
       display: flex;
       flex-direction: row;
-      justify-content: space-between;
       align-items: flex-start;
       width: 100%;
 
-      button {
-        min-width: 36px;
-        margin-left: 11px;
+      p-button {
+        margin-left: 12px;
       }
 
       p-dropdown {
         width: 100%;
+        max-width: 200px;
       }
 
       textarea {
@@ -68,7 +67,7 @@
           margin-left: 8px;
         }
 
-        button {
+        p-button {
           margin-left: 16px;
         }
 
@@ -77,7 +76,6 @@
     }
 
   }
-
 
   .dropdown-block {
     display: flex;

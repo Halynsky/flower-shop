@@ -319,8 +319,8 @@
                     <p-dropdown id="size" [options]="sizes" [(ngModel)]="sizeToAdd" name="flowerSizesToAdd" optionLabel="name"
                                 placeholder="Оберіть розмір" [filter]="true" emptyFilterMessage="не знайдено"></p-dropdown>
 
-                    <button type="button" pButton icon="pi pi-check" class="p-button-success" (click)="addFlowerSize()"></button>
-                    <button type="button" pButton icon="pi pi-plus" class="p-button-secondary" (click)="displayAddSizeDialog = true"></button>
+                    <p-button icon="pi pi-check" class="p-button-success" (click)="addFlowerSize()"></p-button>
+                    <p-button icon="pi pi-plus" class="p-button-secondary" (click)="displayAddSizeDialog = true"></p-button>
 
                   </div>
 
@@ -344,7 +344,7 @@
 
                         <div class="units">грн</div>
 
-                        <button pButton type="button" icon="fa fa-trash" class="p-button-danger" (click)="removeFlowerSize(i)"></button>
+                        <p-button icon="fa fa-trash" class="p-button-danger" (click)="removeFlowerSize(i)"></p-button>
 
                       </div>
 

@@ -6,8 +6,8 @@ import { ItemSaveMode } from "../../../../models/ItemSaveMode";
 import { FlowerTypeService } from "../../../../api/services/flower-type.service";
 import { FlowerType } from "../../../../api/models/FlowerType";
 import { finalize, first } from "rxjs/operators";
-import { DialogService } from "primeng";
 import { EditorDialogComponent } from "../../../shared/editor-dialog/editor-dialog.component";
+import { DialogService } from "primeng/dynamicdialog";
 
 @Component({
   selector: 'flower-type-item',

@@ -12,7 +12,8 @@
   padding-top: 15px;
   padding-right: 20px;
   transition: margin-left .2s ease;
-  min-height: calc(100vh - 65px);
+  min-height: calc(100vh - 66px);
+  max-height: calc(100vh - 66px);
   &.-opened {
     margin-left: 250px;
   }
@@ -20,8 +21,20 @@
 
 .scroll-holder {
   flex-grow: 1;
-  overflow-y: auto;
-  margin-top: 49px;
+  margin-top: 50px;
   height: calc(100% - 50px);
 }
 
+.panel-header {
+  width: max-content;
+  min-width: 100%;
+
+  &.item {
+    min-width: initial;
+  }
+}
+
+.panel-content {
+  width: fit-content;
+  min-width: 100%;
+}

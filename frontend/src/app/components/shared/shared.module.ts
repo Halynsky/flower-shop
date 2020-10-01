@@ -40,10 +40,10 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { UserExistDialogComponent } from "./user-exist-dialog/user-exist-dialog.component";
 import { AddEmailDialogComponent } from "./add-email-dialog/add-email-dialog.component";
-import { DialogModule } from "primeng";
 import { PrivacyPolicyComponent } from "./privacy-policy/privacy-policy.component";
 import { MessageButtonComponent } from './message-button/message-button.component';
 import { MessageOptionsDialogComponent } from "./message-options-dialog/message-options-dialog.component";
+import { DialogModule } from "primeng/dialog";
 
 
 const PROVIDERS = [

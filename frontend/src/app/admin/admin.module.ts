@@ -27,37 +27,6 @@ import { WarehouseOperationItemComponent } from "./shop/warehouse-operations/war
 import { ValidatorsModule } from "../validators/validators.module";
 import { ImagePreviewComponent } from "./shared/image-preview/image-preview.component";
 import { WarehouseComponent } from "./shop/warehouse/warehouse.component";
-import {
-  ButtonModule,
-  CalendarModule,
-  CardModule,
-  ChartModule,
-  CheckboxModule,
-  ColorPickerModule,
-  ConfirmationService,
-  ConfirmDialogModule,
-  ContextMenuModule,
-  DialogService,
-  DropdownModule,
-  DynamicDialogConfig,
-  DynamicDialogModule,
-  DynamicDialogRef,
-  EditorModule,
-  InputSwitchModule,
-  InputTextareaModule,
-  InputTextModule,
-  KeyFilterModule,
-  ListboxModule,
-  MenuModule,
-  MessageModule,
-  MultiSelectModule,
-  PanelMenuModule,
-  ProgressSpinnerModule,
-  RatingModule,
-  SliderModule,
-  TieredMenuModule,
-  ToggleButtonModule
-} from "primeng";
 import { DirectivesModule } from "../directives/directives.module";
 import { IConfig, NgxMaskModule } from "ngx-mask";
 import { GroupItemComponent } from "./types/groups/group-item/group-item.component";
@@ -67,6 +36,32 @@ import { EditorDialogComponent } from './shared/editor-dialog/editor-dialog.comp
 import { ItemsSelectorComponent } from './photo-editor/items-selector/items-selector.component';
 import { CollagesGeneratorComponent } from "./photo-editor/collages-generator/collages-generator.component";
 import { PhotoGeneratorComponent } from "./photo-editor/photo-generator/photo-generator.component";
+import { ConfirmDialogModule } from "primeng/confirmdialog";
+import { MenuModule } from "primeng/menu";
+import { PanelMenuModule } from "primeng/panelmenu";
+import { TieredMenuModule } from "primeng/tieredmenu";
+import { ButtonModule } from "primeng/button";
+import { InputTextModule } from "primeng/inputtext";
+import { MultiSelectModule } from "primeng/multiselect";
+import { InputTextareaModule } from "primeng/inputtextarea";
+import { CalendarModule } from "primeng/calendar";
+import { MessageModule } from "primeng/message";
+import { SliderModule } from "primeng/slider";
+import { EditorModule } from "primeng/editor";
+import { ContextMenuModule } from "primeng/contextmenu";
+import { DialogService, DynamicDialogConfig, DynamicDialogModule, DynamicDialogRef } from "primeng/dynamicdialog";
+import { ColorPickerModule } from "primeng/colorpicker";
+import { ToggleButtonModule } from "primeng/togglebutton";
+import { DropdownModule } from "primeng/dropdown";
+import { InputSwitchModule } from "primeng/inputswitch";
+import { CheckboxModule } from "primeng/checkbox";
+import { ListboxModule } from "primeng/listbox";
+import { RatingModule } from "primeng/rating";
+import { CardModule } from "primeng/card";
+import { KeyFilterModule } from "primeng/keyfilter";
+import { ProgressSpinnerModule } from "primeng/progressspinner";
+import { ConfirmationService } from "primeng/api";
+import { ChartModule } from "primeng/chart";
 
 export const ngxMaskOptions: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
