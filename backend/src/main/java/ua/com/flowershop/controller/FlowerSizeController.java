@@ -92,7 +92,7 @@ public class FlowerSizeController {
                                                  @PageableDefault(sort = "id", page = 0, size = 10, direction = Sort.Direction.ASC) Pageable pageRequest,
                                                  HttpServletResponse response) throws IOException {
         List<FlowerSize> leftovers = flowerSizeRepository.getAllLeftovers(id, codePart, flowerNamePart, flowerTypeNames, priceFrom, priceTo, colorNamePart,
-            Sort.by(new Sort.Order(Sort.Direction.ASC, "flower.flowerType.nameSingle"), new Sort.Order(Sort.Direction.ASC, "flower.group.nameSingle")));
+            Sort.by(new Sort.Order(Sort.Direction.ASC, "code")));
         Workbook workbook = poiExporter.exportLeftoversToExcel(leftovers, null);
         response.setHeader("Content-disposition", "attachment; filename=Sklad " + now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))  + ".xlsx");
         workbook.write(response.getOutputStream());
