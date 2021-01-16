@@ -3,5 +3,5 @@ export const environment = {
   googleApiKey: '',
   facebookClientId: '654293855101789',
   googleClientId: '',
-  novaPoshtaApiKey: '5b42444ed664477cc7bc3d28bfbb8278'
+  novaPoshtaApiKey: '4a271fe207c90d6bf762bdc741473564'
 };

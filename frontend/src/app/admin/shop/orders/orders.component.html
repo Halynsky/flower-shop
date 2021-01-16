@@ -151,7 +151,7 @@
 
           <div *ngSwitchCase="'priceToPay'">
             <span class="range-filter-values">({{priceToPayFilter[0]}} - {{priceToPayFilter[1]}} )</span>
-            <i class="fa fa-close" (click)="this.priceToPayFilter=[priceToPayMinMax[0], priceToPayMinMax[1]]; dt.filter(null, col.field, 'rangeMoney')" title="Очистити"
+            <i class="fa fa-close" (click)="priceToPayFilter=[priceToPayMinMax[0], priceToPayMinMax[1]]; dt.filter(null, col.field, 'rangeMoney')" title="Очистити"
                [ngStyle]="{'margin-left':'8px', 'margin-bottom': '10px', 'cursor':'pointer'}"></i>
             <p-slider [(ngModel)]="priceToPayFilter" [ngStyle]="{'width':'100%'}" [range]="true"
                       (onSlideEnd)="dt.filter(priceToPayFilter, col.field, 'rangeMoney')" [min]="priceToPayMinMax[0]" [max]="priceToPayMinMax[1]"></p-slider>
