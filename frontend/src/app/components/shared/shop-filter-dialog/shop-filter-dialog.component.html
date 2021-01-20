@@ -2,7 +2,7 @@
 
   <i class="material-icons close" (click)="dialogRef.close()"></i>
 
-  <shop-filters [filters]="filters" (onFilterChange)="filterChange($event)"></shop-filters>
+  <shop-filters [filters]="filters" [emitOnInit]="false" (onFilterChange)="filterChange($event)"></shop-filters>
 
   <button mat-flat-button color="primary" class="submit-filter-button" (click)="dialogRef.close()">
     Застосувати

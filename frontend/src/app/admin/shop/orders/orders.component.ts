@@ -247,7 +247,7 @@ export class OrdersComponent implements OnInit {
           this.displayPaymentConfirmDialog = true;
           this.paymentDate = this.selected.paid ? new Date(this.selected.paid) : null;
         },
-        visible: !this.orderIsClosed(this.selected.status),
+        visible: ![this.Status.CANCELED, this.Status.CANCELED_AUTO, this.Status.RETURNED].includes(this.selected.status)
       },
       {
         label: 'Редагувати реквізити',

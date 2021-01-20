@@ -9,6 +9,7 @@ import { getErrorMessage } from "../../../utils/Functions";
 import { Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren } from "@angular/core";
 import { MatCheckbox, MatCheckboxChange } from "@angular/material/checkbox";
 import { ActivatedRoute, Router } from "@angular/router";
+import { first } from "rxjs/operators";
 
 @Component({
   selector: 'shop-filters',
@@ -21,7 +22,10 @@ export class ShopFiltersComponent implements OnInit {
   @ViewChildren('colorCheckbox') colorCheckboxes: QueryList<MatCheckbox>;
 
   @Input() filters = new ShopFilter();
+  @Input() emitOnInit = true;
   @Output() onFilterChange: EventEmitter<any> = new EventEmitter();
+
+  initialized: boolean = false;
 
   flowerTypes: FlowerType[];
   colors: Color[];
@@ -48,12 +52,22 @@ export class ShopFiltersComponent implements OnInit {
   }
 
   readQueryParams() {
-    this.route.queryParams.subscribe(params => {
-      let colorFilters = params['colors'];
-      let flowerTypeFilters = params['flowerTypes'];
+    this.route.queryParams
+      .subscribe(params => {
+      let colorFilters = params.colors;
+      let flowerTypeFilters = params.flowerTypes;
       this.filters.colorFilters = colorFilters ? colorFilters.split(',').map(i => parseInt(i)) : [];
       this.filters.flowerTypeFilters = flowerTypeFilters ? flowerTypeFilters.split(',').map(i => parseInt(i)) : [];
-      this.emitFilterChange();
+      this.filters.page = params.page ? params.page : "0";
+      this.filters.sort = params.sort ? params.sort : "popularity,DESC";
+
+      if (!this.initialized) {
+        if (this.emitOnInit) this.emitFilterChange();
+        this.initialized = true;
+      } else {
+        this.emitFilterChange();
+      }
+
     });
   }
 
@@ -71,6 +85,7 @@ export class ShopFiltersComponent implements OnInit {
         this.filters.flowerTypeFilters.splice(index, 1);
       }
     }
+    this.filters.page = "0"
     this.changeUrlFilters();
   }
 
@@ -84,6 +99,7 @@ export class ShopFiltersComponent implements OnInit {
         this.filters.colorFilters.splice(index, 1);
       }
     }
+    this.filters.page = "0"
     this.changeUrlFilters();
   }
 
@@ -108,15 +124,28 @@ export class ShopFiltersComponent implements OnInit {
   }
 
   changeUrlFilters() {
-    let params: any = {};
-    if (this.filters.colorFilters.length > 0) {
-      params.colors = this.filters.colorFilters.join(',')
-    }
-    if (this.filters.flowerTypeFilters.length > 0) {
-      params.flowerTypes = this.filters.flowerTypeFilters.join(',')
-    }
+    this.route.queryParams
+      .pipe(first())
+      .subscribe(params => {
+        let newParams: any = {...params};
 
-    this.router.navigate(['shop'], {queryParams: params})
+        if (this.filters.colorFilters.length > 0) {
+          newParams.colors = this.filters.colorFilters.join(',')
+        } else {
+          delete newParams.colors
+        }
+
+        if (this.filters.flowerTypeFilters.length > 0) {
+          newParams.flowerTypes = this.filters.flowerTypeFilters.join(',')
+        } else {
+          delete newParams.flowerTypes
+        }
+
+        newParams.page = this.filters.page;
+
+        this.router.navigate(['shop'], {queryParams: newParams})
+      });
+
   }
 
 }

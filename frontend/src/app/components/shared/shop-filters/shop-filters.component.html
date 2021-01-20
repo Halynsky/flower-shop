@@ -21,7 +21,7 @@
 
   <div class="show-more-block" *ngIf="flowerTypes">
     <a *ngIf="!showAll" (click)="showAll = true">Показати всі ({{flowerTypes.length}})</a>
-    <a *ngIf="showAll" (click)="showAll = false">Показати (в наявності)</a>
+    <a *ngIf="showAll" (click)="showAll = false">Сховати відсутні</a>
   </div>
 
 </div>

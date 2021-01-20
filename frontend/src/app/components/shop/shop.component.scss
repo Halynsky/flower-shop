@@ -164,6 +164,14 @@
       }
     }
 
+    .filter-button {
+      background-color: rgba(137, 138, 137, 0.65) !important;
+      position: fixed;
+      top: 60px;
+      left: 22px;
+      z-index: 1000;
+    }
+
   }
 
   .mat-form-field-underline {
