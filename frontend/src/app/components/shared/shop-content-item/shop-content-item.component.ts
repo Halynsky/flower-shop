@@ -12,7 +12,8 @@ import { FlowerSize } from "../../../api/models/FlowerSize";
 @Component({
   selector: 'shop-content-item',
   templateUrl: './shop-content-item.component.html',
-  styleUrls: ['./shop-content-item.component.scss']
+  styleUrls: ['./shop-content-item.component.scss'],
+  host: {'[id]': '"item_" + flowerSize.id'}
 })
 export class ShopContentItemComponent implements OnInit {
 

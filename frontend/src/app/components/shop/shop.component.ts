@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FlowerService } from "../../api/services/flower.service";
 import { SnackBarService } from "../../services/snak-bar.service";
-import { ShopFilter } from "../../api/models/ShopFilter";
+import { ShopFilterParams, ShopFilters } from "../../api/models/ShopFilters";
 import { Pagination } from "../../api/models/Pagination";
 import { RestPage } from "../../api/models/RestPage";
 import { ShopFilterDialogComponent } from "../shared/shop-filter-dialog/shop-filter-dialog.component";
@@ -13,6 +13,10 @@ import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { Subject } from "rxjs";
 import { FlowerSizeService } from "../../api/services/flower-size.service";
 import { FlowerSize } from "../../api/models/FlowerSize";
+import { ShopCacheService } from "../../services/shop-cache.service";
+import { ActivatedRoute, Router } from "@angular/router";
+import { LAST_VISITED_ITEM } from "../../utils/Costants";
+import { ShopFilterService } from "../../services/shop-filter.service";
 
 @Component({
   selector: 'shop',
@@ -28,10 +32,17 @@ export class ShopComponent implements OnInit, OnDestroy {
   private DISTANCE_TO_BOTTOM_WHEN_LOAD_MORE = 200;
   public DISTANCE_FROM_TOP_WHEN_SHOW_GO_TOP_BUTTON = 300;
 
+  initialized: boolean = false;
+
   flowersPage: RestPage<FlowerSize> = new RestPage<FlowerSize>();
-  filters: ShopFilter = new ShopFilter();
-  sort = 'isAvailable,DESC,f.isPopular,DESC,f.popularity,DESC';
-  searchTerm = '';
+
+  sortOptions = [
+    {label: "За популярністю", value: "popularity,DESC"},
+    {label: "Від дешевших до дорожчих", value: "price,ASC"},
+    {label: "Від дорожчих до дешевших", value: "price,DESC"},
+    {label: "За новизною", value: "created,DESC"}
+  ]
+
 
   pagination: Pagination;
 
@@ -47,17 +58,18 @@ export class ShopComponent implements OnInit, OnDestroy {
               public dialog: MatDialog,
               @Inject('Window') public window: Window,
               @Inject(DOCUMENT) private document: Document,
-              private globalSearchService: GlobalSearchService) {
+              private globalSearchService: GlobalSearchService,
+              private shopCacheService: ShopCacheService,
+              private route: ActivatedRoute,
+              private router: Router,
+              public shopFilterService: ShopFilterService) {
 
-    this.globalSearchService.onSearchTermChange
-      .pipe(takeUntil(this.destroyed$))
-      .subscribe(searchTerm => {
-      this.searchTerm = searchTerm;
-      this.searchTermChange(null)
-    })
+    this.readQueryParams()
+
   }
 
   ngOnInit() {
+    console.log("ngOnInit")
   }
 
   ngOnDestroy() {
@@ -65,23 +77,56 @@ export class ShopComponent implements OnInit, OnDestroy {
     this.destroyed$.complete();
   }
 
+  readQueryParams() {
+    this.route.queryParams
+      .subscribe(params => {
+        if (!this.shopFilterService.initialized) this.shopFilterService.init(params as ShopFilterParams)
+        this.onFilterChange();
+      });
+  }
 
-  getShopItems(searchTerm: string, filters?: ShopFilter, showMore: boolean = false) {
-    this.pagination = showMore ? this.pagination.nextPage() : new Pagination(0, this.DEFAULT_PAGE_SIZE, this.sort);
+  getShopItems(filters?: ShopFilters, showMore: boolean = false) {
+    let pagination = this.pagination;
+
+    if (!this.initialized) {
+      pagination = new Pagination(0, (pagination.page + 1) * pagination.size, pagination.sort)
+    }
+
     this.loading = true;
-    this.flowerSizeService.getAllForShop(searchTerm, this.pagination, filters)
+    this.flowerSizeService.getAllForShop(pagination, filters)
       .pipe(
-        finalize(() => this.loading = false),
+        finalize(() => {
+          this.loading = false;
+          this.shopCacheService.cachedData = this.flowersPage;
+          this.shopFilterService.loadingShowMore = false;
+        }),
         takeUntil(this.destroyed$)
       ).subscribe(
       page => {
         if (!showMore) {
           this.flowersPage = page
+
+          if (!this.initialized) {
+            setTimeout(() => {
+
+              let item = document.getElementById(`item_${sessionStorage.getItem(LAST_VISITED_ITEM)}`);
+
+              if (item) {
+                item.scrollIntoView()
+                document.querySelector('html').scrollTop -= 100
+                sessionStorage.removeItem(LAST_VISITED_ITEM)
+              }
+
+            })
+          }
+
         } else {
           page.content.unshift(...this.flowersPage.content);
           page.numberOfElements += this.flowersPage.numberOfElements;
           this.flowersPage = page;
         }
+
+        if (!this.initialized) this.initialized = true;
       },
       error => this.snackBarService.showError(getErrorMessage(error))
       )
@@ -91,24 +136,28 @@ export class ShopComponent implements OnInit, OnDestroy {
     return item.id
   }
 
-  onFilterChange(event) {
-    this.filters = event;
-    this.getShopItems(this.searchTerm, this.filters);
-    this.window.scrollTo(0, 0);
-    this.changeDetectorRef.detectChanges();
+  onFilterChange() {
+    this.pagination = new Pagination(this.shopFilterService.filters.page, this.DEFAULT_PAGE_SIZE, this.shopFilterService.filters.sort)
+    this.getShopItems(this.clearPageableFromFilters(this.shopFilterService.filters), this.shopFilterService.loadingShowMore);
+  }
+
+  clearPageableFromFilters(allFilters) {
+    let filters = {...allFilters}
+    delete filters.page;
+    delete filters.sort;
+    return filters;
   }
 
   sortSelectionChange(event) {
-    this.pagination.sort = this.sort;
-    this.getShopItems(this.searchTerm, this.filters);
+    this.shopFilterService.afterFilterChange()
   }
 
   searchTermChange(event) {
-    this.getShopItems(this.searchTerm, this.filters)
+    this.shopFilterService.afterFilterChange()
   }
 
-  searchTermCleared() {
-    this.getShopItems(this.searchTerm, this.filters)
+  searchTermCleared(event) {
+    this.searchTermChange(event)
   }
 
   openFilterModal() {
@@ -117,23 +166,18 @@ export class ShopComponent implements OnInit, OnDestroy {
       width: '100vw',
     });
 
-    this.shopFilterDialogRef.componentInstance.onFilterChange.subscribe(filter => {
-      this.onFilterChange(filter);
-    });
-    this.shopFilterDialogRef.componentInstance.filters = this.filters;
   }
 
   showMore() {
-    this.getShopItems(this.searchTerm, this.filters, true);
+    this.shopFilterService.showMore();
   }
 
   trackScroll(event: any) {
     this.pageYOffset = this.window.pageYOffset;
     let scrollToBottom = this.document.scrollingElement.scrollHeight - this.window.innerHeight - this.window.pageYOffset;
-    if (scrollToBottom < this.DISTANCE_TO_BOTTOM_WHEN_LOAD_MORE && !this.flowersPage.last && ! this.loading) {
+    if (scrollToBottom < this.DISTANCE_TO_BOTTOM_WHEN_LOAD_MORE && !this.flowersPage.last && !this.loading) {
       this.showMore();
     }
   }
-
 
 }

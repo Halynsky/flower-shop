@@ -2,10 +2,10 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FlowerSize } from "../../../api/models/FlowerSize";
 import { FlowerSizeService } from "../../../api/services/flower-size.service";
 import { SnackBarService } from "../../../services/snak-bar.service";
-import htmlToImage from 'html-to-image';
 import { DOCUMENT } from "@angular/common";
 import { GroupService } from "../../../api/services/group.service";
 import { FlowerTypeService } from "../../../api/services/flower-type.service";
+import { toBlob } from "html-to-image";
 
 @Component({
   selector: 'photo-generator',
@@ -50,7 +50,7 @@ export class PhotoGeneratorComponent implements OnInit {
 
       let id = item.flower.nameOriginal.replace(this.ALL_SPACES_PATTERN, "_").replace(this.ALL_APOSTROPHE_PATTERN, "")
 
-      htmlToImage.toBlob(document.getElementById(id))
+      toBlob(document.getElementById(id))
         .then(function (blob) {
           window.saveAs(blob, `${id}.png`);
         });

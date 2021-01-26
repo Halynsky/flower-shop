@@ -120,7 +120,7 @@
             placeholder="Вулиця"
             formControlName="street"
             [matAutocomplete]="streetAutocomplete"
-            [disabled]="loadingStreets"
+            [readOnly]="loadingStreets"
             autocomplete="off"
             required>
           <mat-autocomplete #streetAutocomplete="matAutocomplete" (optionSelected)="onStreetSelect($event)" [displayWith]="displayStreetFn" >
@@ -185,7 +185,7 @@
             formControlName="novaPoshtaDepartment"
             [matAutocomplete]="novaPoshtaDepartmentAutocomplete"
             isObjectValidator
-            [disabled]="loadingWarehouses"
+            [readOnly]="loadingWarehouses"
             required>
           <mat-autocomplete #novaPoshtaDepartmentAutocomplete="matAutocomplete" (optionSelected)="onNovaPoshtaDepartmentSelect($event)" [displayWith]="displayWarehouseFn">
             <mat-option *ngFor="let warehouse of filteredWarehouses" [value]="warehouse" class="order-page-autocomplete-option">

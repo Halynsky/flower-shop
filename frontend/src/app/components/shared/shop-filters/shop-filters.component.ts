@@ -4,11 +4,11 @@ import { SizeService } from "../../../api/services/size.service";
 import { ColorService } from "../../../api/services/color.service";
 import { FlowerType } from "../../../api/models/FlowerType";
 import { Color } from "../../../api/models/Color";
-import { ShopFilter } from "../../../api/models/ShopFilter";
 import { getErrorMessage } from "../../../utils/Functions";
-import { Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren } from "@angular/core";
+import { Component, Input, OnInit, QueryList, ViewChildren } from "@angular/core";
 import { MatCheckbox, MatCheckboxChange } from "@angular/material/checkbox";
 import { ActivatedRoute, Router } from "@angular/router";
+import { ShopFilterService } from "../../../services/shop-filter.service";
 
 @Component({
   selector: 'shop-filters',
@@ -20,8 +20,7 @@ export class ShopFiltersComponent implements OnInit {
   @ViewChildren('flowerTypeCheckbox') flowerTypeCheckboxes: QueryList<MatCheckbox>;
   @ViewChildren('colorCheckbox') colorCheckboxes: QueryList<MatCheckbox>;
 
-  @Input() filters = new ShopFilter();
-  @Output() onFilterChange: EventEmitter<any> = new EventEmitter();
+  @Input() emitOnInit = true;
 
   flowerTypes: FlowerType[];
   colors: Color[];
@@ -33,7 +32,8 @@ export class ShopFiltersComponent implements OnInit {
               private colorService: ColorService,
               private snackBarService: SnackBarService,
               private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              public shopFilterService: ShopFilterService) {
 
     flowerTypeService.getAll().subscribe(
       flowerTypes => this.flowerTypes = flowerTypes,
@@ -47,76 +47,50 @@ export class ShopFiltersComponent implements OnInit {
 
   }
 
-  readQueryParams() {
-    this.route.queryParams.subscribe(params => {
-      let colorFilters = params['colors'];
-      let flowerTypeFilters = params['flowerTypes'];
-      this.filters.colorFilters = colorFilters ? colorFilters.split(',').map(i => parseInt(i)) : [];
-      this.filters.flowerTypeFilters = flowerTypeFilters ? flowerTypeFilters.split(',').map(i => parseInt(i)) : [];
-      this.emitFilterChange();
-    });
-  }
-
   ngOnInit() {
-    this.readQueryParams();
+
   }
 
   onFlowerTypeFilterChange(event: MatCheckboxChange) {
     if (event.checked) {
-      if (this.filters.flowerTypeFilters.find(item => item == event.source.value) == undefined)
-        this.filters.flowerTypeFilters.push(event.source.value);
+      if (this.shopFilterService.filters.flowerTypeFilters.find(item => item == parseInt(event.source.value)) == undefined)
+        this.shopFilterService.filters.flowerTypeFilters.push(parseInt(event.source.value));
     } else {
-      let index = this.filters.flowerTypeFilters.indexOf(event.source.value);
+      let index = this.shopFilterService.filters.flowerTypeFilters.indexOf(parseInt(event.source.value));
       if (index > -1) {
-        this.filters.flowerTypeFilters.splice(index, 1);
+        this.shopFilterService.filters.flowerTypeFilters.splice(index, 1);
       }
     }
-    this.changeUrlFilters();
+    this.shopFilterService.afterFilterChange();
   }
 
   onColorFilterChange(event: MatCheckboxChange) {
     if (event.checked) {
-      if (this.filters.colorFilters.find(item => item == event.source.value) == undefined)
-        this.filters.colorFilters.push(event.source.value);
+      if (this.shopFilterService.filters.colorFilters.find(item => item == parseInt(event.source.value)) == undefined)
+        this.shopFilterService.filters.colorFilters.push(parseInt(event.source.value));
     } else {
-      let index = this.filters.colorFilters.indexOf(event.source.value);
+      let index = this.shopFilterService.filters.colorFilters.indexOf(parseInt(event.source.value));
       if (index > -1) {
-        this.filters.colorFilters.splice(index, 1);
+        this.shopFilterService.filters.colorFilters.splice(index, 1);
       }
     }
-    this.changeUrlFilters();
+    this.shopFilterService.afterFilterChange();
   }
 
   clearFlowerTypeFilters() {
-    this.filters.flowerTypeFilters = [];
+    this.shopFilterService.filters.flowerTypeFilters = [];
     this.flowerTypeCheckboxes.forEach(checkbox => checkbox.writeValue(false));
-    this.changeUrlFilters();
+    this.shopFilterService.afterFilterChange();
   }
 
   clearColorFilters() {
-    this.filters.colorFilters = [];
+    this.shopFilterService.filters.colorFilters = [];
     this.colorCheckboxes.forEach(checkbox => checkbox.writeValue(false));
-    this.changeUrlFilters();
-  }
-
-  emitFilterChange() {
-    this.onFilterChange.emit(this.filters);
+    this.shopFilterService.afterFilterChange();
   }
 
   trackByFn(index, item) {
     return item.id
-  }
-
-  changeUrlFilters() {
-    let params: any = {};
-    if (this.filters.colorFilters.length > 0) {
-      params.colors = this.filters.colorFilters.join(',')
-    }
-    if (this.filters.flowerTypeFilters.length > 0) {
-      params.flowerTypes = this.filters.flowerTypeFilters.join(',')
-    }
-
-    this.router.navigate(['shop'], {queryParams: params})
   }
 
 }

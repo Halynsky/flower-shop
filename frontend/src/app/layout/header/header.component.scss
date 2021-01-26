@@ -130,7 +130,11 @@
       }
       @include response-to(xs) {
         padding: 0px;
-        //display: none;
+        min-width: auto;
+        display: flex;
+        justify-content: center;
+        width: 50px;
+
         div {
           &.user-name {
             display: none;
@@ -144,6 +148,14 @@
       .bucket-button {
         display: flex;
         align-items: center;
+
+        @include response-to(xs) {
+          padding: 0px;
+          min-width: auto;
+          display: flex;
+          justify-content: center;
+          width: 50px;
+        }
 
         .bucket {
           height: 37px;

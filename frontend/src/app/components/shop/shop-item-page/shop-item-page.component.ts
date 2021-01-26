@@ -6,7 +6,7 @@ import { SnackBarService } from "../../../services/snak-bar.service";
 import { getErrorMessage } from "../../../utils/Functions";
 import { BucketItem } from "../../../models/Bucket";
 import { BucketDialogComponent } from "../../shared/bucket-dialog/bucket-dialog.component";
-import { FLOWER_IMAGE_PLACEHOLDER } from "../../../utils/Costants";
+import { FLOWER_IMAGE_PLACEHOLDER, LAST_VISITED_ITEM } from "../../../utils/Costants";
 import { MatDialog } from "@angular/material/dialog";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -36,11 +36,13 @@ export class ShopItemPageComponent implements OnInit, OnDestroy {
               public dialog: MatDialog) {
     this.route.params.subscribe(params => {
       this.id = params['id'];
+      sessionStorage.setItem(LAST_VISITED_ITEM, this.id.toString());
       this.getShopItem();
     });
   }
 
   ngOnInit() {
+
   }
 
   ngOnDestroy() {

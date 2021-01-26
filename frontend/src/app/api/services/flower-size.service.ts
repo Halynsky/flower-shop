@@ -27,7 +27,7 @@ export class FlowerSizeService {
     return this.http.get<FlowerSize[]>(`${this.URL}/byIds`, {params: {ids: ids}});
   }
 
-  getAllForShop(searchTerm: string, paginationObject: Pagination, filtersObject) {
+  getAllForShop(paginationObject: Pagination, filtersObject) {
     let filters = copy(filtersObject);
     let pagination = copy(paginationObject);
     for (let key in filters) {
@@ -50,8 +50,6 @@ export class FlowerSizeService {
       }
       sortParams.forEach(param => params = params.append('sort', param));
     }
-
-    params = params.append('searchTerm', searchTerm);
 
     return this.http.get<RestPage<FlowerSize>>(`${this.URL}/shop`, {params: params});
   }

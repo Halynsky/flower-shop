@@ -136,7 +136,7 @@ export class FacebookLoginProvider extends BaseLoginProvider {
     });
   }
 
-  signOut(): Promise<any> {
+  signOut(): Promise<void> {
     return new Promise((resolve, reject) => {
       FB.logout(resolve);
     });

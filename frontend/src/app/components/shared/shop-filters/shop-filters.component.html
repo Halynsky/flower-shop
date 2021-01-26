@@ -3,15 +3,18 @@
   <div class="filter-title">
     <span>Квіти</span>
     <div class="clear-filter">
-      <mat-icon *ngIf="filters.flowerTypeFilters.length > 0" title="Очистити фільтр"
+      <mat-icon *ngIf="shopFilterService.filters.flowerTypeFilters.length > 0" title="Очистити фільтр"
                 (click)="clearFlowerTypeFilters()">close</mat-icon>
     </div>
   </div>
 
   <div class="filter-content">
     <ng-template ngFor let-flowerType [ngForOf]="flowerTypes" [ngForTrackBy]="trackByFn">
-      <div class="filter-item" [ngClass]="{'inactive': (filters.flowerTypeFilters.length > 0 && !filters.flowerTypeFilters.includes(flowerType.id)) || flowerType.availableFlowersCount == 0, 'checked' : filters.flowerTypeFilters.includes(flowerType.id)}" *ngIf="flowerType.availableFlowersCount > 0 || filters.flowerTypeFilters.includes(flowerType.id) || showAll">
-        <mat-checkbox (change)="onFlowerTypeFilterChange($event)" [value]="flowerType.id" #flowerTypeCheckbox [checked]="filters.flowerTypeFilters.includes(flowerType.id)">
+      <div class="filter-item"
+           [ngClass]="{'inactive': (shopFilterService.filters.flowerTypeFilters.length > 0
+            && !shopFilterService.filters.flowerTypeFilters.includes($any(flowerType.id))) || flowerType.availableFlowersCount == 0, 'checked' : shopFilterService.filters.flowerTypeFilters.includes($any(flowerType.id))}"
+           *ngIf="flowerType.availableFlowersCount > 0 || shopFilterService.filters.flowerTypeFilters.includes($any(flowerType.id)) || showAll">
+        <mat-checkbox (change)="onFlowerTypeFilterChange($event)" [value]="flowerType.id" #flowerTypeCheckbox [checked]="shopFilterService.filters.flowerTypeFilters.includes($any(flowerType.id))">
           <span>{{flowerType.name}}</span>
           <span *ngIf="flowerType.availableFlowersCount > 0">&nbsp;( {{flowerType.availableFlowersCount}} ) </span>
         </mat-checkbox>
@@ -21,7 +24,7 @@
 
   <div class="show-more-block" *ngIf="flowerTypes">
     <a *ngIf="!showAll" (click)="showAll = true">Показати всі ({{flowerTypes.length}})</a>
-    <a *ngIf="showAll" (click)="showAll = false">Показати (в наявності)</a>
+    <a *ngIf="showAll" (click)="showAll = false">Сховати відсутні</a>
   </div>
 
 </div>
@@ -32,15 +35,15 @@
   <div class="filter-title">
     <span>Колір</span>
     <div class="clear-filter">
-      <mat-icon *ngIf="filters.colorFilters.length > 0" title="Очистити фільтр"
+      <mat-icon *ngIf="shopFilterService.filters.colorFilters.length > 0" title="Очистити фільтр"
                 (click)="clearColorFilters()">close</mat-icon>
     </div>
   </div>
 
   <div class="filter-content">
     <ng-template ngFor let-color [ngForOf]="colors" [ngForTrackBy]="trackByFn">
-      <div class="filter-item" [ngClass]="{'inactive': filters.colorFilters.length > 0 && !filters.colorFilters.includes(color.id)}">
-        <mat-checkbox (change)="onColorFilterChange($event)" [value]="color.id"  #colorCheckbox [checked]="filters.colorFilters.includes(color.id)">{{color.name}}</mat-checkbox>
+      <div class="filter-item" [ngClass]="{'inactive': shopFilterService.filters.colorFilters.length > 0 && !shopFilterService.filters.colorFilters.includes($any(color.id))}">
+        <mat-checkbox (change)="onColorFilterChange($event)" [value]="color.id"  #colorCheckbox [checked]="shopFilterService.filters.colorFilters.includes($any(color.id))">{{color.name}}</mat-checkbox>
       </div>
     </ng-template>
   </div>

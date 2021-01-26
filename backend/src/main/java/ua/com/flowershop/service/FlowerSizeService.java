@@ -3,7 +3,9 @@ package ua.com.flowershop.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ua.com.flowershop.projection.FlowerSizeFullProjectionWithAvailable;
 import ua.com.flowershop.repository.FlowerSizeRepository;
@@ -27,6 +29,28 @@ public class FlowerSizeService {
 
     public Page<FlowerSizeFullProjectionWithAvailable> getForShop (String searchTerm, List<Long> flowerTypeFilters, List<Long> sizeFilters,
                                                           List<Long> colorFilters, Pageable pageRequest) {
+
+        Sort sort = Sort.by("isAvailable").descending();
+
+        switch (pageRequest.getSort().toString()) {
+            case "price: ASC":
+                sort = sort.and(Sort.by("price").ascending());
+                break;
+            case "price: DESC":
+                sort = sort.and(Sort.by("price").descending());
+                break;
+            case "created: DESC":
+                sort = sort.and(Sort.by("f.isNew").descending())
+                .and(Sort.by("f.created").descending());
+                break;
+            case "popularity: DESC":
+            default:
+                sort = sort.and(Sort.by("f.isPopular").descending())
+                    .and(Sort.by("f.popularity").ascending());
+                break;
+        }
+
+        pageRequest = PageRequest.of(pageRequest.getPageNumber(), pageRequest.getPageSize(), sort);
 
         flowerTypeFilters = HibernateUtil.fixEmptyFilter(flowerTypeFilters);
         sizeFilters = HibernateUtil.fixEmptyFilter(sizeFilters);
