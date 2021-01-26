@@ -1,6 +1,6 @@
 <div class="sidebar">
   <perfect-scrollbar style="max-height: calc(100vh - 114px); max-width: 268px; position: fixed">
-    <shop-filters (onFilterChange)="onFilterChange($event)"></shop-filters>
+    <shop-filters></shop-filters>
   </perfect-scrollbar>
 </div>
 
@@ -9,8 +9,8 @@
   <div class="content-top-bar">
 
     <mat-form-field class="main-search-wrapper">
-      <input matInput placeholder="Пошук" #search [(ngModel)]="searchTerm" (ngModelChange)="searchTermChange($event)">
-      <mat-icon matSuffix class="close-icon" (click)="searchTerm = ''; searchTermCleared($event)">close</mat-icon>
+      <input matInput placeholder="Пошук" #search [(ngModel)]="shopFilterService.filters.searchTerm" (ngModelChange)="searchTermChange($event)">
+      <mat-icon matSuffix class="close-icon" (click)="shopFilterService.filters.searchTerm = ''; searchTermCleared($event)">close</mat-icon>
       <mat-icon matSuffix class="search-icon">search</mat-icon>
     </mat-form-field>
 
@@ -20,7 +20,7 @@
     </button>
 
     <mat-form-field class="ordering-selector-wrapper">
-      <mat-select placeholder="Сортування" [(ngModel)]="sort" value="popularity,DESC" (selectionChange)="sortSelectionChange($event)">
+      <mat-select placeholder="Сортування" [(ngModel)]="shopFilterService.filters.sort" value="popularity,DESC" (selectionChange)="sortSelectionChange($event)">
         <ng-template ngFor let-item [ngForOf]="sortOptions" let-i="index">
           <mat-option [value]="item.value">{{item.label}}</mat-option>
         </ng-template>

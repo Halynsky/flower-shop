@@ -1,11 +1,11 @@
 import { ChangeDetectorRef, Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FlowerService } from "../../api/services/flower.service";
 import { SnackBarService } from "../../services/snak-bar.service";
-import { ShopFilter } from "../../api/models/ShopFilter";
+import { ShopFilterParams, ShopFilters } from "../../api/models/ShopFilters";
 import { Pagination } from "../../api/models/Pagination";
 import { RestPage } from "../../api/models/RestPage";
 import { ShopFilterDialogComponent } from "../shared/shop-filter-dialog/shop-filter-dialog.component";
-import { finalize, first, takeUntil } from "rxjs/operators";
+import { finalize, takeUntil } from "rxjs/operators";
 import { getErrorMessage } from "../../utils/Functions";
 import { DOCUMENT } from "@angular/common";
 import { GlobalSearchService } from "../../services/global-search.service";
@@ -16,6 +16,7 @@ import { FlowerSize } from "../../api/models/FlowerSize";
 import { ShopCacheService } from "../../services/shop-cache.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { LAST_VISITED_ITEM } from "../../utils/Costants";
+import { ShopFilterService } from "../../services/shop-filter.service";
 
 @Component({
   selector: 'shop',
@@ -34,7 +35,6 @@ export class ShopComponent implements OnInit, OnDestroy {
   initialized: boolean = false;
 
   flowersPage: RestPage<FlowerSize> = new RestPage<FlowerSize>();
-  filters: ShopFilter = new ShopFilter();
 
   sortOptions = [
     {label: "За популярністю", value: "popularity,DESC"},
@@ -43,8 +43,6 @@ export class ShopComponent implements OnInit, OnDestroy {
     {label: "За новизною", value: "created,DESC"}
   ]
 
-  sort = 'popularity,DESC';
-  searchTerm = '';
 
   pagination: Pagination;
 
@@ -63,14 +61,10 @@ export class ShopComponent implements OnInit, OnDestroy {
               private globalSearchService: GlobalSearchService,
               private shopCacheService: ShopCacheService,
               private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              public shopFilterService: ShopFilterService) {
 
-    this.globalSearchService.onSearchTermChange
-      .pipe(takeUntil(this.destroyed$))
-      .subscribe(searchTerm => {
-      this.searchTerm = searchTerm;
-      this.searchTermChange(null)
-    })
+    this.readQueryParams()
 
   }
 
@@ -83,8 +77,15 @@ export class ShopComponent implements OnInit, OnDestroy {
     this.destroyed$.complete();
   }
 
-  getShopItems(searchTerm: string = '', filters?: ShopFilter, showMore: boolean = false) {
-    console.log("getShopItems showMore", showMore)
+  readQueryParams() {
+    this.route.queryParams
+      .subscribe(params => {
+        if (!this.shopFilterService.initialized) this.shopFilterService.init(params as ShopFilterParams)
+        this.onFilterChange();
+      });
+  }
+
+  getShopItems(filters?: ShopFilters, showMore: boolean = false) {
     let pagination = this.pagination;
 
     if (!this.initialized) {
@@ -92,11 +93,12 @@ export class ShopComponent implements OnInit, OnDestroy {
     }
 
     this.loading = true;
-    this.flowerSizeService.getAllForShop(searchTerm, pagination, filters)
+    this.flowerSizeService.getAllForShop(pagination, filters)
       .pipe(
         finalize(() => {
           this.loading = false;
           this.shopCacheService.cachedData = this.flowersPage;
+          this.shopFilterService.loadingShowMore = false;
         }),
         takeUntil(this.destroyed$)
       ).subscribe(
@@ -134,14 +136,9 @@ export class ShopComponent implements OnInit, OnDestroy {
     return item.id
   }
 
-  onFilterChange(event) {
-    console.log("onFilterChange")
-    this.filters = event;
-    let originalPage = this.pagination?.page;
-    this.pagination = new Pagination(parseInt(this.filters.page), this.DEFAULT_PAGE_SIZE, this.filters.sort)
-    this.getShopItems(this.searchTerm, this.clearPageableFromFilters(this.filters), this.pagination.page != 0 && originalPage != null && originalPage != this.pagination.page);
-    // this.window.scrollTo(0, 0);
-    this.changeDetectorRef.detectChanges();
+  onFilterChange() {
+    this.pagination = new Pagination(this.shopFilterService.filters.page, this.DEFAULT_PAGE_SIZE, this.shopFilterService.filters.sort)
+    this.getShopItems(this.clearPageableFromFilters(this.shopFilterService.filters), this.shopFilterService.loadingShowMore);
   }
 
   clearPageableFromFilters(allFilters) {
@@ -152,25 +149,11 @@ export class ShopComponent implements OnInit, OnDestroy {
   }
 
   sortSelectionChange(event) {
-    this.route.queryParams
-      .pipe(first())
-      .subscribe(params => {
-        let newParams: any = {...params};
-        newParams.sort = this.sort
-        newParams.page = 0;
-        this.router.navigate(['shop'], {queryParams: newParams})
-      })
+    this.shopFilterService.afterFilterChange()
   }
 
   searchTermChange(event) {
-    this.route.queryParams
-      .pipe(first())
-      .subscribe(params => {
-        let newParams: any = {...params};
-        newParams.searchTerm = this.searchTerm
-        newParams.page = 0;
-        this.router.navigate(['shop'], {queryParams: newParams})
-      })
+    this.shopFilterService.afterFilterChange()
   }
 
   searchTermCleared(event) {
@@ -183,21 +166,10 @@ export class ShopComponent implements OnInit, OnDestroy {
       width: '100vw',
     });
 
-    this.shopFilterDialogRef.componentInstance.onFilterChange.subscribe(filter => {
-      this.onFilterChange(filter);
-    });
-    this.shopFilterDialogRef.componentInstance.filters = this.filters;
   }
 
   showMore() {
-    this.route.queryParams
-      .pipe(first())
-      .subscribe(params => {
-        let newParams: any = {...params};
-        newParams.page = this.pagination.page + 1
-        newParams.sort = this.pagination.sort
-        this.router.navigate(['shop'], {queryParams: newParams})
-      })
+    this.shopFilterService.showMore();
   }
 
   trackScroll(event: any) {

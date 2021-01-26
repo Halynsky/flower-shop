@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { ShopFilter } from "../api/models/ShopFilter";
+import { ShopFilters } from "../api/models/ShopFilters";
 import { Pagination } from "../api/models/Pagination";
 
 
@@ -7,7 +7,7 @@ import { Pagination } from "../api/models/Pagination";
 export class ShopCacheService {
 
   sort
-  filters: ShopFilter
+  filters: ShopFilters
   searchTerm
   pagination: Pagination
   cachedData
