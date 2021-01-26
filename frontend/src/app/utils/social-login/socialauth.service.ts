@@ -126,7 +126,7 @@ export class SocialAuthService {
     });
   }
 
-  signOut(revoke: boolean = false): Promise<any> {
+  signOut(revoke: boolean = false): Promise<void> {
     return new Promise((resolve, reject) => {
       if (!this.initialized) {
         reject(SocialAuthService.ERR_NOT_INITIALIZED);

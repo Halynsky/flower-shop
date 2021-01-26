@@ -2,10 +2,10 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FlowerSize } from "../../../api/models/FlowerSize";
 import { FlowerSizeService } from "../../../api/services/flower-size.service";
 import { SnackBarService } from "../../../services/snak-bar.service";
-import htmlToImage from 'html-to-image';
 import { DOCUMENT } from "@angular/common";
 import { GroupService } from "../../../api/services/group.service";
 import { FlowerTypeService } from "../../../api/services/flower-type.service";
+import { toBlob } from "html-to-image";
 
 @Component({
   selector: 'collages-generator',
@@ -59,7 +59,7 @@ export class CollagesGeneratorComponent implements OnInit {
       return
     }
 
-    htmlToImage.toBlob(document.getElementById('collage-preview'))
+    toBlob(document.getElementById('collage-preview'))
       .then(function (blob) {
         window.saveAs(blob, 'collage.png');
       });

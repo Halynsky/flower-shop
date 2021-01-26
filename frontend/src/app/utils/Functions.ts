@@ -11,7 +11,7 @@ export function clone(source) {
 }
 
 export function arrayToHttpParam(array: Array<any>) {
-  return array.join(',')
+  return Array.isArray(array) ? array.join(',') : array
 }
 
 /**

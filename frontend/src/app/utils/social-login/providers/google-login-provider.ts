@@ -140,7 +140,7 @@ export class GoogleLoginProvider extends BaseLoginProvider {
     });
   }
 
-  signOut(revoke?: boolean): Promise<any> {
+  signOut(revoke?: boolean): Promise<void> {
     return new Promise((resolve, reject) => {
       let signOutPromise: Promise<any>;
 

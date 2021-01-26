@@ -34,18 +34,18 @@ public class FlowerSizeService {
 
         switch (pageRequest.getSort().toString()) {
             case "price: ASC":
-                sort.and(Sort.by("price").ascending());
+                sort = sort.and(Sort.by("price").ascending());
                 break;
             case "price: DESC":
-                sort.and(Sort.by("price").descending());
+                sort = sort.and(Sort.by("price").descending());
                 break;
             case "created: DESC":
-                sort.and(Sort.by("f.isNew").descending())
+                sort = sort.and(Sort.by("f.isNew").descending())
                 .and(Sort.by("f.created").descending());
                 break;
             case "popularity: DESC":
             default:
-                sort.and(Sort.by("f.isPopular").descending())
+                sort = sort.and(Sort.by("f.isPopular").descending())
                     .and(Sort.by("f.popularity").ascending());
                 break;
         }

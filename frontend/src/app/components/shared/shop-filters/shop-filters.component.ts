@@ -124,6 +124,7 @@ export class ShopFiltersComponent implements OnInit {
   }
 
   changeUrlFilters() {
+    console.log("changeUrlFilters")
     this.route.queryParams
       .pipe(first())
       .subscribe(params => {
@@ -141,7 +142,7 @@ export class ShopFiltersComponent implements OnInit {
           delete newParams.flowerTypes
         }
 
-        newParams.page = this.filters.page;
+        newParams.page = 0;
 
         this.router.navigate(['shop'], {queryParams: newParams})
       });
