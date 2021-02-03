@@ -51,7 +51,7 @@ public class SocialController {
         return new ResponseEntity<>(securityUserModel ,HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("isAuthenticated()")
     @DeleteMapping("/facebook/disconnect")
     public ResponseEntity<Void> disconnectFacebook() {
         User user = securityService.getUser();
@@ -59,7 +59,7 @@ public class SocialController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/facebook/connect")
     public ResponseEntity<Void> connectFacebook(@RequestBody String accessToken) {
         User user = securityService.getUser();
@@ -67,7 +67,7 @@ public class SocialController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("isAuthenticated()")
     @GetMapping()
     public ResponseEntity<List<SocialConnection>> getConnections() {
         User user = securityService.getUser();
