@@ -40,7 +40,7 @@ public class SecurityService {
 
     public SecurityUserModel performUserLogin(User user) {
         Authentication authentication = new UsernamePasswordAuthenticationToken(user.getEmail(), null,
-        AuthorityUtils.createAuthorityList("USER"));
+        AuthorityUtils.createAuthorityList(user.getRole().toString()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         if (user.getIsVirtual()) {
             user.setIsVirtual(false);
