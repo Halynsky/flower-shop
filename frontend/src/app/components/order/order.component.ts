@@ -62,8 +62,8 @@ export class OrderComponent implements OnInit, OnDestroy {
               private profileService: ProfileService) {
 
     this.getCities();
-    this.getWarehouses();
-    this.getStreets();
+    // this.getWarehouses();
+    // this.getStreets();
 
     this.contactInfoFormGroup = this.formBuilder.group({
       name: [],
@@ -114,6 +114,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.novaPoshtaService.getWarehousesByCityRef(settlementRef)
       .pipe(finalize(() => this.loadingWarehouses = false), takeUntil(this.destroyed$))
       .subscribe(response => {
+        console.log(this.warehouses)
         this.warehouses = this.filteredWarehouses = response.data
       }, error => {
         this.snackBarService.showError("Помилка доступу до бази даних Нової Пошти")
