@@ -25,7 +25,7 @@ public class DatabaseUserService implements UserDetailsService {
         return org.springframework.security.core.userdetails.User.withUsername(user.getEmail())
             .password(user.getPassword())
             .disabled(!user.getIsEnabled())
-            .authorities(user.getRole().toString())
+            .roles(user.getRole().toString())
             .build();
     }
 }
