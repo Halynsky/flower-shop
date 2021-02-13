@@ -633,7 +633,7 @@
       <div class="add-block">
 
         <p-dropdown class="add-flower-size-dropdown" [options]="flowerSizes" [(ngModel)]="flowerSizeToAdd" name="flowerSizeToAdd" [filter]="true"
-                    filterBy="value.flower.name,value.flower.nameOriginal,value.flower.flowerType.name,value.flower.flowerType.nameSingle,value.flower.flowerType.nameOriginal,value.code"
+                    filterBy="flower.name,flower.nameOriginal,flower.flowerType.name,flower.flowerType.nameSingle,flower.flowerType.nameOriginal,code"
                     placeholder="Оберіть товар" emptyFilterMessage="Не знайдено" optionLabel="flower.nameOriginal" appendTo="body">
           <ng-template let-selectedItem pTemplate="selectedItem">
             <div class="flower-size-selected">

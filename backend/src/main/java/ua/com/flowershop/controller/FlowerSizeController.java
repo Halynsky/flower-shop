@@ -54,7 +54,7 @@ public class FlowerSizeController {
     @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @GetMapping("/forAdmin/asList")
     public ResponseEntity<List<FlowerSizeSelectorProjection>> getAllForAdmin() {
-        return new ResponseEntity<>(flowerSizeRepository.findAllForAdminProjectedByOrderByFlowerNameAscSizeNameAsc(), OK);
+        return new ResponseEntity<>(flowerSizeRepository.findAllForAdminProjectedByAmountGreaterThanOrderByFlowerNameOriginalAsc(0), OK);
     }
 
     @PageableSwagger
