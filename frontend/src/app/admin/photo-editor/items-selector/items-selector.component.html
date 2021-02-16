@@ -40,18 +40,18 @@
                     placeholder="Оберіть квітку" emptyFilterMessage="Не знайдено" optionLabel="flower.nameOriginal" appendTo="body">
           <ng-template let-selectedItem pTemplate="selectedItem">
             <div class="flower-size-selected">
-              <img [src]="selectedItem.value.flower.image"/>
-              <div><b>{{selectedItem.value.flower.nameOriginal}}</b> {{selectedItem.value.size.name}}, {{selectedItem.value.flower.flowerType.nameSingle}}</div>
+              <img [src]="selectedItem.flower.image"/>
+              <div><b>{{selectedItem.flower.nameOriginal}}</b> {{selectedItem.size.name}}, {{selectedItem.flower.flowerType.nameSingle}}</div>
             </div>
           </ng-template>
           <ng-template let-item pTemplate="item">
             <div class="ui-helper-clearfix">
               <div class="flower-size-option">
-                <img [src]="item.value.flower.image"/>
+                <img [src]="item.flower.image"/>
                 <div class="flower-size-option-info">
-                  <div class="flower-size-option-info-main"><b>{{item.value.flower.nameOriginal}}</b> {{item.value.size.name}}
-                    , {{item.value.flower.flowerType.nameSingle}}</div>
-                  <div class="flower-size-option-info-additional">{{item.value.code}}, Ціна: {{item.value.price / 100}} грн, Доступно: {{item.value.available}} шт</div>
+                  <div class="flower-size-option-info-main"><b>{{item.flower.nameOriginal}}</b> {{item.size.name}}
+                    , {{item.flower.flowerType.nameSingle}}</div>
+                  <div class="flower-size-option-info-additional">{{item.code}}, Ціна: {{item.price / 100}} грн, Доступно: {{item.available}} шт</div>
                 </div>
               </div>
             </div>

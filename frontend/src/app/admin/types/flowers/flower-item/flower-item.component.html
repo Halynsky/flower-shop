@@ -131,15 +131,15 @@
                           optionLabel="name" dataKey="id" #color="ngModel" showClear="true" filter="true" emptyFilterMessage="Не знайдено" required>
                 <ng-template let-selectedItem pTemplate="selectedItem">
                   <div class="color-selected">
-                    <div>{{selectedItem.value.name}}</div>
-                    <div class="color-square" [ngStyle]="{'background-color': selectedItem.value.hex}"></div>
+                    <div>{{selectedItem.name}}</div>
+                    <div class="color-square" [ngStyle]="{'background-color': selectedItem.hex}"></div>
                   </div>
                 </ng-template>
                 <ng-template let-item pTemplate="item">
                   <div class="ui-helper-clearfix">
                     <div class="color-option">
-                      <div>{{item.value.name}}</div>
-                      <div class="color-square" [ngStyle]="{'background-color': item.value.hex}"></div>
+                      <div>{{item.name}}</div>
+                      <div class="color-square" [ngStyle]="{'background-color': item.hex}"></div>
                     </div>
                   </div>
                 </ng-template>
@@ -165,15 +165,15 @@
                           optionLabel="name" dataKey="id" #colorSecondary="ngModel" showClear="true" filter="true" emptyFilterMessage="Не знайдено">
                 <ng-template let-selectedItem pTemplate="selectedItem">
                   <div class="color-selected">
-                    <div>{{selectedItem.value.name}}</div>
-                    <div class="color-square" [ngStyle]="{'background-color': selectedItem.value.hex}"></div>
+                    <div>{{selectedItem.name}}</div>
+                    <div class="color-square" [ngStyle]="{'background-color': selectedItem.hex}"></div>
                   </div>
                 </ng-template>
                 <ng-template let-item pTemplate="item">
                   <div class="ui-helper-clearfix">
                     <div class="color-option">
-                      <div>{{item.value.name}}</div>
-                      <div class="color-square" [ngStyle]="{'background-color': item.value.hex}"></div>
+                      <div>{{item.name}}</div>
+                      <div class="color-square" [ngStyle]="{'background-color': item.hex}"></div>
                     </div>
                   </div>
                 </ng-template>

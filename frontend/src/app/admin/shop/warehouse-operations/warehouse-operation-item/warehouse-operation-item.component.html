@@ -25,16 +25,16 @@
                         placeholder="Оберіть квітку" id="flower" (ngModelChange)="getFlowersSizeById(flowerChosen.id)">
               <ng-template let-selectedItem pTemplate="selectedItem">
                 <div class="flower-selected" >
-                  <img [src]="selectedItem.value.image"/>
-                  <div><b>{{selectedItem.value.nameOriginal}}</b>, {{selectedItem.value.flowerType.nameSingle}}</div>
+                  <img [src]="selectedItem.image"/>
+                  <div><b>{{selectedItem.nameOriginal}}</b>, {{selectedItem.flowerType.nameSingle}}</div>
                 </div>
               </ng-template>
               <ng-template let-item pTemplate="item">
                 <div class="ui-helper-clearfix">
                   <div class="flower-option">
-                    <img [src]="item.value.image"/>
+                    <img [src]="item.image"/>
                     <div class="flower-option-info">
-                      <div class="flower-option-info-main"><b>{{item.value.nameOriginal}}</b>, {{item.value.flowerType.nameSingle}}</div>
+                      <div class="flower-option-info-main"><b>{{item.nameOriginal}}</b>, {{item.flowerType.nameSingle}}</div>
                     </div>
                   </div>
                 </div>
