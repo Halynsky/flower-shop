@@ -10,6 +10,7 @@ import ua.com.flowershop.repository.OrderRepository;
 import ua.com.flowershop.service.OrderService;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -17,20 +18,20 @@ import java.util.List;
 public class OrdersCleaningJob {
 
     private final static int MAX_DELIVERY_STATE_DAYS = 14;
-    private final static int MAX_UNPAID_DAYS = 60;
+    private final static int MAX_UNPAID_DAYS = 90;
 
     @Autowired private OrderRepository orderRepository;
     @Autowired private OrderService orderService;
 
-//    @Scheduled(cron = "${job.unpaid.orders.cleaning}")
-//    public void cancelUnpaidOrders() {
-//        log.info("Job | Clean unpaid orders job started");
-//        List<Order> longTermUnpaidOrders = orderRepository.findByNotPaidAndStatusIsNewAndCreatedBefore(LocalDateTime.now().minusDays(MAX_UNPAID_DAYS));
-//        longTermUnpaidOrders.forEach(order -> {
-//            orderService.changeStatus(order.getId(), new OrderStatusChangeRequestModel().setStatus(Order.Status.CANCELED_AUTO));
-//        });
-//        log.info("Job | Clean unpaid orders job finished");
-//    }
+    @Scheduled(cron = "${job.unpaid.orders.cleaning}")
+    public void cancelUnpaidOrders() {
+        log.info("Job | Clean unpaid orders job started");
+        List<Order> longTermUnpaidOrders = orderRepository.findByNotPaidAndStatusIsNewAndCreatedBefore(LocalDateTime.now().minusDays(MAX_UNPAID_DAYS));
+        longTermUnpaidOrders.forEach(order -> {
+            orderService.changeStatus(order.getId(), new OrderStatusChangeRequestModel().setStatus(Order.Status.CANCELED_AUTO));
+        });
+        log.info("Job | Clean unpaid orders job finished");
+    }
 
     @Scheduled(cron = "${job.delivering.orders.cleaning}")
     public void closeDeliveredOrders() {
