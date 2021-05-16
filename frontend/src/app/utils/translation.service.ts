@@ -15,6 +15,7 @@ export class TranslationService {
       EXTERNAL_SALE: 'Продаж (поза системою)',
       GIFT: 'Подарунок',
       DEFECT: 'Списання (брак)',
+      LEFTOVERS: 'Списання (залишки)',
       MISTAKE: 'Списання (помилкове внесення)'
     },
     orderStatuses: {

@@ -53,6 +53,7 @@ public class WarehouseOperationType {
         RETURN("RETURN"),
         GIFT("GIFT"),
         DEFECT("DEFECT"),
+        LEFTOVERS("LEFTOVERS"),
         MISTAKE("MISTAKE");
 
         private final String value;
