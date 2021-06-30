@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --prod",
-    "serve": "ng serve --hmr",
+    "serve-hmr": "ng serve --hmr",
+    "serve": "ng serve",
     "build": "ng build",
     "build:prod": "node --max_old_space_size=6096 node_modules/@angular/cli/bin/ng build --prod",
     "build:stg": "node --max_old_space_size=6096 node_modules/@angular/cli/bin/ng build --configuration=stg",

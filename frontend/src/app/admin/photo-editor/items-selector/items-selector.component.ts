@@ -96,7 +96,7 @@ export class ItemsSelectorComponent implements OnInit {
       return
     }
 
-    if(this.availableOnly && item.available == 0) {
+    if (this.availableOnly && item.available == 0) {
       return
     }
 

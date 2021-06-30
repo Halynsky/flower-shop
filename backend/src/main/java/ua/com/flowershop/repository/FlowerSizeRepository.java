@@ -61,6 +61,7 @@ public interface FlowerSizeRepository extends JpaRepository<FlowerSize, Long> {
     Page<FlowerSizeFullProjectionWithAvailable> findProjectedByFilters(String searchTerm, List<Long> flowerTypeFilters, List<Long> colorFilters, List<Long> sizeFilters, Pageable pageRequest);
 
     List<FlowerSizeSelectorProjection> findAllForAdminProjectedByAmountGreaterThanOrderByFlowerNameOriginalAsc(Integer minAmount);
+    List<FlowerSizeSelectorProjection> findAllForAdminProjectedByOrderByFlowerNameOriginalAsc();
 
     @Query("SELECT min(fs.price) FROM FlowerSize fs " +
         "WHERE fs.flower.id = :id")
