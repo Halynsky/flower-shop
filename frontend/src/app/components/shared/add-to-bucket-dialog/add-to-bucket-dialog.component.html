@@ -16,7 +16,7 @@
 
         <div class="add-to-card-inner">
 
-          <table>
+          <table *ngIf="flowerSize.isAvailable">
 
             <tr class="header">
               <th [innerText]="'Розмір'"></th>
@@ -34,7 +34,7 @@
 
           </table>
 
-          <div class="items-total-price-block-wrapper">
+          <div class="items-total-price-block-wrapper" [ngClass]="{'unavailable': !flowerSize.isAvailable}">
             <div *ngIf="flowerSize.isAvailable; else unavailable" class="items-total-price-block" [ngClass]="{'accent': bucketItem.amount * bucketItem.price > 0}">Разом на суму: <span class="items-total-price">{{bucketItem.amount * bucketItem.price / 100}} грн</span></div>
             <ng-template #unavailable>
               <div class="item-unavailable">Немає в наявності</div>

@@ -204,6 +204,11 @@
             text-align: center;
             color: $grey-600;
 
+            &.unavailable {
+              border: none;
+              margin-top: -16px;
+            }
+
             .items-total-price-block {
               opacity: 0.5;
 
