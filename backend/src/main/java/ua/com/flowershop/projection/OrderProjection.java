@@ -16,6 +16,7 @@ public interface OrderProjection {
     LocalDate getPaid();
     Integer getTotalPrice();
     Integer getDiscount();
+    Integer getAdvancePayment();
     @Value("#{@orderItemRepository.findProjectedByOrderId(target.id)}")
     List<OrderItemProjection> getOrderItems();
 }

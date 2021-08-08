@@ -23,6 +23,7 @@ public interface OrderAdminProjection {
     Integer getTotalPrice();
     Integer getDiscount();
     Integer getPriceToPay();
+    Integer getAdvancePayment();
     @Value("#{@orderItemRepository.findProjectedForAdminByOrderId(target.id)}")
     List<OrderItemAdminProjection> getOrderItems();
 }

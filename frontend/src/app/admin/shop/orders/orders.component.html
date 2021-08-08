@@ -244,6 +244,9 @@
                 <i class="material-icons">indeterminate_check_box</i>
               </div>
             </div>
+            <div *ngIf="rowData.advancePayment" class="debt">
+              Борг: {{(rowData.priceToPay - rowData.advancePayment) / 100 + ' грн'}}
+            </div>
           </span>
 
           <span *ngSwitchDefault>
@@ -777,6 +780,21 @@
           <ng-container *ngIf="paymentConfirmForm.dirty || paymentConfirmForm.touched || paymentConfirmForm.submitted">
             <p-message *ngIf="paymentDateCalendar.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
           </ng-container>
+        </div>
+      </div>
+
+      <div class="prime-form-group p-col-12">
+        <div class="p-col-4">
+          <label>Аванс</label>
+        </div>
+        <div class="p-col-4">
+          <input pInputText
+                 #advancePayment="ngModel"
+                 name="advancePayment"
+                 [(ngModel)]="orderAdvancePayment"
+                 digitOnly>
+        </div>
+        <div class="p-col-4">
         </div>
       </div>
 

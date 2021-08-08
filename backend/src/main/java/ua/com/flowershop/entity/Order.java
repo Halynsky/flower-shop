@@ -48,6 +48,7 @@ public class Order {
     private Integer totalPrice;
     @Column(columnDefinition = "integer default 0")
     private Integer discount = 0;
+    private Integer advancePayment;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

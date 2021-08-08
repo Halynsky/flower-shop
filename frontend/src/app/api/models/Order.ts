@@ -19,6 +19,7 @@ export class OrderAdmin {
   totalPrice: number;
   discount: number;
   priceToPay: number;
+  advancePayment: number;
 }
 
 export class OrderItemAdmin {
@@ -65,6 +66,7 @@ export class Order {
   paid: string;
   totalPrice: number;
   discount: number;
+  advancePayment: number;
 }
 
 export class OrderItem {

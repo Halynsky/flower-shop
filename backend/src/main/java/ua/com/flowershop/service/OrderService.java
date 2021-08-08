@@ -15,6 +15,7 @@ import ua.com.flowershop.util.PopularityService;
 import ua.com.flowershop.util.mail.MailService;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -118,10 +119,13 @@ public class OrderService {
         return order.getId();
     }
 
-    public void confirmPayment(Long orderId, LocalDate paid) {
-       Order order = orderRepository.findById(orderId).orElseThrow(NotFoundException::new);
-       order.setPaid(paid);
-       orderRepository.save(order);
+    public void confirmPayment(Long orderId, PaymentConfirmationModel paymentConfirmationModel) {
+        String dateString = paymentConfirmationModel.getDate();
+        LocalDate paymentDate = nonNull(paymentConfirmationModel.getDate()) && !dateString.equals("") ? LocalDate.parse(dateString, DateTimeFormatter.ofPattern("dd-MM-yyyy")) : null;
+        Order order = orderRepository.findById(orderId).orElseThrow(NotFoundException::new);
+        order.setPaid(paymentDate);
+        order.setAdvancePayment(paymentConfirmationModel.getAdvancePayment());
+        orderRepository.save(order);
     }
 
     @Transactional
@@ -252,15 +256,15 @@ public class OrderService {
         User mainUser = mainOrder.getUser();
         User otherUser = otherOrder.getUser();
 
-        if(mainUser.getIsVirtual() && !otherUser.getIsVirtual()) {
+        if (mainUser.getIsVirtual() && !otherUser.getIsVirtual()) {
             throw new ConflictException("Приєднання замовлення реального користувача до замовлення віртуального користувача заборонено");
         }
 
-        if(!mainUser.getIsVirtual() && !otherUser.getIsVirtual() && !mainUser.equals(otherUser)) {
+        if (!mainUser.getIsVirtual() && !otherUser.getIsVirtual() && !mainUser.equals(otherUser)) {
             throw new ConflictException("Замовлення належать двом різним реальним користувачам");
         }
 
-        if((isNull(mainOrder.getPaid()) || isNull(otherOrder.getPaid())) && !(isNull(mainOrder.getPaid()) && isNull(otherOrder.getPaid()))) {
+        if ((isNull(mainOrder.getPaid()) || isNull(otherOrder.getPaid())) && !(isNull(mainOrder.getPaid()) && isNull(otherOrder.getPaid()))) {
             throw new ConflictException("Ви намагаєтесь об’єднати оплачене та не оплачене замовлення");
         }
 
@@ -290,7 +294,7 @@ public class OrderService {
 
     }
 
-    private String retrieveAddress (OrderModel orderModel) {
+    private String retrieveAddress(OrderModel orderModel) {
         OrderDeliveryModel orderDeliveryModel = orderModel.getDeliveryInfo();
         String receiverFullName;
         String receiverPhone;
@@ -307,7 +311,7 @@ public class OrderService {
 
         StringBuilder ds = new StringBuilder();
 
-        switch(orderDeliveryModel.getDeliveryType()) {
+        switch (orderDeliveryModel.getDeliveryType()) {
             case NOVA_POSHTA_COURIER:
                 ds.append("Нова Пошта (Адресна доставка), ");
                 ds.append(orderDeliveryModel.getCity());
@@ -365,7 +369,7 @@ public class OrderService {
         Order mainOrder = orderRepository.findById(mainOrderId).orElseThrow(NotFoundException::new);
         Order otherOrder = new Order();
 
-        if(orderItemIds.size() == 0 || mainOrder.getOrderItems().size() == orderItemIds.size()) {
+        if (orderItemIds.size() == 0 || mainOrder.getOrderItems().size() == orderItemIds.size()) {
             throw new ConflictException("Для розєднання к вожному з замовленнь повинно бути хоча б по одній позиції");
         }
 
@@ -390,7 +394,7 @@ public class OrderService {
         Set<OrderItem> mainOrderItems = mainOrder.getOrderItems();
         mainOrderItems.removeAll(otherOrderItems);
 
-        if(mainOrderItems.size() == 0 || otherOrderItems.size() == 0) {
+        if (mainOrderItems.size() == 0 || otherOrderItems.size() == 0) {
             throw new ConflictException("Для розєднання к вожному з замовленнь повинно бути хоча б по одній позиції");
         }
 
@@ -429,7 +433,7 @@ public class OrderService {
             FlowerSize flowerSize = flowerSizeRepository.findById(oi.getId()).orElseThrow(NotFoundException::new);
             Integer addedAmount = 0;
 
-            if(isNull(orderItem)) {
+            if (isNull(orderItem)) {
 
                 orderItem = new OrderItem().setOrder(order)
                     .setAmount(oi.getAmount())

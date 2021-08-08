@@ -24,7 +24,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     @Query("SELECT DISTINCT(o.id) as id, o.created as created, o.closed as closed, o.sent as sent, o.status as status, o.user as user, " +
         "o.comment as comment, o.note as note, o.deliveryAddress as deliveryAddress, o.postDeclaration as postDeclaration, " +
-        "o.paid as paid, o.phone as phone, o.totalPrice as totalPrice, o.discount as discount, (o.totalPrice - o.discount) as priceToPay FROM Order o " +
+        "o.paid as paid, o.phone as phone, o.totalPrice as totalPrice, o.discount as discount, (o.totalPrice - o.discount) as priceToPay, o.advancePayment as advancePayment FROM Order o " +
         "LEFT JOIN o.user u " +
         "WHERE (:id IS null OR o.id = :id) " +
         "AND (:userId IS null OR u.id = :userId) " +

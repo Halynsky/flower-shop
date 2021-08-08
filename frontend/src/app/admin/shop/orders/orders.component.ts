@@ -20,6 +20,7 @@ import { OrderCreateRequestAdmin } from "../../../api/models/OrderCreateRequestA
 import { UserService } from "../../../api/services/user.service";
 import { FilterMetadata } from "primeng/api";
 import { Table } from "primeng/table";
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-orders',
@@ -116,6 +117,7 @@ export class OrdersComponent implements OnInit {
   orderDiscount;
   paymentDate;
   userIdToCreateOrder;
+  orderAdvancePayment;
 
   lastLazyLoadEvent;
 
@@ -245,6 +247,7 @@ export class OrdersComponent implements OnInit {
         icon: 'fas fa-comments-dollar',
         command: (event) => {
           this.displayPaymentConfirmDialog = true;
+          this.orderAdvancePayment = this.selected.advancePayment ? this.selected.advancePayment / 100 : null
           this.paymentDate = this.selected.paid ? new Date(this.selected.paid) : null;
         },
         visible: ![this.Status.CANCELED, this.Status.CANCELED_AUTO, this.Status.RETURNED].includes(this.selected.status)
@@ -349,8 +352,9 @@ export class OrdersComponent implements OnInit {
 
   confirmPayment() {
     this.loading = true;
-    let date = this.paymentDate ?  this.paymentDate.toLocaleDateString().replace(/\./g,'-') : null;
-    this.dataService.confirmPayment(this.selected.id, date)
+    // let date = this.paymentDate ?  this.paymentDate.toLocaleDateString().replace(/\./g,'-') : null;
+    let date = this.paymentDate ?  moment(this.paymentDate).format('DD-MM-YYYY') : null;
+    this.dataService.confirmPayment(this.selected.id, date, this.orderAdvancePayment ? this.orderAdvancePayment * 100 : undefined)
       .pipe(finalize(() => this.loading = false))
       .subscribe(() => {
       this.snackBarService.showSuccess(`Оплату для замовлення №${this.selected.id} успішно підтверджено`);

@@ -22,8 +22,12 @@ export class OrderService {
     return this.http.post(`${this.URL}`, orderRequest, {responseType: 'text'});
   }
 
-  confirmPayment(id: number, date) {
-    return this.http.put(`${this.URL}/${id}/confirmPayment`, date);
+  confirmPayment(id: number, date, advancePayment: number) {
+    let params = {
+      date: date,
+      advancePayment: advancePayment
+    }
+    return this.http.put(`${this.URL}/${id}/confirmPayment`, params);
   }
 
   changeStatus(id: number, orderStatusChangeRequest: OrderStatusChangeRequest) {
