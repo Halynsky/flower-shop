@@ -19,7 +19,7 @@ import static springfox.documentation.builders.PathSelectors.regex;
 
 @Configuration
 @EnableSwagger2
-@Profile("dev")
+@Profile(value = {"dev", "stg"})
 public class SwaggerConfig {
 
     String API_VERSION = "0.0.1-SNAPSHOT";
