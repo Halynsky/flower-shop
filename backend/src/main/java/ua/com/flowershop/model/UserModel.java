@@ -7,6 +7,9 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 import ua.com.flowershop.entity.User;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
 @Getter
 @Setter
 @Accessors(chain = true)
@@ -14,9 +17,13 @@ import ua.com.flowershop.entity.User;
 @AllArgsConstructor
 public class UserModel {
     private Long id;
+    @Email
     private String email;
+    @NotEmpty
     private String password;
+    @NotEmpty
     private String name;
+    @NotEmpty
     private String phone;
     private Boolean isEnabled;
     private User.Role role;

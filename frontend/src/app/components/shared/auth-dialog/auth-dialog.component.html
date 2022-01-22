@@ -23,6 +23,7 @@
                   name="email"
                   [(ngModel)]="credentials.email"
                   placeholder="Електронна адреса"
+                  email
                   required/>
 
               <div class="error-wrapper" *ngIf="(email.dirty || email.touched) && loginForm.submitted">
@@ -97,10 +98,10 @@
                   required
                   email
                   [uniqueValidator]="userService.isEmailFree.bind(userService)"/>
-
               <div class="error-wrapper" *ngIf="email.dirty || email.touched || regForm.submitted">
                 <div class="error-message" *ngIf="email.errors?.unique && !email.errors?.required">Данний Email вже зайнятий</div>
                 <div class="error-message" *ngIf="email.errors?.required">Повинно бути вказано</div>
+                <div class="error-message" *ngIf="!email.errors?.required && !email.errors?.unique && email.errors?.email">Введіть валідний мейл</div>
               </div>
             </div>
 
