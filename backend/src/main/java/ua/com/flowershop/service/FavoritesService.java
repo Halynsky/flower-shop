@@ -57,8 +57,9 @@ public class FavoritesService {
             .orElseThrow(() -> new InternalServerException("Основний список бажань не знайдено"));
 
         FlowerSize flowerSize = favoriteItemsList.getFlowerSizes().stream()
-            .filter(f -> f.getId().equals(id)).
-            findFirst().orElseThrow(NotFoundException::new);
+            .filter(f -> f.getId().equals(id))
+            .findFirst()
+            .orElseThrow(NotFoundException::new);
 
         favoriteItemsList.getFlowerSizes().remove(flowerSize);
         favoriteItemsListRepository.save(favoriteItemsList);

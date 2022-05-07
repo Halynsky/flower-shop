@@ -27,7 +27,7 @@ import static java.time.Period.between;
 public class StatisticsService {
 
     private static final String RELEASE_DATE_STRING = "2020-01-01";
-    private static final LocalDate RELEASE_DATE = LocalDate.parse(RELEASE_DATE_STRING, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    private static final LocalDate RELEASE_DATE = LocalDate.parse(RELEASE_DATE_STRING, DateTimeFormatter.ISO_DATE);
 
     private static final int MONTH_IN_QUARTER = 3;
     private static final int MONTH_IN_YEAR = 12;
