@@ -85,6 +85,7 @@ export namespace Order {
   export enum Status {
     NEW = 'NEW',
     PROCESSING = 'PROCESSING',
+    PACKAGING = 'PACKAGING',
     DELIVERING = 'DELIVERING',
     RETURNED = 'RETURNED',
     CANCELED = 'CANCELED',

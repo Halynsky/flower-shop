@@ -205,7 +205,7 @@
 
           <span *ngSwitchCase="'status'"
                 [ngClass]="{'highlight-status': rowData.status == Status.NEW,
-                'pg-primary': rowData.status == Status.NEW || rowData.status == Status.PROCESSING || rowData.status == Status.DELIVERING,
+                'pg-primary': rowData.status == Status.NEW || rowData.status == Status.PROCESSING || rowData.status == Status.DELIVERING || rowData.status == Status.PACKAGING,
                  'pg-accent': rowData.status == Status.DONE,
                  'pg-warn': rowData.status == Status.RETURNED,
                  'pg-danger': rowData.status == Status.CANCELED || rowData.status == Status.CANCELED_AUTO}">
@@ -306,7 +306,7 @@
         </div>
         <div class="p-col-4">
           <label class="new-status-name"
-                 [ngClass]="{'pg-primary': orderStatusChangeRequest.status == Status.PROCESSING || orderStatusChangeRequest.status == Status.DELIVERING,
+                 [ngClass]="{'pg-primary': orderStatusChangeRequest.status == Status.PROCESSING || orderStatusChangeRequest.status == Status.DELIVERING || orderStatusChangeRequest.status == Status.PACKAGING,
                  'pg-accent': orderStatusChangeRequest.status == Status.DONE,
                  'pg-warn': orderStatusChangeRequest.status == Status.RETURNED,
                  'pg-danger': orderStatusChangeRequest.status == Status.CANCELED || orderStatusChangeRequest.status == Status.CANCELED_AUTO}">

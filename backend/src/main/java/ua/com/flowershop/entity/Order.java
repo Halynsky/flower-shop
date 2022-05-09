@@ -60,6 +60,7 @@ public class Order {
     public enum Status {
         NEW("NEW"),
         PROCESSING("PROCESSING"),
+        PACKAGING("PACKAGING"),
         DELIVERING("DELIVERING"),
         RETURNED("RETURNED"),
         CANCELED("CANCELED"),
@@ -78,11 +79,11 @@ public class Order {
         }
 
         public static List<Status> getEditable() {
-            return Arrays.asList(NEW, PROCESSING);
+            return Arrays.asList(NEW, PROCESSING, PACKAGING);
         }
 
         public static List<Status> getActive() {
-            return Arrays.asList(NEW, PROCESSING);
+            return Arrays.asList(NEW, PROCESSING, PACKAGING);
         }
 
     }

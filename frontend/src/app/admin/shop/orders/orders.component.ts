@@ -200,6 +200,16 @@ export class OrdersComponent implements OnInit {
         styleClass: 'cm-primary',
       },
       {
+        label: 'Пакується',
+        icon: 'fas fa-boxes',
+        command: (event) => {
+          this.displayStatusChangeDialog = true;
+          this.orderStatusChangeRequest.status = this.Status.PACKAGING;
+        },
+        visible: this.orderIsEditable(this.selected.status),
+        styleClass: 'cm-primary',
+      },
+      {
         label: 'Відправлено',
         icon: 'fas fa-shipping-fast',
         command: (event) => {

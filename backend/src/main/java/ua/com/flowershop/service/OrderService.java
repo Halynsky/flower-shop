@@ -135,6 +135,7 @@ public class OrderService {
         switch (orderStatusChangeRequest.getStatus()) {
 
             case PROCESSING:
+            case PACKAGING:
                 if (!order.getStatus().equals(Order.Status.NEW)) {
                     throw new ConflictException("Вказано невалідний статус замовлення");
                 }
