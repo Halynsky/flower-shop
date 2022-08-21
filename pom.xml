@@ -24,7 +24,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>12</java.version>
+        <java.version>17</java.version>
         <apache.commons.version>2.6</apache.commons.version>
         <jsr310.version>2.9.2</jsr310.version>
         <springfox.version>2.8.0</springfox.version>
