@@ -1,6 +1,5 @@
 package ua.com.flowershop.configuration;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,8 +29,6 @@ import static ua.com.flowershop.util.Path.*;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired private DatabaseUserService databaseUserService;
-    @Autowired private PasswordEncoder passwordEncoder;
-    @Autowired private ObjectMapper objectMapper;
     @Autowired private AuthenticationFailEntryPoint authenticationFailEntryPoint;
     @Autowired private AuthenticationSuccessHandler authenticationSuccessHandler;
     @Autowired private AuthenticationFailureHandler authenticationFailureHandler;

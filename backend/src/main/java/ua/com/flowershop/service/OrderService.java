@@ -36,7 +36,6 @@ public class OrderService {
     private static final String COMA_PHONE = ", тел.";
 
     @Autowired private OrderRepository orderRepository;
-    @Autowired private OrderService orderService;
     @Autowired private OrderItemRepository orderItemRepository;
     @Autowired private FlowerSizeRepository flowerSizeRepository;
     @Autowired private WarehouseOperationRepository warehouseOperationRepository;
@@ -180,7 +179,7 @@ public class OrderService {
                     throw new ConflictException("Вказано невалідний статус замовлення");
                 }
                 if (Order.Status.getActive().contains(order.getStatus())) {
-                    orderService.changeStatus(order.getId(), new OrderStatusChangeRequestModel().setStatus(Order.Status.DELIVERING).setDate(LocalDate.now()));
+                    changeStatus(order.getId(), new OrderStatusChangeRequestModel().setStatus(Order.Status.DELIVERING).setDate(LocalDate.now()));
                     order = orderRepository.findById(orderId).orElseThrow(NotFoundException::new);
                 }
                 order.getOrderItems().forEach(oi -> {

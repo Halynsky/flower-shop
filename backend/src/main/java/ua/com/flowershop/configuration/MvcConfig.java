@@ -1,5 +1,7 @@
 package ua.com.flowershop.configuration;
 
+import org.springframework.boot.web.server.WebServerFactoryCustomizer;
+import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.ViewResolver;
@@ -17,6 +19,11 @@ public class MvcConfig implements WebMvcConfigurer {
         resolver.setSuffix(".html");
         resolver.setPrefix("/");
         return resolver;
+    }
+
+    @Bean
+    WebServerFactoryCustomizer<ConfigurableServletWebServerFactory> enableDefaultServlet() {
+        return (factory) -> factory.setRegisterDefaultServlet(true);
     }
 
     @Override
