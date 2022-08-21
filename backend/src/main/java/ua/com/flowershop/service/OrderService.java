@@ -138,7 +138,7 @@ public class OrderService {
                 if (!Order.Status.getEditable().contains(order.getStatus())) {
                     throw new ConflictException("Вказано невалідний статус замовлення");
                 }
-                
+
                 break;
             case PACKAGING:
                 if (!Order.Status.getEditable().contains(order.getStatus())) {

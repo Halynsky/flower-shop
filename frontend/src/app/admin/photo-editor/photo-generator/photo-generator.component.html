@@ -71,7 +71,7 @@
     <ng-template ngFor let-item [ngForOf]="items" let-i="index">
       <div class="flower-size-in-list">
         <div class="controls">
-          <p-button icon="fas fa-trash" styleClass="p-button-sm p-button-danger" (click)="removeCollageItem(i)"></p-button>
+          <p-button icon="fas fa-trash" styleClass="p-button-sm p-button-danger" (click)="removeSelectedItem(i)"></p-button>
         </div>
         <img [src]="item.flower.image"/>
         <div class="info"><b>{{item.flower.nameOriginal}}</b> {{item.size.name}}, {{item.flower.flowerType.nameSingle}}</div>
@@ -96,7 +96,7 @@
 
       <ng-template ngFor let-item [ngForOf]="items" let-i="index">
 
-        <div id="{{item.flower.nameOriginal | replace: ALL_SPACES_PATTERN: '_' | replace: ALL_APOSTROPHE_PATTERN: ''}}" class="result-preview-item" [ngStyle]="{'background-image':'url(' + item.flower.image + ')', 'height.px': photoConfig.baseWidth, 'font-size.px': photoConfig.fontSize}">
+        <div id="{{(item.flower.nameOriginal + '_' + item.size.name) | replace: ALL_SPACES_PATTERN: '_' | replace: ALL_APOSTROPHE_PATTERN: '' | replace: ALL_SLASH_PATTERN: '-'}}" class="result-preview-item" [ngStyle]="{'background-image':'url(' + item.flower.image + ')', 'height.px': photoConfig.baseWidth, 'font-size.px': photoConfig.fontSize}">
           <div class="left-info">
             <div class="code">{{item.code}}</div>
             <div class="name">
@@ -108,7 +108,6 @@
           <div class="right-info">
             <div class="price">{{item.price / 100 + ' грн'}}</div>
           </div>
-
         </div>
 
       </ng-template>

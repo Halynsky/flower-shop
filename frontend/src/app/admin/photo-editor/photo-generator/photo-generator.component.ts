@@ -16,6 +16,7 @@ export class PhotoGeneratorComponent implements OnInit {
 
   ALL_SPACES_PATTERN = new RegExp(/ /g);
   ALL_APOSTROPHE_PATTERN = new RegExp(/'/g);
+  ALL_SLASH_PATTERN = new RegExp(/\//g);
 
   loading = false;
 
@@ -37,7 +38,7 @@ export class PhotoGeneratorComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  removeCollageItem(index) {
+  removeSelectedItem(index) {
     this.items.splice(index,1)
   }
 
@@ -46,17 +47,20 @@ export class PhotoGeneratorComponent implements OnInit {
       return
     }
 
-    this.items.forEach(item => {
-
-      let id = item.flower.nameOriginal.replace(this.ALL_SPACES_PATTERN, "_").replace(this.ALL_APOSTROPHE_PATTERN, "")
+    this.items.forEach((item, index) => {
+      let id = (item.flower.nameOriginal + '_' + item.size.name)
+        .replace(this.ALL_SPACES_PATTERN, "_")
+        .replace(this.ALL_APOSTROPHE_PATTERN, "")
+        .replace(this.ALL_SLASH_PATTERN, "-")
+        console.log(id, item)
 
       toBlob(document.getElementById(id))
         .then(function (blob) {
-          window.saveAs(blob, `${id}.png`);
+          setTimeout(() => {
+            window.saveAs(blob, `${id}.png`);
+          }, index * 500)
         });
-
     })
-
   }
 
 }

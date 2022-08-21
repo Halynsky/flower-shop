@@ -62,7 +62,6 @@ public class MailService {
         context.setVariable("signature", SIGNATURE);
         context.setVariable("companyName", COMPANY_NAME);
         context.setVariable("companyPhone", COMPANY_PHONE);
-        context.setVariable("homeImproveAddress", COMPANY_PHONE);
         context.setVariable(CONTENT_ALIGN, "center");
         return context;
     }
