@@ -37,7 +37,9 @@
       <span>{{flowerSize.flower.flowerType.nameSingle}}</span>
       <span *ngIf="flowerSize.flower.group">{{', ' + flowerSize.flower.group.nameSingle}}</span>
     </div>
-    <div class="name">{{flowerSize.flower.nameOriginal}}</div>
+    <div class="name">
+      <span>{{flowerSize.flower.nameOriginal}}, {{ flowerSize.size.name}}</span>
+    </div>
     <div class="price">
       <div>{{flowerSize.price / 100}} грн</div>
       <div class="not-available-mark">(немає в наявності)</div>
