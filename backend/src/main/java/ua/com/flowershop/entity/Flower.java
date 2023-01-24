@@ -43,6 +43,7 @@ public class Flower {
 
     private Boolean isNew = true;
     private Boolean isPopular;
+    private String seasonName;
     @Min(0)
     @Max(10)
     private Double popularity = 1.0;

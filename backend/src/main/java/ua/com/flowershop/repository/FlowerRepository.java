@@ -31,13 +31,14 @@ public interface FlowerRepository extends JpaRepository<Flower, Long> {
         "AND (:flowerNamePart IS null OR lower(f.name) LIKE '%' || lower(cast(:flowerNamePart as string)) || '%' ) " +
         "AND (:flowerOriginalNamePart IS null OR lower(f.nameOriginal) LIKE '%' || lower(cast(:flowerOriginalNamePart as string)) || '%' ) " +
         "AND (COALESCE(:flowerTypeNames, NULL) IS NULL OR f.flowerType.name IN :flowerTypeNames) " +
+        "AND (COALESCE(:seasonNames, NULL) IS NULL OR f.seasonName IN :seasonNames) " +
         "AND (:groupNamePart IS null OR lower(g.name) LIKE '%' || lower(cast(:groupNamePart as string)) || '%'  OR lower(g.nameOriginal) LIKE '%' || lower(cast(:groupNamePart as string)) || '%' ) " +
         "AND (:sizeFrom IS null or f.flowerSizeMin >= :sizeFrom) AND (:sizeTo IS null or f.flowerSizeMax <= :sizeTo) " +
         "AND (:heightFrom IS null or f.flowerHeightMin >= :heightFrom) AND (:heightTo IS null or f.flowerHeightMax <= :heightTo) " +
         "AND (:popularityFrom IS null or f.popularity >= :popularityFrom AND (:popularityTo IS null or f.popularity <= :popularityTo))" +
         "AND (:colorNamePart IS null OR lower(f.color.name) LIKE '%' || lower(cast(:colorNamePart as string)) || '%' ) " +
         "AND ((CAST(:createdFrom AS date) IS null OR CAST(:createdTo AS date) IS null) OR f.created BETWEEN :createdFrom AND :createdTo) ")
-    Page<FlowerFullProjection> findForAdminProjectedByFilters(Long id, String flowerNamePart, String flowerOriginalNamePart, List<String> flowerTypeNames, String groupNamePart,
+    Page<FlowerFullProjection> findForAdminProjectedByFilters(Long id, String flowerNamePart, String flowerOriginalNamePart, List<String> flowerTypeNames, List<String> seasonNames, String groupNamePart,
                                                               Integer sizeFrom, Integer sizeTo, Integer heightFrom, Integer heightTo,
                                                               Double popularityFrom, Double popularityTo, String colorNamePart,
                                                               LocalDateTime createdFrom, LocalDateTime createdTo,

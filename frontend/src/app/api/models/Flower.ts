@@ -17,6 +17,7 @@ export class Flower {
   flowerType: FlowerType;
   isNew: boolean = false;
   isPopular: boolean = false;
+  seasonName: string;
   popularity: number;
   color: Color;
   colorSecondary: Color;
@@ -31,6 +32,7 @@ export class FlowerShort {
   flowerType: FlowerType;
   isNew: boolean = false;
   isPopular: boolean = false;
+  seasonName: string;
   priceMin: number;
   group: Group;
 }

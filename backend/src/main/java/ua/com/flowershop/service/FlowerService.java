@@ -39,12 +39,12 @@ public class FlowerService {
     @Autowired private FlowerSizeRepository flowerSizeRepository;
     @Autowired private ItemCodeGenerator itemCodeGenerator;
 
-    public Page<FlowerFullProjection> findForAdmin(Long id, String flowerNamePart, String flowerOriginalNamePart, List<String> flowerTypeNames, String groupNamePart,
+    public Page<FlowerFullProjection> findForAdmin(Long id, String flowerNamePart, String flowerOriginalNamePart, List<String> flowerTypeNames, List<String> seasonNames, String groupNamePart,
                                                    Integer sizeFrom, Integer sizeTo, Integer heightFrom, Integer heightTo,
                                                    Double popularityFrom, Double popularityTo, String colorNamePart,
                                                    LocalDateTime createdFrom, LocalDateTime createdTo,
                                                    Pageable pageRequest) {
-        return flowerRepository.findForAdminProjectedByFilters(id, flowerNamePart, flowerOriginalNamePart, flowerTypeNames, groupNamePart, sizeFrom, sizeTo, heightFrom,
+        return flowerRepository.findForAdminProjectedByFilters(id, flowerNamePart, flowerOriginalNamePart, flowerTypeNames, seasonNames, groupNamePart, sizeFrom, sizeTo, heightFrom,
             heightTo, popularityFrom, popularityTo, colorNamePart, createdFrom, createdTo, pageRequest);
     }
 
@@ -161,6 +161,7 @@ public class FlowerService {
             .setFlowerSizeMin(flower.getFlowerSizeMin())
             .setIsNew(flower.getIsNew())
             .setIsPopular(flower.getIsPopular())
+            .setSeasonName(flower.getSeasonName())
             .setPopularity(flower.getPopularity())
             .setCreated(flower.getCreated())
             .setFlowerType(flower.getFlowerType());

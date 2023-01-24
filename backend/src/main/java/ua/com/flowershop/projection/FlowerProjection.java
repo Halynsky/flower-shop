@@ -14,5 +14,6 @@ public interface FlowerProjection {
     Integer getPopularity();
     Boolean getIsNew();
     Boolean getIsPopular();
+    String getSeasonName();
     FlowerTypeShortProjection getFlowerType();
 }

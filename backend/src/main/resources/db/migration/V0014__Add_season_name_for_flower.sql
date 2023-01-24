@@ -1,0 +1,1 @@
+ALTER TABLE flowers ADD COLUMN season_name varchar(50);

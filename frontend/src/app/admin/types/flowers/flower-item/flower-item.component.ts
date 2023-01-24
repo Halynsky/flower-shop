@@ -19,6 +19,8 @@ import { finalize } from 'rxjs/operators';
 import { Group } from '../../../../api/models/Group';
 import { GroupService } from '../../../../api/services/group.service';
 import { forkJoin, Observable } from "rxjs";
+import * as moment from 'moment';
+import { RELEASE_DATE_STRING } from "../../../../utils/Costants";
 
 @Component({
   selector: 'flower-item',
@@ -38,6 +40,7 @@ export class FlowerItemComponent implements OnInit {
   propertyId;
   flowerTypes: FlowerType[] = [];
   groups: Group[] = [];
+  seasonNameOptions: {value: string; label: string}[] = [];
   item: FlowerFull = new FlowerFull();
 
   colors: Color[] = [];
@@ -77,11 +80,9 @@ export class FlowerItemComponent implements OnInit {
 
     let requests: Observable<any>[] = [this.flowerTypeService.getAll(), this.colorService.getForAdmin(), this.sizeService.getAll()];
 
-
-
-
     if (this.mode === ItemSaveMode.edit)
       requests.push(this.dataService.getById(this.propertyId));
+
     forkJoin(requests)
       .pipe(finalize(() => this.initialized = true))
       .subscribe(
@@ -99,6 +100,14 @@ export class FlowerItemComponent implements OnInit {
         },
         error => this.snackBarService.showError(getErrorMessage(error))
       );
+
+
+    const releaseYear = moment(RELEASE_DATE_STRING).year()
+    this.seasonNameOptions.push(({label: `Не вибрано`, value: null}))
+    for (let year = moment().year() + 1; year >= releaseYear; year--) {
+      this.seasonNameOptions.push(({label: `Осінь ${year}`, value: `Осінь ${year}`}))
+      this.seasonNameOptions.push(({label: `Весна ${year}`, value: `Весна ${year}`}))
+    }
   }
 
   ngOnInit() {

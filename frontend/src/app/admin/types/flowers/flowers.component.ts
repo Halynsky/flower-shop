@@ -13,6 +13,8 @@ import { TranslationService } from "../../../utils/translation.service";
 import { RestPage } from "../../../api/models/RestPage";
 import { FlowerTypeService } from "../../../api/services/flower-type.service";
 import { saveAs } from 'file-saver';
+import * as moment from "moment/moment";
+import { RELEASE_DATE_STRING } from "../../../utils/Costants";
 
 
 @Component({
@@ -67,6 +69,7 @@ export class FlowersComponent implements OnInit {
     {field: 'isNew', header: 'Новинка', active: true},
     {field: 'isPopular', header: 'Популярна', active: true},
     {field: 'popularity', header: 'Рейтинг', active: true},
+    {field: 'seasonName', header: 'Сезон', active: true},
     {field: 'color', header: 'Колір1', active: true},
     {field: 'colorSecondary', header: 'Колір2', active: true},
     {field: 'created', header: 'Створено', active: false}
@@ -76,6 +79,8 @@ export class FlowersComponent implements OnInit {
 
   items: RestPage<Flower> = new RestPage<Flower>();
   selected: Flower;
+
+  seasonNameOptions: {value: string; label: string}[] = [];
 
   menuItems = [
     {
@@ -101,6 +106,11 @@ export class FlowersComponent implements OnInit {
               public translation: TranslationService,
               private route: ActivatedRoute) {
     this.getTypes();
+    const releaseYear = moment(RELEASE_DATE_STRING).year()
+    for (let year = moment().year() + 1; year >= releaseYear; year--) {
+      this.seasonNameOptions.push(({label: `Осінь ${year}`, value: `Осінь ${year}`}))
+      this.seasonNameOptions.push(({label: `Весна ${year}`, value: `Весна ${year}`}))
+    }
   }
 
   ngOnInit() {

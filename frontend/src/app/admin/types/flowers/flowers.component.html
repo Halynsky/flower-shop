@@ -59,6 +59,10 @@
             {{col.header}}
           </th>
 
+          <th *ngSwitchCase="'seasonName'">
+            {{col.header}}
+          </th>
+
         </ng-container>
 
       </tr>
@@ -128,6 +132,13 @@
               [locale]="translation.calendar_ua">
             </p-calendar>
           </div>
+
+          <div *ngSwitchCase="'seasonName'">
+            <p-multiSelect [options]="seasonNameOptions" defaultLabel="Всі"
+                           class="table-filter"
+                           (onChange)="dt.filter($event.value, 'seasonNames', 'in')" filterMatchMode="startsWith"></p-multiSelect>
+          </div>
+
         </th>
       </tr>
     </ng-template>

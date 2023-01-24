@@ -39,6 +39,7 @@ public class FlowerController {
                                                                      @RequestParam(required = false) String flowerNamePart,
                                                                      @RequestParam(required = false) String flowerOriginalNamePart,
                                                                      @RequestParam(required = false) List<String> flowerTypeNames,
+                                                                     @RequestParam(required = false) List<String> seasonNames,
                                                                      @RequestParam(required = false) String groupNamePart,
                                                                      @RequestParam(required = false) Integer sizeFrom,
                                                                      @RequestParam(required = false) Integer sizeTo,
@@ -50,7 +51,7 @@ public class FlowerController {
                                                                      @RequestParam(required = false) LocalDateTime createdFrom,
                                                                      @RequestParam(required = false) LocalDateTime createdTo,
                                                                      @PageableDefault(sort = "id", page = 0, size = 10, direction = Sort.Direction.ASC) Pageable pageRequest) {
-        return new ResponseEntity<>(flowerService.findForAdmin(id, flowerNamePart, flowerOriginalNamePart, flowerTypeNames, groupNamePart, sizeFrom, sizeTo, heightFrom,
+        return new ResponseEntity<>(flowerService.findForAdmin(id, flowerNamePart, flowerOriginalNamePart, flowerTypeNames, seasonNames, groupNamePart, sizeFrom, sizeTo, heightFrom,
             heightTo, popularityFrom, popularityTo, colorNamePart, createdFrom, createdTo, pageRequest), OK);
     }
 

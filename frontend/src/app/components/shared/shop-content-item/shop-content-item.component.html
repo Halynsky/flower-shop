@@ -3,6 +3,7 @@
 
     <div class="flags-wrapper">
       <div class="is-new" *ngIf="flowerSize.flower.isNew">НОВИНКА</div>
+      <div class="season-name" *ngIf="flowerSize.flower.seasonName">{{flowerSize.flower.seasonName | uppercase}}</div>
       <div class="is-popular" *ngIf="flowerSize.flower.isPopular">ХІТ</div>
     </div>
 

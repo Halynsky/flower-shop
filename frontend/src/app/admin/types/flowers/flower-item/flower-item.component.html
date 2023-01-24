@@ -302,6 +302,20 @@
         </div>
 
         <div class="prime-form-group">
+          <div class="p-col-3">
+            <label for="group">Сезон</label>
+          </div>
+          <div class="p-col-4">
+            <div class="dropdown-block">
+              <p-dropdown [options]="seasonNameOptions" name="seasonName" optionValue="value" optionLabel="label" #seasonName="ngModel"[(ngModel)]="item.seasonName"
+                          placeholder="Оберіть сезон" id="seasonName" showClear="true"></p-dropdown>
+            </div>
+          </div>
+          <div class="p-col-3">
+          </div>
+        </div>
+
+        <div class="prime-form-group">
 
           <div class="p-col-7">
             <fieldset>
