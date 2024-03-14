@@ -16,15 +16,13 @@ import ua.com.flowershop.util.mail.MailService;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.time.LocalDateTime.now;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
+import static java.util.function.Predicate.not;
 
 @Slf4j
 @Service
@@ -41,6 +39,7 @@ public class OrderService {
     @Autowired private WarehouseOperationRepository warehouseOperationRepository;
     @Autowired private WarehouseOperationTypeRepository warehouseOperationTypeRepository;
     @Autowired private UserRepository userRepository;
+    @Autowired private UserDeliveryInfoRepository userDeliveryInfoRepository;
     @Autowired private SecurityService securityService;
     @Autowired private MailService mailService;
     @Autowired private PopularityService popularityService;
@@ -79,7 +78,6 @@ public class OrderService {
         order.setOrderItems(orderItems);
         order.setTotalPrice(orderItems.stream().reduce(0, (left, right) -> left + right.getAmount() * right.getPrice(), Integer::sum));
         order.setComment(orderModel.getDeliveryInfo().getComment());
-        order.setDeliveryAddress(retrieveAddress(orderModel));
         order.setPhone(orderModel.getContactInfo().getPhone());
         orderRepository.save(order);
 
@@ -108,6 +106,14 @@ public class OrderService {
             user.setPhone(order.getPhone());
         }
 
+        UserDeliveryInfo userDeliveryInfo = userDeliveryInfoRepository.findById(user.getId())
+            .map((previousInfo) -> UserDeliveryInfo.merge(previousInfo, orderModel.getDeliveryInfo()))
+            .orElseGet(() -> UserDeliveryInfo.of(orderModel.getDeliveryInfo(), orderModel.getContactInfo()));
+        userDeliveryInfo.setConcatedAddress(retrieveAddress(userDeliveryInfo));
+        userDeliveryInfo.setUser(user);
+
+        order.setDeliveryAddress(userDeliveryInfo.getConcatedAddress());
+        userDeliveryInfoRepository.save(userDeliveryInfo);
         userRepository.save(user);
         orderRepository.save(order);
 
@@ -239,6 +245,11 @@ public class OrderService {
         Order order = orderRepository.findById(orderId).orElseThrow(NotFoundException::new);
         order.setPhone(orderContactsChangeRequest.getPhone());
         order.setDeliveryAddress(orderContactsChangeRequest.getDeliveryAddress());
+        User user = order.getUser();
+        UserDeliveryInfo userDeliveryInfo = userDeliveryInfoRepository.findById(user.getId()).orElseGet(UserDeliveryInfo::new);
+        Optional.ofNullable(orderContactsChangeRequest.getDeliveryAddress()).filter(not(String::isEmpty)).ifPresent(userDeliveryInfo::setConcatedAddress);
+        userDeliveryInfo.setUser(user);
+        userDeliveryInfoRepository.save(userDeliveryInfo);
         orderRepository.save(order);
     }
 
@@ -299,57 +310,42 @@ public class OrderService {
 
     }
 
-    private String retrieveAddress(OrderModel orderModel) {
-        OrderDeliveryModel orderDeliveryModel = orderModel.getDeliveryInfo();
-        String receiverFullName;
-        String receiverPhone;
-        if (nonNull(orderDeliveryModel.getReceiverFullName()) && !orderDeliveryModel.getReceiverFullName().equals("")) {
-            receiverFullName = orderDeliveryModel.getReceiverFullName();
-        } else {
-            receiverFullName = orderModel.getContactInfo().getName();
-        }
-        if (nonNull(orderDeliveryModel.getReceiverPhone()) && !orderDeliveryModel.getReceiverPhone().equals("")) {
-            receiverPhone = orderDeliveryModel.getReceiverPhone();
-        } else {
-            receiverPhone = orderModel.getContactInfo().getPhone();
-        }
-
+    private String retrieveAddress(UserDeliveryInfo userDeliveryInfo) {
         StringBuilder ds = new StringBuilder();
-
-        switch (orderDeliveryModel.getDeliveryType()) {
+        switch (userDeliveryInfo.getDeliveryType()) {
             case NOVA_POSHTA_COURIER:
                 ds.append("Нова Пошта (Адресна доставка), ");
-                ds.append(orderDeliveryModel.getCity());
+                ds.append(userDeliveryInfo.getCity());
                 ds.append(COMA_SPACE);
-                ds.append(orderDeliveryModel.getStreet());
+                ds.append(userDeliveryInfo.getStreet());
                 ds.append(COMA_HOUSE);
-                ds.append(orderDeliveryModel.getHouse());
-                if (nonNull(orderDeliveryModel.getApartment()) && !orderDeliveryModel.getApartment().isBlank()) {
+                ds.append(userDeliveryInfo.getHouse());
+                if (nonNull(userDeliveryInfo.getApartment()) && !userDeliveryInfo.getApartment().isBlank()) {
                     ds.append(COMA_APARTMENTS);
-                    ds.append(orderDeliveryModel.getApartment());
+                    ds.append(userDeliveryInfo.getApartment());
                 }
                 ds.append(COMA_SPACE);
                 break;
             case UKR_POSHTA:
                 ds.append("Укр Пошта, ");
-                ds.append(orderDeliveryModel.getCity());
+                ds.append(userDeliveryInfo.getCity());
                 ds.append(COMA_SPACE);
-                ds.append(orderDeliveryModel.getStreet());
+                ds.append(userDeliveryInfo.getStreet());
                 ds.append(COMA_HOUSE);
-                ds.append(orderDeliveryModel.getHouse());
-                if (nonNull(orderDeliveryModel.getApartment()) && !orderDeliveryModel.getApartment().isBlank()) {
+                ds.append(userDeliveryInfo.getHouse());
+                if (nonNull(userDeliveryInfo.getApartment()) && !userDeliveryInfo.getApartment().isBlank()) {
                     ds.append(COMA_APARTMENTS);
-                    ds.append(orderDeliveryModel.getApartment());
+                    ds.append(userDeliveryInfo.getApartment());
                 }
                 ds.append(COMA_SPACE);
-                ds.append(orderDeliveryModel.getPostalCode());
+                ds.append(userDeliveryInfo.getPostalCode());
                 ds.append(COMA_SPACE);
                 break;
             case NOVA_POSHTA_DEPARTMENT:
                 ds.append("Нова Пошта, ");
-                ds.append(orderDeliveryModel.getCity());
+                ds.append(userDeliveryInfo.getCity());
                 ds.append(COMA_SPACE);
-                ds.append(orderDeliveryModel.getNovaPoshtaDepartment());
+                ds.append(userDeliveryInfo.getNovaPoshtaDepartment());
                 ds.append(COMA_SPACE);
                 break;
             case SELF_UZHGOROD:
@@ -361,9 +357,9 @@ public class OrderService {
                 throw new ValidationException("Данний спосіб доставки не дозволений");
         }
 
-        ds.append(receiverFullName);
+        ds.append(userDeliveryInfo.getReceiverFullName());
         ds.append(COMA_PHONE);
-        ds.append(receiverPhone);
+        ds.append(userDeliveryInfo.getReceiverPhone());
 
         return ds.toString();
     }
@@ -446,9 +442,7 @@ public class OrderService {
                     .setFlowerSize(flowerSize);
                 addedAmount = oi.getAmount();
             } else {
-
                 addedAmount = oi.getAmount() - orderItem.getAmount();
-
             }
 
             if (addedAmount > flowerSize.getAvailable()) {
@@ -494,6 +488,8 @@ public class OrderService {
         User user = userRepository.findById(userIdToCreateFor).orElseThrow(() -> new NotFoundException("Користувача з id - " + userIdToCreateFor + " не знайдено"));
 
         Order order = new Order()
+            .setDeliveryAddress(Optional.of(user.getUserDeliveryInfo()).map(UserDeliveryInfo::getConcatedAddress).orElse(null))
+            .setPhone(Optional.of(user.getUserDeliveryInfo()).map(UserDeliveryInfo::getReceiverPhone).orElse(null))
             .setUser(user);
         orderRepository.save(order);
 
@@ -535,13 +531,18 @@ public class OrderService {
                 .setIsVirtual(true)
                 .setLastOrderDate(now());
         }
+        user = userRepository.save(user);
 
-        userRepository.save(user);
+        UserDeliveryInfo userDeliveryInfo = userDeliveryInfoRepository.findById(user.getId()).orElseGet(UserDeliveryInfo::new);
+        Optional.ofNullable(orderCreateRequestAdmin.getDeliveryAddress()).filter(not(String::isEmpty)).ifPresent(userDeliveryInfo::setConcatedAddress);
+        Optional.ofNullable(orderCreateRequestAdmin.getPhone()).filter(not(String::isEmpty)).ifPresent(userDeliveryInfo::setReceiverPhone);
+        userDeliveryInfo.setUser(user);
+        userDeliveryInfoRepository.save(userDeliveryInfo);
 
         Order order = new Order()
             .setUser(user)
-            .setDeliveryAddress(orderCreateRequestAdmin.getDeliveryAddress())
-            .setPhone(orderCreateRequestAdmin.getPhone());
+            .setDeliveryAddress(userDeliveryInfo.getConcatedAddress())
+            .setPhone(userDeliveryInfo.getReceiverPhone());
         orderRepository.save(order);
 
         return order.getId();
@@ -551,7 +552,6 @@ public class OrderService {
         Order order = orderRepository.findById(orderId).orElseThrow(NotFoundException::new);
         mailService.sendOrderAdmin(order);
     }
-
 
     public void changeStatusToProcessingForAll(List<Order> orders) {
         orders.forEach(o -> {

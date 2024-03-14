@@ -12,6 +12,11 @@ import { Pagination } from "../../api/models/Pagination";
 import { NgForm } from "@angular/forms";
 import { finalize } from "rxjs/operators";
 import { dataTableFilter } from "../util";
+import { OrderAdmin } from "../../api/models/Order";
+import { UpdateOrderItemsDialogComponent } from "../shared/update-order-items-dialog/update-order-items-dialog.component";
+import { DialogService } from "primeng/dynamicdialog";
+import { OrderService } from "../../api/services/order.service";
+import { OrderCreateRequestAdmin } from "../../api/models/OrderCreateRequestAdmin";
 
 @Component({
   selector: 'app-users',
@@ -57,8 +62,10 @@ export class UsersComponent implements OnInit {
   constructor(private dataService: UserService,
               private confirmationService: ConfirmationService,
               private snackBarService: SnackBarService,
+              private orderService: OrderService,
               private router: Router,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private dialogService: DialogService) {
     this.initContextMenu();
   }
 
@@ -80,8 +87,13 @@ export class UsersComponent implements OnInit {
       },
       {
         label: 'Переглянути замовлення',
-        icon: 'fas fa-shopping-basket',
+        icon: 'fas fa-cart-shopping',
         command: () => this.router.navigate(['admin/shop/orders'], {queryParams: {userId: this.selected.id}})
+      },
+      {
+        label: 'Додати замовлення',
+        icon: 'fas fa-cart-plus',
+        command: () => this.createOrderForUser()
       },
       {
         label: 'Заблокувати',
@@ -133,6 +145,32 @@ export class UsersComponent implements OnInit {
         }
       },
     ];
+  }
+
+  createOrderForUser() {
+    let orderCreateRequestAdmin = new OrderCreateRequestAdmin()
+    orderCreateRequestAdmin.userId = this.selected.id
+    this.orderService.createAsAdmin(orderCreateRequestAdmin)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(orderId => {
+        this.snackBarService.showSuccess(`Замовлення ${orderId} успішно створено`);
+        let updatingOrder = new OrderAdmin();
+        updatingOrder.id = orderId;
+        updatingOrder.orderItems = [];
+        updatingOrder.orderItems = updatingOrder.orderItems.reverse();
+        this.openUpdateOrderItemsDialog(updatingOrder)
+      }, error => this.snackBarService.showError(getErrorMessage(error)))
+  }
+
+  openUpdateOrderItemsDialog(updatingOrder: OrderAdmin) {
+    this.dialogService.open(UpdateOrderItemsDialogComponent, {
+      data: {
+        updatingOrder: updatingOrder,
+        onUpdate: () => this.router.navigate(['admin/shop/orders'], {queryParams: {id: updatingOrder.id}})
+      },
+      header: `Оновлення позицій замовлення №${updatingOrder.id}`,
+      width: '700px'
+    });
   }
 
   loadDataLazy(filters = {}, pagination: Pagination = new Pagination()) {

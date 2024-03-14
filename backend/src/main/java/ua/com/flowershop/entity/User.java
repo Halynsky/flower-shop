@@ -72,6 +72,8 @@ public class User {
     @JsonIgnore
     @OneToMany(mappedBy = "user")
     protected List<FavoriteItemsList> favoriteItemsLists;
+    @OneToOne(mappedBy = "user")
+    private UserDeliveryInfo userDeliveryInfo;
 
     public enum Role {
         USER("USER"),

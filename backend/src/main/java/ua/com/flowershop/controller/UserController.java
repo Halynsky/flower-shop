@@ -8,9 +8,13 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import ua.com.flowershop.exception.NotFoundException;
 import ua.com.flowershop.model.UserAdminModel;
 import ua.com.flowershop.projection.UserAdminProjection;
+import ua.com.flowershop.projection.UserDeliveryInfoProjection;
+import ua.com.flowershop.repository.UserDeliveryInfoRepository;
 import ua.com.flowershop.repository.UserRepository;
+import ua.com.flowershop.security.SecurityService;
 import ua.com.flowershop.service.UserService;
 import ua.com.flowershop.util.annotation.PageableSwagger;
 
@@ -23,7 +27,9 @@ import static ua.com.flowershop.util.Path.USERS_PATH;
 public class UserController {
 
     @Autowired private UserRepository userRepository;
+    @Autowired private UserDeliveryInfoRepository userDeliveryInfoRepository;
     @Autowired private UserService userService;
+    @Autowired private SecurityService securityService;
 
     @PreAuthorize("hasAnyRole('SUPPORT', 'ADMIN')")
     @GetMapping("/forAdmin")
@@ -105,4 +111,9 @@ public class UserController {
         return new ResponseEntity<>(OK);
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/deliveryInfo")
+    public ResponseEntity<UserDeliveryInfoProjection> getUserDeliveryInfo(){
+        return new ResponseEntity<>(userDeliveryInfoRepository.findProjectedById(securityService.getUser().getId()).orElseThrow(NotFoundException::new), OK);
+    }
 }

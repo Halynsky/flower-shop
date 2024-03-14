@@ -1,0 +1,15 @@
+:host {
+  .create-mode-selector {
+    flex-direction: column;
+    width: 100%;
+
+    button {
+      width: 100%;
+      max-width: 350px;
+      &:not(:last-of-type) {
+        margin-bottom: 8px;
+      }
+    }
+
+  }
+}

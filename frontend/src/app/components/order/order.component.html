@@ -70,7 +70,7 @@
       </form>
     </mat-step>
     <mat-step [stepControl]="deliveryInfoFormGroup">
-      <form [formGroup]="deliveryInfoFormGroup">
+      <form [formGroup]="deliveryInfoFormGroup" *ngIf="!loadingDeliveryInfo">
 
         <ng-template matStepLabel>Доставка</ng-template>
 
@@ -249,12 +249,12 @@
         <div><span class="final-purchase-items-amount">{{bucketLocalService.bucketInfo.totalItems}}</span> позиції <span class="check-items" (click)="bucketLocalService.openBucketDialog()">(переглянути товари)</span></div>
         <div>На сумму <span class="final-purchase-items-price">{{bucketLocalService.bucketInfo.totalPrice / 100}}</span> грн</div>
 
-        <button mat-flat-button color="accent" routerLink="/order" [disabled]="deliveryInfoFormGroup.invalid || loading" (click)="submitOrder()">
+        <button mat-flat-button color="accent" routerLink="/order" [disabled]="deliveryInfoFormGroup && deliveryInfoFormGroup.invalid || loading" (click)="submitOrder()">
           <i class="material-icons">check</i>
           <span>Підтвердити замовлення</span>
         </button>
 
-        <div class="disabled-hint" *ngIf="deliveryInfoFormGroup.invalid">Вкажіть всю необхідну інформацію</div>
+        <div class="disabled-hint" *ngIf="deliveryInfoFormGroup && deliveryInfoFormGroup.invalid">Вкажіть всю необхідну інформацію</div>
 
       </div>
 

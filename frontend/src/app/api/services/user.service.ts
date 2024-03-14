@@ -63,4 +63,7 @@ export class UserService {
     return this.http.post(`${this.URL}/${id}/password/restore/request`, null);
   }
 
+  getUserDeliveryInfo() {
+    return this.http.get(`${this.URL}/deliveryInfo`);
+  }
 }
