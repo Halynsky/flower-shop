@@ -489,6 +489,7 @@ public class OrderService {
 
         Order order = new Order()
             .setDeliveryAddress(Optional.of(user.getUserDeliveryInfo()).map(UserDeliveryInfo::getConcatedAddress).orElse(null))
+            .setPhone(Optional.of(user.getUserDeliveryInfo()).map(UserDeliveryInfo::getReceiverPhone).orElse(null))
             .setUser(user);
         orderRepository.save(order);
 
@@ -530,17 +531,18 @@ public class OrderService {
                 .setIsVirtual(true)
                 .setLastOrderDate(now());
         }
+        user = userRepository.save(user);
 
         UserDeliveryInfo userDeliveryInfo = userDeliveryInfoRepository.findById(user.getId()).orElseGet(UserDeliveryInfo::new);
         Optional.ofNullable(orderCreateRequestAdmin.getDeliveryAddress()).filter(not(String::isEmpty)).ifPresent(userDeliveryInfo::setConcatedAddress);
+        Optional.ofNullable(orderCreateRequestAdmin.getPhone()).filter(not(String::isEmpty)).ifPresent(userDeliveryInfo::setReceiverPhone);
         userDeliveryInfo.setUser(user);
-        userRepository.save(user);
         userDeliveryInfoRepository.save(userDeliveryInfo);
 
         Order order = new Order()
             .setUser(user)
             .setDeliveryAddress(userDeliveryInfo.getConcatedAddress())
-            .setPhone(orderCreateRequestAdmin.getPhone());
+            .setPhone(userDeliveryInfo.getReceiverPhone());
         orderRepository.save(order);
 
         return order.getId();
