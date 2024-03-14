@@ -1,0 +1,128 @@
+<form id="create_order_form" #createOrderForm="ngForm" class="create-order-dialog-content" (ngSubmit)="createOrderForm.valid && createOrder()">
+
+  <div class="p-grid p-grid-responsive ui-fluid">
+
+    <div class="prime-form-group create-mode-selector" *ngIf="!createOrderMode">
+      <button pButton (click)="createOrderMode = 'byId'" icon="pi pi-user" label="Для зареєстрованого користувача"></button>
+      <button pButton (click)="createOrderMode = 'new'" icon="pi pi-plus" label="Для не зареєстрованого користувача"></button>
+    </div>
+
+    <div *ngIf="createOrderMode == 'byId'" class="for-existed-user">
+
+      <div class="prime-form-group" >
+        <div class="p-col-4">
+          <label>Id користувача</label>
+        </div>
+        <div class="p-col-4">
+          <input pInputText
+                 #userIdToCreateOrderInput="ngModel"
+                 name="userIdToCreateOrder"
+                 [(ngModel)]="orderCreateRequestAdmin.userId"
+                 required>
+        </div>
+        <div class="p-col-4">
+          <ng-container *ngIf="userIdToCreateOrderInput.dirty || userIdToCreateOrderInput.touched || createOrderForm.submitted">
+            <p-message *ngIf="createOrderForm.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
+          </ng-container>
+        </div>
+      </div>
+
+    </div>
+
+    <div *ngIf="createOrderMode == 'new'" class="for-new-user">
+
+      <div class="prime-form-group">
+        <div class="p-col-4">
+          <label for="name">Імя</label>
+        </div>
+        <div class="p-col-4">
+          <input
+            pInputText
+            #nameInput="ngModel"
+            id="name"
+            name="name"
+            [(ngModel)]="orderCreateRequestAdmin.name"
+            required/>
+        </div>
+        <div class="p-col-4">
+          <ng-container *ngIf="(nameInput.dirty || nameInput.touched) && createOrderForm.submitted">
+            <p-message *ngIf="nameInput.errors?.required" severity="error" text="Імя повинно бути вказано"></p-message>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="prime-form-group">
+        <div class="p-col-4">
+          <label for="email">Email</label>
+        </div>
+        <div class="p-col-4">
+          <input
+            pInputText
+            #emailInput="ngModel"
+            id="email"
+            name="email"
+            [(ngModel)]="orderCreateRequestAdmin.email"
+            [uniqueValidator]="userService.isEmailFree.bind(userService)"
+            email
+          />
+        </div>
+
+        <div class="p-col-4">
+          <ng-container *ngIf="(emailInput.dirty || emailInput.touched) && createOrderForm.submitted">
+            <p-message *ngIf="emailInput.errors?.unique" severity="error" text="Користувач з данним Email вже існує"></p-message>
+            <p-message *ngIf="emailInput.errors?.email" severity="error" text="Email повинен бути валідним"></p-message>
+          </ng-container>
+        </div>
+
+      </div>
+
+      <div class="prime-form-group">
+        <div class="p-col-4">
+          <label for="phone">Телефон</label>
+        </div>
+        <div class="p-col-4">
+          <input
+            pInputText
+            #phone="ngModel"
+            id="phone"
+            name="phone"
+            required
+            validation="false"
+            prefix="+38 "
+            mask='(000) 000-0000'
+            maxlength="18"
+            pattern="^[0].{9,9}"
+            [(ngModel)]="orderCreateRequestAdmin.phone"
+          />
+        </div>
+        <div class="p-col-4">
+          <ng-container *ngIf="(phone.dirty || phone.touched) && createOrderForm.submitted">
+            <p-message *ngIf="phone.errors?.required" severity="error" text="Телефон повинен бути вказаний"></p-message>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="prime-form-group">
+        <div class="p-col-4">
+          <label for="phone">Адреса доставки</label>
+        </div>
+        <div class="p-col-4">
+            <textarea pInputTextarea
+                      #deliveryAddress="ngModel"
+                      name="deliveryAddress"
+                      [(ngModel)]="orderCreateRequestAdmin.deliveryAddress"
+                      cols="23" rows="6" maxlength="500">
+            </textarea>
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+
+</form>
+
+<p-footer>
+  <button *ngIf="createOrderMode" pButton form="create_order_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="Підтвердити" type="submit" [disabled]="loading"></button>
+</p-footer>

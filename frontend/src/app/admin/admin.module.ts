@@ -62,6 +62,8 @@ import { KeyFilterModule } from "primeng/keyfilter";
 import { ProgressSpinnerModule } from "primeng/progressspinner";
 import { ConfirmationService } from "primeng/api";
 import { ChartModule } from "primeng/chart";
+import { CreateOrderDialogComponent } from './shared/create-order-dialog/create-order-dialog.component';
+import { UpdateOrderItemsDialogComponent } from './shared/update-order-items-dialog/update-order-items-dialog.component';
 
 export const ngxMaskOptions: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
@@ -95,7 +97,9 @@ export const ngxMaskOptions: Partial<IConfig> | (() => Partial<IConfig>) = {};
     EditorDialogComponent,
     CollagesGeneratorComponent,
     PhotoGeneratorComponent,
-    ItemsSelectorComponent
+    ItemsSelectorComponent,
+    CreateOrderDialogComponent,
+    UpdateOrderItemsDialogComponent
   ],
   imports: [
     routing,

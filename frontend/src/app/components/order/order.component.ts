@@ -16,6 +16,7 @@ import { MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
 import { MatRadioChange } from "@angular/material/radio";
 import { ProfileService } from "../../api/services/profile.service";
 import { UserExistDialogComponent } from "../shared/user-exist-dialog/user-exist-dialog.component";
+import { UserService } from "../../api/services/user.service";
 
 @Component({
   selector: 'order',
@@ -32,6 +33,8 @@ export class OrderComponent implements OnInit, OnDestroy {
   contactInfoFormGroup: FormGroup;
   deliveryInfoFormGroup: FormGroup;
 
+  deliveryInfo: any;
+
   orderId;
   orderPrice;
 
@@ -41,6 +44,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   filteredWarehouses = [];
   streets = [];
 
+  loadingDeliveryInfo = false;
   loadingWarehouses = false;
   loadingStreets = false;
   loading = false;
@@ -58,6 +62,7 @@ export class OrderComponent implements OnInit, OnDestroy {
               public snackBarService: SnackBarService,
               public dialog: MatDialog,
               public novaPoshtaService: NovaPoshtaService,
+              public userService: UserService,
               private changeDetectorRef: ChangeDetectorRef,
               private profileService: ProfileService) {
 
@@ -74,13 +79,25 @@ export class OrderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.initFormGroups(DeliveryType.NOVA_POSHTA_DEPARTMENT, true);
     this.fillUserData();
-
     this.securityService.onLogin.subscribe(() => {
       this.fillUserData();
     });
     this.bucketLocalService.updateBucketFlowerSizes();
+    this.fillUserDeliveryInfo()
+  }
+
+  fillUserDeliveryInfo() {
+    this.loadingDeliveryInfo = true;
+    this.userService.getUserDeliveryInfo()
+      .pipe(finalize(() => this.loadingDeliveryInfo = false), takeUntil(this.destroyed$))
+      .subscribe(
+        (deliveryInfo: any) => {
+          this.deliveryInfo = deliveryInfo
+          this.initFormGroups(deliveryInfo.deliveryType, true)
+        },
+        error => this.initFormGroups(DeliveryType.NOVA_POSHTA_DEPARTMENT, true)
+      );
   }
 
   ngOnDestroy() {
@@ -245,8 +262,8 @@ export class OrderComponent implements OnInit, OnDestroy {
       this.deliveryInfoFormGroup = new FormGroup({});
       this.deliveryInfoFormGroup.addControl('deliveryType', new FormControl(deliveryType));
       this.deliveryInfoFormGroup.addControl('comment', new FormControl());
-      this.deliveryInfoFormGroup.addControl('receiverFullName', new FormControl());
-      this.deliveryInfoFormGroup.addControl('receiverPhone', new FormControl());
+      this.deliveryInfoFormGroup.addControl('receiverFullName', new FormControl(this.deliveryInfo?.receiverFullName));
+      this.deliveryInfoFormGroup.addControl('receiverPhone', new FormControl(this.deliveryInfo?.receiverPhone));
     } else {
       this.unsubscribeFromDropdownChanges();
     }
@@ -255,7 +272,7 @@ export class OrderComponent implements OnInit, OnDestroy {
       case DeliveryType.UKR_POSHTA:
         this.deliveryInfoFormGroup.removeControl('novaPoshtaDepartment');
         if (!this.deliveryInfoFormGroup.get('postalCode'))
-          this.deliveryInfoFormGroup.addControl('postalCode', new FormControl());
+          this.deliveryInfoFormGroup.addControl('postalCode', new FormControl(this.deliveryInfo?.postalCode));
         this.addDirectAddressControls();
         break;
       case DeliveryType.NOVA_POSHTA_COURIER: {
@@ -269,9 +286,9 @@ export class OrderComponent implements OnInit, OnDestroy {
         this.deliveryInfoFormGroup.removeControl('house');
         this.deliveryInfoFormGroup.removeControl('apartment');
         this.deliveryInfoFormGroup.removeControl('postalCode');
-        this.deliveryInfoFormGroup.addControl('novaPoshtaDepartment', new FormControl());
+        this.deliveryInfoFormGroup.addControl('novaPoshtaDepartment', new FormControl(this.deliveryInfo && {Description: this.deliveryInfo.novaPoshtaDepartment}));
         if (!this.deliveryInfoFormGroup.get('city'))
-          this.deliveryInfoFormGroup.addControl('city', new FormControl());
+          this.deliveryInfoFormGroup.addControl('city', new FormControl(this.deliveryInfo && {Present: this.deliveryInfo.city}));
         break;
       }
       case DeliveryType.SELF_UZHGOROD: {
@@ -316,13 +333,13 @@ export class OrderComponent implements OnInit, OnDestroy {
 
   addDirectAddressControls() {
     if (!this.deliveryInfoFormGroup.get('city'))
-      this.deliveryInfoFormGroup.addControl('city', new FormControl());
+      this.deliveryInfoFormGroup.addControl('city', new FormControl(this.deliveryInfo && {Present: this.deliveryInfo.city}));
     if (!this.deliveryInfoFormGroup.get('street'))
-      this.deliveryInfoFormGroup.addControl('street', new FormControl());
+      this.deliveryInfoFormGroup.addControl('street', new FormControl(this.deliveryInfo && {Present: this.deliveryInfo.street}));
     if (!this.deliveryInfoFormGroup.get('house'))
-      this.deliveryInfoFormGroup.addControl('house', new FormControl());
+      this.deliveryInfoFormGroup.addControl('house', new FormControl(this.deliveryInfo?.house));
     if (!this.deliveryInfoFormGroup.get('apartment'))
-      this.deliveryInfoFormGroup.addControl('apartment', new FormControl());
+      this.deliveryInfoFormGroup.addControl('apartment', new FormControl(this.deliveryInfo?.apartment));
   }
 
   isFormValid(): Observable<boolean> {

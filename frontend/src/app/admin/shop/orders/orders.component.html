@@ -2,7 +2,7 @@
   <h1>Замовлення</h1>
   <div class="navigation-buttons">
     <button pButton (click)="toProgressMenu.toggle($event)" icon="pi pi-bars" class="p-button-success" label="Обробка"></button>
-    <button pButton (click)="displayCreateOrderDialog = true" icon="pi pi-plus" class="p-button-success" label="Додати"></button>
+    <button pButton (click)="openCreateOrderDialog()" icon="pi pi-plus" class="p-button-success" label="Додати"></button>
     <button pButton (click)="refresh()" icon="pi pi-refresh" label="Оновити"></button>
   </div>
 
@@ -86,7 +86,7 @@
       <tr>
         <th></th>
         <th *ngFor="let col of columns" [ngSwitch]="col.field">
-          <input *ngSwitchCase="'id'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'equals')" class="table-filter">
+          <input *ngSwitchCase="'id'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'equals')" [ngModel]="filters?.id?.value" class="table-filter">
           <input *ngSwitchCase="'user'" pInputText type="text" (input)="dt.filter($event.target.value, 'userNamePart', 'contains')" class="table-filter">
           <input *ngSwitchCase="'userFacebookNickname'" pInputText type="text"
                  (input)="dt.filter($event.target.value, 'userFacebookNicknamePart', 'startsWith')" class="table-filter">
@@ -616,102 +616,6 @@
   </p-footer>
 </p-dialog>
 
-
-<p-dialog [(visible)]="displayUpdateOrderItemsDialog" class="update-order-items-dialog" [modal]="true"
-          (onHide)="resetUpdateOrderItemsForm(updateOrderItemsForm)" [positionTop]="120">
-  <p-header>
-    Оновлення позицій замовлення №{{updatingOrder?.id}}
-  </p-header>
-
-  <form id="update_order_items" #updateOrderItemsForm="ngForm" class="update-order-items-dialog-content"
-        (ngSubmit)="updateOrderItemsForm.valid && updateOrderItems()">
-
-
-    <div class="loading-spinner" *ngIf="!initialized">
-      <p-progressSpinner></p-progressSpinner>
-    </div>
-
-    <div class="update-order-items-block-wrapper" *ngIf="updatingOrder && flowerSizes && initialized">
-
-      <div class="add-block">
-
-        <p-dropdown class="add-flower-size-dropdown" [options]="flowerSizes" [(ngModel)]="flowerSizeToAdd" name="flowerSizeToAdd" [filter]="true"
-                    filterBy="flower.name,flower.nameOriginal,flower.flowerType.name,flower.flowerType.nameSingle,flower.flowerType.nameOriginal,code"
-                    placeholder="Оберіть товар" emptyFilterMessage="Не знайдено" optionLabel="flower.nameOriginal" appendTo="body">
-          <ng-template let-selectedItem pTemplate="selectedItem">
-            <div class="flower-size-selected">
-              <img [src]="selectedItem.flower.image"/>
-              <div><b>{{selectedItem.flower.nameOriginal}}</b> {{selectedItem.size.name}}, {{selectedItem.flower.flowerType.nameSingle}}</div>
-            </div>
-          </ng-template>
-          <ng-template let-item pTemplate="item">
-            <div class="ui-helper-clearfix">
-              <div class="flower-size-option">
-                <img [src]="item.flower.image"/>
-                <div class="flower-size-option-info">
-                  <div class="flower-size-option-info-main"><b>{{item.flower.nameOriginal}}</b> {{item.size.name}}
-                    , {{item.flower.flowerType.nameSingle}}</div>
-                  <div class="flower-size-option-info-additional">{{item.code}}, Ціна: {{item.price / 100}} грн, Доступно: {{item.available}} шт</div>
-                </div>
-              </div>
-            </div>
-          </ng-template>
-        </p-dropdown>
-
-        <button pButton icon="pi pi-plus" label="Додати" type="button" class="p-button-success" [disabled]="loading"
-                (click)="addOrderItem()"></button>
-
-      </div>
-
-      <div class="expanded-row-table update-order-items-table">
-        <div class="body">
-          <div class="row">
-            <div class="head">Фото</div>
-            <div class="head">Товар</div>
-            <div class="head">Розмір</div>
-            <div class="head">Кількість</div>
-            <div class="head">Сума</div>
-            <div class="head"></div>
-          </div>
-          <ng-template ngFor let-orderItem [ngForOf]="updatingOrder.orderItems" let-i="index">
-            <div class="row">
-              <div class="cell image-wrapper">
-                <img [src]="orderItem.image" class="order-item-logo">
-              </div>
-              <div class="cell">
-                <div>{{orderItem.flowerTypeName}}</div>
-                <div><b>{{orderItem.name}}</b></div>
-                <div>{{orderItem.code}}</div>
-              </div>
-              <div class="cell">{{orderItem.sizeName}}</div>
-              <div class="cell">
-                <div class="input-wrapper">
-                  <i class="fas fa-angle-left" (click)="minusAmount(i)"></i>
-                  <input [name]="'orderItem_' + orderItem.flowerSizeId" (ngModelChange)="onAmountModelChange($event, orderItem)" [(ngModel)]="orderItem.amount"
-                         maxlength="5" required type="text" digitOnly [minValue]="1" [maxValue]="getMaxForFlowerSize(orderItem)">
-                  <i class="fas fa-angle-right" (click)="plusAmount(i)"></i>
-                </div>
-              </div>
-              <div class="cell">{{orderItem.amount * orderItem.price / 100 + ' грн'}}</div>
-              <div class="cell control-wrapper" (click)="removeOrderItem(i)">
-                <i class="fas fa-times"></i>
-              </div>
-            </div>
-
-          </ng-template>
-        </div>
-      </div>
-
-    </div>
-
-  </form>
-
-  <p-footer>
-    <button pButton form="update_order_items" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="Підтвердити" type="submit"
-            [disabled]="loading || updateOrderItemsForm.invalid"></button>
-  </p-footer>
-</p-dialog>
-
 <p-dialog [(visible)]="displayDiscountChangeDialog" class="discount-change-dialog" [modal]="true" (onHide)="resetDiscountChangeForm(discountChangeForm)">
   <p-header>
     Встановлення знижки для замовлення №{{selected?.id}}
@@ -805,141 +709,6 @@
   <p-footer>
     <button pButton form="payment_confirm_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="Підтвердити" type="submit"
             [disabled]="loading"></button>
-  </p-footer>
-</p-dialog>
-
-<p-dialog [(visible)]="displayCreateOrderDialog" class="create-order-dialog" [modal]="true" (onHide)="resetCreateOrderForm(createOrderForm)">
-  <p-header>
-    Створення замовлення
-  </p-header>
-
-  <form id="create_order_form" #createOrderForm="ngForm" class="create-order-dialog-content" (ngSubmit)="createOrderForm.valid && createOrder()">
-
-    <div class="p-grid p-grid-responsive ui-fluid">
-
-      <div class="prime-form-group create-mode-selector" *ngIf="!createOrderMode">
-        <button pButton (click)="createOrderMode = 'byId'" icon="pi pi-user" label="Для зареєстрованого користувача"></button>
-        <button pButton (click)="createOrderMode = 'new'" icon="pi pi-plus" label="Для не зареєстрованого користувача"></button>
-      </div>
-
-      <div *ngIf="createOrderMode == 'byId'" class="for-existed-user">
-
-        <div class="prime-form-group" >
-          <div class="p-col-4">
-            <label>Id користувача</label>
-          </div>
-          <div class="p-col-4">
-            <input pInputText
-                   #userIdToCreateOrderInput="ngModel"
-                   name="userIdToCreateOrder"
-                   [(ngModel)]="orderCreateRequestAdmin.userId"
-                   required>
-          </div>
-          <div class="p-col-4">
-            <ng-container *ngIf="userIdToCreateOrderInput.dirty || userIdToCreateOrderInput.touched || createOrderForm.submitted">
-              <p-message *ngIf="createOrderForm.errors?.required" severity="error" text="Повинно бути вказано"></p-message>
-            </ng-container>
-          </div>
-        </div>
-
-      </div>
-
-      <div *ngIf="createOrderMode == 'new'" class="for-new-user">
-
-        <div class="prime-form-group">
-          <div class="p-col-4">
-            <label for="name">Імя</label>
-          </div>
-          <div class="p-col-4">
-            <input
-              pInputText
-              #nameInput="ngModel"
-              id="name"
-              name="name"
-              [(ngModel)]="orderCreateRequestAdmin.name"
-              required/>
-          </div>
-          <div class="p-col-4">
-            <ng-container *ngIf="(nameInput.dirty || nameInput.touched) && createOrderForm.submitted">
-              <p-message *ngIf="nameInput.errors?.required" severity="error" text="Імя повинно бути вказано"></p-message>
-            </ng-container>
-          </div>
-        </div>
-
-        <div class="prime-form-group">
-          <div class="p-col-4">
-            <label for="email">Email</label>
-          </div>
-          <div class="p-col-4">
-            <input
-              pInputText
-              #emailInput="ngModel"
-              id="email"
-              name="email"
-              [(ngModel)]="orderCreateRequestAdmin.email"
-              [uniqueValidator]="userService.isEmailFree.bind(userService)"
-              email
-            />
-          </div>
-
-          <div class="p-col-4">
-            <ng-container *ngIf="(emailInput.dirty || emailInput.touched) && createOrderForm.submitted">
-              <p-message *ngIf="emailInput.errors?.unique" severity="error" text="Користувач з данним Email вже існує"></p-message>
-              <p-message *ngIf="emailInput.errors?.email" severity="error" text="Email повинен бути валідним"></p-message>
-            </ng-container>
-          </div>
-
-        </div>
-
-        <div class="prime-form-group">
-          <div class="p-col-4">
-            <label for="phone">Телефон</label>
-          </div>
-          <div class="p-col-4">
-            <input
-              pInputText
-              #phone="ngModel"
-              id="phone"
-              name="phone"
-              required
-              validation="false"
-              prefix="+38 "
-              mask='(000) 000-0000'
-              maxlength="18"
-              pattern="^[0].{9,9}"
-              [(ngModel)]="orderCreateRequestAdmin.phone"
-            />
-          </div>
-          <div class="p-col-4">
-            <ng-container *ngIf="(phone.dirty || phone.touched) && createOrderForm.submitted">
-              <p-message *ngIf="phone.errors?.required" severity="error" text="Телефон повинен бути вказаний"></p-message>
-            </ng-container>
-          </div>
-        </div>
-
-        <div class="prime-form-group">
-          <div class="p-col-4">
-            <label for="phone">Адреса доставки</label>
-          </div>
-          <div class="p-col-4">
-            <textarea pInputTextarea
-                      #deliveryAddress="ngModel"
-                      name="deliveryAddress"
-                      [(ngModel)]="orderCreateRequestAdmin.deliveryAddress"
-                      cols="23" rows="6" maxlength="500">
-            </textarea>
-          </div>
-        </div>
-
-      </div>
-
-
-    </div>
-
-  </form>
-
-  <p-footer>
-    <button *ngIf="createOrderMode" pButton form="create_order_form" icon="{{loading ? 'fas fa-spinner fa-pulse' : 'pi pi-check'}}" label="Підтвердити" type="submit" [disabled]="loading"></button>
   </p-footer>
 </p-dialog>
 
