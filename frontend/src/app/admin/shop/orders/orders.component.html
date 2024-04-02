@@ -884,7 +884,7 @@
 
           <div class="p-col-4">
             <ng-container *ngIf="(emailInput.dirty || emailInput.touched) && createOrderForm.submitted">
-              <p-message *ngIf="emailInput.errors?.unique" severity="error" text="Користувач з данним Email вже існує"></p-message>
+              <p-message *ngIf="emailInput.errors?.unique" severity="error" text="Користувач з даним Email вже існує"></p-message>
               <p-message *ngIf="emailInput.errors?.email" severity="error" text="Email повинен бути валідним"></p-message>
             </ng-container>
           </div>

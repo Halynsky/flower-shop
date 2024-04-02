@@ -34,6 +34,7 @@ public class OrderService {
     private static final String COMA_APARTMENTS = ", кв.";
     private static final String COMA_HOUSE = ", буд.";
     private static final String COMA_PHONE = ", тел.";
+    private static final String FAKE_EMAIL_SUFFIX = "@fakemail.com";
 
     @Autowired private OrderRepository orderRepository;
     @Autowired private OrderItemRepository orderItemRepository;
@@ -523,7 +524,7 @@ public class OrderService {
         }
 
         if (isNull(orderCreateRequestAdmin.getEmail())) {
-            orderCreateRequestAdmin.setEmail(UUID.randomUUID().toString() + "@fakemail.com");
+            orderCreateRequestAdmin.setEmail(UUID.randomUUID() + FAKE_EMAIL_SUFFIX);
         }
 
         if (isNull(user)) {

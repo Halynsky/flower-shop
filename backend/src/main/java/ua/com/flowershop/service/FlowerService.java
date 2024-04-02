@@ -92,6 +92,7 @@ public class FlowerService {
             .setIsPopular(flower.getIsPopular())
             .setPopularity(flower.getPopularity())
             .setFlowerType(flower.getFlowerType())
+            .setSeasonName(flower.getSeasonName())
             .setColor(flower.getColor());
 
         flowerRepository.save(flowerToCreate);

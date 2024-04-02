@@ -82,7 +82,7 @@ export class ImagePreviewComponent {
   removeImage(event: Event): void {
     this.confirmationService.confirm({
       header: this.confirmTitle,
-      message: `Ви впевнені що хочете видалити данну картинку?`,
+      message: `Ви впевнені що хочете видалити дану картинку?`,
       accept: () => {
         this.fileChange.emit(null);
         this.fileInput.nativeElement.value = '';

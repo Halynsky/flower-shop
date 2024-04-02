@@ -103,7 +103,7 @@ export class WarehouseOperationsComponent implements OnInit {
   confirmRemove(event) {
     if (this.selected.isActive) {
       this.confirmationService.confirm({
-        message: "Ви впевнені що хочете відмінити данну 'Складську операцію'?",
+        message: "Ви впевнені що хочете відмінити дану 'Складську операцію'?",
         accept: () => {
           this.remove(event)
         }
