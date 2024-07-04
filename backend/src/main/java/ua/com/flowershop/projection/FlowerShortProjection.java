@@ -9,5 +9,6 @@ public interface FlowerShortProjection extends FlowerTinyProjection {
     Boolean  getHasAvailableFlowerSize();
     Boolean getIsNew();
     Boolean getIsPopular();
+    String getTag();
     String getSeasonName();
 }

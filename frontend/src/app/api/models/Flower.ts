@@ -18,6 +18,7 @@ export class Flower {
   isNew: boolean = false;
   isPopular: boolean = false;
   seasonName: string;
+  tag: string;
   popularity: number;
   color: Color;
   colorSecondary: Color;

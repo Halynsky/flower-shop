@@ -1,0 +1,16 @@
+version: "3.9"
+services:
+  postgres:
+    container_name: flowershop_postgres
+    image: postgres:15.3
+    restart: unless-stopped
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=flowershop
+      - POSTGRES_PASSWORD=root
+    volumes:
+      - flowershop-postgresql-data:/var/lib/postgresql/data
+volumes:
+  flowershop-postgresql-data:
+    name: flowershop-postgresql-data

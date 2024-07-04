@@ -30,6 +30,7 @@ public class FlowerModel {
     private Integer flowerHeightMax;
     private Boolean isNew;
     private Boolean isPopular;
+    private String tag;
     private String seasonName;
     private Double popularity;
     private LocalDateTime created;
