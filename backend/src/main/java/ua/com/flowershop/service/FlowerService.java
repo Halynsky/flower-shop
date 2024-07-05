@@ -163,6 +163,7 @@ public class FlowerService {
             .setIsNew(flower.getIsNew())
             .setIsPopular(flower.getIsPopular())
             .setSeasonName(flower.getSeasonName())
+            .setTag(flower.getTag())
             .setPopularity(flower.getPopularity())
             .setCreated(flower.getCreated())
             .setFlowerType(flower.getFlowerType());
