@@ -1,4 +1,5 @@
 version: "3.9"
+name: flowershop
 services:
   postgres:
     container_name: flowershop_postgres
